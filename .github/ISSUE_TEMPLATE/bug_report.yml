@@ -1,0 +1,30 @@
+name: Bug report
+description: Report a problem with geometry, display, or a desktop workflow.
+body:
+  - type: input
+    id: version
+    attributes:
+      label: Application version and operating system
+      placeholder: Polytope Laboratory 0.22.0, Windows 11
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps to reproduce
+      description: Include the model name and settings. Attach a small project file if useful.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+      description: Screenshots and error messages help.
+    validations:
+      required: true

@@ -1,0 +1,57 @@
+const {_electron:electron}=require('playwright');
+const fs=require('node:fs/promises'),path=require('node:path'),assert=require('node:assert/strict'),THREE=require('three');
+const root=path.resolve(__dirname,'..'),active=project=>{const d=project.documents[project.active];return d.states[d.cursor];};
+const geometry=model=>Object.fromEntries(['dimension','embeddingDimension','vertices','edges','faces','cells'].map(k=>[k,model[k]]));
+const literal=()=>({name:'Independent direct-picking fixture',dimension:4,embeddingDimension:4,interpretation:'generalized-complex',vertices:[[1,0,0,0],[-1,0,0,0],[0,1,0,0],[0,-1,0,0],[0,0,1,0],[0,0,-1,0],[0,0,0,1],[0,0,0,-1]],edges:[[0,2],[2,4],[4,0]],faces:[[0,2,4]],cells:[]});
+
+async function main(){
+  const artifacts=process.env.POLYTOPE_TEST_ARTIFACTS?path.resolve(process.env.POLYTOPE_TEST_ARTIFACTS):path.join(root,'artifacts');await fs.mkdir(artifacts,{recursive:true});
+  const packaged=process.env.POLYTOPE_TEST_EXECUTABLE,folder=await fs.mkdtemp(path.join(artifacts,packaged?'entity-picking-packaged-':'entity-picking-smoke-'));
+  const profile=path.join(folder,'profile');await fs.mkdir(profile);await fs.writeFile(path.join(profile,'linked-libraries.json'),JSON.stringify({version:1,paths:[]}));
+  const env={...process.env,POLYTOPE_TEST_USER_DATA:profile};delete env.ELECTRON_RUN_AS_NODE;if(packaged)env.POLYTOPE_PYTHON=path.join(folder,'unavailable-python.exe');
+  const app=await electron.launch({executablePath:packaged||require('electron'),args:packaged?[]:[root],cwd:root,env,timeout:30000});
+  const page=await app.firstWindow();page.setDefaultTimeout(30000);const checks=[],errors=[],evidence=[];let sequence=0;
+  page.on('pageerror',error=>errors.push(error.message));
+  const ready=async()=>{await page.waitForFunction(()=>document.getElementById('cancel').hidden);for(let i=0;i<5;i++)await page.evaluate(()=>new Promise(requestAnimationFrame));};
+  async function save(label){await ready();await page.keyboard.press('Escape');const file=path.join(folder,`${++sequence}-${label}.polyproj`);await app.evaluate(({dialog},file)=>{dialog.showSaveDialog=async()=>({canceled:false,filePath:file});},file);await page.evaluate(()=>document.getElementById('status').textContent='');await page.locator('#save').click();await page.waitForFunction(file=>document.getElementById('status').textContent==='Saved '+file,file);return {file,project:JSON.parse(await fs.readFile(file,'utf8'))};}
+  async function open(file,name){await ready();await app.evaluate(({dialog},file)=>{dialog.showOpenDialog=async()=>({canceled:false,filePaths:[file]});},file);await page.locator('#open').click();await page.waitForFunction(name=>document.getElementById('model-name').textContent===name,name);await ready();}
+  async function create(label,model,view){const file=path.join(folder,label+'.polyproj');await fs.writeFile(file,JSON.stringify({format:'polytope-laboratory',version:1,active:0,documents:[{id:label,cursor:0,states:[{model,view,label,notes:''}]}]}));return file;}
+  async function mode(kind){await page.keyboard.press('Escape');await page.locator('#pick-kind').selectOption(kind);await ready();assert.equal(await page.locator('#selection-kind').inputValue(),kind);}
+  async function coordinates(points){
+    const state=active((await save('camera')).project),v=state.view.camera,box=await page.locator('#base-canvas canvas').boundingBox(),half=v.orthographicHalfHeight;
+    const c=new THREE.OrthographicCamera(-half*box.width/box.height,half*box.width/box.height,half,-half,.01,1000);c.position.fromArray(v.position);c.up.fromArray(v.up);c.zoom=v.zoom;c.lookAt(new THREE.Vector3(...v.target));c.updateProjectionMatrix();c.updateMatrixWorld();
+    return points.map(p=>{const q=new THREE.Vector3(...p).project(c);return [box.x+(q.x+1)*box.width/2,box.y+(1-q.y)*box.height/2];});
+  }
+  async function click(point,kind,id){const [p]=await coordinates([point]);await page.mouse.click(...p);await ready();const selected=JSON.parse(await page.locator('#selection-info').textContent());assert.equal(selected.kind,kind);if(id!==undefined)assert.equal(selected.index,id);evidence.push({kind,index:selected.index,point,pixel:p});return selected.index;}
+  async function appearanceInput(id,value){await page.locator('#surface-settings').evaluate(node=>{node.open=true;});await page.locator('#'+id).evaluate((n,v)=>{n.value=String(v);n.dispatchEvent(new Event('input',{bubbles:true}));},value);await page.keyboard.press('Escape');await ready();}
+  try{
+    await page.waitForFunction(()=>document.getElementById('model-name').textContent==='Tesseract');await ready();const initial=active((await save('original')).project),model=literal();
+    const zero={...initial.view,angles:Array(6).fill(0),projection:'orthographic',faces:false,vertices:false,edges:true,hiddenCells:[],isolatedCell:null,cellFacing:'all',cellShrink:1,vertexStyle:'point',edgeStyle:'line'};
+    const file=await create('literal-source-picks',model,zero);await open(file,model.name);await page.locator('#view-orientation').selectOption('z');await page.locator('#fit-view').click();
+    await mode('vertex');assert.equal(await page.locator('#vertices-visible').isChecked(),true);await click([1,0,0],'vertex',0);assert.match(await page.locator('#selection-info').textContent(),/coordinates/);
+    await appearanceInput('vertex-style','sphere');await click([0,1,0],'vertex',2);await page.screenshot({path:path.join(folder,'source-vertex-sphere-pick.png')});
+    checks.push('toolbar source-vertex picking enables visible points and returns exact source IDs and coordinates for points and spheres');
+    await page.locator('#projection').selectOption('stereographic');await mode('edge');const curved=[Math.SQRT1_2,Math.SQRT1_2,0];await click(curved,'edge',0);
+    const previous=await page.locator('#selection-info').textContent(),[chord]=await coordinates([[.5,.5,0]]);await page.mouse.click(...chord);await ready();assert.equal(await page.locator('#selection-info').textContent(),previous);
+    await appearanceInput('edge-style','cylinder');await click(curved,'edge',0);await page.screenshot({path:path.join(folder,'curved-source-edge-cylinder-pick.png')});checks.push('curved stereographic line and cylinder picks return source edge 0; its absent endpoint chord cannot be picked');
+    await mode('face');await click([.6,.6,0],'face',0);await page.screenshot({path:path.join(folder,'spherical-source-face-pick.png')});
+    checks.push('ray picking actual curved face interior maps virtual surface patches to their original source face');
+    await mode('vertex');const beforeDrag=await page.locator('#selection-info').textContent(),[drag]=await coordinates([[0,1,0]]);await page.mouse.move(...drag);await page.mouse.down();await page.mouse.move(drag[0]+35,drag[1]+20,{steps:4});await page.mouse.move(...drag,{steps:4});await page.mouse.up();await ready();assert.equal(await page.locator('#selection-info').textContent(),beforeDrag);
+    await page.locator('#view-orientation').selectOption('z');await mode('vertex');const center=[];for(let i=0;i<3;i++)center.push(await click([0,0,0],'vertex'));assert.deepEqual([...center].sort((a,b)=>a-b),[4,5,7]);assert.ok(!center.includes(6));
+    const crossSaved=active((await save('cross-source-unchanged')).project);assert.deepEqual(geometry(crossSaved.model),geometry(model));checks.push('observer drag returning to its start does not pick; repeated coincident vertices cycle source IDs and exclude the clipped north pole');
+    const tesseract={...initial.model,name:'Independent shared-cell picking fixture'},tesseractFile=await create('tesseract-source-cells',tesseract,{...zero,faces:true,surfaceOpacity:.22,pickKind:'cell'});await open(tesseractFile,tesseract.name);await page.locator('#view-orientation').selectOption('z');await page.locator('#fit-view').click();await mode('cell');
+    const expected=tesseract.cells.flatMap((faces,id)=>{const ids=[...new Set(faces.flatMap(f=>tesseract.faces[f]))];return [2,3].some(axis=>ids.every(v=>tesseract.vertices[v][axis]===tesseract.vertices[ids[0]][axis]))?[id]:[];});assert.equal(expected.length,4);
+    const cells=[];for(let i=0;i<4;i++)cells.push(await click([.1,.2,0],'cell'));assert.deepEqual([...cells].sort((a,b)=>a-b),expected.sort((a,b)=>a-b));assert.equal(new Set(cells).size,4);
+    await page.locator('#surface-settings').evaluate(node=>{node.open=true;});await page.locator('#visible-cell-id').fill(String(cells[0]));await page.locator('#isolate-cell').click();await page.keyboard.press('Escape');await appearanceInput('cell-shrink',.6);await click([.1,.2,0],'cell',cells[0]);await page.screenshot({path:path.join(folder,'shrunk-isolated-source-cell-pick.png')});
+    const saved=await save('selected-shrunk-source-cell'),state=active(saved.project);assert.deepEqual(geometry(state.model),geometry(tesseract));assert.deepEqual(state.view.entitySelection,{kind:'cell',index:cells[0]});assert.equal(state.view.pickKind,'cell');assert.equal(state.view.cellShrink,.6);assert.equal(state.view.isolatedCell,cells[0]);
+    checks.push('unshrunk shared faces cycle all four ray-visible source owners; isolated shrunk patches return their unique active source cell');
+    await mode('edge');await open(saved.file,tesseract.name);await page.waitForFunction(()=>document.getElementById('pick-kind').value==='cell');assert.equal(await page.locator('#selection-kind').inputValue(),'cell');assert.equal(Number(await page.locator('#selection-id').inputValue()),cells[0]);await click([.1,.2,0],'cell',cells[0]);
+    const restored=active((await save('restored-selected-cell')).project);assert.deepEqual(geometry(restored.model),geometry(tesseract));assert.equal(restored.view.pickKind,'cell');assert.deepEqual(restored.view.entitySelection,state.view.entitySelection);
+    checks.push('native save/reopen restores source pick kind and entity selection together with shrink/isolation while retaining all incidence');
+    const bad=structuredClone(saved.project);active(bad).view.pickKind='virtual-patch';active(bad).model.name='Invalid picking mode fixture';const badFile=path.join(folder,'invalid-pick-kind.polyproj');await fs.writeFile(badFile,JSON.stringify(bad));await app.evaluate(({dialog},file)=>{dialog.showOpenDialog=async()=>({canceled:false,filePaths:[file]});},badFile);await page.locator('#open').click();await page.waitForFunction(()=>document.getElementById('status').textContent.includes('pickKind'));assert.equal(await page.locator('#model-name').textContent(),tesseract.name);
+    checks.push('native project validation rejects invented virtual picking kinds before adopting the malformed state');
+    assert.deepEqual(errors,[]);await fs.writeFile(path.join(folder,'result.json'),JSON.stringify({passed:true,packaged:Boolean(packaged),version:await app.evaluate(({app})=>app.getVersion()),checks,evidence,pageErrors:errors},null,2));console.log(`Entity picking desktop smoke passed: ${checks.length} checks. Artifacts: ${folder}`);
+  }catch(error){await page.screenshot({path:path.join(folder,'failure.png')}).catch(()=>{});await fs.writeFile(path.join(folder,'failure.json'),JSON.stringify({passed:false,error:error.stack,checks,evidence,pageErrors:errors},null,2));console.error('Artifacts:',folder);console.error(await page.locator('body').innerText().catch(()=>''));throw error;}
+  finally{await app.evaluate(({app})=>app.exit(0)).catch(()=>{});}
+}
+main().catch(error=>{console.error(error);process.exitCode=1;});

@@ -1,0 +1,31 @@
+{
+  "scope": "Bounded 0.15 development evidence; all 73 original requirement-wide parity gates remain open",
+  "requirements": {
+    "CON-07": {
+      "dimensions": [
+        3
+      ],
+      "object_classes": [
+        "independently checked closed convex intrinsic 3D sources with congruent selected faces"
+      ],
+      "implementation_status": "prototype",
+      "partial_implementation": "Mounted face attachment uses a proper rigid placement, explicit ordered seam match and post-snap checks. It welds only matched seam vertices/edges and removes only the two selected faces. Full source snapshots, maps, RGBA and unit labels survive native history, branch/replay and projects. Actual development UI checks cover adjacent cube incidence 12/20/10, undo/redo, Save/Open, replay, independent Memory 9 and a held native response followed by changed source units. Face placement is a separate unmounted development prototype.",
+      "parameter_domain": {
+        "required": "All benchmark-supported augmentation, excavation, drilling, face/vertex placement and material options; installed 6.0 option behavior remains unaudited.",
+        "implemented": "Two checked convex 3D sources with at most 256 vertices each; selected face at most 64 vertices; explicit cycle offset and positive finite addition scale; congruent seam and strict halfspace separation; preserved source colors and matching units.",
+        "pending": "Nonconvex attachment domains, keeping shared faces, batch/symmetry attachment, excavation, drilling, mounted face/vertex placement, automatic placement sizing, source recoloring and installed baseline conformance."
+      },
+      "numeric_contract": "Float64 geometric predicates and proper placement; exact source incidence ownership. Approximate area/content are metadata evidence, not a native solid or exact measure certificate.",
+      "test_fixture_ids": [
+        "tests/test_augmentation.py",
+        "tests/test_augmentation_workflow.py",
+        "tests/augmentation-controls.test.mjs",
+        "tests/history-workflow.test.mjs",
+        "scripts/augmentation-smoke.cjs"
+      ],
+      "validation_evidence": "142 focused native tests; full native 2829 PASS/1 platform skip with 483 unchanged inputs in artifacts/native-development-0.15.0-2829-qualified.json. Combined registered Node753 PASS. Actual development augmentation UI four groups in artifacts/augmentation-smoke-yf2Avf/result.json. The initial development proofs below were followed by actual packaged checks; no requirement-complete workflow is claimed. Later actual packaged qualification PASS30 suites in artifacts/desktop-qualification-1FOKlh/result.json, including four attachment groups in augmentation/augmentation-smoke-nw0Dge/result.json; actual portable in artifacts/portable-candidate-0.15.0/portable-smoke.json; exact promoted launcher receipt artifacts/promoted-portable-0.15.0.json. These are bounded workflow proofs, not requirement-wide conformance.",
+      "known_limits": "Only the declared convex face-seam domain is mounted. Placement66 headless tests are unmounted development evidence. Required excavation/drilling/vertex/batch and installed-baseline scenarios remain open.",
+      "release_blocker": true
+    }
+  }
+}

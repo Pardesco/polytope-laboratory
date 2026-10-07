@@ -1,0 +1,125 @@
+
+Uniform Compounds
+=================
+Uniform compounds can be specified by
+
+o   A UC number e.g. uc5
+
+o   uc_ followed by a name (see the list below) Use '_' instead of
+    a space to avoid having to quote the model name.
+
+    When giving a name the following abbreviations can be used
+       tr:     truncated
+       sm:     small
+       gr:     great
+       st:     stellated
+       sn:     snub
+       tet:    tetrahedra
+       ico:    icosahedra
+       icosa:  icosahedra
+       dod:    dodecahedra
+       oct:    octahedra
+       cubo:   cuboctahedra
+       icosid: icosidodecahedra
+       pri:    prisms
+       ant:    antiprisms
+       rot:    rotational
+
+    e.g. uc_5_tetrahedra, uc_5_tet, uc_2_tr_tet, uc_20_octahedra_rot
+
+    When a compound is listed as rotational, an angle can be supplied after
+    an underscore. If no angle is supplied, a random angle is generated
+
+    e.g. uc2_a30, uc7_a22.5, uc11_a11.315, uc28_a0
+
+    For uc20 to uc25 n/d and k can be supplied after an underscore.
+    If no n/d or k is supplied then random values are generated
+
+    e.g. uc21_n5/2k4, uc22_n7/3, uc23_n7/3k3, uc25_n7/4k3
+
+    Because uc20, uc22, and uc24 an angle can also be supplied.
+    Note that the order of a, n/d and k does not matter
+
+    e.g. uc20_n9/2, uc20_k5, uc22_n7/3k2a4, uc22_a7n5/3k3, uc24_a3k5n7/4
+
+
+Uniform Compound List:
+
+UC No  Name
+-----  -------------------------------
+UC1    6 tetrahedra rotational
+UC2    12 tetrahedra rotational
+UC3    6 tetrahedra
+UC4    2 tetrahedra
+UC5    5 tetrahedra
+UC6    10 tetrahedra
+UC7    6 cubes rotational
+UC8    3 cubes
+UC9    5 cubes
+UC10   4 octahedra rotational
+UC11   8 octahedra rotational
+UC12   4 octahedra
+UC13   20 octahedra rotational
+UC14   20 octahedra
+UC15   10 octahedra 1
+UC16   10 octahedra 2
+UC17   5 octahedra
+UC18   5 tetrahemihexahedra
+UC19   20 tetrahemihexahedra
+UC20   2k n d gonal prisms rotational
+UC21   k n d gonal prisms
+UC22   2k n odd d gonal antiprisms rotational
+UC23   k n odd d gonal antiprisms
+UC24   2k n even d gonal antiprisms rotational
+UC25   k n even d gonal antiprisms
+UC26   12 pentagonal antiprisms rotational
+UC27   6 pentagonal antiprisms
+UC28   12 pentagrammic crossed antiprisms rotational
+UC29   6 pentagrammic crossed antiprisms
+UC30   4 triangular prisms
+UC31   8 triangular prisms
+UC32   10 triangular prisms
+UC33   20 triangular prisms
+UC34   6 pentagonal prisms
+UC35   12 pentagonal prisms
+UC36   6 pentagrammic prisms
+UC37   12 pentagrammic prisms
+UC38   4 hexagonal prisms
+UC39   10 hexagonal prisms
+UC40   6 decagonal prisms
+UC41   6 decagrammic prisms
+UC42   3 square antiprisms
+UC43   6 square antiprisms
+UC44   6 pentagrammic antiprisms
+UC45   12 pentagrammic antiprisms
+UC46   2 icosahedra
+UC47   5 icosahedra
+UC48   2 great dodecahedra
+UC49   5 great dodecahedra
+UC50   2 small stellated dodecahedra
+UC51   5 small stellated dodecahedra
+UC52   2 great icosahedra
+UC53   5 great icosahedra
+UC54   2 truncated tetrahedra
+UC55   5 truncated tetrahedra
+UC56   10 truncated tetrahedra
+UC57   5 truncated cubes
+UC58   5 stellated truncated hexahedra
+UC59   5 cuboctahedra
+UC60   5 cubohemioctahedra
+UC61   5 octahemioctahedra
+UC62   5 rhombicuboctahedra
+UC63   5 small rhombihexahedra
+UC64   5 small cubicuboctahedra
+UC65   5 great cubicuboctahedra
+UC66   5 great rhombihexahedra
+UC67   5 great rhombicuboctahedra
+UC68   2 snub cubes
+UC69   2 snub dodecahedra
+UC70   2 great snub icosidodecahedra
+UC71   2 great inverted snub icosidodecahedra
+UC72   2 great retrosnub icosidodecahedra
+UC73   2 snub dodecadodecahedra
+UC74   2 inverted snub dodecadodecahedra
+UC75   2 snub icosidodecadodecahedra
+

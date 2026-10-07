@@ -1,0 +1,158 @@
+{
+  "scope": "Qualified bounded0.14 implementation evidence; all original requirement-wide parity gates remain open",
+  "requirements": {
+    "CON-02": {
+      "dimensions": [
+        3
+      ],
+      "object_classes": [
+        "signed/unreduced podium and antipodium shells",
+        "genus-one polyhedral tori",
+        "rational FCC Waterman hulls"
+      ],
+      "implementation_status": "prototype",
+      "partial_implementation": "Qualified bounded0.14 mounts four geometric podium/antipodium modes, periodic direct-incidence torus and exact rational FCC-ball/author-root Waterman workflows. Full ordered sources, factor ownership, RGBA, selection maps and numerical scopes are retained. The qualified0.14 portable contains these bounded workflows.",
+      "parameter_domain": {
+        "required": "All verified generator options and sequences from the original specification.",
+        "implemented": "Signed unreduced rings; radius/edge and height/side-edge modes; positive ring tori with n*m<=4000; exact rational3D FCC membership with bounded candidate/output sites.",
+        "pending": "Stephanoids, fifth vertex-figure sizing, full degenerate/sequence/4D Waterman domains and installed baseline."
+      },
+      "numeric_contract": "Float64 approximate constructions and defining Hull; Waterman membership alone is exact rational. No exact Hull or uniformity certificate.",
+      "test_fixture_ids": [
+        "tests/test_torus.py",
+        "tests/test_torus_workflow.py",
+        "tests/test_podia.py",
+        "tests/test_podia_components.py",
+        "tests/test_podia_finalization.py",
+        "tests/test_podia_workflow.py",
+        "tests/test_waterman.py",
+        "tests/test_waterman_workflow.py",
+        "scripts/torus-podia-smoke.cjs",
+        "scripts/waterman-smoke.cjs"
+      ],
+      "validation_evidence": "Qualified0.14 native2687PASS/1skip, Node664PASS;29 actual packaged suites PASS631.603s in artifacts/desktop-qualification-v4vfLc/result.json; actual portable with3064 source hashes in artifacts/portable-revised-candidate-0.14.0/portable-smoke.json. These broad counts are not requirement-specific conformance counts. Development550 targeted native tests; actual20 hidden desktop groups across specialized/waterman/products in artifacts/hidden-qualification-pMOk2n/result.json, with37154 HWND checks/zero owned violations. These counts include product regressions; requirement-wide parity remains open; the later qualified0.14 portable evidence is stated above.",
+      "known_limits": "Specialized option/sequence/installed-baseline domains remain incomplete; stephanoids and vertex-figure sizing are still missing.",
+      "release_blocker": true
+    },
+    "CON-09": {
+      "dimensions": [
+        4
+      ],
+      "object_classes": [
+        "explicit convex parallel-layer joins"
+      ],
+      "implementation_status": "prototype",
+      "partial_implementation": "Qualified bounded0.14 has a positive-height edge-fitting solver for already positioned convex layers. It checks actual layer/lateral edge classes, solves separation, then requires common-hypersphere and ordered regular-face predicates; publishes numerical residuals and diagnosed non-solutions.",
+      "parameter_domain": {
+        "required": "General verified regular-face, equal-edge and equal-area fitting domains and convergence/residual controls.",
+        "implemented": "At most64 total source vertices, explicit rigid XYZ positioning, positive height only, float64 tolerance1e-8; no implicit rescaling or orientation.",
+        "pending": "General3D/4D fitting, equal-area constraints, user-controlled convergence and full benchmark cases."
+      },
+      "numeric_contract": "Approximate closed-form edge-height fit with independent final numerical predicates; certified=false.",
+      "test_fixture_ids": [
+        "tests/test_strict_layer_fit.py",
+        "tests/segmentotope-controls.test.mjs",
+        "tests/segmentotope-analysis-controls.test.mjs",
+        "scripts/layer-join-smoke.cjs"
+      ],
+      "validation_evidence": "Qualified0.14 native2687PASS/1skip, Node664PASS;29 actual packaged suites PASS631.603s in artifacts/desktop-qualification-v4vfLc/result.json; actual portable with3064 source hashes in artifacts/portable-revised-candidate-0.14.0/portable-smoke.json. These broad counts are not requirement-specific conformance counts. 22 actual solver/native recipe/persistence cases;154 combined layer tests. Actual hidden layer UI8groups passed in354.623s: artifacts/hidden-qualification-lq83RN/result.json,22685 HWNDchecks/zero ownedviolations. No general fitting parity claimed. Full native development2687PASS+1skip with479 source hashes unchanged; artifacts/native-development-0.14.0-2687-qualified.json. This broad count is not a requirement-specific conformance count.",
+      "known_limits": "Only positive separation for fixed source positioning is fitted; equal-area/general regular-face solvers and complete installed domains remain open.",
+      "release_blocker": true
+    },
+    "CON-12": {
+      "dimensions": [
+        4
+      ],
+      "object_classes": [
+        "convex parallel-layer joins",
+        "derived crossed rational-antiprism products"
+      ],
+      "implementation_status": "prototype",
+      "partial_implementation": "Qualified bounded0.14 exposes explicit convex joins with3D/2D/edge/point tops, source maps/colors and replayable parameters; separate positive-height strict fitting and read-only residual inspection. A named crossed rational-antiprism ? interval family retains direct nonconvex incidence and distinct convex/star layer classifications. It does not use Hull to replace crossed boundaries.",
+      "parameter_domain": {
+        "required": "Complete segmentotope definitions, crossed benchmarks and verified orientation/parameter domains.",
+        "implemented": "Convex64-source-vertex joins, signed nonzero height, explicit orthogonal XYZ matrices/translations. Crossed raw retrograde n/d, radius/base edge and height/side-edge modes, independent positive depth, explicit common frame, at most4000 output vertices.",
+        "pending": "Stella crossed checkbox correspondence, gyro/gyro2/flip matrices, automatic orientation/size matching, complete preset inventory and sequence ordering."
+      },
+      "numeric_contract": "Float64 approximate independent convex boundary/Hull/normal-measure/native gates; direct generalized crossed incidence has no inferred solid measure; strict predicates certified=false.",
+      "test_fixture_ids": [
+        "tests/test_segmentotopes.py",
+        "tests/test_layer_join_workflow.py",
+        "tests/test_strict_layer_fit.py",
+        "tests/test_crossed_segmentotopes.py",
+        "tests/test_crossed_segmentotope_workflow.py",
+        "tests/segmentotope-controls.test.mjs",
+        "tests/segmentotope-analysis-controls.test.mjs",
+        "tests/crossed-segmentotope-controls.test.mjs",
+        "scripts/layer-join-smoke.cjs"
+      ],
+      "validation_evidence": "Qualified0.14 native2687PASS/1skip, Node664PASS;29 actual packaged suites PASS631.603s in artifacts/desktop-qualification-v4vfLc/result.json; actual portable with3064 source hashes in artifacts/portable-revised-candidate-0.14.0/portable-smoke.json. These broad counts are not requirement-specific conformance counts. 97 kernel guards/boundary tests;35 convex transport/history/project cases;22 fit cases;50 crossed kernel +34 actual crossed workflow cases;632 complete frontend tests. Independent tesseract/simplex/pyramid and crossed4/3 16/40/36/12 incidence. Actual hidden layer UI8groups passed: artifacts/hidden-qualification-lq83RN/result.json; no packaged0.14 parity claim. Full native development2687PASS+1skip with479 source hashes unchanged; artifacts/native-development-0.14.0-2687-qualified.json. This broad count is not a requirement-specific conformance count.",
+      "known_limits": "Bounded numerical domain; complete installed crossed/gyro/preset equivalence and option sequences remain unverified. Full73-requirement scope preserved.",
+      "release_blocker": true
+    },
+    "LIB-07": {
+      "dimensions": [
+        2,
+        3,
+        4
+      ],
+      "object_classes": [
+        "literal signed/unreduced polygon cycles",
+        "rational prisms/antiprisms",
+        "duoprisms/antiduoprisms"
+      ],
+      "implementation_status": "prototype",
+      "release_blocker": true,
+      "partial_implementation": "Qualified0.14 exposes signed/unreduced polygons and ordered products, rational antiprisms/antiduoprisms, preserved disconnected factor/component ownership, four antiprism sizing modes and source-preserving3D prisms. Independent cycle/coordinate checks and actual native/UI/history/persistence scenarios pass.",
+      "parameter_domain": {
+        "required": "All verified generator definitions, parameter domains and sequence behavior from the untouched specification.",
+        "implemented": "Literal signed/unreduced n/d; radius/base-edge and height/side-edge antiprism modes; finite positive heights and declared source/output budgets; genuine retained component snapshots.",
+        "pending": "Full installed6.0 conformance, all degeneracy/sequence/material options and complete family inventory."
+      },
+      "numeric_contract": "Float64 approximate geometry; literal integer rational symbols and source cycles retained; no exact radical/uniformity certificate.",
+      "test_fixture_ids": [
+        "tests/test_antiprisms.py",
+        "tests/test_antiprism_components.py",
+        "tests/test_construction_families_workflow.py",
+        "tests/test_products.py",
+        "scripts/construction-families-smoke.cjs",
+        "scripts/polygon-product-smoke.cjs",
+        "scripts/star-polygon-smoke.cjs"
+      ],
+      "validation_evidence": "Qualified0.14 native2687PASS/1skip, Node664PASS;29 actual packaged suites PASS631.603s in artifacts/desktop-qualification-v4vfLc/result.json; actual portable with3064 source hashes in artifacts/portable-revised-candidate-0.14.0/portable-smoke.json. These broad counts are not requirement-specific conformance counts. Actual families suite51.687s, products19.180s, polygons20.373s; none is requirement-wide installed baseline conformance.",
+      "known_limits": "Full installed6.0 generator/sequence domains, degenerate boundaries and complete material options remain unqualified."
+    },
+    "CON-11": {
+      "dimensions": [
+        4
+      ],
+      "object_classes": [
+        "3D-base prisms",
+        "ordered duoprisms",
+        "rational antiduoprisms",
+        "stepped prisms/dual gyro families"
+      ],
+      "implementation_status": "prototype",
+      "release_blocker": true,
+      "partial_implementation": "Qualified0.14 mounts source-preserving3D-base prism recipes, signed/unreduced ordered polygon products, rational antiduoprisms and step-prism controls. Full factor/source snapshots, maps, RGBA/units and recoverable generated components retain original incidence. Actual UI commit, undo/redo, replay and parameter branches pass bounded scenarios.",
+      "parameter_domain": {
+        "required": "Complete benchmark-verified prism/antiduoprism/step definitions, parameter domains and sequences from the original specification.",
+        "implemented": "Literal rank-resolved3D source prisms and ordered2D cycles; n/d signs and unreduced phases preserved, documented4000 output-vertex and finite-positive sizing limits; step dual construction with diagnosed rank refusals.",
+        "pending": "Installed6.0 correspondence, complete step/gyro inventory, boundary degeneracies, automatic sequences and all material choices."
+      },
+      "numeric_contract": "Float64 approximate direct incidence or explicit dual/Hull construction in declared convex domains; no inferred replacement of star boundaries.",
+      "test_fixture_ids": [
+        "tests/test_prisms.py",
+        "tests/test_antiprism_components.py",
+        "tests/test_antiprisms.py",
+        "tests/test_step_prisms.py",
+        "tests/test_construction_families_workflow.py",
+        "tests/test_product_workflow.py",
+        "scripts/construction-families-smoke.cjs",
+        "scripts/polygon-product-smoke.cjs"
+      ],
+      "validation_evidence": "Qualified0.14 native2687PASS/1skip, Node664PASS;29 actual packaged suites PASS631.603s in artifacts/desktop-qualification-v4vfLc/result.json; actual portable with3064 source hashes in artifacts/portable-revised-candidate-0.14.0/portable-smoke.json. These broad counts are not requirement-specific conformance counts. Actual families51.687s/products19.180s. Existing installed5.4 menu33403/33529 static labels are separate historical evidence, not target6.0 executed correspondence.",
+      "known_limits": "Complete installed6.0 stepped/gyro definitions and sequences remain open; static5.4 resources cannot establish6.0 conformance."
+    }
+  }
+}

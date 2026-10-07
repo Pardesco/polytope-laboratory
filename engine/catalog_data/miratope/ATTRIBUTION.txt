@@ -1,0 +1,5 @@
+Miratope regular 4D OFF assets
+Copyright (c) 2021 Miratope authors
+MIT License; see LICENSE.
+Acquired without modification from C:\Users\Randall\Documents\art-projects\miratope-rs\lib\4D\regular
+Local source git HEAD: f8ecb0da7bac755586d114a6609d1b6968cff82c

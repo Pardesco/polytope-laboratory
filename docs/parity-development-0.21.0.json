@@ -1,0 +1,31 @@
+{
+  "version": "0.21.0",
+  "scope": "Actual mounted development faceting workflows; all original requirement-wide gates remain open",
+  "requirements": {
+    "FAC-02": {
+      "implementation_status": "prototype",
+      "release_blocker": true,
+      "partial_implementation": "Mounted automatic source-plane ordered-cycle candidates and closed-incidence search, exact supplied subgroup equivalence, isohedral/type evidence, detached preview and explicit verified adoption. Actual cube92/20 and tetra4/4 candidate/plane pools, exhausted source-face selections, history replay/branch and native Save/Open pass. These are bounded recorded domains, not complete installed-baseline enumeration.",
+      "validation_evidence": "Full native0.21:4117 passed/one skip,524 unchanged inputs. Frontend1576 passed,221 unchanged inputs. Actual mounted12-group GUI PASS: artifacts/automatic-faceting-smoke-rlmgom/result.json. Existing frozen development0.2 evidence remains retained. No packaged/released or requirement-wide acceptance claim.",
+      "known_limits": "Source4..12, face8, candidates4096, supplied subgroup128, search256 variables/200000 nodes/128 results. Automatic maximal symmetry, broad source/classification domains and full installed-baseline conformance remain open. Exact predicates refer to supplied coordinate ratios; realized coordinates/native metrics remain approximate.",
+      "test_fixture_ids": ["artifacts/automatic-faceting-0.2-development-frozen/test_automatic_faceting.py", "artifacts/automatic-faceting-0.2-development-qualified.json", "tests/test_automatic_faceting.py", "tests/test_automatic_faceting_workflow.py", "tests/automatic-faceting-controls.test.mjs", "scripts/automatic-faceting-smoke.cjs", "artifacts/native-development-0.21.0.json", "artifacts/frontend-source-tests-0.21.0.json", "artifacts/automatic-faceting-smoke-rlmgom/result.json"]
+    },
+    "FAC-03": {
+      "implementation_status": "prototype",
+      "release_blocker": true,
+      "partial_implementation": "Mounted closed/isohedral, full/partial supplied-vertex use, coplanar-sharing, type/per-plane limits and precise candidate/search phase completion, limits and cancellation. Actual GUI empty/limited searches and stale source/units/notes/document/criteria/cancel/adoption guards pass. Separate frozen development policy predicates cover manual tidy, whole-edge spiky, verified subgroup partial orbits and reciprocal singularities; these additional policies are not mounted search filters.",
+      "validation_evidence": "Actual mounted12-group GUI PASS: artifacts/automatic-faceting-smoke-rlmgom/result.json, plus full native4117/one skip and frontend1576. Separate development/faceting-policy-qualification.json records187 checks, including74 new policy checks; no policy-enumeration or production-filter claim. Existing frozen0.2 evidence retained.",
+      "known_limits": "Bounded recorded candidate domains and supplied verified subgroup only. Tidy-dual and spiky UI options remain unavailable; generalized reciprocal ambiguity, broader enumeration and installed-baseline comparisons remain unresolved. Research predicates do not establish filtered search completeness or full FAC-03 acceptance.",
+      "test_fixture_ids": ["artifacts/automatic-faceting-0.2-development-frozen/test_automatic_faceting.py", "artifacts/automatic-faceting-0.2-development-qualified.json", "tests/test_automatic_faceting.py", "tests/test_automatic_faceting_workflow.py", "tests/automatic-faceting-controls.test.mjs", "scripts/automatic-faceting-smoke.cjs", "artifacts/automatic-faceting-smoke-rlmgom/result.json", "development/faceting-policy-qualification.json"]
+    },
+    "FAC-04": {
+      "implementation_status": "prototype",
+      "release_blocker": true,
+      "numeric_contract": "Exact supplied-coordinate plane/action evidence; approximate realized coordinates and native metrics. Detached preview and explicit adoption preserve full source attributes and ordered incidence.",
+      "partial_implementation": "Mounted independent 3D candidate preview, explicit conversion/adoption to source-bound generalized base model and immutable operation history. Actual preview/adopt geometry, Undo/Redo/Replay/Branch and native Save/Open agree for source-face cube/tetra and independently specified alternating-tetra branch. Required per-vertex faceting diagrams and editable diagram workflows are not yet implemented.",
+      "validation_evidence": "artifacts/automatic-faceting-smoke-rlmgom/result.json: actual mounted source-preserving detached preview, explicit adoption, full attributed history/native persistence and independent parameter branch. Full native4117/one skip and frontend1576 pass. This supports only the implemented preview/adoption portion of original FAC-04.",
+      "known_limits": "No mounted per-vertex projective diagram, diagram picking/editing/UndoRedo, interactive symmetry replication or saved editable facet diagram. A 3D result preview is not the required faceting diagram. Broader domains and installed-baseline conformance remain open.",
+      "test_fixture_ids": ["tests/test_automatic_faceting_workflow.py", "tests/automatic-faceting-controls.test.mjs", "scripts/automatic-faceting-smoke.cjs", "artifacts/automatic-faceting-smoke-rlmgom/result.json"]
+    }
+  }
+}

@@ -1,0 +1,15 @@
+name: Feature request
+description: Suggest a missing workflow or improvement.
+body:
+  - type: textarea
+    id: workflow
+    attributes:
+      label: What would you like to do?
+      description: Describe the workflow and an example model, if relevant.
+    validations:
+      required: true
+  - type: textarea
+    id: reference
+    attributes:
+      label: Example or reference
+      description: A screenshot, manual link, or sample output is useful.

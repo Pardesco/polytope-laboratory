@@ -1,0 +1,7 @@
+:root{--bg:#101925;--panel:#14212d;--panel2:#192d3b;--text:#e0ebef;--muted:#829daa;--border:#2a3e4d;--accent:#74d8c7}
+*{scrollbar-width:thin;scrollbar-color:#385262 #14212d}
+#stellation-regions{max-height:170px;overflow:auto;margin:10px 0;border:1px solid var(--border);padding:4px 8px}#stellation-regions label{justify-content:flex-start;gap:7px;margin:5px 0;font-size:10px}#stellation-regions label input{width:auto;flex:none}#stellation-regions label:has(input:disabled){opacity:.5}
+#stellation-controls label:has(input[type=checkbox]){justify-content:flex-start}#stellation-controls input[type=checkbox]{width:auto}
+#net-panel label:has(input[type=checkbox]){justify-content:flex-start}#net-panel input[type=checkbox]{width:auto}#net-panel label span{display:flex;align-items:center;gap:4px}#net-panel label span input{width:54px}#net-preview [data-net-face]{cursor:grab}#net-preview [data-net-edge]{cursor:crosshair}#net-preview svg{touch-action:none}
+.net-history{display:flex;gap:5px;margin:8px 0}.net-history button{flex:1;font-size:10px;padding:5px}
+#net-preview.packed-page [data-net-face]{cursor:default}#net-preview.packed-page [data-net-edge]{pointer-events:none}

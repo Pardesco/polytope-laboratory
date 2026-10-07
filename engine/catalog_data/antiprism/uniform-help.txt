@@ -1,0 +1,131 @@
+
+Uniform Polyhedra
+=================
+Uniform polyhedra can be specified by
+
+o   A U number e.g. u8
+
+o   u_ followed by the specific Wythoff Symbol in the list below,
+    e.g. 'u_2 4|3', which will be used as a lookup for the
+    corresponding uniform
+
+o   wythoff_ followed by a general Wythoff Symbol, where '_' and ':'
+    maybe used instead of ' ', and ':', e.g. wythoff_2_4:3. The model
+    is constructed directly from the symbol. Note that some degenerate
+    snub models may not be constructed correctly. The faces around each
+    triangle vertex are coloured, in order, red, blue, yellow, and snub
+    triangles are coloured white.
+
+o   u_ followed by a name (see the list below) Use '_' instead of
+    a space to avoid having to quote the model name.
+
+    When giving a name the following abbreviations can be used
+       tr:     truncated
+       sm:     small
+       gr:     great
+       st:     stellated
+       sn:     snub
+       tet:    tetrahedron
+       ico:    icosahedron
+       icosa:  icosahedron
+       dod:    dodecahedron
+       oct:    octahedron
+       cubo:   cuboctahedron
+       icosid: icosidodecahedron
+
+    e.g. u_truncated_octahedron, u_tr_octahedron, u_tr_oct
+
+o   Common polyhedra can be given by name only (see help for
+    'common_polys' for list) e.g. tet, cube
+
+o   Uniform prisms are named 'pri' followed by the polygon
+    fraction e.g pri5, pri5/2
+
+o   Uniform antiprisms are named 'ant' followed by the polygon fraction
+    e.g ant5, ant5/2, ant5/3
+
+Uniform List:
+
+U No.  Wythoff Sym    Name
+-----  -----------    ------------------------
+U1           3|2 3    tetrahedron
+U2           2 3|3    truncated tetrahedron
+U3         3/2 3|3    octahemioctahedron
+U4         3/2 3|2    tetrahemihexahedron
+U5           4|2 3    octahedron
+U6           3|2 4    cube
+U7           2|3 4    cuboctahedron
+U8           2 4|3    truncated octahedron
+U9           2 3|4    truncated cube
+U10          3 4|2    rhombicuboctahedron
+U11         2 3 4|    truncated cuboctahedron
+U12         |2 3 4    snub cube
+U13        3/2 4|4    small cubicuboctahedron
+U14        3 4|4/3    great cubicuboctahedron
+U15        4/3 4|3    cubohemioctahedron
+U16       4/3 3 4|    cubitruncated cuboctahedron
+U17        3/2 4|2    great rhombicuboctahedron
+U18       3/2 2 4|    small rhombihexahedron
+U19        2 3|4/3    stellated truncated hexahedron
+U20       4/3 2 3|    great truncated cuboctahedron
+U21     4/3 3/2 2|    great rhombihexahedron
+U22          5|2 3    icosahedron
+U23          3|2 5    dodecahedron
+U24          2|3 5    icosidodecahedron
+U25          2 5|3    truncated icosahedron
+U26          2 3|5    truncated dodecahedron
+U27          3 5|2    rhombicosidodecahedron
+U28         2 3 5|    truncated icosidodecahedron
+U29         |2 3 5    snub dodecahedron
+U30        3|5/2 3    small ditrigonal icosidodecahedron
+U31        5/2 3|3    small icosicosidodecahedron
+U32       |5/2 3 3    small snub icosicosidodecahedron
+U33        3/2 5|5    small dodecicosidodecahedron
+U34        5|2 5/2    small stellated dodecahedron
+U35        5/2|2 5    great dodecahedron
+U36        2|5/2 5    dodecadodecahedron
+U37        2 5/2|5    truncated great dodecahedron
+U38        5/2 5|2    rhombidodecadodecahedron
+U39       2 5/2 5|    small rhombidodecahedron
+U40       |2 5/2 5    snub dodecadodecahedron
+U41        3|5/3 5    ditrigonal dodecadodecahedron
+U42        3 5|5/3    great ditrigonal dodecicosidodecahedron
+U43        5/3 3|5    small ditrigonal dodecicosidodecahedron
+U44        5/3 5|3    icosidodecadodecahedron
+U45       5/3 3 5|    icositruncated dodecadodecahedron
+U46       |5/3 3 5    snub icosidodecadodecahedron
+U47        3/2|3 5    great ditrigonal icosidodecahedron
+U48        3/2 5|3    great icosicosidodecahedron
+U49        3/2 3|5    small icosihemidodecahedron
+U50       3/2 3 5|    small dodecicosahedron
+U51        5/4 5|5    small dodecahemidodecahedron
+U52        3|2 5/2    great stellated dodecahedron
+U53        5/2|2 3    great icosahedron
+U54        2|5/2 3    great icosidodecahedron
+U55        2 5/2|3    great truncated icosahedron
+U56       2 5/2 3|    rhombicosahedron
+U57       |2 5/2 3    great snub icosidodecahedron
+U58        2 5|5/3    small stellated truncated dodecahedron
+U59       5/3 2 5|    truncated dodecadodecahedron
+U60       |5/3 2 5    inverted snub dodecadodecahedron
+U61      5/2 3|5/3    great dodecicosidodecahedron
+U62      5/3 5/2|3    small dodecahemicosahedron
+U63     5/3 5/2 3|    great dodecicosahedron
+U64     |5/3 5/2 3    great snub dodecicosidodecahedron
+U65        5/4 5|3    great dodecahemicosahedron
+U66        2 3|5/3    great stellated truncated dodecahedron
+U67        5/3 3|2    great rhombicosidodecahedron
+U68       5/3 2 3|    great truncated icosidodecahedron
+U69       |5/3 2 3    great inverted snub icosidodecahedron
+U70    5/3 5/2|5/3    great dodecahemidodecahedron
+U71      3/2 3|5/3    great icosihemidodecahedron
+U72   |3/2 3/2 5/2    small retrosnub icosicosidodecahedron
+U73     3/2 5/3 2|    great rhombidodecahedron
+U74     |3/2 5/3 2    great retrosnub icosidodecahedron
+U75  3/2 5/3 3 5/2    great dirhombicosidodecahedron
+U76          2 5|2    pentagonal prism
+U77         |2 2 5    pentagonal antiprism
+U78        2 5/2|2    pentagrammic prism
+U79       |2 2 5/2    pentagrammic antiprism
+U80       |2 2 5/3    pentagrammic crossed antiprism
+

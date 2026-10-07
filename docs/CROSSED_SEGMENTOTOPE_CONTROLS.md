@@ -1,0 +1,13 @@
+# Derived crossed product controller
+
+`ui/crossed-segmentotope-controls.mjs` exports `CrossedSegmentotopeControls`. It adds a closed Construct disclosure titled **Crossed antiprism product (4D)** after `segmentotope-settings`, with `podia-settings` as a fallback anchor. It requires `context.guard`, `context.number` and `context.generate(kind, params)`; `context.getProject` and `context.isExporting` are optional. Native dispatch, application mounting and publication are owned by the integration layer.
+
+The controller sends kind `crossed-antiprism-segmentotope`, preserves the original signed/unreduced literal symbol, and evaluates three independent size expressions. Radius/edge and height/side-edge selectors expose all four explicit sizing modes; interval depth is separate from layer separation. Defaults `4/3`, radius 1, height 1, depth 1 are an explicit feasible generalized construction. There is no automatic equal-triangle option for the default symbol, since its equal-triangle height is impossible.
+
+An optional closed Orientation disclosure selects identity, common X reflection, or an explicit orthogonal 3×3 matrix. Matrix entries have separate expression fields; hidden matrix inputs are disabled and never evaluated. These choices are mathematical common-frame transformations, not Stella gyro/gyro2/flip aliases. The native kernel remains the final geometry/domain validator.
+
+Generation rejects malformed/nonretrograde symbols and counts outside `3<=n<=1000` before evaluating expressions. Each expression and final callback is guarded against animation export, workspace replacement, active document/state changes and current model replacement. Busy requests prevent concurrent generation; cancellation and numeric/native refusals release controls. The integration's generator callback must independently guard publication after its native await, as the controller cannot undo geometry already published inside a caller callback.
+
+`tests/crossed-segmentotope-controls.test.mjs` passes **12 headless Node groups**, covering four sizing modes, literal symbols, hidden inputs, common reflection/explicit matrix, export and workspace races, busy/cancellation, finite/range validation and structured native refusal. This is controller qualification, not a visible desktop or packaged UI test. No app/browser windows were launched; the user's no-popup preference remains in force.
+
+The independent source-incidence derivation and remaining CON-12 baseline gaps are documented in [CROSSED_SEGMENTOTOPES.md](CROSSED_SEGMENTOTOPES.md). This controller does not turn the derived family into an installed Stella-checkbox equivalence claim.

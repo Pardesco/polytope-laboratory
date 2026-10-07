@@ -1,0 +1,26 @@
+[
+  {
+    "key": "tesseract",
+    "file": "stereographic-native-tesseract.json",
+    "sourceProject": "C:\\Users\\Randall\\Documents\\4d-polytope-desktop\\artifacts\\stereographic-dense-publication-packaged-Z5sXfD\\1-tesseract-source-original.polyproj",
+    "sourceProjectSHA256": "a4083ea428d85e7836482641f38c6033b721d81481f702c4e27132c986fe1049",
+    "sourceFingerprint": "7184b78112587526fffa727ea91d5fca9a988932202ef3501211fe5076d25fe6",
+    "interactionTolerance": 0.01141732283464567
+  },
+  {
+    "key": "cell600",
+    "file": "stereographic-native-cell600.json",
+    "sourceProject": "C:\\Users\\Randall\\Documents\\4d-polytope-desktop\\artifacts\\stereographic-dense-publication-packaged-Z5sXfD\\4-cell600-source-original.polyproj",
+    "sourceProjectSHA256": "b8df35a9d5481b8744f4f8f9ddc59aab69d4ac5ca127bd7081be89a0efe41160",
+    "sourceFingerprint": "0763555c286cf5c88b0f504d3ac93224c28745bfc7b3c347ca208a533fec426e",
+    "interactionTolerance": 0.008392781428395666
+  },
+  {
+    "key": "cell120",
+    "file": "stereographic-native-cell120.json",
+    "sourceProject": "C:\\Users\\Randall\\Documents\\4d-polytope-desktop\\artifacts\\stereographic-dense-publication-packaged-Z5sXfD\\7-cell120-source-original.polyproj",
+    "sourceProjectSHA256": "7af39e18b76b89ba862081aae30429700874828398388e7548c7b698d4b49db0",
+    "sourceFingerprint": "1a0b9ffb0a61ca697d5dc8c50547162354b54136044a805abe504fe64ae28150",
+    "interactionTolerance": 0.006169465567801756
+  }
+]

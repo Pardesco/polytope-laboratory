@@ -1,0 +1,1615 @@
+{
+  "schemaVersion": 1,
+  "version": "0.7.0",
+  "independentlyGenerated": true,
+  "baselineLibraryComplete": false,
+  "entries": [
+    {
+      "key": "tetrahedron",
+      "name": "Tetrahedron",
+      "dimension": 3,
+      "symbol": "{3,3}",
+      "family": "Platonic",
+      "counts": [
+        4,
+        6,
+        4,
+        0
+      ],
+      "geometryFingerprint": "9cc0dcff3e7d0400a7f7a2c5b629f2998dc51547da01e2f9a7b51b55a174387e",
+      "interpretation": "convex-polytope",
+      "actualCounts": [
+        4,
+        6,
+        4,
+        0
+      ],
+      "faceTypes": {
+        "3": 4
+      },
+      "edgeLengths": {
+        "min": 1.4142135623730951,
+        "max": 1.4142135623730956,
+        "mean": 1.4142135623730951
+      },
+      "eulerCharacteristic": 2,
+      "numericContract": "float64-approximate; no algebraic certificate",
+      "construction": "convex-hull"
+    },
+    {
+      "key": "cube",
+      "name": "Cube",
+      "dimension": 3,
+      "symbol": "{4,3}",
+      "family": "Platonic",
+      "counts": [
+        8,
+        12,
+        6,
+        0
+      ],
+      "geometryFingerprint": "5e0d2b7b73fb36c5c155a6c5b0c7ada92e79c2e529864520ae041a795044877b",
+      "interpretation": "convex-polytope",
+      "actualCounts": [
+        8,
+        12,
+        6,
+        0
+      ],
+      "faceTypes": {
+        "4": 6
+      },
+      "edgeLengths": {
+        "min": 2.0,
+        "max": 2.0,
+        "mean": 2.0
+      },
+      "eulerCharacteristic": 2,
+      "numericContract": "float64-approximate; no algebraic certificate",
+      "construction": "convex-hull"
+    },
+    {
+      "key": "octahedron",
+      "name": "Octahedron",
+      "dimension": 3,
+      "symbol": "{3,4}",
+      "family": "Platonic",
+      "counts": [
+        6,
+        12,
+        8,
+        0
+      ],
+      "geometryFingerprint": "f93d0caccbcea15c79fc40d300b9190c5bb74b6eb565470672dc0a63525fa729",
+      "interpretation": "convex-polytope",
+      "actualCounts": [
+        6,
+        12,
+        8,
+        0
+      ],
+      "faceTypes": {
+        "3": 8
+      },
+      "edgeLengths": {
+        "min": 1.4142135623730951,
+        "max": 1.4142135623730951,
+        "mean": 1.4142135623730951
+      },
+      "eulerCharacteristic": 2,
+      "numericContract": "float64-approximate; no algebraic certificate",
+      "construction": "convex-hull"
+    },
+    {
+      "key": "dodecahedron",
+      "name": "Dodecahedron",
+      "dimension": 3,
+      "symbol": "{5,3}",
+      "family": "Platonic",
+      "counts": [
+        20,
+        30,
+        12,
+        0
+      ],
+      "geometryFingerprint": "5e3dacd536a20b3a6e94f0a30614c574e8faafe88fa02a4e711d0cfc192131ac",
+      "interpretation": "convex-polytope",
+      "actualCounts": [
+        20,
+        30,
+        12,
+        0
+      ],
+      "faceTypes": {
+        "5": 12
+      },
+      "edgeLengths": {
+        "min": 0.4721359549995794,
+        "max": 0.47213595499957955,
+        "mean": 0.4721359549995795
+      },
+      "eulerCharacteristic": 2,
+      "numericContract": "float64-approximate; no algebraic certificate",
+      "construction": "dual"
+    },
+    {
+      "key": "icosahedron",
+      "name": "Icosahedron",
+      "dimension": 3,
+      "symbol": "{3,5}",
+      "family": "Platonic",
+      "counts": [
+        12,
+        30,
+        20,
+        0
+      ],
+      "geometryFingerprint": "c546a1e53912e0f684dbd33d686d5b9258bbf1d95f66349d8730375c4047d68f",
+      "interpretation": "convex-polytope",
+      "actualCounts": [
+        12,
+        30,
+        20,
+        0
+      ],
+      "faceTypes": {
+        "3": 20
+      },
+      "edgeLengths": {
+        "min": 2.0,
+        "max": 2.0,
+        "mean": 2.0
+      },
+      "eulerCharacteristic": 2,
+      "numericContract": "float64-approximate; no algebraic certificate",
+      "construction": "convex-hull"
+    },
+    {
+      "key": "simplex4",
+      "name": "5-cell",
+      "dimension": 4,
+      "symbol": "{3,3,3}",
+      "family": "Regular convex",
+      "counts": [
+        5,
+        10,
+        10,
+        5
+      ],
+      "geometryFingerprint": "a68e442f6f39288264d2ac03420ba9b39e159f529470c59ca26292bf44dc079f",
+      "interpretation": "convex-polytope",
+      "actualCounts": [
+        5,
+        10,
+        10,
+        5
+      ],
+      "faceTypes": {
+        "3": 10
+      },
+      "edgeLengths": {
+        "min": 1.414213562373095,
+        "max": 1.4142135623730951,
+        "mean": 1.4142135623730951
+      },
+      "eulerCharacteristic": 0,
+      "numericContract": "float64-approximate; no algebraic certificate",
+      "construction": "convex-hull"
+    },
+    {
+      "key": "tesseract",
+      "name": "Tesseract",
+      "dimension": 4,
+      "symbol": "{4,3,3}",
+      "family": "Regular convex",
+      "counts": [
+        16,
+        32,
+        24,
+        8
+      ],
+      "geometryFingerprint": "7184b78112587526fffa727ea91d5fca9a988932202ef3501211fe5076d25fe6",
+      "interpretation": "convex-polytope",
+      "actualCounts": [
+        16,
+        32,
+        24,
+        8
+      ],
+      "faceTypes": {
+        "4": 24
+      },
+      "edgeLengths": {
+        "min": 2.0,
+        "max": 2.0,
+        "mean": 2.0
+      },
+      "eulerCharacteristic": 0,
+      "numericContract": "float64-approximate; no algebraic certificate",
+      "construction": "convex-hull"
+    },
+    {
+      "key": "cross4",
+      "name": "16-cell",
+      "dimension": 4,
+      "symbol": "{3,3,4}",
+      "family": "Regular convex",
+      "counts": [
+        8,
+        24,
+        32,
+        16
+      ],
+      "geometryFingerprint": "0bf7f22e225b6e1eafb25643ef8211640e3d8a80383da9228b54c1cdd82c6788",
+      "interpretation": "convex-polytope",
+      "actualCounts": [
+        8,
+        24,
+        32,
+        16
+      ],
+      "faceTypes": {
+        "3": 32
+      },
+      "edgeLengths": {
+        "min": 1.4142135623730951,
+        "max": 1.4142135623730951,
+        "mean": 1.4142135623730951
+      },
+      "eulerCharacteristic": 0,
+      "numericContract": "float64-approximate; no algebraic certificate",
+      "construction": "convex-hull"
+    },
+    {
+      "key": "cell24",
+      "name": "24-cell",
+      "dimension": 4,
+      "symbol": "{3,4,3}",
+      "family": "Regular convex",
+      "counts": [
+        24,
+        96,
+        96,
+        24
+      ],
+      "geometryFingerprint": "8eb19c658708e122c956f68ddf4206c2f5ddffddf1419d8854a952198f0e351b",
+      "interpretation": "convex-polytope",
+      "actualCounts": [
+        24,
+        96,
+        96,
+        24
+      ],
+      "faceTypes": {
+        "3": 96
+      },
+      "edgeLengths": {
+        "min": 1.4142135623730951,
+        "max": 1.4142135623730951,
+        "mean": 1.4142135623730956
+      },
+      "eulerCharacteristic": 0,
+      "numericContract": "float64-approximate; no algebraic certificate",
+      "construction": "convex-hull"
+    },
+    {
+      "key": "cell120",
+      "name": "120-cell",
+      "dimension": 4,
+      "symbol": "{5,3,3}",
+      "family": "Regular convex",
+      "counts": [
+        600,
+        1200,
+        720,
+        120
+      ],
+      "geometryFingerprint": "1a0b9ffb0a61ca697d5dc8c50547162354b54136044a805abe504fe64ae28150",
+      "interpretation": "convex-polytope",
+      "actualCounts": [
+        600,
+        1200,
+        720,
+        120
+      ],
+      "faceTypes": {
+        "5": 720
+      },
+      "edgeLengths": {
+        "min": 0.2917960675006306,
+        "max": 0.29179606750063114,
+        "mean": 0.2917960675006309
+      },
+      "eulerCharacteristic": 0,
+      "numericContract": "float64-approximate; no algebraic certificate",
+      "construction": "dual"
+    },
+    {
+      "key": "cell600",
+      "name": "600-cell",
+      "dimension": 4,
+      "symbol": "{3,3,5}",
+      "family": "Regular convex",
+      "counts": [
+        120,
+        720,
+        1200,
+        600
+      ],
+      "geometryFingerprint": "0763555c286cf5c88b0f504d3ac93224c28745bfc7b3c347ca208a533fec426e",
+      "interpretation": "convex-polytope",
+      "actualCounts": [
+        120,
+        720,
+        1200,
+        600
+      ],
+      "faceTypes": {
+        "3": 1200
+      },
+      "edgeLengths": {
+        "min": 0.6180339887498948,
+        "max": 0.6180339887498949,
+        "mean": 0.6180339887498949
+      },
+      "eulerCharacteristic": 0,
+      "numericContract": "float64-approximate; no algebraic certificate",
+      "construction": "convex-hull"
+    },
+    {
+      "key": "cuboctahedron",
+      "name": "Cuboctahedron",
+      "dimension": 3,
+      "symbol": "r{4,3}",
+      "family": "Archimedean",
+      "counts": [
+        12,
+        24,
+        14,
+        0
+      ],
+      "geometryFingerprint": "114d31d0c0cfa1d4282f4d01727d38bd01b5d91f9a06bc2d5e7adf14aefcbaaa",
+      "interpretation": "convex-polytope",
+      "actualCounts": [
+        12,
+        24,
+        14,
+        0
+      ],
+      "faceTypes": {
+        "3": 8,
+        "4": 6
+      },
+      "edgeLengths": {
+        "min": 1.4142135623730951,
+        "max": 1.4142135623730951,
+        "mean": 1.4142135623730951
+      },
+      "eulerCharacteristic": 2,
+      "numericContract": "float64-approximate; no algebraic certificate",
+      "construction": "truncate"
+    },
+    {
+      "key": "icosidodecahedron",
+      "name": "Icosidodecahedron",
+      "dimension": 3,
+      "symbol": "r{5,3}",
+      "family": "Archimedean",
+      "counts": [
+        30,
+        60,
+        32,
+        0
+      ],
+      "geometryFingerprint": "c52af4371e9186a11d42451ade9f1fd1087625e24bfd515e31361f8c9a8a657c",
+      "interpretation": "convex-polytope",
+      "actualCounts": [
+        30,
+        60,
+        32,
+        0
+      ],
+      "faceTypes": {
+        "3": 20,
+        "5": 12
+      },
+      "edgeLengths": {
+        "min": 1.0,
+        "max": 1.0,
+        "mean": 1.0
+      },
+      "eulerCharacteristic": 2,
+      "numericContract": "float64-approximate; no algebraic certificate",
+      "construction": "truncate"
+    },
+    {
+      "key": "truncated-tetrahedron",
+      "name": "Truncated tetrahedron",
+      "dimension": 3,
+      "family": "Archimedean",
+      "counts": [
+        12,
+        18,
+        8,
+        0
+      ],
+      "geometryFingerprint": "1e659905da80cc85ead3ed576070fba2588b6df4a831f80c59888a22047d941b",
+      "interpretation": "convex-polytope",
+      "actualCounts": [
+        12,
+        18,
+        8,
+        0
+      ],
+      "faceTypes": {
+        "3": 4,
+        "6": 4
+      },
+      "edgeLengths": {
+        "min": 0.4714045207910317,
+        "max": 0.47140452079103196,
+        "mean": 0.47140452079103173
+      },
+      "eulerCharacteristic": 2,
+      "numericContract": "float64-approximate; no algebraic certificate",
+      "construction": "truncate"
+    },
+    {
+      "key": "truncated-cube",
+      "name": "Truncated cube",
+      "dimension": 3,
+      "family": "Archimedean",
+      "counts": [
+        24,
+        36,
+        14,
+        0
+      ],
+      "geometryFingerprint": "a46db30359418c65ec316e6ab4869954a299eeda8ec0c66d1d1103c8a0b9f4cd",
+      "interpretation": "convex-polytope",
+      "actualCounts": [
+        24,
+        36,
+        14,
+        0
+      ],
+      "faceTypes": {
+        "3": 8,
+        "8": 6
+      },
+      "edgeLengths": {
+        "min": 0.82842712474619,
+        "max": 0.8284271247461903,
+        "mean": 0.8284271247461903
+      },
+      "eulerCharacteristic": 2,
+      "numericContract": "float64-approximate; no algebraic certificate",
+      "construction": "truncate"
+    },
+    {
+      "key": "truncated-octahedron",
+      "name": "Truncated octahedron",
+      "dimension": 3,
+      "family": "Archimedean",
+      "counts": [
+        24,
+        36,
+        14,
+        0
+      ],
+      "geometryFingerprint": "ad652ec43fec5b10fba61ae537b01414f95149100c4ab9c03a5201ea4e01b2ac",
+      "interpretation": "convex-polytope",
+      "actualCounts": [
+        24,
+        36,
+        14,
+        0
+      ],
+      "faceTypes": {
+        "4": 6,
+        "6": 8
+      },
+      "edgeLengths": {
+        "min": 0.4714045207910317,
+        "max": 0.47140452079103184,
+        "mean": 0.47140452079103184
+      },
+      "eulerCharacteristic": 2,
+      "numericContract": "float64-approximate; no algebraic certificate",
+      "construction": "truncate"
+    },
+    {
+      "key": "truncated-dodecahedron",
+      "name": "Truncated dodecahedron",
+      "dimension": 3,
+      "family": "Archimedean",
+      "counts": [
+        60,
+        90,
+        32,
+        0
+      ],
+      "geometryFingerprint": "e712d70611a1ac1f2ad03b5070e90359d8a5c2336342bc3c13d16c2ae039ded3",
+      "interpretation": "convex-polytope",
+      "actualCounts": [
+        60,
+        90,
+        32,
+        0
+      ],
+      "faceTypes": {
+        "3": 20,
+        "10": 12
+      },
+      "edgeLengths": {
+        "min": 0.21114561800016826,
+        "max": 0.2111456180001683,
+        "mean": 0.21114561800016823
+      },
+      "eulerCharacteristic": 2,
+      "numericContract": "float64-approximate; no algebraic certificate",
+      "construction": "truncate"
+    },
+    {
+      "key": "truncated-icosahedron",
+      "name": "Truncated icosahedron",
+      "dimension": 3,
+      "family": "Archimedean",
+      "counts": [
+        60,
+        90,
+        32,
+        0
+      ],
+      "geometryFingerprint": "d413e681892001439dcd7788384de7c2202deed0479c6f00ef03f24078fec053",
+      "interpretation": "convex-polytope",
+      "actualCounts": [
+        60,
+        90,
+        32,
+        0
+      ],
+      "faceTypes": {
+        "5": 12,
+        "6": 20
+      },
+      "edgeLengths": {
+        "min": 0.6666666666666666,
+        "max": 0.666666666666667,
+        "mean": 0.6666666666666669
+      },
+      "eulerCharacteristic": 2,
+      "numericContract": "float64-approximate; no algebraic certificate",
+      "construction": "truncate"
+    },
+    {
+      "key": "rhombicuboctahedron",
+      "name": "Rhombicuboctahedron",
+      "dimension": 3,
+      "family": "Archimedean",
+      "counts": [
+        24,
+        48,
+        26,
+        0
+      ],
+      "geometryFingerprint": "9c1da4cdceff9ec2ca990d2cdd42cf3f51a049b675e4235e7bab5937c29747c8",
+      "interpretation": "convex-polytope",
+      "actualCounts": [
+        24,
+        48,
+        26,
+        0
+      ],
+      "faceTypes": {
+        "3": 8,
+        "4": 18
+      },
+      "edgeLengths": {
+        "min": 1.999999999999999,
+        "max": 2.0000000000000053,
+        "mean": 2.0000000000000004
+      },
+      "eulerCharacteristic": 2,
+      "numericContract": "float64-approximate; no algebraic certificate",
+      "construction": "wythoff"
+    },
+    {
+      "key": "truncated-cuboctahedron",
+      "name": "Truncated cuboctahedron",
+      "dimension": 3,
+      "family": "Archimedean",
+      "counts": [
+        48,
+        72,
+        26,
+        0
+      ],
+      "geometryFingerprint": "d37e15b8426b3fe87191679fafbfe9eed13f8efefd1457d5e2cdfbd6f58c5448",
+      "interpretation": "convex-polytope",
+      "actualCounts": [
+        48,
+        72,
+        26,
+        0
+      ],
+      "faceTypes": {
+        "4": 12,
+        "6": 8,
+        "8": 6
+      },
+      "edgeLengths": {
+        "min": 1.9999999999999987,
+        "max": 2.000000000000008,
+        "mean": 2.000000000000001
+      },
+      "eulerCharacteristic": 2,
+      "numericContract": "float64-approximate; no algebraic certificate",
+      "construction": "wythoff"
+    },
+    {
+      "key": "rhombicosidodecahedron",
+      "name": "Rhombicosidodecahedron",
+      "dimension": 3,
+      "family": "Archimedean",
+      "counts": [
+        60,
+        120,
+        62,
+        0
+      ],
+      "geometryFingerprint": "696d118120148172c9889f356f4ec71e5fe718bf24cafded9e09b1d004dcf173",
+      "interpretation": "convex-polytope",
+      "actualCounts": [
+        60,
+        120,
+        62,
+        0
+      ],
+      "faceTypes": {
+        "3": 20,
+        "4": 30,
+        "5": 12
+      },
+      "edgeLengths": {
+        "min": 1.9999999999999987,
+        "max": 2.0000000000000138,
+        "mean": 2.0000000000000013
+      },
+      "eulerCharacteristic": 2,
+      "numericContract": "float64-approximate; no algebraic certificate",
+      "construction": "wythoff"
+    },
+    {
+      "key": "truncated-icosidodecahedron",
+      "name": "Truncated icosidodecahedron",
+      "dimension": 3,
+      "family": "Archimedean",
+      "counts": [
+        120,
+        180,
+        62,
+        0
+      ],
+      "geometryFingerprint": "3e39c93d8883d9a0e77250d281c0e5194667b851854cce193352c61d7419136a",
+      "interpretation": "convex-polytope",
+      "actualCounts": [
+        120,
+        180,
+        62,
+        0
+      ],
+      "faceTypes": {
+        "4": 30,
+        "6": 20,
+        "10": 12
+      },
+      "edgeLengths": {
+        "min": 1.9999999999999978,
+        "max": 2.0000000000000258,
+        "mean": 2.0000000000000018
+      },
+      "eulerCharacteristic": 2,
+      "numericContract": "float64-approximate; no algebraic certificate",
+      "construction": "wythoff"
+    },
+    {
+      "key": "snub-cube",
+      "name": "Snub cube (A)",
+      "dimension": 3,
+      "symbol": "s{4,3}",
+      "family": "Archimedean",
+      "counts": [
+        24,
+        60,
+        38,
+        0
+      ],
+      "chiral": true,
+      "enantiomorph": "A",
+      "aliases": [
+        "Snub cube"
+      ],
+      "geometryFingerprint": "94866bbf0da9e45b8f0d8c56bb96a1b0f9254aaa6e7a7253588679e99cc13604",
+      "interpretation": "convex-polytope",
+      "actualCounts": [
+        24,
+        60,
+        38,
+        0
+      ],
+      "faceTypes": {
+        "3": 32,
+        "4": 6
+      },
+      "edgeLengths": {
+        "min": 0.9999999999999994,
+        "max": 1.0000000000000016,
+        "mean": 1.0
+      },
+      "eulerCharacteristic": 2,
+      "numericContract": "float64-approximate; no algebraic certificate",
+      "construction": "snub-rotational-orbit"
+    },
+    {
+      "key": "snub-cube-mirror",
+      "name": "Snub cube (B)",
+      "dimension": 3,
+      "symbol": "s{4,3}",
+      "family": "Archimedean",
+      "counts": [
+        24,
+        60,
+        38,
+        0
+      ],
+      "chiral": true,
+      "enantiomorph": "B",
+      "aliases": [
+        "Snub cube",
+        "mirror Snub cube"
+      ],
+      "geometryFingerprint": "253bd9ba477711c72ebd97d6cf745e7383248922558060e2eb7fad87e9bd524b",
+      "interpretation": "convex-polytope",
+      "actualCounts": [
+        24,
+        60,
+        38,
+        0
+      ],
+      "faceTypes": {
+        "3": 32,
+        "4": 6
+      },
+      "edgeLengths": {
+        "min": 0.9999999999999994,
+        "max": 1.0000000000000016,
+        "mean": 1.0
+      },
+      "eulerCharacteristic": 2,
+      "numericContract": "float64-approximate; no algebraic certificate",
+      "construction": "snub-rotational-orbit"
+    },
+    {
+      "key": "snub-dodecahedron",
+      "name": "Snub dodecahedron (A)",
+      "dimension": 3,
+      "symbol": "s{5,3}",
+      "family": "Archimedean",
+      "counts": [
+        60,
+        150,
+        92,
+        0
+      ],
+      "chiral": true,
+      "enantiomorph": "A",
+      "aliases": [
+        "Snub dodecahedron"
+      ],
+      "geometryFingerprint": "3ed207ddc3d928ca9b4d261abf2fa6f1b98fe87be61c37cd7b3ffecbe1ddca12",
+      "interpretation": "convex-polytope",
+      "actualCounts": [
+        60,
+        150,
+        92,
+        0
+      ],
+      "faceTypes": {
+        "3": 80,
+        "5": 12
+      },
+      "edgeLengths": {
+        "min": 0.9999999999999974,
+        "max": 1.0000000000000004,
+        "mean": 1.0
+      },
+      "eulerCharacteristic": 2,
+      "numericContract": "float64-approximate; no algebraic certificate",
+      "construction": "snub-rotational-orbit"
+    },
+    {
+      "key": "snub-dodecahedron-mirror",
+      "name": "Snub dodecahedron (B)",
+      "dimension": 3,
+      "symbol": "s{5,3}",
+      "family": "Archimedean",
+      "counts": [
+        60,
+        150,
+        92,
+        0
+      ],
+      "chiral": true,
+      "enantiomorph": "B",
+      "aliases": [
+        "Snub dodecahedron",
+        "mirror Snub dodecahedron"
+      ],
+      "geometryFingerprint": "b56d1bf2d0003f506d9e975662fcc8c334a3800148360fa2dc8be6dba335cb1d",
+      "interpretation": "convex-polytope",
+      "actualCounts": [
+        60,
+        150,
+        92,
+        0
+      ],
+      "faceTypes": {
+        "3": 80,
+        "5": 12
+      },
+      "edgeLengths": {
+        "min": 0.9999999999999974,
+        "max": 1.0000000000000004,
+        "mean": 1.0
+      },
+      "eulerCharacteristic": 2,
+      "numericContract": "float64-approximate; no algebraic certificate",
+      "construction": "snub-rotational-orbit"
+    },
+    {
+      "key": "triakis-tetrahedron",
+      "name": "Triakis tetrahedron",
+      "dimension": 3,
+      "family": "Catalan",
+      "counts": [
+        8,
+        18,
+        12,
+        0
+      ],
+      "dualOf": "truncated-tetrahedron",
+      "edgeUniform": false,
+      "faceTransitive": true,
+      "chiral": false,
+      "enantiomorph": null,
+      "aliases": [
+        "dual of Truncated tetrahedron",
+        "triakis tetrahedron"
+      ],
+      "geometryFingerprint": "b16c43269ba57b156bfd984fb570e2510e93f3b53d66ae231c7164e560e2209f",
+      "interpretation": "convex-polytope",
+      "actualCounts": [
+        8,
+        18,
+        12,
+        0
+      ],
+      "faceTypes": {
+        "3": 12
+      },
+      "edgeLengths": {
+        "min": 3.394112549695427,
+        "max": 5.65685424949238,
+        "mean": 4.148359782961077
+      },
+      "eulerCharacteristic": 2,
+      "numericContract": "float64-approximate; no algebraic certificate",
+      "construction": "dual"
+    },
+    {
+      "key": "rhombic-dodecahedron",
+      "name": "Rhombic dodecahedron",
+      "dimension": 3,
+      "family": "Catalan",
+      "counts": [
+        14,
+        24,
+        12,
+        0
+      ],
+      "dualOf": "cuboctahedron",
+      "edgeUniform": true,
+      "faceTransitive": true,
+      "chiral": false,
+      "enantiomorph": null,
+      "aliases": [
+        "dual of Cuboctahedron",
+        "rhombic dodecahedron"
+      ],
+      "geometryFingerprint": "e654b2f89c521823b81f5a8c7faa3f4735b81390e6763e4585c2c55160476cfc",
+      "interpretation": "convex-polytope",
+      "actualCounts": [
+        14,
+        24,
+        12,
+        0
+      ],
+      "faceTypes": {
+        "4": 12
+      },
+      "edgeLengths": {
+        "min": 0.8660254037844386,
+        "max": 0.8660254037844386,
+        "mean": 0.8660254037844387
+      },
+      "eulerCharacteristic": 2,
+      "numericContract": "float64-approximate; no algebraic certificate",
+      "construction": "dual"
+    },
+    {
+      "key": "triakis-octahedron",
+      "name": "Triakis octahedron",
+      "dimension": 3,
+      "family": "Catalan",
+      "counts": [
+        14,
+        36,
+        24,
+        0
+      ],
+      "dualOf": "truncated-cube",
+      "edgeUniform": false,
+      "faceTransitive": true,
+      "chiral": false,
+      "enantiomorph": null,
+      "aliases": [
+        "dual of Truncated cube",
+        "triakis octahedron"
+      ],
+      "geometryFingerprint": "5a086119dab9cc5805c95598694b9d5ad6622d12a1394968653fd51084792bbf",
+      "interpretation": "convex-polytope",
+      "actualCounts": [
+        14,
+        36,
+        24,
+        0
+      ],
+      "faceTypes": {
+        "3": 24
+      },
+      "edgeLengths": {
+        "min": 0.8284271247461901,
+        "max": 1.4142135623730951,
+        "mean": 1.023689270621825
+      },
+      "eulerCharacteristic": 2,
+      "numericContract": "float64-approximate; no algebraic certificate",
+      "construction": "dual"
+    },
+    {
+      "key": "tetrakis-hexahedron",
+      "name": "Tetrakis hexahedron",
+      "dimension": 3,
+      "family": "Catalan",
+      "counts": [
+        14,
+        36,
+        24,
+        0
+      ],
+      "dualOf": "truncated-octahedron",
+      "edgeUniform": false,
+      "faceTransitive": true,
+      "chiral": false,
+      "enantiomorph": null,
+      "aliases": [
+        "dual of Truncated octahedron",
+        "tetrakis hexahedron"
+      ],
+      "geometryFingerprint": "b2ebeb7a69f001914a8c0c677f6fcd9a92a8731ff88b3e860c2f8aaf02835dd3",
+      "interpretation": "convex-polytope",
+      "actualCounts": [
+        14,
+        36,
+        24,
+        0
+      ],
+      "faceTypes": {
+        "3": 24
+      },
+      "edgeLengths": {
+        "min": 1.4999999999999998,
+        "max": 2.0,
+        "mean": 1.6666666666666667
+      },
+      "eulerCharacteristic": 2,
+      "numericContract": "float64-approximate; no algebraic certificate",
+      "construction": "dual"
+    },
+    {
+      "key": "pentakis-dodecahedron",
+      "name": "Pentakis dodecahedron",
+      "dimension": 3,
+      "family": "Catalan",
+      "counts": [
+        32,
+        90,
+        60,
+        0
+      ],
+      "dualOf": "truncated-icosahedron",
+      "edgeUniform": false,
+      "faceTransitive": true,
+      "chiral": false,
+      "enantiomorph": null,
+      "aliases": [
+        "dual of Truncated icosahedron",
+        "pentakis dodecahedron"
+      ],
+      "geometryFingerprint": "93a008255df3cecf6ab2070b49be5a47669f1b2cba5101c69400b10dfee93282",
+      "interpretation": "convex-polytope",
+      "actualCounts": [
+        32,
+        90,
+        60,
+        0
+      ],
+      "faceTypes": {
+        "3": 60
+      },
+      "edgeLengths": {
+        "min": 0.41881197513134616,
+        "max": 0.47213595499957955,
+        "mean": 0.43658663508742407
+      },
+      "eulerCharacteristic": 2,
+      "numericContract": "float64-approximate; no algebraic certificate",
+      "construction": "dual"
+    },
+    {
+      "key": "triakis-icosahedron",
+      "name": "Triakis icosahedron",
+      "dimension": 3,
+      "family": "Catalan",
+      "counts": [
+        32,
+        90,
+        60,
+        0
+      ],
+      "dualOf": "truncated-dodecahedron",
+      "edgeUniform": false,
+      "faceTransitive": true,
+      "chiral": false,
+      "enantiomorph": null,
+      "aliases": [
+        "dual of Truncated dodecahedron",
+        "triakis icosahedron"
+      ],
+      "geometryFingerprint": "d0f03cc4029984caf03e0b26ad0c39f1c9432e283d5b075d8fba24da8ac8d54a",
+      "interpretation": "convex-polytope",
+      "actualCounts": [
+        32,
+        90,
+        60,
+        0
+      ],
+      "faceTypes": {
+        "3": 60
+      },
+      "edgeLengths": {
+        "min": 1.1603574565909278,
+        "max": 2.0000000000000004,
+        "mean": 1.440238304393952
+      },
+      "eulerCharacteristic": 2,
+      "numericContract": "float64-approximate; no algebraic certificate",
+      "construction": "dual"
+    },
+    {
+      "key": "rhombic-triacontahedron",
+      "name": "Rhombic triacontahedron",
+      "dimension": 3,
+      "family": "Catalan",
+      "counts": [
+        32,
+        60,
+        30,
+        0
+      ],
+      "dualOf": "icosidodecahedron",
+      "edgeUniform": true,
+      "faceTransitive": true,
+      "chiral": false,
+      "enantiomorph": null,
+      "aliases": [
+        "dual of Icosidodecahedron",
+        "rhombic triacontahedron"
+      ],
+      "geometryFingerprint": "8c854464f6f73c1b3152a82d4e960bee4c73ae2e4ca68ce1f20c9dfeb024038f",
+      "interpretation": "convex-polytope",
+      "actualCounts": [
+        32,
+        60,
+        30,
+        0
+      ],
+      "faceTypes": {
+        "4": 30
+      },
+      "edgeLengths": {
+        "min": 0.44902797657958515,
+        "max": 0.4490279765795855,
+        "mean": 0.4490279765795853
+      },
+      "eulerCharacteristic": 2,
+      "numericContract": "float64-approximate; no algebraic certificate",
+      "construction": "dual"
+    },
+    {
+      "key": "deltoidal-icositetrahedron",
+      "name": "Deltoidal icositetrahedron",
+      "dimension": 3,
+      "family": "Catalan",
+      "counts": [
+        26,
+        48,
+        24,
+        0
+      ],
+      "dualOf": "rhombicuboctahedron",
+      "edgeUniform": false,
+      "faceTransitive": true,
+      "chiral": false,
+      "enantiomorph": null,
+      "aliases": [
+        "dual of Rhombicuboctahedron",
+        "deltoidal icositetrahedron"
+      ],
+      "geometryFingerprint": "cd1165f93a63edfcd80347111991c4ab086727dea043d53edfc244ce91de79de",
+      "interpretation": "convex-polytope",
+      "actualCounts": [
+        26,
+        48,
+        24,
+        0
+      ],
+      "faceTypes": {
+        "4": 24
+      },
+      "edgeLengths": {
+        "min": 0.24520612448811713,
+        "max": 0.3170253355622146,
+        "mean": 0.28111573002516593
+      },
+      "eulerCharacteristic": 2,
+      "numericContract": "float64-approximate; no algebraic certificate",
+      "construction": "dual"
+    },
+    {
+      "key": "disdyakis-dodecahedron",
+      "name": "Disdyakis dodecahedron",
+      "dimension": 3,
+      "family": "Catalan",
+      "counts": [
+        26,
+        72,
+        48,
+        0
+      ],
+      "dualOf": "truncated-cuboctahedron",
+      "edgeUniform": false,
+      "faceTransitive": true,
+      "chiral": false,
+      "enantiomorph": null,
+      "aliases": [
+        "dual of Truncated cuboctahedron",
+        "disdyakis dodecahedron"
+      ],
+      "geometryFingerprint": "726da68b260c40bf0c5056f5f92fadb999452d29093b7227d0d51b6da047b5e9",
+      "interpretation": "convex-polytope",
+      "actualCounts": [
+        26,
+        72,
+        48,
+        0
+      ],
+      "faceTypes": {
+        "3": 48
+      },
+      "edgeLengths": {
+        "min": 0.14156982198015933,
+        "max": 0.2308440260098119,
+        "mean": 0.1872643443843888
+      },
+      "eulerCharacteristic": 2,
+      "numericContract": "float64-approximate; no algebraic certificate",
+      "construction": "dual"
+    },
+    {
+      "key": "pentagonal-icositetrahedron",
+      "name": "Pentagonal icositetrahedron (A)",
+      "dimension": 3,
+      "family": "Catalan",
+      "counts": [
+        38,
+        60,
+        24,
+        0
+      ],
+      "dualOf": "snub-cube",
+      "edgeUniform": false,
+      "faceTransitive": true,
+      "chiral": true,
+      "enantiomorph": "A",
+      "aliases": [
+        "dual of Snub cube (A)",
+        "pentagonal icositetrahedron"
+      ],
+      "geometryFingerprint": "8a3315473a63460082a11ef77a084c38df6b56b153d428954d82c821d91b4de7",
+      "interpretation": "convex-polytope",
+      "actualCounts": [
+        38,
+        60,
+        24,
+        0
+      ],
+      "faceTypes": {
+        "5": 24
+      },
+      "edgeLengths": {
+        "min": 0.3815109721049634,
+        "max": 0.5416095250332522,
+        "mean": 0.4455503932762792
+      },
+      "eulerCharacteristic": 2,
+      "numericContract": "float64-approximate; no algebraic certificate",
+      "construction": "dual"
+    },
+    {
+      "key": "deltoidal-hexecontahedron",
+      "name": "Deltoidal hexecontahedron",
+      "dimension": 3,
+      "family": "Catalan",
+      "counts": [
+        62,
+        120,
+        60,
+        0
+      ],
+      "dualOf": "rhombicosidodecahedron",
+      "edgeUniform": false,
+      "faceTransitive": true,
+      "chiral": false,
+      "enantiomorph": null,
+      "aliases": [
+        "dual of Rhombicosidodecahedron",
+        "deltoidal hexacontahedron"
+      ],
+      "geometryFingerprint": "f2873ef484f02c8df5d1d40cfc2cf4960c8a1186e1d43e8c9518ba602f0b3365",
+      "interpretation": "convex-polytope",
+      "actualCounts": [
+        62,
+        120,
+        60,
+        0
+      ],
+      "faceTypes": {
+        "4": 60
+      },
+      "edgeLengths": {
+        "min": 0.08498526501500606,
+        "max": 0.1308216141274062,
+        "mean": 0.10790343957120611
+      },
+      "eulerCharacteristic": 2,
+      "numericContract": "float64-approximate; no algebraic certificate",
+      "construction": "dual"
+    },
+    {
+      "key": "disdyakis-triacontahedron",
+      "name": "Disdyakis triacontahedron",
+      "dimension": 3,
+      "family": "Catalan",
+      "counts": [
+        62,
+        180,
+        120,
+        0
+      ],
+      "dualOf": "truncated-icosidodecahedron",
+      "edgeUniform": false,
+      "faceTransitive": true,
+      "chiral": false,
+      "enantiomorph": null,
+      "aliases": [
+        "dual of Truncated icosidodecahedron",
+        "disdyakis triacontahedron"
+      ],
+      "geometryFingerprint": "61fdfc6cc451cc528f1baddbe91ca3450f4119d0b86a2147b04c9c9bf4898830",
+      "interpretation": "convex-polytope",
+      "actualCounts": [
+        62,
+        180,
+        120,
+        0
+      ],
+      "faceTypes": {
+        "3": 120
+      },
+      "edgeLengths": {
+        "min": 0.04906626563356538,
+        "max": 0.0906358729587351,
+        "mean": 0.07225880975670801
+      },
+      "eulerCharacteristic": 2,
+      "numericContract": "float64-approximate; no algebraic certificate",
+      "construction": "dual"
+    },
+    {
+      "key": "pentagonal-hexecontahedron",
+      "name": "Pentagonal hexecontahedron (A)",
+      "dimension": 3,
+      "family": "Catalan",
+      "counts": [
+        92,
+        150,
+        60,
+        0
+      ],
+      "dualOf": "snub-dodecahedron",
+      "edgeUniform": false,
+      "faceTransitive": true,
+      "chiral": true,
+      "enantiomorph": "A",
+      "aliases": [
+        "dual of Snub dodecahedron (A)",
+        "pentagonal hexacontahedron"
+      ],
+      "geometryFingerprint": "24bcead76eb7f6a9d0539ad0dd4de35f47c6320b4effb42868c962644d5b2682",
+      "interpretation": "convex-polytope",
+      "actualCounts": [
+        92,
+        150,
+        60,
+        0
+      ],
+      "faceTypes": {
+        "5": 60
+      },
+      "edgeLengths": {
+        "min": 0.1325484181503171,
+        "max": 0.23194018971715724,
+        "mean": 0.17230512677705334
+      },
+      "eulerCharacteristic": 2,
+      "numericContract": "float64-approximate; no algebraic certificate",
+      "construction": "dual"
+    },
+    {
+      "key": "pentagonal-icositetrahedron-mirror",
+      "name": "Pentagonal icositetrahedron (B)",
+      "dimension": 3,
+      "family": "Catalan",
+      "counts": [
+        38,
+        60,
+        24,
+        0
+      ],
+      "dualOf": "snub-cube-mirror",
+      "edgeUniform": false,
+      "faceTransitive": true,
+      "chiral": true,
+      "enantiomorph": "B",
+      "aliases": [
+        "dual of Snub cube (B)",
+        "pentagonal icositetrahedron mirror"
+      ],
+      "geometryFingerprint": "fcc12387204974025622a4246b777dd1a214d699d0f44a3d4a81ab005e04a01a",
+      "interpretation": "convex-polytope",
+      "actualCounts": [
+        38,
+        60,
+        24,
+        0
+      ],
+      "faceTypes": {
+        "5": 24
+      },
+      "edgeLengths": {
+        "min": 0.3815109721049634,
+        "max": 0.5416095250332529,
+        "mean": 0.44555039327627916
+      },
+      "eulerCharacteristic": 2,
+      "numericContract": "float64-approximate; no algebraic certificate",
+      "construction": "dual"
+    },
+    {
+      "key": "pentagonal-hexecontahedron-mirror",
+      "name": "Pentagonal hexecontahedron (B)",
+      "dimension": 3,
+      "family": "Catalan",
+      "counts": [
+        92,
+        150,
+        60,
+        0
+      ],
+      "dualOf": "snub-dodecahedron-mirror",
+      "edgeUniform": false,
+      "faceTransitive": true,
+      "chiral": true,
+      "enantiomorph": "B",
+      "aliases": [
+        "dual of Snub dodecahedron (B)",
+        "pentagonal hexacontahedron mirror"
+      ],
+      "geometryFingerprint": "d09c6902c6ec7252a24b830d000492dd4fda5f5230be8fca262ae3495a98bdc9",
+      "interpretation": "convex-polytope",
+      "actualCounts": [
+        92,
+        150,
+        60,
+        0
+      ],
+      "faceTypes": {
+        "5": 60
+      },
+      "edgeLengths": {
+        "min": 0.1325484181503171,
+        "max": 0.23194018971715724,
+        "mean": 0.17230512677705334
+      },
+      "eulerCharacteristic": 2,
+      "numericContract": "float64-approximate; no algebraic certificate",
+      "construction": "dual"
+    },
+    {
+      "key": "small-stellated-dodecahedron",
+      "name": "Small stellated dodecahedron",
+      "dimension": 3,
+      "family": "Kepler-Poinsot",
+      "symbol": "{5/2,5}",
+      "counts": [
+        12,
+        30,
+        12,
+        0
+      ],
+      "dualKey": "great-dodecahedron",
+      "aliases": [
+        "small stellated dodecahedron"
+      ],
+      "geometryFingerprint": "694f3e02d5d04cf457471b9821dec808a7cf19cc10efd8e529dca48db43445e9",
+      "interpretation": "generalized-complex",
+      "actualCounts": [
+        12,
+        30,
+        12,
+        0
+      ],
+      "faceTypes": {
+        "5": 12
+      },
+      "edgeLengths": {
+        "min": 3.23606797749979,
+        "max": 3.23606797749979,
+        "mean": 3.236067977499789
+      },
+      "eulerCharacteristic": -6,
+      "numericContract": "float64-approximate; no algebraic certificate",
+      "construction": "kepler-poinsot"
+    },
+    {
+      "key": "great-dodecahedron",
+      "name": "Great dodecahedron",
+      "dimension": 3,
+      "family": "Kepler-Poinsot",
+      "symbol": "{5,5/2}",
+      "counts": [
+        12,
+        30,
+        12,
+        0
+      ],
+      "dualKey": "small-stellated-dodecahedron",
+      "aliases": [
+        "great dodecahedron"
+      ],
+      "geometryFingerprint": "fccef570c61425fa5ea8e70a305af7db47027d46fe0e2f3838b5ae067d6db54e",
+      "interpretation": "generalized-complex",
+      "actualCounts": [
+        12,
+        30,
+        12,
+        0
+      ],
+      "faceTypes": {
+        "5": 12
+      },
+      "edgeLengths": {
+        "min": 2.0,
+        "max": 2.0,
+        "mean": 2.0
+      },
+      "eulerCharacteristic": -6,
+      "numericContract": "float64-approximate; no algebraic certificate",
+      "construction": "kepler-poinsot"
+    },
+    {
+      "key": "great-stellated-dodecahedron",
+      "name": "Great stellated dodecahedron",
+      "dimension": 3,
+      "family": "Kepler-Poinsot",
+      "symbol": "{5/2,3}",
+      "counts": [
+        20,
+        30,
+        12,
+        0
+      ],
+      "dualKey": "great-icosahedron",
+      "aliases": [
+        "great stellated dodecahedron"
+      ],
+      "geometryFingerprint": "99f44b5384ce3dc4288214f14ce8ff31c4e58a74fc9513ca8824af57d881d098",
+      "interpretation": "generalized-complex",
+      "actualCounts": [
+        20,
+        30,
+        12,
+        0
+      ],
+      "faceTypes": {
+        "5": 12
+      },
+      "edgeLengths": {
+        "min": 1.2360679774997898,
+        "max": 1.2360679774997898,
+        "mean": 1.2360679774997896
+      },
+      "eulerCharacteristic": 2,
+      "numericContract": "float64-approximate; no algebraic certificate",
+      "construction": "kepler-poinsot"
+    },
+    {
+      "key": "great-icosahedron",
+      "name": "Great icosahedron",
+      "dimension": 3,
+      "family": "Kepler-Poinsot",
+      "symbol": "{3,5/2}",
+      "counts": [
+        12,
+        30,
+        20,
+        0
+      ],
+      "dualKey": "great-stellated-dodecahedron",
+      "aliases": [
+        "great icosahedron"
+      ],
+      "geometryFingerprint": "c1beaa16b74ff4128396228e662cc8a341813db60ce56b5d3e3b45140ce8115c",
+      "interpretation": "generalized-complex",
+      "actualCounts": [
+        12,
+        30,
+        20,
+        0
+      ],
+      "faceTypes": {
+        "3": 20
+      },
+      "edgeLengths": {
+        "min": 3.23606797749979,
+        "max": 3.23606797749979,
+        "mean": 3.236067977499789
+      },
+      "eulerCharacteristic": 2,
+      "numericContract": "float64-approximate; no algebraic certificate",
+      "construction": "kepler-poinsot"
+    }
+  ]
+}

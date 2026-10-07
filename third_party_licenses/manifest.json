@@ -1,0 +1,80 @@
+{
+  "python": "3.10.11 (tags/v3.10.11:7d4cc5a, Apr  5 2023, 00:38:17) [MSC v.1929 64 bit (AMD64)]",
+  "notices": [
+    {
+      "component": "numpy",
+      "file": "third_party_licenses/numpy/numpy-1.26.4.dist-info/LICENSE.txt",
+      "sha256": "e261222a74adff28f88160dac1c5cb302d93b67e9ca989eb83bf311e11a9970a"
+    },
+    {
+      "component": "numpy",
+      "file": "third_party_licenses/numpy/numpy/core/include/numpy/random/LICENSE.txt",
+      "sha256": "d544761558b510866c21f7e8a2d5716fca76e0b98117e3b6b86314db7244d150"
+    },
+    {
+      "component": "numpy",
+      "file": "third_party_licenses/numpy/numpy/ma/LICENSE",
+      "sha256": "d78dbb208b80d92b4d333e41a4baae50d12444f46e53199fa7726a91de6e2da7"
+    },
+    {
+      "component": "numpy",
+      "file": "third_party_licenses/numpy/numpy/random/LICENSE.md",
+      "sha256": "b4bc2f4fa1c95778f1ed3dd8f14706bece399475b978f9f34b5d3cd72521b48a"
+    },
+    {
+      "component": "scipy",
+      "file": "third_party_licenses/scipy/scipy-1.11.4.dist-info/LICENSE.txt",
+      "sha256": "576cf05d9893a49dbb0d3adf40bbf0d4136e895b1b6fce7aae744387b94bca34"
+    },
+    {
+      "component": "scipy",
+      "file": "third_party_licenses/scipy/scipy/_lib/_uarray/LICENSE",
+      "sha256": "e4c4acc31e8287066d7c995d26e3ef902ca1977ee187b260b11c278366503811"
+    },
+    {
+      "component": "scipy",
+      "file": "third_party_licenses/scipy/scipy/fft/_pocketfft/LICENSE.md",
+      "sha256": "c04661685cff9d8035fe1c4c3ab357e7f7633cafc06a73e9d90c3c5fede8a86a"
+    },
+    {
+      "component": "scipy",
+      "file": "third_party_licenses/scipy/scipy/sparse/linalg/_eigen/arpack/COPYING",
+      "sha256": "fcb3c6c7de1460cf7d0863c3c5996e518eb8015a2eced36911f3da178440b3df"
+    },
+    {
+      "component": "scipy",
+      "file": "third_party_licenses/scipy/scipy/spatial/qhull_src/COPYING.txt",
+      "sha256": "962452e737df7c743a3dc2744232071028b8c0450e7674a55057c330ea1977eb"
+    },
+    {
+      "component": "Pillow",
+      "file": "third_party_licenses/Pillow/pillow-12.3.0.dist-info/licenses/LICENSE",
+      "sha256": "4f7866a74802c6326f81faff59a56546b6aec2b10b91973e0e9308de95e79857"
+    },
+    {
+      "component": "pyinstaller",
+      "file": "third_party_licenses/pyinstaller/pyinstaller-6.22.3.dist-info/licenses/COPYING.txt",
+      "sha256": "0598064c7d2718e38d7914a7d08343b2fa008e3bea9ebba2aa7a6ffa5900dd64"
+    },
+    {
+      "component": "Python",
+      "file": "third_party_licenses/Python/LICENSE.txt",
+      "sha256": "f2fd8edb3271310fc2af0ffa72886b26094d3e3b5c3bb709269d2ec4b31285a4"
+    },
+    {
+      "component": "Three.js",
+      "file": "third_party_licenses/Three.js/LICENSE",
+      "sha256": "bfe119ea4fd413f5f7ca3fcd63adb0c4a073ed39daa2fe7d3e6b769e21272601"
+    },
+    {
+      "component": "Electron",
+      "file": "third_party_licenses/Electron/LICENSE",
+      "sha256": "5154e165bd6c2cc0cfbcd8916498c7abab0497923bafcd5cb07673fe8480087d"
+    },
+    {
+      "component": "Electron",
+      "file": "third_party_licenses/Electron/LICENSES.chromium.html",
+      "sha256": "7b328b8c7463ac9bfc7dc648c751533517c8441a0b5b21047d6c0b2620e60d70"
+    }
+  ]
+}

@@ -1,0 +1,7299 @@
+{
+  "version": 1,
+  "provider": "Polytope Laboratory + attributed Antiprism parts",
+  "providerVersion": "Original rigid excavation 0.1.0; Antiprism 0.32",
+  "license": "Original code GPL-3.0-only; attributed supplied solid coordinates with retained upstream MIT-and-similar COPYING.",
+  "primaryReference": "https://www.orchidpalms.com/polyhedra/toroids/toroids2.html",
+  "upstreamManifestSha256": "aabffc47ffe70f7dc19c4a0267342b5660df12951e65d96b4e0b25a594055800",
+  "entries": [
+    {
+      "key": "stewart-k3-2q3-s3",
+      "name": "Stewart toroid K3 / 2Q3(S3) (original family variant)",
+      "dimension": 3,
+      "family": "Stewart toroids",
+      "symbol": "K3 / 2Q3(S3)",
+      "counts": [
+        30,
+        60,
+        30,
+        0
+      ],
+      "aliases": [
+        "Stewart",
+        "toroid",
+        "regular-faced tunnel",
+        "K3/2Q3(S3)",
+        "genus 1"
+      ],
+      "componentCount": 1,
+      "genus": [
+        1
+      ],
+      "sourceClassification": "Original 2-mouth member of the documented four-mouth octahedral excavation construction; numerical Stewart criteria verified. Not asserted as a named benchmark entry.",
+      "chirality": {
+        "status": "unresolved",
+        "scope": "Complete incidence-preserving symmetry/chirality search is not claimed."
+      },
+      "file": "models/stewart-k3-2q3-s3.off",
+      "sha256": "3d8de3e9661f0e54ab0c4d41a388a5ae5ee1c5e1c9f8347460326e1357bdd122",
+      "sourceFile": "sources/stewart-k3-2q3-s3-unoriented.off",
+      "sourceSha256": "bf02b8437afa5a05401b25dc407d1633c358016d98374e8c0c8d6c3aac4a13ef",
+      "sourceParts": [
+        {
+          "sourceKey": "antiprism-u8",
+          "file": "sources/u8.off",
+          "sha256": "50a0c613cdd2ba9d81faddc2e6acb658934d18fbb84ffca2673b3e16cea0e722",
+          "sourceCounts": {
+            "vertices": 24,
+            "edges": 36,
+            "faces": 14,
+            "cells": 0
+          }
+        },
+        {
+          "sourceKey": "antiprism-j3",
+          "file": "sources/j3.off",
+          "sha256": "1f323ba0d162adfac72237b0af21d1938a4bb17b4484eda95812aa5df3c22bab",
+          "sourceCounts": {
+            "vertices": 9,
+            "edges": 15,
+            "faces": 8,
+            "cells": 0
+          }
+        },
+        {
+          "sourceKey": "antiprism-u5",
+          "file": "sources/u5.off",
+          "sha256": "687aaca2093abb8f0d2f78866a55ee4d16c865cdfe9e20e82731c087f81afbc1",
+          "sourceCounts": {
+            "vertices": 6,
+            "edges": 12,
+            "faces": 8,
+            "cells": 0
+          }
+        }
+      ],
+      "sourceMaps": {
+        "vertexOrigins": [
+          [
+            {
+              "piece": "K3",
+              "sourceVertexId": 0
+            },
+            {
+              "piece": "Q3-mouth-10",
+              "sourceVertexId": 1
+            }
+          ],
+          [
+            {
+              "piece": "K3",
+              "sourceVertexId": 1
+            }
+          ],
+          [
+            {
+              "piece": "K3",
+              "sourceVertexId": 2
+            },
+            {
+              "piece": "Q3-mouth-6",
+              "sourceVertexId": 1
+            }
+          ],
+          [
+            {
+              "piece": "K3",
+              "sourceVertexId": 3
+            }
+          ],
+          [
+            {
+              "piece": "K3",
+              "sourceVertexId": 4
+            },
+            {
+              "piece": "Q3-mouth-10",
+              "sourceVertexId": 5
+            }
+          ],
+          [
+            {
+              "piece": "K3",
+              "sourceVertexId": 5
+            }
+          ],
+          [
+            {
+              "piece": "K3",
+              "sourceVertexId": 6
+            }
+          ],
+          [
+            {
+              "piece": "K3",
+              "sourceVertexId": 7
+            },
+            {
+              "piece": "Q3-mouth-6",
+              "sourceVertexId": 5
+            }
+          ],
+          [
+            {
+              "piece": "K3",
+              "sourceVertexId": 8
+            },
+            {
+              "piece": "Q3-mouth-10",
+              "sourceVertexId": 3
+            }
+          ],
+          [
+            {
+              "piece": "K3",
+              "sourceVertexId": 9
+            }
+          ],
+          [
+            {
+              "piece": "K3",
+              "sourceVertexId": 10
+            },
+            {
+              "piece": "Q3-mouth-6",
+              "sourceVertexId": 3
+            }
+          ],
+          [
+            {
+              "piece": "K3",
+              "sourceVertexId": 11
+            }
+          ],
+          [
+            {
+              "piece": "K3",
+              "sourceVertexId": 12
+            },
+            {
+              "piece": "Q3-mouth-10",
+              "sourceVertexId": 0
+            }
+          ],
+          [
+            {
+              "piece": "K3",
+              "sourceVertexId": 13
+            }
+          ],
+          [
+            {
+              "piece": "K3",
+              "sourceVertexId": 14
+            },
+            {
+              "piece": "Q3-mouth-6",
+              "sourceVertexId": 0
+            }
+          ],
+          [
+            {
+              "piece": "K3",
+              "sourceVertexId": 15
+            }
+          ],
+          [
+            {
+              "piece": "K3",
+              "sourceVertexId": 16
+            },
+            {
+              "piece": "Q3-mouth-10",
+              "sourceVertexId": 2
+            }
+          ],
+          [
+            {
+              "piece": "K3",
+              "sourceVertexId": 17
+            }
+          ],
+          [
+            {
+              "piece": "K3",
+              "sourceVertexId": 18
+            },
+            {
+              "piece": "Q3-mouth-6",
+              "sourceVertexId": 2
+            }
+          ],
+          [
+            {
+              "piece": "K3",
+              "sourceVertexId": 19
+            }
+          ],
+          [
+            {
+              "piece": "K3",
+              "sourceVertexId": 20
+            },
+            {
+              "piece": "Q3-mouth-10",
+              "sourceVertexId": 4
+            }
+          ],
+          [
+            {
+              "piece": "K3",
+              "sourceVertexId": 21
+            }
+          ],
+          [
+            {
+              "piece": "K3",
+              "sourceVertexId": 22
+            }
+          ],
+          [
+            {
+              "piece": "K3",
+              "sourceVertexId": 23
+            },
+            {
+              "piece": "Q3-mouth-6",
+              "sourceVertexId": 4
+            }
+          ],
+          [
+            {
+              "piece": "S3",
+              "sourceVertexId": 0
+            },
+            {
+              "piece": "Q3-mouth-10",
+              "sourceVertexId": 8
+            }
+          ],
+          [
+            {
+              "piece": "S3",
+              "sourceVertexId": 1
+            },
+            {
+              "piece": "Q3-mouth-6",
+              "sourceVertexId": 8
+            }
+          ],
+          [
+            {
+              "piece": "S3",
+              "sourceVertexId": 2
+            },
+            {
+              "piece": "Q3-mouth-6",
+              "sourceVertexId": 7
+            },
+            {
+              "piece": "Q3-mouth-10",
+              "sourceVertexId": 7
+            }
+          ],
+          [
+            {
+              "piece": "S3",
+              "sourceVertexId": 3
+            }
+          ],
+          [
+            {
+              "piece": "S3",
+              "sourceVertexId": 4
+            },
+            {
+              "piece": "Q3-mouth-10",
+              "sourceVertexId": 6
+            }
+          ],
+          [
+            {
+              "piece": "S3",
+              "sourceVertexId": 5
+            },
+            {
+              "piece": "Q3-mouth-6",
+              "sourceVertexId": 6
+            }
+          ]
+        ],
+        "faceOrigins": [
+          {
+            "piece": "K3",
+            "sourceFaceId": 0,
+            "transform": null,
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                0.05098,
+                0.32157,
+                0.50196
+              ]
+            },
+            "mappedSourceCycle": [
+              2,
+              16,
+              0,
+              18
+            ],
+            "orientationReversed": false
+          },
+          {
+            "piece": "K3",
+            "sourceFaceId": 1,
+            "transform": null,
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                0.05098,
+                0.32157,
+                0.50196
+              ]
+            },
+            "mappedSourceCycle": [
+              5,
+              14,
+              7,
+              15
+            ],
+            "orientationReversed": false
+          },
+          {
+            "piece": "K3",
+            "sourceFaceId": 2,
+            "transform": null,
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                0.05098,
+                0.32157,
+                0.50196
+              ]
+            },
+            "mappedSourceCycle": [
+              6,
+              12,
+              4,
+              13
+            ],
+            "orientationReversed": false
+          },
+          {
+            "piece": "K3",
+            "sourceFaceId": 3,
+            "transform": null,
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                0.05098,
+                0.32157,
+                0.50196
+              ]
+            },
+            "mappedSourceCycle": [
+              11,
+              23,
+              10,
+              22
+            ],
+            "orientationReversed": false
+          },
+          {
+            "piece": "K3",
+            "sourceFaceId": 4,
+            "transform": null,
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                0.05098,
+                0.32157,
+                0.50196
+              ]
+            },
+            "mappedSourceCycle": [
+              19,
+              1,
+              17,
+              3
+            ],
+            "orientationReversed": false
+          },
+          {
+            "piece": "K3",
+            "sourceFaceId": 5,
+            "transform": null,
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                0.05098,
+                0.32157,
+                0.50196
+              ]
+            },
+            "mappedSourceCycle": [
+              20,
+              8,
+              21,
+              9
+            ],
+            "orientationReversed": false
+          },
+          {
+            "piece": "K3",
+            "sourceFaceId": 7,
+            "transform": null,
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                1.0,
+                0.79216,
+                0.50196
+              ]
+            },
+            "mappedSourceCycle": [
+              3,
+              15,
+              7,
+              23,
+              11,
+              19
+            ],
+            "orientationReversed": false
+          },
+          {
+            "piece": "K3",
+            "sourceFaceId": 8,
+            "transform": null,
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                1.0,
+                0.79216,
+                0.50196
+              ]
+            },
+            "mappedSourceCycle": [
+              5,
+              21,
+              8,
+              16,
+              2,
+              14
+            ],
+            "orientationReversed": false
+          },
+          {
+            "piece": "K3",
+            "sourceFaceId": 9,
+            "transform": null,
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                1.0,
+                0.79216,
+                0.50196
+              ]
+            },
+            "mappedSourceCycle": [
+              9,
+              17,
+              1,
+              13,
+              4,
+              20
+            ],
+            "orientationReversed": false
+          },
+          {
+            "piece": "K3",
+            "sourceFaceId": 11,
+            "transform": null,
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                1.0,
+                0.79216,
+                0.50196
+              ]
+            },
+            "mappedSourceCycle": [
+              12,
+              6,
+              22,
+              10,
+              18,
+              0
+            ],
+            "orientationReversed": false
+          },
+          {
+            "piece": "K3",
+            "sourceFaceId": 12,
+            "transform": null,
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                1.0,
+                0.79216,
+                0.50196
+              ]
+            },
+            "mappedSourceCycle": [
+              13,
+              1,
+              19,
+              11,
+              22,
+              6
+            ],
+            "orientationReversed": false
+          },
+          {
+            "piece": "K3",
+            "sourceFaceId": 13,
+            "transform": null,
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                1.0,
+                0.79216,
+                0.50196
+              ]
+            },
+            "mappedSourceCycle": [
+              15,
+              3,
+              17,
+              9,
+              21,
+              5
+            ],
+            "orientationReversed": false
+          },
+          {
+            "piece": "S3",
+            "sourceFaceId": 0,
+            "transform": null,
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                0.90196,
+                0.45098,
+                0.0
+              ]
+            },
+            "mappedSourceCycle": [
+              24,
+              26,
+              29
+            ],
+            "orientationReversed": true
+          },
+          {
+            "piece": "S3",
+            "sourceFaceId": 2,
+            "transform": null,
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                0.90196,
+                0.45098,
+                0.0
+              ]
+            },
+            "mappedSourceCycle": [
+              25,
+              27,
+              29
+            ],
+            "orientationReversed": true
+          },
+          {
+            "piece": "S3",
+            "sourceFaceId": 3,
+            "transform": null,
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                0.90196,
+                0.45098,
+                0.0
+              ]
+            },
+            "mappedSourceCycle": [
+              25,
+              28,
+              27
+            ],
+            "orientationReversed": true
+          },
+          {
+            "piece": "S3",
+            "sourceFaceId": 4,
+            "transform": null,
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                0.90196,
+                0.45098,
+                0.0
+              ]
+            },
+            "mappedSourceCycle": [
+              26,
+              28,
+              25
+            ],
+            "orientationReversed": true
+          },
+          {
+            "piece": "S3",
+            "sourceFaceId": 5,
+            "transform": null,
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                0.90196,
+                0.45098,
+                0.0
+              ]
+            },
+            "mappedSourceCycle": [
+              27,
+              28,
+              24
+            ],
+            "orientationReversed": true
+          },
+          {
+            "piece": "S3",
+            "sourceFaceId": 7,
+            "transform": null,
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                0.90196,
+                0.45098,
+                0.0
+              ]
+            },
+            "mappedSourceCycle": [
+              29,
+              27,
+              24
+            ],
+            "orientationReversed": true
+          },
+          {
+            "piece": "Q3-mouth-6",
+            "sourceFaceId": 2,
+            "transform": {
+              "rowRotation": [
+                [
+                  0.40824829046386313,
+                  -0.8164965809277263,
+                  -0.4082482904638626
+                ],
+                [
+                  -0.7071067811865475,
+                  -3.576792014222709e-16,
+                  -0.7071067811865476
+                ],
+                [
+                  0.5773502691896258,
+                  0.5773502691896253,
+                  -0.5773502691896258
+                ]
+              ],
+              "translation": [
+                -0.7071067811865469,
+                -0.7071067811865475,
+                0.7071067811865474
+              ],
+              "phase": 1,
+              "reversedTargetCycle": false
+            },
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                0.05098,
+                0.32157,
+                0.50196
+              ]
+            },
+            "mappedSourceCycle": [
+              14,
+              29,
+              26,
+              2
+            ],
+            "orientationReversed": true
+          },
+          {
+            "piece": "Q3-mouth-6",
+            "sourceFaceId": 3,
+            "transform": {
+              "rowRotation": [
+                [
+                  0.40824829046386313,
+                  -0.8164965809277263,
+                  -0.4082482904638626
+                ],
+                [
+                  -0.7071067811865475,
+                  -3.576792014222709e-16,
+                  -0.7071067811865476
+                ],
+                [
+                  0.5773502691896258,
+                  0.5773502691896253,
+                  -0.5773502691896258
+                ]
+              ],
+              "translation": [
+                -0.7071067811865469,
+                -0.7071067811865475,
+                0.7071067811865474
+              ],
+              "phase": 1,
+              "reversedTargetCycle": false
+            },
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                0.90196,
+                0.45098,
+                0.0
+              ]
+            },
+            "mappedSourceCycle": [
+              2,
+              26,
+              18
+            ],
+            "orientationReversed": true
+          },
+          {
+            "piece": "Q3-mouth-6",
+            "sourceFaceId": 4,
+            "transform": {
+              "rowRotation": [
+                [
+                  0.40824829046386313,
+                  -0.8164965809277263,
+                  -0.4082482904638626
+                ],
+                [
+                  -0.7071067811865475,
+                  -3.576792014222709e-16,
+                  -0.7071067811865476
+                ],
+                [
+                  0.5773502691896258,
+                  0.5773502691896253,
+                  -0.5773502691896258
+                ]
+              ],
+              "translation": [
+                -0.7071067811865469,
+                -0.7071067811865475,
+                0.7071067811865474
+              ],
+              "phase": 1,
+              "reversedTargetCycle": false
+            },
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                0.05098,
+                0.32157,
+                0.50196
+              ]
+            },
+            "mappedSourceCycle": [
+              18,
+              26,
+              25,
+              10
+            ],
+            "orientationReversed": true
+          },
+          {
+            "piece": "Q3-mouth-6",
+            "sourceFaceId": 5,
+            "transform": {
+              "rowRotation": [
+                [
+                  0.40824829046386313,
+                  -0.8164965809277263,
+                  -0.4082482904638626
+                ],
+                [
+                  -0.7071067811865475,
+                  -3.576792014222709e-16,
+                  -0.7071067811865476
+                ],
+                [
+                  0.5773502691896258,
+                  0.5773502691896253,
+                  -0.5773502691896258
+                ]
+              ],
+              "translation": [
+                -0.7071067811865469,
+                -0.7071067811865475,
+                0.7071067811865474
+              ],
+              "phase": 1,
+              "reversedTargetCycle": false
+            },
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                0.90196,
+                0.45098,
+                0.0
+              ]
+            },
+            "mappedSourceCycle": [
+              10,
+              25,
+              23
+            ],
+            "orientationReversed": true
+          },
+          {
+            "piece": "Q3-mouth-6",
+            "sourceFaceId": 6,
+            "transform": {
+              "rowRotation": [
+                [
+                  0.40824829046386313,
+                  -0.8164965809277263,
+                  -0.4082482904638626
+                ],
+                [
+                  -0.7071067811865475,
+                  -3.576792014222709e-16,
+                  -0.7071067811865476
+                ],
+                [
+                  0.5773502691896258,
+                  0.5773502691896253,
+                  -0.5773502691896258
+                ]
+              ],
+              "translation": [
+                -0.7071067811865469,
+                -0.7071067811865475,
+                0.7071067811865474
+              ],
+              "phase": 1,
+              "reversedTargetCycle": false
+            },
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                0.05098,
+                0.32157,
+                0.50196
+              ]
+            },
+            "mappedSourceCycle": [
+              23,
+              25,
+              29,
+              7
+            ],
+            "orientationReversed": true
+          },
+          {
+            "piece": "Q3-mouth-6",
+            "sourceFaceId": 7,
+            "transform": {
+              "rowRotation": [
+                [
+                  0.40824829046386313,
+                  -0.8164965809277263,
+                  -0.4082482904638626
+                ],
+                [
+                  -0.7071067811865475,
+                  -3.576792014222709e-16,
+                  -0.7071067811865476
+                ],
+                [
+                  0.5773502691896258,
+                  0.5773502691896253,
+                  -0.5773502691896258
+                ]
+              ],
+              "translation": [
+                -0.7071067811865469,
+                -0.7071067811865475,
+                0.7071067811865474
+              ],
+              "phase": 1,
+              "reversedTargetCycle": false
+            },
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                0.90196,
+                0.45098,
+                0.0
+              ]
+            },
+            "mappedSourceCycle": [
+              7,
+              29,
+              14
+            ],
+            "orientationReversed": true
+          },
+          {
+            "piece": "Q3-mouth-10",
+            "sourceFaceId": 2,
+            "transform": {
+              "rowRotation": [
+                [
+                  -0.40824829046386313,
+                  0.8164965809277263,
+                  -0.4082482904638626
+                ],
+                [
+                  0.7071067811865475,
+                  3.576792014222709e-16,
+                  -0.7071067811865476
+                ],
+                [
+                  -0.5773502691896258,
+                  -0.5773502691896253,
+                  -0.5773502691896258
+                ]
+              ],
+              "translation": [
+                0.7071067811865469,
+                0.7071067811865475,
+                0.7071067811865474
+              ],
+              "phase": 0,
+              "reversedTargetCycle": false
+            },
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                0.05098,
+                0.32157,
+                0.50196
+              ]
+            },
+            "mappedSourceCycle": [
+              12,
+              28,
+              26,
+              0
+            ],
+            "orientationReversed": true
+          },
+          {
+            "piece": "Q3-mouth-10",
+            "sourceFaceId": 3,
+            "transform": {
+              "rowRotation": [
+                [
+                  -0.40824829046386313,
+                  0.8164965809277263,
+                  -0.4082482904638626
+                ],
+                [
+                  0.7071067811865475,
+                  3.576792014222709e-16,
+                  -0.7071067811865476
+                ],
+                [
+                  -0.5773502691896258,
+                  -0.5773502691896253,
+                  -0.5773502691896258
+                ]
+              ],
+              "translation": [
+                0.7071067811865469,
+                0.7071067811865475,
+                0.7071067811865474
+              ],
+              "phase": 0,
+              "reversedTargetCycle": false
+            },
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                0.90196,
+                0.45098,
+                0.0
+              ]
+            },
+            "mappedSourceCycle": [
+              0,
+              26,
+              16
+            ],
+            "orientationReversed": true
+          },
+          {
+            "piece": "Q3-mouth-10",
+            "sourceFaceId": 4,
+            "transform": {
+              "rowRotation": [
+                [
+                  -0.40824829046386313,
+                  0.8164965809277263,
+                  -0.4082482904638626
+                ],
+                [
+                  0.7071067811865475,
+                  3.576792014222709e-16,
+                  -0.7071067811865476
+                ],
+                [
+                  -0.5773502691896258,
+                  -0.5773502691896253,
+                  -0.5773502691896258
+                ]
+              ],
+              "translation": [
+                0.7071067811865469,
+                0.7071067811865475,
+                0.7071067811865474
+              ],
+              "phase": 0,
+              "reversedTargetCycle": false
+            },
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                0.05098,
+                0.32157,
+                0.50196
+              ]
+            },
+            "mappedSourceCycle": [
+              16,
+              26,
+              24,
+              8
+            ],
+            "orientationReversed": true
+          },
+          {
+            "piece": "Q3-mouth-10",
+            "sourceFaceId": 5,
+            "transform": {
+              "rowRotation": [
+                [
+                  -0.40824829046386313,
+                  0.8164965809277263,
+                  -0.4082482904638626
+                ],
+                [
+                  0.7071067811865475,
+                  3.576792014222709e-16,
+                  -0.7071067811865476
+                ],
+                [
+                  -0.5773502691896258,
+                  -0.5773502691896253,
+                  -0.5773502691896258
+                ]
+              ],
+              "translation": [
+                0.7071067811865469,
+                0.7071067811865475,
+                0.7071067811865474
+              ],
+              "phase": 0,
+              "reversedTargetCycle": false
+            },
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                0.90196,
+                0.45098,
+                0.0
+              ]
+            },
+            "mappedSourceCycle": [
+              8,
+              24,
+              20
+            ],
+            "orientationReversed": true
+          },
+          {
+            "piece": "Q3-mouth-10",
+            "sourceFaceId": 6,
+            "transform": {
+              "rowRotation": [
+                [
+                  -0.40824829046386313,
+                  0.8164965809277263,
+                  -0.4082482904638626
+                ],
+                [
+                  0.7071067811865475,
+                  3.576792014222709e-16,
+                  -0.7071067811865476
+                ],
+                [
+                  -0.5773502691896258,
+                  -0.5773502691896253,
+                  -0.5773502691896258
+                ]
+              ],
+              "translation": [
+                0.7071067811865469,
+                0.7071067811865475,
+                0.7071067811865474
+              ],
+              "phase": 0,
+              "reversedTargetCycle": false
+            },
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                0.05098,
+                0.32157,
+                0.50196
+              ]
+            },
+            "mappedSourceCycle": [
+              20,
+              24,
+              28,
+              4
+            ],
+            "orientationReversed": true
+          },
+          {
+            "piece": "Q3-mouth-10",
+            "sourceFaceId": 7,
+            "transform": {
+              "rowRotation": [
+                [
+                  -0.40824829046386313,
+                  0.8164965809277263,
+                  -0.4082482904638626
+                ],
+                [
+                  0.7071067811865475,
+                  3.576792014222709e-16,
+                  -0.7071067811865476
+                ],
+                [
+                  -0.5773502691896258,
+                  -0.5773502691896253,
+                  -0.5773502691896258
+                ]
+              ],
+              "translation": [
+                0.7071067811865469,
+                0.7071067811865475,
+                0.7071067811865474
+              ],
+              "phase": 0,
+              "reversedTargetCycle": false
+            },
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                0.90196,
+                0.45098,
+                0.0
+              ]
+            },
+            "mappedSourceCycle": [
+              4,
+              28,
+              12
+            ],
+            "orientationReversed": true
+          }
+        ],
+        "canceledCaps": [
+          [
+            {
+              "piece": "K3",
+              "sourceFaceId": 6,
+              "transform": null,
+              "sourceColor": {
+                "encoding": "unit",
+                "values": [
+                  1.0,
+                  0.79216,
+                  0.50196
+                ]
+              }
+            },
+            {
+              "piece": "Q3-mouth-6",
+              "sourceFaceId": 0,
+              "transform": {
+                "rowRotation": [
+                  [
+                    0.40824829046386313,
+                    -0.8164965809277263,
+                    -0.4082482904638626
+                  ],
+                  [
+                    -0.7071067811865475,
+                    -3.576792014222709e-16,
+                    -0.7071067811865476
+                  ],
+                  [
+                    0.5773502691896258,
+                    0.5773502691896253,
+                    -0.5773502691896258
+                  ]
+                ],
+                "translation": [
+                  -0.7071067811865469,
+                  -0.7071067811865475,
+                  0.7071067811865474
+                ],
+                "phase": 1,
+                "reversedTargetCycle": false
+              },
+              "sourceColor": {
+                "encoding": "unit",
+                "values": [
+                  1.0,
+                  0.79216,
+                  0.50196
+                ]
+              }
+            }
+          ],
+          [
+            {
+              "piece": "K3",
+              "sourceFaceId": 10,
+              "transform": null,
+              "sourceColor": {
+                "encoding": "unit",
+                "values": [
+                  1.0,
+                  0.79216,
+                  0.50196
+                ]
+              }
+            },
+            {
+              "piece": "Q3-mouth-10",
+              "sourceFaceId": 0,
+              "transform": {
+                "rowRotation": [
+                  [
+                    -0.40824829046386313,
+                    0.8164965809277263,
+                    -0.4082482904638626
+                  ],
+                  [
+                    0.7071067811865475,
+                    3.576792014222709e-16,
+                    -0.7071067811865476
+                  ],
+                  [
+                    -0.5773502691896258,
+                    -0.5773502691896253,
+                    -0.5773502691896258
+                  ]
+                ],
+                "translation": [
+                  0.7071067811865469,
+                  0.7071067811865475,
+                  0.7071067811865474
+                ],
+                "phase": 0,
+                "reversedTargetCycle": false
+              },
+              "sourceColor": {
+                "encoding": "unit",
+                "values": [
+                  1.0,
+                  0.79216,
+                  0.50196
+                ]
+              }
+            }
+          ],
+          [
+            {
+              "piece": "S3",
+              "sourceFaceId": 1,
+              "transform": null,
+              "sourceColor": {
+                "encoding": "unit",
+                "values": [
+                  0.90196,
+                  0.45098,
+                  0.0
+                ]
+              }
+            },
+            {
+              "piece": "Q3-mouth-10",
+              "sourceFaceId": 1,
+              "transform": {
+                "rowRotation": [
+                  [
+                    -0.40824829046386313,
+                    0.8164965809277263,
+                    -0.4082482904638626
+                  ],
+                  [
+                    0.7071067811865475,
+                    3.576792014222709e-16,
+                    -0.7071067811865476
+                  ],
+                  [
+                    -0.5773502691896258,
+                    -0.5773502691896253,
+                    -0.5773502691896258
+                  ]
+                ],
+                "translation": [
+                  0.7071067811865469,
+                  0.7071067811865475,
+                  0.7071067811865474
+                ],
+                "phase": 0,
+                "reversedTargetCycle": false
+              },
+              "sourceColor": {
+                "encoding": "unit",
+                "values": [
+                  0.90196,
+                  0.45098,
+                  0.0
+                ]
+              }
+            }
+          ],
+          [
+            {
+              "piece": "S3",
+              "sourceFaceId": 6,
+              "transform": null,
+              "sourceColor": {
+                "encoding": "unit",
+                "values": [
+                  0.90196,
+                  0.45098,
+                  0.0
+                ]
+              }
+            },
+            {
+              "piece": "Q3-mouth-6",
+              "sourceFaceId": 1,
+              "transform": {
+                "rowRotation": [
+                  [
+                    0.40824829046386313,
+                    -0.8164965809277263,
+                    -0.4082482904638626
+                  ],
+                  [
+                    -0.7071067811865475,
+                    -3.576792014222709e-16,
+                    -0.7071067811865476
+                  ],
+                  [
+                    0.5773502691896258,
+                    0.5773502691896253,
+                    -0.5773502691896258
+                  ]
+                ],
+                "translation": [
+                  -0.7071067811865469,
+                  -0.7071067811865475,
+                  0.7071067811865474
+                ],
+                "phase": 1,
+                "reversedTargetCycle": false
+              },
+              "sourceColor": {
+                "encoding": "unit",
+                "values": [
+                  0.90196,
+                  0.45098,
+                  0.0
+                ]
+              }
+            }
+          ]
+        ]
+      },
+      "construction": {
+        "definition": "Truncated octahedron excavated by a central regular octahedron with triangular cupola mouths on a tetrahedral set of hexagon facets.",
+        "parameters": {
+          "mouths": 2,
+          "edgeLength": 1
+        },
+        "mouths": [
+          {
+            "hullMouthFaceId": 6,
+            "centralOctahedronFaceId": 6,
+            "transform": {
+              "rowRotation": [
+                [
+                  0.40824829046386313,
+                  -0.8164965809277263,
+                  -0.4082482904638626
+                ],
+                [
+                  -0.7071067811865475,
+                  -3.576792014222709e-16,
+                  -0.7071067811865476
+                ],
+                [
+                  0.5773502691896258,
+                  0.5773502691896253,
+                  -0.5773502691896258
+                ]
+              ],
+              "translation": [
+                -0.7071067811865469,
+                -0.7071067811865475,
+                0.7071067811865474
+              ],
+              "phase": 1,
+              "reversedTargetCycle": false
+            }
+          },
+          {
+            "hullMouthFaceId": 10,
+            "centralOctahedronFaceId": 1,
+            "transform": {
+              "rowRotation": [
+                [
+                  -0.40824829046386313,
+                  0.8164965809277263,
+                  -0.4082482904638626
+                ],
+                [
+                  0.7071067811865475,
+                  3.576792014222709e-16,
+                  -0.7071067811865476
+                ],
+                [
+                  -0.5773502691896258,
+                  -0.5773502691896253,
+                  -0.5773502691896258
+                ]
+              ],
+              "translation": [
+                0.7071067811865469,
+                0.7071067811865475,
+                0.7071067811865474
+              ],
+              "phase": 0,
+              "reversedTargetCycle": false
+            }
+          }
+        ],
+        "primaryReference": "https://www.orchidpalms.com/polyhedra/toroids/toroids2.html",
+        "primaryNamedExample": false,
+        "excavationOpenings": 2,
+        "excavationChangesGenusFrom": 0,
+        "excavationChangesGenusTo": 1,
+        "genusDerivation": "A connected spherical outer boundary and connected spherical excavation boundary, each with m cap disks removed and paired, give Euler characteristic 4-2m and genus m-1."
+      },
+      "numericChecks": {
+        "classified": true,
+        "mode": "float64-approximate",
+        "certified": false,
+        "tolerance": 1e-07,
+        "predicateScale": 2.82842712474619,
+        "R": {
+          "passed": true,
+          "maximumResidual": 1.1102230246251565e-15,
+          "ordinaryFaceSizeCounts": {
+            "3": 12,
+            "4": 12,
+            "6": 6
+          }
+        },
+        "A": {
+          "passed": true,
+          "minimumAdjacentNormalCrossLength": 0.8164965809277257
+        },
+        "Q": {
+          "passed": true,
+          "hullEdgeCount": 36,
+          "missingHullEdges": []
+        },
+        "T": {
+          "passed": true,
+          "componentCount": 1,
+          "topology": {
+            "vertices": 30,
+            "edges": 60,
+            "faces": 30,
+            "eulerCharacteristic": 0,
+            "closedVertexManifold": true,
+            "orientable": true,
+            "genus": 1,
+            "genusScope": "Abstract supplied boundary; geometric self-intersection is not excluded."
+          }
+        },
+        "D": {
+          "passed": true,
+          "facePairsChecked": 435,
+          "coplanarPairsChecked": 7,
+          "conflicts": [],
+          "method": "Complete convex-face pair plane-line interval checks and coplanar closed polygon clipping; shared source edges/vertices retained."
+        },
+        "scope": "Numerical R/A/Q/T/D for this supplied ordinary regular-faced positive-genus boundary; no exhaustive Stewart catalog or exact certificate."
+      }
+    },
+    {
+      "key": "stewart-k3-3q3-s3",
+      "name": "Stewart toroid K3 / 3Q3(S3) (original family variant)",
+      "dimension": 3,
+      "family": "Stewart toroids",
+      "symbol": "K3 / 3Q3(S3)",
+      "counts": [
+        30,
+        66,
+        34,
+        0
+      ],
+      "aliases": [
+        "Stewart",
+        "toroid",
+        "regular-faced tunnel",
+        "K3/3Q3(S3)",
+        "genus 2"
+      ],
+      "componentCount": 1,
+      "genus": [
+        2
+      ],
+      "sourceClassification": "Original 3-mouth member of the documented four-mouth octahedral excavation construction; numerical Stewart criteria verified. Not asserted as a named benchmark entry.",
+      "chirality": {
+        "status": "unresolved",
+        "scope": "Complete incidence-preserving symmetry/chirality search is not claimed."
+      },
+      "file": "models/stewart-k3-3q3-s3.off",
+      "sha256": "28f061a9f206ca16c5dc2edf7d7654e68944f014ebe05105f2f51f2bdf9b10be",
+      "sourceFile": "sources/stewart-k3-3q3-s3-unoriented.off",
+      "sourceSha256": "e1b03597a7f330b5b333e9b19d13bf84e283b1953489a346c3c3c9f463cd3fd7",
+      "sourceParts": [
+        {
+          "sourceKey": "antiprism-u8",
+          "file": "sources/u8.off",
+          "sha256": "50a0c613cdd2ba9d81faddc2e6acb658934d18fbb84ffca2673b3e16cea0e722",
+          "sourceCounts": {
+            "vertices": 24,
+            "edges": 36,
+            "faces": 14,
+            "cells": 0
+          }
+        },
+        {
+          "sourceKey": "antiprism-j3",
+          "file": "sources/j3.off",
+          "sha256": "1f323ba0d162adfac72237b0af21d1938a4bb17b4484eda95812aa5df3c22bab",
+          "sourceCounts": {
+            "vertices": 9,
+            "edges": 15,
+            "faces": 8,
+            "cells": 0
+          }
+        },
+        {
+          "sourceKey": "antiprism-u5",
+          "file": "sources/u5.off",
+          "sha256": "687aaca2093abb8f0d2f78866a55ee4d16c865cdfe9e20e82731c087f81afbc1",
+          "sourceCounts": {
+            "vertices": 6,
+            "edges": 12,
+            "faces": 8,
+            "cells": 0
+          }
+        }
+      ],
+      "sourceMaps": {
+        "vertexOrigins": [
+          [
+            {
+              "piece": "K3",
+              "sourceVertexId": 0
+            },
+            {
+              "piece": "Q3-mouth-10",
+              "sourceVertexId": 1
+            }
+          ],
+          [
+            {
+              "piece": "K3",
+              "sourceVertexId": 1
+            },
+            {
+              "piece": "Q3-mouth-12",
+              "sourceVertexId": 1
+            }
+          ],
+          [
+            {
+              "piece": "K3",
+              "sourceVertexId": 2
+            },
+            {
+              "piece": "Q3-mouth-6",
+              "sourceVertexId": 1
+            }
+          ],
+          [
+            {
+              "piece": "K3",
+              "sourceVertexId": 3
+            }
+          ],
+          [
+            {
+              "piece": "K3",
+              "sourceVertexId": 4
+            },
+            {
+              "piece": "Q3-mouth-10",
+              "sourceVertexId": 5
+            }
+          ],
+          [
+            {
+              "piece": "K3",
+              "sourceVertexId": 5
+            }
+          ],
+          [
+            {
+              "piece": "K3",
+              "sourceVertexId": 6
+            },
+            {
+              "piece": "Q3-mouth-12",
+              "sourceVertexId": 5
+            }
+          ],
+          [
+            {
+              "piece": "K3",
+              "sourceVertexId": 7
+            },
+            {
+              "piece": "Q3-mouth-6",
+              "sourceVertexId": 5
+            }
+          ],
+          [
+            {
+              "piece": "K3",
+              "sourceVertexId": 8
+            },
+            {
+              "piece": "Q3-mouth-10",
+              "sourceVertexId": 3
+            }
+          ],
+          [
+            {
+              "piece": "K3",
+              "sourceVertexId": 9
+            }
+          ],
+          [
+            {
+              "piece": "K3",
+              "sourceVertexId": 10
+            },
+            {
+              "piece": "Q3-mouth-6",
+              "sourceVertexId": 3
+            }
+          ],
+          [
+            {
+              "piece": "K3",
+              "sourceVertexId": 11
+            },
+            {
+              "piece": "Q3-mouth-12",
+              "sourceVertexId": 3
+            }
+          ],
+          [
+            {
+              "piece": "K3",
+              "sourceVertexId": 12
+            },
+            {
+              "piece": "Q3-mouth-10",
+              "sourceVertexId": 0
+            }
+          ],
+          [
+            {
+              "piece": "K3",
+              "sourceVertexId": 13
+            },
+            {
+              "piece": "Q3-mouth-12",
+              "sourceVertexId": 0
+            }
+          ],
+          [
+            {
+              "piece": "K3",
+              "sourceVertexId": 14
+            },
+            {
+              "piece": "Q3-mouth-6",
+              "sourceVertexId": 0
+            }
+          ],
+          [
+            {
+              "piece": "K3",
+              "sourceVertexId": 15
+            }
+          ],
+          [
+            {
+              "piece": "K3",
+              "sourceVertexId": 16
+            },
+            {
+              "piece": "Q3-mouth-10",
+              "sourceVertexId": 2
+            }
+          ],
+          [
+            {
+              "piece": "K3",
+              "sourceVertexId": 17
+            }
+          ],
+          [
+            {
+              "piece": "K3",
+              "sourceVertexId": 18
+            },
+            {
+              "piece": "Q3-mouth-6",
+              "sourceVertexId": 2
+            }
+          ],
+          [
+            {
+              "piece": "K3",
+              "sourceVertexId": 19
+            },
+            {
+              "piece": "Q3-mouth-12",
+              "sourceVertexId": 2
+            }
+          ],
+          [
+            {
+              "piece": "K3",
+              "sourceVertexId": 20
+            },
+            {
+              "piece": "Q3-mouth-10",
+              "sourceVertexId": 4
+            }
+          ],
+          [
+            {
+              "piece": "K3",
+              "sourceVertexId": 21
+            }
+          ],
+          [
+            {
+              "piece": "K3",
+              "sourceVertexId": 22
+            },
+            {
+              "piece": "Q3-mouth-12",
+              "sourceVertexId": 4
+            }
+          ],
+          [
+            {
+              "piece": "K3",
+              "sourceVertexId": 23
+            },
+            {
+              "piece": "Q3-mouth-6",
+              "sourceVertexId": 4
+            }
+          ],
+          [
+            {
+              "piece": "S3",
+              "sourceVertexId": 0
+            },
+            {
+              "piece": "Q3-mouth-10",
+              "sourceVertexId": 8
+            }
+          ],
+          [
+            {
+              "piece": "S3",
+              "sourceVertexId": 1
+            },
+            {
+              "piece": "Q3-mouth-6",
+              "sourceVertexId": 8
+            },
+            {
+              "piece": "Q3-mouth-12",
+              "sourceVertexId": 8
+            }
+          ],
+          [
+            {
+              "piece": "S3",
+              "sourceVertexId": 2
+            },
+            {
+              "piece": "Q3-mouth-6",
+              "sourceVertexId": 7
+            },
+            {
+              "piece": "Q3-mouth-10",
+              "sourceVertexId": 7
+            }
+          ],
+          [
+            {
+              "piece": "S3",
+              "sourceVertexId": 3
+            },
+            {
+              "piece": "Q3-mouth-12",
+              "sourceVertexId": 7
+            }
+          ],
+          [
+            {
+              "piece": "S3",
+              "sourceVertexId": 4
+            },
+            {
+              "piece": "Q3-mouth-10",
+              "sourceVertexId": 6
+            },
+            {
+              "piece": "Q3-mouth-12",
+              "sourceVertexId": 6
+            }
+          ],
+          [
+            {
+              "piece": "S3",
+              "sourceVertexId": 5
+            },
+            {
+              "piece": "Q3-mouth-6",
+              "sourceVertexId": 6
+            }
+          ]
+        ],
+        "faceOrigins": [
+          {
+            "piece": "K3",
+            "sourceFaceId": 0,
+            "transform": null,
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                0.05098,
+                0.32157,
+                0.50196
+              ]
+            },
+            "mappedSourceCycle": [
+              2,
+              16,
+              0,
+              18
+            ],
+            "orientationReversed": false
+          },
+          {
+            "piece": "K3",
+            "sourceFaceId": 1,
+            "transform": null,
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                0.05098,
+                0.32157,
+                0.50196
+              ]
+            },
+            "mappedSourceCycle": [
+              5,
+              14,
+              7,
+              15
+            ],
+            "orientationReversed": false
+          },
+          {
+            "piece": "K3",
+            "sourceFaceId": 2,
+            "transform": null,
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                0.05098,
+                0.32157,
+                0.50196
+              ]
+            },
+            "mappedSourceCycle": [
+              6,
+              12,
+              4,
+              13
+            ],
+            "orientationReversed": false
+          },
+          {
+            "piece": "K3",
+            "sourceFaceId": 3,
+            "transform": null,
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                0.05098,
+                0.32157,
+                0.50196
+              ]
+            },
+            "mappedSourceCycle": [
+              11,
+              23,
+              10,
+              22
+            ],
+            "orientationReversed": false
+          },
+          {
+            "piece": "K3",
+            "sourceFaceId": 4,
+            "transform": null,
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                0.05098,
+                0.32157,
+                0.50196
+              ]
+            },
+            "mappedSourceCycle": [
+              19,
+              1,
+              17,
+              3
+            ],
+            "orientationReversed": false
+          },
+          {
+            "piece": "K3",
+            "sourceFaceId": 5,
+            "transform": null,
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                0.05098,
+                0.32157,
+                0.50196
+              ]
+            },
+            "mappedSourceCycle": [
+              20,
+              8,
+              21,
+              9
+            ],
+            "orientationReversed": false
+          },
+          {
+            "piece": "K3",
+            "sourceFaceId": 7,
+            "transform": null,
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                1.0,
+                0.79216,
+                0.50196
+              ]
+            },
+            "mappedSourceCycle": [
+              3,
+              15,
+              7,
+              23,
+              11,
+              19
+            ],
+            "orientationReversed": false
+          },
+          {
+            "piece": "K3",
+            "sourceFaceId": 8,
+            "transform": null,
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                1.0,
+                0.79216,
+                0.50196
+              ]
+            },
+            "mappedSourceCycle": [
+              5,
+              21,
+              8,
+              16,
+              2,
+              14
+            ],
+            "orientationReversed": false
+          },
+          {
+            "piece": "K3",
+            "sourceFaceId": 9,
+            "transform": null,
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                1.0,
+                0.79216,
+                0.50196
+              ]
+            },
+            "mappedSourceCycle": [
+              9,
+              17,
+              1,
+              13,
+              4,
+              20
+            ],
+            "orientationReversed": false
+          },
+          {
+            "piece": "K3",
+            "sourceFaceId": 11,
+            "transform": null,
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                1.0,
+                0.79216,
+                0.50196
+              ]
+            },
+            "mappedSourceCycle": [
+              12,
+              6,
+              22,
+              10,
+              18,
+              0
+            ],
+            "orientationReversed": false
+          },
+          {
+            "piece": "K3",
+            "sourceFaceId": 13,
+            "transform": null,
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                1.0,
+                0.79216,
+                0.50196
+              ]
+            },
+            "mappedSourceCycle": [
+              15,
+              3,
+              17,
+              9,
+              21,
+              5
+            ],
+            "orientationReversed": false
+          },
+          {
+            "piece": "S3",
+            "sourceFaceId": 0,
+            "transform": null,
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                0.90196,
+                0.45098,
+                0.0
+              ]
+            },
+            "mappedSourceCycle": [
+              24,
+              26,
+              29
+            ],
+            "orientationReversed": true
+          },
+          {
+            "piece": "S3",
+            "sourceFaceId": 2,
+            "transform": null,
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                0.90196,
+                0.45098,
+                0.0
+              ]
+            },
+            "mappedSourceCycle": [
+              25,
+              27,
+              29
+            ],
+            "orientationReversed": true
+          },
+          {
+            "piece": "S3",
+            "sourceFaceId": 4,
+            "transform": null,
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                0.90196,
+                0.45098,
+                0.0
+              ]
+            },
+            "mappedSourceCycle": [
+              26,
+              28,
+              25
+            ],
+            "orientationReversed": true
+          },
+          {
+            "piece": "S3",
+            "sourceFaceId": 5,
+            "transform": null,
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                0.90196,
+                0.45098,
+                0.0
+              ]
+            },
+            "mappedSourceCycle": [
+              27,
+              28,
+              24
+            ],
+            "orientationReversed": true
+          },
+          {
+            "piece": "S3",
+            "sourceFaceId": 7,
+            "transform": null,
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                0.90196,
+                0.45098,
+                0.0
+              ]
+            },
+            "mappedSourceCycle": [
+              29,
+              27,
+              24
+            ],
+            "orientationReversed": true
+          },
+          {
+            "piece": "Q3-mouth-6",
+            "sourceFaceId": 2,
+            "transform": {
+              "rowRotation": [
+                [
+                  0.40824829046386313,
+                  -0.8164965809277263,
+                  -0.4082482904638626
+                ],
+                [
+                  -0.7071067811865475,
+                  -3.576792014222709e-16,
+                  -0.7071067811865476
+                ],
+                [
+                  0.5773502691896258,
+                  0.5773502691896253,
+                  -0.5773502691896258
+                ]
+              ],
+              "translation": [
+                -0.7071067811865469,
+                -0.7071067811865475,
+                0.7071067811865474
+              ],
+              "phase": 1,
+              "reversedTargetCycle": false
+            },
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                0.05098,
+                0.32157,
+                0.50196
+              ]
+            },
+            "mappedSourceCycle": [
+              14,
+              29,
+              26,
+              2
+            ],
+            "orientationReversed": true
+          },
+          {
+            "piece": "Q3-mouth-6",
+            "sourceFaceId": 3,
+            "transform": {
+              "rowRotation": [
+                [
+                  0.40824829046386313,
+                  -0.8164965809277263,
+                  -0.4082482904638626
+                ],
+                [
+                  -0.7071067811865475,
+                  -3.576792014222709e-16,
+                  -0.7071067811865476
+                ],
+                [
+                  0.5773502691896258,
+                  0.5773502691896253,
+                  -0.5773502691896258
+                ]
+              ],
+              "translation": [
+                -0.7071067811865469,
+                -0.7071067811865475,
+                0.7071067811865474
+              ],
+              "phase": 1,
+              "reversedTargetCycle": false
+            },
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                0.90196,
+                0.45098,
+                0.0
+              ]
+            },
+            "mappedSourceCycle": [
+              2,
+              26,
+              18
+            ],
+            "orientationReversed": true
+          },
+          {
+            "piece": "Q3-mouth-6",
+            "sourceFaceId": 4,
+            "transform": {
+              "rowRotation": [
+                [
+                  0.40824829046386313,
+                  -0.8164965809277263,
+                  -0.4082482904638626
+                ],
+                [
+                  -0.7071067811865475,
+                  -3.576792014222709e-16,
+                  -0.7071067811865476
+                ],
+                [
+                  0.5773502691896258,
+                  0.5773502691896253,
+                  -0.5773502691896258
+                ]
+              ],
+              "translation": [
+                -0.7071067811865469,
+                -0.7071067811865475,
+                0.7071067811865474
+              ],
+              "phase": 1,
+              "reversedTargetCycle": false
+            },
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                0.05098,
+                0.32157,
+                0.50196
+              ]
+            },
+            "mappedSourceCycle": [
+              18,
+              26,
+              25,
+              10
+            ],
+            "orientationReversed": true
+          },
+          {
+            "piece": "Q3-mouth-6",
+            "sourceFaceId": 5,
+            "transform": {
+              "rowRotation": [
+                [
+                  0.40824829046386313,
+                  -0.8164965809277263,
+                  -0.4082482904638626
+                ],
+                [
+                  -0.7071067811865475,
+                  -3.576792014222709e-16,
+                  -0.7071067811865476
+                ],
+                [
+                  0.5773502691896258,
+                  0.5773502691896253,
+                  -0.5773502691896258
+                ]
+              ],
+              "translation": [
+                -0.7071067811865469,
+                -0.7071067811865475,
+                0.7071067811865474
+              ],
+              "phase": 1,
+              "reversedTargetCycle": false
+            },
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                0.90196,
+                0.45098,
+                0.0
+              ]
+            },
+            "mappedSourceCycle": [
+              10,
+              25,
+              23
+            ],
+            "orientationReversed": true
+          },
+          {
+            "piece": "Q3-mouth-6",
+            "sourceFaceId": 6,
+            "transform": {
+              "rowRotation": [
+                [
+                  0.40824829046386313,
+                  -0.8164965809277263,
+                  -0.4082482904638626
+                ],
+                [
+                  -0.7071067811865475,
+                  -3.576792014222709e-16,
+                  -0.7071067811865476
+                ],
+                [
+                  0.5773502691896258,
+                  0.5773502691896253,
+                  -0.5773502691896258
+                ]
+              ],
+              "translation": [
+                -0.7071067811865469,
+                -0.7071067811865475,
+                0.7071067811865474
+              ],
+              "phase": 1,
+              "reversedTargetCycle": false
+            },
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                0.05098,
+                0.32157,
+                0.50196
+              ]
+            },
+            "mappedSourceCycle": [
+              23,
+              25,
+              29,
+              7
+            ],
+            "orientationReversed": true
+          },
+          {
+            "piece": "Q3-mouth-6",
+            "sourceFaceId": 7,
+            "transform": {
+              "rowRotation": [
+                [
+                  0.40824829046386313,
+                  -0.8164965809277263,
+                  -0.4082482904638626
+                ],
+                [
+                  -0.7071067811865475,
+                  -3.576792014222709e-16,
+                  -0.7071067811865476
+                ],
+                [
+                  0.5773502691896258,
+                  0.5773502691896253,
+                  -0.5773502691896258
+                ]
+              ],
+              "translation": [
+                -0.7071067811865469,
+                -0.7071067811865475,
+                0.7071067811865474
+              ],
+              "phase": 1,
+              "reversedTargetCycle": false
+            },
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                0.90196,
+                0.45098,
+                0.0
+              ]
+            },
+            "mappedSourceCycle": [
+              7,
+              29,
+              14
+            ],
+            "orientationReversed": true
+          },
+          {
+            "piece": "Q3-mouth-10",
+            "sourceFaceId": 2,
+            "transform": {
+              "rowRotation": [
+                [
+                  -0.40824829046386313,
+                  0.8164965809277263,
+                  -0.4082482904638626
+                ],
+                [
+                  0.7071067811865475,
+                  3.576792014222709e-16,
+                  -0.7071067811865476
+                ],
+                [
+                  -0.5773502691896258,
+                  -0.5773502691896253,
+                  -0.5773502691896258
+                ]
+              ],
+              "translation": [
+                0.7071067811865469,
+                0.7071067811865475,
+                0.7071067811865474
+              ],
+              "phase": 0,
+              "reversedTargetCycle": false
+            },
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                0.05098,
+                0.32157,
+                0.50196
+              ]
+            },
+            "mappedSourceCycle": [
+              12,
+              28,
+              26,
+              0
+            ],
+            "orientationReversed": true
+          },
+          {
+            "piece": "Q3-mouth-10",
+            "sourceFaceId": 3,
+            "transform": {
+              "rowRotation": [
+                [
+                  -0.40824829046386313,
+                  0.8164965809277263,
+                  -0.4082482904638626
+                ],
+                [
+                  0.7071067811865475,
+                  3.576792014222709e-16,
+                  -0.7071067811865476
+                ],
+                [
+                  -0.5773502691896258,
+                  -0.5773502691896253,
+                  -0.5773502691896258
+                ]
+              ],
+              "translation": [
+                0.7071067811865469,
+                0.7071067811865475,
+                0.7071067811865474
+              ],
+              "phase": 0,
+              "reversedTargetCycle": false
+            },
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                0.90196,
+                0.45098,
+                0.0
+              ]
+            },
+            "mappedSourceCycle": [
+              0,
+              26,
+              16
+            ],
+            "orientationReversed": true
+          },
+          {
+            "piece": "Q3-mouth-10",
+            "sourceFaceId": 4,
+            "transform": {
+              "rowRotation": [
+                [
+                  -0.40824829046386313,
+                  0.8164965809277263,
+                  -0.4082482904638626
+                ],
+                [
+                  0.7071067811865475,
+                  3.576792014222709e-16,
+                  -0.7071067811865476
+                ],
+                [
+                  -0.5773502691896258,
+                  -0.5773502691896253,
+                  -0.5773502691896258
+                ]
+              ],
+              "translation": [
+                0.7071067811865469,
+                0.7071067811865475,
+                0.7071067811865474
+              ],
+              "phase": 0,
+              "reversedTargetCycle": false
+            },
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                0.05098,
+                0.32157,
+                0.50196
+              ]
+            },
+            "mappedSourceCycle": [
+              16,
+              26,
+              24,
+              8
+            ],
+            "orientationReversed": true
+          },
+          {
+            "piece": "Q3-mouth-10",
+            "sourceFaceId": 5,
+            "transform": {
+              "rowRotation": [
+                [
+                  -0.40824829046386313,
+                  0.8164965809277263,
+                  -0.4082482904638626
+                ],
+                [
+                  0.7071067811865475,
+                  3.576792014222709e-16,
+                  -0.7071067811865476
+                ],
+                [
+                  -0.5773502691896258,
+                  -0.5773502691896253,
+                  -0.5773502691896258
+                ]
+              ],
+              "translation": [
+                0.7071067811865469,
+                0.7071067811865475,
+                0.7071067811865474
+              ],
+              "phase": 0,
+              "reversedTargetCycle": false
+            },
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                0.90196,
+                0.45098,
+                0.0
+              ]
+            },
+            "mappedSourceCycle": [
+              8,
+              24,
+              20
+            ],
+            "orientationReversed": true
+          },
+          {
+            "piece": "Q3-mouth-10",
+            "sourceFaceId": 6,
+            "transform": {
+              "rowRotation": [
+                [
+                  -0.40824829046386313,
+                  0.8164965809277263,
+                  -0.4082482904638626
+                ],
+                [
+                  0.7071067811865475,
+                  3.576792014222709e-16,
+                  -0.7071067811865476
+                ],
+                [
+                  -0.5773502691896258,
+                  -0.5773502691896253,
+                  -0.5773502691896258
+                ]
+              ],
+              "translation": [
+                0.7071067811865469,
+                0.7071067811865475,
+                0.7071067811865474
+              ],
+              "phase": 0,
+              "reversedTargetCycle": false
+            },
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                0.05098,
+                0.32157,
+                0.50196
+              ]
+            },
+            "mappedSourceCycle": [
+              20,
+              24,
+              28,
+              4
+            ],
+            "orientationReversed": true
+          },
+          {
+            "piece": "Q3-mouth-10",
+            "sourceFaceId": 7,
+            "transform": {
+              "rowRotation": [
+                [
+                  -0.40824829046386313,
+                  0.8164965809277263,
+                  -0.4082482904638626
+                ],
+                [
+                  0.7071067811865475,
+                  3.576792014222709e-16,
+                  -0.7071067811865476
+                ],
+                [
+                  -0.5773502691896258,
+                  -0.5773502691896253,
+                  -0.5773502691896258
+                ]
+              ],
+              "translation": [
+                0.7071067811865469,
+                0.7071067811865475,
+                0.7071067811865474
+              ],
+              "phase": 0,
+              "reversedTargetCycle": false
+            },
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                0.90196,
+                0.45098,
+                0.0
+              ]
+            },
+            "mappedSourceCycle": [
+              4,
+              28,
+              12
+            ],
+            "orientationReversed": true
+          },
+          {
+            "piece": "Q3-mouth-12",
+            "sourceFaceId": 2,
+            "transform": {
+              "rowRotation": [
+                [
+                  0.40824829046386313,
+                  0.8164965809277263,
+                  0.4082482904638626
+                ],
+                [
+                  -0.7071067811865475,
+                  3.576792014222709e-16,
+                  0.7071067811865476
+                ],
+                [
+                  0.5773502691896258,
+                  -0.5773502691896253,
+                  0.5773502691896258
+                ]
+              ],
+              "translation": [
+                -0.7071067811865469,
+                0.7071067811865475,
+                -0.7071067811865474
+              ],
+              "phase": 0,
+              "reversedTargetCycle": false
+            },
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                0.05098,
+                0.32157,
+                0.50196
+              ]
+            },
+            "mappedSourceCycle": [
+              13,
+              28,
+              27,
+              1
+            ],
+            "orientationReversed": true
+          },
+          {
+            "piece": "Q3-mouth-12",
+            "sourceFaceId": 3,
+            "transform": {
+              "rowRotation": [
+                [
+                  0.40824829046386313,
+                  0.8164965809277263,
+                  0.4082482904638626
+                ],
+                [
+                  -0.7071067811865475,
+                  3.576792014222709e-16,
+                  0.7071067811865476
+                ],
+                [
+                  0.5773502691896258,
+                  -0.5773502691896253,
+                  0.5773502691896258
+                ]
+              ],
+              "translation": [
+                -0.7071067811865469,
+                0.7071067811865475,
+                -0.7071067811865474
+              ],
+              "phase": 0,
+              "reversedTargetCycle": false
+            },
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                0.90196,
+                0.45098,
+                0.0
+              ]
+            },
+            "mappedSourceCycle": [
+              1,
+              27,
+              19
+            ],
+            "orientationReversed": true
+          },
+          {
+            "piece": "Q3-mouth-12",
+            "sourceFaceId": 4,
+            "transform": {
+              "rowRotation": [
+                [
+                  0.40824829046386313,
+                  0.8164965809277263,
+                  0.4082482904638626
+                ],
+                [
+                  -0.7071067811865475,
+                  3.576792014222709e-16,
+                  0.7071067811865476
+                ],
+                [
+                  0.5773502691896258,
+                  -0.5773502691896253,
+                  0.5773502691896258
+                ]
+              ],
+              "translation": [
+                -0.7071067811865469,
+                0.7071067811865475,
+                -0.7071067811865474
+              ],
+              "phase": 0,
+              "reversedTargetCycle": false
+            },
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                0.05098,
+                0.32157,
+                0.50196
+              ]
+            },
+            "mappedSourceCycle": [
+              19,
+              27,
+              25,
+              11
+            ],
+            "orientationReversed": true
+          },
+          {
+            "piece": "Q3-mouth-12",
+            "sourceFaceId": 5,
+            "transform": {
+              "rowRotation": [
+                [
+                  0.40824829046386313,
+                  0.8164965809277263,
+                  0.4082482904638626
+                ],
+                [
+                  -0.7071067811865475,
+                  3.576792014222709e-16,
+                  0.7071067811865476
+                ],
+                [
+                  0.5773502691896258,
+                  -0.5773502691896253,
+                  0.5773502691896258
+                ]
+              ],
+              "translation": [
+                -0.7071067811865469,
+                0.7071067811865475,
+                -0.7071067811865474
+              ],
+              "phase": 0,
+              "reversedTargetCycle": false
+            },
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                0.90196,
+                0.45098,
+                0.0
+              ]
+            },
+            "mappedSourceCycle": [
+              11,
+              25,
+              22
+            ],
+            "orientationReversed": true
+          },
+          {
+            "piece": "Q3-mouth-12",
+            "sourceFaceId": 6,
+            "transform": {
+              "rowRotation": [
+                [
+                  0.40824829046386313,
+                  0.8164965809277263,
+                  0.4082482904638626
+                ],
+                [
+                  -0.7071067811865475,
+                  3.576792014222709e-16,
+                  0.7071067811865476
+                ],
+                [
+                  0.5773502691896258,
+                  -0.5773502691896253,
+                  0.5773502691896258
+                ]
+              ],
+              "translation": [
+                -0.7071067811865469,
+                0.7071067811865475,
+                -0.7071067811865474
+              ],
+              "phase": 0,
+              "reversedTargetCycle": false
+            },
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                0.05098,
+                0.32157,
+                0.50196
+              ]
+            },
+            "mappedSourceCycle": [
+              22,
+              25,
+              28,
+              6
+            ],
+            "orientationReversed": true
+          },
+          {
+            "piece": "Q3-mouth-12",
+            "sourceFaceId": 7,
+            "transform": {
+              "rowRotation": [
+                [
+                  0.40824829046386313,
+                  0.8164965809277263,
+                  0.4082482904638626
+                ],
+                [
+                  -0.7071067811865475,
+                  3.576792014222709e-16,
+                  0.7071067811865476
+                ],
+                [
+                  0.5773502691896258,
+                  -0.5773502691896253,
+                  0.5773502691896258
+                ]
+              ],
+              "translation": [
+                -0.7071067811865469,
+                0.7071067811865475,
+                -0.7071067811865474
+              ],
+              "phase": 0,
+              "reversedTargetCycle": false
+            },
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                0.90196,
+                0.45098,
+                0.0
+              ]
+            },
+            "mappedSourceCycle": [
+              6,
+              28,
+              13
+            ],
+            "orientationReversed": true
+          }
+        ],
+        "canceledCaps": [
+          [
+            {
+              "piece": "K3",
+              "sourceFaceId": 6,
+              "transform": null,
+              "sourceColor": {
+                "encoding": "unit",
+                "values": [
+                  1.0,
+                  0.79216,
+                  0.50196
+                ]
+              }
+            },
+            {
+              "piece": "Q3-mouth-6",
+              "sourceFaceId": 0,
+              "transform": {
+                "rowRotation": [
+                  [
+                    0.40824829046386313,
+                    -0.8164965809277263,
+                    -0.4082482904638626
+                  ],
+                  [
+                    -0.7071067811865475,
+                    -3.576792014222709e-16,
+                    -0.7071067811865476
+                  ],
+                  [
+                    0.5773502691896258,
+                    0.5773502691896253,
+                    -0.5773502691896258
+                  ]
+                ],
+                "translation": [
+                  -0.7071067811865469,
+                  -0.7071067811865475,
+                  0.7071067811865474
+                ],
+                "phase": 1,
+                "reversedTargetCycle": false
+              },
+              "sourceColor": {
+                "encoding": "unit",
+                "values": [
+                  1.0,
+                  0.79216,
+                  0.50196
+                ]
+              }
+            }
+          ],
+          [
+            {
+              "piece": "K3",
+              "sourceFaceId": 10,
+              "transform": null,
+              "sourceColor": {
+                "encoding": "unit",
+                "values": [
+                  1.0,
+                  0.79216,
+                  0.50196
+                ]
+              }
+            },
+            {
+              "piece": "Q3-mouth-10",
+              "sourceFaceId": 0,
+              "transform": {
+                "rowRotation": [
+                  [
+                    -0.40824829046386313,
+                    0.8164965809277263,
+                    -0.4082482904638626
+                  ],
+                  [
+                    0.7071067811865475,
+                    3.576792014222709e-16,
+                    -0.7071067811865476
+                  ],
+                  [
+                    -0.5773502691896258,
+                    -0.5773502691896253,
+                    -0.5773502691896258
+                  ]
+                ],
+                "translation": [
+                  0.7071067811865469,
+                  0.7071067811865475,
+                  0.7071067811865474
+                ],
+                "phase": 0,
+                "reversedTargetCycle": false
+              },
+              "sourceColor": {
+                "encoding": "unit",
+                "values": [
+                  1.0,
+                  0.79216,
+                  0.50196
+                ]
+              }
+            }
+          ],
+          [
+            {
+              "piece": "K3",
+              "sourceFaceId": 12,
+              "transform": null,
+              "sourceColor": {
+                "encoding": "unit",
+                "values": [
+                  1.0,
+                  0.79216,
+                  0.50196
+                ]
+              }
+            },
+            {
+              "piece": "Q3-mouth-12",
+              "sourceFaceId": 0,
+              "transform": {
+                "rowRotation": [
+                  [
+                    0.40824829046386313,
+                    0.8164965809277263,
+                    0.4082482904638626
+                  ],
+                  [
+                    -0.7071067811865475,
+                    3.576792014222709e-16,
+                    0.7071067811865476
+                  ],
+                  [
+                    0.5773502691896258,
+                    -0.5773502691896253,
+                    0.5773502691896258
+                  ]
+                ],
+                "translation": [
+                  -0.7071067811865469,
+                  0.7071067811865475,
+                  -0.7071067811865474
+                ],
+                "phase": 0,
+                "reversedTargetCycle": false
+              },
+              "sourceColor": {
+                "encoding": "unit",
+                "values": [
+                  1.0,
+                  0.79216,
+                  0.50196
+                ]
+              }
+            }
+          ],
+          [
+            {
+              "piece": "S3",
+              "sourceFaceId": 1,
+              "transform": null,
+              "sourceColor": {
+                "encoding": "unit",
+                "values": [
+                  0.90196,
+                  0.45098,
+                  0.0
+                ]
+              }
+            },
+            {
+              "piece": "Q3-mouth-10",
+              "sourceFaceId": 1,
+              "transform": {
+                "rowRotation": [
+                  [
+                    -0.40824829046386313,
+                    0.8164965809277263,
+                    -0.4082482904638626
+                  ],
+                  [
+                    0.7071067811865475,
+                    3.576792014222709e-16,
+                    -0.7071067811865476
+                  ],
+                  [
+                    -0.5773502691896258,
+                    -0.5773502691896253,
+                    -0.5773502691896258
+                  ]
+                ],
+                "translation": [
+                  0.7071067811865469,
+                  0.7071067811865475,
+                  0.7071067811865474
+                ],
+                "phase": 0,
+                "reversedTargetCycle": false
+              },
+              "sourceColor": {
+                "encoding": "unit",
+                "values": [
+                  0.90196,
+                  0.45098,
+                  0.0
+                ]
+              }
+            }
+          ],
+          [
+            {
+              "piece": "S3",
+              "sourceFaceId": 3,
+              "transform": null,
+              "sourceColor": {
+                "encoding": "unit",
+                "values": [
+                  0.90196,
+                  0.45098,
+                  0.0
+                ]
+              }
+            },
+            {
+              "piece": "Q3-mouth-12",
+              "sourceFaceId": 1,
+              "transform": {
+                "rowRotation": [
+                  [
+                    0.40824829046386313,
+                    0.8164965809277263,
+                    0.4082482904638626
+                  ],
+                  [
+                    -0.7071067811865475,
+                    3.576792014222709e-16,
+                    0.7071067811865476
+                  ],
+                  [
+                    0.5773502691896258,
+                    -0.5773502691896253,
+                    0.5773502691896258
+                  ]
+                ],
+                "translation": [
+                  -0.7071067811865469,
+                  0.7071067811865475,
+                  -0.7071067811865474
+                ],
+                "phase": 0,
+                "reversedTargetCycle": false
+              },
+              "sourceColor": {
+                "encoding": "unit",
+                "values": [
+                  0.90196,
+                  0.45098,
+                  0.0
+                ]
+              }
+            }
+          ],
+          [
+            {
+              "piece": "S3",
+              "sourceFaceId": 6,
+              "transform": null,
+              "sourceColor": {
+                "encoding": "unit",
+                "values": [
+                  0.90196,
+                  0.45098,
+                  0.0
+                ]
+              }
+            },
+            {
+              "piece": "Q3-mouth-6",
+              "sourceFaceId": 1,
+              "transform": {
+                "rowRotation": [
+                  [
+                    0.40824829046386313,
+                    -0.8164965809277263,
+                    -0.4082482904638626
+                  ],
+                  [
+                    -0.7071067811865475,
+                    -3.576792014222709e-16,
+                    -0.7071067811865476
+                  ],
+                  [
+                    0.5773502691896258,
+                    0.5773502691896253,
+                    -0.5773502691896258
+                  ]
+                ],
+                "translation": [
+                  -0.7071067811865469,
+                  -0.7071067811865475,
+                  0.7071067811865474
+                ],
+                "phase": 1,
+                "reversedTargetCycle": false
+              },
+              "sourceColor": {
+                "encoding": "unit",
+                "values": [
+                  0.90196,
+                  0.45098,
+                  0.0
+                ]
+              }
+            }
+          ]
+        ]
+      },
+      "construction": {
+        "definition": "Truncated octahedron excavated by a central regular octahedron with triangular cupola mouths on a tetrahedral set of hexagon facets.",
+        "parameters": {
+          "mouths": 3,
+          "edgeLength": 1
+        },
+        "mouths": [
+          {
+            "hullMouthFaceId": 6,
+            "centralOctahedronFaceId": 6,
+            "transform": {
+              "rowRotation": [
+                [
+                  0.40824829046386313,
+                  -0.8164965809277263,
+                  -0.4082482904638626
+                ],
+                [
+                  -0.7071067811865475,
+                  -3.576792014222709e-16,
+                  -0.7071067811865476
+                ],
+                [
+                  0.5773502691896258,
+                  0.5773502691896253,
+                  -0.5773502691896258
+                ]
+              ],
+              "translation": [
+                -0.7071067811865469,
+                -0.7071067811865475,
+                0.7071067811865474
+              ],
+              "phase": 1,
+              "reversedTargetCycle": false
+            }
+          },
+          {
+            "hullMouthFaceId": 10,
+            "centralOctahedronFaceId": 1,
+            "transform": {
+              "rowRotation": [
+                [
+                  -0.40824829046386313,
+                  0.8164965809277263,
+                  -0.4082482904638626
+                ],
+                [
+                  0.7071067811865475,
+                  3.576792014222709e-16,
+                  -0.7071067811865476
+                ],
+                [
+                  -0.5773502691896258,
+                  -0.5773502691896253,
+                  -0.5773502691896258
+                ]
+              ],
+              "translation": [
+                0.7071067811865469,
+                0.7071067811865475,
+                0.7071067811865474
+              ],
+              "phase": 0,
+              "reversedTargetCycle": false
+            }
+          },
+          {
+            "hullMouthFaceId": 12,
+            "centralOctahedronFaceId": 3,
+            "transform": {
+              "rowRotation": [
+                [
+                  0.40824829046386313,
+                  0.8164965809277263,
+                  0.4082482904638626
+                ],
+                [
+                  -0.7071067811865475,
+                  3.576792014222709e-16,
+                  0.7071067811865476
+                ],
+                [
+                  0.5773502691896258,
+                  -0.5773502691896253,
+                  0.5773502691896258
+                ]
+              ],
+              "translation": [
+                -0.7071067811865469,
+                0.7071067811865475,
+                -0.7071067811865474
+              ],
+              "phase": 0,
+              "reversedTargetCycle": false
+            }
+          }
+        ],
+        "primaryReference": "https://www.orchidpalms.com/polyhedra/toroids/toroids2.html",
+        "primaryNamedExample": false,
+        "excavationOpenings": 3,
+        "excavationChangesGenusFrom": 0,
+        "excavationChangesGenusTo": 2,
+        "genusDerivation": "A connected spherical outer boundary and connected spherical excavation boundary, each with m cap disks removed and paired, give Euler characteristic 4-2m and genus m-1."
+      },
+      "numericChecks": {
+        "classified": true,
+        "mode": "float64-approximate",
+        "certified": false,
+        "tolerance": 1e-07,
+        "predicateScale": 2.82842712474619,
+        "R": {
+          "passed": true,
+          "maximumResidual": 1.1102230246251565e-15,
+          "ordinaryFaceSizeCounts": {
+            "3": 14,
+            "4": 15,
+            "6": 5
+          }
+        },
+        "A": {
+          "passed": true,
+          "minimumAdjacentNormalCrossLength": 0.8164965809277257
+        },
+        "Q": {
+          "passed": true,
+          "hullEdgeCount": 36,
+          "missingHullEdges": []
+        },
+        "T": {
+          "passed": true,
+          "componentCount": 1,
+          "topology": {
+            "vertices": 30,
+            "edges": 66,
+            "faces": 34,
+            "eulerCharacteristic": -2,
+            "closedVertexManifold": true,
+            "orientable": true,
+            "genus": 2,
+            "genusScope": "Abstract supplied boundary; geometric self-intersection is not excluded."
+          }
+        },
+        "D": {
+          "passed": true,
+          "facePairsChecked": 561,
+          "coplanarPairsChecked": 12,
+          "conflicts": [],
+          "method": "Complete convex-face pair plane-line interval checks and coplanar closed polygon clipping; shared source edges/vertices retained."
+        },
+        "scope": "Numerical R/A/Q/T/D for this supplied ordinary regular-faced positive-genus boundary; no exhaustive Stewart catalog or exact certificate."
+      }
+    },
+    {
+      "key": "stewart-k3-4q3-s3",
+      "name": "Stewart toroid K3 / 4Q3(S3)",
+      "dimension": 3,
+      "family": "Stewart toroids",
+      "symbol": "K3 / 4Q3(S3)",
+      "counts": [
+        30,
+        72,
+        38,
+        0
+      ],
+      "aliases": [
+        "Stewart",
+        "toroid",
+        "regular-faced tunnel",
+        "K3/4Q3(S3)",
+        "genus 3"
+      ],
+      "componentCount": 1,
+      "genus": [
+        3
+      ],
+      "sourceClassification": "Primary named Stewart excavation (page45): genus3.",
+      "chirality": {
+        "status": "unresolved",
+        "scope": "Complete incidence-preserving symmetry/chirality search is not claimed."
+      },
+      "file": "models/stewart-k3-4q3-s3.off",
+      "sha256": "95e6d64c3e42709cedf92e8bbd3cfb0ee1c2574a9c1ff393e6dfe61d0d3bd4b6",
+      "sourceFile": "sources/stewart-k3-4q3-s3-unoriented.off",
+      "sourceSha256": "e4869b0f090dd1aa4e4e73a3e3b03bc30307ad05907793f9dcdfc247f26577b1",
+      "sourceParts": [
+        {
+          "sourceKey": "antiprism-u8",
+          "file": "sources/u8.off",
+          "sha256": "50a0c613cdd2ba9d81faddc2e6acb658934d18fbb84ffca2673b3e16cea0e722",
+          "sourceCounts": {
+            "vertices": 24,
+            "edges": 36,
+            "faces": 14,
+            "cells": 0
+          }
+        },
+        {
+          "sourceKey": "antiprism-j3",
+          "file": "sources/j3.off",
+          "sha256": "1f323ba0d162adfac72237b0af21d1938a4bb17b4484eda95812aa5df3c22bab",
+          "sourceCounts": {
+            "vertices": 9,
+            "edges": 15,
+            "faces": 8,
+            "cells": 0
+          }
+        },
+        {
+          "sourceKey": "antiprism-u5",
+          "file": "sources/u5.off",
+          "sha256": "687aaca2093abb8f0d2f78866a55ee4d16c865cdfe9e20e82731c087f81afbc1",
+          "sourceCounts": {
+            "vertices": 6,
+            "edges": 12,
+            "faces": 8,
+            "cells": 0
+          }
+        }
+      ],
+      "sourceMaps": {
+        "vertexOrigins": [
+          [
+            {
+              "piece": "K3",
+              "sourceVertexId": 0
+            },
+            {
+              "piece": "Q3-mouth-10",
+              "sourceVertexId": 1
+            }
+          ],
+          [
+            {
+              "piece": "K3",
+              "sourceVertexId": 1
+            },
+            {
+              "piece": "Q3-mouth-12",
+              "sourceVertexId": 1
+            }
+          ],
+          [
+            {
+              "piece": "K3",
+              "sourceVertexId": 2
+            },
+            {
+              "piece": "Q3-mouth-6",
+              "sourceVertexId": 1
+            }
+          ],
+          [
+            {
+              "piece": "K3",
+              "sourceVertexId": 3
+            },
+            {
+              "piece": "Q3-mouth-13",
+              "sourceVertexId": 1
+            }
+          ],
+          [
+            {
+              "piece": "K3",
+              "sourceVertexId": 4
+            },
+            {
+              "piece": "Q3-mouth-10",
+              "sourceVertexId": 5
+            }
+          ],
+          [
+            {
+              "piece": "K3",
+              "sourceVertexId": 5
+            },
+            {
+              "piece": "Q3-mouth-13",
+              "sourceVertexId": 5
+            }
+          ],
+          [
+            {
+              "piece": "K3",
+              "sourceVertexId": 6
+            },
+            {
+              "piece": "Q3-mouth-12",
+              "sourceVertexId": 5
+            }
+          ],
+          [
+            {
+              "piece": "K3",
+              "sourceVertexId": 7
+            },
+            {
+              "piece": "Q3-mouth-6",
+              "sourceVertexId": 5
+            }
+          ],
+          [
+            {
+              "piece": "K3",
+              "sourceVertexId": 8
+            },
+            {
+              "piece": "Q3-mouth-10",
+              "sourceVertexId": 3
+            }
+          ],
+          [
+            {
+              "piece": "K3",
+              "sourceVertexId": 9
+            },
+            {
+              "piece": "Q3-mouth-13",
+              "sourceVertexId": 3
+            }
+          ],
+          [
+            {
+              "piece": "K3",
+              "sourceVertexId": 10
+            },
+            {
+              "piece": "Q3-mouth-6",
+              "sourceVertexId": 3
+            }
+          ],
+          [
+            {
+              "piece": "K3",
+              "sourceVertexId": 11
+            },
+            {
+              "piece": "Q3-mouth-12",
+              "sourceVertexId": 3
+            }
+          ],
+          [
+            {
+              "piece": "K3",
+              "sourceVertexId": 12
+            },
+            {
+              "piece": "Q3-mouth-10",
+              "sourceVertexId": 0
+            }
+          ],
+          [
+            {
+              "piece": "K3",
+              "sourceVertexId": 13
+            },
+            {
+              "piece": "Q3-mouth-12",
+              "sourceVertexId": 0
+            }
+          ],
+          [
+            {
+              "piece": "K3",
+              "sourceVertexId": 14
+            },
+            {
+              "piece": "Q3-mouth-6",
+              "sourceVertexId": 0
+            }
+          ],
+          [
+            {
+              "piece": "K3",
+              "sourceVertexId": 15
+            },
+            {
+              "piece": "Q3-mouth-13",
+              "sourceVertexId": 0
+            }
+          ],
+          [
+            {
+              "piece": "K3",
+              "sourceVertexId": 16
+            },
+            {
+              "piece": "Q3-mouth-10",
+              "sourceVertexId": 2
+            }
+          ],
+          [
+            {
+              "piece": "K3",
+              "sourceVertexId": 17
+            },
+            {
+              "piece": "Q3-mouth-13",
+              "sourceVertexId": 2
+            }
+          ],
+          [
+            {
+              "piece": "K3",
+              "sourceVertexId": 18
+            },
+            {
+              "piece": "Q3-mouth-6",
+              "sourceVertexId": 2
+            }
+          ],
+          [
+            {
+              "piece": "K3",
+              "sourceVertexId": 19
+            },
+            {
+              "piece": "Q3-mouth-12",
+              "sourceVertexId": 2
+            }
+          ],
+          [
+            {
+              "piece": "K3",
+              "sourceVertexId": 20
+            },
+            {
+              "piece": "Q3-mouth-10",
+              "sourceVertexId": 4
+            }
+          ],
+          [
+            {
+              "piece": "K3",
+              "sourceVertexId": 21
+            },
+            {
+              "piece": "Q3-mouth-13",
+              "sourceVertexId": 4
+            }
+          ],
+          [
+            {
+              "piece": "K3",
+              "sourceVertexId": 22
+            },
+            {
+              "piece": "Q3-mouth-12",
+              "sourceVertexId": 4
+            }
+          ],
+          [
+            {
+              "piece": "K3",
+              "sourceVertexId": 23
+            },
+            {
+              "piece": "Q3-mouth-6",
+              "sourceVertexId": 4
+            }
+          ],
+          [
+            {
+              "piece": "S3",
+              "sourceVertexId": 0
+            },
+            {
+              "piece": "Q3-mouth-10",
+              "sourceVertexId": 8
+            },
+            {
+              "piece": "Q3-mouth-13",
+              "sourceVertexId": 8
+            }
+          ],
+          [
+            {
+              "piece": "S3",
+              "sourceVertexId": 1
+            },
+            {
+              "piece": "Q3-mouth-6",
+              "sourceVertexId": 8
+            },
+            {
+              "piece": "Q3-mouth-12",
+              "sourceVertexId": 8
+            }
+          ],
+          [
+            {
+              "piece": "S3",
+              "sourceVertexId": 2
+            },
+            {
+              "piece": "Q3-mouth-6",
+              "sourceVertexId": 7
+            },
+            {
+              "piece": "Q3-mouth-10",
+              "sourceVertexId": 7
+            }
+          ],
+          [
+            {
+              "piece": "S3",
+              "sourceVertexId": 3
+            },
+            {
+              "piece": "Q3-mouth-12",
+              "sourceVertexId": 7
+            },
+            {
+              "piece": "Q3-mouth-13",
+              "sourceVertexId": 7
+            }
+          ],
+          [
+            {
+              "piece": "S3",
+              "sourceVertexId": 4
+            },
+            {
+              "piece": "Q3-mouth-10",
+              "sourceVertexId": 6
+            },
+            {
+              "piece": "Q3-mouth-12",
+              "sourceVertexId": 6
+            }
+          ],
+          [
+            {
+              "piece": "S3",
+              "sourceVertexId": 5
+            },
+            {
+              "piece": "Q3-mouth-6",
+              "sourceVertexId": 6
+            },
+            {
+              "piece": "Q3-mouth-13",
+              "sourceVertexId": 6
+            }
+          ]
+        ],
+        "faceOrigins": [
+          {
+            "piece": "K3",
+            "sourceFaceId": 0,
+            "transform": null,
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                0.05098,
+                0.32157,
+                0.50196
+              ]
+            },
+            "mappedSourceCycle": [
+              2,
+              16,
+              0,
+              18
+            ],
+            "orientationReversed": false
+          },
+          {
+            "piece": "K3",
+            "sourceFaceId": 1,
+            "transform": null,
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                0.05098,
+                0.32157,
+                0.50196
+              ]
+            },
+            "mappedSourceCycle": [
+              5,
+              14,
+              7,
+              15
+            ],
+            "orientationReversed": false
+          },
+          {
+            "piece": "K3",
+            "sourceFaceId": 2,
+            "transform": null,
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                0.05098,
+                0.32157,
+                0.50196
+              ]
+            },
+            "mappedSourceCycle": [
+              6,
+              12,
+              4,
+              13
+            ],
+            "orientationReversed": false
+          },
+          {
+            "piece": "K3",
+            "sourceFaceId": 3,
+            "transform": null,
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                0.05098,
+                0.32157,
+                0.50196
+              ]
+            },
+            "mappedSourceCycle": [
+              11,
+              23,
+              10,
+              22
+            ],
+            "orientationReversed": false
+          },
+          {
+            "piece": "K3",
+            "sourceFaceId": 4,
+            "transform": null,
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                0.05098,
+                0.32157,
+                0.50196
+              ]
+            },
+            "mappedSourceCycle": [
+              19,
+              1,
+              17,
+              3
+            ],
+            "orientationReversed": false
+          },
+          {
+            "piece": "K3",
+            "sourceFaceId": 5,
+            "transform": null,
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                0.05098,
+                0.32157,
+                0.50196
+              ]
+            },
+            "mappedSourceCycle": [
+              20,
+              8,
+              21,
+              9
+            ],
+            "orientationReversed": false
+          },
+          {
+            "piece": "K3",
+            "sourceFaceId": 7,
+            "transform": null,
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                1.0,
+                0.79216,
+                0.50196
+              ]
+            },
+            "mappedSourceCycle": [
+              3,
+              15,
+              7,
+              23,
+              11,
+              19
+            ],
+            "orientationReversed": false
+          },
+          {
+            "piece": "K3",
+            "sourceFaceId": 8,
+            "transform": null,
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                1.0,
+                0.79216,
+                0.50196
+              ]
+            },
+            "mappedSourceCycle": [
+              5,
+              21,
+              8,
+              16,
+              2,
+              14
+            ],
+            "orientationReversed": false
+          },
+          {
+            "piece": "K3",
+            "sourceFaceId": 9,
+            "transform": null,
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                1.0,
+                0.79216,
+                0.50196
+              ]
+            },
+            "mappedSourceCycle": [
+              9,
+              17,
+              1,
+              13,
+              4,
+              20
+            ],
+            "orientationReversed": false
+          },
+          {
+            "piece": "K3",
+            "sourceFaceId": 11,
+            "transform": null,
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                1.0,
+                0.79216,
+                0.50196
+              ]
+            },
+            "mappedSourceCycle": [
+              12,
+              6,
+              22,
+              10,
+              18,
+              0
+            ],
+            "orientationReversed": false
+          },
+          {
+            "piece": "S3",
+            "sourceFaceId": 0,
+            "transform": null,
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                0.90196,
+                0.45098,
+                0.0
+              ]
+            },
+            "mappedSourceCycle": [
+              24,
+              26,
+              29
+            ],
+            "orientationReversed": true
+          },
+          {
+            "piece": "S3",
+            "sourceFaceId": 2,
+            "transform": null,
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                0.90196,
+                0.45098,
+                0.0
+              ]
+            },
+            "mappedSourceCycle": [
+              25,
+              27,
+              29
+            ],
+            "orientationReversed": true
+          },
+          {
+            "piece": "S3",
+            "sourceFaceId": 4,
+            "transform": null,
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                0.90196,
+                0.45098,
+                0.0
+              ]
+            },
+            "mappedSourceCycle": [
+              26,
+              28,
+              25
+            ],
+            "orientationReversed": true
+          },
+          {
+            "piece": "S3",
+            "sourceFaceId": 5,
+            "transform": null,
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                0.90196,
+                0.45098,
+                0.0
+              ]
+            },
+            "mappedSourceCycle": [
+              27,
+              28,
+              24
+            ],
+            "orientationReversed": true
+          },
+          {
+            "piece": "Q3-mouth-6",
+            "sourceFaceId": 2,
+            "transform": {
+              "rowRotation": [
+                [
+                  0.40824829046386313,
+                  -0.8164965809277263,
+                  -0.4082482904638626
+                ],
+                [
+                  -0.7071067811865475,
+                  -3.576792014222709e-16,
+                  -0.7071067811865476
+                ],
+                [
+                  0.5773502691896258,
+                  0.5773502691896253,
+                  -0.5773502691896258
+                ]
+              ],
+              "translation": [
+                -0.7071067811865469,
+                -0.7071067811865475,
+                0.7071067811865474
+              ],
+              "phase": 1,
+              "reversedTargetCycle": false
+            },
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                0.05098,
+                0.32157,
+                0.50196
+              ]
+            },
+            "mappedSourceCycle": [
+              14,
+              29,
+              26,
+              2
+            ],
+            "orientationReversed": true
+          },
+          {
+            "piece": "Q3-mouth-6",
+            "sourceFaceId": 3,
+            "transform": {
+              "rowRotation": [
+                [
+                  0.40824829046386313,
+                  -0.8164965809277263,
+                  -0.4082482904638626
+                ],
+                [
+                  -0.7071067811865475,
+                  -3.576792014222709e-16,
+                  -0.7071067811865476
+                ],
+                [
+                  0.5773502691896258,
+                  0.5773502691896253,
+                  -0.5773502691896258
+                ]
+              ],
+              "translation": [
+                -0.7071067811865469,
+                -0.7071067811865475,
+                0.7071067811865474
+              ],
+              "phase": 1,
+              "reversedTargetCycle": false
+            },
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                0.90196,
+                0.45098,
+                0.0
+              ]
+            },
+            "mappedSourceCycle": [
+              2,
+              26,
+              18
+            ],
+            "orientationReversed": true
+          },
+          {
+            "piece": "Q3-mouth-6",
+            "sourceFaceId": 4,
+            "transform": {
+              "rowRotation": [
+                [
+                  0.40824829046386313,
+                  -0.8164965809277263,
+                  -0.4082482904638626
+                ],
+                [
+                  -0.7071067811865475,
+                  -3.576792014222709e-16,
+                  -0.7071067811865476
+                ],
+                [
+                  0.5773502691896258,
+                  0.5773502691896253,
+                  -0.5773502691896258
+                ]
+              ],
+              "translation": [
+                -0.7071067811865469,
+                -0.7071067811865475,
+                0.7071067811865474
+              ],
+              "phase": 1,
+              "reversedTargetCycle": false
+            },
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                0.05098,
+                0.32157,
+                0.50196
+              ]
+            },
+            "mappedSourceCycle": [
+              18,
+              26,
+              25,
+              10
+            ],
+            "orientationReversed": true
+          },
+          {
+            "piece": "Q3-mouth-6",
+            "sourceFaceId": 5,
+            "transform": {
+              "rowRotation": [
+                [
+                  0.40824829046386313,
+                  -0.8164965809277263,
+                  -0.4082482904638626
+                ],
+                [
+                  -0.7071067811865475,
+                  -3.576792014222709e-16,
+                  -0.7071067811865476
+                ],
+                [
+                  0.5773502691896258,
+                  0.5773502691896253,
+                  -0.5773502691896258
+                ]
+              ],
+              "translation": [
+                -0.7071067811865469,
+                -0.7071067811865475,
+                0.7071067811865474
+              ],
+              "phase": 1,
+              "reversedTargetCycle": false
+            },
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                0.90196,
+                0.45098,
+                0.0
+              ]
+            },
+            "mappedSourceCycle": [
+              10,
+              25,
+              23
+            ],
+            "orientationReversed": true
+          },
+          {
+            "piece": "Q3-mouth-6",
+            "sourceFaceId": 6,
+            "transform": {
+              "rowRotation": [
+                [
+                  0.40824829046386313,
+                  -0.8164965809277263,
+                  -0.4082482904638626
+                ],
+                [
+                  -0.7071067811865475,
+                  -3.576792014222709e-16,
+                  -0.7071067811865476
+                ],
+                [
+                  0.5773502691896258,
+                  0.5773502691896253,
+                  -0.5773502691896258
+                ]
+              ],
+              "translation": [
+                -0.7071067811865469,
+                -0.7071067811865475,
+                0.7071067811865474
+              ],
+              "phase": 1,
+              "reversedTargetCycle": false
+            },
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                0.05098,
+                0.32157,
+                0.50196
+              ]
+            },
+            "mappedSourceCycle": [
+              23,
+              25,
+              29,
+              7
+            ],
+            "orientationReversed": true
+          },
+          {
+            "piece": "Q3-mouth-6",
+            "sourceFaceId": 7,
+            "transform": {
+              "rowRotation": [
+                [
+                  0.40824829046386313,
+                  -0.8164965809277263,
+                  -0.4082482904638626
+                ],
+                [
+                  -0.7071067811865475,
+                  -3.576792014222709e-16,
+                  -0.7071067811865476
+                ],
+                [
+                  0.5773502691896258,
+                  0.5773502691896253,
+                  -0.5773502691896258
+                ]
+              ],
+              "translation": [
+                -0.7071067811865469,
+                -0.7071067811865475,
+                0.7071067811865474
+              ],
+              "phase": 1,
+              "reversedTargetCycle": false
+            },
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                0.90196,
+                0.45098,
+                0.0
+              ]
+            },
+            "mappedSourceCycle": [
+              7,
+              29,
+              14
+            ],
+            "orientationReversed": true
+          },
+          {
+            "piece": "Q3-mouth-10",
+            "sourceFaceId": 2,
+            "transform": {
+              "rowRotation": [
+                [
+                  -0.40824829046386313,
+                  0.8164965809277263,
+                  -0.4082482904638626
+                ],
+                [
+                  0.7071067811865475,
+                  3.576792014222709e-16,
+                  -0.7071067811865476
+                ],
+                [
+                  -0.5773502691896258,
+                  -0.5773502691896253,
+                  -0.5773502691896258
+                ]
+              ],
+              "translation": [
+                0.7071067811865469,
+                0.7071067811865475,
+                0.7071067811865474
+              ],
+              "phase": 0,
+              "reversedTargetCycle": false
+            },
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                0.05098,
+                0.32157,
+                0.50196
+              ]
+            },
+            "mappedSourceCycle": [
+              12,
+              28,
+              26,
+              0
+            ],
+            "orientationReversed": true
+          },
+          {
+            "piece": "Q3-mouth-10",
+            "sourceFaceId": 3,
+            "transform": {
+              "rowRotation": [
+                [
+                  -0.40824829046386313,
+                  0.8164965809277263,
+                  -0.4082482904638626
+                ],
+                [
+                  0.7071067811865475,
+                  3.576792014222709e-16,
+                  -0.7071067811865476
+                ],
+                [
+                  -0.5773502691896258,
+                  -0.5773502691896253,
+                  -0.5773502691896258
+                ]
+              ],
+              "translation": [
+                0.7071067811865469,
+                0.7071067811865475,
+                0.7071067811865474
+              ],
+              "phase": 0,
+              "reversedTargetCycle": false
+            },
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                0.90196,
+                0.45098,
+                0.0
+              ]
+            },
+            "mappedSourceCycle": [
+              0,
+              26,
+              16
+            ],
+            "orientationReversed": true
+          },
+          {
+            "piece": "Q3-mouth-10",
+            "sourceFaceId": 4,
+            "transform": {
+              "rowRotation": [
+                [
+                  -0.40824829046386313,
+                  0.8164965809277263,
+                  -0.4082482904638626
+                ],
+                [
+                  0.7071067811865475,
+                  3.576792014222709e-16,
+                  -0.7071067811865476
+                ],
+                [
+                  -0.5773502691896258,
+                  -0.5773502691896253,
+                  -0.5773502691896258
+                ]
+              ],
+              "translation": [
+                0.7071067811865469,
+                0.7071067811865475,
+                0.7071067811865474
+              ],
+              "phase": 0,
+              "reversedTargetCycle": false
+            },
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                0.05098,
+                0.32157,
+                0.50196
+              ]
+            },
+            "mappedSourceCycle": [
+              16,
+              26,
+              24,
+              8
+            ],
+            "orientationReversed": true
+          },
+          {
+            "piece": "Q3-mouth-10",
+            "sourceFaceId": 5,
+            "transform": {
+              "rowRotation": [
+                [
+                  -0.40824829046386313,
+                  0.8164965809277263,
+                  -0.4082482904638626
+                ],
+                [
+                  0.7071067811865475,
+                  3.576792014222709e-16,
+                  -0.7071067811865476
+                ],
+                [
+                  -0.5773502691896258,
+                  -0.5773502691896253,
+                  -0.5773502691896258
+                ]
+              ],
+              "translation": [
+                0.7071067811865469,
+                0.7071067811865475,
+                0.7071067811865474
+              ],
+              "phase": 0,
+              "reversedTargetCycle": false
+            },
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                0.90196,
+                0.45098,
+                0.0
+              ]
+            },
+            "mappedSourceCycle": [
+              8,
+              24,
+              20
+            ],
+            "orientationReversed": true
+          },
+          {
+            "piece": "Q3-mouth-10",
+            "sourceFaceId": 6,
+            "transform": {
+              "rowRotation": [
+                [
+                  -0.40824829046386313,
+                  0.8164965809277263,
+                  -0.4082482904638626
+                ],
+                [
+                  0.7071067811865475,
+                  3.576792014222709e-16,
+                  -0.7071067811865476
+                ],
+                [
+                  -0.5773502691896258,
+                  -0.5773502691896253,
+                  -0.5773502691896258
+                ]
+              ],
+              "translation": [
+                0.7071067811865469,
+                0.7071067811865475,
+                0.7071067811865474
+              ],
+              "phase": 0,
+              "reversedTargetCycle": false
+            },
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                0.05098,
+                0.32157,
+                0.50196
+              ]
+            },
+            "mappedSourceCycle": [
+              20,
+              24,
+              28,
+              4
+            ],
+            "orientationReversed": true
+          },
+          {
+            "piece": "Q3-mouth-10",
+            "sourceFaceId": 7,
+            "transform": {
+              "rowRotation": [
+                [
+                  -0.40824829046386313,
+                  0.8164965809277263,
+                  -0.4082482904638626
+                ],
+                [
+                  0.7071067811865475,
+                  3.576792014222709e-16,
+                  -0.7071067811865476
+                ],
+                [
+                  -0.5773502691896258,
+                  -0.5773502691896253,
+                  -0.5773502691896258
+                ]
+              ],
+              "translation": [
+                0.7071067811865469,
+                0.7071067811865475,
+                0.7071067811865474
+              ],
+              "phase": 0,
+              "reversedTargetCycle": false
+            },
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                0.90196,
+                0.45098,
+                0.0
+              ]
+            },
+            "mappedSourceCycle": [
+              4,
+              28,
+              12
+            ],
+            "orientationReversed": true
+          },
+          {
+            "piece": "Q3-mouth-12",
+            "sourceFaceId": 2,
+            "transform": {
+              "rowRotation": [
+                [
+                  0.40824829046386313,
+                  0.8164965809277263,
+                  0.4082482904638626
+                ],
+                [
+                  -0.7071067811865475,
+                  3.576792014222709e-16,
+                  0.7071067811865476
+                ],
+                [
+                  0.5773502691896258,
+                  -0.5773502691896253,
+                  0.5773502691896258
+                ]
+              ],
+              "translation": [
+                -0.7071067811865469,
+                0.7071067811865475,
+                -0.7071067811865474
+              ],
+              "phase": 0,
+              "reversedTargetCycle": false
+            },
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                0.05098,
+                0.32157,
+                0.50196
+              ]
+            },
+            "mappedSourceCycle": [
+              13,
+              28,
+              27,
+              1
+            ],
+            "orientationReversed": true
+          },
+          {
+            "piece": "Q3-mouth-12",
+            "sourceFaceId": 3,
+            "transform": {
+              "rowRotation": [
+                [
+                  0.40824829046386313,
+                  0.8164965809277263,
+                  0.4082482904638626
+                ],
+                [
+                  -0.7071067811865475,
+                  3.576792014222709e-16,
+                  0.7071067811865476
+                ],
+                [
+                  0.5773502691896258,
+                  -0.5773502691896253,
+                  0.5773502691896258
+                ]
+              ],
+              "translation": [
+                -0.7071067811865469,
+                0.7071067811865475,
+                -0.7071067811865474
+              ],
+              "phase": 0,
+              "reversedTargetCycle": false
+            },
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                0.90196,
+                0.45098,
+                0.0
+              ]
+            },
+            "mappedSourceCycle": [
+              1,
+              27,
+              19
+            ],
+            "orientationReversed": true
+          },
+          {
+            "piece": "Q3-mouth-12",
+            "sourceFaceId": 4,
+            "transform": {
+              "rowRotation": [
+                [
+                  0.40824829046386313,
+                  0.8164965809277263,
+                  0.4082482904638626
+                ],
+                [
+                  -0.7071067811865475,
+                  3.576792014222709e-16,
+                  0.7071067811865476
+                ],
+                [
+                  0.5773502691896258,
+                  -0.5773502691896253,
+                  0.5773502691896258
+                ]
+              ],
+              "translation": [
+                -0.7071067811865469,
+                0.7071067811865475,
+                -0.7071067811865474
+              ],
+              "phase": 0,
+              "reversedTargetCycle": false
+            },
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                0.05098,
+                0.32157,
+                0.50196
+              ]
+            },
+            "mappedSourceCycle": [
+              19,
+              27,
+              25,
+              11
+            ],
+            "orientationReversed": true
+          },
+          {
+            "piece": "Q3-mouth-12",
+            "sourceFaceId": 5,
+            "transform": {
+              "rowRotation": [
+                [
+                  0.40824829046386313,
+                  0.8164965809277263,
+                  0.4082482904638626
+                ],
+                [
+                  -0.7071067811865475,
+                  3.576792014222709e-16,
+                  0.7071067811865476
+                ],
+                [
+                  0.5773502691896258,
+                  -0.5773502691896253,
+                  0.5773502691896258
+                ]
+              ],
+              "translation": [
+                -0.7071067811865469,
+                0.7071067811865475,
+                -0.7071067811865474
+              ],
+              "phase": 0,
+              "reversedTargetCycle": false
+            },
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                0.90196,
+                0.45098,
+                0.0
+              ]
+            },
+            "mappedSourceCycle": [
+              11,
+              25,
+              22
+            ],
+            "orientationReversed": true
+          },
+          {
+            "piece": "Q3-mouth-12",
+            "sourceFaceId": 6,
+            "transform": {
+              "rowRotation": [
+                [
+                  0.40824829046386313,
+                  0.8164965809277263,
+                  0.4082482904638626
+                ],
+                [
+                  -0.7071067811865475,
+                  3.576792014222709e-16,
+                  0.7071067811865476
+                ],
+                [
+                  0.5773502691896258,
+                  -0.5773502691896253,
+                  0.5773502691896258
+                ]
+              ],
+              "translation": [
+                -0.7071067811865469,
+                0.7071067811865475,
+                -0.7071067811865474
+              ],
+              "phase": 0,
+              "reversedTargetCycle": false
+            },
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                0.05098,
+                0.32157,
+                0.50196
+              ]
+            },
+            "mappedSourceCycle": [
+              22,
+              25,
+              28,
+              6
+            ],
+            "orientationReversed": true
+          },
+          {
+            "piece": "Q3-mouth-12",
+            "sourceFaceId": 7,
+            "transform": {
+              "rowRotation": [
+                [
+                  0.40824829046386313,
+                  0.8164965809277263,
+                  0.4082482904638626
+                ],
+                [
+                  -0.7071067811865475,
+                  3.576792014222709e-16,
+                  0.7071067811865476
+                ],
+                [
+                  0.5773502691896258,
+                  -0.5773502691896253,
+                  0.5773502691896258
+                ]
+              ],
+              "translation": [
+                -0.7071067811865469,
+                0.7071067811865475,
+                -0.7071067811865474
+              ],
+              "phase": 0,
+              "reversedTargetCycle": false
+            },
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                0.90196,
+                0.45098,
+                0.0
+              ]
+            },
+            "mappedSourceCycle": [
+              6,
+              28,
+              13
+            ],
+            "orientationReversed": true
+          },
+          {
+            "piece": "Q3-mouth-13",
+            "sourceFaceId": 2,
+            "transform": {
+              "rowRotation": [
+                [
+                  -0.40824829046386313,
+                  -0.8164965809277263,
+                  0.4082482904638626
+                ],
+                [
+                  0.7071067811865475,
+                  -3.576792014222709e-16,
+                  0.7071067811865476
+                ],
+                [
+                  -0.5773502691896258,
+                  0.5773502691896253,
+                  0.5773502691896258
+                ]
+              ],
+              "translation": [
+                0.7071067811865469,
+                -0.7071067811865475,
+                -0.7071067811865474
+              ],
+              "phase": 0,
+              "reversedTargetCycle": false
+            },
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                0.05098,
+                0.32157,
+                0.50196
+              ]
+            },
+            "mappedSourceCycle": [
+              15,
+              29,
+              27,
+              3
+            ],
+            "orientationReversed": true
+          },
+          {
+            "piece": "Q3-mouth-13",
+            "sourceFaceId": 3,
+            "transform": {
+              "rowRotation": [
+                [
+                  -0.40824829046386313,
+                  -0.8164965809277263,
+                  0.4082482904638626
+                ],
+                [
+                  0.7071067811865475,
+                  -3.576792014222709e-16,
+                  0.7071067811865476
+                ],
+                [
+                  -0.5773502691896258,
+                  0.5773502691896253,
+                  0.5773502691896258
+                ]
+              ],
+              "translation": [
+                0.7071067811865469,
+                -0.7071067811865475,
+                -0.7071067811865474
+              ],
+              "phase": 0,
+              "reversedTargetCycle": false
+            },
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                0.90196,
+                0.45098,
+                0.0
+              ]
+            },
+            "mappedSourceCycle": [
+              3,
+              27,
+              17
+            ],
+            "orientationReversed": true
+          },
+          {
+            "piece": "Q3-mouth-13",
+            "sourceFaceId": 4,
+            "transform": {
+              "rowRotation": [
+                [
+                  -0.40824829046386313,
+                  -0.8164965809277263,
+                  0.4082482904638626
+                ],
+                [
+                  0.7071067811865475,
+                  -3.576792014222709e-16,
+                  0.7071067811865476
+                ],
+                [
+                  -0.5773502691896258,
+                  0.5773502691896253,
+                  0.5773502691896258
+                ]
+              ],
+              "translation": [
+                0.7071067811865469,
+                -0.7071067811865475,
+                -0.7071067811865474
+              ],
+              "phase": 0,
+              "reversedTargetCycle": false
+            },
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                0.05098,
+                0.32157,
+                0.50196
+              ]
+            },
+            "mappedSourceCycle": [
+              17,
+              27,
+              24,
+              9
+            ],
+            "orientationReversed": true
+          },
+          {
+            "piece": "Q3-mouth-13",
+            "sourceFaceId": 5,
+            "transform": {
+              "rowRotation": [
+                [
+                  -0.40824829046386313,
+                  -0.8164965809277263,
+                  0.4082482904638626
+                ],
+                [
+                  0.7071067811865475,
+                  -3.576792014222709e-16,
+                  0.7071067811865476
+                ],
+                [
+                  -0.5773502691896258,
+                  0.5773502691896253,
+                  0.5773502691896258
+                ]
+              ],
+              "translation": [
+                0.7071067811865469,
+                -0.7071067811865475,
+                -0.7071067811865474
+              ],
+              "phase": 0,
+              "reversedTargetCycle": false
+            },
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                0.90196,
+                0.45098,
+                0.0
+              ]
+            },
+            "mappedSourceCycle": [
+              9,
+              24,
+              21
+            ],
+            "orientationReversed": true
+          },
+          {
+            "piece": "Q3-mouth-13",
+            "sourceFaceId": 6,
+            "transform": {
+              "rowRotation": [
+                [
+                  -0.40824829046386313,
+                  -0.8164965809277263,
+                  0.4082482904638626
+                ],
+                [
+                  0.7071067811865475,
+                  -3.576792014222709e-16,
+                  0.7071067811865476
+                ],
+                [
+                  -0.5773502691896258,
+                  0.5773502691896253,
+                  0.5773502691896258
+                ]
+              ],
+              "translation": [
+                0.7071067811865469,
+                -0.7071067811865475,
+                -0.7071067811865474
+              ],
+              "phase": 0,
+              "reversedTargetCycle": false
+            },
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                0.05098,
+                0.32157,
+                0.50196
+              ]
+            },
+            "mappedSourceCycle": [
+              21,
+              24,
+              29,
+              5
+            ],
+            "orientationReversed": true
+          },
+          {
+            "piece": "Q3-mouth-13",
+            "sourceFaceId": 7,
+            "transform": {
+              "rowRotation": [
+                [
+                  -0.40824829046386313,
+                  -0.8164965809277263,
+                  0.4082482904638626
+                ],
+                [
+                  0.7071067811865475,
+                  -3.576792014222709e-16,
+                  0.7071067811865476
+                ],
+                [
+                  -0.5773502691896258,
+                  0.5773502691896253,
+                  0.5773502691896258
+                ]
+              ],
+              "translation": [
+                0.7071067811865469,
+                -0.7071067811865475,
+                -0.7071067811865474
+              ],
+              "phase": 0,
+              "reversedTargetCycle": false
+            },
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                0.90196,
+                0.45098,
+                0.0
+              ]
+            },
+            "mappedSourceCycle": [
+              5,
+              29,
+              15
+            ],
+            "orientationReversed": true
+          }
+        ],
+        "canceledCaps": [
+          [
+            {
+              "piece": "K3",
+              "sourceFaceId": 6,
+              "transform": null,
+              "sourceColor": {
+                "encoding": "unit",
+                "values": [
+                  1.0,
+                  0.79216,
+                  0.50196
+                ]
+              }
+            },
+            {
+              "piece": "Q3-mouth-6",
+              "sourceFaceId": 0,
+              "transform": {
+                "rowRotation": [
+                  [
+                    0.40824829046386313,
+                    -0.8164965809277263,
+                    -0.4082482904638626
+                  ],
+                  [
+                    -0.7071067811865475,
+                    -3.576792014222709e-16,
+                    -0.7071067811865476
+                  ],
+                  [
+                    0.5773502691896258,
+                    0.5773502691896253,
+                    -0.5773502691896258
+                  ]
+                ],
+                "translation": [
+                  -0.7071067811865469,
+                  -0.7071067811865475,
+                  0.7071067811865474
+                ],
+                "phase": 1,
+                "reversedTargetCycle": false
+              },
+              "sourceColor": {
+                "encoding": "unit",
+                "values": [
+                  1.0,
+                  0.79216,
+                  0.50196
+                ]
+              }
+            }
+          ],
+          [
+            {
+              "piece": "K3",
+              "sourceFaceId": 10,
+              "transform": null,
+              "sourceColor": {
+                "encoding": "unit",
+                "values": [
+                  1.0,
+                  0.79216,
+                  0.50196
+                ]
+              }
+            },
+            {
+              "piece": "Q3-mouth-10",
+              "sourceFaceId": 0,
+              "transform": {
+                "rowRotation": [
+                  [
+                    -0.40824829046386313,
+                    0.8164965809277263,
+                    -0.4082482904638626
+                  ],
+                  [
+                    0.7071067811865475,
+                    3.576792014222709e-16,
+                    -0.7071067811865476
+                  ],
+                  [
+                    -0.5773502691896258,
+                    -0.5773502691896253,
+                    -0.5773502691896258
+                  ]
+                ],
+                "translation": [
+                  0.7071067811865469,
+                  0.7071067811865475,
+                  0.7071067811865474
+                ],
+                "phase": 0,
+                "reversedTargetCycle": false
+              },
+              "sourceColor": {
+                "encoding": "unit",
+                "values": [
+                  1.0,
+                  0.79216,
+                  0.50196
+                ]
+              }
+            }
+          ],
+          [
+            {
+              "piece": "K3",
+              "sourceFaceId": 12,
+              "transform": null,
+              "sourceColor": {
+                "encoding": "unit",
+                "values": [
+                  1.0,
+                  0.79216,
+                  0.50196
+                ]
+              }
+            },
+            {
+              "piece": "Q3-mouth-12",
+              "sourceFaceId": 0,
+              "transform": {
+                "rowRotation": [
+                  [
+                    0.40824829046386313,
+                    0.8164965809277263,
+                    0.4082482904638626
+                  ],
+                  [
+                    -0.7071067811865475,
+                    3.576792014222709e-16,
+                    0.7071067811865476
+                  ],
+                  [
+                    0.5773502691896258,
+                    -0.5773502691896253,
+                    0.5773502691896258
+                  ]
+                ],
+                "translation": [
+                  -0.7071067811865469,
+                  0.7071067811865475,
+                  -0.7071067811865474
+                ],
+                "phase": 0,
+                "reversedTargetCycle": false
+              },
+              "sourceColor": {
+                "encoding": "unit",
+                "values": [
+                  1.0,
+                  0.79216,
+                  0.50196
+                ]
+              }
+            }
+          ],
+          [
+            {
+              "piece": "K3",
+              "sourceFaceId": 13,
+              "transform": null,
+              "sourceColor": {
+                "encoding": "unit",
+                "values": [
+                  1.0,
+                  0.79216,
+                  0.50196
+                ]
+              }
+            },
+            {
+              "piece": "Q3-mouth-13",
+              "sourceFaceId": 0,
+              "transform": {
+                "rowRotation": [
+                  [
+                    -0.40824829046386313,
+                    -0.8164965809277263,
+                    0.4082482904638626
+                  ],
+                  [
+                    0.7071067811865475,
+                    -3.576792014222709e-16,
+                    0.7071067811865476
+                  ],
+                  [
+                    -0.5773502691896258,
+                    0.5773502691896253,
+                    0.5773502691896258
+                  ]
+                ],
+                "translation": [
+                  0.7071067811865469,
+                  -0.7071067811865475,
+                  -0.7071067811865474
+                ],
+                "phase": 0,
+                "reversedTargetCycle": false
+              },
+              "sourceColor": {
+                "encoding": "unit",
+                "values": [
+                  1.0,
+                  0.79216,
+                  0.50196
+                ]
+              }
+            }
+          ],
+          [
+            {
+              "piece": "S3",
+              "sourceFaceId": 1,
+              "transform": null,
+              "sourceColor": {
+                "encoding": "unit",
+                "values": [
+                  0.90196,
+                  0.45098,
+                  0.0
+                ]
+              }
+            },
+            {
+              "piece": "Q3-mouth-10",
+              "sourceFaceId": 1,
+              "transform": {
+                "rowRotation": [
+                  [
+                    -0.40824829046386313,
+                    0.8164965809277263,
+                    -0.4082482904638626
+                  ],
+                  [
+                    0.7071067811865475,
+                    3.576792014222709e-16,
+                    -0.7071067811865476
+                  ],
+                  [
+                    -0.5773502691896258,
+                    -0.5773502691896253,
+                    -0.5773502691896258
+                  ]
+                ],
+                "translation": [
+                  0.7071067811865469,
+                  0.7071067811865475,
+                  0.7071067811865474
+                ],
+                "phase": 0,
+                "reversedTargetCycle": false
+              },
+              "sourceColor": {
+                "encoding": "unit",
+                "values": [
+                  0.90196,
+                  0.45098,
+                  0.0
+                ]
+              }
+            }
+          ],
+          [
+            {
+              "piece": "S3",
+              "sourceFaceId": 3,
+              "transform": null,
+              "sourceColor": {
+                "encoding": "unit",
+                "values": [
+                  0.90196,
+                  0.45098,
+                  0.0
+                ]
+              }
+            },
+            {
+              "piece": "Q3-mouth-12",
+              "sourceFaceId": 1,
+              "transform": {
+                "rowRotation": [
+                  [
+                    0.40824829046386313,
+                    0.8164965809277263,
+                    0.4082482904638626
+                  ],
+                  [
+                    -0.7071067811865475,
+                    3.576792014222709e-16,
+                    0.7071067811865476
+                  ],
+                  [
+                    0.5773502691896258,
+                    -0.5773502691896253,
+                    0.5773502691896258
+                  ]
+                ],
+                "translation": [
+                  -0.7071067811865469,
+                  0.7071067811865475,
+                  -0.7071067811865474
+                ],
+                "phase": 0,
+                "reversedTargetCycle": false
+              },
+              "sourceColor": {
+                "encoding": "unit",
+                "values": [
+                  0.90196,
+                  0.45098,
+                  0.0
+                ]
+              }
+            }
+          ],
+          [
+            {
+              "piece": "S3",
+              "sourceFaceId": 6,
+              "transform": null,
+              "sourceColor": {
+                "encoding": "unit",
+                "values": [
+                  0.90196,
+                  0.45098,
+                  0.0
+                ]
+              }
+            },
+            {
+              "piece": "Q3-mouth-6",
+              "sourceFaceId": 1,
+              "transform": {
+                "rowRotation": [
+                  [
+                    0.40824829046386313,
+                    -0.8164965809277263,
+                    -0.4082482904638626
+                  ],
+                  [
+                    -0.7071067811865475,
+                    -3.576792014222709e-16,
+                    -0.7071067811865476
+                  ],
+                  [
+                    0.5773502691896258,
+                    0.5773502691896253,
+                    -0.5773502691896258
+                  ]
+                ],
+                "translation": [
+                  -0.7071067811865469,
+                  -0.7071067811865475,
+                  0.7071067811865474
+                ],
+                "phase": 1,
+                "reversedTargetCycle": false
+              },
+              "sourceColor": {
+                "encoding": "unit",
+                "values": [
+                  0.90196,
+                  0.45098,
+                  0.0
+                ]
+              }
+            }
+          ],
+          [
+            {
+              "piece": "S3",
+              "sourceFaceId": 7,
+              "transform": null,
+              "sourceColor": {
+                "encoding": "unit",
+                "values": [
+                  0.90196,
+                  0.45098,
+                  0.0
+                ]
+              }
+            },
+            {
+              "piece": "Q3-mouth-13",
+              "sourceFaceId": 1,
+              "transform": {
+                "rowRotation": [
+                  [
+                    -0.40824829046386313,
+                    -0.8164965809277263,
+                    0.4082482904638626
+                  ],
+                  [
+                    0.7071067811865475,
+                    -3.576792014222709e-16,
+                    0.7071067811865476
+                  ],
+                  [
+                    -0.5773502691896258,
+                    0.5773502691896253,
+                    0.5773502691896258
+                  ]
+                ],
+                "translation": [
+                  0.7071067811865469,
+                  -0.7071067811865475,
+                  -0.7071067811865474
+                ],
+                "phase": 0,
+                "reversedTargetCycle": false
+              },
+              "sourceColor": {
+                "encoding": "unit",
+                "values": [
+                  0.90196,
+                  0.45098,
+                  0.0
+                ]
+              }
+            }
+          ]
+        ]
+      },
+      "construction": {
+        "definition": "Truncated octahedron excavated by a central regular octahedron with triangular cupola mouths on a tetrahedral set of hexagon facets.",
+        "parameters": {
+          "mouths": 4,
+          "edgeLength": 1
+        },
+        "mouths": [
+          {
+            "hullMouthFaceId": 6,
+            "centralOctahedronFaceId": 6,
+            "transform": {
+              "rowRotation": [
+                [
+                  0.40824829046386313,
+                  -0.8164965809277263,
+                  -0.4082482904638626
+                ],
+                [
+                  -0.7071067811865475,
+                  -3.576792014222709e-16,
+                  -0.7071067811865476
+                ],
+                [
+                  0.5773502691896258,
+                  0.5773502691896253,
+                  -0.5773502691896258
+                ]
+              ],
+              "translation": [
+                -0.7071067811865469,
+                -0.7071067811865475,
+                0.7071067811865474
+              ],
+              "phase": 1,
+              "reversedTargetCycle": false
+            }
+          },
+          {
+            "hullMouthFaceId": 10,
+            "centralOctahedronFaceId": 1,
+            "transform": {
+              "rowRotation": [
+                [
+                  -0.40824829046386313,
+                  0.8164965809277263,
+                  -0.4082482904638626
+                ],
+                [
+                  0.7071067811865475,
+                  3.576792014222709e-16,
+                  -0.7071067811865476
+                ],
+                [
+                  -0.5773502691896258,
+                  -0.5773502691896253,
+                  -0.5773502691896258
+                ]
+              ],
+              "translation": [
+                0.7071067811865469,
+                0.7071067811865475,
+                0.7071067811865474
+              ],
+              "phase": 0,
+              "reversedTargetCycle": false
+            }
+          },
+          {
+            "hullMouthFaceId": 12,
+            "centralOctahedronFaceId": 3,
+            "transform": {
+              "rowRotation": [
+                [
+                  0.40824829046386313,
+                  0.8164965809277263,
+                  0.4082482904638626
+                ],
+                [
+                  -0.7071067811865475,
+                  3.576792014222709e-16,
+                  0.7071067811865476
+                ],
+                [
+                  0.5773502691896258,
+                  -0.5773502691896253,
+                  0.5773502691896258
+                ]
+              ],
+              "translation": [
+                -0.7071067811865469,
+                0.7071067811865475,
+                -0.7071067811865474
+              ],
+              "phase": 0,
+              "reversedTargetCycle": false
+            }
+          },
+          {
+            "hullMouthFaceId": 13,
+            "centralOctahedronFaceId": 7,
+            "transform": {
+              "rowRotation": [
+                [
+                  -0.40824829046386313,
+                  -0.8164965809277263,
+                  0.4082482904638626
+                ],
+                [
+                  0.7071067811865475,
+                  -3.576792014222709e-16,
+                  0.7071067811865476
+                ],
+                [
+                  -0.5773502691896258,
+                  0.5773502691896253,
+                  0.5773502691896258
+                ]
+              ],
+              "translation": [
+                0.7071067811865469,
+                -0.7071067811865475,
+                -0.7071067811865474
+              ],
+              "phase": 0,
+              "reversedTargetCycle": false
+            }
+          }
+        ],
+        "primaryReference": "https://www.orchidpalms.com/polyhedra/toroids/toroids2.html",
+        "primaryNamedExample": true,
+        "excavationOpenings": 4,
+        "excavationChangesGenusFrom": 0,
+        "excavationChangesGenusTo": 3,
+        "genusDerivation": "A connected spherical outer boundary and connected spherical excavation boundary, each with m cap disks removed and paired, give Euler characteristic 4-2m and genus m-1."
+      },
+      "numericChecks": {
+        "classified": true,
+        "mode": "float64-approximate",
+        "certified": false,
+        "tolerance": 1e-07,
+        "predicateScale": 2.82842712474619,
+        "R": {
+          "passed": true,
+          "maximumResidual": 1.1102230246251565e-15,
+          "ordinaryFaceSizeCounts": {
+            "3": 16,
+            "4": 18,
+            "6": 4
+          }
+        },
+        "A": {
+          "passed": true,
+          "minimumAdjacentNormalCrossLength": 0.8164965809277257
+        },
+        "Q": {
+          "passed": true,
+          "hullEdgeCount": 36,
+          "missingHullEdges": []
+        },
+        "T": {
+          "passed": true,
+          "componentCount": 1,
+          "topology": {
+            "vertices": 30,
+            "edges": 72,
+            "faces": 38,
+            "eulerCharacteristic": -4,
+            "closedVertexManifold": true,
+            "orientable": true,
+            "genus": 3,
+            "genusScope": "Abstract supplied boundary; geometric self-intersection is not excluded."
+          }
+        },
+        "D": {
+          "passed": true,
+          "facePairsChecked": 703,
+          "coplanarPairsChecked": 18,
+          "conflicts": [],
+          "method": "Complete convex-face pair plane-line interval checks and coplanar closed polygon clipping; shared source edges/vertices retained."
+        },
+        "scope": "Numerical R/A/Q/T/D for this supplied ordinary regular-faced positive-genus boundary; no exhaustive Stewart catalog or exact certificate."
+      }
+    },
+    {
+      "key": "stewart-k3-q3t3",
+      "name": "Stewart toroid K3 / Q3T3",
+      "dimension": 3,
+      "family": "Stewart toroids",
+      "symbol": "K3 / Q3T3",
+      "counts": [
+        30,
+        54,
+        24,
+        0
+      ],
+      "aliases": [
+        "Stewart",
+        "toroid",
+        "regular-faced tunnel",
+        "K3/Q3T3",
+        "genus 1"
+      ],
+      "componentCount": 1,
+      "genus": [
+        1
+      ],
+      "sourceClassification": "Primary named Stewart excavation (page34); numerical R/A/Q/T/D verified.",
+      "chirality": {
+        "status": "unresolved",
+        "scope": "Complete incidence-preserving symmetry/chirality search is not claimed."
+      },
+      "file": "models/stewart-k3-q3t3.off",
+      "sha256": "b96ec87a56442f6b0904614f012f725505b3aff09385432445a3872c102c07fa",
+      "sourceFile": "sources/stewart-k3-q3t3-unoriented.off",
+      "sourceSha256": "1afa7fe0990ab3e68f274a2e479f7e71cd12e3e1013caf0699ac66c248c25b67",
+      "sourceParts": [
+        {
+          "sourceKey": "antiprism-u8",
+          "file": "sources/u8.off",
+          "sha256": "50a0c613cdd2ba9d81faddc2e6acb658934d18fbb84ffca2673b3e16cea0e722",
+          "sourceCounts": {
+            "vertices": 24,
+            "edges": 36,
+            "faces": 14,
+            "cells": 0
+          }
+        },
+        {
+          "sourceKey": "antiprism-j3",
+          "file": "sources/j3.off",
+          "sha256": "1f323ba0d162adfac72237b0af21d1938a4bb17b4484eda95812aa5df3c22bab",
+          "sourceCounts": {
+            "vertices": 9,
+            "edges": 15,
+            "faces": 8,
+            "cells": 0
+          }
+        },
+        {
+          "sourceKey": "antiprism-u2",
+          "file": "sources/u2.off",
+          "sha256": "af18218a87c62c2743cb42a2361dbcfd4bdb69fb5ac6ec846bfc11ae1741f6b2",
+          "sourceCounts": {
+            "vertices": 12,
+            "edges": 18,
+            "faces": 8,
+            "cells": 0
+          }
+        }
+      ],
+      "sourceMaps": {
+        "vertexOrigins": [
+          [
+            {
+              "piece": "K3",
+              "sourceVertexId": 0
+            }
+          ],
+          [
+            {
+              "piece": "K3",
+              "sourceVertexId": 1
+            },
+            {
+              "piece": "T3",
+              "sourceVertexId": 1
+            }
+          ],
+          [
+            {
+              "piece": "K3",
+              "sourceVertexId": 2
+            },
+            {
+              "piece": "Q3",
+              "sourceVertexId": 0
+            }
+          ],
+          [
+            {
+              "piece": "K3",
+              "sourceVertexId": 3
+            }
+          ],
+          [
+            {
+              "piece": "K3",
+              "sourceVertexId": 4
+            },
+            {
+              "piece": "T3",
+              "sourceVertexId": 10
+            }
+          ],
+          [
+            {
+              "piece": "K3",
+              "sourceVertexId": 5
+            }
+          ],
+          [
+            {
+              "piece": "K3",
+              "sourceVertexId": 6
+            }
+          ],
+          [
+            {
+              "piece": "K3",
+              "sourceVertexId": 7
+            },
+            {
+              "piece": "Q3",
+              "sourceVertexId": 4
+            }
+          ],
+          [
+            {
+              "piece": "K3",
+              "sourceVertexId": 8
+            }
+          ],
+          [
+            {
+              "piece": "K3",
+              "sourceVertexId": 9
+            },
+            {
+              "piece": "T3",
+              "sourceVertexId": 7
+            }
+          ],
+          [
+            {
+              "piece": "K3",
+              "sourceVertexId": 10
+            },
+            {
+              "piece": "Q3",
+              "sourceVertexId": 2
+            }
+          ],
+          [
+            {
+              "piece": "K3",
+              "sourceVertexId": 11
+            }
+          ],
+          [
+            {
+              "piece": "K3",
+              "sourceVertexId": 12
+            }
+          ],
+          [
+            {
+              "piece": "K3",
+              "sourceVertexId": 13
+            },
+            {
+              "piece": "T3",
+              "sourceVertexId": 2
+            }
+          ],
+          [
+            {
+              "piece": "K3",
+              "sourceVertexId": 14
+            },
+            {
+              "piece": "Q3",
+              "sourceVertexId": 5
+            }
+          ],
+          [
+            {
+              "piece": "K3",
+              "sourceVertexId": 15
+            }
+          ],
+          [
+            {
+              "piece": "K3",
+              "sourceVertexId": 16
+            }
+          ],
+          [
+            {
+              "piece": "K3",
+              "sourceVertexId": 17
+            },
+            {
+              "piece": "T3",
+              "sourceVertexId": 5
+            }
+          ],
+          [
+            {
+              "piece": "K3",
+              "sourceVertexId": 18
+            },
+            {
+              "piece": "Q3",
+              "sourceVertexId": 1
+            }
+          ],
+          [
+            {
+              "piece": "K3",
+              "sourceVertexId": 19
+            }
+          ],
+          [
+            {
+              "piece": "K3",
+              "sourceVertexId": 20
+            },
+            {
+              "piece": "T3",
+              "sourceVertexId": 11
+            }
+          ],
+          [
+            {
+              "piece": "K3",
+              "sourceVertexId": 21
+            }
+          ],
+          [
+            {
+              "piece": "K3",
+              "sourceVertexId": 22
+            }
+          ],
+          [
+            {
+              "piece": "K3",
+              "sourceVertexId": 23
+            },
+            {
+              "piece": "Q3",
+              "sourceVertexId": 3
+            }
+          ],
+          [
+            {
+              "piece": "Q3",
+              "sourceVertexId": 6
+            },
+            {
+              "piece": "T3",
+              "sourceVertexId": 0
+            }
+          ],
+          [
+            {
+              "piece": "Q3",
+              "sourceVertexId": 7
+            },
+            {
+              "piece": "T3",
+              "sourceVertexId": 4
+            }
+          ],
+          [
+            {
+              "piece": "Q3",
+              "sourceVertexId": 8
+            },
+            {
+              "piece": "T3",
+              "sourceVertexId": 8
+            }
+          ],
+          [
+            {
+              "piece": "T3",
+              "sourceVertexId": 3
+            }
+          ],
+          [
+            {
+              "piece": "T3",
+              "sourceVertexId": 6
+            }
+          ],
+          [
+            {
+              "piece": "T3",
+              "sourceVertexId": 9
+            }
+          ]
+        ],
+        "faceOrigins": [
+          {
+            "piece": "K3",
+            "sourceFaceId": 0,
+            "transform": null,
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                0.05098,
+                0.32157,
+                0.50196
+              ]
+            },
+            "mappedSourceCycle": [
+              2,
+              16,
+              0,
+              18
+            ],
+            "orientationReversed": false
+          },
+          {
+            "piece": "K3",
+            "sourceFaceId": 1,
+            "transform": null,
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                0.05098,
+                0.32157,
+                0.50196
+              ]
+            },
+            "mappedSourceCycle": [
+              5,
+              14,
+              7,
+              15
+            ],
+            "orientationReversed": false
+          },
+          {
+            "piece": "K3",
+            "sourceFaceId": 2,
+            "transform": null,
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                0.05098,
+                0.32157,
+                0.50196
+              ]
+            },
+            "mappedSourceCycle": [
+              6,
+              12,
+              4,
+              13
+            ],
+            "orientationReversed": false
+          },
+          {
+            "piece": "K3",
+            "sourceFaceId": 3,
+            "transform": null,
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                0.05098,
+                0.32157,
+                0.50196
+              ]
+            },
+            "mappedSourceCycle": [
+              11,
+              23,
+              10,
+              22
+            ],
+            "orientationReversed": false
+          },
+          {
+            "piece": "K3",
+            "sourceFaceId": 4,
+            "transform": null,
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                0.05098,
+                0.32157,
+                0.50196
+              ]
+            },
+            "mappedSourceCycle": [
+              19,
+              1,
+              17,
+              3
+            ],
+            "orientationReversed": false
+          },
+          {
+            "piece": "K3",
+            "sourceFaceId": 5,
+            "transform": null,
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                0.05098,
+                0.32157,
+                0.50196
+              ]
+            },
+            "mappedSourceCycle": [
+              20,
+              8,
+              21,
+              9
+            ],
+            "orientationReversed": false
+          },
+          {
+            "piece": "K3",
+            "sourceFaceId": 7,
+            "transform": null,
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                1.0,
+                0.79216,
+                0.50196
+              ]
+            },
+            "mappedSourceCycle": [
+              3,
+              15,
+              7,
+              23,
+              11,
+              19
+            ],
+            "orientationReversed": false
+          },
+          {
+            "piece": "K3",
+            "sourceFaceId": 8,
+            "transform": null,
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                1.0,
+                0.79216,
+                0.50196
+              ]
+            },
+            "mappedSourceCycle": [
+              5,
+              21,
+              8,
+              16,
+              2,
+              14
+            ],
+            "orientationReversed": false
+          },
+          {
+            "piece": "K3",
+            "sourceFaceId": 10,
+            "transform": null,
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                1.0,
+                0.79216,
+                0.50196
+              ]
+            },
+            "mappedSourceCycle": [
+              12,
+              0,
+              16,
+              8,
+              20,
+              4
+            ],
+            "orientationReversed": false
+          },
+          {
+            "piece": "K3",
+            "sourceFaceId": 11,
+            "transform": null,
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                1.0,
+                0.79216,
+                0.50196
+              ]
+            },
+            "mappedSourceCycle": [
+              12,
+              6,
+              22,
+              10,
+              18,
+              0
+            ],
+            "orientationReversed": false
+          },
+          {
+            "piece": "K3",
+            "sourceFaceId": 12,
+            "transform": null,
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                1.0,
+                0.79216,
+                0.50196
+              ]
+            },
+            "mappedSourceCycle": [
+              13,
+              1,
+              19,
+              11,
+              22,
+              6
+            ],
+            "orientationReversed": false
+          },
+          {
+            "piece": "K3",
+            "sourceFaceId": 13,
+            "transform": null,
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                1.0,
+                0.79216,
+                0.50196
+              ]
+            },
+            "mappedSourceCycle": [
+              15,
+              3,
+              17,
+              9,
+              21,
+              5
+            ],
+            "orientationReversed": false
+          },
+          {
+            "piece": "Q3",
+            "sourceFaceId": 2,
+            "transform": {
+              "rowRotation": [
+                [
+                  0.8164965809277258,
+                  -0.40824829046386274,
+                  0.40824829046386346
+                ],
+                [
+                  3.08454613352823e-16,
+                  -0.7071067811865476,
+                  -0.7071067811865472
+                ],
+                [
+                  0.5773502691896261,
+                  0.5773502691896255,
+                  -0.5773502691896257
+                ]
+              ],
+              "translation": [
+                -0.707106781186547,
+                -0.7071067811865471,
+                0.7071067811865475
+              ],
+              "phase": 0,
+              "reversedTargetCycle": false
+            },
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                0.05098,
+                0.32157,
+                0.50196
+              ]
+            },
+            "mappedSourceCycle": [
+              2,
+              24,
+              25,
+              18
+            ],
+            "orientationReversed": true
+          },
+          {
+            "piece": "Q3",
+            "sourceFaceId": 3,
+            "transform": {
+              "rowRotation": [
+                [
+                  0.8164965809277258,
+                  -0.40824829046386274,
+                  0.40824829046386346
+                ],
+                [
+                  3.08454613352823e-16,
+                  -0.7071067811865476,
+                  -0.7071067811865472
+                ],
+                [
+                  0.5773502691896261,
+                  0.5773502691896255,
+                  -0.5773502691896257
+                ]
+              ],
+              "translation": [
+                -0.707106781186547,
+                -0.7071067811865471,
+                0.7071067811865475
+              ],
+              "phase": 0,
+              "reversedTargetCycle": false
+            },
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                0.90196,
+                0.45098,
+                0.0
+              ]
+            },
+            "mappedSourceCycle": [
+              18,
+              25,
+              10
+            ],
+            "orientationReversed": true
+          },
+          {
+            "piece": "Q3",
+            "sourceFaceId": 4,
+            "transform": {
+              "rowRotation": [
+                [
+                  0.8164965809277258,
+                  -0.40824829046386274,
+                  0.40824829046386346
+                ],
+                [
+                  3.08454613352823e-16,
+                  -0.7071067811865476,
+                  -0.7071067811865472
+                ],
+                [
+                  0.5773502691896261,
+                  0.5773502691896255,
+                  -0.5773502691896257
+                ]
+              ],
+              "translation": [
+                -0.707106781186547,
+                -0.7071067811865471,
+                0.7071067811865475
+              ],
+              "phase": 0,
+              "reversedTargetCycle": false
+            },
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                0.05098,
+                0.32157,
+                0.50196
+              ]
+            },
+            "mappedSourceCycle": [
+              10,
+              25,
+              26,
+              23
+            ],
+            "orientationReversed": true
+          },
+          {
+            "piece": "Q3",
+            "sourceFaceId": 5,
+            "transform": {
+              "rowRotation": [
+                [
+                  0.8164965809277258,
+                  -0.40824829046386274,
+                  0.40824829046386346
+                ],
+                [
+                  3.08454613352823e-16,
+                  -0.7071067811865476,
+                  -0.7071067811865472
+                ],
+                [
+                  0.5773502691896261,
+                  0.5773502691896255,
+                  -0.5773502691896257
+                ]
+              ],
+              "translation": [
+                -0.707106781186547,
+                -0.7071067811865471,
+                0.7071067811865475
+              ],
+              "phase": 0,
+              "reversedTargetCycle": false
+            },
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                0.90196,
+                0.45098,
+                0.0
+              ]
+            },
+            "mappedSourceCycle": [
+              23,
+              26,
+              7
+            ],
+            "orientationReversed": true
+          },
+          {
+            "piece": "Q3",
+            "sourceFaceId": 6,
+            "transform": {
+              "rowRotation": [
+                [
+                  0.8164965809277258,
+                  -0.40824829046386274,
+                  0.40824829046386346
+                ],
+                [
+                  3.08454613352823e-16,
+                  -0.7071067811865476,
+                  -0.7071067811865472
+                ],
+                [
+                  0.5773502691896261,
+                  0.5773502691896255,
+                  -0.5773502691896257
+                ]
+              ],
+              "translation": [
+                -0.707106781186547,
+                -0.7071067811865471,
+                0.7071067811865475
+              ],
+              "phase": 0,
+              "reversedTargetCycle": false
+            },
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                0.05098,
+                0.32157,
+                0.50196
+              ]
+            },
+            "mappedSourceCycle": [
+              7,
+              26,
+              24,
+              14
+            ],
+            "orientationReversed": true
+          },
+          {
+            "piece": "Q3",
+            "sourceFaceId": 7,
+            "transform": {
+              "rowRotation": [
+                [
+                  0.8164965809277258,
+                  -0.40824829046386274,
+                  0.40824829046386346
+                ],
+                [
+                  3.08454613352823e-16,
+                  -0.7071067811865476,
+                  -0.7071067811865472
+                ],
+                [
+                  0.5773502691896261,
+                  0.5773502691896255,
+                  -0.5773502691896257
+                ]
+              ],
+              "translation": [
+                -0.707106781186547,
+                -0.7071067811865471,
+                0.7071067811865475
+              ],
+              "phase": 0,
+              "reversedTargetCycle": false
+            },
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                0.90196,
+                0.45098,
+                0.0
+              ]
+            },
+            "mappedSourceCycle": [
+              14,
+              24,
+              2
+            ],
+            "orientationReversed": true
+          },
+          {
+            "piece": "T3",
+            "sourceFaceId": 1,
+            "transform": {
+              "rowRotation": [
+                [
+                  -0.6666666666666663,
+                  -0.666666666666667,
+                  -0.3333333333333332
+                ],
+                [
+                  -0.6666666666666667,
+                  0.33333333333333326,
+                  0.666666666666667
+                ],
+                [
+                  -0.33333333333333326,
+                  0.6666666666666667,
+                  -0.6666666666666667
+                ]
+              ],
+              "translation": [
+                0.3535533905932736,
+                0.35355339059327395,
+                -0.35355339059327395
+              ],
+              "phase": 0,
+              "reversedTargetCycle": true
+            },
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                0.90196,
+                0.45098,
+                0.0
+              ]
+            },
+            "mappedSourceCycle": [
+              13,
+              28,
+              4
+            ],
+            "orientationReversed": true
+          },
+          {
+            "piece": "T3",
+            "sourceFaceId": 2,
+            "transform": {
+              "rowRotation": [
+                [
+                  -0.6666666666666663,
+                  -0.666666666666667,
+                  -0.3333333333333332
+                ],
+                [
+                  -0.6666666666666667,
+                  0.33333333333333326,
+                  0.666666666666667
+                ],
+                [
+                  -0.33333333333333326,
+                  0.6666666666666667,
+                  -0.6666666666666667
+                ]
+              ],
+              "translation": [
+                0.3535533905932736,
+                0.35355339059327395,
+                -0.35355339059327395
+              ],
+              "phase": 0,
+              "reversedTargetCycle": true
+            },
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                0.90196,
+                0.45098,
+                0.0
+              ]
+            },
+            "mappedSourceCycle": [
+              27,
+              9,
+              20
+            ],
+            "orientationReversed": true
+          },
+          {
+            "piece": "T3",
+            "sourceFaceId": 3,
+            "transform": {
+              "rowRotation": [
+                [
+                  -0.6666666666666663,
+                  -0.666666666666667,
+                  -0.3333333333333332
+                ],
+                [
+                  -0.6666666666666667,
+                  0.33333333333333326,
+                  0.666666666666667
+                ],
+                [
+                  -0.33333333333333326,
+                  0.6666666666666667,
+                  -0.6666666666666667
+                ]
+              ],
+              "translation": [
+                0.3535533905932736,
+                0.35355339059327395,
+                -0.35355339059327395
+              ],
+              "phase": 0,
+              "reversedTargetCycle": true
+            },
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                0.90196,
+                0.45098,
+                0.0
+              ]
+            },
+            "mappedSourceCycle": [
+              29,
+              1,
+              17
+            ],
+            "orientationReversed": true
+          },
+          {
+            "piece": "T3",
+            "sourceFaceId": 4,
+            "transform": {
+              "rowRotation": [
+                [
+                  -0.6666666666666663,
+                  -0.666666666666667,
+                  -0.3333333333333332
+                ],
+                [
+                  -0.6666666666666667,
+                  0.33333333333333326,
+                  0.666666666666667
+                ],
+                [
+                  -0.33333333333333326,
+                  0.6666666666666667,
+                  -0.6666666666666667
+                ]
+              ],
+              "translation": [
+                0.3535533905932736,
+                0.35355339059327395,
+                -0.35355339059327395
+              ],
+              "phase": 0,
+              "reversedTargetCycle": true
+            },
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                1.0,
+                0.79216,
+                0.50196
+              ]
+            },
+            "mappedSourceCycle": [
+              24,
+              27,
+              20,
+              4,
+              28,
+              25
+            ],
+            "orientationReversed": true
+          },
+          {
+            "piece": "T3",
+            "sourceFaceId": 6,
+            "transform": {
+              "rowRotation": [
+                [
+                  -0.6666666666666663,
+                  -0.666666666666667,
+                  -0.3333333333333332
+                ],
+                [
+                  -0.6666666666666667,
+                  0.33333333333333326,
+                  0.666666666666667
+                ],
+                [
+                  -0.33333333333333326,
+                  0.6666666666666667,
+                  -0.6666666666666667
+                ]
+              ],
+              "translation": [
+                0.3535533905932736,
+                0.35355339059327395,
+                -0.35355339059327395
+              ],
+              "phase": 0,
+              "reversedTargetCycle": true
+            },
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                1.0,
+                0.79216,
+                0.50196
+              ]
+            },
+            "mappedSourceCycle": [
+              29,
+              17,
+              9,
+              27,
+              24,
+              26
+            ],
+            "orientationReversed": true
+          },
+          {
+            "piece": "T3",
+            "sourceFaceId": 7,
+            "transform": {
+              "rowRotation": [
+                [
+                  -0.6666666666666663,
+                  -0.666666666666667,
+                  -0.3333333333333332
+                ],
+                [
+                  -0.6666666666666667,
+                  0.33333333333333326,
+                  0.666666666666667
+                ],
+                [
+                  -0.33333333333333326,
+                  0.6666666666666667,
+                  -0.6666666666666667
+                ]
+              ],
+              "translation": [
+                0.3535533905932736,
+                0.35355339059327395,
+                -0.35355339059327395
+              ],
+              "phase": 0,
+              "reversedTargetCycle": true
+            },
+            "sourceColor": {
+              "encoding": "unit",
+              "values": [
+                1.0,
+                0.79216,
+                0.50196
+              ]
+            },
+            "mappedSourceCycle": [
+              29,
+              26,
+              25,
+              28,
+              13,
+              1
+            ],
+            "orientationReversed": true
+          }
+        ],
+        "canceledCaps": [
+          [
+            {
+              "piece": "K3",
+              "sourceFaceId": 6,
+              "transform": null,
+              "sourceColor": {
+                "encoding": "unit",
+                "values": [
+                  1.0,
+                  0.79216,
+                  0.50196
+                ]
+              }
+            },
+            {
+              "piece": "Q3",
+              "sourceFaceId": 0,
+              "transform": {
+                "rowRotation": [
+                  [
+                    0.8164965809277258,
+                    -0.40824829046386274,
+                    0.40824829046386346
+                  ],
+                  [
+                    3.08454613352823e-16,
+                    -0.7071067811865476,
+                    -0.7071067811865472
+                  ],
+                  [
+                    0.5773502691896261,
+                    0.5773502691896255,
+                    -0.5773502691896257
+                  ]
+                ],
+                "translation": [
+                  -0.707106781186547,
+                  -0.7071067811865471,
+                  0.7071067811865475
+                ],
+                "phase": 0,
+                "reversedTargetCycle": false
+              },
+              "sourceColor": {
+                "encoding": "unit",
+                "values": [
+                  1.0,
+                  0.79216,
+                  0.50196
+                ]
+              }
+            }
+          ],
+          [
+            {
+              "piece": "K3",
+              "sourceFaceId": 9,
+              "transform": null,
+              "sourceColor": {
+                "encoding": "unit",
+                "values": [
+                  1.0,
+                  0.79216,
+                  0.50196
+                ]
+              }
+            },
+            {
+              "piece": "T3",
+              "sourceFaceId": 5,
+              "transform": {
+                "rowRotation": [
+                  [
+                    -0.6666666666666663,
+                    -0.666666666666667,
+                    -0.3333333333333332
+                  ],
+                  [
+                    -0.6666666666666667,
+                    0.33333333333333326,
+                    0.666666666666667
+                  ],
+                  [
+                    -0.33333333333333326,
+                    0.6666666666666667,
+                    -0.6666666666666667
+                  ]
+                ],
+                "translation": [
+                  0.3535533905932736,
+                  0.35355339059327395,
+                  -0.35355339059327395
+                ],
+                "phase": 0,
+                "reversedTargetCycle": true
+              },
+              "sourceColor": {
+                "encoding": "unit",
+                "values": [
+                  1.0,
+                  0.79216,
+                  0.50196
+                ]
+              }
+            }
+          ],
+          [
+            {
+              "piece": "Q3",
+              "sourceFaceId": 1,
+              "transform": {
+                "rowRotation": [
+                  [
+                    0.8164965809277258,
+                    -0.40824829046386274,
+                    0.40824829046386346
+                  ],
+                  [
+                    3.08454613352823e-16,
+                    -0.7071067811865476,
+                    -0.7071067811865472
+                  ],
+                  [
+                    0.5773502691896261,
+                    0.5773502691896255,
+                    -0.5773502691896257
+                  ]
+                ],
+                "translation": [
+                  -0.707106781186547,
+                  -0.7071067811865471,
+                  0.7071067811865475
+                ],
+                "phase": 0,
+                "reversedTargetCycle": false
+              },
+              "sourceColor": {
+                "encoding": "unit",
+                "values": [
+                  0.90196,
+                  0.45098,
+                  0.0
+                ]
+              }
+            },
+            {
+              "piece": "T3",
+              "sourceFaceId": 0,
+              "transform": {
+                "rowRotation": [
+                  [
+                    -0.6666666666666663,
+                    -0.666666666666667,
+                    -0.3333333333333332
+                  ],
+                  [
+                    -0.6666666666666667,
+                    0.33333333333333326,
+                    0.666666666666667
+                  ],
+                  [
+                    -0.33333333333333326,
+                    0.6666666666666667,
+                    -0.6666666666666667
+                  ]
+                ],
+                "translation": [
+                  0.3535533905932736,
+                  0.35355339059327395,
+                  -0.35355339059327395
+                ],
+                "phase": 0,
+                "reversedTargetCycle": true
+              },
+              "sourceColor": {
+                "encoding": "unit",
+                "values": [
+                  0.90196,
+                  0.45098,
+                  0.0
+                ]
+              }
+            }
+          ]
+        ]
+      },
+      "construction": {
+        "definition": "Truncated octahedron excavated by face-bonded triangular cupola and truncated tetrahedron; two hexagonal cap openings.",
+        "transforms": {
+          "outerMouthFaceId": 6,
+          "cupolaTransform": {
+            "rowRotation": [
+              [
+                0.8164965809277258,
+                -0.40824829046386274,
+                0.40824829046386346
+              ],
+              [
+                3.08454613352823e-16,
+                -0.7071067811865476,
+                -0.7071067811865472
+              ],
+              [
+                0.5773502691896261,
+                0.5773502691896255,
+                -0.5773502691896257
+              ]
+            ],
+            "translation": [
+              -0.707106781186547,
+              -0.7071067811865471,
+              0.7071067811865475
+            ],
+            "phase": 0,
+            "reversedTargetCycle": false
+          },
+          "tetrahedronTransform": {
+            "rowRotation": [
+              [
+                -0.6666666666666663,
+                -0.666666666666667,
+                -0.3333333333333332
+              ],
+              [
+                -0.6666666666666667,
+                0.33333333333333326,
+                0.666666666666667
+              ],
+              [
+                -0.33333333333333326,
+                0.6666666666666667,
+                -0.6666666666666667
+              ]
+            ],
+            "translation": [
+              0.3535533905932736,
+              0.35355339059327395,
+              -0.35355339059327395
+            ],
+            "phase": 0,
+            "reversedTargetCycle": true
+          },
+          "oppositeMouth": [
+            [
+              9,
+              5
+            ]
+          ]
+        },
+        "primaryReference": "https://www.orchidpalms.com/polyhedra/toroids/toroids2.html",
+        "primaryNamedExample": true,
+        "excavationOpenings": 2,
+        "excavationChangesGenusFrom": 0,
+        "excavationChangesGenusTo": 1
+      },
+      "numericChecks": {
+        "classified": true,
+        "mode": "float64-approximate",
+        "certified": false,
+        "tolerance": 1e-07,
+        "predicateScale": 2.82842712474619,
+        "R": {
+          "passed": true,
+          "maximumResidual": 1.3322676295501878e-15,
+          "ordinaryFaceSizeCounts": {
+            "3": 6,
+            "4": 9,
+            "6": 9
+          }
+        },
+        "A": {
+          "passed": true,
+          "minimumAdjacentNormalCrossLength": 0.2721655269759083
+        },
+        "Q": {
+          "passed": true,
+          "hullEdgeCount": 36,
+          "missingHullEdges": []
+        },
+        "T": {
+          "passed": true,
+          "componentCount": 1,
+          "topology": {
+            "vertices": 30,
+            "edges": 54,
+            "faces": 24,
+            "eulerCharacteristic": 0,
+            "closedVertexManifold": true,
+            "orientable": true,
+            "genus": 1,
+            "genusScope": "Abstract supplied boundary; geometric self-intersection is not excluded."
+          }
+        },
+        "D": {
+          "passed": true,
+          "facePairsChecked": 276,
+          "coplanarPairsChecked": 0,
+          "conflicts": [],
+          "method": "Complete convex-face pair plane-line interval checks and coplanar closed polygon clipping; shared source edges/vertices retained."
+        },
+        "scope": "Numerical R/A/Q/T/D for this supplied ordinary regular-faced positive-genus boundary; no exhaustive Stewart catalog or exact certificate."
+      }
+    }
+  ],
+  "coverage": "Two primary named excavations plus original two/three-mouth variants of the four-mouth construction; actual genus1/2/3, no complete catalog claim."
+}

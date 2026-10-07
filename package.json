@@ -1,0 +1,91 @@
+{
+  "name": "polytope-laboratory",
+  "version": "0.25.0",
+  "description": "Offline mathematical workspace for 3D and 4D polytopes",
+  "private": true,
+  "main": "desktop/main.cjs",
+  "scripts": {
+    "start": "electron .",
+    "build": "vite build --configLoader native",
+    "test": "python -m pytest tests -q",
+    "test:desktop": "node scripts/desktop-smoke.cjs",
+    "test:portable": "node scripts/portable-smoke.cjs",
+    "engine:bundle": "python -m PyInstaller --noconfirm --clean --onedir --exclude-module pytest --exclude-module matplotlib --exclude-module PyQt5 --exclude-module pandas --exclude-module IPython --exclude-module tkinter --add-data \"../engine/__init__.py;engine\" --add-data \"../engine/formats.py;engine\" --add-data \"../engine/geometry.py;engine\" --add-data \"../engine/regular4d_validation.py;engine\" --add-data \"../engine/catalog_data;engine/catalog_data\" --copy-metadata numpy --copy-metadata scipy --name polytope-engine --distpath build/engine --workpath build/pyinstaller --specpath build engine/server.py",
+    "package": "npm run build && npm run engine:bundle && node scripts/prepare-package.cjs && electron-builder --win portable --x64",
+    "test:library": "node scripts/linked-library-smoke.cjs",
+    "test:features": "node scripts/face-fill-test.mjs && node scripts/face-fill-cap-test.mjs && node --test tests/cell-visibility.test.mjs tests/animation.test.mjs tests/view-camera.test.mjs tests/viewer-geometry.test.mjs tests/model-memories.test.mjs tests/display-frame.test.mjs tests/cell-facing.test.mjs tests/project-storage.test.cjs tests/entity-presentation.test.mjs tests/stereographic.test.mjs tests/tour.test.mjs tests/stereographic-viewer.test.mjs tests/transitions.test.mjs tests/entity-picking.test.mjs tests/stereographic-normals.test.mjs tests/animation-tracks.test.mjs tests/perspective4d.test.mjs tests/viewer-perspective.test.mjs tests/animation-adapters.test.mjs tests/viewer-explosion.test.mjs tests/explosion-viewer.test.mjs tests/animation-track-controls.test.mjs tests/animation-renderer.test.mjs tests/product-controls.test.mjs tests/stereographic-quality.test.mjs tests/stereographic-worker-geometry.test.mjs tests/stereographic-worker-protocol.test.mjs tests/animation-export-capture.test.mjs tests/viewer-stereographic-worker.test.mjs tests/construction-workflow.test.mjs tests/history-workflow.test.mjs tests/antiprism-controls.test.mjs tests/step-prism-controls.test.mjs tests/stereographic-typed-display.test.mjs tests/viewer-stereographic-typed.test.mjs tests/status.test.mjs tests/torus-controls.test.mjs tests/podia-controls.test.mjs tests/hidden-qualification.test.cjs tests/project-workflow.test.mjs tests/waterman-controls.test.mjs tests/segmentotope-controls.test.mjs tests/stereographic-arc-bound.test.mjs tests/segmentotope-analysis-controls.test.mjs tests/crossed-segmentotope-controls.test.mjs tests/packed-surface-colors.test.mjs tests/packed-owner-comparison.test.mjs tests/hidden-runtime.test.cjs tests/augmentation-controls.test.mjs tests/qualification-launch-mode.test.cjs tests/stereographic-output-arena.test.mjs tests/stereographic-growing-arena.test.mjs tests/stereographic-hybrid-arena.test.mjs tests/stereographic-memoized.test.mjs tests/stereographic-mounted-worker.test.mjs tests/projection-fit.test.mjs tests/native-source-binding.test.mjs tests/source-construction-controls.test.mjs tests/face-placement-controls.test.mjs tests/source-core4d-controls.test.mjs tests/stereographic-conforming-worker.test.mjs tests/stereographic-conforming-quality.test.mjs tests/stereographic-surface-conformity.test.mjs tests/stereographic-virtual-conformity.test.mjs tests/viewer-stereographic-conformity.test.mjs tests/source-zonohedron-controls.test.mjs tests/animated-tour-timeline.test.mjs tests/animated-tour-renderer.test.mjs tests/animated-tour-export.test.mjs tests/animated-tour-layer.test.mjs tests/animated-tour-controls.test.mjs tests/expression-entry.test.mjs tests/stereographic-arc-tessellation.test.mjs tests/stereographic-camera-snapshot.test.mjs tests/stereographic-endpoint-bound.test.mjs tests/numeric-entry.test.mjs tests/cupola-controls.test.mjs tests/subdivision-controls.test.mjs tests/workspace-numeric-controls.test.mjs tests/viewport-numeric-controls.test.mjs tests/display-numeric-controls.test.mjs tests/spring-controls.test.mjs tests/animation-tour-numeric.test.mjs tests/numeric-analysis-controls.test.mjs tests/entity-orientation-controls.test.mjs tests/star-polygon-controls.test.mjs tests/segmentotope-expression-controls.test.mjs tests/face-editing-controls.test.mjs tests/construction-source-ownership.test.mjs tests/automatic-faceting-controls.test.mjs tests/stereographic-dense-integration.test.mjs tests/video-recorder.test.mjs tests/vp8-webm.test.mjs tests/signed-normal-integration.test.mjs tests/faceting-diagram-controls.test.mjs tests/dual-morph-session.test.mjs tests/dual-morph-viewer.test.mjs tests/dual-morph-combinations.test.mjs tests/element-content-lifecycle.test.mjs tests/element-content-viewport.test.mjs tests/element-content-presentations.test.mjs tests/element-content-controls-native.test.mjs tests/dual-morph-augmentation.test.mjs tests/dual-morph-augmentation-viewer.test.mjs tests/reinforcement-controls.test.mjs tests/element-content-history.test.mjs tests/bounded-export.test.mjs tests/text-export.test.cjs tests/dual-morph-triangles.test.mjs tests/instance-labels.test.mjs tests/viewer-stereo.test.mjs tests/dual-morph-compound.test.mjs tests/dual-morph-rectify.test.mjs tests/vertex-figure-construction-controls.test.mjs",
+    "test:animation": "node scripts/animation-smoke.cjs",
+    "test:stars": "node scripts/star-desktop-smoke.cjs",
+    "test:audits": "node scripts/library-audit-smoke.cjs",
+    "test:workspace": "node scripts/workspace-ui-smoke.cjs",
+    "test:graphics": "node scripts/viewer-graphics-smoke.cjs",
+    "test:memories": "node scripts/memories-smoke.cjs",
+    "test:inspection": "node scripts/inspection-features-smoke.cjs",
+    "test:cell-facing": "node scripts/cell-facing-smoke.cjs",
+    "test:recipes": "node scripts/recipes-smoke.cjs",
+    "test:units": "node scripts/units-export-smoke.cjs",
+    "test:presentation": "node scripts/entity-presentation-smoke.cjs",
+    "test:tours": "node scripts/tours-smoke.cjs",
+    "test:stereographic": "node scripts/stereographic-smoke.cjs",
+    "test:face-editing": "node scripts/face-editing-smoke.cjs",
+    "test:picking": "node scripts/entity-picking-smoke.cjs",
+    "test:refinement": "node scripts/construction-refinement-smoke.cjs",
+    "test:animation-tracks": "node scripts/animation-tracks-smoke.cjs",
+    "test:perspective": "node scripts/perspective4d-smoke.cjs",
+    "test:star-polygons": "node scripts/star-polygon-smoke.cjs",
+    "test:products": "node scripts/polygon-product-smoke.cjs",
+    "test:workers": "node scripts/stereographic-worker-smoke.cjs",
+    "test:construction-families": "node scripts/construction-families-smoke.cjs",
+    "test:hidden": "node scripts/hidden-desktop-smoke.cjs",
+    "test:specialized": "node scripts/hidden-qualify-desktop.cjs specialized",
+    "test:waterman": "node scripts/hidden-qualify-desktop.cjs waterman",
+    "test:layers": "node scripts/hidden-qualify-desktop.cjs layers",
+    "test:crossed": "node scripts/hidden-qualify-desktop.cjs crossed",
+    "test:augmentation": "node scripts/hidden-qualify-desktop.cjs augmentation",
+    "test:spring": "node scripts/spring-relaxation-smoke.cjs",
+    "test:regular4d": "node scripts/regular4d-catalog-smoke.cjs",
+    "test:workspace-numeric": "node scripts/workspace-numeric-smoke.cjs",
+    "test:dual-morphs": "node scripts/dual-morph-smoke.cjs",
+    "test:faceting-diagrams": "node scripts/faceting-diagram-smoke.cjs",
+    "test:element-content": "node scripts/element-content-smoke.cjs",
+    "package:source": "python scripts/package-source.py",
+    "licenses:collect": "python scripts/collect-third-party-licenses.py",
+    "package:preview": "node scripts/package-preview.cjs"
+  },
+  "dependencies": {
+    "three": "^0.180.0"
+  },
+  "devDependencies": {
+    "electron": "^44.5.1",
+    "electron-builder": "^26.0.12",
+    "playwright": "^1.55.1",
+    "vite": "^7.1.7"
+  },
+  "build": {
+    "appId": "com.pardesco.polytope-laboratory",
+    "productName": "Polytope Laboratory",
+    "directories": {
+      "output": "release",
+      "app": "build/desktop-app"
+    },
+    "files": [
+      "desktop/**",
+      "dist/**",
+      "package.json",
+      "LICENSE",
+      "THIRD_PARTY_NOTICES.md",
+      "third_party_licenses/**"
+    ],
+    "extraResources": [
+      {
+        "from": "build/engine/polytope-engine",
+        "to": "engine"
+      }
+    ],
+    "win": {
+      "target": "portable",
+      "signAndEditExecutable": false
+    }
+  },
+  "license": "GPL-3.0-only"
+}
