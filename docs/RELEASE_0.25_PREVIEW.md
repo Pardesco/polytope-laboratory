@@ -38,3 +38,5 @@ This is a community preview. Feature completeness, full regression and measured
 90% Stella4D parity are not claimed. The GitHub release is labeled as a prerelease.
 
 The repository runtime files match the archived source. GitHub publication changes only documentation; the [source-pair record](RELEASE_SOURCE_PAIR_0.25.json) retains the archive and binary hashes.
+
+Later 0.26 integration found that the shared print-window policy in this preview blocks embedded PNG annotations in PDFs. SVG retains the images. The fix permits source-owned data images and has actual PDF image evidence in 0.26 development; it does not change this frozen binary or source ZIP.

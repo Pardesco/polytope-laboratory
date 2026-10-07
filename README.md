@@ -21,7 +21,7 @@ This is an early community preview. Our goal is broad Stella4D feature coverage;
 
 See [0.25 features and limits](docs/RELEASE_0.25_PREVIEW.md), the [feature roadmap](docs/OPEN_SOURCE_ROADMAP.md), and the [full build specification](STELLA4D_FEATURE_COMPLETE_BUILD_SPEC.md).
 
-Saved folding cameras can clip later poses; review the motion and adjust framing before export. Some advanced generalized, infinite and hemi operations remain unavailable or report explicit diagnostics. Please include the model/project and steps to reproduce when reporting an issue.
+Saved folding cameras can clip later poses; review the motion and adjust framing before export. Embedded PNG annotations can be omitted from printed net PDFs in this preview; use SVG when the images are required. The print-window fix is in 0.26 development. Some advanced generalized, infinite and hemi operations remain unavailable or report explicit diagnostics. Please include the model/project and steps to reproduce when reporting an issue.
 
 ## Build from source
 
