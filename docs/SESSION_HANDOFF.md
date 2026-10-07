@@ -1,4 +1,13 @@
-# Active development - October 7, 2026
+# Current priority - October 7, 2026
+
+The current direction is to pause feature expansion and improve the core
+experience: simplify controls and visible data, measure and improve performance,
+investigate reported dual-morph scaling, and verify common workflows. Follow
+[the roadmap](OPEN_SOURCE_ROADMAP.md) and [interface contribution guidance](../CONTRIBUTING.md).
+The feature-expansion instructions below are historical and are superseded by
+this direction. Existing staged features remain deferred.
+
+## Previous development checkpoint - October 7, 2026
 
 The feature-complete goal remains active, using GPT-6.1-Sol subagents. Randall
 prioritizes free/open-source feature coverage or roughly 90% of Stella4D,

@@ -1,13 +1,38 @@
-# 0.26 community preview
+# Polytope Laboratory 0.26.0 preview
 
-[Download the Windows x64 portable](https://github.com/Pardesco/polytope-laboratory/releases/download/v0.26.0/Polytope.Laboratory.0.26.0.preview.exe) and [matching GPLv3 source](https://github.com/Pardesco/polytope-laboratory/releases/download/v0.26.0/Polytope.Laboratory.0.26.0.source.zip). Report reproducible problems through the repository’s Issues tab. This is a community prerelease; feature-complete and measured 90% parity are not claimed.
+An early Windows preview for exploring and constructing 3D and 4D polytopes. It is not yet a direct Stella4D competitor. The interface, performance and support for specialized geometry still need work.
 
-This release includes the earlier 0.25 tools and adds complete ordinary 4D cell sections, source-owned section labels/eligible PNG, dual-morph ratio tracks and PNG/WebM, explicit export-frame fitting, ordinary coincident-edge assembly, projective/infinite wire duals, reflected snub forms and symbol search, separate Skilling geometry, generalized 3D algebraic measurements, literal 4D arrangement/regiment comparisons and bounded distances to concave faces. Source PNG now renders in net PDF output. See [features and supported domains](RELEASE_0.26_DEVELOPMENT.md).
+[Download for Windows x64](https://github.com/Pardesco/polytope-laboratory/releases/download/v0.26.0/Polytope.Laboratory.0.26.0.preview.exe) | [Matching GPLv3 source ZIP](https://github.com/Pardesco/polytope-laboratory/releases/download/v0.26.0/Polytope.Laboratory.0.26.0.source.zip) | [Report a problem](https://github.com/Pardesco/polytope-laboratory/issues)
 
-The actual Windows portable starts with development Python unavailable. Its bundled engine loads 1305 catalog entries, Skilling’s 60/240/204 incidence, four ideal U3 reciprocal vertices, regular-star density 3, complete ordinary cell sections and their source-content descriptors, the analytical concave distance sqrt(2), and literal two-source arrangement comparison. Existing expansion, reciprocal, tab/paper, Stewart, sphere and independent-view availability checks also pass.
+Run the downloaded executable. Python and the mathematical dependencies are included. The app works offline.
 
-Source-app checks exercise actual section PNG sequences, whole-face PNG/refusal, dual-morph and fitted-fold PNG/WebM frames, source-content SVG/PDF, projective and reflection history, two-source compound PNG/Save/Open/replay, density JSON/CSV and bounded-versus-flat distance controls. These are scoped workflow checks, with retained failed evidence; no full regression is claimed.
+## What changed in 0.26
 
-[Nine runnable example projects](../examples/README.md) are included in the corresponding source ZIP. Extract it and use Open to try them; the portable runs independently of those examples. Program code is GPL-3.0-only, with third-party data and dependency notices preserved.
+- **More 4D sections:** slice supported 4D models with ordinary 3D cells, including concave cells. Sections can contain separate regions or holes. Source labels follow the section; face images are supported when a whole source face survives the cut.
+- **Dual-morph animation export:** save a morph-ratio track and export it as a PNG sequence or WebM video for supported morphs. Eligible source labels and face images follow the animation.
+- **Export framing:** use **Fit export frames** to choose a camera that contains the geometry across the sampled animation frames.
+- **Paper-model assembly:** choose how supported pieces join along coincident edges, edit glue tabs and supports, and export SVG/PDF. Face images now appear in net PDF output.
+- **Projective duals:** inspect wireframe duals with vertices at infinity. A clipping control determines how much of the infinite geometry is displayed.
+- **Catalog and analysis tools:** additional snub mirror forms and symbol search, a separate Skilling model, signed winding and algebraic measurements for supported 3D models, 4D arrangement comparisons, and distances to bounded concave faces.
 
-Remaining domains include all 2191 baseline uniform-polychora identities, fissary/scaliform classification, infinite-dual filled faces/nets/morphs, general star-cell sections, unrestricted nonconvex 4D distances, arrangement-resolved union/bulk volumes and several specialized construction options. The next development work covers 4D Waterman, star vertex-figure completion and verified orbit coloring. Earlier binaries and source archives remain unchanged.
+The [technical feature notes](https://github.com/Pardesco/polytope-laboratory/blob/main/docs/RELEASE_0.26_DEVELOPMENT.md) explain the supported inputs and mathematical definitions.
+
+## Try an example
+
+The source ZIP includes nine projects in `examples/0.26`. Extract it, launch the preview and use **Open** to load a project. The [example list](https://github.com/Pardesco/polytope-laboratory/blob/main/examples/README.md) includes instructions for each one. The executable can run without the example files.
+
+For a first look, select a model from the Library, drag to orbit, use **Fit** to frame it, and open **Inspector** for measurements and constructions. Click **Guide** or press **F1** for help.
+
+## Known limitations
+
+- **Usability and speed:** control organization and documentation need improvement. Community reports include dual-operation latency and slow dual morphing with unexpected scaling on a 3D truncated tetrahedron. These reports still need reproduction and measurement; 0.26 does not include fixes for them.
+- **Geometry support:** some star, self-crossing, nonconvex and singular inputs are unsupported. General star-cell sections and unrestricted nonconvex 4D distances remain incomplete. Infinite duals have a wire display, but no filled faces, nets or morphs.
+- **Mathematical results:** most calculations are numerical. Structural validation is a set of checks, not a general mathematical proof. Algebraic volume counts signed contributions and is not necessarily the volume of the filled union.
+- **Catalog coverage:** the catalog is incomplete and does not represent every uniform 4-polytope.
+- **Testing:** the Windows executable was checked with development Python unavailable, and selected geometry, saving and export workflows were tested. The preview has not passed a complete regression of every feature.
+
+## Next priority
+
+Feature expansion is paused while we simplify the interface, reduce unnecessary visible data, investigate performance and morph scaling, and improve reliability in common workflows. See the [roadmap](https://github.com/Pardesco/polytope-laboratory/blob/main/docs/OPEN_SOURCE_ROADMAP.md).
+
+For bug reports, include the model, settings, steps, expected result and actual result. Attach a small project when possible. The program is GPL-3.0-only; [third-party notices](https://github.com/Pardesco/polytope-laboratory/blob/main/THIRD_PARTY_NOTICES.md) cover included data and dependencies.

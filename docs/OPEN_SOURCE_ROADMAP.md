@@ -1,11 +1,62 @@
-# Open-source feature roadmap
+# Development roadmap
 
-The October 7 direction is a free, open-source program with broad practical
-coverage of Stella4D, aiming for feature completeness or roughly 90% of its
-workflows. This replaces exhaustive qualification as the development priority.
-The original specification remains the feature inventory. Strict acceptance
-gate counts measure conformance evidence, rather than practical feature coverage.
-We have not yet measured or claimed 90% coverage.
+Updated October 7, 2026: **pause feature expansion and make the core experience
+excellent.** This replaces the earlier feature-coverage priority. Polytope
+Laboratory is an early community preview, not yet a direct Stella4D competitor.
+Stella4D remains a reference for long-term scope, rather than the measure of
+success for the next release.
+
+The immediate goal is to make existing workflows simpler, faster and more
+reliable. A longer feature list is not a substitute for a usable application.
+
+## Core workflows first
+
+Focus on finding and opening a model, controlling the view, inspecting geometry,
+constructing a dual or truncation, exploring a section or net, saving a project,
+and exporting a result. Review the complete path through each task, including
+defaults, feedback, undo and errors.
+
+1. **Simplify the interface.** Group controls in the order a task requires them.
+   Keep common actions easy to find, use consistent labels and units, and show
+   advanced settings only when relevant. Reduce competing panels, scrolling and
+   repeated buttons. Judge visual polish alongside readability and discoverability.
+2. **Review every visible data field.** Ask whether it helps someone act or
+   understand the current result, and whether it needs to appear now. Put raw
+   JSON, provenance records and detailed validation behind an explicit details
+   action. Keep limitations that affect the current task visible and explain
+   them in plain language. Preserve access to the underlying mathematical data.
+3. **Measure and improve performance.** Record end-to-end timings for model
+   loading, duals, truncations, sections and nets, plus frame times for rotation
+   and morph playback. State the hardware, model and settings. Profile before
+   choosing an optimization, then compare the same workload before and after.
+4. **Investigate reported morph problems.** Reproduce slow playback and
+   unexpected scaling on the 3D truncated tetrahedron. Establish the intended
+   center, radius and framing behavior, then verify intermediate poses and
+   endpoints. These are reported problems, not completed fixes.
+5. **Make documentation useful.** Lead with what the app does, how to start and
+   known limits. Write release notes around changes a user can observe. Keep
+   test logs and implementation detail in technical reference documents.
+6. **Test with users.** Have people attempt the core tasks without coaching.
+   Record where they hesitate, what they expect and whether they finish. Use
+   those observations to choose the next simplification.
+
+## Conditions for resuming feature expansion
+
+Resume deliberately after the core workflow review, rather than after a set
+number of new controls or catalog entries. Before resuming:
+
+- Fresh users can complete the core tasks without being guided through the UI.
+- Reported dual latency and truncated-tetrahedron morph problems have been
+  reproduced or investigated with their remaining uncertainties documented.
+- Representative performance measurements have a recorded baseline and
+  comparisons for the changes made; no unmeasured FPS promises are published.
+- Common controls have consistent placement, clear labels and sensible defaults,
+  and unnecessary technical data has moved out of the default view.
+- Save/Open, undo/redo and affected exports pass relevant checks in the packaged
+  app. Any unresolved limitations are stated in the release notes.
+
+Feature implementation already staged for a future version remains deferred.
+Necessary fixes to current workflows can continue during the pause.
 
 ## Available in the development build
 
@@ -70,17 +121,17 @@ We have not yet measured or claimed 90% coverage.
 Each workflow has supported geometry domains; available controls do not imply
 every generalized, nonconvex, or singular input is supported.
 
-## Immediate work
+## Deferred feature work
 
-- Expand generalized morph domains and combinations; source-owned moving content
-  and generalized 3D sizing are mounted.
-- Expand specialized 3D families and reconcile 4D catalog coverage.
-- Fill remaining construction domains, including generalized expansion and fitting.
-- Expand source-incidence truncation/quasi cuts and specialized catalog families.
-- Add 4D Waterman construction, completion from star vertex figures and verified
-  symmetry-orbit coloring. Extend the remaining generalized/singular domains.
-- The 0.25 GPLv3 community preview and corresponding source archive are available;
-  continue new features in the next development version.
+The previous expansion plans remain a backlog: broader morph domains and
+combinations, specialized 3D families, more 4D catalog coverage, generalized
+construction and fitting, source-incidence cuts, 4D Waterman construction,
+completion from star vertex figures, and symmetry-orbit coloring. They are not
+the immediate development queue.
+
+The [0.26 community preview](RELEASE_0.26_PREVIEW.md) and corresponding source
+archive are published. Detailed feature inventories and historical checks
+describe supported domains; they do not establish complete Stella4D parity.
 
 ## Development checks
 
