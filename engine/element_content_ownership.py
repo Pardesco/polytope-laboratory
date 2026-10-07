@@ -9,7 +9,7 @@ from copy import deepcopy
 from .geometry import GeometryError, canonical_cycle
 from . import element_annotations as content
 
-INDEX_OPERATIONS = {'transform', 'scale-reference', 'spring-relaxation', 'sphere-project'}
+INDEX_OPERATIONS = {'transform', 'scale-reference', 'spring-relaxation', 'sphere-project', 'reflect-source'}
 RETAINED_OPERATIONS = {'facet', 'facet-adopt'}
 MAX_DETACHED = 8
 FIELDS = {'vertex': 'vertices', 'edge': 'edges', 'face': 'faces', 'cell': 'cells'}

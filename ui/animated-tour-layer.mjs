@@ -2,6 +2,7 @@
  * the renderer; native results never replace the user's active document. */
 import {attachElementContentCapture,contentParameters,contentSignature} from './element-content-lifecycle.mjs';
 import {Viewer} from './viewer.js';
+import {hasSectionSourceContent,rememberSectionSource,hasEmptySectionSource} from './section-source-content.mjs';
 const abort=()=>Object.assign(Error('Tour layer preparation cancelled.'),{name:'AbortError'});
 
 export function createAnimatedTourLayerFactory({host,run,ViewerClass=Viewer,createElement=tag=>document.createElement(tag)}){
@@ -17,7 +18,7 @@ export function createAnimatedTourLayerFactory({host,run,ViewerClass=Viewer,crea
     catch(error){dispose();throw error;}
     const [viewer,netViewer]=viewers;let sequence=0,closed=false;
     const detach=viewers.map(v=>attachElementContentCapture(v,{getState,isCurrent:()=>!closed&&isCurrent?.()!==false,
-      canMap:()=>v===viewer||Boolean(v.net||v.cellNet),referenceEdgeMm:()=>v.net?.referenceEdgeLengthMm??25,
+      canMap:()=>v===viewer||Boolean(v.net||v.cellNet)||hasSectionSourceContent(v.model)||hasEmptySectionSource(v),referenceEdgeMm:()=>v.net?.referenceEdgeLengthMm??25,
       describe:(model,params,options)=>run('element-content-describe',params,model,'Prepare tour element content',options)}));
     const check=(state,options)=>{if(closed||options.signal?.aborted||options.isCurrent?.()===false||isCurrent?.()===false||getState()!==state)throw abort();};
     const prepareLayout=view=>{const paneWidth=width/(view.viewportLayout==='split'?2:1);
@@ -36,6 +37,11 @@ export function createAnimatedTourLayerFactory({host,run,ViewerClass=Viewer,crea
         const settings=v.cellNet||{},cache=state.cellNetLayout;
         result=cache?.sourceFingerprint===m.fingerprint&&cache.root===(settings.root??0)?structuredClone(cache):await call('cell-net',{root:settings.root??0,...state.cellNetSeparate?{connections:[]}: {}});
       }else if(mode==='section')result=await call('section',{normal:v.sectionNormal,offset:v.sectionOffset??0,fill_rule:v.fillRule||'nonzero'});
+      else if(mode==='cell-section'){
+        const plane=JSON.stringify([v.sectionNormal,v.sectionOffset??0,v.fillRule||'nonzero']);
+        result=await call('section',{normal:structuredClone(v.sectionNormal),offset:v.sectionOffset??0,fill_rule:v.fillRule||'nonzero',section_domain:'ordinary-cells'});
+        const live=getState()?.view;if(JSON.stringify([live?.sectionNormal,live?.sectionOffset??0,live?.fillRule||'nonzero'])!==plane)throw abort();
+      }
       else if(mode==='dual'||mode==='incidence-dual')result={model:await call(mode,{})};
       else if(mode==='vertex-figure')result=await call(mode,{vertex:v.entity??0});
       else if(mode==='cell'||mode==='face')result={model:await call('cell',{kind:mode==='face'||m.dimension!==4?'face':'cell',index:v.entity??0})};
@@ -43,8 +49,9 @@ export function createAnimatedTourLayerFactory({host,run,ViewerClass=Viewer,crea
       check(state,options);if(token!==sequence||contentSignature(state)!==signature||mode==='net'&&JSON.stringify(v.net||{})!==netSignature)throw abort();prepareLayout(v);
       if(mode==='net'){netViewer.setNet(result);netViewer.setFold(v.net?.fraction??0);netViewer.setDisplay(derivedView(v));}
       else if(mode==='cell-net'){netViewer.setCellNet(result,v.cellNet?.shrink??1);netViewer.setDisplay(derivedView(v));}
-      else{netViewer.setModel(result.model??null);if(result.model)netViewer.setDisplay(derivedView(v));}
+      else{netViewer.setModel(result.model??null);rememberSectionSource(netViewer,result,m);if(result.model)netViewer.setDisplay(derivedView(v));}
       if(v.derivedCamera)netViewer.restoreCamera(v.derivedCamera);else netViewer.fit();
+      if(mode==='cell-section'&&(result.model||hasEmptySectionSource(netViewer)))await netViewer.prepareCapture({...options,isCurrent:()=>token===sequence&&!closed&&getState()===state&&contentSignature(state)===signature&&options.isCurrent?.()!==false});
       check(state,options);netViewer.draw();return result;
     };
     return {viewer,netViewer,run,prepareLayout,refreshDerived,refreshSection:refreshDerived,

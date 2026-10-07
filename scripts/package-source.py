@@ -8,7 +8,7 @@ version=json.loads((root/'package.json').read_text())['version']
 output=root/'release'/f'Polytope Laboratory {version} source.zip'
 if output.exists():raise SystemExit('Source archive already exists; preserve it or choose a new package version.')
 paths=[]
-for directory in ['engine','ui','desktop','scripts','tests','docs','.github','third_party_licenses']:
+for directory in ['engine','ui','desktop','scripts','tests','docs','examples','.github','third_party_licenses']:
     paths.extend(p for p in (root/directory).rglob('*') if p.is_file() and '__pycache__' not in p.parts and p.suffix!='.pyc')
 for name in ['README.md','LICENSE','THIRD_PARTY_NOTICES.md','CONTRIBUTING.md','STELLA4D_FEATURE_COMPLETE_BUILD_SPEC.md','package.json','package-lock.json','requirements.txt','vite.config.mjs','.gitignore']:
     paths.append(root/name)

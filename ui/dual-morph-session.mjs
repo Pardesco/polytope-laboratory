@@ -85,6 +85,13 @@ export class DualMorphSession{
   cancel(){this.pause();this.generation++;this.configuration?.abort();this.active?.controller.abort();if(this.queued)this.queued.reject(abort('Morph canceled.'));this.queued=null;this.numericEntry?.cancel();}
   invalidate(){this.prepared=null;this.owner=null;this.cancel();if(!this.context.isExporting?.())this.context.clear?.();this.context.onState?.();}
   reset(){this.blocked();this.checked();this.cancel();const state=this.context.getState();state.view.dualMorph={...clone(state.view.dualMorph),enabled:false,ratio:0};this.expected=signature(state.view.dualMorph);this.context.clear?.();this.context.markDirty?.();this.context.onState?.();}
+  adoptAnimationPose(frame,prepared){
+    const owner=this.owner,state=this.context.getState();if(!owner||!this.prepared)return false;
+    const document=this.context.getDocument(),unit=state?.view?.coordinateUnit??state?.model?.metadata?.coordinateUnits??'model';
+    if(state!==owner.state||this.context.getProject()!==owner.project||document!==owner.document||document?.states!==owner.states||document?.cursor!==owner.cursor||JSON.stringify(state.model)!==owner.modelSignature||(state.notes??'')!==(owner.notes??'')||unit!==owner.unit)throw abort('Animation morph adoption belongs to a changed source.');
+    this.validateFrame(frame,prepared,frame.ratio);if(prepared.sourceAttributesSha256!==this.prepared.sourceAttributesSha256||prepared.sourceContextSha256!==this.prepared.sourceContextSha256||prepared.descriptorSha256!==this.prepared.descriptorSha256)throw abort('Animation morph attributes or context changed.');
+    this.prepared=clone(prepared);this.expected=signature(state.view.dualMorph);return true;
+  }
   async restoreSaved(){const saved=this.context.getState()?.view.dualMorph;if(!saved?.enabled)return null;return this.configure(clone(saved));}
   async prepareCapture({signal}={}){
     if(!this.prepared||!this.owner)throw Error('Wait for saved dual morph reconstruction before capture.');

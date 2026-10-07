@@ -1,6 +1,6 @@
 {
   "name": "polytope-laboratory",
-  "version": "0.25.0",
+  "version": "0.26.0",
   "description": "Offline mathematical workspace for 3D and 4D polytopes",
   "private": true,
   "main": "desktop/main.cjs",

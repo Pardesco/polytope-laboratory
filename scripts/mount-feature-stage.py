@@ -21,7 +21,9 @@ for change in changes:
     text=planned.get(name,p.read_text(encoding='utf-8'))
     for hunk in change['hunks']:
         count=text.count(hunk['before'])
-        assert count>=1 if hunk.get('replaceAll') else count==hunk.get('expectedCount',1),(name,hunk['before'],count)
+        expected=hunk.get('expectedCount',hunk.get('expectedOccurrences',1))
+        assert type(expected) is int and expected>0,(name,expected)
+        assert count>=1 if hunk.get('replaceAll') else count==expected,(name,hunk['before'],count)
         text=text.replace(hunk['before'],hunk['after'])
     planned[name]=text
 for entry in manifest['newFiles']:

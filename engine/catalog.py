@@ -32,7 +32,12 @@ def _sources():
                       'aliases':[entry.get('id',''),entry['name']],
                       'sourceClassification':entry.get('sourceClassification',entry.get('family')),
                       'numericContract':'Supplied approximate source decimals; no exact certificate'}
-            if entry.get('symbol'):record['symbol']=entry['symbol']
+            if entry.get('symbol') or entry.get('wythoffSymbol'):
+                record['symbol']=entry.get('symbol',entry.get('wythoffSymbol'))
+                record['aliases']+=list(dict.fromkeys([record['symbol'],record['symbol'].replace(' ',''),record['symbol'].replace(' ','_').replace('|',':')]))
+            if provider=='antiprism':
+                from .uniform_snub_catalog import uniform_snub_metadata
+                record.update(uniform_snub_metadata(key,source_sha=entry['sha256']))
             mathematical_labels=regular4d_metadata(key)
             if mathematical_labels:
                 mathematical_labels['aliases']=list(dict.fromkeys(record['aliases']+mathematical_labels['aliases']))
@@ -52,10 +57,14 @@ def get_catalog():
     for record in records[:len(CATALOG)]:
         labels=regular4d_metadata(record['key'])
         if labels:record.update(labels)
-    return records + specialized_catalog() + expanded_catalog() + stewart_catalog() + stewart_family_catalog() + exact_regular_catalog()
+    from .uniform_snub_catalog import uniform_snub_catalog
+    return records + uniform_snub_catalog() + specialized_catalog() + expanded_catalog() + stewart_catalog() + stewart_family_catalog() + exact_regular_catalog()
 
 
 def load_catalog_model(key):
+    from .uniform_snub_catalog import load_uniform_snub_model
+    uniform_variant=load_uniform_snub_model(key)
+    if uniform_variant is not None:return uniform_variant
     from .exact_regular_sources import load_exact_regular_model
     exact_regular = load_exact_regular_model(key)
     if exact_regular is not None: return exact_regular

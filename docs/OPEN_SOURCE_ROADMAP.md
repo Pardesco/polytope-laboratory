@@ -49,7 +49,17 @@ We have not yet measured or claimed 90% coverage.
 - Source-color paper batches with detached print cuts, saved IDs, tabs and content.
 - Generalized 4D expansion with complete source/polar product cells and source content.
 - Concave/toroidal 3D net folding through saved keyframes, tours and PNG/WebM export.
-- Searchable offline guide with 21 topics and F1 control context.
+- Searchable offline guide with 23 topics and F1 control context.
+- Complete ordinary 4D cell sections, with concave/disconnected/holed regions.
+- Source-owned section labels and eligible whole-face PNG, animation and tours.
+- Saved dual-morph ratio tracks with source content and PNG/WebM export.
+- Explicit camera fitting across sampled export frames.
+- Four-face coincident-edge joining for ordinary convex/concave/toroidal pieces.
+- True projective ideal identities with clipped wire duals and saved view recipes.
+- Supplied snub reflected forms, symbol aliases and separate Skilling geometry.
+- Signed 3D winding and algebraic area/volume with saved JSON/CSV evidence.
+- Literal 4D arrangement/regiment comparison and source-owned compounds.
+- Finite distances to actual simple planar concave 3D face regions.
 - Multiple documents, project metadata, undo/redo, operation replay, saving, and recovery.
 - JSON geometry exports retain project metadata and notes; other formats report losses.
 - Matching 3D vertex figures to finite 4D constructions.
@@ -67,8 +77,8 @@ every generalized, nonconvex, or singular input is supported.
 - Expand specialized 3D families and reconcile 4D catalog coverage.
 - Fill remaining construction domains, including generalized expansion and fitting.
 - Expand source-incidence truncation/quasi cuts and specialized catalog families.
-- Expand complete generalized 4D cell sections, four-face coincident-edge
-  assembly and dual-morph video export.
+- Add 4D Waterman construction, completion from star vertex figures and verified
+  symmetry-orbit coloring. Extend the remaining generalized/singular domains.
 - The 0.25 GPLv3 community preview and corresponding source archive are available;
   continue new features in the next development version.
 

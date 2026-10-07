@@ -60,6 +60,9 @@ def _qualified_cloud(model,frame,entity,points,origin,scale):
 
 
 def bounded_entity_distance(model,frames,entities,points):
+    if model.get('dimension')==3 and points.shape[1]==3 and any(frame['kind']=='face' for frame in frames):
+        from .ordinary_face_distances import ordinary_face_distance
+        return ordinary_face_distance(model,frames,entities,points)
     scale=frames[0]['scale'];origin=points[frames[0]['vertices'][0]]
     a,b=[_qualified_cloud(model,frame,entity,points,origin,scale) for frame,entity in zip(frames,entities)]
     na,nb=len(a),len(b);matrix=np.column_stack((a.T,-b.T))

@@ -43,7 +43,7 @@ class BoundedEntityDistances(unittest.TestCase):
         self.check_distance(model,[ref('vertex',4),ref('face',0)],math.sqrt(3))
         self.assertAlmostEqual(entity_measure(model,entities=[ref('vertex',4),ref('face',0)])['value'],1)
         bad=deepcopy(model);bad['vertices'][2]=[.25,.25,0]
-        with self.assertRaisesRegex(GeometryError,'convex ordered'):entity_measure(bad,entities=[ref('vertex',4),ref('face',0)],bounded=True)
+        self.check_distance(bad,[ref('vertex',4),ref('face',0)],math.sqrt(6))  # Literal concave region, not its convex hull.
         bad=regular('tesseract');bad['interpretation']='generalized-complex'
         with self.assertRaisesRegex(GeometryError,'explicit convex'):entity_measure(bad,entities=[ref('cell',0),ref('cell',1)],bounded=True)
 

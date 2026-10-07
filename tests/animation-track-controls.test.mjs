@@ -76,7 +76,7 @@ test('external camera edit during export prevents old-view restoration',async()=
 });
 
 function externalExportFixture(){
-  const source=state(),events=[],nodes=Object.fromEntries(['duration','fps','loop','rotation','section','keyframe','play','start','end','time','png','webm','target','turns','plane','explosion','fold','explosion-direction','explosion-endpoint','explosion-pose','fold-pose','track-options','position','cancel','progress'].map(key=>[key,{value:'',checked:false,disabled:false,hidden:false,textContent:''}]));
+  const source=state(),events=[],nodes=Object.fromEntries(['duration','fps','loop','rotation','section','keyframe','play','start','end','time','png','webm','fit','target','turns','plane','explosion','fold','explosion-direction','explosion-endpoint','explosion-pose','fold-pose','morph','morph-pose','morph-endpoint','track-options','position','cancel','progress'].map(key=>[key,{value:'',checked:false,disabled:false,hidden:false,textContent:''}]));
   nodes.plane.options=Array.from({length:6},(_,i)=>({value:String(i),disabled:false}));nodes.plane.value='0';Object.defineProperty(nodes.plane,'selectedOptions',{get:()=>[nodes.plane.options[Number(nodes.plane.value)]]});
   nodes.target.value='base';const netOption={disabled:false};nodes.target.querySelector=()=>netOption;nodes.turns.value='1';nodes['explosion-direction'].value='normal';nodes['explosion-endpoint'].value='1';
   const doc={id:'doc',states:[source],cursor:0},project={documents:[doc]};let external=false;const viewer={setDisplay:()=>events.push('display'),draw:()=>events.push('draw')},context={getProject:()=>project,getDocument:()=>doc,evaluateMany:async entries=>entries.map(Number),getState:()=>source,getModel:()=>source.model,
@@ -88,7 +88,7 @@ function externalExportFixture(){
 
 test('other export disables every sequence/edit/play/capture control, then restores dimension and track eligibility',()=>{
   const f=externalExportFixture(),before=structuredClone(f.source);f.setExternal(true);f.controls.update();
-  for(const key of ['duration','fps','loop','rotation','section','keyframe','play','start','end','time','png','webm','target','turns','plane','explosion','fold','explosion-direction','explosion-endpoint','explosion-pose','fold-pose'])assert.equal(f.nodes[key].disabled,true,key);
+  for(const key of ['duration','fps','loop','rotation','section','keyframe','play','start','end','time','png','webm','fit','target','turns','plane','explosion','fold','explosion-direction','explosion-endpoint','explosion-pose','fold-pose','morph','morph-pose','morph-endpoint'])assert.equal(f.nodes[key].disabled,true,key);
   assert.equal(f.nodes.cancel.hidden,true,'The separate tour Cancel button owns its export');assert.deepEqual(f.source,before);f.setExternal(false);f.controls.update();
   for(const key of ['duration','fps','rotation','section','play','png','webm','explosion','fold'])assert.equal(f.nodes[key].disabled,false,key);
   assert.equal(f.nodes['explosion-pose'].disabled,true);assert.equal(f.nodes['fold-pose'].disabled,true);assert.equal(f.nodes.plane.options[2].disabled,true);assert.equal(f.nodes.target.querySelector().disabled,true);assert.deepEqual(f.source,before);

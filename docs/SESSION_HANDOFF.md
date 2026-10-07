@@ -5,7 +5,7 @@ prioritizes free/open-source feature coverage or roughly 90% of Stella4D,
 with a build and relevant checks. Practical 90% coverage is not yet measured.
 The historical pause below is superseded; its evidence remains retained.
 
-Working sources are **0.25.0 development**. The usable **0.25.0 GPLv3 community
+Working sources are **0.26.0 development**. The usable **0.26.0 GPLv3 community
 preview and corresponding source archive** are packaged in `release`.
 Its real portable launch passed with development Python unavailable. The prior
 qualified 0.21 release is unchanged. Program license is GPL-3.0-only; third-party
@@ -20,7 +20,7 @@ structured catalog queries, metadata JSON export/reopen, material/lighting/theme
 regular-face/equal-edge/equal-area fitting, grounded stephanoids, and analytic
 tetrahedron, triangular-prism, and triangular-grid controls, procedural bump/studio
 reflection, exact rational 3D surface sections, and stellation cell/dependency diagrams.
-See `RELEASE_0.25_DEVELOPMENT.md` and `OPEN_SOURCE_ROADMAP.md` for current limits.
+See `RELEASE_0.26_DEVELOPMENT.md` and `OPEN_SOURCE_ROADMAP.md` for current limits.
 
 Build passes. A short actual-app check passes fitting preview/adoption, 4D
 expansion, material presets, labels, and JSON metadata export/reopen:
@@ -59,7 +59,7 @@ New in 0.25: generalized expansion morphs, automatic exact full/proper source
 symmetry for faceting, per-edge physical glue tabs and literal 4D incidence
 reciprocation. Mounted eight native and six Viewer/session/controller groups pass;
 source-symmetry native/UI sanity and
-build pass. These later additions are not in the 0.24 binary or source ZIP.
+build pass. These features are included in the qualified 0.25 binary/source pair.
 
 Exact regular faceting sources and source-color paper batches are also mounted.
 Source/adoption Save/Open and history replay, three native printing and two
@@ -77,8 +77,68 @@ Two native source checks and six Viewer/animation/tour checks pass. Actual GPU
 PNG0/.5/1, three decoded VP8 frames and source/annotation/tab/history Save/Open
 pass: `artifacts/generalized-fold-quick-FEbVM9/result.json`.
 
-Next staged work: complete generalized 4D cell sections, four-face coincident-edge
-assembly, and actual dual-morph animation/video export. Via-snub is a proposed
+New in 0.26: complete ordinary 4D cell sections with concave/disconnected/holed
+regions, saved dual-morph ratio tracks and PNG/WebM export, and explicit Fit export
+frames. Mounted focused checks and actual desktop exports/promotion/SaveOpen pass:
+`artifacts/feature-0.26-quick-254ZbX/result.json`. The formerly clipped concave-fold
+endpoint is now wholly visible after explicit fitting; continuous-motion/label
+extents are not certified by sampled frame fitting.
+
+Four-face coincident-edge assembly supports all four policies for qualified ordinary
+convex/concave/toroidal pieces, physical tabs, detached history and source text/PNG SVG/PDF. Mounted native
+and five Node groups pass. Actual UI/export/SaveOpen passes in
+`artifacts/coincident-assembly-quick-G0Jdvd/result.json`; its PDF review confirms
+both support instructions, A4 dimensions and embedded source PNG. Root fixed the
+shared print-window data-image policy after the initial PDF omitted that image.
+The frozen 0.25 preview retains the old behavior, now recorded publicly.
+
+GitHub is published: https://github.com/Pardesco/polytope-laboratory and its
+v0.25.0 prerelease with Issues enabled. Uploaded digests match the original binary
+and corresponding source ZIP. Publication came from a clean archive extraction in
+`build/github-publication-0.25/source`, preserving runtime files; current 0.26
+sources are not pushed. `artifacts/github-publication-0.25.0.json` records it.
+
+Projective infinite/hemi incidence duals, twelve supplied reflected snub forms,
+U1-U75 symbol aliases, separate Skilling source and source-owned reflection are
+mounted. Eight native/five Node groups and actual desktop catalog/PNG/source
+selection/clipping recipes/history SaveOpen pass:
+`artifacts/projective-snub-quick-fWUhHk/result.json`. Three controller groups pass
+after PNG save feedback integration. Actual concave assembly UI/PDF/SaveOpen passes
+`artifacts/coincident-assembly-quick-2rcRiL/result.json`; PNG/SUP instructions are
+present and custom 1000 mm paper measures 1000.167 mm.
+
+The public documentation follow-up is pushed at 3ff0111999b4f8d6f31cfa7f5ec95eca1f0fcc7f.
+The initial release tag/source remains 4fc3b02a9763860f73349d3f378571dc969a663c.
+Current build: 153 modules pass; offline help has 25 searchable topics. Stale unstarted ledger rows for supplied specialized
+families, bounded vertex-figure completion, reinforcement and element content now
+reflect existing prototypes; no additional conformance gates were closed.
+
+Source-owned content on ordinary 4D cell sections is mounted: repeated formatted
+labels retain rank-loss owners and whole-surviving-face PNG retains UV/source alpha.
+Three mounted native/four actual Viewer-animation-tour checks and real GUI PNG
+sequence/content/promotion/refusal/SaveOpen pass:
+`artifacts/section-content-quick-ApisKX/result.json`. Export-owned read admission
+was fixed after actual capture hit the construction guard; ordinary construction
+and promotion remain blocked during export. Three section-controller groups pass
+including late lost-owner refusal. Generalized 3D density/algebraic measures are
+mounted; native four-star/analytic/ownership cases and three real-native controller
+checks pass. Actual density inspector/query/source JSON/CSV and evidence SaveOpen pass:
+`artifacts/density-info-quick-X0hY43/result.json`.
+
+Literal 4D arrangement/regiment comparison and independent-incidence compounds,
+plus simple concave-face bounded distances, are mounted. Three regiment native,
+six distance native and five combined Node groups pass; actual desktop comparison,
+navigation, compound PNG/content/SaveOpen/replay and bounded/flat metrics pass:
+`artifacts/regiment-distance-quick-UdLQGc/result.json`. Root fixed comparison
+empty-state initialization and the shared history commit return value, and enabled
+native-supported comparison/compound history branching. Nine runnable projects
+are in examples/0.26. No broad regression was performed.
+
+Next isolated work: 4D D4-lattice Waterman construction, finite completion from
+nonconvex/star vertex figures and verified symmetry-orbit coloring.
+The 0.25 portable passes with
+development Python disabled; all 2,354 archived hashes and 1,828 frozen runtime
+inputs matched the actual corresponding source ZIP before this version bump. Via-snub is a proposed
 future method, not a grounded current benchmark requirement. Protected importer files and
 historical release assets remain unchanged. Initial full-test receipts predate
 the new features. The expanded native regression was stopped at Randall's request
@@ -86,8 +146,8 @@ and contains unresolved failures; old frontend doubles were fixed in focused
 checks. Reinforcement PDF verification was corrected for Chromium quantization;
 the complete desktop wrapper was not rerun. Retained failures remain inspectable.
 
-Preview receipt: `artifacts/community-preview-0.25.0.json`.
-Source archive receipt: `artifacts/source-package-0.25.0.json`.
+Preview receipt: `artifacts/community-preview-0.26.0.json`.
+Source archive receipt: `artifacts/source-package-0.26.0.json`.
 
 ---
 

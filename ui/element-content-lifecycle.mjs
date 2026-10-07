@@ -1,4 +1,5 @@
 /** Source-bound annotation preparation for independent capture viewers. */
+import {prepareEmptySectionSourceContent,verifySectionSourcePose} from './section-source-content.mjs';
 const jobs=new WeakMap();
 const clone=structuredClone;
 const abort=()=>Object.assign(Error('Element content preparation canceled or changed.'),{name:'AbortError'});
@@ -8,6 +9,7 @@ export const contentParameters=state=>state?.view?.elementAnnotations?{element_a
 export function invalidateElementContent(viewer){const job=jobs.get(viewer);job?.controller.abort();jobs.delete(viewer);}
 
 export async function prepareElementContent(viewer,state,{describe,signal,isCurrent,referenceEdgeMm=25,canMap=true}={}){
+  verifySectionSourcePose(viewer,state);const empty=await prepareEmptySectionSourceContent(viewer,state,{signal,isCurrent});if(empty)return empty;
   if(typeof viewer?.setElementContent!=='function'){
     if(state?.view?.elementAnnotations?.entries.length)throw Error('Element content renderer is unavailable.');
     return {ready:true};

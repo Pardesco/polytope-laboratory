@@ -1,5 +1,6 @@
 import {NumericEntry} from './numeric-entry.mjs';
-import {requireNoEnabledDualMorph} from './dual-morph-combinations.mjs';
+import {fitAnimationFrames} from './animation-framing.mjs';
+import {requireMorphAnimation} from './morph-animation-adapter.mjs';
 import {createSequence,normalizeSequence,evaluateNormalized,sequenceFrameTimes,setSequenceKeyframe,resizeSequence,withSequenceTracks} from './animation.mjs';
 import {recordRenderedVideo} from './video-recorder.mjs';
 import {requireTrackCapabilities,createTrackSweep,AnimationTrackSessions,captureAnimationView} from './animation-track-controls.mjs';
@@ -26,6 +27,9 @@ export class AnimationControls {
         <label>Explosion direction <select id="animation-explosion-direction"><option value="normal">Outward normals</option><option value="radial">Entity centroids (radial)</option></select></label>
         <label>Explosion endpoint <input id="animation-explosion-endpoint" type="text" maxlength="512" value="1"></label>
         <div class="button-row"><button id="animation-explosion">Add explosion track</button><button id="animation-fold">Add rigid face-net fold</button></div>
+        <label>Morph ratio endpoint <input id="animation-morph-endpoint" type="text" maxlength="512" value="1"></label>
+        <button id="animation-morph" class="wide">Add dual-morph ratio sweep</button>
+        <label>Morph pose <input id="animation-morph-pose" type="range" min="0" max="1" step="0.001" value="0"></label>
         <label>Explosion pose <input id="animation-explosion-pose" type="range" min="0" max="10" step="0.001" value="0"></label>
         <label>Fold pose <input id="animation-fold-pose" type="range" min="0" max="1" step="0.001" value="0"></label>
       </div>
@@ -33,6 +37,7 @@ export class AnimationControls {
       <output id="animation-position">0.000 / 8.000 s</output>
       <div class="button-row"><button id="animation-play">Play</button><button id="animation-start">Go to start</button><button id="animation-end">Go to end</button></div>
       <label>Capture view <select id="animation-target"><option value="base">Base model</option><option value="section">Section</option><option value="net">Face net</option></select></label>
+      <button id="animation-fit" class="wide">Fit export frames</button>
       <div class="button-row"><button id="animation-png">Export PNG frames</button><button id="animation-webm">Export WebM video</button></div>
       <button id="animation-cancel" class="wide" hidden>Cancel animation export</button>
       <p class="muted">PNG and WebM include both endpoint poses.</p>
@@ -42,13 +47,14 @@ export class AnimationControls {
     const wrap=fn=>context.guard?context.guard(fn):async(...args)=>{try{return await fn(...args);}catch(error){context.setStatus?.(error.message);}};
     this.nodes.duration.onchange=wrap(()=>this.configure());this.nodes.fps.onchange=wrap(()=>this.configure());this.nodes.loop.onchange=wrap(()=>this.configure());
     this.nodes.rotation.onclick=wrap(()=>this.rotation());this.nodes.section.onclick=wrap(()=>this.section());this.nodes.keyframe.onclick=wrap(()=>this.record());
-    this.nodes.explosion.onclick=wrap(()=>this.addTrack('explosion'));this.nodes.fold.onclick=wrap(()=>this.addTrack('fold'));
+    this.nodes.explosion.onclick=wrap(()=>this.addTrack('explosion'));this.nodes.fold.onclick=wrap(()=>this.addTrack('fold'));this.nodes.morph.onclick=wrap(()=>this.addTrack('morphRatio'));this.nodes['morph-pose'].oninput=wrap(()=>this.trackPose('morphRatio',Number(this.nodes['morph-pose'].value)));
     this.nodes['explosion-pose'].oninput=wrap(()=>this.trackPose('explosionAmount',Number(this.nodes['explosion-pose'].value)));
     this.nodes['fold-pose'].oninput=wrap(()=>this.trackPose('foldFraction',Number(this.nodes['fold-pose'].value)));
     this.nodes.play.onclick=wrap(()=>this.playing?this.pause():this.play());
     this.nodes.start.onclick=wrap(()=>this.scrub(0));this.nodes.end.onclick=wrap(()=>this.scrub(this.sequence().duration));
     this.nodes.time.oninput=wrap(()=>this.scrub(Number(this.nodes.time.value)));
     this.nodes.png.onclick=wrap(()=>this.export('png'));this.nodes.webm.onclick=wrap(()=>this.export('webm'));this.nodes.cancel.onclick=()=>this.cancel();
+    this.nodes.fit.onclick=wrap(()=>fitAnimationFrames(this));
     this.sync();
   }
   sequence(){const source=this.context.getState();if(!source)throw new Error('Open a model before creating an animation.');return requireTrackCapabilities(source.view.animation||createSequence(source.view),this.context);}
@@ -91,7 +97,7 @@ export class AnimationControls {
     if(!Number.isInteger(index)||index<0||index>=PLANES.length||AXES[index][1]>=(state.model.embeddingDimension||state.model.dimension))throw Error('Choose a rotation plane supported by the source dimension.');
     let sequence=createSequence(state.view,old.duration,old.fps);
     sequence.loop=this.nodes.loop.checked;sequence.keyframes[1].angles=[...sequence.keyframes[0].angles];sequence.keyframes[1].angles[index]+=values.turns*360;
-    if(old.version===2){sequence=withSequenceTracks(sequence,old.tracks,state.view);sequence.keyframes=old.keyframes.map(frame=>({...frame,angles:sequence.keyframes[0].angles.map((angle,axis)=>angle+(axis===index?values.turns*360*frame.time/old.duration:0))}));}
+    if(old.version>=2){sequence=withSequenceTracks(sequence,old.tracks,state.view);sequence.keyframes=old.keyframes.map(frame=>({...frame,angles:sequence.keyframes[0].angles.map((angle,axis)=>angle+(axis===index?values.turns*360*frame.time/old.duration:0))}));}
     sequence=normalizeSequence(sequence);this.time=0;this.save(sequence);this.context.setStatus?.('Rotation sequence saved with start and end keyframes.');
   });}
   async section(){return this.numericAction([],()=>({}),values=>{
@@ -103,24 +109,24 @@ export class AnimationControls {
     for(const vertex of model.vertices){const depth=vertex.reduce((sum,value,index)=>sum+value*normal[index]/length,0);low=Math.min(low,depth);high=Math.max(high,depth);}
     const old=this.configuredSequence(values);let sequence=createSequence(state.view,old.duration,old.fps);
     sequence.loop=this.nodes.loop.checked;sequence.keyframes[1].angles=[...sequence.keyframes[0].angles];sequence.keyframes[0].sectionOffset=low;sequence.keyframes[1].sectionOffset=high;
-    if(old.version===2){sequence=withSequenceTracks(sequence,old.tracks,state.view);sequence.keyframes=old.keyframes.map(frame=>({...frame,angles:[...sequence.keyframes[0].angles],sectionOffset:low+(high-low)*frame.time/old.duration}));}
-    sequence=normalizeSequence(sequence);this.time=0;state.view.derivedMode='section';this.context.showSection?.();this.nodes.target.value='section';this.save(sequence);this.context.setStatus?.('Section sweep saved from the lowest to highest source vertex depth.');
+    if(old.version>=2){sequence=withSequenceTracks(sequence,old.tracks,state.view);sequence.keyframes=old.keyframes.map(frame=>({...frame,angles:[...sequence.keyframes[0].angles],sectionOffset:low+(high-low)*frame.time/old.duration}));}
+    sequence=normalizeSequence(sequence);this.time=0;if(state.view.derivedMode!=='cell-section')state.view.derivedMode='section';this.context.showSection?.();this.nodes.target.value='section';this.save(sequence);this.context.setStatus?.('Section sweep saved from the lowest to highest source vertex depth.');
   });}
   async record(){return this.numericAction([],()=>({}),values=>{
     const sequence=setSequenceKeyframe(this.configuredSequence(values),Math.min(this.time,values.duration),this.context.getState().view);
     this.time=Math.min(this.time,values.duration);this.save(sequence);this.context.setStatus?.(`Recorded pose at ${this.time.toFixed(3)} s (${sequence.keyframes.length} keyframes).`);
   });}
-  async addTrack(kind){requireNoEnabledDualMorph(this.context.getState(),'Animation track');return this.numericAction(['explosion-direction',...(kind==='fold'?[]:['explosion-endpoint'])],inputs=>kind==='fold'?{}:{amount:{text:inputs['explosion-endpoint'],min:0,max:10}},async(values,check)=>{
+  async addTrack(kind){if(kind!=='morphRatio')requireMorphAnimation(this.context.getState(),this.sequence(),'Animation track');return this.numericAction(['explosion-direction',...(kind==='fold'?[]:[kind==='morphRatio'?'morph-endpoint':'explosion-endpoint'])],inputs=>kind==='fold'?{}:{amount:{text:inputs[kind==='morphRatio'?'morph-endpoint':'explosion-endpoint'],min:0,max:kind==='morphRatio'?1:10}},async(values,check)=>{
     const candidate=createTrackSweep(this.configuredSequence(values),kind,{direction:this.nodes['explosion-direction'].value,amount:kind==='fold'?1:values.amount});
     this.context.stopLegacy?.();await this.trackSessions.prepare(candidate,{preflight:true});check();
     this.time=0;this.save(candidate);if(kind==='fold'){this.context.showNet?.();this.nodes.target.value='net';}
-    this.context.setStatus?.(`${kind==='fold'?'Rigid face-net folding':'Explosion'} track saved after source preflight.`);this.update();
+    this.context.setStatus?.(`${kind==='fold'?'Rigid face-net folding':kind==='morphRatio'?'Dual-morph ratio':'Explosion'} track saved after source preflight.`);this.update();
   });}
   async trackPose(field,value){
-    this.assertNoExternalExport();requireNoEnabledDualMorph(this.context.getState(),'Animation track');
+    this.assertNoExternalExport();requireMorphAnimation(this.context.getState(),this.sequence(),'Animation track');
     if(this.editing)throw Error('Finish the numeric animation edit first.');if(this.exporting)return;this.pause();const source=this.context.getState(),generation=this.generation,sequence=this.sequence();
-    if(sequence.version!==2||!Object.hasOwn(sequence.keyframes[0],field))throw new Error('Add this track before adjusting its pose.');
-    const candidate=setSequenceKeyframe(sequence,this.time,{...source.view,[field]:value});
+    if(sequence.version<2||!Object.hasOwn(sequence.keyframes[0],field))throw new Error('Add this track before adjusting its pose.');
+    const candidate=setSequenceKeyframe(sequence,this.time,{...source.view,[field]:value,...(field==='morphRatio'?{dualMorph:{...source.view.dualMorph,ratio:value}}:{})});
     await this.trackSessions.prepare(candidate,{preflight:true});this.assertActive(source,generation);this.save(candidate);
     await this.apply(candidate,this.time,source,generation);this.context.markDirty?.();
   }
@@ -138,28 +144,28 @@ export class AnimationControls {
     for(const option of this.nodes.plane.options)option.disabled=AXES[Number(option.value)][1]>=dimension;
     if(this.nodes.plane.selectedOptions[0]?.disabled)this.nodes.plane.value='0';
     this.nodes.section.disabled=dimension<3;
-    for(const name of ['duration','fps','loop','rotation','section','keyframe','play','start','end','time','png','webm','target','turns','plane','explosion','fold','explosion-direction','explosion-endpoint','explosion-pose','fold-pose'])if(this.editing||this.exporting||this.externalExporting())this.nodes[name].disabled=true;else this.nodes[name].disabled=name==='section'&&dimension<3;
+    for(const name of ['duration','fps','loop','rotation','section','keyframe','play','start','end','time','png','webm','fit','target','turns','plane','explosion','fold','explosion-direction','explosion-endpoint','explosion-pose','fold-pose','morph','morph-pose','morph-endpoint'])if(this.editing||this.exporting||this.externalExporting())this.nodes[name].disabled=true;else this.nodes[name].disabled=name==='section'&&dimension<3;
     const caps=typeof this.context.capabilities==='function'?this.context.capabilities():this.context.capabilities;
-    this.nodes['track-options'].hidden=!caps?.explosion&&!caps?.fold;this.nodes.explosion.disabled||=caps?.explosion!==true;this.nodes.fold.disabled||=caps?.fold!==true;
+    this.nodes['track-options'].hidden=!caps?.explosion&&!caps?.fold&&!caps?.morphRatio;this.nodes.morph.disabled||=caps?.morphRatio!==true||state.view.dualMorph?.enabled!==true;this.nodes['morph-pose'].disabled||=!sequence.tracks?.morphRatio;this.nodes['morph-pose'].value=state.view.dualMorph?.ratio??0;this.nodes.explosion.disabled||=caps?.explosion!==true;this.nodes.fold.disabled||=caps?.fold!==true;
     this.nodes['explosion-pose'].disabled||=!sequence.tracks?.explosion;this.nodes['fold-pose'].disabled||=!sequence.tracks?.fold;
     this.nodes['explosion-pose'].value=state.view.explosionAmount??0;this.nodes['fold-pose'].value=state.view.foldFraction??state.view.net?.fraction??0;
     this.nodes.target.querySelector('option[value="net"]').disabled=!sequence.tracks?.fold||!this.context.netViewer&&!this.context.sectionViewer;
-    if(state.view.dualMorph?.enabled===true){for(const name of ['play','start','end','time','png','webm','explosion','fold','explosion-pose','fold-pose'])this.nodes[name].disabled=true;this.nodes.progress.textContent='Reset the dual morph before animation playback or export; combined tracks are unavailable.';}
+    if(state.view.dualMorph?.enabled===true){for(const name of ['explosion','fold','explosion-pose','fold-pose'])this.nodes[name].disabled=true;if(!sequence.tracks?.morphRatio){for(const name of ['play','start','end','time','png','webm','fit'])this.nodes[name].disabled=true;this.nodes.progress.textContent='Add a dual-morph ratio sweep to animate this enabled morph.';}this.nodes.section.disabled=true;}
   }
   assertActive(source,generation){this.assertNoExternalExport();if(this.generation!==generation || this.context.getState()!==source)throw canceled();}
   async apply(sequence,time,source,generation,{forceSection=false}={}){
-    this.assertActive(source,generation);requireNoEnabledDualMorph(source,'Animation pose');
-    if(sequence.version===2){await this.trackSessions.apply(sequence,time,()=>!this.externalExporting()&&this.generation===generation&&this.context.getState()===source&&(!this.exporting||!this.exportAbort));this.assertActive(source,generation);this.exportView?.accept();this.time=Math.max(0,Math.min(sequence.duration,time));this.update();return;}
+    this.assertActive(source,generation);requireMorphAnimation(source,sequence,'Animation pose');
+    if(sequence.version>=2){await this.trackSessions.apply(sequence,time,()=>!this.externalExporting()&&this.generation===generation&&this.context.getState()===source&&(!this.exporting||!this.exportAbort));this.assertActive(source,generation);this.exportView?.accept();this.time=Math.max(0,Math.min(sequence.duration,time));this.update();return;}
     if(this.exportView&&!this.exportView.current())throw new Error('Animation source view changed; publication cancelled.');
     const frame=evaluateNormalized(sequence,time),view=source.view,changed=view.sectionOffset!==frame.sectionOffset;
     view.angles=frame.angles;view.sectionOffset=frame.sectionOffset;if(changed)delete view.sectionAlignment;
     this.context.display?.();this.context.viewer.setDisplay(view);this.context.syncPose?.(view);this.time=frame.time;this.update();
     this.exportView?.accept();
-    if(view.derivedMode==='section' && (changed||forceSection)){
+    if(['section','cell-section'].includes(view.derivedMode) && (changed||forceSection)){
       await this.context.refreshSection();this.assertActive(source,generation);
       if(this.exportView&&!this.exportView.current())throw new Error('Animation source view changed; publication cancelled.');
     }
-    this.context.viewer.draw();if(view.derivedMode==='section')this.context.sectionViewer?.draw();
+    this.context.viewer.draw();if(['section','cell-section'].includes(view.derivedMode))this.context.sectionViewer?.draw();
   }
   pause(){if(this.playing)this.context.markDirty?.();this.playing=false;this.generation++;this.trackSessions?.interrupt();if(this.raf)cancelAnimationFrame(this.raf);this.raf=null;this.update();}
   cancelNumeric(){this.numericEntry?.cancel();}
@@ -173,12 +179,12 @@ export class AnimationControls {
     assertCurrent();
   }
   async scrub(time){
-    this.assertNoExternalExport();requireNoEnabledDualMorph(this.context.getState(),'Animation pose');
+    this.assertNoExternalExport();requireMorphAnimation(this.context.getState(),this.sequence(),'Animation pose');
     if(this.editing)throw Error('Finish the numeric animation edit first.');if(this.exporting)return;this.pause();this.exportAbort=false;this.context.stopLegacy?.();const generation=this.generation,source=this.context.getState();
     try{await this.apply(this.sequence(),time,source,generation,{forceSection:source.view.derivedMode==='section'});this.context.markDirty?.();}catch(error){if(this.generation===generation)throw error;}
   }
   play(){
-    this.assertNoExternalExport();requireNoEnabledDualMorph(this.context.getState(),'Animation playback');
+    this.assertNoExternalExport();requireMorphAnimation(this.context.getState(),this.sequence(),'Animation playback');
     if(this.editing)throw Error('Finish the numeric animation edit first.');if(this.exporting)return;this.exportAbort=false;this.context.stopLegacy?.();const sequence=this.sequence(),source=this.context.getState();
     if(!source.view.animation)this.save(sequence);
     this.pause();this.playing=true;const generation=this.generation;
@@ -195,10 +201,11 @@ export class AnimationControls {
     this.raf=requestAnimationFrame(frame);
   }
   async export(format){
-    this.assertNoExternalExport();requireNoEnabledDualMorph(this.context.getState(),'Animation export');
+    this.assertNoExternalExport();requireMorphAnimation(this.context.getState(),this.sequence(),'Animation export');
     if(this.exporting)throw new Error('An animation export is already running.');
     await this.configure();this.context.stopLegacy?.();this.pause();
     const source=this.context.getState(),sequence=this.sequence(),generation=this.generation,target=this.nodes.target.value;
+    if(sequence.tracks?.morphRatio&&target!=='base')throw Error('Dual-morph export currently requires Base model capture; source sections/nets are not evaluated morph geometry.');
     if(target==='section'&&source.model.dimension<3)throw new Error('Section export requires a 3D or 4D model.');
     if(target==='net'&&!sequence.tracks?.fold)throw new Error('Face-net capture requires a qualified rigid folding track.');
     if(target==='section'&&sequence.tracks?.fold)throw new Error('A folding sequence displays a face net. Choose Face net or Base model for capture.');
@@ -211,8 +218,8 @@ export class AnimationControls {
     let trackSession=null;
     try{
       if(format==='webm'&&(typeof VideoEncoder!=='function'||typeof VideoEncoder.isConfigSupported!=='function'||typeof VideoFrame!=='function'))throw new Error('Explicit-pose WebCodecs video encoding is unavailable. Export PNG frames instead.');
-      if(target==='section'){source.view.derivedMode='section';snapshot.accept();}
-      if(sequence.version===2){trackSession=await this.trackSessions.prepare(sequence);this.assertActive(source,generation);}
+      if(target==='section'){if(source.view.derivedMode!=='cell-section')source.view.derivedMode='section';snapshot.accept();}
+      if(sequence.version>=2){trackSession=await this.trackSessions.prepare(sequence);this.assertActive(source,generation);}
       session=await this.context.api.animationBegin({format,name:source.model.name,fps:sequence.fps,frameCount:times.length,duration:sequence.duration});
       if(!session)return;
       this.assertActive(source,generation);
@@ -240,7 +247,7 @@ export class AnimationControls {
       this.exportView=null;
       if(tracksRestored&&snapshot.restore()){
         this.time=originalTime;this.context.display?.();this.context.viewer.setDisplay(source.view);this.context.syncPose?.(source.view);
-        if(source.view.derivedMode==='section')await this.context.refreshSection().catch(error=>this.context.setStatus?.(error.message));
+        if(['section','cell-section'].includes(source.view.derivedMode))await this.context.refreshSection().catch(error=>this.context.setStatus?.(error.message));
         this.context.viewer.draw();this.context.sectionViewer?.draw();
       }
       for(const item of controlSnapshot)if(item.viewer.controls===item.controls&&item.controls){item.controls.enabled=item.enabled;item.controls.enableDamping=item.damping;}

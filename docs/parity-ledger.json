@@ -14,7 +14,7 @@
       "numeric_contract": "float64-approximate geometry; rational-exact expression/predicate subset",
       "implementation_owner": "Polytope Laboratory",
       "implementation_status": "prototype",
-      "partial_implementation": "Independent 45-record construction catalog plus attributed Antiprism U1-U75 supplied realizations, complete ordered source geometry/colors/hashes and independent regular-face/equal-edge checks. Exhausted numerical symmetry/chirality for selected sources. Full uniform classification, variants and installed benchmark conformance remain open.",
+      "partial_implementation": "Independent construction catalog and attributed Antiprism U1-U75 supplied realizations with literal incidence, colors and provenance. All U1-U75 Wythoff symbol aliases are searchable. Twelve selected reflected snub forms preserve source incidence; bounded full-incidence numerical symmetry distinguishes nine chiral forms from three achiral sources. Skilling’s exceptional 60/240/204 realization is a separate attributed entry with explicit four-face edge incidence. Source reflection preserves text/PNG, notes, units and saved history.",
       "test_fixture_ids": [
         "tests/test_kernel.py",
         "tests/test_reference_library.py",
@@ -31,10 +31,11 @@
         "scripts/portable-smoke.cjs",
         "tests/test_linked_library.py",
         "tests/test_drive_download.py",
-        "scripts/linked-library-smoke.cjs"
+        "scripts/linked-library-smoke.cjs",
+        "scripts/projective-snub-quick-smoke.cjs"
       ],
-      "validation_evidence": "See artifacts/desktop-smoke.json and pytest results.  Requirement-wide conformance is NOT established.",
-      "known_limits": "Independent 45-record construction catalog plus attributed Antiprism U1-U75 supplied realizations, complete ordered source geometry/colors/hashes and independent regular-face/equal-edge checks. Exhausted numerical symmetry/chirality for selected sources. Full uniform classification, variants and installed benchmark conformance remain open.",
+      "validation_evidence": "Actual desktop catalog, reflection, PNG and Save/Open/replay pass: artifacts/projective-snub-quick-fWUhHk/result.json. Requirement-wide conformance is not established.",
+      "known_limits": "Complete uniform variant classification, exceptional abstract edge pairing, and installed benchmark conformance remain open.",
       "release_blocker": true
     },
     {
@@ -83,11 +84,11 @@
       "parameter_domain": null,
       "numeric_contract": null,
       "implementation_owner": "Polytope Laboratory",
-      "implementation_status": "unstarted",
-      "partial_implementation": null,
+      "implementation_status": "prototype",
+      "partial_implementation": "Attributed specialized polyhedra/compounds and seven named Stewart toroids with checked genera one through three are supplied. Noble disphenoid construction is available. Literal source incidence, provenance and separate numerical validation status are retained.",
       "test_fixture_ids": [],
-      "validation_evidence": null,
-      "known_limits": "No implemented scenario.",
+      "validation_evidence": "Scoped catalog/desktop evidence is retained in docs/RELEASE_0.24_DEVELOPMENT.md and artifacts/sphere-cell-stewart-quick-vVDCuk/result.json. Requirement-wide conformance is not established.",
+      "known_limits": "Full specialized catalog equivalence and all named noble/compound families remain incomplete.",
       "release_blocker": true
     },
     {
@@ -419,11 +420,11 @@
       "parameter_domain": null,
       "numeric_contract": null,
       "implementation_owner": "Polytope Laboratory",
-      "implementation_status": "unstarted",
-      "partial_implementation": null,
+      "implementation_status": "prototype",
+      "partial_implementation": "Literal finite 4D two-source arrangement comparison verifies full vertex bijections, source edge/cyclic face/complete cell correspondence, same-edge regiment evidence and internal/cross-source corealmic cell witnesses. Saved records and explicit independent-incidence compound recipes retain both source states, raw RGBA/text/PNG, units/notes, navigation and history. A genuine regular-star same-edge/same-face/different-cell pair is supplied.",
       "test_fixture_ids": [],
-      "validation_evidence": null,
-      "known_limits": "No implemented scenario.",
+      "validation_evidence": "Three native/five combined Node groups and actual desktop comparison/navigation/compound PNG/SaveOpen/replay pass: artifacts/regiment-distance-quick-UdLQGc/result.json. Requirement-wide conformance is not established.",
+      "known_limits": "Uniform fissary/scaliform catalog classification, unrestricted regiment enumeration and all baseline named identities remain incomplete; source witnesses establish only the declared geometric/incidence relationship.",
       "release_blocker": true
     },
     {
@@ -910,7 +911,7 @@
       "numeric_contract": "float64-approximate geometry; rational-exact expression/predicate subset",
       "implementation_owner": "Polytope Laboratory",
       "implementation_status": "prototype",
-      "partial_implementation": "Intrinsic affine-flat distances/principal angles and bounded source vertex/edge distances; now also qualified convex face/cell interior distance in intrinsic 2/3/4D with closest points, barycentric weights, numerical convex optimality gap and distance bounds. Concave/star filled regions and generalized cell interiors remain unsupported.",
+      "partial_implementation": "Intrinsic affine-flat distances/principal angles, bounded source vertex/edge distances, qualified convex 4D cell distances, and simple planar concave 3D face-region nearest points are implemented. Original-region witnesses include literal source triangles/corners and barycentric coordinates; convex hulls do not fill a concave notch.",
       "test_fixture_ids": [
         "tests/test_kernel.py",
         "tests/test_reference_library.py",
@@ -930,8 +931,8 @@
         "scripts/linked-library-smoke.cjs",
         "tests/test_bounded_entity_distance.py"
       ],
-      "validation_evidence": "See artifacts/desktop-smoke.json and pytest results.  Requirement-wide conformance is NOT established. Targeted current development: artifacts/refraction-measurements-quick-jiij6x/result.json. Requirement-wide conformance remains unproven.",
-      "known_limits": "Intrinsic affine-flat distances/principal angles and bounded source vertex/edge distances; now also qualified convex face/cell interior distance in intrinsic 2/3/4D with closest points, barycentric weights, numerical convex optimality gap and distance bounds. Concave/star filled regions and generalized cell interiors remain unsupported.",
+      "validation_evidence": "Six focused native/two controller groups and actual bounded sqrt(2) versus supporting-plane 1 distance/SaveOpen pass: artifacts/regiment-distance-quick-UdLQGc/result.json. Requirement-wide conformance is not established.",
+      "known_limits": "Star/self-crossing filled face semantics, holes not represented by the source format and nonconvex/generalized 4D cell interiors remain unavailable.",
       "release_blocker": true
     },
     {
@@ -946,7 +947,7 @@
       "numeric_contract": "float64-approximate geometry; rational-exact expression/predicate subset",
       "implementation_owner": "Polytope Laboratory",
       "implementation_status": "prototype",
-      "partial_implementation": "Intrinsic entity lengths/areas/volumes/common circumradii, unoriented principal angles and convex interior dihedrals; cached measures recomputed from source. Units, generalized content/density and full domain qualification pending.",
+      "partial_implementation": "Intrinsic entity lengths/areas/volumes/common circumradii, unoriented principal angles and convex interior dihedrals are available. Generalized closed orientable planar-faced 3D chains now support declared-point signed winding and magnitude, oriented algebraic volume and absolute algebraic face-area sum, explicit orientation policies, declared units, saved verified evidence and source-owned CSV/JSON exports.",
       "test_fixture_ids": [
         "tests/test_kernel.py",
         "tests/test_reference_library.py",
@@ -965,8 +966,8 @@
         "tests/test_drive_download.py",
         "scripts/linked-library-smoke.cjs"
       ],
-      "validation_evidence": "See artifacts/desktop-smoke.json and pytest results.  Requirement-wide conformance is NOT established.",
-      "known_limits": "Intrinsic entity lengths/areas/volumes/common circumradii, unoriented principal angles and convex interior dihedrals; cached measures recomputed from source. Units, generalized content/density and full domain qualification pending.",
+      "validation_evidence": "Mounted native four-star densities 3/3/7/7 against Cayley and analytic/cancellation/source/evidence cases plus three Node groups pass. Actual inspector/query/JSON/CSV/evidence SaveOpen: artifacts/density-info-quick-X0hY43/result.json. Requirement-wide conformance is not established.",
+      "known_limits": "Algebraic multiplicity is distinct from unsigned filled/union area or bulk volume; 4D density, arrangement-resolved union measures and full domain qualification remain unavailable.",
       "release_blocker": true
     },
     {
@@ -1349,7 +1350,7 @@
       "numeric_contract": "Float64 approximate constructions and defining Hull; Waterman membership alone is exact rational. No exact Hull or uniformity certificate.",
       "implementation_owner": "Polytope Laboratory",
       "implementation_status": "prototype",
-      "partial_implementation": "Qualified bounded0.14 mounts four geometric podium/antipodium modes, periodic direct-incidence torus and exact rational FCC-ball/author-root Waterman workflows. Full ordered sources, factor ownership, RGBA, selection maps and numerical scopes are retained. The qualified0.14 portable contains these bounded workflows.",
+      "partial_implementation": "Qualified bounded0.14 mounts four geometric podium/antipodium modes, periodic direct-incidence torus and exact rational FCC-ball/author-root Waterman workflows. Full ordered sources, factor ownership, RGBA, selection maps and numerical scopes are retained. The qualified0.14 portable contains these bounded workflows. Bounded crown/stephanoid construction, symmetry/mirror controls and height/edge metrics were mounted in 0.23.",
       "test_fixture_ids": [
         "tests/test_torus.py",
         "tests/test_torus_workflow.py",
@@ -1363,7 +1364,7 @@
         "scripts/waterman-smoke.cjs"
       ],
       "validation_evidence": "Qualified0.14 native2687PASS/1skip, Node664PASS;29 actual packaged suites PASS631.603s in artifacts/desktop-qualification-v4vfLc/result.json; actual portable with3064 source hashes in artifacts/portable-revised-candidate-0.14.0/portable-smoke.json. These broad counts are not requirement-specific conformance counts. Development550 targeted native tests; actual20 hidden desktop groups across specialized/waterman/products in artifacts/hidden-qualification-pMOk2n/result.json, with37154 HWND checks/zero owned violations. These counts include product regressions; requirement-wide parity remains open; the later qualified0.14 portable evidence is stated above.",
-      "known_limits": "Specialized option/sequence/installed-baseline domains remain incomplete; stephanoids and vertex-figure sizing are still missing.",
+      "known_limits": "Specialized option/sequence/installed-baseline domains remain incomplete; general vertex-figure sizing is unavailable.",
       "release_blocker": true
     },
     {
@@ -1492,7 +1493,7 @@
       "numeric_contract": "float64-approximate geometry; rational-exact expression/predicate subset",
       "implementation_owner": "Polytope Laboratory",
       "implementation_status": "prototype",
-      "partial_implementation": "Intrinsic reflection; compounds and blending pending. Literal model compounds retain leaf component IDs, ordered incidence and source snapshots; component extraction/deletion supports history/replay and saved projects. Full pseudo-uniform/dual blending and benchmark domains remain open.",
+      "partial_implementation": "Intrinsic reflection; compounds and blending pending. Literal model compounds retain leaf component IDs, ordered incidence and source snapshots; component extraction/deletion supports history/replay and saved projects. Full pseudo-uniform/dual blending and benchmark domains remain open. Literal two-source 4D comparison compounds preserve independent coincident vertices and all rank owner maps, source RGBA/text/PNG/units/notes/history.",
       "test_fixture_ids": [
         "tests/test_kernel.py",
         "tests/test_reference_library.py",
@@ -1750,11 +1751,14 @@
       "parameter_domain": null,
       "numeric_contract": null,
       "implementation_owner": "Polytope Laboratory",
-      "implementation_status": "unstarted",
-      "partial_implementation": null,
-      "test_fixture_ids": [],
-      "validation_evidence": null,
-      "known_limits": "No implemented scenario.",
+      "implementation_status": "prototype",
+      "partial_implementation": "Finite candidate completion from an eligible intrinsic convex 3D vertex figure compares complete normalized metric, vertex bijection, source edges and ordered face cycles against regular-convex and bounded Wythoff 4D candidates. Controls support candidate preview/adoption and source-bound history.",
+      "test_fixture_ids": [
+        "tests/test_vertex_figure_construction.py",
+        "tests/vertex-figure-construction-controls.test.mjs"
+      ],
+      "validation_evidence": "Focused native/controller evidence and limitations are retained in the development history; no unrestricted reconstruction gate is claimed. Requirement-wide conformance is not established.",
+      "known_limits": "Unrestricted nonconvex uniform/scaliform reconstruction is unavailable; the finite search is not a general reconstruction theorem.",
       "release_blocker": true
     },
     {
@@ -1812,7 +1816,7 @@
       "numeric_contract": "float64-approximate geometry; rational-exact expression/predicate subset",
       "implementation_owner": "Polytope Laboratory",
       "implementation_status": "prototype",
-      "partial_implementation": "Convex 3D-to-2D and 4D-to-3D reconstructed solid boundaries; declared convex-region-union sections retain disconnected and degenerate strata. Generalized sources additionally retain winding-defined source-face intersection curves and coplanar faces, without claiming reconstructed solid or filled source-cell sections. Complete generalized solid boundaries and benchmark-wide topology transition qualification remain pending.",
+      "partial_implementation": "Convex 3D-to-2D and 4D-to-3D reconstructed solid boundaries; declared convex-region-union sections retain disconnected and degenerate strata. Generalized sources additionally retain winding-defined source-face intersection curves and coplanar faces, without claiming reconstructed solid or filled source-cell sections. Complete generalized solid boundaries and benchmark-wide topology transition qualification remain pending. Complete ordinary 4D source-cell sections now retain concave, disconnected and holed regions, literal boundary identity, embedding and raw cell colors; root actual concave promotion/SaveOpen and ring-hole rendering pass. Star/nonordinary filled-cell semantics remain unsupported.",
       "test_fixture_ids": [
         "tests/test_kernel.py",
         "tests/test_reference_library.py",
@@ -2358,7 +2362,7 @@
       "numeric_contract": "float64-approximate geometry; rational-exact expression/predicate subset",
       "implementation_owner": "Polytope Laboratory",
       "implementation_status": "prototype",
-      "partial_implementation": "Cut/join editing with acyclic forests, matching literal source IDs, default/per-edge none/single/double tabs, explicit single-tab face owner, fixed physical-mm width and saved preferences/history. Source-color printing supports auto/mixed/separate paper batches with detached cross-color cuts, preserving editable source nets and annotations. Face/tab overlap diagnostics and SVG physical scale remain. Four-face coincident-edge assembly and tongue-in-groove/internal-support policies remain open.",
+      "partial_implementation": "Cut/join editing, acyclic forests, matching literal source IDs, fixed physical-mm per-edge tabs, selected tab owner, saved preferences/history and source-color paper separation are implemented. Four-face coincident-edge assembly supports all four documented outside/inside pairing/tab policies for 2 to 16 qualified ordinary convex, concave or toroidal pieces, detached history, source text/PNG and SVG/PDF.",
       "test_fixture_ids": [
         "tests/test_kernel.py",
         "tests/test_reference_library.py",
@@ -2380,10 +2384,11 @@
         "tests/net-tab-controls.test.mjs",
         "tests/test_net_color_printing.py",
         "tests/net-color-printing-controls.test.mjs",
-        "scripts/feature-0.25-quick-smoke.cjs"
+        "scripts/feature-0.25-quick-smoke.cjs",
+        "scripts/coincident-assembly-quick-smoke.cjs"
       ],
-      "validation_evidence": "See artifacts/desktop-smoke.json and pytest results.  Requirement-wide conformance is NOT established.",
-      "known_limits": "Cut/join editing with acyclic forest contract; matching source IDs, perpendicular trapezoid tabs, face/tab overlap diagnostics and SVG physical scale. Advanced coincident-edge/tab/color policies pending.",
+      "validation_evidence": "Actual convex and ordinary concave UI/export/SaveOpen pass: artifacts/coincident-assembly-quick-G0Jdvd/result.json and artifacts/coincident-assembly-quick-2rcRiL/result.json. PDF review verifies source PNG and support instructions; custom 1000 mm paper measured 1000.167 mm. Requirement-wide conformance is not established.",
+      "known_limits": "Star/immersed pieces, ambiguous decomposition, distinct coincident source IDs and multiple shared edges per pair remain unsupported; no mechanical fit or collision-free folding certificate.",
       "release_blocker": true
     },
     {
@@ -2471,11 +2476,15 @@
       "parameter_domain": null,
       "numeric_contract": null,
       "implementation_owner": "Polytope Laboratory",
-      "implementation_status": "unstarted",
-      "partial_implementation": null,
-      "test_fixture_ids": [],
-      "validation_evidence": null,
-      "known_limits": "No implemented scenario.",
+      "implementation_status": "prototype",
+      "partial_implementation": "Bounded source-vertex internal supporting polygons at the authoritative convex 3D net scale, physical dimensions, saved recipes and SVG/PDF plus CSV/JSON measurement export are implemented.",
+      "test_fixture_ids": [
+        "tests/test_net_reinforcement.py",
+        "tests/reinforcement-controls.test.mjs",
+        "scripts/net-reinforcement-smoke.cjs"
+      ],
+      "validation_evidence": "Historical focused native/controller/desktop evidence remains in docs/SESSION_HANDOFF.md. No physical assembly qualification is claimed. Requirement-wide conformance is not established.",
+      "known_limits": "Supporting polygon construction is a bounded prototype; material stiffness, mechanical fit and complete reinforcement families are not qualified.",
       "release_blocker": true
     },
     {
@@ -2536,7 +2545,7 @@
       "numeric_contract": "float64-approximate geometry; rational-exact expression/predicate subset",
       "implementation_owner": "Polytope Laboratory",
       "implementation_status": "prototype",
-      "partial_implementation": "Saved 3D/4D numeric rotation and intrinsic section-depth keyframes, duration/fps/loop settings, scrubbing and cancellable time-based playback; reversible rigid-net folding also remains available. PNG captures evaluate exact frame times and include both endpoints. Explicit-pose VP8/WebM evaluates and encodes every sampled source time including endpoints; a separate capture canvas supports offscreen viewports. The terminal pose has a one-frame display hold. Qualified concave/toroidal nets now use saved folding keyframes/tours and PNG/WebM, retaining source content and net-history fences. V2 normal/radial entity-explosion and rigid3Dface-net tracks have source-bound preflight, actual renderer instances, guarded async publication and full original-view export restoration. Native/project and independent renderer/controller tests pass; Thirteen actual packaged track/export checks pass, including source preservation, saved pose hydration, PNG and decoded offscreen WebM endpoints, and complete-view cancellation restoration. Generalized explosion, camera/projection/material tracks and complete benchmark animation domains remain pending. PNG/WebM await exact fine geometry before pixel reads, fence cancellation/source/view changes and recover unchanged presentation poses after canceled capture. Required transition families and full mathematical domains remain open.",
+      "partial_implementation": "Saved 3D/4D numeric rotation and intrinsic section-depth keyframes, duration/fps/loop settings, scrubbing and cancellable time-based playback; reversible rigid-net folding also remains available. PNG captures evaluate exact frame times and include both endpoints. Explicit-pose VP8/WebM evaluates and encodes every sampled source time including endpoints; a separate capture canvas supports offscreen viewports. The terminal pose has a one-frame display hold. Qualified concave/toroidal nets now use saved folding keyframes/tours and PNG/WebM, retaining source content and net-history fences. V2 normal/radial entity-explosion and rigid3Dface-net tracks have source-bound preflight, actual renderer instances, guarded async publication and full original-view export restoration. Native/project and independent renderer/controller tests pass; Thirteen actual packaged track/export checks pass, including source preservation, saved pose hydration, PNG and decoded offscreen WebM endpoints, and complete-view cancellation restoration. Generalized explosion, camera/projection/material tracks and complete benchmark animation domains remain pending. PNG/WebM await exact fine geometry before pixel reads, fence cancellation/source/view changes and recover unchanged presentation poses after canceled capture. Required transition families and full mathematical domains remain open. Saved v3 dual-morph ratio keyframes combine with rotation and native per-frame source-owned text/PNG in PNG/WebM export; root real desktop checks five poses and five decoded VP8 frames. Explicit Fit export frames bounds sampled geometry while restoring the original pose; continuous motion and label extents are not certified.",
       "test_fixture_ids": [
         "tests/test_kernel.py",
         "tests/test_reference_library.py",
@@ -2771,11 +2780,15 @@
       "parameter_domain": null,
       "numeric_contract": null,
       "implementation_owner": "Polytope Laboratory",
-      "implementation_status": "unstarted",
-      "partial_implementation": null,
-      "test_fixture_ids": [],
-      "validation_evidence": null,
-      "known_limits": "No implemented scenario.",
+      "implementation_status": "prototype",
+      "partial_implementation": "Formatted text on source vertices, edges, faces and 4D cells and bounded source-owned PNG face textures render in the viewport and eligible printable nets. Saved literal ownership, repeated instances, supported morph/fold content, original-source archive on promotion and SVG/PDF data images are implemented. Ordinary 4D cell sections retain rank-loss source text occurrences and eligible whole-surviving-face PNG in display, depth animation and tours.",
+      "test_fixture_ids": [
+        "tests/test_element_content_workflow.py",
+        "tests/element-content-viewport.test.mjs",
+        "scripts/element-content-smoke.cjs"
+      ],
+      "validation_evidence": "Actual moving content passes artifacts/morph-content-quick-7Zmypa/result.json and artifacts/feature-0.26-quick-254ZbX/result.json; printed source PNG passes artifacts/coincident-assembly-quick-G0Jdvd/pdf-review.json. Requirement-wide conformance is not established. Actual section content PNG/promotion/refusal/SaveOpen: artifacts/section-content-quick-ApisKX/result.json.",
+      "known_limits": "PNG mapping requires eligible planar simple faces and supported projections; arbitrary malformed/nonplanar/star or infinite-dual image mappings remain unsupported.",
       "release_blocker": true
     },
     {

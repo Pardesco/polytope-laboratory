@@ -11,7 +11,7 @@ import {AnimationRenderer} from './animation-renderer.mjs';
 import {requireTrackCapabilities} from './animation-track-controls.mjs';
 import {resolveExplosion,explosionGeometry} from './explosion.mjs';
 import {createMemories,storeMemory} from './model-memories.mjs';
-import {requireNoEnabledDualMorph,requireNoTourDualMorph} from './dual-morph-combinations.mjs';
+import {requireMorphAnimation} from './morph-animation-adapter.mjs';
 
 export const ANIMATED_TOUR_RENDER_LIMITS=Object.freeze({layers:2,width:4096,height:4096,pixels:16777216,cacheBytes:128*1024*1024});
 const clone=structuredClone,abort=message=>Object.assign(Error(message),{name:'AbortError'}),encoder=new TextEncoder();
@@ -47,6 +47,7 @@ function explosionNeeds(timeline){
   const result=new Map();let used=0;
   for(const index of factors.keys()){
     const event=timeline.tour.events[index],tracks=event.state.view.animation?.tracks;
+    if(tracks?.morphRatio)throw Error('Explosive transitions with dual-morph geometry are unavailable; use a nonexplosive transition.');
     if(tracks?.fold)throw Error('Explosive tour transitions with rigid folding need a separate net-entity adapter; the saved event is retained.');
     if(tracks?.explosion&&tracks.explosion.direction!=='radial')throw Error('A normal explosion track cannot be silently combined with a radial tour transition.');
     const resolved=resolveExplosion(event.state.model,{direction:'radial'});if(!resolved.supported)throw Error(resolved.diagnostic);
@@ -68,7 +69,7 @@ function explosionNeeds(timeline){
 export class AnimatedTourRenderer{
   constructor({tour,timeline,loop=false,canvas,createCanvas=()=>document.createElement('canvas'),createLayer,getOwner,onPresent=()=>{},onDiagnostic=()=>{}}){
     if(typeof createLayer!=='function'||typeof getOwner!=='function')throw Error('Animated tours require independent layer factories and source/project ownership.');
-    this.timeline=timeline??prepareAnimatedTourTimeline(tour,{loop});evaluateAnimatedTour(this.timeline,0);requireNoTourDualMorph(this.timeline);
+    this.timeline=timeline??prepareAnimatedTourTimeline(tour,{loop});evaluateAnimatedTour(this.timeline,0);for(const event of this.timeline.tour.events)requireMorphAnimation(event.state,event.state.view.animation,'Animated tour');
     this.size=size(canvas);this.canvas=canvas;this.pixels=canvas.getContext('2d',{alpha:false});if(!this.pixels)throw Error('Tour output needs a 2D composition canvas.');
     this.scratch=createCanvas();if(this.scratch===canvas)throw Error('Tour staging and visible canvases must be independent.');Object.assign(this.scratch,this.size);this.scratchPixels=this.scratch.getContext('2d',{alpha:false});if(!this.scratchPixels)throw Error('Tour staging canvas is unavailable.');
     this.createLayer=createLayer;this.getOwner=getOwner;const captured=getOwner();this.owner={project:captured?.project,tour:captured?.tour,sourceState:captured?.sourceState,
@@ -107,7 +108,7 @@ export class AnimatedTourRenderer{
     actor.renderer=new AnimationRenderer(options);this.slots[index]=actor;return actor;
   }
   async install(actor,layer,job){
-    requireNoEnabledDualMorph(layer.state,'Animated tour layer');
+    requireMorphAnimation(layer.state,layer.animation?.sequence??layer.state.view.animation,'Animated tour layer');
     if(actor.eventIndex===layer.index&&actor.session)return;
     actor.session?.destroy();actor.session=null;actor.renderer.clearTracks();this.check(job);
     actor.state=clone(layer.state);actor.eventIndex=layer.index;
@@ -126,12 +127,12 @@ export class AnimatedTourRenderer{
       this.caches.set(key,saved);this.cacheBytes+=n;return clone(saved);
     };
     actor.session=await prepareAnimationAdapters({state:actor.state,sequence,getState:()=>actor.state,
-      loadPlanes:fetch('planes'),loadNet:fetch('net')});this.check(job);
+      loadPlanes:fetch('planes'),loadNet:fetch('net'),loadMorph:(model,sequence,o)=>actor.renderer.loadMorph(model,sequence,{signal:job.controller.signal,isCurrent:()=>o.isCurrent()&&guards.isCurrent()})});this.check(job);
   }
   async renderLayer(actor,layer,job){
     await this.install(actor,layer,job);this.check(job);
     const originalModel=actor.state.model,modelSignature=sourceSignature(layer.state.model),notes=layer.state.notes;
-    const sourceCurrent=()=>actor.state.model===originalModel&&actor.viewer.model===originalModel&&sourceSignature(originalModel)===modelSignature&&actor.state.notes===notes;
+    const sourceCurrent=()=>actor.state.model===originalModel&&(actor.viewer.model===originalModel||actor.viewer.morphSource===originalModel&&actor.viewer.morphFrame)&&sourceSignature(originalModel)===modelSignature&&actor.state.notes===notes;
     const time=layer.animation?.time??0;
     await actor.session.apply(time,async(pose,guards)=>{
       const isCurrent=()=>sourceCurrent()&&guards.isCurrent()&&this.ownerCurrent()&&job.token===this.generation&&!job.controller.signal.aborted;

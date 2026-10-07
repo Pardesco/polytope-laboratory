@@ -18,6 +18,10 @@ allowed.add('facet-diagram');
 allowed.add('element-content-describe');
 allowed.add('stellation-cell-graph');
 allowed.add('sphere-project');
+allowed.add('reflect-source');
+for(const op of ['coincidic-compare','coincidic-record','coincidic-compound'])allowed.add(op);
+for(const op of ['generalized-density-info','generalized-density-restore'])allowed.add(op);
+allowed.add('projective-incidence-dual');
 allowed.add('element-label-presets');
 allowed.add('expand-runcinate');
 allowed.add('geometry-fit');
@@ -27,6 +31,7 @@ allowed.add('exact-surface-section-preview');
 allowed.add('incidence-truncate');
 allowed.add('incidence-truncate-preview');
 for(const op of ['net-reinforcement','net-measurements','net-reinforcement-pages'])allowed.add(op);
+for(const op of ['coincident-edge-qualify','coincident-edge-net','coincident-edge-edit','coincident-edge-pages','coincident-edge-fold','coincident-edge-restore'])allowed.add(op);
 for(const op of ['vertex-figure-candidates','construct-from-vertex-figure'])allowed.add(op);
 const formats = { off:'off',json:'json',obj:'obj',stl:'stl',dxf:'dxf',vrml:'wrl',pov:'pov',svg:'svg' };
 const recoveryPath = () => path.join(app.getPath('userData'), 'recovery.polyproj');
@@ -277,7 +282,7 @@ app.whenReady().then(() => {
     const width=Number(svg.match(/width="([\d.e+-]+)mm"/)?.[1]),height=Number(svg.match(/height="([\d.e+-]+)mm"/)?.[1]);
     if(!Number.isFinite(width)||!Number.isFinite(height)||width<=0||height<=0||Math.max(width,height)>2000)throw new Error('Net page dimensions must be positive and no larger than 2,000 mm.');
     const printWindow=createAppWindow({show:false,webPreferences:{sandbox:true,nodeIntegration:false,contextIsolation:true,javascript:false}});
-    const html=`<!doctype html><html><head><meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'"><style>@page {size:${width+20}mm ${height+20}mm;margin:10mm}body{margin:0}svg{display:block;width:${width}mm;height:${height}mm}</style></head><body>${svg}</body></html>`;
+    const html=`<!doctype html><html><head><meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; img-src data:"><style>@page {size:${width+20}mm ${height+20}mm;margin:10mm}body{margin:0}svg{display:block;width:${width}mm;height:${height}mm}</style></head><body>${svg}</body></html>`;
     await printWindow.loadURL('data:text/html;charset=utf-8,'+encodeURIComponent(html));
     return {printWindow,width,height};
   }
@@ -298,7 +303,7 @@ app.whenReady().then(() => {
     const [width,height]=dimensions[0];
     if(dimensions.some(d=>d.some(x=>!Number.isFinite(x)||x<20||x>2000)||d[0]!==width||d[1]!==height))throw new Error('Packed pages must have equal finite paper dimensions in 20Ã¢â‚¬â€œ2,000 mm.');
     const printWindow=createAppWindow({show:false,webPreferences:{sandbox:true,nodeIntegration:false,contextIsolation:true,javascript:false}});
-    const html=`<!doctype html><html><head><meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'"><style>@page{size:${width}mm ${height}mm;margin:0}body{margin:0}.page{position:relative;width:${width}mm;height:calc(${height}mm - 1px);break-after:page;overflow:hidden}.page:last-child{break-after:auto}svg{position:absolute;top:0;left:0;display:block;width:${width}mm;height:${height}mm}</style></head><body>${pages.map(svg=>'<section class="page">'+svg+'</section>').join('')}</body></html>`;
+    const html=`<!doctype html><html><head><meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; img-src data:"><style>@page{size:${width}mm ${height}mm;margin:0}body{margin:0}.page{position:relative;width:${width}mm;height:calc(${height}mm - 1px);break-after:page;overflow:hidden}.page:last-child{break-after:auto}svg{position:absolute;top:0;left:0;display:block;width:${width}mm;height:${height}mm}</style></head><body>${pages.map(svg=>'<section class="page">'+svg+'</section>').join('')}</body></html>`;
     try{await printWindow.loadURL('data:text/html;charset=utf-8,'+encodeURIComponent(html));return printWindow;}catch(e){printWindow.destroy();throw e;}
   }
   handle('save-packed-net-pdf',async pages=>{

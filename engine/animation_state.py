@@ -34,8 +34,8 @@ def _finite(value,label):
     return value
 
 
-def _tracks(value):
-    record=_record(value,{'explosion','fold'},'Animation tracks')
+def _tracks(value,version=2):
+    record=_record(value,({'explosion','fold','morphRatio'} if version==3 else {'explosion','fold'}),'Animation tracks')
     if not record:
         raise GeometryError('Version 2 animations require at least one supported track.')
     tracks={}
@@ -49,6 +49,10 @@ def _tracks(value):
         if type(options['kind']) is not str or options['kind']!='face-net':
             raise GeometryError('Only rigid 3D face-net folding tracks are supported; partial 4D cell-net folding is unavailable.')
         tracks['fold']={'kind':'face-net'}
+    if 'morphRatio' in record:
+        options=_record(record['morphRatio'],{'kind','version'},'Morph ratio track',{'kind','version'})
+        if options['kind']!='dual-morph' or type(options['version']) is not int or options['version']!=1:raise GeometryError('Morph ratio track requires version1 dual-morph kind.')
+        tracks['morphRatio']={'kind':'dual-morph','version':1}
     return tracks
 
 
@@ -61,11 +65,11 @@ def validate_animation_sequence(value):
     sequence=_record(value,{'version','duration','fps','loop','keyframes','tracks'},
                      'Animation sequence',{'version','duration','fps','keyframes'})
     version=sequence['version']
-    if type(version) not in (int,float) or version not in (1,2):
+    if type(version) not in (int,float) or version not in (1,2,3):
         raise GeometryError('Unsupported animation sequence version.')
     if version==1 and 'tracks' in sequence:
         raise GeometryError('Additional animation tracks require version 2.')
-    tracks=_tracks(sequence.get('tracks')) if version==2 else {}
+    tracks=_tracks(sequence.get('tracks'),int(version)) if version>=2 else {}
     duration=_finite(sequence['duration'],'Animation duration')
     fps=_finite(sequence['fps'],'Animation frame rate')
     if not 0<duration<=MAX_DURATION:
@@ -82,6 +86,7 @@ def validate_animation_sequence(value):
     frame_fields={'time','angles','sectionOffset'}
     if 'explosion' in tracks:frame_fields.add('explosionAmount')
     if 'fold' in tracks:frame_fields.add('foldFraction')
+    if 'morphRatio' in tracks:frame_fields.add('morphRatio')
     keyframes=[]
     for frame in frames:
         frame=_record(frame,frame_fields,'Animation keyframe',frame_fields)
@@ -95,7 +100,7 @@ def validate_animation_sequence(value):
         if any(abs(angle)>MAX_ANGLE for angle in angles):
             raise GeometryError('Rotation angles exceed the supported range.')
         normalized={'time':time,'angles':angles,'sectionOffset':_finite(frame['sectionOffset'],'Section depth')}
-        for name,maximum in [('explosionAmount',MAX_EXPLOSION_AMOUNT),('foldFraction',1)]:
+        for name,maximum in [('explosionAmount',MAX_EXPLOSION_AMOUNT),('foldFraction',1),('morphRatio',1)]:
             if name not in frame_fields:continue
             scalar=_finite(frame[name],name)
             if not 0<=scalar<=maximum:
@@ -120,7 +125,7 @@ def animation_render_support(value,rendered_tracks=()):
     if type(rendered_tracks) not in (list,tuple,set,frozenset) or any(type(name) is not str for name in rendered_tracks):
         raise GeometryError('Animation renderer capabilities require supported track names.')
     capabilities=set(rendered_tracks)
-    if any(type(name) is not str or name not in ('explosion','fold') for name in capabilities):
+    if any(type(name) is not str or name not in ('explosion','fold','morphRatio') for name in capabilities):
         raise GeometryError('Unknown animation renderer capability.')
     missing=sorted(set(sequence.get('tracks',{}))-capabilities)
     if missing:

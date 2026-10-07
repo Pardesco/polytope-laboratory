@@ -9,6 +9,15 @@ from .animation_state import validate_animation_sequence
 def validate_view(model, view):
     if not isinstance(view,dict):
         raise GeometryError('Saved view must be an object.')
+    if 'generalizedDensity' in view:
+        from .generalized_density import validate_density_state
+        validate_density_state(model,view['generalizedDensity'],unit=view.get('coordinateUnit','model'))
+    if 'coincidentAssembly' in view:
+        from .coincident_edge_assembly import validate_assembly_state
+        validate_assembly_state(model,view['coincidentAssembly'],element_annotations=view.get('elementAnnotations'))
+    if 'coincidicComparison' in view:
+        from .coincidic_regiments import validate_record
+        validate_record(model,view['coincidicComparison'])
     if 'appearance' in view:
         from .appearance_state import validate_appearance
         validate_appearance(view['appearance'])
@@ -38,6 +47,9 @@ def validate_view(model, view):
     near=view.get('perspectiveNear4D',.08)
     if not finite(distance) or not 0<distance<=100 or not finite(near) or not 0<near<distance:
         raise GeometryError('Saved 4D perspective requires distance in (0,100] and near depth in (0,distance).')
+    if 'projectiveDual' in view:
+        from .projective_dual_workflow import validate_saved_projective
+        validate_saved_projective(model,view)
     if 'dualMorph' in view:
         from .dual_morph import normalize_settings
         view['dualMorph']=normalize_settings(model,view['dualMorph'])

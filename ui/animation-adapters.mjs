@@ -3,6 +3,7 @@
  * Saved geometry, model identities and views are never written by this module.
  */
 import {normalizeSequence,evaluateNormalized} from './animation.mjs';
+import {requireMorphAnimation} from './morph-animation-adapter.mjs';
 import {resolveExplosion,explosionGeometry,foldTrackPositions} from './explosion.mjs';
 import {createMemories,storeMemory} from './model-memories.mjs';
 import {animationSourceSignature,foldingPreparationSignature,foldingCacheSignature,verifyGeneralizedFoldFill} from './generalized-fold-qualification.mjs';
@@ -13,7 +14,7 @@ const fail=message=>{throw Error(message);};
 const fingerprint=value=>typeof value==='string'&&/^[0-9a-f]{64}$/.test(value);
 const sameIdentity=(current,state,model,source)=>current===state&&state.model===model&&(model.fingerprint??null)===source.fingerprint&&(model.id??null)===source.modelId;
 function signature(view){const result=JSON.stringify(view);if(typeof result!=='string'||result.length>32*1024*1024)fail('Animation source view exceeds its snapshot resource bound.');return result;}
-const frameView=(original,frame)=>{const view={...clone(original),angles:[...frame.angles],sectionOffset:frame.sectionOffset,...(Object.hasOwn(frame,'explosionAmount')?{explosionAmount:frame.explosionAmount}:{}),...(Object.hasOwn(frame,'foldFraction')?{foldFraction:frame.foldFraction}:{})};if(original.sectionOffset!==frame.sectionOffset)delete view.sectionAlignment;return view;};
+const frameView=(original,frame)=>{const view={...clone(original),angles:[...frame.angles],sectionOffset:frame.sectionOffset,...(Object.hasOwn(frame,'explosionAmount')?{explosionAmount:frame.explosionAmount}:{}),...(Object.hasOwn(frame,'foldFraction')?{foldFraction:frame.foldFraction}:{}),...(Object.hasOwn(frame,'morphRatio')?{dualMorph:{...clone(original.dualMorph),ratio:frame.morphRatio}}:{})};if(original.sectionOffset!==frame.sectionOffset)delete view.sectionAlignment;return view;};
 
 function verifyNetBinding(model,net){
   if(!net||!fingerprint(model.fingerprint)||net.sourceFingerprint!==model.fingerprint)fail('Folding net source fingerprint does not match the saved model.');
@@ -32,7 +33,7 @@ function verifyNetBinding(model,net){
  * A missing/stale cache is fetched at most once for this session. The caller
  * supplies authoritative net reconstruction; raw net buffers are not repaired.
  */
-export async function prepareAnimationAdapters({state,sequence,getState=()=>state,loadPlanes,loadNet,signal}={}){
+export async function prepareAnimationAdapters({state,sequence,getState=()=>state,loadPlanes,loadNet,loadMorph,signal}={}){
   if(!state?.model||!state.view)fail('Animation adapters require saved model and view state.');
   if(signal?.aborted)fail('Animation preparation cancelled.');
   const model=state.model;
@@ -48,6 +49,8 @@ export async function prepareAnimationAdapters({state,sequence,getState=()=>stat
   check();
   // The immutable memory snapshot core supplies existing finite JSON/depth/item
   // and 32MiB state ownership bounds without touching project memory slots.
+  requireMorphAnimation(saved,normalized);let morphAnimation=null;
+  if(normalized.tracks?.morphRatio){if(typeof loadMorph!=='function')fail('Native dual-morph animation preparation is unavailable.');check();morphAnimation=await loadMorph(clone(saved.model),normalized,{signal,isCurrent:current});check();morphAnimation=freeze(storeMemory(createMemories(),1,{model:saved.model,view:{morphAnimation}}).slots[0].state.view.morphAnimation);}
   let explosion=null,net=null;
   if(normalized.tracks?.explosion){
     const direction=normalized.tracks.explosion.direction;
@@ -72,8 +75,8 @@ export async function prepareAnimationAdapters({state,sequence,getState=()=>stat
     if(generalized)verifyGeneralizedFoldFill(saved.model,net);
   }
   check();
-  const originalView=saved.view,originalFrame=freeze({time:0,angles:Array.from({length:6},(_,i)=>originalView.angles?.[i]??0),sectionOffset:originalView.sectionOffset??0,...(explosion?{explosionAmount:originalView.explosionAmount??0}:{}),...(net?{foldFraction:originalView.foldFraction??originalView.net?.fraction??0}:{})});
-  const geometry=(frame,view,restoring=false)=>({source,frame:clone(frame),view:net&&!restoring?{...clone(view),derivedMode:'net',viewportLayout:'split',net:{...clone(view.net??{}),display:'fold',fraction:frame.foldFraction}}:clone(view),restoring,...(explosion?{baseExplosion:explosionGeometry(explosion,frame.explosionAmount)}:{}),...(net?{foldNet:net,foldFaces:foldTrackPositions(net,frame.foldFraction),foldSourceFingerprint:net.sourceFingerprint}:{} )});
+  const originalView=saved.view,originalFrame=freeze({time:0,angles:Array.from({length:6},(_,i)=>originalView.angles?.[i]??0),sectionOffset:originalView.sectionOffset??0,...(explosion?{explosionAmount:originalView.explosionAmount??0}:{}),...(net?{foldFraction:originalView.foldFraction??originalView.net?.fraction??0}:{}),...(morphAnimation?{morphRatio:originalView.dualMorph.ratio}:{})});
+  const geometry=(frame,view,restoring=false)=>({source,frame:clone(frame),view:net&&!restoring?{...clone(view),derivedMode:'net',viewportLayout:'split',net:{...clone(view.net??{}),display:'fold',fraction:frame.foldFraction}}:clone(view),restoring,...(explosion?{baseExplosion:explosionGeometry(explosion,frame.explosionAmount)}:{}),...(net?{foldNet:net,foldFaces:foldTrackPositions(net,frame.foldFraction),foldSourceFingerprint:net.sourceFingerprint}:{} ),...(morphAnimation?{morphAnimation}:{})});
   // Check original presentation now, before a renderer or export session starts.
   geometry(originalFrame,originalView,true);
   let expectedSignature=initialSignature,cancelled=false,generation=0,active=null,pendingViews=null;

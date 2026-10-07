@@ -1,4 +1,6 @@
 import {catalogMatches} from './catalog-query.mjs';
+import {SourceReflectionControls} from './source-reflection-controls.mjs';
+import {CoincidicRegimentControls} from './coincidic-regiment-controls.mjs';
 import {UserGuide} from './user-guide.mjs';
 import './style.css';
 import { Viewer } from './viewer.js';
@@ -38,8 +40,10 @@ import {ElementContentControls} from './element-content-controls.mjs';
 import {ElementLabelPresetsControls} from './element-label-presets-controls.mjs';
 let sourceLabelPresets=null;
 import {ReinforcementControls,checkedReinforcementSVG} from './reinforcement-controls.mjs';
+import {CoincidentEdgeControls,checkedAssemblySVG} from './coincident-edge-controls.mjs';
+import {GeneralizedDensityControls} from './generalized-density-controls.mjs';
 import {publishBoundedExport} from './bounded-export.mjs';
-let reinforcement=null;
+let reinforcement=null,coincidentAssembly=null,densityInfo=null;
 import {captureContentHistoryPublication} from './element-content-history.mjs';
 import { PickingControls } from './picking-controls.mjs';
 import { CompoundControls } from './compound-controls.mjs';
@@ -49,9 +53,12 @@ import { SourceConstructionControls } from './source-construction-controls.mjs';
 import {ExpansionControls} from './expansion-controls.mjs';
 import {FittingControls} from './fitting-controls.mjs';
 import {ExactSectionControls} from './exact-section-controls.mjs';
+import {OrdinaryCellSectionWorkflow} from './ordinary-cell-section-workflow.mjs';
+import {hasSectionSourceContent,rememberSectionSource,hasEmptySectionSource} from './section-source-content.mjs';
 import {IncidenceTruncationControls} from './incidence-truncation-controls.mjs';
 import {SphereProjectionControls} from './sphere-projection-controls.mjs';
-let sphereProjectionControls=null;
+import {ProjectiveDualControls} from './projective-dual-controls.mjs';
+let sphereProjectionControls=null,projectiveDualControls=null;
 import { SourceZonohedronControls } from './source-zonohedron-controls.mjs';
 import {VertexFigureConstructionControls} from './vertex-figure-construction-controls.mjs';
 import {MultiViewControls} from './multi-view-controls.mjs';
@@ -102,7 +109,7 @@ base.onDisplay=diagnostic=>{displayDiagnostic(diagnostic);projectionFit?.notify(
 base.onCamera=value=>{projectionFit?.cancel();if(state()){state().view.camera=value;if(viewportControls)viewportControls.orientation.value='free';markDirty();}};
 derived.onCamera=value=>{if(state()){state().view.derivedCamera=value;markDirty();}};
 
-function markDirty(){basicSolidControls?.sync();dualMorph?.sync();tours?.invalidatePreview();dirty=true;revision++;api.setDirty(true).catch(()=>{});segmentotopeControls?.sync();segmentotopeAnalysis?.sync();augmentationControls?.sync();geodesicControls?.sync();convexCoreControls?.sync();expansionControls?.sync();fittingControls?.sync();exactSectionControls?.sync();incidenceTruncationControls?.sync();sphereProjectionControls?.sync();facePlacementControls?.sync();sourceZonohedronControls?.sync();vertexFigureConstruction?.sync();multipleViews?.sync();springControls?.sync();automaticFaceting?.sync();facetingDiagram?.sync();elementContent?.sync();sourceLabelPresets?.sync();stellationCells?.sync();reinforcement?.sync();}
+function markDirty(){sourceReflectionControls?.sync();coincidicRegimentControls?.sync();basicSolidControls?.sync();dualMorph?.sync();tours?.invalidatePreview();dirty=true;revision++;api.setDirty(true).catch(()=>{});segmentotopeControls?.sync();segmentotopeAnalysis?.sync();augmentationControls?.sync();geodesicControls?.sync();convexCoreControls?.sync();expansionControls?.sync();fittingControls?.sync();exactSectionControls?.sync();incidenceTruncationControls?.sync();sphereProjectionControls?.sync();projectiveDualControls?.sync();facePlacementControls?.sync();sourceZonohedronControls?.sync();vertexFigureConstruction?.sync();multipleViews?.sync();springControls?.sync();automaticFaceting?.sync();facetingDiagram?.sync();elementContent?.sync();sourceLabelPresets?.sync();stellationCells?.sync();reinforcement?.sync();coincidentAssembly?.sync();densityInfo?.sync();}
 function setStatus(text){return status.set(text);}
 function error(e){const message=e?.message||String(e);setStatus(message);$('toast').textContent=message;$('toast').hidden=false;clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('toast').hidden=true,9000);}
 function guard(fn){return async(...args)=>{try{return await fn(...args);}catch(e){error(e);}};}
@@ -128,8 +135,8 @@ const netEditor=new NetEditor({getState:state,getModel:model,getProject:()=>proj
 const cellNetEditor=new CellNetEditor({getState:state,getModel:model,getProject:()=>project,getDocument:doc,number,isExporting:()=>(animation.exporting||tourExporting),isBusy:()=>animation.playing||viewportControls?.playing||tours?.playing,run,guard,markDirty,refresh:refreshDerived,viewer:derived,onSourceSelection:(kind,index,dirty)=>{$('selection-kind').value=kind;$('selection-id').value=index;selectEntity(dirty);}});
 const measurementControls=new MeasurementControls({...numericContext,getState:state,getModel:model,run,guard,markDirty,refresh:refreshDerived,number,rawNumbers,format});
 const symmetryControls=new SymmetryControls({...numericContext,getState:state,run,guard,markDirty,viewer:base,format});
-const animationRenderer=new AnimationRenderer({getState:state,viewer:base,netViewer:derived,run,display:()=>{displayBase();viewportControls?.sync();},syncPose:view=>{syncRotationPose();$('section-depth').value=view.sectionOffset;$('section-offset').value=view.sectionOffset;$('derived-mode').value=view.derivedMode;},refreshDerived:options=>refreshDerived({throwOnError:true,preserveLayout:true,...options}),refreshSection:options=>refreshDerived({throwOnError:true,...options}),showNet:pose=>{++derivedSequence;derivedModel=null;derivedResult=null;net=pose.foldNet;$('promote').disabled=true;$('net-preview').hidden=true;$('derived-canvas').hidden=false;$('derived-mode').value='net';$('derived-status').textContent='Rigid face-net fold: '+format(pose.frame.foldFraction);viewportControls?.sync();}});
-const animation=new AnimationControls({...numericContext,getState:state,getModel:model,isExporting:()=>tourExporting,viewer:base,sectionViewer:derived,netViewer:derived,capabilities:()=>animationRenderer.capabilities(),loadPlanes:(m,o)=>animationRenderer.loadPlanes(m,o),loadNet:(m,o)=>animationRenderer.loadNet(m,o),renderTracks:(p,o)=>animationRenderer.renderTracks(p,o),clearTracks:()=>animationRenderer.clearTracks(),display:displayBase,refreshSection:()=>refreshDerived({throwOnError:true}),markDirty,api,setStatus,guard,stopLegacy:()=>{dualMorph?.pause();viewportControls?.stop();},onExportStateChange:()=>{dualMorph?.sync();animation.update();projectionFit?.cancel();viewportControls?.sync();memories?.sync();entityOrientation?.sync();cellFacing?.sync();historyControls?.sync();presentationControls?.sync();appearanceControls?.sync();materialEffectsControls?.sync();tours?.sync();faceEditing?.sync();automaticFaceting?.sync();facetingDiagram?.sync();pickingControls?.sync();compoundControls?.sync();perspectiveControls?.sync();subdivisionControls?.sync();cupolaControls?.sync();starPolygonControls?.sync();productControls?.sync();antiprismControls?.sync();stepPrismControls?.sync();nobleControls?.sync();stephanoidControls?.sync();basicSolidControls?.sync();torusControls?.sync();podiaControls?.sync();watermanControls?.sync();crossedSegmentotopeControls?.sync();augmentationControls?.sync();geodesicControls?.sync();convexCoreControls?.sync();expansionControls?.sync();fittingControls?.sync();exactSectionControls?.sync();incidenceTruncationControls?.sync();sphereProjectionControls?.sync();facePlacementControls?.sync();sourceZonohedronControls?.sync();vertexFigureConstruction?.sync();multipleViews?.sync();springControls?.sync();segmentotopeControls?.sync();segmentotopeAnalysis?.sync();elementContent?.sync();sourceLabelPresets?.sync();stellationCells?.sync();reinforcement?.sync();projectMetadata?.sync();},showSection:()=>{state().view.viewportLayout='split';viewportControls?.sync();},syncPose:view=>{syncRotationPose();$('section-depth').value=view.sectionOffset;$('section-offset').value=view.sectionOffset;$('derived-mode').value=view.derivedMode;}});
+const animationRenderer=new AnimationRenderer({getState:state,viewer:base,netViewer:derived,run,onMorphPose:(frame,prepared)=>dualMorph?.adoptAnimationPose(frame,prepared),display:()=>{displayBase();viewportControls?.sync();},syncPose:view=>{syncRotationPose();$('section-depth').value=view.sectionOffset;$('section-offset').value=view.sectionOffset;$('derived-mode').value=view.derivedMode;},refreshDerived:options=>refreshDerived({throwOnError:true,preserveLayout:true,...options}),refreshSection:options=>refreshDerived({throwOnError:true,...options}),showNet:pose=>{++derivedSequence;derivedModel=null;derivedResult=null;net=pose.foldNet;$('promote').disabled=true;$('net-preview').hidden=true;$('derived-canvas').hidden=false;$('derived-mode').value='net';$('derived-status').textContent='Rigid face-net fold: '+format(pose.frame.foldFraction);viewportControls?.sync();}});
+const animation=new AnimationControls({...numericContext,getState:state,getModel:model,isExporting:()=>tourExporting,viewer:base,sectionViewer:derived,netViewer:derived,capabilities:()=>animationRenderer.capabilities(),loadPlanes:(m,o)=>animationRenderer.loadPlanes(m,o),loadNet:(m,o)=>animationRenderer.loadNet(m,o),loadMorph:(m,s,o)=>animationRenderer.loadMorph(m,s,o),renderTracks:(p,o)=>animationRenderer.renderTracks(p,o),clearTracks:()=>animationRenderer.clearTracks(),display:displayBase,refreshSection:()=>{const source=state(),generation=animation.generation;const current=()=>state()===source&&animation.generation===generation&&!tourExporting;return refreshDerived({throwOnError:true,isCurrent:current,exportOwner:animation.exporting?()=>animation.exporting&&current():undefined});},markDirty,api,setStatus,guard,stopLegacy:()=>{dualMorph?.cancel();viewportControls?.stop();},onExportStateChange:()=>{sourceReflectionControls?.sync();coincidicRegimentControls?.sync();dualMorph?.sync();animation.update();projectionFit?.cancel();viewportControls?.sync();memories?.sync();entityOrientation?.sync();cellFacing?.sync();historyControls?.sync();presentationControls?.sync();appearanceControls?.sync();materialEffectsControls?.sync();tours?.sync();faceEditing?.sync();automaticFaceting?.sync();facetingDiagram?.sync();pickingControls?.sync();compoundControls?.sync();perspectiveControls?.sync();subdivisionControls?.sync();cupolaControls?.sync();starPolygonControls?.sync();productControls?.sync();antiprismControls?.sync();stepPrismControls?.sync();nobleControls?.sync();stephanoidControls?.sync();basicSolidControls?.sync();torusControls?.sync();podiaControls?.sync();watermanControls?.sync();crossedSegmentotopeControls?.sync();augmentationControls?.sync();geodesicControls?.sync();convexCoreControls?.sync();expansionControls?.sync();fittingControls?.sync();exactSectionControls?.sync();incidenceTruncationControls?.sync();sphereProjectionControls?.sync();projectiveDualControls?.sync();facePlacementControls?.sync();sourceZonohedronControls?.sync();vertexFigureConstruction?.sync();multipleViews?.sync();springControls?.sync();segmentotopeControls?.sync();segmentotopeAnalysis?.sync();elementContent?.sync();sourceLabelPresets?.sync();stellationCells?.sync();reinforcement?.sync();coincidentAssembly?.sync();densityInfo?.sync();projectMetadata?.sync();},showSection:()=>{state().view.viewportLayout='split';viewportControls?.sync();},syncPose:view=>{syncRotationPose();$('section-depth').value=view.sectionOffset;$('section-offset').value=view.sectionOffset;$('derived-mode').value=view.derivedMode;}});
 dualMorph=new DualMorphControls({...numericContext,mappedContent:true,
   prepare:(m,settings,sourceContext,o)=>run('prepare-dual-morph',{settings,sourceContext},m,'Prepare dual morph',o),
   evaluate:(m,prepared,ratio,sourceContext,o)=>run('evaluate-dual-morph',{prepared,ratio,sourceContext},m,'Evaluate dual morph',o),
@@ -214,13 +221,27 @@ reinforcement=new ReinforcementControls({...numericContext,
   export:(format,text,o)=>publishBoundedExport(api,format,text,o),
   exportPdf:(pages,o)=>publishBoundedExport(api,'pdf',pages,o)
 });
+coincidentAssembly=new CoincidentEdgeControls({...numericContext,
+  mount:{after:panel=>$('net-panel').append(panel)},
+  read:async(op,p,m,o)=>{o.verifyPublication();const result=await run(op,p,m,'Prepare four-face source assembly',o);o.verifyPublication();return result;},
+  preview:async(svg,result,o)=>{o.verifyPublication();const root=checkedAssemblySVG(svg);root.style.width='100%';root.style.height='auto';o.verifyPublication();$('assembly-chart').replaceChildren(document.importNode(root,true));$('assembly-chart').hidden=false;},
+  clearPreview:()=>{$('assembly-chart')?.replaceChildren();if($('assembly-chart'))$('assembly-chart').hidden=true;},
+  getPaperParameters:()=>{const p=state().view.netPrint??{paper:'a4',orientation:'portrait',margin_mm:10,gap_mm:5};return Object.fromEntries(['paper','orientation','width_mm','height_mm','margin_mm','gap_mm','allow_rotation'].filter(k=>p[k]!==undefined).map(k=>[k,p[k]]));},
+  export:(format,text,o)=>publishBoundedExport(api,format,text,{...o,defaultName:'Source edge assembly'}),
+  exportPdf:(pages,o)=>publishBoundedExport(api,'pdf',pages,{...o,defaultName:'Source edge assembly'})
+});
+densityInfo=new GeneralizedDensityControls({...numericContext,format,
+  mount:{after:panel=>$('entity-measure-controls').after(panel)},
+  read:async(op,p,m,o)=>{o.verifyPublication();const result=await run(op,p,m,'Generalized source density information',o);o.verifyPublication();return result;},
+  export:(format,text,o)=>publishBoundedExport(api,format,text,{...o,defaultName:'Generalized density evidence'})
+});
 // Descriptor/asset readiness precedes capture; missing requested content is never
 // treated as an empty overlay while an asynchronous native read is in flight.
 for(const viewer of [base,derived]){
   const capture=viewer.prepareCapture.bind(viewer);
   viewer.prepareCapture=async(options={})=>{
     if(viewer===base)await elementContent.prepareCapture(options);
-    else if(viewer.net||viewer.cellNet)await elementContent.refresh(viewer,{...options,referenceEdgeMm:viewer.net?.referenceEdgeLengthMm??25});
+    else if(viewer.net||viewer.cellNet||hasSectionSourceContent(viewer.model)||hasEmptySectionSource(viewer))await elementContent.refresh(viewer,{...options,referenceEdgeMm:viewer.net?.referenceEdgeLengthMm??25});
     else if(state()?.view.elementAnnotations?.entries.length)throw Error('Element content mapping to this derived presentation is not supported.');
     return capture(options);
   };
@@ -231,6 +252,8 @@ const compoundControls=new CompoundControls({getState:state,isExporting:()=>(ani
 const perspectiveControls=new PerspectiveControls({...numericContext,getState:state,isExporting:()=>(animation.exporting||tourExporting),guard,display:displayBase,markDirty});
 const subdivisionControls=new SubdivisionControls({...numericContext,getState:state,isExporting:()=>(animation.exporting||tourExporting),guard,commit:commitOperation});
 const sourceConstructionContext={...numericContext,getState:state,getDocument:doc,getProject:()=>project,isExporting:()=>(animation.exporting||tourExporting),guard,number,commit:commitOperation};
+const sourceReflectionControls=new SourceReflectionControls(sourceConstructionContext);
+const coincidicRegimentControls=new CoincidicRegimentControls({...sourceConstructionContext,setStatus,restoreState:restoreMemoryState,onSelect:(kind,index)=>{$('selection-kind').value=kind;$('selection-id').value=index;return selectEntity(true);},navigateDocument:id=>{const index=project.documents.findIndex(d=>d.id===id);if(index<0)throw Error('Comparison source document is no longer open.');project.active=index;markDirty();renderWorkspace();}});
 geodesicControls=new SourceConstructionControls(sourceConstructionContext,'geodesic');
 convexCoreControls=new SourceConstructionControls(sourceConstructionContext,'core');
 expansionControls=new ExpansionControls(sourceConstructionContext);
@@ -238,6 +261,7 @@ fittingControls=new FittingControls({...sourceConstructionContext,preview:async(
 exactSectionControls=new ExactSectionControls({...sourceConstructionContext,preview:async(op,params,{sourceSnapshot,signal,verifyPublication})=>{verifyPublication();const result=await run(op,params,sourceSnapshot,'Compute exact surface section',{signal});verifyPublication();return result;}});
 incidenceTruncationControls=new IncidenceTruncationControls({...sourceConstructionContext,preview:async(op,params,{sourceSnapshot,signal,verifyPublication})=>{verifyPublication();const result=await run(op,params,sourceSnapshot,'Compute source edge cut',{signal});verifyPublication();return result;}});
 sphereProjectionControls=new SphereProjectionControls(sourceConstructionContext);
+projectiveDualControls=new ProjectiveDualControls({...sourceConstructionContext,run,markDirty,setStatus,saveImage:data=>api.saveImage(data),onSelect:(kind,index)=>{$('selection-kind').value=kind;$('selection-id').value=index;selectEntity(true);}});
 sourceZonohedronControls=new SourceZonohedronControls(sourceConstructionContext,{anchor:'convex-core-settings'});
 vertexFigureConstruction=new VertexFigureConstructionControls({...sourceConstructionContext,run,addDocument});
 multipleViews=new MultiViewControls({...numericContext,Viewer,getState:state,getSource:model,getProject:()=>project,getDocument:doc,isExporting:()=>(animation.exporting||tourExporting),guard,markDirty,setStatus,saveImage:data=>api.saveImage(data),describeContent:(m,p,o)=>run('element-content-describe',p,m,'Prepare multiple-view content',o),onSelect:(index,count,kind)=>{$('selection-kind').value=kind;$('selection-id').value=index;selectEntity();}});
@@ -260,6 +284,7 @@ const crossedSegmentotopeControls=new CrossedSegmentotopeControls({...numericCon
 augmentationControls=new AugmentationControls({guard,number,getState:state,getDocument:doc,getProject:()=>project,getWorkspace:()=>project,getMemories:()=>project.memories,isExporting:()=>(animation.exporting||tourExporting),commit:commitOperation});
 facePlacementControls=new FacePlacementControls({guard,number,getState:state,getDocument:doc,getProject:()=>project,getMemories:()=>project.memories,isExporting:()=>(animation.exporting||tourExporting),commit:commitOperation});
 function constructDocument(kind,params,label,options){return generateConstruction({getProject:()=>project,isExporting:()=>(animation.exporting||tourExporting),run,addDocument},kind,params,label,options);}
+const ordinaryCellSections=new OrdinaryCellSectionWorkflow({...sourceConstructionContext,run,publishHistory:result=>{project.documents.push({...result,id:uid(),name:'Ordinary cell section'});project.active=project.documents.length-1;markDirty();renderWorkspace();}});
 const workspaceNumeric=new WorkspaceNumericControls({...numericContext,getInput:$,commit:commitOperation,generate:constructDocument,run,addDocument,markDirty,refreshDerived});
 function syncRotationPose(){const v=state()?.view;if(v)PLANES.forEach((_,i)=>{if($('plane-'+i)){$('plane-'+i).value=v.angles[i]||0;$('plane-output-'+i).textContent=format(v.angles[i]||0)+'°';}});}
 const unitControls=el('div');unitControls.innerHTML='<label>Coordinate units <select id="model-unit"><option value="model">Model units</option><option>mm</option><option>cm</option><option>m</option><option>in</option><option>ft</option></select></label><label>Reference edge <input id="reference-edge" type="number" min="0" value="0" step="1"></label><label>Desired edge length <input id="reference-length" value="1"></label><button id="scale-reference">Scale to reference</button>';
@@ -295,7 +320,7 @@ function renderCatalog(){
   filtered.slice(0,250).forEach(entry=>{
     const button=el('button',undefined,'catalog-entry');button.dataset.key=entry.key;
     button.disabled=entry.external&&entry.supported===false;
-    button.title=entry.external?[entry.relativePath,entry.diagnostic||'Header indexed; geometry is checked when opened.',entry.counts?'V / E / F / C: '+entry.counts.join(' / '):''].filter(Boolean).join('\n'):[entry.name,entry.catalogStatus,entry.sourceClassification,entry.classificationVerified===false?'Classification unverified':''].filter(Boolean).join('\n');
+    button.title=entry.external?[entry.relativePath,entry.diagnostic||'Header indexed; geometry is checked when opened.',entry.counts?'V / E / F / C: '+entry.counts.join(' / '):''].filter(Boolean).join('\n'):[entry.name,entry.catalogStatus,entry.sourceClassification,entry.chiralityStatus,entry.uniformSnubVariant?.labelBasis,entry.classificationVerified===false?'Classification unverified':''].filter(Boolean).join('\n');
     if(entry.key===model()?.metadata?.key)button.classList.add('active');
     button.append(el('span',entry.dimension?entry.dimension+'D':'OFF','dim'),el('span',entry.name,'entry-name'),el('small',[entry.symbol,entry.family].filter(Boolean).join(' · ')));
     if(entry.external&&entry.supported===false)button.append(el('small',entry.diagnostic||'Unsupported OFF file','muted'));
@@ -352,6 +377,7 @@ async function commitOperation(op,params,label,{verifyPublication,signal}={}){
   preserveHistoryObserver(prepared);project.documents[index]=prepared.result;
   clearTimeout(toastTimer);$('toast').hidden=true;
   markDirty();if(index===project.active)renderWorkspace();else renderTabs();
+  return prepared.result;
 }
 async function openRecipeDocument(op,parameters){
   const context={getProject:()=>project,getDocument:doc,getState:state,isExporting:()=>(animation.exporting||tourExporting),run};
@@ -363,7 +389,7 @@ async function openRecipeDocument(op,parameters){
 
 function displayBase(){
   const s=state();if(!s)return;
-  perspectiveControls.sync();subdivisionControls.sync();productControls.sync();antiprismControls.sync();stepPrismControls.sync();nobleControls.sync();torusControls.sync();podiaControls.sync();watermanControls.sync();crossedSegmentotopeControls.sync();augmentationControls.sync();geodesicControls.sync();convexCoreControls.sync();expansionControls.sync();fittingControls.sync();exactSectionControls.sync();incidenceTruncationControls.sync();sphereProjectionControls?.sync();facePlacementControls.sync();sourceZonohedronControls.sync();vertexFigureConstruction?.sync();multipleViews?.sync();segmentotopeControls.sync();segmentotopeAnalysis.sync();
+  sourceReflectionControls?.sync();coincidicRegimentControls?.sync();perspectiveControls.sync();subdivisionControls.sync();productControls.sync();antiprismControls.sync();stepPrismControls.sync();nobleControls.sync();torusControls.sync();podiaControls.sync();watermanControls.sync();crossedSegmentotopeControls.sync();augmentationControls.sync();geodesicControls.sync();convexCoreControls.sync();expansionControls.sync();fittingControls.sync();exactSectionControls.sync();incidenceTruncationControls.sync();sphereProjectionControls?.sync();projectiveDualControls?.sync();facePlacementControls.sync();sourceZonohedronControls.sync();vertexFigureConstruction?.sync();multipleViews?.sync();segmentotopeControls.sync();segmentotopeAnalysis.sync();
   displayDiagnostic(base.setDisplay(s.view));
   if(derived.model&&(derived.view?.appearance!==s.view.appearance||derived.view?.materialEffects!==s.view.materialEffects))derived.setDisplay({...derived.view,appearance:s.view.appearance,materialEffects:s.view.materialEffects});
   elementContent.refresh().catch(e=>{if(state()===s){elementContent.node('status').textContent=e.message;elementContent.node('status').dataset.status='presentation-refused';}});
@@ -390,7 +416,7 @@ function displayDiagnostic(diagnostic){
 function renderWorkspace(){
   dualMorph?.invalidate();
   automaticFaceting.invalidate();facetingDiagram.invalidate();
-  elementContent.invalidate();reinforcement?.invalidate();
+  elementContent.invalidate();reinforcement?.invalidate();coincidentAssembly?.invalidate();densityInfo?.invalidate();
   projectionFit?.cancel();
   const m=model(),v=state()?.view;if(!m)return;
   animationRenderer.clearTracks();
@@ -414,7 +440,7 @@ function renderWorkspace(){
   if(selection&&Number.isInteger(selection.index)&&selection.index>=0&&selection.index<selectedCount){$('selection-kind').value=selection.kind;$('selection-id').value=selection.index;selectEntity(false);}
   else{$('selection-kind').value='vertex';$('selection-id').value=0;$('selection-info').textContent='Click a projected vertex or select a source entity by index.';}
   $('counts-strip').replaceChildren();['vertices','edges','faces','cells'].forEach(k=>{if(k==='cells'&&m.dimension!==4)return;const block=el('div',undefined,'count-block');block.append(el('strong',format(m[k]?.length||0)),el('small',k.toUpperCase()));$('counts-strip').append(block);});
-  stellation.sync();netEditor.sync();cellNetEditor.sync();measurementControls.sync();symmetryControls.sync();memories.sync();entityOrientation.sync();tours.sync();faceEditing.sync();automaticFaceting.sync();facetingDiagram.sync();elementContent.sync();sourceLabelPresets?.sync();stellationCells?.sync();reinforcement?.sync();projectMetadata.sync();compoundControls.sync();renderTabs();renderHistory();renderCatalog();refreshAnalysis();refreshDerived();
+  stellation.sync();netEditor.sync();cellNetEditor.sync();measurementControls.sync();symmetryControls.sync();memories.sync();entityOrientation.sync();tours.sync();faceEditing.sync();automaticFaceting.sync();facetingDiagram.sync();elementContent.sync();sourceLabelPresets?.sync();stellationCells?.sync();reinforcement?.sync();coincidentAssembly?.sync();densityInfo?.sync();projectMetadata.sync();compoundControls.sync();renderTabs();renderHistory();renderCatalog();refreshAnalysis();refreshDerived();
   const restoredSource=state();(state().view.dualMorph?.enabled?dualMorph.restoreSaved():animationRenderer.restoreSavedExplosion()).catch(e=>{if(state()===restoredSource)error(e);});
 }
 async function refreshAnalysis(){
@@ -441,7 +467,7 @@ async function refreshAnalysis(){
     $('evidence').replaceChildren(el('p',a.validation.passed?'Listed structural checks passed':'Validation failed','badge'));$('evidence').append(el('p',a.validation.checks.join(' · '),'muted'),el('pre',JSON.stringify({numeric:m.numeric,certificate:m.certificate,provenance:m.provenance,warnings:a.validation.warnings},null,2),'code-box'));
   }catch(e){if(sequence===analysisSequence)error(e);}
 }
-async function refreshDerived({throwOnError=false,isCurrent,signal,preserveLayout=false}={}){
+async function refreshDerived({throwOnError=false,isCurrent,signal,preserveLayout=false,exportOwner}={}){
   const m=model(),v=state()?.view;if(!m)return;
   const source=state(),current=()=>state()===source&&source.model===m&&!signal?.aborted&&isCurrent?.()!==false;
   if(!current())throw new Error('Derived presentation cancelled.');
@@ -459,6 +485,7 @@ async function refreshDerived({throwOnError=false,isCurrent,signal,preserveLayou
       $('derived-status').textContent='Source surface intersection evidence';return {status:'surface-intersection',model:m};
     }
     if(mode==='section')result=await deriveRun('section',{normal:v.sectionNormal,offset:v.sectionOffset,fill_rule:v.fillRule||'nonzero'},m,'Evaluate section');
+    else if(mode==='cell-section')result=await ordinaryCellSections.evaluate({normal:v.sectionNormal,offset:v.sectionOffset,fill_rule:v.fillRule||'nonzero'},{signal,isCurrent:current,exportOwner});
     else if(mode==='dual')result={model:await deriveRun('dual',{},m,'Evaluate dual')};
     else if(mode==='incidence-dual')result={model:await deriveRun('incidence-dual',{},m,'Evaluate incidence dual')};
     else if(mode==='vertex-figure')result=await deriveRun('vertex-figure',{vertex:safeIndex($('entity-id').value,m.vertices.length)},m,'Evaluate vertex figure');
@@ -476,7 +503,8 @@ async function refreshDerived({throwOnError=false,isCurrent,signal,preserveLayou
       $('net-preview').hidden=true;$('derived-canvas').hidden=false;cellNetEditor.show(result);
     }else{
       derivedResult=result;derivedModel=result.model;
-      derived.setModel(derivedModel);derived.restoreCamera(v.derivedCamera);if(derivedModel)derived.setDisplay({angles:Array(6).fill(0),projection:'orthographic',cameraProjection:v.cameraProjection,faces:true,vertices:v.vertices,edges:v.edges,fillRule:v.fillRule||'nonzero',surfaceOpacity:v.surfaceOpacity,surfaceColors:v.surfaceColors,appearance:v.appearance,materialEffects:v.materialEffects});
+      derived.setModel(derivedModel);rememberSectionSource(derived,result,m);derived.restoreCamera(v.derivedCamera);if(derivedModel)derived.setDisplay({angles:Array(6).fill(0),projection:'orthographic',cameraProjection:v.cameraProjection,faces:true,vertices:v.vertices,edges:v.edges,fillRule:v.fillRule||'nonzero',surfaceOpacity:v.surfaceOpacity,surfaceColors:v.surfaceColors,appearance:v.appearance,materialEffects:v.materialEffects});
+      if(mode==='cell-section'&&(derivedModel||hasEmptySectionSource(derived)))await elementContent.refresh(derived,{signal,isCurrent:current});
       $('promote').disabled=!derivedModel;
       $('derived-status').textContent=mode==='stellation'?result.status:derivedModel?`${derivedModel.vertices.length} vertices · ${derivedModel.edges.length} edges · ${derivedModel.faces.length} faces · intrinsic ${derivedModel.dimension}D`:result.status==='empty'?'Empty intersection':`Tangent / degenerate intersection · affine dimension ${result.affineDimension}`;
     }
@@ -596,7 +624,7 @@ document.querySelectorAll('[data-panel]').forEach(b=>b.onclick=()=>{document.que
 PLANES.forEach(([a,b,label],i)=>{const row=el('div',undefined,'plane'),input=el('input');input.id='plane-'+i;input.type='range';input.min=-180;input.max=180;input.step=0.1;input.value=0;input.setAttribute('aria-label',label+' rotation');const output=el('output','0°');output.id='plane-output-'+i;row.append(el('label',label),input,output);$('planes').append(row);input.oninput=()=>{state().view.angles[i]=Number(input.value);output.textContent=format(Number(input.value))+'°';displayBase();markDirty();};});
 ['projection','faces-visible','vertices-visible'].forEach(id=>$(id).onchange=()=>{if(id==='projection')projectionFit?.cancel();const v=state().view;v.projection=$('projection').value;v.faces=$('faces-visible').checked;v.vertices=$('vertices-visible').checked;v.presentation=!v.faces?'wireframe':v.surfaceOpacity<1?'translucent':'solid';displayBase();viewportControls.sync();markDirty();if(id==='projection')projectionFit?.request();});
 $('derived-mode').onchange=()=>{state().view.derivedMode=$('derived-mode').value;markDirty();refreshDerived();};
-$('promote').onclick=()=>{if(derivedModel)addDocument(clone(derivedModel),'Promote derived view');};
+$('promote').onclick=guard(()=>{if(!derivedModel)return;if(state().view.derivedMode==='cell-section')return ordinaryCellSections.promote(derivedResult);addDocument(clone(derivedModel),'Promote derived view');});
 $('apply-section').onclick=guard(()=>workspaceNumeric.section());
 let sectionDebounce;
 $('section-offset').oninput=()=>{$('section-depth').value=$('section-offset').value;state().view.sectionOffset=Number($('section-offset').value);delete state().view.sectionAlignment;markDirty();clearTimeout(sectionDebounce);sectionDebounce=setTimeout(refreshDerived,200);};
@@ -629,7 +657,7 @@ $('rational-hull').onclick=guard(()=>workspaceNumeric.hull(true));
 $('certify-current').onclick=guard(async()=>{if(model().interpretation!=='convex-polytope')throw new Error('Certification supports convex hull sources only.');const points=model().vertices.map(p=>p.map(String));addDocument(await run('rational-hull',{points,name:'Rational input hull of '+model().name},null,'Certify supplied decimal hull'),'Certify decimal input');});
 $('rational-dual').onclick=guard(()=>commitOperation('rational-dual',{},'Exact rational polar dual'));
 $('link-library').onclick=guard(async()=>{const result=await api.library();if(!result)return;acceptLinkedLibrary(result);const supported=result.entries.filter(e=>e.supported!==false).length;setStatus(`Indexed ${result.entries.length} OFF files from ${result.path}; ${supported} have supported headers. Geometry is checked when opened.`);});
-$('cancel').onclick=guard(async()=>{stellationCells?.cancel();basicSolidControls?.cancel();stephanoidControls?.cancel();sourceLabelPresets?.cancel();multipleViews?.close();dualMorph?.cancel();elementContent.invalidate();reinforcement?.cancel();netEditor.sequence++;cellNetEditor.sequence++;workspaceNumeric.cancel();entityOrientation.cancelNumeric?.();viewportControls.cancelNumeric?.();springControls?.cancel();presentationControls?.cancelNumeric();appearanceControls?.cancelNumeric();materialEffectsControls?.cancelNumeric();perspectiveControls?.cancelNumeric();measurementControls?.cancelNumeric?.();symmetryControls?.cancelNumeric?.();stellation?.cancelNumeric?.();animation?.cancelNumeric?.();tours?.cancelNumeric?.();for(const control of [sphereProjectionControls,vertexFigureConstruction,geodesicControls,convexCoreControls,expansionControls,fittingControls,exactSectionControls,incidenceTruncationControls,sourceZonohedronControls,subdivisionControls,cupolaControls,stepPrismControls,nobleControls,torusControls,watermanControls,productControls,antiprismControls,faceEditing,automaticFaceting,facetingDiagram,segmentotopeControls,starPolygonControls,podiaControls,crossedSegmentotopeControls]){control?.cancel?.();control?.cancelNumeric?.();}const ids=[...running.keys()];await Promise.all(ids.map(id=>api.cancel(id)));setStatus('Cancelled active computation.');});
+$('cancel').onclick=guard(async()=>{sourceReflectionControls.cancel();coincidicRegimentControls.cancel();ordinaryCellSections.cancel();stellationCells?.cancel();basicSolidControls?.cancel();stephanoidControls?.cancel();sourceLabelPresets?.cancel();multipleViews?.close();projectiveDualControls?.cancel();dualMorph?.cancel();elementContent.invalidate();reinforcement?.cancel();coincidentAssembly?.cancel();densityInfo?.cancel();netEditor.sequence++;cellNetEditor.sequence++;workspaceNumeric.cancel();entityOrientation.cancelNumeric?.();viewportControls.cancelNumeric?.();springControls?.cancel();presentationControls?.cancelNumeric();appearanceControls?.cancelNumeric();materialEffectsControls?.cancelNumeric();perspectiveControls?.cancelNumeric();measurementControls?.cancelNumeric?.();symmetryControls?.cancelNumeric?.();stellation?.cancelNumeric?.();animation?.cancelNumeric?.();tours?.cancelNumeric?.();for(const control of [sphereProjectionControls,vertexFigureConstruction,geodesicControls,convexCoreControls,expansionControls,fittingControls,exactSectionControls,incidenceTruncationControls,sourceZonohedronControls,subdivisionControls,cupolaControls,stepPrismControls,nobleControls,torusControls,watermanControls,productControls,antiprismControls,faceEditing,automaticFaceting,facetingDiagram,segmentotopeControls,starPolygonControls,podiaControls,crossedSegmentotopeControls]){control?.cancel?.();control?.cancelNumeric?.();}const ids=[...running.keys()];await Promise.all(ids.map(id=>api.cancel(id)));setStatus('Cancelled active computation.');});
 setInterval(guard(async()=>{if(!dirty||!project.documents.length||(animation.exporting||tourExporting))return;const savedRevision=revision;await api.autosave(serialize());$('autosave-status').textContent='Recovery snapshot '+new Date().toLocaleTimeString();if(savedRevision!==revision)$('autosave-status').textContent+=' · newer changes pending';}),30000);
 function frame(now){const dt=Math.min((now-lastFrame)/1000,0.1);lastFrame=now;if(viewportControls.tick(dt))dirty=true;
   netEditor.tick(dt);base.draw();derived.draw();if(facetingPreview&&!$('facet-preview').hidden)facetingPreview.draw();if(running.size){const job=[...running.values()][0];$('job-time').textContent=((now-job.start)/1000).toFixed(1)+' s';}else $('job-time').textContent='';requestAnimationFrame(frame);}

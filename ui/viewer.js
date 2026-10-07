@@ -580,8 +580,7 @@ export class Viewer {
     const far=Number.isFinite(distance)?Math.max(1000,distance*1.05+1):1000;
     if(this.camera.far!==far){this.camera.far=far;this.camera.updateProjectionMatrix();}
   }
-  fit(padding=1.2){
-    const points=this.observationCloud();
+  fit(padding=1.2,points=this.observationCloud()){
     const direction=this.camera.position.clone().sub(this.controls.target);if(!direction.lengthSq())direction.set(1,1,1);
     const fit=fitView(points,{aspect:this.aspect||1,direction:direction.toArray(),up:this.camera.up.toArray(),fov:this.perspectiveCamera.fov,padding});
     if(!fit)return this.cameraState();

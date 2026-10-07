@@ -1,0 +1,13 @@
+# 0.26 community preview
+
+[Download the Windows x64 portable](https://github.com/Pardesco/polytope-laboratory/releases/download/v0.26.0/Polytope.Laboratory.0.26.0.preview.exe) and [matching GPLv3 source](https://github.com/Pardesco/polytope-laboratory/releases/download/v0.26.0/Polytope.Laboratory.0.26.0.source.zip). Report reproducible problems through the repository’s Issues tab. This is a community prerelease; feature-complete and measured 90% parity are not claimed.
+
+This release includes the earlier 0.25 tools and adds complete ordinary 4D cell sections, source-owned section labels/eligible PNG, dual-morph ratio tracks and PNG/WebM, explicit export-frame fitting, ordinary coincident-edge assembly, projective/infinite wire duals, reflected snub forms and symbol search, separate Skilling geometry, generalized 3D algebraic measurements, literal 4D arrangement/regiment comparisons and bounded distances to concave faces. Source PNG now renders in net PDF output. See [features and supported domains](RELEASE_0.26_DEVELOPMENT.md).
+
+The actual Windows portable starts with development Python unavailable. Its bundled engine loads 1305 catalog entries, Skilling’s 60/240/204 incidence, four ideal U3 reciprocal vertices, regular-star density 3, complete ordinary cell sections and their source-content descriptors, the analytical concave distance sqrt(2), and literal two-source arrangement comparison. Existing expansion, reciprocal, tab/paper, Stewart, sphere and independent-view availability checks also pass.
+
+Source-app checks exercise actual section PNG sequences, whole-face PNG/refusal, dual-morph and fitted-fold PNG/WebM frames, source-content SVG/PDF, projective and reflection history, two-source compound PNG/Save/Open/replay, density JSON/CSV and bounded-versus-flat distance controls. These are scoped workflow checks, with retained failed evidence; no full regression is claimed.
+
+[Nine runnable example projects](../examples/README.md) are included in the corresponding source ZIP. Extract it and use Open to try them; the portable runs independently of those examples. Program code is GPL-3.0-only, with third-party data and dependency notices preserved.
+
+Remaining domains include all 2191 baseline uniform-polychora identities, fissary/scaliform classification, infinite-dual filled faces/nets/morphs, general star-cell sections, unrestricted nonconvex 4D distances, arrangement-resolved union/bulk volumes and several specialized construction options. The next development work covers 4D Waterman, star vertex-figure completion and verified orbit coloring. Earlier binaries and source archives remain unchanged.

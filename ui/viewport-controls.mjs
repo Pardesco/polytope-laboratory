@@ -94,9 +94,10 @@ export class ViewportControls {
     for(const node of [this.camera,this.orientation,$('fit-view'),$('render-style'),$('viewport-layout'),this.plane,this.speed,this.gesture])node.disabled=this.context.isExporting();
     this.context.base.renderer.domElement.title=d===4?'Drag to orbit the 3D projection. Shift-drag to rotate in XW/YW. Scroll to zoom.':'Drag to orbit. Scroll to zoom.';
     const mode=view.derivedMode,controls=document.querySelector('.section-controls');
-    controls.hidden=layout!=='split'||!['section','vertex-figure','cell','face'].includes(mode);
-    for(const label of controls.querySelectorAll('label')){const field=label.querySelector('input');label.hidden=mode==='section'?field?.id==='entity-id':field?.id!=='entity-id';}
-    $('apply-section').hidden=mode!=='section';$('section-events').hidden=mode!=='section';
+    const sectionMode=['section','cell-section'].includes(mode);
+    controls.hidden=layout!=='split'||!['section','cell-section','vertex-figure','cell','face'].includes(mode);
+    for(const label of controls.querySelectorAll('label')){const field=label.querySelector('input');label.hidden=sectionMode?field?.id==='entity-id':field?.id!=='entity-id';}
+    $('apply-section').hidden=!sectionMode;$('section-events').hidden=!sectionMode;
     this.syncPlaying();
   }
   syncPlaying(){$('auto-rotate').textContent=this.playing?'Pause rotation':'Rotate';$('auto-rotate').setAttribute('aria-pressed',String(this.playing));}

@@ -62,6 +62,8 @@ from engine.geometric_fitting import dispatch_geometry_fit
 from engine.exact_surface_sections import dispatch_exact_section
 from engine.incidence_truncation import dispatch_incidence_truncation
 from engine.net_reinforcement_workflow import dispatch_reinforcement
+from engine.coincident_edge_workflow import dispatch_assembly
+from engine.generalized_density import dispatch_density
 
 
 def dispatch(request):
@@ -72,6 +74,8 @@ def dispatch(request):
     if op == 'element-label-presets': return dispatch_element_labels(request)
     if op in ('vertex-figure-candidates','construct-from-vertex-figure'): return dispatch_vertex_figure_construction(request)
     if op in ('net-reinforcement','net-measurements','net-reinforcement-pages'): return dispatch_reinforcement(request)
+    if op in ('generalized-density-info','generalized-density-restore'): return dispatch_density(request)
+    if op in ('coincident-edge-qualify','coincident-edge-net','coincident-edge-edit','coincident-edge-pages','coincident-edge-fold','coincident-edge-restore'): return dispatch_assembly(request)
     if op in ('prepare-dual-morph','evaluate-dual-morph'): return dispatch_dual_morph(request)
     if op == 'facet-diagram': return dispatch_diagram(request)
     if op in ('facet-candidates','facet-search','facet-adopt'): return dispatch_faceting(request)
@@ -91,10 +95,19 @@ def dispatch(request):
     if op in ('exact-surface-section','exact-surface-section-preview'): return dispatch_exact_section(request)
     if op in ('geometry-fit','geometry-fit-preview'): return dispatch_geometry_fit(request)
     if op == 'expand-runcinate': return dispatch_static_expansion(request)
+    if op == 'projective-incidence-dual':
+        from engine.projective_incidence_dual import dispatch_projective
+        return dispatch_projective(request)
     if op == 'sphere-project': return dispatch_sphere_projection(request)
     if op == 'convex-core': return dispatch_convex_core(request)
     params = dict(request.get('params') or {})
     model = request.get('model')
+    if op == 'reflect-source':
+        from engine.source_reflection import dispatch_source_reflection
+        return dispatch_source_reflection(request)
+    if op in ('coincidic-compare','coincidic-record','coincidic-compound'):
+        from engine.coincidic_regiments import dispatch_arrangement
+        return dispatch_arrangement(request)
     if op == 'catalog': return get_catalog()
     if op == 'generate':
         result = generate(**params)

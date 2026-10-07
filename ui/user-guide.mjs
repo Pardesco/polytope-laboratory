@@ -13,6 +13,7 @@ export const GUIDE_TOPICS=[
     'Only the first 250 matches are displayed; refining your search still searches every indexed entry. Unknown count properties do not match numeric filters.',
     'Link a local OFF folder to browse your own files without copying or altering them. Unsupported files keep their diagnostic. Discovery entries retain their source classification status; a catalog listing alone does not establish uniformity.',
     'Stewart toroids include five named excavations and two explicitly original variants. Their source parts, ordinary faces and actual genera are checked on load.',
+    'Search U40 reflected for a supplied mirror form, or search a Wythoff symbol. The selected reflected sources distinguish chiral and achiral numerical symmetry. Skilling is a separate exceptional entry; its four-face edges do not define an ordinary solid shell.',
     'The Exact regular source family offers integer-coordinate tetrahedron, cube and octahedron choices for exact symmetry faceting. Their full/proper groups are 24/12, 48/24 and 48/24. They are alternate realizations; existing regular generators retain their own coordinates.'
   ]),
   topic('projects','Projects, history and recovery','File menu and document tabs','save open undo redo replay branch metadata notes recover autosave',[
@@ -32,8 +33,8 @@ export const GUIDE_TOPICS=[
   ]),
   topic('selection','Selection and measurements','Inspector → Analysis','pick identify vertex edge face cell distance angle dihedral circumradius',[
     'Click an entity in the viewport, or choose its kind and source index in Analysis. Repeated net copies share the same source ID. Ambiguous projected selections can be cycled rather than merged.',
-    'Measurements use intrinsic geometry rather than projected pixel distances. Affine-flat distance treats the selected objects as infinite flats; bounded distance instead uses vertices, finite edges and qualified convex face or cell regions.',
-    'Bounded face and cell measurements report closest points and numerical distance bounds. Concave or star filled regions and unsupported generalized cell interiors receive a diagnostic. Export construction measurements as CSV or JSON with their units.'
+    'Measurements use intrinsic geometry rather than projected pixel distances. Affine-flat distance treats the selected objects as infinite flats; bounded distance instead uses vertices, finite edges, simple planar 3D face regions including concave faces, and qualified convex 4D cells.',
+    'Bounded face and cell measurements report closest points and numerical distance bounds. Star/self-crossing faces, inferred holes and unsupported generalized cell interiors receive a diagnostic. Export construction measurements as CSV or JSON with their units.'
   ]),
   topic('appearance','Appearance and materials','Appearance controls','color alpha tint theme phong lights bump reflection refraction surface',[
     'Material presets, highlights, lights and viewport themes affect display. Tint multiplies source face colors; source opacity remains meaningful. Vertex spheres, edge cylinders and Geomag presentation use the source geometry.',
@@ -43,12 +44,33 @@ export const GUIDE_TOPICS=[
   topic('sections','Sections and vertex figures','Derived view and exact surface-section controls','slice plane normal offset rational winding tangent convex section',[
     'Set a section plane normal and offset to slice intrinsic geometry. Event stepping moves through vertex levels. Empty and tangent intersections are valid results, with their type reported.',
     'Exact rational 3D surface sections retain rational edge intersections and ordered concave/star winding evidence. Their display coordinates remain approximate. Coplanar source faces are handled explicitly.',
+    'For intrinsic 4D sources, choose Ordinary cell section to fill each qualified cell intersection, including concave regions, disconnected pieces and holes. Surface section curves are a separate mode. Promote explicitly to create a new 3D document while retaining the original source.',
     'A local vertex figure describes the incident neighborhood. The 4D construction matcher checks it against finite supported candidates and reports ambiguous matches; it is not a universal completion solver.'
   ]),
   topic('construction','Constructions and source domains','Inspector → Construct','hull dual reciprocal truncate rectify mirror scale transform coxeter wythoff',[
     'Choose a construction appropriate to the source dimension and interpretation. A convex hull intentionally changes the boundary. Other source-preserving operations retain literal incidence and refuse domains they cannot handle.',
     'Convex polar duals and 3D/4D source-incidence duals have different domains. Reciprocal constructions require a center and radius; planes through the center can make a finite reciprocal impossible.',
     'Generators include regular/Wythoff models, prisms, antiprisms, polygon products, Waterman models and specialized families. Their parameter limits and refusal messages are part of the operation.'
+  ]),
+  topic('regiment','4D arrangements and regiments','Inspector → Construct → 4D arrangement / regiment comparison','coincidic skeleton vertices edges cell correspondence compound',[
+    'Open both 4D models, choose the other source and compare. Current XYZW placement and coordinate units must agree; record any alignment as a separate operation.',
+    'The saved report distinguishes common vertices, edges, cyclic faces and complete cell boundaries. Choose a literal source ID to navigate its counterparts. Corealmic shared-cell witnesses are distinct from a common vertex arrangement.',
+    'Construct literal compound keeps independent incidence and both sources’ text/PNG, RGBA, notes and units. Coincident vertices remain separate. The report does not establish uniformity or a filled union.'
+  ]),
+  topic('density','Generalized density and algebraic measures','Inspector → Analysis → Generalized 3D density / algebraic measures','winding star volume area point signed multiplicity csv',[
+    'Declare a source-coordinate point and choose coherent source anchors or positive algebraic volume per component. Compute reports signed winding and magnitude, algebraic volume and absolute algebraic face-area sum.',
+    'These measures count signed face-cycle multiplicity. Filled/union bulk measures and 4D density are unavailable. Density on a surface is undefined; zero volume cannot choose the positive-volume orientation.',
+    'Save evidence retains the source-bound query in the native project. Restore reconstructs it. Export full-source JSON or measurement CSV with the declared units and mathematical definitions.'
+  ]),
+  topic('projective-dual','Projective and infinite duals','Inspector → Construct → Projective / infinite dual','reciprocal ideal hemi infinity clip cutoff wire',[
+    'Choose center, radius and clipping half-width in source units. Save reciprocal view recipe opens the separate wire view; Show saved reciprocal restores it. Fit clip box and orbit affect its independent camera.',
+    'The element selector maps dual vertices to original faces, dual edges to original edges and dual face cycles to original vertices. Ideal vertices retain their true projective identities. Change clipping distance to alter the finite display and save PNG to share it.',
+    'The original finite source, notes and annotations stay in the document. Infinite faces have no assigned fill, solid measure, net or morph. A recipe whose source has changed must be rebuilt.'
+  ]),
+  topic('coincident-assembly','Four-face coincident-edge assembly','Inspector → Nets → Four-face coincident edge assembly','assembly join tongue groove support coincident inside outside genus',[
+    'This workflow qualifies separate ordinary pieces touching along literal shared edges. Convex, concave and toroidal pieces are supported within the reported limits. It retains the separate pieces and their source face IDs.',
+    'Select the outside pair and choose tongue-in-groove, internal support, no internal support or disconnected policy. Preview shows the pairing, cuts and physical tabs. Edit the detached layout, then Save edits; Restore saved reopens it.',
+    'Export SVG or packed PDF at the chosen millimeter scale. Source face text and eligible PNG follow their original owners. Select larger paper or smaller E0 when an intact part cannot fit. Ambiguous contacts and star or immersed pieces receive a diagnostic.'
   ]),
   topic('sphere','Project onto a sphere','Inspector → Construct → Project vertices onto sphere','sphere project radial radius center xyz xyzw',[
     'Enter a center in XYZ or XYZW coordinates and a positive radius, or leave either field empty. The default center is the mean source vertex position; the default radius is the mean source distance from that center.',
@@ -97,8 +119,9 @@ export const GUIDE_TOPICS=[
     'Physical net labels and face images use the net scale. Unsupported transfers or poses are refused rather than guessing a new owner. Wait for image decoding before capturing a view.'
   ]),
   topic('animation','Animation, dual morphs and tours','Animation and Dual morph controls','keyframe time video png capture rotation explosion fold snub sizing tilt',[
-    'Animate rotations, supported explosions, section depth and folding using time-based tracks. Keyframes and tours retain reproducible camera/view states.',
+    'Animate rotations, supported explosions, ordinary-cell or surface section depth and folding using time-based tracks. Keyframes and tours retain reproducible camera/view states.',
     'Eight scoped 3D dual-morph methods include sizing, truncation, augmentation, expansion and four tilting methods. Sizing and expansion also support finite closed ordinary star/nonconvex 3D boundaries, including the four regular stars. Generalized 4D expansion retains actual source/polar product cells and finite star winding. Each method reports its own source domain and transitions.',
+    'Dual-morph ratio keyframes combine with rotation and carry source-owned text/PNG into PNG and WebM frames. Choose Fit export frames to sample every export time and save one camera containing their displayed geometry; your original pose is restored. The fit covers sampled geometry, not every intervening playback instant or label extent.',
     'PNG/video export prepares the required assets and supports cancellation. Unsupported combinations receive a diagnostic. A smooth display animation does not establish continuous mathematical equivalence outside its declared domain.'
   ]),
   topic('exports','Exporting and sharing','File → Export, Capture image and Print','off 4off obj stl pov vrml dxf json csv pdf svg png',[
@@ -113,7 +136,7 @@ export const GUIDE_TOPICS=[
   ])
 ];
 
-const CONTEXT=[['sphere-project','sphere'],['incidence-dual','construction'],['make-incidence-dual','construction'],['incidence-','truncation'],['cell-net','cell-nets'],['net-','nets'],['reinforcement','nets'],['element-','content'],['source-label','content'],['dual-morph','animation'],['tour','animation'],['animation','animation'],['material-','appearance'],['surface-','appearance'],['appearance','appearance'],['multiple-views','views'],['perspective','views'],['stereo','views'],['library','library'],['search','library'],['catalog','library'],['measurement','selection'],['selection','selection'],['units','expressions'],['expression','expressions'],['exact-section','sections'],['section','sections'],['vertex-figure','sections'],['expand','expansion'],['fitting','expansion'],['augmentation','augmentation'],['face-placement','augmentation'],['automatic-facet','faceting'],['faceting','faceting'],['stellation','faceting'],['basic-solid','specialized'],['stephanoid','specialized'],['project-metadata','projects'],['rational','numeric']];
+const CONTEXT=[['coincidic-','regiment'],['density-','density'],['generalized-density','density'],['projective-dual','projective-dual'],['assembly-','coincident-assembly'],['source-reflection','construction'],['reflect-literal','construction'],['sphere-project','sphere'],['incidence-dual','construction'],['make-incidence-dual','construction'],['incidence-','truncation'],['cell-net','cell-nets'],['net-','nets'],['reinforcement','nets'],['element-','content'],['source-label','content'],['dual-morph','animation'],['tour','animation'],['animation','animation'],['material-','appearance'],['surface-','appearance'],['appearance','appearance'],['multiple-views','views'],['perspective','views'],['stereo','views'],['library','library'],['search','library'],['catalog','library'],['measurement','selection'],['selection','selection'],['units','expressions'],['expression','expressions'],['exact-section','sections'],['section','sections'],['vertex-figure','sections'],['expand','expansion'],['fitting','expansion'],['augmentation','augmentation'],['face-placement','augmentation'],['automatic-facet','faceting'],['faceting','faceting'],['stellation','faceting'],['basic-solid','specialized'],['stephanoid','specialized'],['project-metadata','projects'],['rational','numeric']];
 export function guideContext(element){
   for(let node=element;node;node=node.parentElement){const id=node.id||'';const found=CONTEXT.find(([prefix])=>id.startsWith(prefix));if(found)return found[1];}
   return 'start';

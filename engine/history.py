@@ -18,7 +18,7 @@ MAX_DEPTH = 64
 MAX_VALUES = 8_000_000
 ALGORITHM_VERSIONS = MappingProxyType({'transform': VERSION, 'section': VERSION,
     'dual': VERSION, 'incidence-dual': '0.5.0', 'truncate': VERSION,
-    'extrude': VERSION, 'cell': '0.2.0', 'facet': VERSION, 'facet-adopt':'0.1.0', 'scale-reference': VERSION, 'remove-coincident-pairs': '0.1.0', 'blend-faces': '0.1.0', 'compound-component': '0.1.0', 'compound-drop': '0.1.0', 'subdivide-edges':'0.1.0', 'polygon-prism':'0.2.0', 'polyhedron-prism':'0.1.0', 'convex-layer-join':'0.1.0', 'fit-strict-layer-join':'0.1.0', 'attach-at-faces':'0.1.0', 'triangular-geodesic':'0.1.0', 'convex-core':'0.1.0', 'place-at-faces':'0.1.0', 'convex-core-4d':'0.1.0', 'source-zonohedron':'0.1.0', 'spring-relaxation':'0.1.0', 'element-content':'0.1.0', 'expand-runcinate':'0.1.0', 'geometry-fit':'0.1.0', 'exact-surface-section':'0.1.0', 'incidence-truncate':'0.1.0', 'sphere-project':'0.1.0'})
+    'extrude': VERSION, 'cell': '0.2.0', 'facet': VERSION, 'facet-adopt':'0.1.0', 'scale-reference': VERSION, 'remove-coincident-pairs': '0.1.0', 'blend-faces': '0.1.0', 'compound-component': '0.1.0', 'compound-drop': '0.1.0', 'subdivide-edges':'0.1.0', 'polygon-prism':'0.2.0', 'polyhedron-prism':'0.1.0', 'convex-layer-join':'0.1.0', 'fit-strict-layer-join':'0.1.0', 'attach-at-faces':'0.1.0', 'triangular-geodesic':'0.1.0', 'convex-core':'0.1.0', 'place-at-faces':'0.1.0', 'convex-core-4d':'0.1.0', 'source-zonohedron':'0.1.0', 'spring-relaxation':'0.1.0', 'element-content':'0.1.0', 'expand-runcinate':'0.1.0', 'geometry-fit':'0.1.0', 'exact-surface-section':'0.1.0', 'incidence-truncate':'0.1.0', 'sphere-project':'0.1.0', 'projective-incidence-dual':'0.1.0', 'reflect-source':'0.1.0', 'coincidic-record':'0.1.0', 'coincidic-compound':'0.1.0'})
 REPLAY_OPERATIONS = frozenset(ALGORITHM_VERSIONS)
 NUMERIC_POLICY = MappingProxyType({'mode': 'float64-approximate', 'tolerance': TOLERANCE})
 NODE_KEYS = frozenset({'id', 'parent', 'inputs', 'op', 'params', 'numericPolicy',
@@ -329,6 +329,13 @@ def replay_history(history, dispatcher, target=None):
                 raise GeometryError('Element content replay changed source geometry/attributes.')
             results[node_id] = computed
             continue
+        if node['op'] == 'projective-incidence-dual':
+            from .projective_dual_workflow import replay_projective_state
+            computed = _snapshot(replay_projective_state(results[node['inputs'][0]], node))
+            if canonical_model(computed['model']) != canonical_model(node['snapshot']['model']):
+                raise GeometryError('Projective reciprocal replay changed finite source geometry/attributes.')
+            results[node_id] = computed
+            continue
         request = {'op': node['op'], 'params': node['params'],
                    'model': results[node['inputs'][0]]['model']}
         if node['op'] in ('polygon-prism','cell','spring-relaxation'):
@@ -346,11 +353,17 @@ def replay_history(history, dispatcher, target=None):
             # remain literal. Geometry is still independently compared below.
             model['id'] = node['snapshot']['model']['id']
         computed = _snapshot({**node['snapshot'], 'model': model})
+        if node['op'] in ('coincidic-record','coincidic-compound'):
+            from .coincidic_regiments import verify_replay
+            verify_replay(results[node['inputs'][0]],computed,node)
+        if node['op']=='reflect-source':
+            from .source_reflection import verify_reflection_replay
+            verify_reflection_replay(results[node['inputs'][0]],computed,node['snapshot'])
         expected = node['snapshot']['model']
         if (canonical_model(computed['model']) != canonical_model(expected)
                 or identity(computed['model']) != node['resultFingerprint']):
             raise GeometryError(f'History node {node_id} failed full coordinate/incidence replay verification.')
-        if any(field in results[node['inputs'][0]]['view'] for field in ('elementAnnotations', 'elementContentDetached')):
+        if node['op'] not in ('coincidic-record','coincidic-compound') and any(field in results[node['inputs'][0]]['view'] for field in ('elementAnnotations', 'elementContentDetached')):
             from .element_content_ownership import verify_replayed_content
             verify_replayed_content(results[node['inputs'][0]], computed, node)
         results[node_id] = computed

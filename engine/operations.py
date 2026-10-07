@@ -48,7 +48,11 @@ def truncate(model, amount=1/3):
     return record(hull(points, label + model['name']), model, 'truncate', {'amount': amount, 'definition': 'hull of directed edge-cut points'})
 
 
-def section(model, normal=None, offset=0, fill_rule='nonzero'):
+def section(model, normal=None, offset=0, fill_rule='nonzero', section_domain='surface'):
+    if section_domain not in ('surface','ordinary-cells'): raise GeometryError('Choose surface or ordinary-cells section domain.')
+    if section_domain=='ordinary-cells':
+        from .ordinary_cell_sections import ordinary_cell_section
+        return ordinary_cell_section(model,normal,offset,fill_rule)
     if model.get('interpretation')=='polyhedral-region-union':
         from .stellation import section_union
         return section_union(model,normal,offset)

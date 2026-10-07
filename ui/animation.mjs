@@ -13,8 +13,8 @@ function ordinaryArray(value,label){
   if(!Array.isArray(value)||Object.getOwnPropertySymbols(value).length||Object.getOwnPropertyNames(value).some(key=>key!=='length'&&(!Number.isInteger(Number(key))||String(Number(key))!==key||Number(key)<0||Number(key)>=value.length)))throw new Error(`${label} requires an ordinary array.`);
   return Array.from({length:value.length},(_,index)=>{const descriptor=Object.getOwnPropertyDescriptor(value,String(index));if(!descriptor||!('value' in descriptor))throw new Error(`${label} cannot contain holes or accessors.`);return descriptor.value;});
 }
-function normalizeTracks(value){
-  const tracks=fields(value,['explosion','fold'],'Animation tracks'),result={};
+function normalizeTracks(value,{morph=false}={}){
+  const tracks=fields(value,['explosion','fold',...morph?['morphRatio']:[]],'Animation tracks'),result={};
   if(tracks.explosion!==undefined){
     const options=fields(tracks.explosion,['direction'],'Explosion track');
     if(!['normal','radial'].includes(options.direction))throw new Error('Explosion track direction must be normal or radial.');
@@ -25,6 +25,7 @@ function normalizeTracks(value){
     if(options.kind!=='face-net')throw new Error('Only rigid 3D face-net folding tracks are supported; partial 4D cell-net folding is unavailable.');
     result.fold={kind:'face-net'};
   }
+  if(tracks.morphRatio!==undefined){const options=fields(tracks.morphRatio,['kind','version'],'Morph ratio track');if(options.kind!=='dual-morph'||options.version!==1)throw Error('Morph ratio track requires version1 dual-morph kind.');result.morphRatio={kind:'dual-morph',version:1};}
   if(!Object.keys(result).length)throw new Error('Version 2 animations require at least one supported track.');
   return result;
 }
@@ -42,14 +43,14 @@ function finite(value, label) {
 
 export function normalizeSequence(value) {
   value=fields(value,['version','duration','fps','loop','keyframes','tracks'],'Animation sequence');
-  if(value.version!==1&&value.version!==2)throw new Error('Unsupported animation sequence version.');
-  const tracks=value.version===2?normalizeTracks(value.tracks):null;
+  if(value.version!==1&&value.version!==2&&value.version!==3)throw new Error('Unsupported animation sequence version.');
+  const tracks=value.version>=2?normalizeTracks(value.tracks,{morph:value.version===3}):null;
   if(value.version===1&&value.tracks!==undefined)throw new Error('Additional animation tracks require version 2.');
   const duration=finite(value.duration,'Animation duration'),fps=finite(value.fps,'Animation frame rate');
   if(duration<=0 || duration>ANIMATION_LIMITS.duration)throw new Error('Animation duration must be greater than zero and at most 300 seconds.');
   if(!Number.isInteger(fps) || fps<1 || fps>ANIMATION_LIMITS.fps)throw new Error('Animation frame rate must be an integer from 1 to 60.');
   if(!Array.isArray(value.keyframes) || value.keyframes.length<2 || value.keyframes.length>ANIMATION_LIMITS.keyframes)throw new Error('Animation requires 2 to 256 keyframes.');
-  const names=['time','angles','sectionOffset',...(tracks?.explosion?['explosionAmount']:[]),...(tracks?.fold?['foldFraction']:[])];
+  const names=['time','angles','sectionOffset',...(tracks?.explosion?['explosionAmount']:[]),...(tracks?.fold?['foldFraction']:[]),...(tracks?.morphRatio?['morphRatio']:[])];
   const inputFrames=ordinaryArray(value.keyframes,'Animation keyframes');
   const keyframes=inputFrames.map((input,index)=>{
     const frame=fields(input,names,'Animation keyframe');
@@ -58,7 +59,7 @@ export function normalizeSequence(value) {
     if(!Array.isArray(frame.angles) || frame.angles.length!==6)throw new Error('Every keyframe requires six rotation angles.');
     const angles=ordinaryArray(frame.angles,'Rotation angles').map(angle=>finite(angle,'Rotation angle'));
     if(angles.some(angle=>Math.abs(angle)>1e6))throw new Error('Rotation angles exceed the supported range.');
-    return {time,angles,sectionOffset:finite(frame.sectionOffset,'Section depth'),...(tracks?.explosion?{explosionAmount:trackValue(frame.explosionAmount,'explosionAmount')}:{}),...(tracks?.fold?{foldFraction:trackValue(frame.foldFraction,'foldFraction')}:{})};
+    return {time,angles,sectionOffset:finite(frame.sectionOffset,'Section depth'),...(tracks?.explosion?{explosionAmount:trackValue(frame.explosionAmount,'explosionAmount')}:{}),...(tracks?.fold?{foldFraction:trackValue(frame.foldFraction,'foldFraction')}:{}),...(tracks?.morphRatio?{morphRatio:trackValue(frame.morphRatio,'morphRatio')}:{})};
   });
   if(keyframes[0].time!==0 || keyframes.at(-1).time!==duration)throw new Error('Animation keyframes must include time zero and the exact duration.');
   if(value.loop!==undefined && typeof value.loop!=='boolean')throw new Error('Animation loop must be a boolean.');
@@ -78,7 +79,7 @@ export function evaluateNormalized(sequence,time) {
   let high=frames.findIndex(frame=>frame.time>=time),a=frames[high-1],b=frames[high];
   const fraction=(time-a.time)/(b.time-a.time);
   const frame={time,angles:a.angles.map((angle,index)=>angle+(b.angles[index]-angle)*fraction),sectionOffset:a.sectionOffset===b.sectionOffset?a.sectionOffset:(1-fraction)*a.sectionOffset+fraction*b.sectionOffset};
-  for(const name of ['explosionAmount','foldFraction'])if(Object.hasOwn(a,name))frame[name]=a[name]==b[name]?a[name]:(1-fraction)*a[name]+fraction*b[name];
+  for(const name of ['explosionAmount','foldFraction','morphRatio'])if(Object.hasOwn(a,name))frame[name]=a[name]==b[name]?a[name]:(1-fraction)*a[name]+fraction*b[name];
   return frame;
 }
 
@@ -101,10 +102,10 @@ export function createSequence(view={},duration=8,fps=24,{tracks}={}) {
 /** Explicit migration retains v1 angles/depth. Empty tracks explicitly remove
  * presentation tracks and downgrade to v1; source geometry is never modified. */
 export function withSequenceTracks(value,options,defaults={}){
-  const sequence=normalizeSequence(value),supplied=fields(options,['explosion','fold'],'Animation tracks');
-  const tracks=Object.keys(supplied).length?normalizeTracks(supplied):null;
-  const keyframes=sequence.keyframes.map(frame=>({time:frame.time,angles:[...frame.angles],sectionOffset:frame.sectionOffset,...(tracks?.explosion?{explosionAmount:frame.explosionAmount??defaults.explosionAmount??0}:{}),...(tracks?.fold?{foldFraction:frame.foldFraction??defaults.foldFraction??0}:{})}));
-  return normalizeSequence({version:tracks?2:1,duration:sequence.duration,fps:sequence.fps,loop:sequence.loop,...(tracks?{tracks}:{}),keyframes});
+  const sequence=normalizeSequence(value),supplied=fields(options,['explosion','fold','morphRatio'],'Animation tracks');
+  const tracks=Object.keys(supplied).length?normalizeTracks(supplied,{morph:true}):null;
+  const keyframes=sequence.keyframes.map(frame=>({time:frame.time,angles:[...frame.angles],sectionOffset:frame.sectionOffset,...(tracks?.explosion?{explosionAmount:frame.explosionAmount??defaults.explosionAmount??0}:{}),...(tracks?.fold?{foldFraction:frame.foldFraction??defaults.foldFraction??0}:{}),...(tracks?.morphRatio?{morphRatio:frame.morphRatio??defaults.dualMorph?.ratio??0}:{})}));
+  return normalizeSequence({version:tracks?.morphRatio?3:tracks?2:1,duration:sequence.duration,fps:sequence.fps,loop:sequence.loop,...(tracks?{tracks}:{}),keyframes});
 }
 
 export function setSequenceKeyframe(value,time,view) {
@@ -112,7 +113,7 @@ export function setSequenceKeyframe(value,time,view) {
   finite(time,'Keyframe time');
   if(time<0 || time>sequence.duration)throw new Error('Keyframe time is outside the sequence.');
   const old=evaluateNormalized(sequence,time);
-  const frame={time,angles:[...view.angles],sectionOffset:view.sectionOffset,...(sequence.tracks?.explosion?{explosionAmount:view.explosionAmount??old.explosionAmount}:{}),...(sequence.tracks?.fold?{foldFraction:view.foldFraction??old.foldFraction}:{})};
+  const frame={time,angles:[...view.angles],sectionOffset:view.sectionOffset,...(sequence.tracks?.explosion?{explosionAmount:view.explosionAmount??old.explosionAmount}:{}),...(sequence.tracks?.fold?{foldFraction:view.foldFraction??old.foldFraction}:{}),...(sequence.tracks?.morphRatio?{morphRatio:view.dualMorph?.ratio??old.morphRatio}:{})};
   const index=sequence.keyframes.findIndex(candidate=>Math.abs(candidate.time-time)<1e-8);
   if(index>=0)sequence.keyframes[index]=frame;
   else sequence.keyframes.push(frame);

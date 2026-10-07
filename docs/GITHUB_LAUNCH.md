@@ -1,8 +1,7 @@
-# GitHub publication checkpoint
+# GitHub publication
 
-The initial public repository contains the frozen 0.25.0 program sources with publication documentation updated. The accompanying Windows portable and GPLv3 source archive remain the original matching pair. Their SHA-256 hashes and runtime-source correspondence are recorded in [RELEASE_SOURCE_PAIR_0.25.json](RELEASE_SOURCE_PAIR_0.25.json).
+The GPLv3 community preview is public at [Pardesco/polytope-laboratory](https://github.com/Pardesco/polytope-laboratory). [Release v0.26.0](https://github.com/Pardesco/polytope-laboratory/releases/tag/v0.26.0) provides the Windows x64 portable and matching source ZIP, including nine native examples. Issues are enabled.
 
-Repository: [Polytope Laboratory](https://github.com/Pardesco/polytope-laboratory).
-Release: [0.25.0 community preview](https://github.com/Pardesco/polytope-laboratory/releases/tag/v0.25.0).
+Publication uses a clean checkout populated from the verified corresponding source archive. All runtime inputs retain the frozen hashes. Publication notes and the source-pair record may be updated without changing executable sources. Historical tags and assets remain paired to their own versions.
 
-Ongoing 0.26 development is separate from this release. Feature completeness and measured 90% Stella4D parity remain unfinished. This checkpoint does not depend on historical local build artifacts or linked proprietary catalogs.
+Local publication checkout is build/github-publication-0.26/source. Further development occurs in the original worktree, with new releases built and verified before publication. This preview does not claim feature completeness or measured 90% Stella4D parity.

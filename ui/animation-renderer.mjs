@@ -3,11 +3,12 @@ import {foldingPreparationSignature} from './generalized-fold-qualification.mjs'
 /** Bridge qualified absolute animation poses to the actual linked viewers. */
 import {resolveExplosion,explosionGeometry} from './explosion.mjs';
 import {requireNoEnabledDualMorph} from './dual-morph-combinations.mjs';
+import {prepareMorphAnimation,renderMorphAnimationPose} from './morph-animation-adapter.mjs';
 export class AnimationRenderer {
   constructor(context){this.context=context;this.foldNet=null;this.restoreGeneration=0;}
   capabilities(){
     const {viewer,netViewer}=this.context;
-    return {explosion:viewer?.supportsExplosion===true,
+    return {morphRatio:typeof viewer?.setMorphFrame==='function'&&typeof this.context.run==='function',explosion:viewer?.supportsExplosion===true,
       fold:typeof netViewer?.setNet==='function'&&typeof netViewer?.setFold==='function'};
   }
   checkedState(model,options={}){
@@ -29,6 +30,7 @@ export class AnimationRenderer {
       edge_length_mm:settings.length??25,tabs:settings.tabs??true,...(settings.tabOptions?{tab_options:structuredClone(settings.tabOptions)}:{}),...(source.netLayout?.sourceFingerprint===model.fingerprint&&source.netLayout.root===(settings.root??0)?{hinges:structuredClone(source.netLayout.hinges),placements:structuredClone(source.netLayout.placements??[])}:contentRestore?{hinges:structuredClone(saved.hinges),placements:structuredClone(saved.placements??[])}:source.netSeparate?{hinges:[]}:{}),...contentParameters(source)},model,'Prepare folding track',{signal:options.signal});
     this.checkedState(model,options);if(contentSignature(source)!==signature||JSON.stringify(source.view.net||{})!==netSignature||foldingPreparationSignature(source)!==layoutSignature)throw Error('Animation source content, net settings or layout/history changed during folding preparation.');return result;
   }
+  async loadMorph(model,sequence,options={}){const source=this.checkedState(model,options);return prepareMorphAnimation(source,sequence,this.context.run,options);}
   clearTracks(){this.restoreGeneration++;this.context.viewer.setExplosion?.(null);this.foldNet=null;}
   applyExplosion(geometry){
     const {viewer}=this.context;
@@ -60,6 +62,7 @@ export class AnimationRenderer {
   async renderTracks(pose,options={}){
     if(options.signal?.aborted||options.isCurrent?.()===false)throw new Error('Animation publication cancelled.');
     const {viewer,netViewer}=this.context,source=this.context.getState();
+    if(pose.morphAnimation)return renderMorphAnimationPose(this.context,pose,options);
     requireNoEnabledDualMorph(source,'Animation presentation');
     requireNoEnabledDualMorph({view:pose.view},'Animation presentation');
     if(!source||source.model.id!==pose.source.modelId||source.model.fingerprint!==pose.source.fingerprint)
@@ -84,10 +87,10 @@ export class AnimationRenderer {
       netViewer.setFold(pose.frame.foldFraction);
       netViewer.setDisplay(source.view);
       this.context.showNet?.(pose);
-    }else if(source.view.derivedMode==='section'&&previousOffset!==source.view.sectionOffset){
+    }else if(['section','cell-section'].includes(source.view.derivedMode)&&previousOffset!==source.view.sectionOffset){
       await this.context.refreshSection(options);
     }
     if(options.signal?.aborted||options.isCurrent?.()===false)throw new Error('Animation publication cancelled.');
-    viewer.draw();if(pose.foldNet||source.view.derivedMode==='section')netViewer.draw();
+    viewer.draw();if(pose.foldNet||['section','cell-section'].includes(source.view.derivedMode))netViewer.draw();
   }
 }

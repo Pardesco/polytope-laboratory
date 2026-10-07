@@ -32,6 +32,9 @@ def run_recipe(document, operation, parameters, dispatcher, label=None):
         raise GeometryError('Operation is unavailable for document recipes.')
     if type(parameters) is not dict:
         raise GeometryError('Recipe parameters require a JSON object.')
+    if operation == 'projective-incidence-dual':
+        from .projective_dual_workflow import run_projective
+        return run_projective(document, parameters, label or 'Projective reciprocal view')
     if operation == 'element-content':
         from .element_content_workflow import run_content
         return run_content(document, parameters, label or 'Edit element content')
@@ -62,6 +65,14 @@ def run_recipe(document, operation, parameters, dispatcher, label=None):
             graph = record_source(graph, node_id, state)
             state['operationNode'] = node_id
     source = result['states'][result['cursor']]
+    if operation in ('coincidic-record','coincidic-compound'):
+        from .coincidic_regiments import clean_state
+        from .history import _source_hash
+        parent_node=next(n for n in graph.to_dict()['nodes'] if n['id']==source['operationNode'])
+        if _source_hash(clean_state(source))!=_source_hash(clean_state(parent_node['snapshot'])):
+            source_id=str(uuid.uuid4())
+            graph=record_source(graph,source_id,source,parent=source['operationNode'])
+            source['operationNode']=source_id
     response = dispatcher({'op':operation, 'params':copy.deepcopy(parameters),
                            'model':copy.deepcopy(source['model'])})
     model = response.get('model') if operation == 'section' else response
@@ -70,6 +81,7 @@ def run_recipe(document, operation, parameters, dispatcher, label=None):
     view = copy.deepcopy(source['view'])
     for field in ('entitySelection','sectionAlignment','orientationFrame','cellFacingCache'):
         view.pop(field, None)
+    view.pop('coincidicComparison', None)
     view.update(cellFacing='all', hiddenCells=[], isolatedCell=None)
     if (model['dimension'], model.get('embeddingDimension', model['dimension'])) != (source['model']['dimension'], source['model'].get('embeddingDimension', source['model']['dimension'])):
         dimension = model['dimension']
@@ -82,15 +94,21 @@ def run_recipe(document, operation, parameters, dispatcher, label=None):
             view.pop(field, None)
     if view.get('symmetry'): view['symmetry']['generatorIds'] = ''
     if view.get('stellation'): view['stellation']['searchGeneratorIds'] = ''
+    if operation == 'section' and parameters.get('section_domain')=='ordinary-cells':
+        view.update(derivedMode='face' if model['faces'] else 'section')
+        view.pop('dualMorph', None)
     if operation == 'exact-surface-section':
         view.update(derivedMode='face' if model['faces'] else 'section-evidence', sectionNormal=[0,0,1])
         view.pop('dualMorph', None)
-    if operation in ('incidence-truncate','sphere-project','incidence-dual'): view.pop('dualMorph', None)
+    if operation in ('incidence-truncate','sphere-project','incidence-dual','reflect-source'): view.pop('dualMorph', None)
     if operation == 'incidence-dual': view['derivedMode'] = 'incidence-dual'
     node_id = str(uuid.uuid4())
     state = {'model':model, 'view':view, 'label':label or operation,
              'notes':source.get('notes',''), 'operationNode':node_id}
-    if 'elementAnnotations' in source['view'] or 'elementContentDetached' in source['view']:
+    if operation in ('coincidic-record','coincidic-compound'):
+        from .coincidic_regiments import compose_state
+        state = {**compose_state(source, parameters, model, operation=='coincidic-compound'), 'label':label or operation, 'operationNode':node_id}
+    elif 'elementAnnotations' in source['view'] or 'elementContentDetached' in source['view']:
         from .element_content_ownership import transfer_content_state
         state = transfer_content_state(source, state, operation)
     graph = append_operation(graph, source['operationNode'], source,

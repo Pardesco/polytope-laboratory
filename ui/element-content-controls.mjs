@@ -1,4 +1,5 @@
 import {NumericEntry} from './numeric-entry.mjs';
+import {prepareEmptySectionSourceContent,verifySectionSourcePose} from './section-source-content.mjs';
 import {captureNativeSource,verifyNativeSource} from './native-source-binding.mjs';
 
 export const ELEMENT_CONTENT_LIMITS=Object.freeze({pngBytes:4*1024*1024,markup:4096,listCharacters:128*1024,listEntries:1024});
@@ -103,7 +104,7 @@ export class ElementContentControls{
   cancel(){this.entry?.cancel();}
   invalidate(){if(!this.publishing)this.cancel();for(const job of this.jobs.values())job.controller.abort();this.jobs.clear();this.loadedState=null;this.sync();}
   async refresh(viewer=this.context.viewer,{signal,isCurrent,referenceEdgeMm=25}={}){
-    const state=this.context.getState();if(!state?.model){await this.context.render(viewer,null,{});return {ready:true};}
+    const state=this.context.getState();verifySectionSourcePose(viewer,state);const empty=await prepareEmptySectionSourceContent(viewer,state,{signal,isCurrent:()=>this.context.getState()===state&&isCurrent?.()!==false});if(empty)return empty;if(!state?.model){await this.context.render(viewer,null,{});return {ready:true};}
     const readContext={...this.context,isExporting:()=>false},owner=captureNativeSource(readContext),content=annotationSignature(state),
       key=JSON.stringify([owner.modelSignature,content,owner.notes,owner.unit,referenceEdgeMm]);
     if(signal?.aborted||isCurrent?.()===false)throw aborted();

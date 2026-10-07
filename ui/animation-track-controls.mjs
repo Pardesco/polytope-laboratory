@@ -13,8 +13,8 @@ export function requireTrackCapabilities(sequence,context){
 
 export function createTrackSweep(sequence,kind,{direction='normal',amount=1}={}){
   const original=normalizeSequence(sequence),tracks={...original.tracks};
-  if(kind==='explosion')tracks.explosion={direction};else if(kind==='fold')tracks.fold={kind:'face-net'};else throw Error('Choose an explosion or rigid face-net track.');
-  const result=withSequenceTracks(original,tracks),field=kind==='explosion'?'explosionAmount':'foldFraction';
+  if(kind==='explosion')tracks.explosion={direction};else if(kind==='fold')tracks.fold={kind:'face-net'};else if(kind==='morphRatio')tracks.morphRatio={kind:'dual-morph',version:1};else throw Error('Choose an explosion, rigid face-net or dual-morph ratio track.');
+  const result=withSequenceTracks(original,tracks),field=kind==='explosion'?'explosionAmount':kind==='morphRatio'?'morphRatio':'foldFraction';
   if(!Number.isFinite(amount)||amount<0||amount>(kind==='explosion'?10:1))throw Error('Track endpoint is outside its supported range.');
   result.keyframes=result.keyframes.map(frame=>({...frame,[field]:frame.time===0?0:frame.time===result.duration?amount:amount*(frame.time/result.duration)}));
   return normalizeSequence(result);
@@ -44,7 +44,7 @@ export class AnimationTrackSessions{
       this.cache[kind]=structuredClone(result);return result;
     };
     try{
-      const session=await prepareAnimationAdapters({state:source,sequence:normalized,getState:this.context.getState,loadPlanes:fetch('planes'),loadNet:fetch('net'),signal:controller.signal});
+      const session=await prepareAnimationAdapters({state:source,sequence:normalized,getState:this.context.getState,loadPlanes:fetch('planes'),loadNet:fetch('net'),loadMorph:(model,seq,guards)=>this.context.loadMorph(model,seq,guards),signal:controller.signal});
       if(controller.signal.aborted||revision!==this.revision){session.destroy();throw Error('Animation preparation cancelled.');}
       if(preflight){session.destroy();if(this.controller===controller)this.controller=null;return null;}
       this.session=session;return session;

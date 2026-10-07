@@ -28,7 +28,7 @@ function simplex(){
 function saved4D(){const source=state(),value=simplex();source.model=value.model;source.view.explosionAmount=.5;return {source,cache:value.cache};}
 
 test('capabilities require actual explosion advertisement and both linked rigid-net methods',()=>{
-  const h=harness();assert.deepEqual(h.renderer.capabilities(),{explosion:true,fold:true});h.viewer.supportsExplosion=false;assert.equal(h.renderer.capabilities().explosion,false);delete h.netViewer.setFold;assert.equal(h.renderer.capabilities().fold,false);
+  const h=harness();assert.deepEqual(h.renderer.capabilities(),{morphRatio:true,explosion:true,fold:true});h.viewer.supportsExplosion=false;assert.equal(h.renderer.capabilities().explosion,false);delete h.netViewer.setFold;assert.equal(h.renderer.capabilities().fold,false);
 });
 
 test('qualified adapter poses render source-bound actual explosion before display/draw without mutating model',async()=>{
@@ -74,7 +74,7 @@ test('native preflight forwards guarded detached source and rejects late source/
 });
 
 test('net preflight snapshots physical settings before await and propagates native rejection',async()=>{
-  const h=harness(),job=deferred();let request;h.context.run=async(...args)=>{request=args;return job.promise;};const model=structuredClone(h.source.model),pending=h.renderer.loadNet(model);h.source.view.net.root=5;h.source.view.net.length=99;assert.deepEqual(request.slice(0,3),['net',{root:2,edge_length_mm:37,tabs:false},model]);job.resolve({qualifiedNet:'result'});assert.deepEqual(await pending,{qualifiedNet:'result'});
+  const h=harness(),job=deferred();let request;h.context.run=async(...args)=>{request=args;return job.promise;};const model=structuredClone(h.source.model),pending=h.renderer.loadNet(model);h.source.view.net.root=5;h.source.view.net.length=99;assert.deepEqual(request.slice(0,3),['net',{root:2,edge_length_mm:37,tabs:false},model]);job.resolve({qualifiedNet:'result'});await assert.rejects(pending,/layout\/history changed/);
   h.context.run=async()=>{throw Error('Native net reconstruction failed');};await assert.rejects(()=>h.renderer.loadNet(model),/Native net reconstruction failed/);
 });
 

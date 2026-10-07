@@ -1,0 +1,23 @@
+Antiprism 0.32 attributed uniform snub forms and Skilling resource
+
+Source: https://www.antiprism.com/files/antiprism-0.32_w64_install.exe
+Pinned installer SHA256: a5318868fa6032923bd9acca945609d5bad0e88cbc8bc1ffec83df35a7d266cc
+Provider: Antiprism, Adrian Rossiter and Roger Kaufman.
+
+Skilling realization: original data/models/skilling resource, retained byte-for-byte.
+Original header attributes Roger Kaufman and explicitly says:
+"This file may be copied, modified and redistributed".
+See retained COPYING and RESOURCE_NOTICE.html for upstream licensing.
+
+The reflected U forms are generated from the existing pinned attributed U sources
+by negating their literal X coordinate. No new source incidence or color is invented.
+Their original source models and source-file hashes remain in saved provenance.
+Source/reflected labels are relative to provider coordinates, not an absolute
+left/right convention. Independent numerical chirality receipts are in manifest.json.
+
+Skilling has actual 240 geometric source edges with two/four face incidences.
+Abstract 360-edge pairings, filled-region meanings and infinite duals are not inferred.
+
+Independent public identity/incidence reference:
+https://www.georgehart.com/virtual-polyhedra/great_disnub_dirhombidodecahedron.html
+Official category reference: https://software3d.com/Manual/Builtin.php

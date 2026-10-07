@@ -1,6 +1,6 @@
 # 0.25 community preview
 
-The Windows x64 portable and matching GPLv3 source archive are attached to the [GitHub prerelease](https://github.com/Pardesco/polytope-laboratory/releases/tag/v0.25.0):
+The Windows x64 portable and matching GPLv3 source archive are available locally:
 
 - `release/preview-0.25.0/Polytope Laboratory 0.25.0 preview.exe`
 - `release/Polytope Laboratory 0.25.0 source.zip`
@@ -35,8 +35,4 @@ Receipts: `artifacts/community-preview-0.25.0.json`,
 and `artifacts/preview-portable-quick-qxweFq/result.json`.
 
 This is a community preview. Feature completeness, full regression and measured
-90% Stella4D parity are not claimed. The GitHub release is labeled as a prerelease.
-
-The repository runtime files match the archived source. GitHub publication changes only documentation; the [source-pair record](RELEASE_SOURCE_PAIR_0.25.json) retains the archive and binary hashes.
-
-Later 0.26 integration found that the shared print-window policy in this preview blocks embedded PNG annotations in PDFs. SVG retains the images. The fix permits source-owned data images and has actual PDF image evidence in 0.26 development; it does not change this frozen binary or source ZIP.
+90% Stella4D parity are not claimed. No GitHub release has been published.
