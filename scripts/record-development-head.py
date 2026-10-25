@@ -161,7 +161,8 @@ Source archive receipt: `artifacts/source-package-{preview_version}.json`.
 
 ---
 '''
-for name in ('BUILD_STATUS.md','SESSION_HANDOFF.md'):
+# The stopping-checkpoint handoff is maintained separately; do not regenerate it.
+for name in ('BUILD_STATUS.md',):
     p=root/'docs'/name;old=p.read_text(encoding='utf-8');_,history=old.split('\n---\n',1);p.write_text(prefix+history,encoding='utf-8')
 (root/'artifacts'/f'development-head-{version}.json').write_text(json.dumps({'version':version,'goalStatus':'active','license':'GPL-3.0-only','protectedImporterHashes':protected,'currentNotes':str(root/'docs'/f'RELEASE_{short_version}_DEVELOPMENT.md')},indent=2)+'\n')
 print('Updated current development handoff:',version)

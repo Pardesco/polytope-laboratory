@@ -1,4 +1,5 @@
 import {ViewerElementContent} from './viewer-element-content.mjs';
+import {transferObservationControls} from './observation-controls.mjs';
 import {ViewerStereo,stereoMode} from './viewer-stereo.mjs';
 import * as THREE from 'three';
 import {createAppearanceLights,applyViewerAppearance} from './viewer-appearance.mjs';
@@ -134,6 +135,7 @@ export class Viewer {
     previous?.dispose();this.controls=new OrbitControls(this.camera,this.renderer.domElement);Object.assign(this.controls,settings);
     if(target)this.controls.target.copy(target);
     this.controls.addEventListener('end',()=>this.onCamera?.(this.cameraState()));this.controls.update();
+    transferObservationControls(previous,this.controls);
   }
   setCameraProjection(mode,preserveScale=true){
     if(!['orthographic','perspective'].includes(mode))throw new Error('Camera projection must be orthographic or perspective.');
@@ -147,18 +149,23 @@ export class Viewer {
     }
     this.camera=next;this.cameraProjection=mode;this.updateOrthographic();next.updateProjectionMatrix();this.bindControls();
   }
-  clear(){disposeMaterialEffects(this);this.stereoRenderer?.dispose();this.stereoRenderer=null;this.elementContentLayer?.destroy();this.elementContentLayer=null;this.elementContentDiagnostic=null;this.stereographicWorker?.destroy();this.stereographicWorker=null;this.publishedPickState=null;this.stereographicWorkerDiagnostic=null;this.stereographicWorkerUnavailable=null;for(const o of [...this.group.children]){this.group.remove(o);o.dispose?.();o.geometry?.dispose();if(Array.isArray(o.material))o.material.forEach(m=>m.dispose());else o.material?.dispose();}this.model=null;this.morphSource=null;this.morphFrame=null;this.morphSelectedSourceIds=null;this.projected=null;this.explosionPayload=null;this.explosionPrepared=null;this.explosionDisplay=null;this.explosionDiagnostic=null;this.instanceProjected=null;this.instanceVisibility=null;this.explosionTriangleDisplay=null;this.explosionTriangles=null;this.explosionInstanceVisibility=null;this.net=null;this.cellNet=null;this.orientationApplied=false;this.orientationDiagnostic=null;this.facingCache=null;this.facingCacheFingerprint=null;this.facingCacheSourceFingerprint=null;this.facingPlanes=null;this.facingCounts=null;this.facingDiagnostic=null;this.facingApplied=false;this.vertexSpheres=null;this.edgeCylinders=null;this.presentationSourceTriangles=null;this.presentationDiagnostic=null;this.stereographicGeometry=null;this.stereographicKey=null;this.perspectiveGeometry=null;this.perspectiveKey=null;this.perspectiveDiagnostic=null;this.observerBounds=null;this.observerBoundsKey=null;this.renderTriangles=null;this.stereographicDiagnostic=null;}
+  clear({retainedMaterials=new Set()}={}){disposeMaterialEffects(this);this.stereoRenderer?.dispose();this.stereoRenderer=null;this.elementContentLayer?.destroy();this.elementContentLayer=null;this.elementContentDiagnostic=null;this.stereographicWorker?.destroy();this.stereographicWorker=null;this.publishedPickState=null;this.stereographicWorkerDiagnostic=null;this.stereographicWorkerUnavailable=null;for(const o of [...this.group.children]){this.group.remove(o);o.dispose?.();o.geometry?.dispose();if(Array.isArray(o.material))o.material.forEach(m=>{if(!retainedMaterials.has(m))m.dispose();});else if(!retainedMaterials.has(o.material))o.material?.dispose();}this.model=null;this.sectionMaterialSource=null;this.sectionMaterialMode=null;this.morphSource=null;this.morphFrame=null;this.morphSelectedSourceIds=null;this.projected=null;this.explosionPayload=null;this.explosionPrepared=null;this.explosionDisplay=null;this.explosionDiagnostic=null;this.instanceProjected=null;this.instanceVisibility=null;this.explosionTriangleDisplay=null;this.explosionTriangles=null;this.explosionInstanceVisibility=null;this.net=null;this.cellNet=null;this.orientationApplied=false;this.orientationDiagnostic=null;this.facingCache=null;this.facingCacheFingerprint=null;this.facingCacheSourceFingerprint=null;this.facingPlanes=null;this.facingCounts=null;this.facingDiagnostic=null;this.facingApplied=false;this.vertexSpheres=null;this.edgeCylinders=null;this.presentationSourceTriangles=null;this.presentationDiagnostic=null;this.stereographicGeometry=null;this.stereographicKey=null;this.perspectiveGeometry=null;this.perspectiveKey=null;this.perspectiveDiagnostic=null;this.observerBounds=null;this.observerBoundsKey=null;this.renderTriangles=null;this.stereographicDiagnostic=null;}
   async setElementContent(descriptor,options={}){
+    if(options.signal?.aborted||options.isCurrent?.()===false)throw Object.assign(Error('Element content source or request changed.'),{name:'AbortError'});
+    options.verifyPublication?.();
     this.elementContentLayer?.destroy();this.elementContentLayer=null;this.elementContentDiagnostic=null;
     if(descriptor===null||descriptor===undefined)return {ready:true,cleared:true};
     const layer=new ViewerElementContent(this,options);this.elementContentLayer=layer;
     try{return await layer.set(descriptor,options);}catch(error){if(this.elementContentLayer===layer)this.elementContentDiagnostic=error.message;throw error;}
   }
-  syncElementContent(){
-    try{this.elementContentLayer?.rebuild();}catch(error){this.elementContentDiagnostic=error.message;if(this.elementContentLayer){this.elementContentLayer.diagnostic=error.message;this.elementContentLayer.clearGeometry();}}
+  syncElementContent(options={}){
+    try{this.elementContentLayer?.rebuild(options);}catch(error){this.elementContentDiagnostic=error.message;if(this.elementContentLayer){this.elementContentLayer.diagnostic=error.message;this.elementContentLayer.clearGeometry();}}
   }
-  setModel(model,{normalization=null,morphSource=null,morphFrame=null}={}){
-    this.clear();this.sourcePickCycle?.reset();this.pickDiagnostic=null;if(!model)return;
+  setModel(model,{normalization=null,morphSource=null,morphFrame=null,reuseMaterials=false}={}){
+    // Keep compiled programs alive across related poses. Geometry and all source
+    // ownership caches are still rebuilt, including topology-changing endpoints.
+    const materials=model&&reuseMaterials?{lines:this.lines?.material,points:this.points?.material,surface:this.surface?.material,highlight:this.highlight?.material}:{};
+    this.clear({retainedMaterials:new Set(Object.values(materials))});this.sourcePickCycle?.reset();this.pickDiagnostic=null;if(!model)return;
     this.model=model;this.morphSource=morphSource;this.morphFrame=morphFrame;const d=model.embeddingDimension||model.dimension;
     let center=Array(d).fill(0);model.vertices.forEach(v=>v.forEach((x,k)=>center[k]+=x/model.vertices.length));
     let radius=Math.max(...model.vertices.map(v=>Math.hypot(...v.map((x,k)=>x-center[k]))))||1;
@@ -166,15 +173,25 @@ export class Viewer {
     this.center=center;this.radius=radius;this.lastFillRule=null;this.visibilityKey=null;this.colorKey=null;
     this.normalized=model.vertices.map(v=>v.map((x,k)=>(x-center[k])/radius));
     this.edgeGeometry=new THREE.BufferGeometry();this.edgeGeometry.setAttribute('position',new THREE.BufferAttribute(new Float32Array(model.edges.length*6),3));
-    this.lines=new THREE.LineSegments(this.edgeGeometry,new THREE.LineBasicMaterial({color:0x9eafc0,transparent:true,opacity:.8}));this.lines.renderOrder=2;this.group.add(this.lines);
+    this.lines=new THREE.LineSegments(this.edgeGeometry,materials.lines??new THREE.LineBasicMaterial({color:0x9eafc0,transparent:true,opacity:.8}));this.lines.renderOrder=2;this.group.add(this.lines);
     this.pointGeometry=new THREE.BufferGeometry();this.pointGeometry.setAttribute('position',new THREE.BufferAttribute(new Float32Array(model.vertices.length*3),3));
-    this.points=new THREE.Points(this.pointGeometry,new THREE.PointsMaterial({color:0xc8d2dd,size:3,sizeAttenuation:false,transparent:true,opacity:.85,depthWrite:false}));this.points.renderOrder=3;this.group.add(this.points);
+    this.points=new THREE.Points(this.pointGeometry,materials.points??new THREE.PointsMaterial({color:0xc8d2dd,size:3,sizeAttenuation:false,transparent:true,opacity:.85,depthWrite:false}));this.points.renderOrder=3;this.group.add(this.points);
     this.triangles=[];
     this.surfaceGeometry=new THREE.BufferGeometry();this.surfaceGeometry.setAttribute('position',new THREE.BufferAttribute(new Float32Array(this.triangles.length*9),3));
-    this.surface=new THREE.Mesh(this.surfaceGeometry,new THREE.MeshPhongMaterial({color:0x9aaec3,specular:0x18202a,shininess:30,flatShading:true,transparent:true,opacity:model.dimension===4?.22:.86,side:THREE.DoubleSide,depthWrite:false,polygonOffset:true,polygonOffsetFactor:1,polygonOffsetUnits:1}));this.group.add(this.surface);
+    this.surface=new THREE.Mesh(this.surfaceGeometry,materials.surface??new THREE.MeshPhongMaterial({color:0x9aaec3,specular:0x18202a,shininess:30,flatShading:true,transparent:true,opacity:model.dimension===4?.22:.86,side:THREE.DoubleSide,depthWrite:false,polygonOffset:true,polygonOffsetFactor:1,polygonOffsetUnits:1}));this.group.add(this.surface);
     this.highlightGeometry=new THREE.BufferGeometry();this.highlightGeometry.setAttribute('position',new THREE.BufferAttribute(new Float32Array(0),3));
-    this.highlight=new THREE.Points(this.highlightGeometry,new THREE.PointsMaterial({color:0xe9ba6b,size:7,sizeAttenuation:false,depthWrite:false}));this.highlight.renderOrder=4;this.group.add(this.highlight);
+    this.highlight=new THREE.Points(this.highlightGeometry,materials.highlight??new THREE.PointsMaterial({color:0xe9ba6b,size:7,sizeAttenuation:false,depthWrite:false}));this.highlight.renderOrder=4;this.group.add(this.highlight);
     this.selected=[];this.setDisplay({angles:Array(6).fill(0),projection:'orthographic',faces:true,vertices:false});
+  }
+  setSectionModel(model,source,{mode='section'}={}){
+    if(!['section','cell-section'].includes(mode))throw Error('Unsupported section presentation mode.');
+    // This identity scopes GPU material lifetime only. Every result still goes
+    // through setModel: topology, colors, ownership and picking are rebuilt.
+    // Native request/publication checks remain with the caller; no geometry or
+    // source snapshot is reused here, even for an in-place source mutation.
+    const reuseMaterials=Boolean(model&&source&&this.model&&this.sectionMaterialSource===source&&this.sectionMaterialMode===mode);
+    this.setModel(model,{reuseMaterials});
+    if(model){this.sectionMaterialSource=source;this.sectionMaterialMode=mode;}
   }
   setMorphFrame(frame,source,view,{isCurrent=()=>true,signal}={}){
     if(signal?.aborted||!isCurrent())throw Object.assign(Error("Morph publication canceled."),{name:"AbortError"});
@@ -182,7 +199,7 @@ export class Viewer {
     const d=source.embeddingDimension||source.dimension,center=Array(d).fill(0);source.vertices.forEach(v=>v.forEach((x,k)=>center[k]+=x/source.vertices.length));
     const radius=Math.max(...source.vertices.map(v=>Math.hypot(...v.map((x,k)=>x-center[k]))))||1;
     const selected=this.morphFrame?(this.morphSelectedSourceIds||[]):(this.selected||[]);
-    this.setModel(frame.model,{normalization:{center,radius},morphSource:source,morphFrame:frame});
+    this.setModel(frame.model,{normalization:{center,radius},morphSource:source,morphFrame:frame,reuseMaterials:this.morphSource===source&&Boolean(this.morphFrame)});
     if(signal?.aborted||!isCurrent())throw Object.assign(Error("Morph publication canceled."),{name:"AbortError"});
     const status=this.setDisplay(view);this.select(selected);this.draw();return status;
   }
@@ -367,24 +384,25 @@ export class Viewer {
       this.stereographicWorker=new ViewerStereographicWorker({worker,getModel:()=>this.stereographicWorker?.snapshot&&stereographicViewSignature(this.stereographicDesiredView||this.view)!==this.stereographicWorker.snapshot.viewSignature?null:this.model,clock:this.stereographicWorkerClock||{},publish:(publication,geometry,snapshot,guard)=>{
         if(!guard.isCurrent())return;
         const desired=this.stereographicDesiredView||this.view;
-        let status;try{status=this.setDisplayNow(snapshot.view,{publication:geometry});}finally{this.view=desired;}
+        let status;try{status=this.setDisplayNow(snapshot.view,{publication:geometry,elementContentPoseCurrent:this.elementContentPoseCurrent});}finally{this.view=desired;}
         if(!guard.isCurrent())throw Object.assign(Error('Stereographic source changed during publication.'),{name:'AbortError'});
         this.stereographicWorkerDiagnostic=null;this.lastDisplayStatus={...status,stereographicPending:publication.intermediate===true,stereographicDisplayedFrameKey:publication.frameKey,stereographicQuality:publication.quality};this.onDisplay?.(this.lastDisplayStatus);if(this.renderer&&this.controls)this.draw();
       },onTiming:timing=>this.onStereographicTiming?.(timing),onDiagnostic:diagnostic=>{this.stereographicWorkerDiagnostic=diagnostic;this.stereographicDiagnostic=diagnostic;this.onDisplay?.({...this.lastDisplayStatus,stereographicDiagnostic:diagnostic,stereographicPending:false});}});
       return this.stereographicWorker;
     }catch(error){this.stereographicWorkerUnavailable=`Stereographic worker unavailable: ${error.message} Synchronous display geometry is used.`;return null;}
   }
-  setDisplay(view){
+  setDisplay(view,{elementContentPoseCurrent}={}){
+    this.elementContentPoseCurrent=elementContentPoseCurrent;
     applyViewerAppearance(this,view);
     this.stereographicDesiredView=view;
     const stereo=view.projection==='stereographic'&&(this.model?.embeddingDimension??this.model?.dimension)===4&&!this.net&&!this.cellNet;
     if(stereo&&this.ensureStereographicWorker()){
       this.deferStereoBuffers=true;
-      try{this.stereographicCaptureFailure=null;return this.setDisplayNow(view,{defer:true});}
+      try{this.stereographicCaptureFailure=null;return this.setDisplayNow(view,{defer:true,elementContentPoseCurrent});}
       catch(error){this.stereographicWorker.cancel();this.stereographicCaptureFailure=error.message;this.stereographicWorkerDiagnostic=error.message;return {...this.lastDisplayStatus,stereographicPending:false,stereographicDiagnostic:error.message};}
       finally{this.deferStereoBuffers=false;}
     }
-    this.stereographicWorker?.cancel();const status=this.setDisplayNow(view);
+    this.stereographicWorker?.cancel();const status=this.setDisplayNow(view,{elementContentPoseCurrent});
     if(stereo&&status){status.stereographicDiagnostic=[status.stereographicDiagnostic,this.stereographicWorkerUnavailable].filter(Boolean).join(' ')||null;this.stereographicDiagnostic=status.stereographicDiagnostic;}
     return status;
   }
@@ -549,11 +567,13 @@ export class Viewer {
     const highlight=this.highlightGeometry.attributes.position.array;highlightIds.forEach((v,i)=>{const point=displayedPoints[v];if(point)highlight.set(packed?(packed.vertexVisible[v]?packed.positions.subarray(v*3,v*3+3):[1e30,1e30,1e30]):(point.clipped||!displayVisibility.vertices[v]?[1e30,1e30,1e30]:point.point),i*3);});this.highlightGeometry.attributes.position.needsUpdate=true;this.highlightGeometry.computeBoundingSphere();
     this.updateObserverBounds(this.perspectiveGeometry||this.stereographicGeometry||this.projected);this.updateObserverFar();
     this.publishedPickState={morphFrame:this.morphFrame,view:this.view,visibility:this.visibility,instanceVisibility:this.instanceVisibility,explosionDisplay:this.explosionDisplay,projected:this.projected,instanceProjected:this.instanceProjected,renderTriangles:this.renderTriangles,triangles:this.triangles,packedDisplay:packed,pickingTriangles:this.stereographicGeometry?.pickingTriangles,contentRecipe:{net:this.net,cellNet:this.cellNet,netRadius:this.netRadius,cellFaceOwners:this.cellFaceOwners,cellVertexSources:this.cellVertexSources,center:this.center.slice(),radius:this.radius,effectiveCellShrink:this.effectiveCellShrink,explosionDisplay:this.explosionDisplay,normalized:this.normalized,cellSurfacePoints:this.cellSurfacePoints}};
-    this.syncElementContent();
+    this.syncElementContent({isPoseCurrent:workerOptions.elementContentPoseCurrent});
     if(packed)try{this.onStereographicTiming?.(Object.freeze({stage:'viewer-packed-display',jobId:packed.owner.jobId,phase:packed.phase,patches:packed.counts.patches,segments:packed.counts.segments,attributesMs:attributesPrepared-publicationStarted,colorsMs:colorsPrepared-attributesPrepared,remainingDisplayMs:performance.now()-colorsPrepared,totalMs:performance.now()-publicationStarted}));}catch{}
     return this.lastDisplayStatus={elementContentDiagnostic:this.elementContentDiagnostic,explosionApplied:Boolean(this.explosionDisplay),explosionDiagnostic:this.explosionDiagnostic,explosionCounts:this.explosionDisplay?{vertices:this.instanceVisibility.vertices.filter(Boolean).length,edges:this.instanceVisibility.edges.filter(Boolean).length,faces:this.explosionDisplay.faces.filter(f=>this.visibility.faces[f.face]&&(f.cell===null||this.visibility.activeCellSet.has(f.cell))).length,entities:this.explosionDisplay.entities.filter(e=>e.cell===null||this.visibility.activeCellSet.has(e.cell)).length,triangles:this.renderTriangles.length,amount:this.explosionDisplay.amount,direction:this.explosionDisplay.direction}:null,clippedEdges:skipped,surfaceSuppressed:this.model.faces.length>0&&!this.fillSupported,suppressedFaces:this.fillDiagnostics?.length||0,filledTriangles:this.renderTriangles?this.renderTriangles.length:this.triangles.length,fillRule,orientationApplied:frame.applied,orientationDiagnostic:frame.diagnostic,facingApplied:this.facingApplied,facingCounts:this.facingCounts,facingDiagnostic:this.facingDiagnostic,presentationDiagnostic:this.presentationDiagnostic,primitiveCounts:this.primitiveCounts,effectiveCellShrink:this.effectiveCellShrink,cellInstances:this.cellInstances,stereographicDiagnostic:this.stereographicDiagnostic,stereographicCounts:this.stereographicGeometry?{segments:this.stereographicGeometry.edges.length,triangles:this.stereographicGeometry.triangles.length,clippedSegments:this.stereographicGeometry.clippedSegments,clippedTriangles:this.stereographicGeometry.clippedTriangles,unresolvedEdges:this.stereographicGeometry.unresolvedEdges,unresolvedTriangles:this.stereographicGeometry.unresolvedTriangles}:null,perspectiveDiagnostic:this.perspectiveDiagnostic,perspectiveCounts:this.perspectiveGeometry?{segments:this.perspectiveGeometry.edges.length,triangles:this.perspectiveGeometry.triangles.length,clippedEdges:this.perspectiveGeometry.clippedEdges,clippedTriangles:this.perspectiveGeometry.clippedTriangles,omittedEdges:this.perspectiveGeometry.omittedEdges,omittedTriangles:this.perspectiveGeometry.omittedTriangles,distance:this.perspectiveSettings.distance,near:this.perspectiveSettings.near}:null};
   }
-  draw(){this.controls.update();if(this.stereographicWorker?.snapshot){const camera=this.stereographicCameraMetrics();if(JSON.stringify(camera)!==JSON.stringify(this.stereographicWorker.snapshot.camera))this.setDisplay(this.view);}this.updateObserverFar();const mode=stereoMode(this.view);if(mode==='none')this.renderer.render(this.scene,this.camera);else{this.stereoRenderer??=new ViewerStereo(this.renderer);this.stereoRenderer.render(this.scene,this.camera,mode);}}
+  // Capture owners disable observation to hold an exact camera. Even a settled
+  // OrbitControls update can round a fitted pose and invalidate that snapshot.
+  draw(){if(this.controls.enabled!==false)this.controls.update();if(this.stereographicWorker?.snapshot){const camera=this.stereographicCameraMetrics();if(JSON.stringify(camera)!==JSON.stringify(this.stereographicWorker.snapshot.camera))this.setDisplay(this.view);}this.updateObserverFar();const mode=stereoMode(this.view);if(mode==='none')this.renderer.render(this.scene,this.camera);else{this.stereoRenderer??=new ViewerStereo(this.renderer);this.stereoRenderer.render(this.scene,this.camera,mode);}}
   observationCloud(){
     const published=this.publishedPickState||this;
     if(published.packedDisplay)return packedObservationCloud(published.packedDisplay);

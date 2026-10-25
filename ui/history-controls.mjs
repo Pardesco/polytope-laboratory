@@ -6,7 +6,7 @@ export class HistoryControls {
     this.branch=document.createElement('button');this.branch.id='history-branch';this.branch.textContent='Parameters';this.branch.title='Edit the selected operation parameters in a new document';
     row.append(this.replay,this.branch);document.getElementById('history-list').before(row);
     this.dialog=document.createElement('dialog');this.dialog.id='history-parameters-dialog';
-    this.dialog.innerHTML='<div class="dialog-heading"><h2>Operation parameters</h2><button id="history-parameters-close" aria-label="Close">Ã—</button></div><p id="history-operation"></p><label>Parameters <textarea id="history-parameters" rows="8" spellcheck="false"></textarea></label><button id="history-parameters-apply">Create branch</button>';
+    this.dialog.innerHTML='<div class="dialog-heading"><h2>Operation parameters</h2><button id="history-parameters-close" aria-label="Close">×</button></div><p id="history-operation"></p><label>Parameters <textarea id="history-parameters" rows="8" spellcheck="false"></textarea></label><button id="history-parameters-apply">Create branch</button>';
     document.body.append(this.dialog);
     this.replay.onclick=context.guard(()=>context.replay());
     this.branch.onclick=()=>{const node=this.node();if(!node)return;this.source=context.getState();document.getElementById('history-operation').textContent=node.op;document.getElementById('history-parameters').value=JSON.stringify(node.params,null,2);this.dialog.showModal();};

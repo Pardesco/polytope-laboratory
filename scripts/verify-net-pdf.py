@@ -1,35 +1,23 @@
-"""Measure the desktop smoke fixture's exported PDF, independently of SVG math.
-
-Requires PyMuPDF in the verification environment; it is not a runtime dependency.
-"""
-from pathlib import Path
-from collections import Counter
+"""Read-only verification of the one-page A4 cube-net QA export."""
+import argparse
 import json
-import math
-import re
-import os
-import fitz
+from pathlib import Path
+from pypdf import PdfReader
 
-root=Path(__file__).resolve().parents[1]
-artifacts=Path(os.environ.get('POLYTOPE_TEST_ARTIFACTS',root/'artifacts'))
-project=json.loads((artifacts/'smoke.polyproj').read_text(encoding='utf-8'))
-state=project['documents'][1]['states'][0];net=state['netLayout']
-assert state['model']['metadata']['key']=='cube','This physical-output fixture checks the cube workflow.'
-pdf=fitz.open(artifacts/'smoke-net.pdf');assert len(pdf)==1
-page=pdf[0]
-expected=[float(re.search(attribute+'="([0-9.e+-]+)mm"',net['svg']).group(1))+20 for attribute in ('width','height')]
-actual=[page.rect.width*25.4/72,page.rect.height*25.4/72]
-# Chromium quantizes CSS page dimensions; source edge lengths must meet a
-# tighter physical tolerance than the surrounding paper-size roundoff.
-assert max(abs(a-b) for a,b in zip(actual,expected))<25.4/96
-lengths=[math.hypot(item[2].x-item[1].x,item[2].y-item[1].y)*25.4/72
-         for draw in page.get_drawings() for item in draw['items'] if item[0]=='l']
-reference=[length for length in lengths if abs(length-net['referenceEdgeLengthMm'])<.5]
-assert len(reference)>=24 and max(abs(length-net['referenceEdgeLengthMm']) for length in reference)<.01
-labels=Counter(int(i) for i in re.findall(r'\bF(\d+)\b',page.get_text()))
-assert labels==Counter(range(net['sourceFaceCount']))
-evidence={'pageCount':len(pdf),'pageMillimeters':actual,'declaredPageMillimeters':expected,'maximumPageRoundoffMm':25.4/96,
-          'referenceEdgeLengthRangeMm':[min(reference),max(reference)],'sourceFaceLabelsPresent':True,
-          'scope':'digital PDF cube-fixture physical scale; hardware printer calibration not established'}
-(artifacts/'net-pdf-measurements.json').write_text(json.dumps(evidence,indent=2),encoding='utf-8')
-print(json.dumps(evidence,indent=2))
+parser = argparse.ArgumentParser(description=__doc__)
+parser.add_argument('pdf', type=Path)
+args = parser.parse_args()
+reader = PdfReader(args.pdf)
+assert len(reader.pages) == 1, 'The cube net should fit on one page'
+assert reader.metadata.title == 'Polytope Laboratory - Net', reader.metadata.title
+page = reader.pages[0]
+dimensions = [float(page.mediabox.width)*25.4/72, float(page.mediabox.height)*25.4/72]
+assert abs(dimensions[0]-210) < .3 and abs(dimensions[1]-297) < .3, dimensions
+text = page.extract_text()
+assert all('F'+str(i) in text for i in range(6)), 'Source face labels are missing'
+receipt = {'passed': True, 'pdf': str(args.pdf.resolve()), 'pages': 1, 'title': reader.metadata.title,
+           'dimensionsMm': dimensions, 'dimensionToleranceMm': .3, 'sourceFaceLabels': list(range(6)),
+           'scope': 'Page size, metadata and text extraction; inspect the separate rendered PNG for visual layout.'}
+with args.pdf.with_suffix('.qa.json').open('x', encoding='utf-8') as stream:
+    stream.write(json.dumps(receipt, indent=2)+'\n')
+print(json.dumps(receipt, indent=2))

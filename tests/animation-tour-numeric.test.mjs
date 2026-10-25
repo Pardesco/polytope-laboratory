@@ -11,7 +11,7 @@ import {numericControlFixture,deferred,flush} from './numeric-control-fixture.mj
 globalThis.Option=class{constructor(text,value){this.textContent=text;this.value=value;}};
 globalThis.cancelAnimationFrame=()=>{};
 const observed=p=>p.then(value=>({value}),error=>({error}));
-const allKeys=['duration','fps','loop','plane','turns','rotation','section','keyframe','play','start','end','time','png','webm','target','explosion','fold','explosion-direction','explosion-endpoint','explosion-pose','fold-pose','track-options','position','progress','cancel'];
+const allKeys=['duration','fps','loop','plane','turns','rotation','section','keyframe','play','start','end','time','png','webm','fit','target','explosion','fold','explosion-direction','explosion-endpoint','explosion-pose','fold-pose','morph','morph-pose','morph-endpoint','track-options','position','progress','cancel'];
 function animation(){
   const h=numericControlFixture(AnimationControls.prototype,Object.fromEntries(allKeys.map(key=>[key,''])));
   h.nodes.duration.value='2';h.nodes.fps.value='4';h.nodes.plane.value='0';h.nodes.turns.value='1';h.nodes.target.value='base';h.nodes['explosion-direction'].value='radial';h.nodes['explosion-endpoint'].value='1';

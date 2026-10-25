@@ -10,6 +10,7 @@ import {AnimationRenderer} from '../ui/animation-renderer.mjs';
 import {AnimationTrackSessions,createTrackSweep} from '../ui/animation-track-controls.mjs';
 import {createSequence,sequenceFrameTimes} from '../ui/animation.mjs';
 import {frameBounds,fitAnimationFrames} from '../ui/animation-framing.mjs';
+import {transferObservationControls} from '../ui/observation-controls.mjs';
 
 const fixture=JSON.parse(execFileSync('python',['-B','-c',"import json;from engine.generators import regular;from engine.nets import unfold;m=regular('cube');print(json.dumps({'model':m,'net':unfold(m,tabs=False)}))"],{cwd:fileURLToPath(new URL('../',import.meta.url)),encoding:'utf8',windowsHide:true}));
 function viewer(model){
@@ -57,4 +58,24 @@ test('source or external camera edits during capture survive framing failure',as
 test('framing bounds rejects empty, nonfinite and excessive clouds before camera publication',()=>{
   assert.throws(()=>frameBounds().corners(),/no visible geometry/);assert.throws(()=>frameBounds().add([[Infinity,0,0]]),/nonfinite/);
   const b=frameBounds(2);b.add([[0,0,0],[1,2,3]]);assert.equal(b.corners().length,8);assert.throws(()=>b.add([[1,1,1]]),/work limit/);
+});
+
+test('framing restores observation through camera control replacement on both viewers',async()=>{
+  const e=environment();let replacements=0;
+  for(const viewer of [e.base,e.derived]){
+    const bind=viewer.bindControls;viewer.bindControls=function(){const old=this.controls;bind.call(this);this.controls={...old,target:old.target.clone()};transferObservationControls(old,this.controls);replacements++;};
+  }
+  try{
+    await fitAnimationFrames(e.c);assert.ok(replacements>=3);
+    for(const viewer of [e.base,e.derived]){assert.equal(viewer.controls.enabled,true);assert.equal(viewer.controls.enableDamping,true);}
+  }finally{e.close();}
+});
+
+test('a camera restoration failure still releases observation and framing busy state',async()=>{
+  const e=environment();e.base.restoreCamera=()=>{throw Error('Camera restoration failed');};
+  try{
+    await assert.rejects(fitAnimationFrames(e.c),/Camera restoration failed/);
+    assert.equal(e.c.exporting,false);assert.equal(e.c.exportView,null);
+    for(const viewer of [e.base,e.derived]){assert.equal(viewer.controls.enabled,true);assert.equal(viewer.controls.enableDamping,true);}
+  }finally{e.close();}
 });

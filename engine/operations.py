@@ -6,12 +6,14 @@ import uuid
 import numpy as np
 from scipy.spatial import cKDTree
 from .geometry import hull, GeometryError, points_array, rank, TOLERANCE, identity, validate, polygon_area, canonical_cycle
+from .section_validation import section_validation
 
 
-def require_convex(model):
+def require_convex(model, *, reuse_section_validation=False):
     if model.get('interpretation') != 'convex-polytope':
         raise GeometryError('This operation supports convex polytopes only. Generalized/star incidence is preserved without convex substitution.')
-    if not validate(model)['passed']:
+    passed = section_validation.passed(model, validate) if reuse_section_validation else validate(model)['passed']
+    if not passed:
         raise GeometryError('Source incidence failed validation.')
 
 
@@ -63,7 +65,7 @@ def section(model, normal=None, offset=0, fill_rule='nonzero', section_domain='s
 
 
 def convex_section(model, normal=None, offset=0):
-    require_convex(model)
+    require_convex(model, reuse_section_validation=True)
     p = points_array(model['vertices'])
     d = model['dimension']
     if d not in (3, 4):

@@ -46,6 +46,7 @@ function dom(){
       e.value=/\bvalue="([^"]*)"/.exec(match[2])?.[1]??'';e.checked=/\bchecked\b/.test(match[2]);this.append(e);
     }}
     querySelector(selector){return selector==='.inspector-tabs'?tabs:nodes.get(selector.slice(1));}
+    addEventListener(name,listener){(this.listeners??={})[name]=listener;}
     replaceChildren(...elements){this.children=[];this.append(...elements);}
   }
   const inspector=new Element(),tabs=new Element();inspector.append(tabs);
@@ -62,6 +63,7 @@ function editors(){
   // The browser's document persists; retain the same DOM lookup for this
   // isolated fixture after restoring the test runner's global document.
   f.net.$=f.cell.$=id=>d.nodes.get(id);
+  f.net.tabControls.$=f.net.colorPrinting.$=f.net.$;
   f.state.view.net={root:0,length:25,tabs:true,display:'layout',fraction:0,action:'move',component:0};
   f.state.view.cellNet={root:0,shrink:1,component:0,selection:null};
   for(const [id,value] of Object.entries({'net-paper':'a4','net-paper-orientation':'portrait','net-component':'0','cell-net-component':'0'}))f.nodes.get(id).value=value;
@@ -157,7 +159,7 @@ test('invalid or stale E0 makes no partial config/layout/history mutations',asyn
 test('production paper Pack button evaluates all custom dimensions/margins/gaps atomically',async()=>{
   const f=editors(),source=structuredClone(f.state.model);f.nodes.get('net-paper').value='custom';
   for(const [id,text] of Object.entries({'net-paper-width':'210 - 2*5','net-paper-height':'297 / 3','net-paper-margin':'10/2','net-paper-gap':'2 + 3'}))f.nodes.get(id).value=text;
-  await clicked(f,'net-pack');assert.deepEqual(f.state.view.netPrint,{paper:'custom',orientation:'portrait',width_mm:200,height_mm:99,margin_mm:5,gap_mm:5,allow_rotation:true});
+  await clicked(f,'net-pack');assert.deepEqual(f.state.view.netPrint,{paper:'custom',orientation:'portrait',width_mm:200,height_mm:99,margin_mm:5,gap_mm:5,allow_rotation:true,color_mode:'mixed',paper_color:'all',print_fill:true,color_source_id:f.state.model.id,color_source_fingerprint:f.state.model.fingerprint});
   assert.equal(f.state.view.net.display,'pages');assert.deepEqual(f.state.model,source);
   for(const id of ['net-paper-width','net-paper-height','net-paper-margin','net-paper-gap'])assert.equal(f.nodes.get(id).type,'text');
   const preset=editors();preset.nodes.get('net-paper-width').value='bad';preset.nodes.get('net-paper-height').value='bad';

@@ -1,3 +1,6 @@
+import {DerivedViewControls,derivedInputKey,derivedEntityIndex} from './derived-view-controls.mjs';
+import {organizeNetInspector} from './net-inspector-layout.mjs';
+import {organizeInspector,simplifyAnalysis,renderValidation} from './inspector-layout.mjs';
 import {catalogMatches} from './catalog-query.mjs';
 import {SourceReflectionControls} from './source-reflection-controls.mjs';
 import {CoincidicRegimentControls} from './coincidic-regiment-controls.mjs';
@@ -83,13 +86,19 @@ import { SegmentotopeControls } from './segmentotope-controls.mjs';
 import { SegmentotopeAnalysisControls } from './segmentotope-analysis-controls.mjs';
 import { CrossedSegmentotopeControls } from './crossed-segmentotope-controls.mjs';
 import { AugmentationControls } from './augmentation-controls.mjs';
-import { generateConstruction } from './construction-workflow.mjs';
+import { generateConstruction,certifyCurrent } from './construction-workflow.mjs';
 import { WorkspaceNumericControls } from './workspace-numeric-controls.mjs';
-import {captureNativeSource,verifyNativeSource} from './native-source-binding.mjs';
+import {verifyNativeSource} from './native-source-binding.mjs';
 import {SpringControls} from './spring-controls.mjs';
 import { prepareHistoryCommit, prepareHistoryOpen, verifyHistoryPublication, preserveHistoryObserver } from './history-workflow.mjs';
 import { createStatus } from './status.mjs';
 import { openWorkspace } from './project-workflow.mjs';
+import {CatalogLoading} from './catalog-loading.mjs';
+import {NativeJobs} from './native-jobs.mjs';
+import {ModelReports} from './model-reports.mjs';
+import {CatalogDiscovery} from './catalog-discovery.mjs';
+import {WorkspaceAvailability} from './workspace-availability.mjs';
+import {IntrinsicReportControls} from './intrinsic-report-controls.mjs';
 
 const $=id=>document.getElementById(id),api=window.polytope;
 const userGuide=new UserGuide($('help-dialog'));
@@ -97,11 +106,17 @@ const status=createStatus(text=>{$('status').textContent=text;});
 const clone=x=>structuredClone(x),uid=()=>crypto.randomUUID();
 const defaults=d=>({angles:d===4?[0,0,24,0,18,0]:Array(6).fill(0),projection:'orthographic',cameraProjection:'orthographic',viewportLayout:'single',pickKind:'edge',presentation:d===4?'translucent':'solid',faces:true,edges:true,vertices:false,fillRule:'nonzero',surfaceOpacity:d===4?.22:1,surfaceColors:'source',hiddenCells:[],isolatedCell:null,rotationPlane:d===4?2:1,rotationSpeed:12,derivedMode:d<3?'dual':'section',sectionNormal:Array(d).fill(0).map((_,i)=>i===d-1?1:0),sectionOffset:0,entity:0});
 let project={format:'polytope-laboratory',version:1,active:0,documents:[]};
-let catalog=[],external=[],linkedLibraries=[],filter='all',derivedModel=null,derivedResult=null,net=null,derivedSequence=0,analysisSequence=0;
+let catalog=[],external=[],linkedLibraries=[],filter='all',derivedModel=null,derivedResult=null,net=null,derivedSequence=0;
 let tourPreviewDocument=null,tourExporting=false;
-let dirty=false,revision=0,lastFrame=performance.now(),toastTimer=null,measurementSequence=0,viewportControls,projectionFit,segmentotopeControls,segmentotopeAnalysis,augmentationControls,geodesicControls,convexCoreControls,expansionControls,fittingControls,exactSectionControls,incidenceTruncationControls,facePlacementControls,sourceZonohedronControls,springControls;
-const running=new Map();
+let dirty=false,revision=0,lastFrame=performance.now(),toastTimer=null,viewportControls,derivedControls,projectionFit,segmentotopeControls,segmentotopeAnalysis,augmentationControls,geodesicControls,convexCoreControls,expansionControls,fittingControls,exactSectionControls,incidenceTruncationControls,facePlacementControls,sourceZonohedronControls,springControls;
+const nativeJobs=new NativeJobs({id:uid,now:()=>performance.now(),start:label=>setStatus(label+'…'),complete:(owner,text)=>status.complete(owner,text),cancel:id=>api.cancel(id),change:()=>{$('cancel').hidden=!nativeJobs.pending.size;}});
+const running=nativeJobs.pending;
+let initialModelAllowed=true;
+let catalogLoader,catalogDiscovery;
 const doc=()=>project.documents[project.active],state=()=>doc()?.states[doc().cursor],model=()=>state()?.model;
+const reports=new ModelReports({getProject:()=>project,getDocument:doc,getState:state});
+const workspaceAvailability=new WorkspaceAvailability({getState:state,getDocument:doc,getGroups:()=>document.querySelectorAll('[data-needs-model]'),getHint:()=>$('empty-workspace-message'),publish:value=>api?.setWorkspaceAvailability?.(value)?.catch(()=>{}),notify:setStatus});
+let analysisDetailsOpen=false,validationDetailsOpen=false;
 const base=new Viewer($('base-canvas'),(index,count,kind='vertex')=>{ $('selection-kind').value=kind;$('selection-id').value=index;selectEntity();if(count>1)setStatus(`${count} source ${kind} candidates near this point. Click again to cycle them.`); });
 const derived=new Viewer($('derived-canvas'),index=>{if(derivedResult?.sourceReferences?.[index]){const refs=derivedResult.sourceReferences[index];const edge=refs.find(r=>r.edge!==undefined)?.edge;if(edge!==undefined){$('selection-kind').value='edge';$('selection-id').value=edge;selectEntity();}}});
 base.onPickDiagnostic=message=>{if(message)setStatus(message);};
@@ -109,16 +124,12 @@ base.onDisplay=diagnostic=>{displayDiagnostic(diagnostic);projectionFit?.notify(
 base.onCamera=value=>{projectionFit?.cancel();if(state()){state().view.camera=value;if(viewportControls)viewportControls.orientation.value='free';markDirty();}};
 derived.onCamera=value=>{if(state()){state().view.derivedCamera=value;markDirty();}};
 
-function markDirty(){sourceReflectionControls?.sync();coincidicRegimentControls?.sync();basicSolidControls?.sync();dualMorph?.sync();tours?.invalidatePreview();dirty=true;revision++;api.setDirty(true).catch(()=>{});segmentotopeControls?.sync();segmentotopeAnalysis?.sync();augmentationControls?.sync();geodesicControls?.sync();convexCoreControls?.sync();expansionControls?.sync();fittingControls?.sync();exactSectionControls?.sync();incidenceTruncationControls?.sync();sphereProjectionControls?.sync();projectiveDualControls?.sync();facePlacementControls?.sync();sourceZonohedronControls?.sync();vertexFigureConstruction?.sync();multipleViews?.sync();springControls?.sync();automaticFaceting?.sync();facetingDiagram?.sync();elementContent?.sync();sourceLabelPresets?.sync();stellationCells?.sync();reinforcement?.sync();coincidentAssembly?.sync();densityInfo?.sync();}
+function markDirty(){netEditor?.updateActions();cellNetEditor?.updateActions();sourceReflectionControls?.sync();coincidicRegimentControls?.sync();basicSolidControls?.sync();dualMorph?.sync();tours?.invalidatePreview();dirty=true;revision++;api.setDirty(true).catch(()=>{});segmentotopeControls?.sync();segmentotopeAnalysis?.sync();augmentationControls?.sync();geodesicControls?.sync();convexCoreControls?.sync();expansionControls?.sync();fittingControls?.sync();exactSectionControls?.sync();incidenceTruncationControls?.sync();sphereProjectionControls?.sync();projectiveDualControls?.sync();facePlacementControls?.sync();sourceZonohedronControls?.sync();vertexFigureConstruction?.sync();multipleViews?.sync();springControls?.sync();automaticFaceting?.sync();facetingDiagram?.sync();elementContent?.sync();sourceLabelPresets?.sync();stellationCells?.sync();reinforcement?.sync();coincidentAssembly?.sync();densityInfo?.sync();}
 function setStatus(text){return status.set(text);}
-function error(e){const message=e?.message||String(e);setStatus(message);$('toast').textContent=message;$('toast').hidden=false;clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('toast').hidden=true,9000);}
+function error(e){if(e?.name==='AbortError')return;const message=e?.message||String(e);setStatus(message);$('toast').textContent=message;$('toast').hidden=false;clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('toast').hidden=true,9000);}
 function guard(fn){return async(...args)=>{try{return await fn(...args);}catch(e){error(e);}};}
 async function run(op,params={},source=null,label=op,{signal}={}){
-  if(signal?.aborted)throw new Error('Animation preparation cancelled.');
-  const id=uid(),start=performance.now();running.set(id,{label,start});const statusOwner=setStatus(label+'…');$('cancel').hidden=false;
-  const abort=()=>api.cancel(id).catch(()=>{});signal?.addEventListener('abort',abort,{once:true});
-  try{const result=await api.engine({op,params,model:source},id);status.complete(statusOwner,`${label} completed in ${((performance.now()-start)/1000).toFixed(2)} s`);return result;}
-  finally{signal?.removeEventListener('abort',abort);running.delete(id);$('cancel').hidden=!running.size;}
+  return nativeJobs.run(id=>api.engine({op,params,model:source},id),label,{signal});
 }
 async function number(expression,options={}){const result=await run('expression',{expression},null,'Evaluate expression',options);return result.value;}
 async function evaluateMany(expressions,{mode='real',signal}={}){const result=await run('expression-batch',{expressions:[...expressions],mode},null,'Evaluate numeric inputs',{signal});return result.values;}
@@ -136,7 +147,7 @@ const cellNetEditor=new CellNetEditor({getState:state,getModel:model,getProject:
 const measurementControls=new MeasurementControls({...numericContext,getState:state,getModel:model,run,guard,markDirty,refresh:refreshDerived,number,rawNumbers,format});
 const symmetryControls=new SymmetryControls({...numericContext,getState:state,run,guard,markDirty,viewer:base,format});
 const animationRenderer=new AnimationRenderer({getState:state,viewer:base,netViewer:derived,run,onMorphPose:(frame,prepared)=>dualMorph?.adoptAnimationPose(frame,prepared),display:()=>{displayBase();viewportControls?.sync();},syncPose:view=>{syncRotationPose();$('section-depth').value=view.sectionOffset;$('section-offset').value=view.sectionOffset;$('derived-mode').value=view.derivedMode;},refreshDerived:options=>refreshDerived({throwOnError:true,preserveLayout:true,...options}),refreshSection:options=>refreshDerived({throwOnError:true,...options}),showNet:pose=>{++derivedSequence;derivedModel=null;derivedResult=null;net=pose.foldNet;$('promote').disabled=true;$('net-preview').hidden=true;$('derived-canvas').hidden=false;$('derived-mode').value='net';$('derived-status').textContent='Rigid face-net fold: '+format(pose.frame.foldFraction);viewportControls?.sync();}});
-const animation=new AnimationControls({...numericContext,getState:state,getModel:model,isExporting:()=>tourExporting,viewer:base,sectionViewer:derived,netViewer:derived,capabilities:()=>animationRenderer.capabilities(),loadPlanes:(m,o)=>animationRenderer.loadPlanes(m,o),loadNet:(m,o)=>animationRenderer.loadNet(m,o),loadMorph:(m,s,o)=>animationRenderer.loadMorph(m,s,o),renderTracks:(p,o)=>animationRenderer.renderTracks(p,o),clearTracks:()=>animationRenderer.clearTracks(),display:displayBase,refreshSection:()=>{const source=state(),generation=animation.generation;const current=()=>state()===source&&animation.generation===generation&&!tourExporting;return refreshDerived({throwOnError:true,isCurrent:current,exportOwner:animation.exporting?()=>animation.exporting&&current():undefined});},markDirty,api,setStatus,guard,stopLegacy:()=>{dualMorph?.cancel();viewportControls?.stop();},onExportStateChange:()=>{sourceReflectionControls?.sync();coincidicRegimentControls?.sync();dualMorph?.sync();animation.update();projectionFit?.cancel();viewportControls?.sync();memories?.sync();entityOrientation?.sync();cellFacing?.sync();historyControls?.sync();presentationControls?.sync();appearanceControls?.sync();materialEffectsControls?.sync();tours?.sync();faceEditing?.sync();automaticFaceting?.sync();facetingDiagram?.sync();pickingControls?.sync();compoundControls?.sync();perspectiveControls?.sync();subdivisionControls?.sync();cupolaControls?.sync();starPolygonControls?.sync();productControls?.sync();antiprismControls?.sync();stepPrismControls?.sync();nobleControls?.sync();stephanoidControls?.sync();basicSolidControls?.sync();torusControls?.sync();podiaControls?.sync();watermanControls?.sync();crossedSegmentotopeControls?.sync();augmentationControls?.sync();geodesicControls?.sync();convexCoreControls?.sync();expansionControls?.sync();fittingControls?.sync();exactSectionControls?.sync();incidenceTruncationControls?.sync();sphereProjectionControls?.sync();projectiveDualControls?.sync();facePlacementControls?.sync();sourceZonohedronControls?.sync();vertexFigureConstruction?.sync();multipleViews?.sync();springControls?.sync();segmentotopeControls?.sync();segmentotopeAnalysis?.sync();elementContent?.sync();sourceLabelPresets?.sync();stellationCells?.sync();reinforcement?.sync();coincidentAssembly?.sync();densityInfo?.sync();projectMetadata?.sync();},showSection:()=>{state().view.viewportLayout='split';viewportControls?.sync();},syncPose:view=>{syncRotationPose();$('section-depth').value=view.sectionOffset;$('section-offset').value=view.sectionOffset;$('derived-mode').value=view.derivedMode;}});
+const animation=new AnimationControls({...numericContext,getState:state,getModel:model,isExporting:()=>tourExporting,viewer:base,sectionViewer:derived,netViewer:derived,capabilities:()=>animationRenderer.capabilities(),loadPlanes:(m,o)=>animationRenderer.loadPlanes(m,o),loadNet:(m,o)=>animationRenderer.loadNet(m,o),loadMorph:(m,s,o)=>animationRenderer.loadMorph(m,s,o),renderTracks:(p,o)=>animationRenderer.renderTracks(p,o),clearTracks:()=>animationRenderer.clearTracks(),display:displayBase,refreshSection:()=>{const source=state(),generation=animation.generation;const current=()=>state()===source&&animation.generation===generation&&!tourExporting;return refreshDerived({throwOnError:true,isCurrent:current,exportOwner:animation.exporting?()=>animation.exporting&&current():undefined});},markDirty,api,setStatus,guard,stopLegacy:()=>{dualMorph?.cancel();viewportControls?.stop();},onExportStateChange:()=>{catalogLoader?.sync();derivedControls?.onExportStateChange();netEditor.onExportStateChange();cellNetEditor.onExportStateChange();sourceReflectionControls?.sync();coincidicRegimentControls?.sync();dualMorph?.sync();animation.update();projectionFit?.cancel();viewportControls?.sync();memories?.sync();entityOrientation?.sync();cellFacing?.sync();historyControls?.sync();presentationControls?.sync();appearanceControls?.sync();materialEffectsControls?.sync();tours?.sync();faceEditing?.sync();automaticFaceting?.sync();facetingDiagram?.sync();pickingControls?.sync();compoundControls?.sync();perspectiveControls?.sync();subdivisionControls?.sync();cupolaControls?.sync();starPolygonControls?.sync();productControls?.sync();antiprismControls?.sync();stepPrismControls?.sync();nobleControls?.sync();stephanoidControls?.sync();basicSolidControls?.sync();torusControls?.sync();podiaControls?.sync();watermanControls?.sync();crossedSegmentotopeControls?.sync();augmentationControls?.sync();geodesicControls?.sync();convexCoreControls?.sync();expansionControls?.sync();fittingControls?.sync();exactSectionControls?.sync();incidenceTruncationControls?.sync();sphereProjectionControls?.sync();projectiveDualControls?.sync();facePlacementControls?.sync();sourceZonohedronControls?.sync();vertexFigureConstruction?.sync();multipleViews?.sync();springControls?.sync();segmentotopeControls?.sync();segmentotopeAnalysis?.sync();elementContent?.sync();sourceLabelPresets?.sync();stellationCells?.sync();reinforcement?.sync();coincidentAssembly?.sync();densityInfo?.sync();projectMetadata?.sync();},showSection:()=>{state().view.viewportLayout='split';viewportControls?.sync();},syncPose:view=>{syncRotationPose();$('section-depth').value=view.sectionOffset;$('section-offset').value=view.sectionOffset;$('derived-mode').value=view.derivedMode;}});
 dualMorph=new DualMorphControls({...numericContext,mappedContent:true,
   prepare:(m,settings,sourceContext,o)=>run('prepare-dual-morph',{settings,sourceContext},m,'Prepare dual morph',o),
   evaluate:(m,prepared,ratio,sourceContext,o)=>run('evaluate-dual-morph',{prepared,ratio,sourceContext},m,'Evaluate dual morph',o),
@@ -151,9 +162,10 @@ base.onMorphPick=(owners,kind,index)=>{
   $('selection-kind').value=selected.kind;$('selection-id').value=selected.id;selectEntity(true);
   setStatus('Morph '+kind+' '+index+' -> '+owners.map(o=>o.kind+' '+o.id).join(', '));
 };
-const memories=new MemoryControls({getProject:()=>project,getState:state,getSource:target=>({documentId:doc().id,modelId:(target==='derived'?derivedModel:model())?.id,...target==='derived'?{derivedMode:state().view.derivedMode}:{}}),getDerivedState:()=>derivedModel?{model:derivedModel,view:{...defaults(derivedModel.dimension),fillRule:state().view.fillRule||'nonzero',surfaceColors:state().view.surfaceColors||'source'},notes:state().notes||'',label:'Derived '+state().view.derivedMode}:null,restoreState:restoreMemoryState,addStates:addMemoryStates,markDirty,setStatus,guard,isExporting:()=>(animation.exporting||tourExporting)});
+function availableDerivedModel(){return derivedControls?.pending?null:derivedModel;}
+const memories=new MemoryControls({getProject:()=>project,getState:state,getSource:target=>({documentId:doc().id,modelId:(target==='derived'?availableDerivedModel():model())?.id,...target==='derived'?{derivedMode:state().view.derivedMode}:{}}),getDerivedState:()=>availableDerivedModel()?{model:derivedModel,view:{...defaults(derivedModel.dimension),fillRule:state().view.fillRule||'nonzero',surfaceColors:state().view.surfaceColors||'source'},notes:state().notes||'',label:'Derived '+state().view.derivedMode}:null,restoreState:restoreMemoryState,addStates:addMemoryStates,markDirty,setStatus,guard,isExporting:()=>(animation.exporting||tourExporting)});
 const tours=new TourControls({...numericContext,getProject:()=>project,getState:state,showEvent:showTourEvent,createRenderer:createTourRenderer,api,onExportStateChange:value=>{tourExporting=value;animation.context.onExportStateChange();},markDirty,guard,isExporting:()=>(animation.exporting||tourExporting),stopOther:()=>{dualMorph?.pause();viewportControls?.stop();animation.pause();},importTour:api.importTour,exportTour:api.exportTour,setStatus});
-viewportControls=new ViewportControls({...numericContext,getState:state,getModel:model,base,derived,display:displayBase,markDirty,isExporting:()=>(animation.exporting||tourExporting),stopTrack:()=>animation.pause(),syncPose:syncRotationPose,refreshDerived,cancelProjectionFit:()=>projectionFit?.cancel()});
+viewportControls=new ViewportControls({...numericContext,getState:state,getModel:model,base,derived,display:displayBase,displayPose,markDirty,isExporting:()=>(animation.exporting||tourExporting),stopTrack:()=>animation.pause(),syncPose:syncRotationPose,refreshDerived,cancelProjectionFit:()=>projectionFit?.cancel(),syncDerivedControls:()=>derivedControls?.sync()});
 projectionFit=new ProjectionFit({
   getOwner:()=>{const current=state();if(!current||(animation.exporting||tourExporting)||animation.playing||viewportControls.playing)return null;
     return {project,document:doc(),state:current,model:current.model,fingerprint:current.model.fingerprint,
@@ -170,7 +182,8 @@ projectionFit=new ProjectionFit({
 const entityOrientation=new EntityOrientationControls({...numericContext,getTarget:()=>({kind:$('selection-kind').value,index:$('selection-id').value,measurementA:{kind:state().view.measurements?.aKind??null,ids:state().view.measurements?.aIds??null},frame:state().view.orientationFrame??null}),getState:state,isExporting:()=>(animation.exporting||tourExporting),guard,apply:orientSelection,clear:()=>{viewportControls.stop();animation.pause();delete state().view.orientationFrame;state().view.angles=Array(6).fill(0);syncRotationPose();displayBase();markDirty();}});
 const cellFacing=new CellFacingControls({getState:state,isExporting:()=>(animation.exporting||tourExporting),guard,evaluate:m=>run('cell-facing',{},m,'Evaluate source cell planes'),getCounts:()=>base.facingCounts,display:displayBase,markDirty});
 const historyControls=new HistoryControls({getState:state,getDocument:doc,isExporting:()=>(animation.exporting||tourExporting),guard,replay:()=>openRecipeDocument('recipe-replay'),branch:params=>openRecipeDocument('recipe-branch',params)});
-const exportControls=new ExportControls({getState:state,getDerived:()=>derivedModel,isExporting:()=>(animation.exporting||tourExporting),prepare:(m,p)=>run('prepare-export',p,m,'Prepare geometry export'),export:api.export,setStatus});
+let cancelDialogNet=null;
+const exportControls=new ExportControls({onClose:()=>cancelDialogNet?.(),getProject:()=>project,getDocument:doc,getState:state,getDerived:availableDerivedModel,getNet:()=>net,isExporting:()=>(animation.exporting||tourExporting),describe:(m,o)=>run('export-options',{},m,'Check export formats',o),prepare:(m,p,o)=>run('prepare-export',p,m,'Prepare geometry export',o),api,setStatus});
 const presentationControls=new PresentationControls({...numericContext,getState:state,isExporting:()=>(animation.exporting||tourExporting),guard,display:displayBase,markDirty});
 const appearanceControls=new AppearanceControls({...numericContext,getState:state,isExporting:()=>(animation.exporting||tourExporting),guard,display:displayBase,markDirty});
 const materialEffectsControls=new MaterialEffectsControls({...numericContext,getState:state,isExporting:()=>(animation.exporting||tourExporting),guard,display:displayBase,markDirty});
@@ -286,6 +299,11 @@ facePlacementControls=new FacePlacementControls({guard,number,getState:state,get
 function constructDocument(kind,params,label,options){return generateConstruction({getProject:()=>project,isExporting:()=>(animation.exporting||tourExporting),run,addDocument},kind,params,label,options);}
 const ordinaryCellSections=new OrdinaryCellSectionWorkflow({...sourceConstructionContext,run,publishHistory:result=>{project.documents.push({...result,id:uid(),name:'Ordinary cell section'});project.active=project.documents.length-1;markDirty();renderWorkspace();}});
 const workspaceNumeric=new WorkspaceNumericControls({...numericContext,getInput:$,commit:commitOperation,generate:constructDocument,run,addDocument,markDirty,refreshDerived});
+derivedControls=new DerivedViewControls({...numericContext,getInput:$,getDerived:()=>derivedModel,markDirty,refreshDerived,
+  syncViewport:()=>viewportControls.sync(),applyPlane:next=>workspaceNumeric.section(next),cancelPlane:()=>workspaceNumeric.cancel(),
+  onAvailabilityChange:()=>{memories.sync();if(exportControls.dialog.open){exportControls.source.options[1].disabled=!availableDerivedModel();if(exportControls.source.value==='derived'){if(derivedControls.pending){exportControls.session.cancel();exportControls.preview.textContent='Wait for plane evaluation before exporting the derived result.';exportControls.preview.dataset.status='preparing';exportControls.sync();}else exportControls.refresh();}}},
+  invalidate:()=>{++derivedSequence;derivedModel=null;derivedResult=null;net=null;$('promote').disabled=true;$('derived-status').textContent='Updating derived view...';},
+  promote:()=>{if(state().view.derivedMode==='cell-section')return ordinaryCellSections.promote(derivedResult);addDocument(clone(derivedModel),'Promote derived view');}});
 function syncRotationPose(){const v=state()?.view;if(v)PLANES.forEach((_,i)=>{if($('plane-'+i)){$('plane-'+i).value=v.angles[i]||0;$('plane-output-'+i).textContent=format(v.angles[i]||0)+'°';}});}
 const unitControls=el('div');unitControls.innerHTML='<label>Coordinate units <select id="model-unit"><option value="model">Model units</option><option>mm</option><option>cm</option><option>m</option><option>in</option><option>ft</option></select></label><label>Reference edge <input id="reference-edge" type="number" min="0" value="0" step="1"></label><label>Desired edge length <input id="reference-length" value="1"></label><button id="scale-reference">Scale to reference</button>';
 $('scale').after(unitControls);
@@ -295,17 +313,46 @@ const auditFilter=el('select');auditFilter.id='library-audit-filter';auditFilter
 for(const [value,label] of [['all','All validation statuses'],['passed','Passed'],['rejected','Rejected'],['untested','Untested'],['stale','Stale evidence'],['reference','Independent references']])auditFilter.append(new Option(label,value));
 $('library-family').after(auditFilter);
 let inspectedLibraryEntry=null;
+const catalogLoadingStatus=el('output',undefined,'muted');catalogLoadingStatus.id='catalog-loading-status';catalogLoadingStatus.setAttribute('role','status');catalogLoadingStatus.setAttribute('aria-live','polite');$('catalog').before(catalogLoadingStatus);
+const discoveryPanel=el('div',undefined,'catalog-discovery'),discoveryStatus=el('output',undefined,'muted'),catalogRetry=el('button','Load Library','wide');
+discoveryStatus.id='catalog-discovery-status';discoveryStatus.setAttribute('role','status');catalogRetry.id='catalog-retry';discoveryPanel.append(discoveryStatus,catalogRetry);$('catalog').before(discoveryPanel);
+function syncCatalogDiscovery(){
+  const status=catalogDiscovery?.state??'loading';discoveryPanel.hidden=status==='ready';catalogRetry.hidden=status==='loading';catalogRetry.disabled=animation.exporting||tourExporting;
+  discoveryStatus.textContent=status==='loading'?'Loading Library…':status==='error'?'Library could not load.':status==='canceled'?'Library loading canceled.':'Load the model Library.';
+  catalogRetry.textContent=status==='error'?'Retry Library':'Load Library';$('catalog').setAttribute('aria-busy',String(status==='loading'));
+}
+function syncCatalogLoading(){
+  syncCatalogDiscovery();
+  const pending=catalogLoader?.pending||new Map(),exporting=animation.exporting||tourExporting;
+  const names=[...pending.values()].map(job=>job.entry.name);
+  catalogLoadingStatus.textContent=pending.size?'Opening '+(pending.size===1?(names[0].length>80?names[0].slice(0,79)+'…':names[0]):pending.size+' models')+'…':'';catalogLoadingStatus.title=names.join('\n');
+  catalogLoadingStatus.hidden=!pending.size;
+  for(const button of $('catalog').querySelectorAll('[data-key]')){
+    const busy=[...pending.values()].some(job=>job.entry.key===button.dataset.key);
+    button.disabled=button.dataset.catalogDisabled==='true'||busy||exporting;button.setAttribute('aria-busy',String(busy));
+    let note=button.querySelector('.catalog-loading-note');if(busy&&!note){note=el('small','Opening…','catalog-loading-note');button.append(note);}else if(!busy)note?.remove();
+  }
+  $('library-open-anyway').disabled=exporting||[...pending.values()].some(job=>job.entry.key===inspectedLibraryEntry?.key);
+  $('new').disabled=exporting;
+}
+async function readCatalogEntry(entry,{signal}){
+  return nativeJobs.run(async id=>entry.external?(await api.libraryModel(entry.key,id)).model:api.engine({op:'generate',params:{kind:'regular',key:entry.key},model:null},id),'Open '+entry.name,{signal});
+}
+catalogLoader=new CatalogLoading({getProject:()=>project,getState:state,isExporting:()=>animation.exporting||tourExporting,
+  read:readCatalogEntry,publish:(m,entry,{activate})=>addDocument(m,entry.external?'Import OFF':'Generate',{activate,catalog:true}),onChange:syncCatalogLoading});
+catalogDiscovery=new CatalogDiscovery({read:options=>run('catalog',{},null,'Load local catalog',options),publish:entries=>{catalog=entries;renderCatalog();},change:syncCatalogDiscovery});
+catalogRetry.onclick=guard(()=>catalogDiscovery.load());
 function inspectLibraryEntry(entry){
   inspectedLibraryEntry=entry;
   $('library-source-info').textContent=JSON.stringify({path:entry.key,relativePath:entry.relativePath,counts:entry.counts,auditStatus:entry.auditStatus||'untested',diagnostic:entry.auditDiagnostic||entry.diagnostic,errors:entry.auditErrors,warnings:entry.auditWarnings,sourceHash:entry.sourceHash},null,2);
-  $('library-repair-copy').disabled=!entry.supported;$('library-dialog').showModal();
+  $('library-repair-copy').disabled=!entry.supported;syncCatalogLoading();$('library-dialog').showModal();
 }
-const cellNetOption=el('option','4D CELL NET');cellNetOption.value='cell-net';$('derived-mode').append(cellNetOption);
-const incidenceDualOption=el('option','3D / 4D INCIDENCE DUAL');incidenceDualOption.value='incidence-dual';$('derived-mode').append(incidenceDualOption);
-const faceOption=el('option','FACE');faceOption.value='face';$('derived-mode').append(faceOption);
+const cellNetOption=el('option','4D cell net');cellNetOption.value='cell-net';$('derived-mode').append(cellNetOption);
+const incidenceDualOption=el('option','Incidence dual (3D / 4D)');incidenceDualOption.value='incidence-dual';$('derived-mode').append(incidenceDualOption);
+const faceOption=el('option','Source face');faceOption.value='face';$('derived-mode').append(faceOption);
 const reciprocal=document.createElement('div');reciprocal.innerHTML='<label>Reciprocation center <input id="incidence-dual-center" placeholder="Vertex mean, or 3 / 4 coordinates"></label><label>Reciprocation radius <input id="incidence-dual-radius" value="1"></label><button id="make-incidence-dual" class="wide">Construct 3D / 4D incidence dual</button><p class="muted">Preserves ordered links and complete cells, including finite star incidence. Requires closed local boundaries. Face or cell planes through the center, coincident reciprocal identities and unresolved links are diagnosed. Convex polar dual remains a separate operation.</p>';$('make-dual').after(reciprocal);
 $('make-incidence-dual').onclick=guard(()=>workspaceNumeric.incidenceDual());
-const stellationOption=el('option','3D STELLATION');stellationOption.value='stellation';$('derived-mode').append(stellationOption);
+const stellationOption=el('option','3D stellation');stellationOption.value='stellation';$('derived-mode').append(stellationOption);
 
 function renderCatalog(){
   const query=$('search').value.toLowerCase().trim(),entries=[...catalog,...external];
@@ -320,17 +367,19 @@ function renderCatalog(){
   filtered.slice(0,250).forEach(entry=>{
     const button=el('button',undefined,'catalog-entry');button.dataset.key=entry.key;
     button.disabled=entry.external&&entry.supported===false;
+    button.dataset.catalogDisabled=String(Boolean(button.disabled));
     button.title=entry.external?[entry.relativePath,entry.diagnostic||'Header indexed; geometry is checked when opened.',entry.counts?'V / E / F / C: '+entry.counts.join(' / '):''].filter(Boolean).join('\n'):[entry.name,entry.catalogStatus,entry.sourceClassification,entry.chiralityStatus,entry.uniformSnubVariant?.labelBasis,entry.classificationVerified===false?'Classification unverified':''].filter(Boolean).join('\n');
     if(entry.key===model()?.metadata?.key)button.classList.add('active');
     button.append(el('span',entry.dimension?entry.dimension+'D':'OFF','dim'),el('span',entry.name,'entry-name'),el('small',[entry.symbol,entry.family].filter(Boolean).join(' · ')));
     if(entry.external&&entry.supported===false)button.append(el('small',entry.diagnostic||'Unsupported OFF file','muted'));
     if(entry.external){const status=entry.auditStatus||'untested';button.append(el('small',status+(entry.auditDiagnostic?' · '+entry.auditDiagnostic:''),'audit-badge audit-'+status));}
-    button.onclick=guard(async()=>{if(entry.external&&entry.auditStatus==='rejected'){inspectLibraryEntry(entry);return;}let result;if(entry.external)result=(await api.libraryModel(entry.key)).model;else result=await run('generate',{kind:'regular',key:entry.key},null,'Generate '+entry.name);addDocument(result);});
+    button.onclick=guard(()=>{if(entry.external&&entry.auditStatus==='rejected'){inspectLibraryEntry(entry);return;}return catalogLoader.open(entry);});
     button.oncontextmenu=event=>{if(entry.external){event.preventDefault();inspectLibraryEntry(entry);}};
     $('catalog').append(button);
   });
   if(filtered.length>250)$('catalog').append(el('p','Showing 250 matches. Refine search to find any indexed entry.','muted'));
-  if(!filtered.length)$('catalog').append(el('p','No matching models. Try another family or search.','muted'));
+  if(!filtered.length&&(entries.length||catalogDiscovery?.state==='ready'))$('catalog').append(el('p','No matching models. Try another family or search.','muted'));
+  catalogLoader?.sync();
 }
 function renderLinkedLibraries(){
   $('linked-libraries').replaceChildren();
@@ -353,22 +402,24 @@ function renderTabs(){
   $('document-tabs').replaceChildren();
   project.documents.forEach((d,i)=>{
     const button=el('button',(d.states[d.cursor].view.documentMetadata?.title?.trim()||d.states[d.cursor].model.name)+(i===project.active&&dirty?' •':''));if(i===project.active)button.classList.add('active');
-    button.onclick=()=>{project.active=i;renderWorkspace();markDirty();};$('document-tabs').append(button);
+    button.onclick=()=>{catalogLoader?.navigationChanged();project.active=i;renderWorkspace();markDirty();};$('document-tabs').append(button);
   });
 }
 function renderHistory(){
-  $('history-list').replaceChildren();doc().states.forEach((s,i)=>{const button=el('button',`${i+1} ${s.label||s.model.provenance?.operation||'model'}`);if(i===doc().cursor)button.classList.add('active');button.onclick=()=>{doc().cursor=i;markDirty();renderWorkspace();};$('history-list').append(button);});
+  $('history-list').replaceChildren();doc().states.forEach((s,i)=>{const button=el('button',`${i+1} ${s.label||s.model.provenance?.operation||'model'}`);if(i===doc().cursor)button.classList.add('active');button.onclick=()=>{catalogLoader?.navigationChanged();doc().cursor=i;markDirty();renderWorkspace();};$('history-list').append(button);});
   historyControls.sync();
   $('undo').disabled=doc().cursor===0;$('redo').disabled=doc().cursor===doc().states.length-1;
+  workspaceAvailability.sync();
 }
-function addDocument(m,label='Generate'){
+function addDocument(m,label='Generate',{activate=true,catalog=false}={}){
+  if(!catalog)catalogLoader?.navigationChanged();
   const view=defaults(m.dimension);view.coordinateUnit=['model','mm','cm','m','in','ft'].includes(m.metadata?.coordinateUnits)?m.metadata.coordinateUnits:({1:'in',2:'ft',4:'mm',5:'cm',6:'m'}[m.metadata?.dxf?.insunits]||'model');view.fillRule=m.metadata?.fillRule||view.fillRule;if(['generalized-complex','surface-section'].includes(m.interpretation)&&m.faces.length)view.derivedMode='face';if(m.interpretation==='surface-section'&&!m.faces.length)view.derivedMode='section-evidence';if(m.metadata?.family==='Kepler-Poinsot')view.derivedMode='incidence-dual';
   if(m.metadata?.dxf){view.faces=m.faces.length>0;const incident=new Set(m.edges.flat());view.vertices=m.vertices.some((_,i)=>!incident.has(i));view.presentation=view.faces?'solid':'wireframe';}
   const importedMetadata=m.metadata?.documentMetadata;
   if(importedMetadata&&typeof importedMetadata==='object'&&!Array.isArray(importedMetadata)&&['title','author','reference','description'].every(key=>importedMetadata[key]===undefined||typeof importedMetadata[key]==='string'))view.documentMetadata=clone(importedMetadata);
   const notes=typeof m.metadata?.documentNotes==='string'?m.metadata.documentNotes:'';
   clearTimeout(toastTimer);$('toast').hidden=true;
-  project.documents.push({id:uid(),cursor:0,states:[{model:m,view,label,notes}]});project.active=project.documents.length-1;markDirty();renderWorkspace();
+  project.documents.push({id:uid(),cursor:0,states:[{model:m,view,label,notes}]});if(activate)project.active=project.documents.length-1;markDirty();if(activate)renderWorkspace();else renderTabs();
 }
 async function commitOperation(op,params,label,{verifyPublication,signal}={}){
   const context={getProject:()=>project,getDocument:doc,getState:state,isExporting:()=>(animation.exporting||tourExporting),run:(op,params,source,label)=>run(op,params,source,label,{signal}),verifyPublication:()=>{if(signal?.aborted)throw new Error('Construction cancelled.');verifyPublication?.();}};
@@ -387,12 +438,14 @@ async function openRecipeDocument(op,parameters){
   project.documents.push(prepared.result);project.active=project.documents.length-1;markDirty();renderWorkspace();
 }
 
-function displayBase(){
+function displayPose(){return displayBase({poseOnly:true});}
+function displayBase({poseOnly=false}={}){
   const s=state();if(!s)return;
   sourceReflectionControls?.sync();coincidicRegimentControls?.sync();perspectiveControls.sync();subdivisionControls.sync();productControls.sync();antiprismControls.sync();stepPrismControls.sync();nobleControls.sync();torusControls.sync();podiaControls.sync();watermanControls.sync();crossedSegmentotopeControls.sync();augmentationControls.sync();geodesicControls.sync();convexCoreControls.sync();expansionControls.sync();fittingControls.sync();exactSectionControls.sync();incidenceTruncationControls.sync();sphereProjectionControls?.sync();projectiveDualControls?.sync();facePlacementControls.sync();sourceZonohedronControls.sync();vertexFigureConstruction?.sync();multipleViews?.sync();segmentotopeControls.sync();segmentotopeAnalysis.sync();
-  displayDiagnostic(base.setDisplay(s.view));
+  const contentDisplay=elementContent.display(base,{poseOnly});
+  displayDiagnostic(contentDisplay.diagnostic);
   if(derived.model&&(derived.view?.appearance!==s.view.appearance||derived.view?.materialEffects!==s.view.materialEffects))derived.setDisplay({...derived.view,appearance:s.view.appearance,materialEffects:s.view.materialEffects});
-  elementContent.refresh().catch(e=>{if(state()===s){elementContent.node('status').textContent=e.message;elementContent.node('status').dataset.status='presentation-refused';}});
+  contentDisplay.pending.catch(e=>{if(e.name!=='AbortError'&&state()===s){elementContent.node('status').textContent=e.message;elementContent.node('status').dataset.status='presentation-refused';}});
 }
 function displayDiagnostic(diagnostic){
   const messages=[];if(base.appearanceEffectsDiagnostic)messages.push(base.appearanceEffectsDiagnostic);if(diagnostic?.clippedEdges)messages.push(`${diagnostic.clippedEdges} edges clipped by projection limits`);
@@ -414,19 +467,21 @@ function displayDiagnostic(diagnostic){
   cellFacing?.sync();presentationControls?.sync();appearanceControls?.sync();materialEffectsControls?.sync();pickingControls?.sync();
 }
 function renderWorkspace(){
+  workspaceAvailability.sync();
+  reports.invalidate();
   dualMorph?.invalidate();
   automaticFaceting.invalidate();facetingDiagram.invalidate();
   elementContent.invalidate();reinforcement?.invalidate();coincidentAssembly?.invalidate();densityInfo?.invalidate();
   projectionFit?.cancel();
-  const m=model(),v=state()?.view;if(!m)return;
+  const m=model(),v=state()?.view;if(!m)return;$('inspector-region').scrollTop=0;
   animationRenderer.clearTracks();
   viewportControls.stop();
   animation.sync();
-  measurementSequence++;$('measurement-result').textContent='';
+  intrinsicReports.reset();
   $('model-name').textContent=v.documentMetadata?.title?.trim()||m.name;$('model-family').textContent=(m.metadata?.family||m.interpretation).toUpperCase();$('dimension-badge').textContent=m.dimension+'D';
   $('numeric-badge').textContent=m.numeric?.mode==='rational-exact'?'RATIONAL':'FLOAT64 · APPROX';
   $('model-unit').value=v.coordinateUnit||'model';
-  regular4dButton.hidden=!m.metadata?.regular4dIdentity;regular4dResult.textContent='';for(const key of ['status','key','flags'])delete regular4dResult.dataset[key];
+  regular4dButton.hidden=!m.metadata?.regular4dIdentity;
   $('notes').value=state().notes||'';$('projection').value=v.projection;$('faces-visible').checked=v.faces;$('vertices-visible').checked=v.vertices;
   $('face-fill-rule').value=v.fillRule||'nonzero';$('surface-opacity').value=v.surfaceOpacity??(m.dimension===4?.12:.28);$('surface-colors').value=v.surfaceColors||'source';$('cell-visibility-controls').hidden=!m.cells?.length;$('visible-cell-id').max=Math.max(0,(m.cells?.length||0)-1);$('visible-cell-id').value=v.isolatedCell??0;
   $('projection').disabled=m.dimension!==4;
@@ -443,10 +498,20 @@ function renderWorkspace(){
   stellation.sync();netEditor.sync();cellNetEditor.sync();measurementControls.sync();symmetryControls.sync();memories.sync();entityOrientation.sync();tours.sync();faceEditing.sync();automaticFaceting.sync();facetingDiagram.sync();elementContent.sync();sourceLabelPresets?.sync();stellationCells?.sync();reinforcement?.sync();coincidentAssembly?.sync();densityInfo?.sync();projectMetadata.sync();compoundControls.sync();renderTabs();renderHistory();renderCatalog();refreshAnalysis();refreshDerived();
   const restoredSource=state();(state().view.dualMorph?.enabled?dualMorph.restoreSaved():animationRenderer.restoreSavedExplosion()).catch(e=>{if(state()===restoredSource)error(e);});
 }
+function reportMessage(id,text){const message=el('p',text,'muted');message.setAttribute('role','status');$(id).replaceChildren(message);}
+function rememberValidationDetails(){validationDetailsOpen=$('validation-details')?.open??validationDetailsOpen;}
+function reportCurrent(ticket,channel,id){
+  if(reports.current(ticket,channel))return true;
+  if(reports.owns(ticket,channel))reportMessage(id,'The source changed. Check the current model again.');
+  return false;
+}
 async function refreshAnalysis(){
-  const m=model(),sequence=++analysisSequence;
+  const ticket=reports.begin(['analysis','validation']),m=ticket.model;
+  analysisDetailsOpen=$('analysis-details')?.open??analysisDetailsOpen;rememberValidationDetails();
+  reportMessage('analysis','Analyzing current model…');reportMessage('evidence','Checking current model…');
   try{
-    const a=await run('analyze',{},m,'Analyze incidence');if(sequence!==analysisSequence)return;
+    const a=await run('analyze',{},m,'Analyze incidence');
+    const analysisCurrent=reportCurrent(ticket,'analysis','analysis'),validationCurrent=reportCurrent(ticket,'validation','evidence');if(!analysisCurrent)return;
     $('analysis').replaceChildren();stat($('analysis'),'Interpretation',m.interpretation);stat($('analysis'),'Symbol',m.metadata?.symbol||'—');
     stat($('analysis'),'Edge length range',format(a.edgeLength.min)+' – '+format(a.edgeLength.max));stat($('analysis'),'Vertex radii about mean',format(a.vertexRadius.min)+' – '+format(a.vertexRadius.max));
     if(m.metadata?.enantiomorph)stat($('analysis'),'Enantiomorph (coordinate convention)',m.metadata.enantiomorph);
@@ -461,15 +526,18 @@ async function refreshAnalysis(){
     if(m.metadata?.coxeterFamily&&m.metadata?.rings)stat($('analysis'),'Coxeter construction',m.metadata.coxeterFamily+' '+m.metadata.rings.join(''));
     if(m.metadata?.linkedRelativePath)stat($('analysis'),'Source catalog file',m.metadata.linkedRelativePath);
     stat($('analysis'),m.interpretation==='convex-polytope'||m.metadata?.fillSemantics==='ordinary-convex-faces'?'Face areas, min / max':'Algebraic cycle areas',format(a.faceArea.min)+' / '+format(a.faceArea.max));
-    if(a.measure){stat($('analysis'),`${m.dimension}D content`,format(a.measure.content)+` u${['','','²','³','⁴'][m.dimension]}`);stat($('analysis'),`${m.dimension-1}D boundary measure`,format(a.measure.boundaryMeasure));}
+    if(a.measure){stat($('analysis'),m.dimension===3?'Volume':`${m.dimension}D content`,format(a.measure.content)+` u${['','','²','³','⁴'][m.dimension]}`);stat($('analysis'),`${m.dimension-1}D boundary measure`,format(a.measure.boundaryMeasure));}
     if(a.dihedral)stat($('analysis'),'Convex interior dihedrals',format(a.dihedral.min)+' – '+format(a.dihedral.max)+'°');
     stat($('analysis'),'Face side counts',Object.entries(a.faceTypes).map(([n,c])=>`${c} × ${n}`).join(', '));stat($('analysis'),'Euler V − E + F − C',a.validation.eulerCharacteristic);
-    $('evidence').replaceChildren(el('p',a.validation.passed?'Listed structural checks passed':'Validation failed','badge'));$('evidence').append(el('p',a.validation.checks.join(' · '),'muted'),el('pre',JSON.stringify({numeric:m.numeric,certificate:m.certificate,provenance:m.provenance,warnings:a.validation.warnings},null,2),'code-box'));
-  }catch(e){if(sequence===analysisSequence)error(e);}
+    simplifyAnalysis(document,{open:analysisDetailsOpen});if(validationCurrent)renderValidation(document,m,a.validation,{open:validationDetailsOpen});
+  }catch(e){
+    if(reportCurrent(ticket,'analysis','analysis')){reportMessage('analysis',e.name==='AbortError'?'Analysis canceled. Select the model again to retry.':'Analysis could not finish. Select the model again to retry.');error(e);}
+    if(reportCurrent(ticket,'validation','evidence'))reportMessage('evidence','Check the current model with Validate incidence.');
+  }
 }
 async function refreshDerived({throwOnError=false,isCurrent,signal,preserveLayout=false,exportOwner}={}){
   const m=model(),v=state()?.view;if(!m)return;
-  const source=state(),current=()=>state()===source&&source.model===m&&!signal?.aborted&&isCurrent?.()!==false;
+  const source=state(),inputKey=derivedInputKey(v),current=()=>state()===source&&source.model===m&&source.view===v&&derivedInputKey(v)===inputKey&&!signal?.aborted&&isCurrent?.()!==false;
   if(!current())throw new Error('Derived presentation cancelled.');
   const deriveRun=(op,params,source,label)=>run(op,params,source,label,{signal});
   if(!preserveLayout&&['net','cell-net','stellation'].includes(v.derivedMode)&&v.viewportLayout!=='split')v.viewportLayout='split';viewportControls?.sync();
@@ -488,9 +556,9 @@ async function refreshDerived({throwOnError=false,isCurrent,signal,preserveLayou
     else if(mode==='cell-section')result=await ordinaryCellSections.evaluate({normal:v.sectionNormal,offset:v.sectionOffset,fill_rule:v.fillRule||'nonzero'},{signal,isCurrent:current,exportOwner});
     else if(mode==='dual')result={model:await deriveRun('dual',{},m,'Evaluate dual')};
     else if(mode==='incidence-dual')result={model:await deriveRun('incidence-dual',{},m,'Evaluate incidence dual')};
-    else if(mode==='vertex-figure')result=await deriveRun('vertex-figure',{vertex:safeIndex($('entity-id').value,m.vertices.length)},m,'Evaluate vertex figure');
-    else if(mode==='cell')result={model:await deriveRun('cell',{kind:m.dimension===4?'cell':'face',index:safeIndex($('entity-id').value,m.dimension===4?m.cells.length:m.faces.length)},m,'Extract entity')};
-    else if(mode==='face')result={model:await deriveRun('cell',{kind:'face',index:safeIndex($('entity-id').value,m.faces.length)},m,'Extract ordered source face')};
+    else if(mode==='vertex-figure')result=await deriveRun('vertex-figure',{vertex:derivedEntityIndex(String(v.entity??0),m.vertices.length)},m,'Evaluate vertex figure');
+    else if(mode==='cell')result={model:await deriveRun('cell',{kind:m.dimension===4?'cell':'face',index:derivedEntityIndex(String(v.entity??0),m.dimension===4?m.cells.length:m.faces.length)},m,'Extract entity')};
+    else if(mode==='face')result={model:await deriveRun('cell',{kind:'face',index:derivedEntityIndex(String(v.entity??0),m.faces.length)},m,'Extract ordered source face')};
     else if(mode==='net')result=await netEditor.evaluate(m,state());
     else if(mode==='cell-net')result=await cellNetEditor.evaluate(m,state());
     else if(mode==='stellation')result=await stellation.evaluate(m,state());
@@ -503,14 +571,15 @@ async function refreshDerived({throwOnError=false,isCurrent,signal,preserveLayou
       $('net-preview').hidden=true;$('derived-canvas').hidden=false;cellNetEditor.show(result);
     }else{
       derivedResult=result;derivedModel=result.model;
-      derived.setModel(derivedModel);rememberSectionSource(derived,result,m);derived.restoreCamera(v.derivedCamera);if(derivedModel)derived.setDisplay({angles:Array(6).fill(0),projection:'orthographic',cameraProjection:v.cameraProjection,faces:true,vertices:v.vertices,edges:v.edges,fillRule:v.fillRule||'nonzero',surfaceOpacity:v.surfaceOpacity,surfaceColors:v.surfaceColors,appearance:v.appearance,materialEffects:v.materialEffects});
+      if(mode==='section'||mode==='cell-section')derived.setSectionModel(derivedModel,m,{mode});else derived.setModel(derivedModel);
+      rememberSectionSource(derived,result,m);derived.restoreCamera(v.derivedCamera);if(derivedModel)derived.setDisplay({angles:Array(6).fill(0),projection:'orthographic',cameraProjection:v.cameraProjection,faces:true,vertices:v.vertices,edges:v.edges,fillRule:v.fillRule||'nonzero',surfaceOpacity:v.surfaceOpacity,surfaceColors:v.surfaceColors,appearance:v.appearance,materialEffects:v.materialEffects});
       if(mode==='cell-section'&&(derivedModel||hasEmptySectionSource(derived)))await elementContent.refresh(derived,{signal,isCurrent:current});
       $('promote').disabled=!derivedModel;
       $('derived-status').textContent=mode==='stellation'?result.status:derivedModel?`${derivedModel.vertices.length} vertices · ${derivedModel.edges.length} edges · ${derivedModel.faces.length} faces · intrinsic ${derivedModel.dimension}D`:result.status==='empty'?'Empty intersection':`Tangent / degenerate intersection · affine dimension ${result.affineDimension}`;
     }
     if(result?.model?.interpretation==='surface-section')$('derived-status').textContent=`Surface intersection · ${result.model.vertices.length} vertices · ${result.model.edges.length} segments · ${v.fillRule||'nonzero'} face fill`;
     memories.sync();return result;
-  }catch(e){if(sequence===derivedSequence&&current()){derived.clear();$('derived-status').textContent=e.message;memories.sync();}if(throwOnError)throw e;}
+  }catch(e){if(sequence===derivedSequence&&current()){derived.clear();$('derived-status').textContent=e.message;memories.sync();}if(throwOnError)throw e;}finally{derivedControls?.sync();}
 }
 function selectEntity(persist=true){
   const m=model(),kind=$('selection-kind').value,field={vertex:'vertices',edge:'edges',face:'faces',cell:'cells'}[kind],index=safeIndex($('selection-id').value,m[field].length);
@@ -520,7 +589,7 @@ function selectEntity(persist=true){
   if(persist){state().view.entitySelection={kind,index};markDirty();}
 }
 function serialize(){return clone({...project,savedAt:new Date().toISOString()});}
-function adopt(p){if(!p?.documents?.length)throw new Error('Project contains no documents.');const bank=normalizeMemories(p.memories),tourBank=normalizeTour(p.tour);project=p;project.memories=bank;project.tour=tourBank;tourPreviewDocument=null;project.documents.forEach(d=>d.states.forEach(s=>{s.view={...defaults(s.model.dimension),...s.view};}));dirty=false;revision++;api.setDirty(false);renderWorkspace();}
+function adopt(p){if(!p?.documents?.length)throw new Error('Project contains no documents.');const bank=normalizeMemories(p.memories),tourBank=normalizeTour(p.tour);catalogLoader?.cancel();project=p;project.memories=bank;project.tour=tourBank;tourPreviewDocument=null;project.documents.forEach(d=>d.states.forEach(s=>{s.view={...defaults(s.model.dimension),...s.view};}));dirty=false;revision++;api.setDirty(false);renderWorkspace();}
 async function restoreMemoryState(snapshot,label){
   if((animation.exporting||tourExporting))throw new Error('Finish or cancel animation export before opening a model memory.');
   const sourceProject=project,sourceState=state();if(project.documents.length>=100)throw new Error('The project already contains the maximum of 100 documents.');
@@ -582,6 +651,8 @@ async function orientSelection(mode,source,direction,{signal,verifyPublication,s
 }
 async function open(){
   if((animation.exporting||tourExporting))throw new Error('Finish or cancel animation export before opening a project.');
+  initialModelAllowed=false;
+  catalogLoader.cancel();
   viewportControls.stop();animation.pause();
   return openWorkspace({getProject:()=>project,getRevision:()=>revision,isExporting:()=>(animation.exporting||tourExporting),load:api.open,publish:result=>{
     if(result.project)adopt(result.project);else addDocument(result.model,'Import '+(result.model.metadata?.dxf?'DXF':result.path.toLowerCase().endsWith('.json')?'JSON':'OFF'));
@@ -597,41 +668,44 @@ async function save(){
 }
 async function recover(){
   if((animation.exporting||tourExporting))throw new Error('Finish or cancel animation export before recovering a project.');
+  initialModelAllowed=false;
+  catalogLoader.cancel();
   viewportControls.stop();animation.pause();
   const result=await openWorkspace({getProject:()=>project,getRevision:()=>revision,isExporting:()=>(animation.exporting||tourExporting),load:api.recover,publish:result=>{
     adopt(result.project);markDirty();setStatus('Recovered autosave. Save it as a project to keep it.');
   }});
   if(!result)throw new Error('No autosave snapshot is available.');
 }
-function historyStep(delta){if(!doc())return;const next=doc().cursor+delta;if(next<0||next>=doc().states.length)return;doc().cursor=next;markDirty();renderWorkspace();}
-const actions={new:async()=>addDocument(await run('generate',{kind:'regular',key:'tesseract'},null,'Generate tesseract')),open,save,recover,undo:()=>historyStep(-1),redo:()=>historyStep(1),reset:()=>{projectionFit?.cancel();base.reset();derived.reset();state().view.camera=base.cameraState();state().view.derivedCamera=derived.cameraState();markDirty();},fullscreen:()=>api.fullscreen(),image:async()=>{if((animation.exporting||tourExporting))throw new Error('Finish animation export before capturing an image.');viewportControls.stop();animation.pause();if(state().view.dualMorph?.enabled)await dualMorph.prepareCapture();const source=state(),sourceModel=model(),view=JSON.stringify(source.view),isCurrent=()=>state()===source&&model()===sourceModel&&JSON.stringify(source.view)===view;if(base.prepareCapture)await base.prepareCapture({isCurrent});if(!isCurrent())throw new Error('View changed while preparing the image. Capture it again.');const result=await api.saveImage(base.image());if(result)setStatus('Saved '+result.path);},help:()=>userGuide.show(),export:()=>exportControls.open(),print:()=>{if(!net)throw new Error('Choose a 3D face net to print.');return state().view.net?.display==='pages'&&state().netPages?api.printPackedNets(state().netPages.pages.map(p=>p.svg)):api.print(net.svg);}};
+function historyStep(delta){if(!doc())return;const next=doc().cursor+delta;if(next<0||next>=doc().states.length)return;catalogLoader?.navigationChanged();doc().cursor=next;markDirty();renderWorkspace();}
+const actions={new:()=>catalogLoader.open({key:'tesseract',name:'Tesseract'}),open,save,recover,undo:()=>historyStep(-1),redo:()=>historyStep(1),reset:()=>{projectionFit?.cancel();base.reset();derived.reset();state().view.camera=base.cameraState();state().view.derivedCamera=derived.cameraState();markDirty();},fullscreen:()=>api.fullscreen(),image:async()=>{if((animation.exporting||tourExporting))throw new Error('Finish animation export before capturing an image.');viewportControls.stop();animation.pause();if(state().view.dualMorph?.enabled)await dualMorph.prepareCapture();const source=state(),sourceModel=model(),view=JSON.stringify(source.view),isCurrent=()=>state()===source&&model()===sourceModel&&JSON.stringify(source.view)===view;if(base.prepareCapture)await base.prepareCapture({isCurrent});if(!isCurrent())throw new Error('View changed while preparing the image. Capture it again.');const result=await api.saveImage(base.image());if(result)setStatus('Saved '+result.path);},help:()=>userGuide.show(),export:()=>exportControls.open(),print:()=>{if(!net)throw new Error('Choose a 3D face net to print.');return state().view.net?.display==='pages'&&state().netPages?api.printPackedNets(state().netPages.pages.map(p=>p.svg)):api.print(net.svg);}};
+for(const [id,fn] of Object.entries(actions))actions[id]=(...args)=>workspaceAvailability.run(id,()=>fn(...args));
 Object.entries(actions).forEach(([id,fn])=>{if($(id))$(id).onclick=guard(fn);});
 api.onAction(name=>actions[name]&&guard(actions[name])());
-$('close-help').onclick=()=>$('help-dialog').close();$('close-export').onclick=()=>$('export-dialog').close();
+$('close-help').onclick=()=>$('help-dialog').close();$('close-export').onclick=()=>exportControls.close();
 $('confirm-export').onclick=guard(()=>exportControls.confirm());
-$('export-net').onclick=guard(async()=>{if(!net)throw new Error('Choose the 3D face net derived view first.');const result=await api.saveSvg(net.svg);if(result){$('export-dialog').close();setStatus('Exported calibrated net '+result.path);}});
-const pdfButton=el('button','Export current net as PDF','wide');pdfButton.id='export-net-pdf';$('export-dialog').append(pdfButton);pdfButton.onclick=guard(async()=>{if(!net)throw new Error('Choose a 3D face net derived view first.');const result=await api.saveNetPdf(net.svg);if(result){$('export-dialog').close();setStatus('Exported calibrated net PDF '+result.path);}});
+async function exportDialogNet(format){
+  if(netEditor.exports.busy)throw Error('Finish the current net export first.');
+  const dialog=$('export-dialog'),scope=exportControls.scope,current=()=>dialog.open&&exportControls.scope===scope,cancel=()=>netEditor.exports.cancel();cancelDialogNet=cancel;
+  try{const result=await netEditor.export(format,{isCurrent:current});if(result&&current())exportControls.close();return result;}catch(error){if(error.name==='AbortError'||!current())return null;throw error;}finally{if(cancelDialogNet===cancel)cancelDialogNet=null;}
+}
+$('export-net').onclick=guard(()=>exportDialogNet('svg'));
+const pdfButton=el('button','Export current net as PDF','wide');pdfButton.id='export-net-pdf';$('export-dialog').append(pdfButton);pdfButton.onclick=guard(()=>exportDialogNet('pdf'));
 $('search').oninput=renderCatalog;$('library-family').onchange=renderCatalog;document.querySelectorAll('[data-filter]').forEach(b=>b.onclick=()=>{filter=b.dataset.filter;document.querySelectorAll('[data-filter]').forEach(x=>x.classList.toggle('active',x===b));renderCatalog();});
 auditFilter.onchange=renderCatalog;
 $('close-library-dialog').onclick=()=>$('library-dialog').close();
-$('library-open-anyway').onclick=guard(async()=>{const result=await api.libraryModel(inspectedLibraryEntry.key);$('library-dialog').close();addDocument(result.model,'Import OFF');});
+$('library-open-anyway').onclick=guard(()=>{const entry=inspectedLibraryEntry;$('library-dialog').close();return catalogLoader.open(entry);});
 $('library-repair-copy').onclick=guard(async()=>{const result=await api.repairLibraryCopy(inspectedLibraryEntry.key);if(result){setStatus('Saved validated edge-count copy '+result.path);$('library-dialog').close();}});
 ['face-fill-rule','surface-colors','surface-opacity'].forEach(id=>$(id).onchange=()=>{const v=state().view;v.fillRule=$('face-fill-rule').value;v.surfaceColors=$('surface-colors').value;v.surfaceOpacity=Number($('surface-opacity').value);v.presentation=!v.faces?'wireframe':v.surfaceOpacity<1?'translucent':'solid';displayBase();viewportControls.sync();markDirty();if(id==='face-fill-rule')refreshDerived();});
 $('isolate-cell').onclick=guard(()=>{state().view.isolatedCell=safeIndex($('visible-cell-id').value,model().cells.length);state().view.hiddenCells=[];displayBase();markDirty();});
 $('hide-cell').onclick=guard(()=>{const id=safeIndex($('visible-cell-id').value,model().cells.length);state().view.hiddenCells=[...new Set([...(state().view.hiddenCells||[]),id])];displayBase();markDirty();});
 $('show-all-cells').onclick=()=>{state().view.hiddenCells=[];state().view.isolatedCell=null;displayBase();markDirty();};
-document.querySelectorAll('[data-panel]').forEach(b=>b.onclick=()=>{document.querySelectorAll('[data-panel]').forEach(x=>x.classList.toggle('active',x===b));['info','construct','evidence','net'].forEach(p=>$(p+'-panel').hidden=p!==b.dataset.panel);});
-PLANES.forEach(([a,b,label],i)=>{const row=el('div',undefined,'plane'),input=el('input');input.id='plane-'+i;input.type='range';input.min=-180;input.max=180;input.step=0.1;input.value=0;input.setAttribute('aria-label',label+' rotation');const output=el('output','0°');output.id='plane-output-'+i;row.append(el('label',label),input,output);$('planes').append(row);input.oninput=()=>{state().view.angles[i]=Number(input.value);output.textContent=format(Number(input.value))+'°';displayBase();markDirty();};});
+organizeInspector(document);
+organizeNetInspector(document);
+document.querySelectorAll('[data-panel]').forEach(b=>b.onclick=()=>{document.querySelectorAll('[data-panel]').forEach(x=>{x.classList.toggle('active',x===b);x.setAttribute('aria-pressed',String(x===b));});$('inspector-region').scrollTop=0;['info','construct','evidence','net'].forEach(p=>$(p+'-panel').hidden=p!==b.dataset.panel);});
+PLANES.forEach(([a,b,label],i)=>{const row=el('div',undefined,'plane'),input=el('input');input.id='plane-'+i;input.type='range';input.min=-180;input.max=180;input.step=0.1;input.value=0;input.setAttribute('aria-label',label+' rotation');const output=el('output','0°');output.id='plane-output-'+i;row.append(el('label',label),input,output);$('planes').append(row);input.oninput=()=>{state().view.angles[i]=Number(input.value);output.textContent=format(Number(input.value))+'°';displayPose();markDirty();};});
 ['projection','faces-visible','vertices-visible'].forEach(id=>$(id).onchange=()=>{if(id==='projection')projectionFit?.cancel();const v=state().view;v.projection=$('projection').value;v.faces=$('faces-visible').checked;v.vertices=$('vertices-visible').checked;v.presentation=!v.faces?'wireframe':v.surfaceOpacity<1?'translucent':'solid';displayBase();viewportControls.sync();markDirty();if(id==='projection')projectionFit?.request();});
-$('derived-mode').onchange=()=>{state().view.derivedMode=$('derived-mode').value;markDirty();refreshDerived();};
-$('promote').onclick=guard(()=>{if(!derivedModel)return;if(state().view.derivedMode==='cell-section')return ordinaryCellSections.promote(derivedResult);addDocument(clone(derivedModel),'Promote derived view');});
-$('apply-section').onclick=guard(()=>workspaceNumeric.section());
-let sectionDebounce;
-$('section-offset').oninput=()=>{$('section-depth').value=$('section-offset').value;state().view.sectionOffset=Number($('section-offset').value);delete state().view.sectionAlignment;markDirty();clearTimeout(sectionDebounce);sectionDebounce=setTimeout(refreshDerived,200);};
-$('entity-id').onchange=()=>{state().view.entity=Number($('entity-id').value);markDirty();refreshDerived();};
-$('section-events').onclick=guard(()=>workspaceNumeric.section(true));
 $('select-entity').onclick=guard(selectEntity);$('notes').oninput=()=>{state().notes=$('notes').value;markDirty();};
-$('measure').onclick=guard(async()=>{const source=state(),sequence=++measurementSequence,result=await run('measure',{kind:$('measurement-kind').value,indices:rawNumbers($('measurement-ids').value)},source.model,'Measure intrinsic geometry');if(state()===source&&measurementSequence===sequence)$('measurement-result').textContent=format(result.value)+' '+result.units;});
+$('measure').onclick=guard(()=>intrinsicReports.measure());
 $('make-dual').onclick=guard(()=>commitOperation('dual',{},'Polar dual'));
 $('truncate').onclick=guard(()=>workspaceNumeric.operation('truncate','truncation','Edge-cut truncation',{min:0,max:.5},'amount'));
 $('extrude').onclick=guard(()=>workspaceNumeric.operation('extrude','extrusion-height','Prism extrusion',{min:0,exclusiveMin:true},'height'));
@@ -646,20 +720,21 @@ $('facet').onclick=guard(()=>commitOperation('facet',{faces:$('facet-cycles').va
 $('evaluate').onclick=guard(async()=>{const result=await run('expression',{expression:$('expression').value},null,'Evaluate expression');$('expression-result').textContent=result.exactRational?`${result.exactRational} = ${format(result.value)} · rational exact`:`${format(result.value)} · float64 approximate`;});
 const regular4dButton=el('button','Verify regular 4D identity','wide');regular4dButton.id='validate-regular4d';
 const regular4dResult=el('output');regular4dResult.id='regular4d-validation-result';$('validate').after(regular4dButton,regular4dResult);
-regular4dButton.onclick=guard(async()=>{
-  const owner=captureNativeSource(numericContext),source=model(),key=source.metadata?.key;
-  const receipt=await run('regular4d-validate',{key},source,'Verify regular 4D identity');verifyNativeSource(numericContext,owner);
-  regular4dResult.textContent=`${receipt.reachedFlags} / ${receipt.flagCount} flags; numerical regularity verified (float64).`;
-  regular4dResult.dataset.status=receipt.status;regular4dResult.dataset.key=key;regular4dResult.dataset.flags=String(receipt.reachedFlags);
+const intrinsicReports=new IntrinsicReportControls({...numericContext,getInput:$,reports,run,rawNumbers,format});
+regular4dButton.onclick=guard(()=>intrinsicReports.identity());
+$('validate').onclick=guard(async()=>{
+  const ticket=reports.begin(['validation']);rememberValidationDetails();reportMessage('evidence','Checking current model…');
+  try{const result=await run('validate',{},ticket.model,'Validate incidence');if(reportCurrent(ticket,'validation','evidence'))renderValidation(document,ticket.model,result,{open:validationDetailsOpen});}
+  catch(e){if(reportCurrent(ticket,'validation','evidence')){reportMessage('evidence',e.name==='AbortError'?'Validation canceled. Check again when ready.':'Validation could not finish. Try again.');throw e;}}
 });
-$('validate').onclick=guard(async()=>{const result=await run('validate',{},model(),'Validate incidence');$('evidence').append(el('pre',JSON.stringify(result,null,2),'code-box'));});
 $('rational-hull').onclick=guard(()=>workspaceNumeric.hull(true));
-$('certify-current').onclick=guard(async()=>{if(model().interpretation!=='convex-polytope')throw new Error('Certification supports convex hull sources only.');const points=model().vertices.map(p=>p.map(String));addDocument(await run('rational-hull',{points,name:'Rational input hull of '+model().name},null,'Certify supplied decimal hull'),'Certify decimal input');});
+$('certify-current').onclick=guard(()=>certifyCurrent({...numericContext,run,addDocument}));
 $('rational-dual').onclick=guard(()=>commitOperation('rational-dual',{},'Exact rational polar dual'));
 $('link-library').onclick=guard(async()=>{const result=await api.library();if(!result)return;acceptLinkedLibrary(result);const supported=result.entries.filter(e=>e.supported!==false).length;setStatus(`Indexed ${result.entries.length} OFF files from ${result.path}; ${supported} have supported headers. Geometry is checked when opened.`);});
-$('cancel').onclick=guard(async()=>{sourceReflectionControls.cancel();coincidicRegimentControls.cancel();ordinaryCellSections.cancel();stellationCells?.cancel();basicSolidControls?.cancel();stephanoidControls?.cancel();sourceLabelPresets?.cancel();multipleViews?.close();projectiveDualControls?.cancel();dualMorph?.cancel();elementContent.invalidate();reinforcement?.cancel();coincidentAssembly?.cancel();densityInfo?.cancel();netEditor.sequence++;cellNetEditor.sequence++;workspaceNumeric.cancel();entityOrientation.cancelNumeric?.();viewportControls.cancelNumeric?.();springControls?.cancel();presentationControls?.cancelNumeric();appearanceControls?.cancelNumeric();materialEffectsControls?.cancelNumeric();perspectiveControls?.cancelNumeric();measurementControls?.cancelNumeric?.();symmetryControls?.cancelNumeric?.();stellation?.cancelNumeric?.();animation?.cancelNumeric?.();tours?.cancelNumeric?.();for(const control of [sphereProjectionControls,vertexFigureConstruction,geodesicControls,convexCoreControls,expansionControls,fittingControls,exactSectionControls,incidenceTruncationControls,sourceZonohedronControls,subdivisionControls,cupolaControls,stepPrismControls,nobleControls,torusControls,watermanControls,productControls,antiprismControls,faceEditing,automaticFaceting,facetingDiagram,segmentotopeControls,starPolygonControls,podiaControls,crossedSegmentotopeControls]){control?.cancel?.();control?.cancelNumeric?.();}const ids=[...running.keys()];await Promise.all(ids.map(id=>api.cancel(id)));setStatus('Cancelled active computation.');});
+$('cancel').onclick=guard(async()=>{intrinsicReports.cancel();initialModelAllowed=false;catalogDiscovery.cancel();nativeJobs.cancel();catalogLoader.cancel();sourceReflectionControls.cancel();coincidicRegimentControls.cancel();ordinaryCellSections.cancel();stellationCells?.cancel();basicSolidControls?.cancel();stephanoidControls?.cancel();sourceLabelPresets?.cancel();multipleViews?.close();projectiveDualControls?.cancel();dualMorph?.cancel();elementContent.invalidate();reinforcement?.cancel();coincidentAssembly?.cancel();densityInfo?.cancel();netEditor.sequence++;cellNetEditor.sequence++;workspaceNumeric.cancel();entityOrientation.cancelNumeric?.();viewportControls.cancelNumeric?.();springControls?.cancel();presentationControls?.cancelNumeric();appearanceControls?.cancelNumeric();materialEffectsControls?.cancelNumeric();perspectiveControls?.cancelNumeric();measurementControls?.cancelNumeric?.();symmetryControls?.cancelNumeric?.();stellation?.cancelNumeric?.();animation?.cancelNumeric?.();tours?.cancelNumeric?.();for(const control of [sphereProjectionControls,vertexFigureConstruction,geodesicControls,convexCoreControls,expansionControls,fittingControls,exactSectionControls,incidenceTruncationControls,sourceZonohedronControls,subdivisionControls,cupolaControls,stepPrismControls,nobleControls,torusControls,watermanControls,productControls,antiprismControls,faceEditing,automaticFaceting,facetingDiagram,segmentotopeControls,starPolygonControls,podiaControls,crossedSegmentotopeControls]){control?.cancel?.();control?.cancelNumeric?.();}setStatus('Cancelled active computation.');});
 setInterval(guard(async()=>{if(!dirty||!project.documents.length||(animation.exporting||tourExporting))return;const savedRevision=revision;await api.autosave(serialize());$('autosave-status').textContent='Recovery snapshot '+new Date().toLocaleTimeString();if(savedRevision!==revision)$('autosave-status').textContent+=' · newer changes pending';}),30000);
 function frame(now){const dt=Math.min((now-lastFrame)/1000,0.1);lastFrame=now;if(viewportControls.tick(dt))dirty=true;
   netEditor.tick(dt);base.draw();derived.draw();if(facetingPreview&&!$('facet-preview').hidden)facetingPreview.draw();if(running.size){const job=[...running.values()][0];$('job-time').textContent=((now-job.start)/1000).toFixed(1)+' s';}else $('job-time').textContent='';requestAnimationFrame(frame);}
 requestAnimationFrame(frame);
-guard(async()=>{if(!api)throw new Error('Open this workspace with the desktop launcher.');catalog=await run('catalog',{},null,'Load local catalog');const m=await run('generate',{kind:'regular',key:'tesseract'},null,'Generate tesseract');addDocument(m);dirty=false;api.setDirty(false);try{const restored=await api.libraries();for(const library of restored.libraries)acceptLinkedLibrary(library);for(const failure of restored.errors)linkedLibraries.push({...failure,entries:[]});renderLinkedLibraries();if(restored.errors.length)setStatus('Some linked folders are unavailable. See the library panel.');}catch(e){error(e);}const recovery=await api.recoveryInfo();if(recovery)setStatus('Recovery snapshot available from '+new Date(recovery.modified).toLocaleString()+'. Use File → Recover autosave.');})();
+workspaceAvailability.sync();
+guard(async()=>{if(!api)throw new Error('Open this workspace with the desktop launcher.');await catalogDiscovery.load().catch(error);renderCatalog();const initialProject=project,initialRevision=revision,m=catalogDiscovery.state==='ready'&&initialModelAllowed&&catalogLoader.sequence===0&&!project.documents.length?await catalogLoader.open({key:'tesseract',name:'Tesseract'}):null;if(m&&project===initialProject&&project.documents.length===1&&model()===m&&revision===initialRevision+1){dirty=false;api.setDirty(false);}if(!project.documents.length)$('model-name').textContent='Choose a model';try{const restored=await api.libraries();for(const library of restored.libraries)acceptLinkedLibrary(library);for(const failure of restored.errors)linkedLibraries.push({...failure,entries:[]});renderLinkedLibraries();if(restored.errors.length)setStatus('Some linked folders are unavailable. See the library panel.');}catch(e){error(e);}const recovery=await api.recoveryInfo();if(recovery)setStatus('Recovery snapshot available from '+new Date(recovery.modified).toLocaleString()+'. Use File → Recover autosave.');})();

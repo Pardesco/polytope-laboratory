@@ -50,6 +50,7 @@ export class NetTabControls{
     const pair=model.edges[edge];if(pair)model.faces.forEach((face,id)=>{if(face.some((a,i)=>pair.includes(a)&&pair.includes(face[(i+1)%face.length]))){const option=document.createElement('option');option.value=String(id);option.textContent=`Source F${id}`;select.append(option);}});
     select.value=item?.face==null?'auto':String(item.face);select.disabled=item?.mode!=='single';
     this.$('net-tab-status').textContent=`${options.edges.length} source-edge overrides${net?.hinges.includes(edge)?' · selected edge is a hinge (override saved for a future cut)':''}${net?.tabs===false?' · all tabs temporarily off':''}`;
-    for(const id of ['net-tab-default-apply','net-tab-edge-apply'])this.$(id).disabled=!net;
+    const blocked=Boolean(this.editor.context?.isExporting?.()||this.editor.exports?.busy);
+    for(const id of ['net-tab-default-apply','net-tab-edge-apply'])this.$(id).disabled=!net||blocked;
   }
 }

@@ -55,6 +55,12 @@ test('invalid normal/depth leaves derived view and source untouched',async()=>{
     assert.ok(!f.calls.some(row=>['dirty','refresh'].includes(row[0])));
   }
 });
+test('section evaluation ignores hidden entity text, preserves the applied entity and fences a mode switch',async()=>{
+  const f=fixture({'section-normal':'0, 0, sqrt(4)','section-depth':'1/2','entity-id':'not a section input','section-offset':'0'});f.state.view.entity=2;f.state.view.derivedMode='section';
+  await f.controls.section();assert.equal(f.state.view.entity,2);assert.equal(f.state.view.sectionOffset,.5);
+  const hold=deferred(),original=f.context.evaluateMany;f.context.evaluateMany=async(...args)=>{await hold.promise;return original(...args);};
+  f.nodes['section-depth'].value='0';const pending=f.controls.section();f.state.view.derivedMode='cell';hold.resolve();await assert.rejects(pending,/Section settings changed/);assert.equal(f.state.view.sectionOffset,.5);
+});
 test('block generator ignores unrelated invalid count inputs and validates positive dimensions',async()=>{
   const f=fixture({generator:'block','generator-n':'nonsense','generator-m':'nonsense','block-sizes':'sqrt(4), 2+3, 1/2'});
   await f.controls.generator();assert.deepEqual(f.calls.find(row=>row[0]==='generate').slice(1,3),['block',{sizes:[2,5,.5]}]);
@@ -118,4 +124,10 @@ test('cancel releases ownership even if native evaluator ignores its signal',asy
   const pending=f.controls.operation('truncate','truncation','Truncate',{min:0,max:.5},'amount');f.controls.cancel();
   await assert.rejects(pending,{name:'AbortError'});assert.equal(f.controls.entry.busy,false);
   hold.resolve([.5]);await flush();assert.ok(!f.calls.some(row=>row[0]==='commit'));
+});
+test('manual plane evaluation forwards cancellation to native derived preparation',async()=>{
+  const f=fixture({'section-normal':'0, 0, 1','section-depth':'1/2','section-offset':'0'}),hold=deferred();let options;
+  f.context.refreshDerived=async value=>{options=value;await hold.promise;};
+  const pending=f.controls.section();await flush();assert.equal(options.signal.aborted,false);assert.equal(options.throwOnError,true);
+  f.controls.cancel();await assert.rejects(pending,{name:'AbortError'});assert.equal(options.signal.aborted,true);hold.resolve();await flush();
 });

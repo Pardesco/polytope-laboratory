@@ -1,4 +1,5 @@
 import {NumericEntry} from './numeric-entry.mjs';
+import {holdObservationControls} from './observation-controls.mjs';
 import {fitAnimationFrames} from './animation-framing.mjs';
 import {requireMorphAnimation} from './morph-animation-adapter.mjs';
 import {createSequence,normalizeSequence,evaluateNormalized,sequenceFrameTimes,setSequenceKeyframe,resizeSequence,withSequenceTracks} from './animation.mjs';
@@ -214,8 +215,7 @@ export class AnimationControls {
     const times=sequenceFrameTimes(sequence),originalTime=this.time,snapshot=captureAnimationView(source,this.context.getState);
     const controller=new AbortController();this.exportController=controller;this.exportView=snapshot;
     this.exporting=true;this.exportAbort=false;this.update();this.context.onExportStateChange?.();let session=null;
-    const controlSnapshot=[...new Set([this.context.viewer,this.context.sectionViewer,this.context.netViewer].filter(Boolean))].map(item=>({viewer:item,controls:item.controls,enabled:item.controls?.enabled,damping:item.controls?.enableDamping}));
-    let trackSession=null;
+    let trackSession=null,observation=null;
     try{
       if(format==='webm'&&(typeof VideoEncoder!=='function'||typeof VideoEncoder.isConfigSupported!=='function'||typeof VideoFrame!=='function'))throw new Error('Explicit-pose WebCodecs video encoding is unavailable. Export PNG frames instead.');
       if(target==='section'){if(source.view.derivedMode!=='cell-section')source.view.derivedMode='section';snapshot.accept();}
@@ -223,7 +223,7 @@ export class AnimationControls {
       session=await this.context.api.animationBegin({format,name:source.model.name,fps:sequence.fps,frameCount:times.length,duration:sequence.duration});
       if(!session)return;
       this.assertActive(source,generation);
-      for(const item of controlSnapshot)if(item.viewer.controls){item.viewer.controls.update();item.viewer.controls.enabled=false;item.viewer.controls.enableDamping=false;}
+      observation=holdObservationControls([this.context.viewer,this.context.sectionViewer,this.context.netViewer]);
       const check=()=>{this.assertActive(source,generation);if(this.exportAbort||controller.signal.aborted||this.exportController!==controller||!this.exporting)throw canceled();if(!snapshot.current())throw new Error('Animation source view changed; export cancelled.');};
       if(format==='png'){
         for(let index=0;index<times.length;index++){
@@ -239,19 +239,22 @@ export class AnimationControls {
       this.nodes.progress.textContent=`Exported ${result.path}`;this.context.setStatus?.(`Exported animation ${result.path}`);
     }catch(error){if(this.exportAbort||generation!==this.generation)this.nodes.progress.textContent='Animation export cancelled.';else throw error;}
     finally{
-      // Fence any deferred renderer work before discarding native staging.
-      controller.abort();if(this.exportController===controller)this.exportController=null;
-      if(session)await this.context.api.animationAbort(session.id).catch(error=>this.context.setStatus?.(error.message));
-      let tracksRestored=!trackSession;
-      if(trackSession){try{await trackSession.restore(this.context.renderTracks);snapshot.accept();tracksRestored=true;}catch(error){this.context.setStatus?.(error.message);}finally{trackSession.destroy();}}
-      this.exportView=null;
-      if(tracksRestored&&snapshot.restore()){
-        this.time=originalTime;this.context.display?.();this.context.viewer.setDisplay(source.view);this.context.syncPose?.(source.view);
-        if(['section','cell-section'].includes(source.view.derivedMode))await this.context.refreshSection().catch(error=>this.context.setStatus?.(error.message));
-        this.context.viewer.draw();this.context.sectionViewer?.draw();
+      try{
+        // Fence any deferred renderer work before discarding native staging.
+        controller.abort();if(this.exportController===controller)this.exportController=null;
+        if(session)await this.context.api.animationAbort(session.id).catch(error=>this.context.setStatus?.(error.message));
+        let tracksRestored=!trackSession;
+        if(trackSession){try{await trackSession.restore(this.context.renderTracks);snapshot.accept();tracksRestored=true;}catch(error){this.context.setStatus?.(error.message);}finally{trackSession.destroy();}}
+        this.exportView=null;
+        if(tracksRestored&&snapshot.restore()){
+          this.time=originalTime;this.context.display?.();this.context.viewer.setDisplay(source.view);this.context.syncPose?.(source.view);
+          if(['section','cell-section'].includes(source.view.derivedMode))await this.context.refreshSection().catch(error=>this.context.setStatus?.(error.message));
+          this.context.viewer.draw();this.context.sectionViewer?.draw();
+        }
+      }finally{
+        this.exportView=null;observation?.release();
+        this.exporting=false;this.exportRecorder=null;this.update();this.context.onExportStateChange?.();
       }
-      for(const item of controlSnapshot)if(item.viewer.controls===item.controls&&item.controls){item.controls.enabled=item.enabled;item.controls.enableDamping=item.damping;}
-      this.exporting=false;this.exportRecorder=null;this.update();this.context.onExportStateChange?.();
     }
   }
   async recordVideo(viewer,sequence,times,source,generation,id,check,target){

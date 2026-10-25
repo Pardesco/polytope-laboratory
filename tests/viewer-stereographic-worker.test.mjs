@@ -18,7 +18,7 @@ class HeldWorker{
 function viewer(model=source()){
   const v=Object.create(Viewer.prototype);v.group=new THREE.Group();v.setModel(model);
   v.cameraProjection='orthographic';v.orthographicHalfHeight=2;v.camera=new THREE.OrthographicCamera(-2,2,2,-2,.01,1000);v.orthographicCamera=v.camera;v.perspectiveCamera=new THREE.PerspectiveCamera(38,1,.01,1000);v.camera.position.set(0,0,5);v.camera.lookAt(0,0,0);v.camera.updateMatrixWorld();
-  v.controls={target:new THREE.Vector3(),update(){}};v.renderer={domElement:{getBoundingClientRect:()=>({width:400,height:400})},render(){}};
+  v.controls={target:new THREE.Vector3(),update(){}};v.renderer={setClearColor(){},domElement:{getBoundingClientRect:()=>({width:400,height:400})},render(){}};
   const worker=new HeldWorker();v.stereographicWorkerFactory=()=>worker;let time=0,id=0;const timers=new Map();v.stereographicWorkerClock={now:()=>time,setTimer:(fn,delay)=>{timers.set(++id,{fn,deadline:time+delay});return id;},clearTimer:id=>timers.delete(id)};
   v.advance=ms=>{time+=ms;for(const [key,t] of [...timers])if(t.deadline<=time){timers.delete(key);t.fn();}};
   v.worker=worker;v.statuses=[];v.onDisplay=status=>v.statuses.push(status);v.picks=[];v.onPick=(...args)=>v.picks.push(args);return v;

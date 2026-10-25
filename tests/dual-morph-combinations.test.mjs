@@ -14,8 +14,8 @@ test('enabled-morph refusal retains the complete saved source/settings and reada
 test('animation play/scrub/export/track edits refuse before pausing a morph or changing source/saved banks',async()=>{
   const s=saved(),before=structuredClone(s),c=Object.create(AnimationControls.prototype);let calls=0;
   c.context={getState:()=>s,isExporting:()=>false,stopLegacy:()=>calls++};c.pause=()=>calls++;c.configure=()=>{calls++;};c.numericAction=()=>{calls++;};
-  assert.throws(()=>c.play(),/enabled dual morph/);for(const fn of [()=>c.scrub(0),()=>c.export('png'),()=>c.addTrack('fold'),()=>c.trackPose('explosionAmount',1)])await assert.rejects(fn,/enabled dual morph/);
-  c.assertActive=()=>{};await assert.rejects(()=>c.apply(createSequence(s.view),0,s,0),/enabled dual morph/);assert.equal(calls,0);assert.deepEqual(s,before);
+  assert.throws(()=>c.play(),/requires an explicit dual-morph ratio track/);for(const fn of [()=>c.scrub(0),()=>c.export('png'),()=>c.addTrack('fold'),()=>c.trackPose('explosionAmount',1)])await assert.rejects(fn,/requires an explicit dual-morph ratio track|enabled dual morph/);
+  c.assertActive=()=>{};await assert.rejects(()=>c.apply(createSequence(s.view),0,s,0),/requires an explicit dual-morph ratio track/);assert.equal(calls,0);assert.deepEqual(s,before);
 });
 test('animation renderer refuses current or restored-pose enabled morph before geometry/view mutation',async()=>{
   const s=saved(),before=structuredClone(s),r=new AnimationRenderer({getState:()=>s});let calls=0;r.applyExplosion=()=>calls++;
@@ -25,7 +25,7 @@ test('animation renderer refuses current or restored-pose enabled morph before g
 });
 test('animated tour preflight refuses enabled event before creating/clearing layers or obtaining canvases',()=>{
   const s=saved(),before=structuredClone(s),tour={version:2,cursor:0,events:[{id:'morph-event',state:s,duration:1,transition:{method:'instant'}}]};let calls=0;
-  assert.throws(()=>new AnimatedTourRenderer({tour,canvas:{getContext:()=>{calls++;}},createCanvas:()=>{calls++;},createLayer:()=>{calls++;},getOwner:()=>{calls++;}}),/Animated tour.*enabled dual morph/);assert.equal(calls,0);assert.deepEqual(s,before);
+  assert.throws(()=>new AnimatedTourRenderer({tour,canvas:{getContext:()=>{calls++;}},createCanvas:()=>{calls++;},createLayer:()=>{calls++;},getOwner:()=>{calls++;}}),/Animated tour requires an explicit dual-morph ratio track/);assert.equal(calls,0);assert.deepEqual(s,before);
 });
 test('late tour-layer enabled-morph request refuses before clearing an installed source actor',async()=>{
   const r=Object.create(AnimatedTourRenderer.prototype),s=saved();let calls=0;const actor={session:{destroy:()=>calls++},renderer:{clearTracks:()=>calls++}};

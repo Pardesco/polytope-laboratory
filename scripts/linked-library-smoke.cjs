@@ -7,6 +7,7 @@ const packaged=process.env.POLYTOPE_TEST_EXECUTABLE;
 const profile=path.join(artifacts,packaged?'linked-packaged-profile':'linked-desktop-profile');
 async function launch(){
   const env={...process.env,POLYTOPE_TEST_USER_DATA:profile};delete env.ELECTRON_RUN_AS_NODE;
+  if(packaged)env.POLYTOPE_PYTHON=path.join(artifacts,'unavailable-python.exe');
   const app=await electron.launch({executablePath:packaged||require('electron'),args:packaged?[]:[root],cwd:root,env,timeout:30000});
   const page=await app.firstWindow();page.setDefaultTimeout(30000);
   await page.waitForFunction(()=>document.getElementById('model-name')?.textContent==='Tesseract');
@@ -42,6 +43,10 @@ async function main(){
     assert.equal(linked.libraries[0].entries.length,3);
     assert.equal(linked.libraries[0].entries.filter(entry=>entry.supported!==false).length,1);
     assert.equal(Number(await session.page.locator('#library-count').innerText()),referenceCount+3);
+    // The Library displays only the first 250 matches. Select the linked
+    // untested rows before checking disabled diagnostics in a larger catalog.
+    await session.page.locator('#library-audit-filter').selectOption('untested');
+    assert.equal(Number(await session.page.locator('#library-count').innerText()),3);
     assert.equal(await session.page.locator('#catalog button:disabled').count(),2);
     await session.page.locator('[data-filter="4"]').click();
     await session.page.locator('#library-family').selectOption('Local OFF · 4D/regular');
@@ -87,7 +92,7 @@ async function main(){
       checks.push('actual source corpus indexed and source incidence opened');
     }
     assert.deepEqual(errors,[]);
-    await fs.writeFile(path.join(artifacts,packaged?'linked-packaged-smoke.json':'linked-desktop-smoke.json'),JSON.stringify({passed:true,packaged:Boolean(packaged),version:await session.app.evaluate(({app})=>app.getVersion()),checks,pageErrors:errors},null,2));
+    await fs.writeFile(path.join(artifacts,packaged?'linked-packaged-smoke.json':'linked-desktop-smoke.json'),JSON.stringify({passed:true,packaged:Boolean(packaged),developmentPythonUnavailable:Boolean(packaged),version:await session.app.evaluate(({app})=>app.getVersion()),checks,pageErrors:errors},null,2));
     console.log(`Linked library smoke passed: ${checks.length} checks.`);
   }finally{await session.app.evaluate(({app})=>app.exit(0)).catch(()=>{});}
 }

@@ -1,153 +1,365 @@
-# Active development - October 7, 2026
+# Published checkpoint ? October 24, 2026
 
-The feature-complete goal remains active, using GPT-6.1-Sol subagents. Randall
-prioritizes free/open-source feature coverage or roughly 90% of Stella4D,
-with a build and relevant checks. Practical 90% coverage is not yet measured.
-The historical pause below is superseded; its evidence remains retained.
+The public community preview is 0.27.20. See [release notes](RELEASE_0.27.20_PREVIEW.md)
+and [source correspondence](RELEASE_SOURCE_PAIR_0.27.20.json). This tag contains
+the sealed qualified 0.27.20 runtime. Later 0.27.21 development remains local and
+unqualified. Text below is the preserved historical local checkpoint.
 
-Working sources are **0.26.0 development**. The usable **0.26.0 GPLv3 community
-preview and corresponding source archive** are packaged in `release`.
-Its real portable launch passed with development Python unavailable. The prior
-qualified 0.21 release is unchanged. Program license is GPL-3.0-only; third-party
-licenses remain intact, and contribution guidance and issue templates are ready.
+# 0.27.19 verified local checkpoint - October 22, 2026
 
-The sources include eight scoped 3D morph methods, faceting diagrams, element
-text/PNG content, repeated-instance labels, physical reinforcement and measurement
-exports, stereo, one-to-six independent views, project metadata, finite 4D
-construction from vertex figures, 80 specialized 3D and 980 attributed 4D entries.
-New in 0.23: convex 4D expansion, tidy/spiky search filters, automatic source labels,
-structured catalog queries, metadata JSON export/reopen, material/lighting/themes,
-regular-face/equal-edge/equal-area fitting, grounded stephanoids, and analytic
-tetrahedron, triangular-prism, and triangular-grid controls, procedural bump/studio
-reflection, exact rational 3D surface sections, and stellation cell/dependency diagrams.
-See `RELEASE_0.26_DEVELOPMENT.md` and `OPEN_SOURCE_ROADMAP.md` for current limits.
+Paused at Randall's requested stopping point. Read the
+[next-session handoff](HANDOFF_0.27.19.md) and
+[Claude review brief/self-critique](CLAUDE_REVIEW_0.27.19.md).
+Independent Claude review and fresh-user observation remain outstanding.
 
-Build passes. A short actual-app check passes fitting preview/adoption, 4D
-expansion, material presets, labels, and JSON metadata export/reopen:
-`artifacts/feature-0.23-quick-hX7RvM/result.json`. Stephanoids passed six focused
-staged checks and the mounted build. The final fitting coordinate guard passed
-three mounted native checks. FAC03 production sanity passes actual criteria
-receipts and adoption. No full regression or requirement-wide conformance closure
-is claimed for this community development checkpoint.
+Absent annotation refresh clears overlays without walking full source geometry.
+State/viewer/request guards fence delayed clears; explicit documents and empty
+section correspondence retain full validation. The final actual bundled profile
+shows lower sampled non-idle renderer time for automatic 4D header rotation,
+with unchanged RAF cadence. One pair of runs does not establish a general FPS,
+GPU or model-load gain. See [0.27.19 notes](RELEASE_0.27.19_DEVELOPMENT.md).
 
-The real-app surface-tool check passes shader rendering and PNG capture,
-cell selection Undo/Redo/filling, and rational section preview/adoption:
-`artifacts/surface-tools-quick-kQ79El/result.json`. Mounted sections and cell
-diagrams also pass six native and six controller/Viewer checks.
+The 167-module build, 170 focused checks, actual bundled annotation, all 16
+registered regular 4D sources, pointer recovery, sections, nets/PDF/held exports,
+saved tours/WebM, core history/Save/Open, morphs, geometry export and intrinsic
+feedback pass. Actual portable launch passes with host Python unavailable;
+1,716 extracted resources match the tested app. Current-byte verification binds
+1,878 frozen runtime inputs; all 1,667 engine inputs are unchanged.
 
-New in 0.24: environment-only refraction, bounded convex face/cell distances,
-source-incidence truncation/quasi cuts, generalized nonconvex face and 4D whole-cell
-nets, sphere projection, and seven Stewart entries with checked genera one through
-three. The real-app refraction/measurement check passes:
-`artifacts/refraction-measurements-quick-jiij6x/result.json`. Quasitruncation
-adoption and concave folding/native Save/Open pass:
-`artifacts/truncation-nets-quick-hvg5IF/result.json`. Generalized netLayout
-restoration routes through the new kernel without changing the protected importer.
+Qualified local portable: `release/preview-0.27.19/Polytope Laboratory 0.27.19 preview.exe`.
+Matching source: `release/Polytope Laboratory 0.27.19 source.zip`.
+Verification/index: `release/preview-0.27.19/verification.json`.
+Source sealing proof: `artifacts/source-pair-0.27.19.json` (require success).
+Prior pairs remain preserved. Production remains 0.26.0; nothing was published
+online. Feature expansion and the unfinished development goal remain paused.
 
-Sphere expression/default controls, generalized whole-cell net display and matching
-faces, native net Save/Open, and the genus-three Stewart catalog load pass:
-`artifacts/sphere-cell-stewart-quick-vVDCuk/result.json`.
-Concave ordinary source cells, tidy-dual faceting and generalized sizing are
-mounted with focused native/controller/Viewer checks. Moving text/PNG content,
-capture, enabled-morph Save/Open and unsupported PNG endpoint retention pass:
-`artifacts/morph-content-quick-7Zmypa/result.json`. The actual-app check required
-detached camera initialization and readable billboard texture orientation fixes.
-Offline help now has 21 searchable topics with F1 control context; its app check
-passes in `artifacts/guide-quick-w7OtRW/result.json`.
+## Preserved 0.27.18 checkpoint
 
-New in 0.25: generalized expansion morphs, automatic exact full/proper source
-symmetry for faceting, per-edge physical glue tabs and literal 4D incidence
-reciprocation. Mounted eight native and six Viewer/session/controller groups pass;
-source-symmetry native/UI sanity and
-build pass. These features are included in the qualified 0.25 binary/source pair.
+# 0.27.18 core-experience development - October 22, 2026
 
-Exact regular faceting sources and source-color paper batches are also mounted.
-Source/adoption Save/Open and history replay, three native printing and two
-controller groups pass. The real-app check passes 4D reciprocation/capture,
-physical tabs, exact-source faceting, source-RGBA paper batches and star expansion
-Save/Open/capture: `artifacts/feature-0.25-quick-NuAPGG/result.json`.
+Camera controls recover after fitting and completed/canceled section export,
+including when fitting or restoration replaces OrbitControls. Temporary ownership
+preserves nested and original disabled settings and does not touch independent
+controls. Restore failures release observation and busy state. The actual
+0.27.17 baseline reproduced four frozen viewport cases; development pointer/Save
+checks recover all of them. The 167-module build and 133 focused checks pass.
+Actual bundled pointer recovery, sections, nets/PDF/held export/retry, nine saved
+tour checks including decoded WebM, saved 120-cell program reuse, core Save/Open,
+morphs, geometry exports, intrinsic feedback and all 16 registered regular 4D
+sources pass with development Python unavailable. Actual portable launch passes;
+1,716 extracted resources match the tested app and 1,878 frozen inputs match
+current source. All engine inputs are unchanged. Matching source is archived and
+verified: `artifacts/source-pair-0.27.18.json`. Latest qualified pair:
+`release/preview-0.27.18/Polytope Laboratory 0.27.18 preview.exe` and
+`release/Polytope Laboratory 0.27.18 source.zip`. Prior pairs remain preserved;
+nothing was published online. See [0.27.18 notes](RELEASE_0.27.18_DEVELOPMENT.md).
 
-Generalized 4D expansion is mounted: three native and two Viewer/session groups
-pass. The real-app check passes concave expansion with four-rank text, moving
-face PNG, Save/Open and retained prior pose after unsupported image refusal:
-`artifacts/generalized-4d-morph-quick-zxan0U/result.json`.
+## Preserved 0.27.17 checkpoint
 
-Generalized net folding is mounted for keyframes/tours and PNG/WebM export.
-Two native source checks and six Viewer/animation/tour checks pass. Actual GPU
-PNG0/.5/1, three decoded VP8 frames and source/annotation/tab/history Save/Open
-pass: `artifacts/generalized-fold-quick-FEbVM9/result.json`.
+# 0.27.17 core-experience development - October 22, 2026
 
-New in 0.26: complete ordinary 4D cell sections with concave/disconnected/holed
-regions, saved dual-morph ratio tracks and PNG/WebM export, and explicit Fit export
-frames. Mounted focused checks and actual desktop exports/promotion/SaveOpen pass:
-`artifacts/feature-0.26-quick-254ZbX/result.json`. The formerly clipped concave-fold
-endpoint is now wholly visible after explicit fitting; continuous-motion/label
-extents are not certified by sampled frame fitting.
+Saved-tour section capture keeps disabled cameras still, avoiding a reproduced
+blank/stale composite after fitting. Section actors retain source/domain-scoped
+materials while rebuilding result geometry, colors and picking. Five warmed
+120-cell cuts show zero program creations/links/deletions versus 20 in the
+intermediate development baseline. Exact publication guards remain enforced.
+The 166-module build and 122 focused checks pass; all engine inputs are unchanged.
+Actual bundled saved sections, nine saved-tour checks including decoded WebM,
+sections, core history/Save/Open, nets/PDF/held export/retry, intrinsic feedback,
+all 16 registered regular 4D sources, morphs and geometry exports pass with
+development Python unavailable. Actual portable launch passes; 1,716 extracted
+resources match the tested app and 1,877 frozen inputs match current source.
+Matching source is archived and verified: `artifacts/source-pair-0.27.17.json`.
+Latest qualified pair: `release/preview-0.27.17/Polytope Laboratory 0.27.17 preview.exe`
+and `release/Polytope Laboratory 0.27.17 source.zip`. Prior pairs remain preserved;
+nothing was published online. See [0.27.17 notes](RELEASE_0.27.17_DEVELOPMENT.md).
 
-Four-face coincident-edge assembly supports all four policies for qualified ordinary
-convex/concave/toroidal pieces, physical tabs, detached history and source text/PNG SVG/PDF. Mounted native
-and five Node groups pass. Actual UI/export/SaveOpen passes in
-`artifacts/coincident-assembly-quick-G0Jdvd/result.json`; its PDF review confirms
-both support instructions, A4 dimensions and embedded source PNG. Root fixed the
-shared print-window data-image policy after the initial PDF omitted that image.
-The frozen 0.25 preview retains the old behavior, now recorded publicly.
+## Preserved 0.27.16 checkpoint
 
-GitHub is published: https://github.com/Pardesco/polytope-laboratory and its
-v0.25.0 prerelease with Issues enabled. Uploaded digests match the original binary
-and corresponding source ZIP. Publication came from a clean archive extraction in
-`build/github-publication-0.25/source`, preserving runtime files; current 0.26
-sources are not pushed. `artifacts/github-publication-0.25.0.json` records it.
+# 0.27.16 core-experience development - October 22, 2026
 
-Projective infinite/hemi incidence duals, twelve supplied reflected snub forms,
-U1-U75 symbol aliases, separate Skilling source and source-owned reflection are
-mounted. Eight native/five Node groups and actual desktop catalog/PNG/source
-selection/clipping recipes/history SaveOpen pass:
-`artifacts/projective-snub-quick-fWUhHk/result.json`. Three controller groups pass
-after PNG save feedback integration. Actual concave assembly UI/PDF/SaveOpen passes
-`artifacts/coincident-assembly-quick-2rcRiL/result.json`; PNG/SUP instructions are
-present and custom 1000 mm paper measures 1000.167 mm.
+Simple measurements bind current raw inputs and source content. Edits clear old
+feedback and cancel pending replies; regular-identity checks show current
+progress, permit notes/unit-display/observer edits and discard work after model
+navigation without stale errors. The real 0.27.15 baseline reproduced the five
+feedback bugs. Development intrinsic/report/discovery/empty workflows, 166-module
+build and 351 focused checks pass. Actual bundled intrinsic/report/discovery,
+empty/native history, publication/certification, catalog/linked, all 16 registered
+regular 4D sources, core Save/Open, sections, morphs, nets/PDF/animation and geometry
+exports pass with development Python unavailable. Actual portable launch passes;
+1,716 extracted resources match the tested app and 1,877 frozen inputs match
+current source. Matching source is archived and verified; receipt:
+`artifacts/source-pair-0.27.16.json`. All engine files are unchanged. Latest
+qualified pair: `release/preview-0.27.16/Polytope Laboratory 0.27.16 preview.exe`
+and `release/Polytope Laboratory 0.27.16 source.zip`. Earlier pairs remain
+preserved; nothing was published online. See
+[0.27.16 notes](RELEASE_0.27.16_DEVELOPMENT.md).
 
-The public documentation follow-up is pushed at 3ff0111999b4f8d6f31cfa7f5ec95eca1f0fcc7f.
-The initial release tag/source remains 4fc3b02a9763860f73349d3f378571dc969a663c.
-Current build: 153 modules pass; offline help has 25 searchable topics. Stale unstarted ledger rows for supplied specialized
-families, bounded vertex-figure completion, reinforcement and element content now
-reflect existing prototypes; no additional conformance gates were closed.
+## Preserved 0.27.15 checkpoint
 
-Source-owned content on ordinary 4D cell sections is mounted: repeated formatted
-labels retain rank-loss owners and whole-surviving-face PNG retains UV/source alpha.
-Three mounted native/four actual Viewer-animation-tour checks and real GUI PNG
-sequence/content/promotion/refusal/SaveOpen pass:
-`artifacts/section-content-quick-ApisKX/result.json`. Export-owned read admission
-was fixed after actual capture hit the construction guard; ordinary construction
-and promotion remain blocked during export. Three section-controller groups pass
-including late lost-owner refusal. Generalized 3D density/algebraic measures are
-mounted; native four-star/analytic/ownership cases and three real-native controller
-checks pass. Actual density inspector/query/source JSON/CSV and evidence SaveOpen pass:
-`artifacts/density-info-quick-X0hY43/result.json`.
+# 0.27.15 core-experience development - October 22, 2026
 
-Literal 4D arrangement/regiment comparison and independent-incidence compounds,
-plus simple concave-face bounded distances, are mounted. Three regiment native,
-six distance native and five combined Node groups pass; actual desktop comparison,
-navigation, compound PNG/content/SaveOpen/replay and bounded/flat metrics pass:
-`artifacts/regiment-distance-quick-UdLQGc/result.json`. Root fixed comparison
-empty-state initialization and the shared history commit return value, and enabled
-native-supported comparison/compound history branching. Nine runnable projects
-are in examples/0.26. No broad regression was performed.
+Empty-workspace controls and source/history menu availability are now coherent.
+Parent fieldsets preserve tool-specific limits; direct native actions recheck
+their source before work. New/Open/Library/Guide remain available and Full screen
+moved to the header. The real 0.27.14 baseline reproduced missing-source errors
+and empty save pickers. Development Cancel/canceled Open/first-model/native
+history, core and report/retry workflows, 165-module build and 267 focused checks
+pass. Packaged empty Cancel/canceled Open/native-history, reports/discovery,
+construction cancellation/certification, startup Open/Recover, catalog/linked
+loading, core Save/Open, sections, morphs, nets/PDF/animation and geometry exports
+pass with development Python unavailable. Actual portable launch passes; 1,716
+extracted resources match the tested app and 1,876 frozen inputs match current
+source. Matching portable/source pair is in `release/preview-0.27.15` and
+`release/Polytope Laboratory 0.27.15 source.zip`; receipt:
+`artifacts/source-pair-0.27.15.json`. All engine files are unchanged. Earlier
+pairs remain preserved; nothing was published online. See
+[0.27.15 notes](RELEASE_0.27.15_DEVELOPMENT.md).
 
-Next isolated work: 4D D4-lattice Waterman construction, finite completion from
-nonconvex/star vertex figures and verified symmetry-orbit coloring.
-The 0.25 portable passes with
-development Python disabled; all 2,354 archived hashes and 1,828 frozen runtime
-inputs matched the actual corresponding source ZIP before this version bump. Via-snub is a proposed
-future method, not a grounded current benchmark requirement. Protected importer files and
-historical release assets remain unchanged. Initial full-test receipts predate
-the new features. The expanded native regression was stopped at Randall's request
-and contains unresolved failures; old frontend doubles were fixed in focused
-checks. Reinforcement PDF verification was corrected for Chromium quantization;
-the complete desktop wrapper was not rerun. Retained failures remain inspectable.
+## Preserved 0.27.14 checkpoint
 
-Preview receipt: `artifacts/community-preview-0.26.0.json`.
-Source archive receipt: `artifacts/source-package-0.26.0.json`.
+# 0.27.14 core-experience development - October 22, 2026
+
+Analysis/incidence validation clear old fields while loading and bind complete
+source content plus output ownership. Canceled/failed startup discovery offers
+an explicit Library retry without opening a default model or replacing a project.
+The actual 0.27.13 baseline reproduced stale reports and absent retry. Current
+development report/startup/core workflows, 164-module build and 261 focused checks
+pass. Packaged reports/discovery, construction cancellation/certification, startup
+Open/Recover, catalog/linked loading, core history/Save/Open, sections, morphs,
+nets/PDF/animation and geometry exports pass with development Python unavailable.
+Actual portable launch passes; 1,716 extracted resources match the tested app
+and 1,874 frozen inputs match current source. Matching portable/source pair is in
+`release/preview-0.27.14` and `release/Polytope Laboratory 0.27.14 source.zip`;
+receipt: `artifacts/source-pair-0.27.14.json`. All engine files are unchanged;
+earlier pairs remain preserved. Nothing was published online. See
+[0.27.14 notes](RELEASE_0.27.14_DEVELOPMENT.md).
+
+## Preserved 0.27.13 checkpoint
+
+# 0.27.13 core-experience development - October 22, 2026
+
+Cancel now discards pending native replies immediately, including computations
+already finished in the engine. Certify current binds its complete source and
+document capacity; startup Open/Recover take priority over the default model.
+The real 0.27.12 baseline reproduced canceled publication, certification entering
+a replacement project, and startup Open refusal. Current development publication
+and catalog workflows, 162-module build and 251 focused checks pass. Packaged
+publication/startup Open/Recover, catalog/linked loading, core construction/
+history, morphs, sections, nets/PDF/animation and geometry exports pass with
+development Python unavailable. Actual portable launch passes; 1,716 extracted
+resources match the tested app and 1,872 frozen inputs match current source.
+Matching portable/source pair is in `release/preview-0.27.13` and
+`release/Polytope Laboratory 0.27.13 source.zip`; source-pair receipt:
+`artifacts/source-pair-0.27.13.json`. All engine files are unchanged. Earlier
+qualified pairs are preserved; nothing was published online. See
+[0.27.13 notes](RELEASE_0.27.13_DEVELOPMENT.md).
+
+## Preserved 0.27.12 checkpoint
+
+# 0.27.12 core-experience development - October 22, 2026
+
+Library loading reliability is retained. General Export now rejects late save
+replies after Escape/Close/direct closure and protects fresh reviews from old
+results and delayed close events. Visible development geometry/net workflows
+track actual native abort/write operations and pass with preserved old files.
+The 161-module build and 242 focused checks pass. Packaged catalog/linked loading,
+construction/history, morphs, sections, nets/PDF/animation and geometry exports
+pass with development Python unavailable. The actual portable launcher passes;
+1,716 extracted resources match the tested app and 1,871 frozen inputs match
+current source. Matching portable/source pair is in `release/preview-0.27.12`
+and `release/Polytope Laboratory 0.27.12 source.zip`; source-pair receipt:
+`artifacts/source-pair-0.27.12.json`. Native engine files are unchanged. See
+[0.27.12 notes](RELEASE_0.27.12_DEVELOPMENT.md).
+
+0.27.11 and 0.27.10 are unqualified and preserved unchanged. Final 0.27.11
+export QA found an old OBJ overwrite after parent closure. The earlier qualified
+0.27.9 portable/source pair is preserved. Nothing was published online.
+
+## Preserved 0.27.11 checkpoint (unqualified candidate)
+
+# 0.27.11 core-experience development - October 22, 2026
+
+Model opens now show pending progress, coalesce duplicate requests and preserve
+project and focus ownership across late native replies. Cancel/Open/Recover and
+animation/tour export discard pending work. Linked-file preflight reserves and
+cancels native job IDs while retaining authorized-root/path checks. Native menu,
+History close and packed-page range labels are repaired. All engine sources are
+unchanged. The 161-module build, 185 focused checks and full development catalog/
+linked/importer workflow pass, including two window sizes. Packaged/portable/
+source verification is pending. See [0.27.11 notes](RELEASE_0.27.11_DEVELOPMENT.md).
+
+The 0.27.10 candidate is unqualified and retained unchanged. Its pending-state
+sync incorrectly re-enabled unsupported rows; the corrected 0.27.11 preserves
+that state and the expanded catalog gate checks it explicitly.
+
+## Preserved 0.27.9 checkpoint
+
+# 0.27.9 core-experience development - October 22, 2026
+
+Repeated construction/numeric source ownership checks inspect bounded complete
+literal data without building another frozen memory bank. Initial validation,
+exact model comparison, notes/units/history ownership and full-state resource
+checks remain enforced. Source ID/unit accessors are refused without executing
+them. Median isolated 120-cell checks are 2.59 ms versus 3.86 ms; full desktop
+timing ranges overlap, with no general latency/FPS claim. Native engine sources
+and memory bank behavior are unchanged. The 160-module build, 933 checks and
+visible development section workflow pass. Packaged construction/history,
+morphs, sections/animation, nets/PDF and geometry exports pass with development
+Python unavailable. Actual portable launch passes; all 1,716 extracted resources
+match the tested app and 1,870 frozen runtime inputs match current source.
+Matching portable/source pair is in `release/preview-0.27.9` and
+`release/Polytope Laboratory 0.27.9 source.zip`; receipt is
+`artifacts/source-pair-0.27.9.json`. Nothing was published online.
+See [0.27.9 notes](RELEASE_0.27.9_DEVELOPMENT.md).
+
+## Preserved 0.27.8 checkpoint
+
+# 0.27.8 core-experience development - October 22, 2026
+
+Live sections retain their compiled display materials between accepted cuts
+while rebuilding geometry, colors and ownership. The measured five-cut visible
+120-cell workload creates/deletes zero programs versus 20 in 0.27.7. Task timings
+overlap prior observations; this is not a general latency/FPS claim. Native engine
+sources are unchanged. The 159-module build, 122 focused checks and visible
+development section workflow pass. Packaged sections/animation, nets/history/PDF
+and geometry exports pass with development Python unavailable. Actual portable
+launch passes; all 1,716 extracted resource files match the tested package, and
+1,869 frozen runtime inputs match current source. The packaged renderer profile
+confirms zero new programs across five cuts. Matching portable/source pair is
+in `release/preview-0.27.8` and `release/Polytope Laboratory 0.27.8 source.zip`;
+receipt is `artifacts/source-pair-0.27.8.json`. Nothing was published online.
+See [0.27.8 notes](RELEASE_0.27.8_DEVELOPMENT.md).
+
+## Preserved 0.27.7 checkpoint
+
+# 0.27.7 core-experience development - October 22, 2026
+
+Working sources are 0.27.7. Successful section-source validation is reused only
+for identical complete literal model content under bounded storage. The measured
+120-cell native IPC workload is now 31-33 ms versus 114-116 ms in 0.27.6; first
+validation/import costs remain. Manual plane preparation locks stale promotion,
+derived export and memory capture, preserves unapplied expressions across
+animation export, and forwards cancellation to native preparation. General
+Export net PDF now uses the guarded writer and cancels with its parent dialog.
+See [0.27.7 notes](RELEASE_0.27.7_DEVELOPMENT.md).
+
+The 159-module build, 145 focused Node checks and 38 native tests (plus three
+subtests) pass. Actual packaged section, net/history/PDF/animation checks pass
+with development Python unavailable, including geometry exports. Actual portable
+launch passes and all 1,716 extracted resource files match the tested package.
+Package/current verification passes for 1,869 frozen inputs; matching source is
+`release/Polytope Laboratory 0.27.7 source.zip`, with source-pair receipt
+`artifacts/source-pair-0.27.7.json`. Prior qualified
+releases remain intact; public production remains 0.26.0 and nothing was
+published online. [NEXT_SESSION.md](NEXT_SESSION.md) records the remaining
+renderer/source-snapshot profiling work. Feature expansion remains paused.
+
+## Preserved 0.27.6 checkpoint
+
+# 0.27.6 core-experience development - October 22, 2026
+
+Working sources are 0.27.6. Derived section/entity controls now guard IDs,
+export ownership, delayed updates and stale native results. Labels and guide
+text explain intrinsic planes and source-index ranges. Repeated section jobs
+reuse bounded workers, reducing the measured tesseract native IPC workload
+from 369-386 ms to about 6 ms; the 120-cell workload is now about 114-116 ms.
+See [0.27.6 notes](RELEASE_0.27.6_DEVELOPMENT.md) for settings and limits.
+
+The 159-module build, 141 focused Node tests and 26 native tests (plus three
+subtests) pass. Actual packaged section/animation/Save/Open/promotion/guide checks,
+net/history/print and geometry-export regressions pass with development Python
+unavailable. Actual portable launch passes; extracted resources match the tested
+package. Local portable is in `release/preview-0.27.6`; matching source is
+`release/Polytope Laboratory 0.27.6 source.zip`. Package verification checks
+1,868 frozen inputs; source pairing is `artifacts/source-pair-0.27.6.json`.
+Prior qualified releases remain intact, public production remains 0.26.0, and
+nothing was published online. Feature expansion stays paused. See
+[NEXT_SESSION.md](NEXT_SESSION.md) for remaining performance and core UX work.
+
+## Preserved 0.27.5 checkpoint
+
+# 0.27.5 core-experience development - October 22, 2026
+
+Working sources are 0.27.5. Explicit net reset/separation now creates the
+requested arrangement as an undoable history step; automatic native Open still
+restores saved edits. Net generation, folding, selection, page and print controls
+respect animation/tour export ownership, including queued handler calls and tab
+refresh. See [0.27.5 notes](RELEASE_0.27.5_DEVELOPMENT.md).
+
+The 158-module build and 131 focused Node tests pass. Actual packaged net and
+geometry-export workflows pass with development Python unavailable, including
+reset/separation/Undo/Redo/Open, held animation dialogs, cancellation and a
+successful three-frame PNG retry. Actual portable launch passes and extracted
+resources match the tested package. Local portable is in `release/preview-0.27.5`,
+with matching `release/Polytope Laboratory 0.27.5 source.zip`. Package verification
+checks 1,867 frozen inputs; archive verification is in
+`artifacts/source-pair-0.27.5.json`. The intermediate 0.27.4 candidate remains unqualified and
+superseded; do not distribute it as verified. Previous qualified releases are
+preserved, public production remains 0.26.0 and nothing was published online.
+Feature expansion remains paused. [NEXT_SESSION.md](NEXT_SESSION.md) records
+the remaining section control and performance work.
+
+## Preserved 0.27.3 checkpoint
+
+# 0.27.3 core-experience development - October 22, 2026
+
+Working sources are 0.27.3. Nets now present task groups, concise summaries,
+visible overlap warnings and guarded layout-dependent controls. Net SVG/PDF
+exports use source-bound atomic publication; PDF metadata is readable. Repeated
+net jobs reuse bounded workers, with measured small-model native IPC reductions
+recorded in [0.27.3 notes](RELEASE_0.27.3_DEVELOPMENT.md).
+
+The 158-module build, 62 focused Node tests and 49 native tests pass. Actual
+packaged net workflows, keyboard controls, print output, Save/Open/history and
+geometry export regression pass. Actual portable launch passes with development
+Python unavailable; extracted resources match the tested package. Local portable:
+`release/preview-0.27.3/Polytope Laboratory 0.27.3 preview.exe`. Corresponding source:
+`release/Polytope Laboratory 0.27.3 source.zip`. Package verification checks 1,867
+frozen inputs; archive verification is `artifacts/source-pair-0.27.3.json`.
+Earlier releases remain intact; public production remains 0.26.0. Nothing was
+published online. See [NEXT_SESSION.md](NEXT_SESSION.md) for remaining reset/
+separate-piece and export busy-state investigations. Feature expansion is paused.
+
+## Preserved 0.27.2 checkpoint
+
+# 0.27.2 core-experience development - October 21, 2026
+
+Working sources are 0.27.2. Feature expansion remains paused. Geometry export
+now reviews supported formats, physical units and losses before selecting a
+file. Source changes and cancellation during destination selection cannot
+publish a stale prepared output. OFF rejects source records it cannot preserve.
+The 0.27.1 morph fixes remain in place; previous releases are preserved.
+
+The 155-module build, 35 native export tests and 92 focused Node checks pass.
+Actual development and packaged export workflows independently check output
+coordinates, topology and units, cancellation, changed source units and a derived
+3D section. Packaged morph, PNG capture and native Save/Open also pass with
+development Python unavailable. See [0.27.2 notes](RELEASE_0.27.2_DEVELOPMENT.md)
+for receipts and limits. Actual portable launch passes, extracted resources match
+the tested package, and corresponding source checks pass. The local executable
+is `release/preview-0.27.2/Polytope Laboratory 0.27.2 preview.exe`; matching source
+is `release/Polytope Laboratory 0.27.2 source.zip`. The release directory retains
+`verification.json`; the source-pair proof is in `artifacts/source-pair-0.27.2.json`.
+
+## Historical stopping checkpoint
+
+# Stopping checkpoint - October 7, 2026
+
+Production is **0.26.0**, published as a GPLv3 community prerelease at
+https://github.com/Pardesco/polytope-laboratory/releases/tag/v0.26.0.
+Final build: 153 modules. Actual portable launch passed with development Python
+unavailable. Matching archive: 2,425 files / 1,860 frozen runtime inputs;
+committed Git blobs and both uploaded asset digests verified.
+
+Randall requested a stopping point. The unfinished feature-complete goal is
+paused. No measured 90% parity or full regression success is claimed.
+Three next-release stages are READY/frozen and not mounted: star vertex-figure
+completion, verified symmetry-orbit coloring and 4D D4 Waterman.
+
+Read [NEXT_SESSION.md](NEXT_SESSION.md) for the authoritative resume sequence,
+commands, pending GUI checks and Git ancestry precautions. Root has not bumped
+working sources to 0.27. Historical evidence below is retained.
 
 ---
 

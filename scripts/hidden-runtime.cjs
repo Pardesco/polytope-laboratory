@@ -8,9 +8,8 @@ async function hashFile(file){
   for await(const chunk of createReadStream(file))digest.update(chunk);
   return digest.digest('hex');
 }
-async function hiddenRuntime(packaged=process.env.POLYTOPE_TEST_EXECUTABLE){
+async function hiddenRuntime(packaged=process.env.POLYTOPE_TEST_EXECUTABLE,expected=require('../package.json').version){
   const source=await fs.readFile(path.join(root,'desktop','main.cjs'));
-  const expected=require('../package.json').version;
   if(!packaged)return {packaged:false,executablePath:require('electron'),
     mainSha256:hash(source),version:expected};
   if(!path.isAbsolute(packaged))throw Error('Packaged hidden runtime requires an absolute unpacked executable path.');

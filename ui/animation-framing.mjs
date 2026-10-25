@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 import {sequenceFrameTimes} from './animation.mjs';
+import {holdObservationControls} from './observation-controls.mjs';
 import {captureAnimationView} from './animation-track-controls.mjs';
 import {requireMorphAnimation} from './morph-animation-adapter.mjs';
 
@@ -35,19 +36,19 @@ export async function fitAnimationFrames(animation){
   const signature=()=>JSON.stringify(Object.fromEntries(Object.entries(source).filter(([key])=>key!=='view'))),sourceSignature=signature();
   const times=sequenceFrameTimes(sequence),originalTime=animation.time,snapshot=captureAnimationView(source,context.getState),bounds=frameBounds();
   const cameras=[...new Set([context.viewer,context.sectionViewer,context.netViewer].filter(Boolean))].map(v=>({viewer:v,
-    camera:structuredClone(v.cameraState()),expected:JSON.stringify(v.cameraState()),controls:v.controls,enabled:v.controls?.enabled,damping:v.controls?.enableDamping}));
+    camera:structuredClone(v.cameraState()),expected:JSON.stringify(v.cameraState())}));
   const camerasCurrent=()=>cameras.every(item=>JSON.stringify(item.viewer.cameraState())===item.expected);
   const acceptCameras=()=>{for(const item of cameras)item.expected=JSON.stringify(item.viewer.cameraState());};
   const controller=new AbortController();animation.exportController=controller;animation.exportView=snapshot;
   animation.exporting=true;animation.exportAbort=false;animation.update();context.onExportStateChange?.();
-  let trackSession=null,completed=false,restored=false,corners;
+  let trackSession=null,observation=null,completed=false,restored=false,corners;
   const check=()=>{
     animation.assertActive(source,generation);
     if(animation.exportAbort||controller.signal.aborted||animation.exportController!==controller||!animation.exporting)throw Error('Animation framing cancelled.');
     if(!snapshot.current()||signature()!==sourceSignature||!camerasCurrent())throw Error('Animation source, view or camera changed; framing cancelled.');
   };
   try{
-    for(const item of cameras)if(item.controls){item.controls.update();item.controls.enabled=false;item.controls.enableDamping=false;}
+    observation=holdObservationControls(cameras.map(item=>item.viewer));
     acceptCameras();check();
     if(target==='section'){if(source.view.derivedMode!=='cell-section')source.view.derivedMode='section';snapshot.accept();}
     if(sequence.version>=2){trackSession=await animation.trackSessions.prepare(sequence);check();}
@@ -61,22 +62,25 @@ export async function fitAnimationFrames(animation){
     }
     check();corners=bounds.corners();completed=true;
   }finally{
-    const owned=context.getState()===source&&signature()===sourceSignature&&snapshot.current()&&camerasCurrent();
-    controller.abort();if(animation.exportController===controller)animation.exportController=null;
-    let tracksRestored=!trackSession;
-    if(trackSession){try{await trackSession.restore(context.renderTracks);snapshot.accept();tracksRestored=true;}catch(error){context.setStatus?.(error.message);}finally{trackSession.destroy();}}
-    animation.exportView=null;
-    if(owned&&tracksRestored&&signature()===sourceSignature&&snapshot.restore()){
-      animation.time=originalTime;context.display?.();context.viewer.setDisplay(source.view);context.syncPose?.(source.view);
-      if(['section','cell-section'].includes(source.view.derivedMode))await context.refreshSection().catch(error=>context.setStatus?.(error.message));
-      // Pose sampling must not silently leave its camera behind on any viewer.
-      if(context.getState()===source&&signature()===sourceSignature&&snapshot.current()){
-        for(const item of cameras)item.viewer.restoreCamera(item.camera);
-        context.viewer.draw();context.sectionViewer?.draw();restored=true;
+    try{
+      const owned=context.getState()===source&&signature()===sourceSignature&&snapshot.current()&&camerasCurrent();
+      controller.abort();if(animation.exportController===controller)animation.exportController=null;
+      let tracksRestored=!trackSession;
+      if(trackSession){try{await trackSession.restore(context.renderTracks);snapshot.accept();tracksRestored=true;}catch(error){context.setStatus?.(error.message);}finally{trackSession.destroy();}}
+      animation.exportView=null;
+      if(owned&&tracksRestored&&signature()===sourceSignature&&snapshot.restore()){
+        animation.time=originalTime;context.display?.();context.viewer.setDisplay(source.view);context.syncPose?.(source.view);
+        if(['section','cell-section'].includes(source.view.derivedMode))await context.refreshSection().catch(error=>context.setStatus?.(error.message));
+        // Pose sampling must not silently leave its camera behind on any viewer.
+        if(context.getState()===source&&signature()===sourceSignature&&snapshot.current()){
+          for(const item of cameras)item.viewer.restoreCamera(item.camera);
+          context.viewer.draw();context.sectionViewer?.draw();restored=true;
+        }
       }
+    }finally{
+      animation.exportView=null;observation?.release();
+      animation.exporting=false;animation.update();context.onExportStateChange?.();
     }
-    for(const item of cameras)if(item.viewer.controls===item.controls&&item.controls){item.controls.enabled=item.enabled;item.controls.enableDamping=item.damping;}
-    animation.exporting=false;animation.update();context.onExportStateChange?.();
   }
   if(!completed||!restored||context.getState()!==source||signature()!==sourceSignature||!snapshot.current())throw Error('Animation framing was cancelled; the fitted camera was not saved.');
   // fit() preserves the user's camera direction, up vector and projection.

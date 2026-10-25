@@ -28,6 +28,14 @@ test('older main code is refused before launch even if the version matches',asyn
 test('older candidate version is refused even with identical main guards',async()=>{
   const f=await fixture({version:'0.13.0'});await assert.rejects(hiddenRuntime(f.exe),/version differs/);
 });
+
+test('explicit profile baseline version still requires matching archive version and main guards',async()=>{
+  const baseline=await fixture({version:'0.27.19'});
+  assert.equal((await hiddenRuntime(baseline.exe,'0.27.19')).version,'0.27.19');
+  await assert.rejects(hiddenRuntime(baseline.exe,'0.27.18'),/version differs/);
+  const changed=await fixture({version:'0.27.19',main:'// different main guards'});
+  await assert.rejects(hiddenRuntime(changed.exe,'0.27.19'),/policy differs/);
+});
 test('portable outer wrappers without adjacent archive are refused',async()=>{
   const folder=await fs.mkdtemp(path.join(root,'artifacts','hidden-runtime-unit-'));
   const exe=path.join(folder,'Portable.exe');await fs.writeFile(exe,'never launch');

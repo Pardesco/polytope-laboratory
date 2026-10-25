@@ -16,7 +16,7 @@ function viewer(model){
   const v=Object.create(Viewer.prototype);v.group=new THREE.Group();v.setModel(model);v.cameraProjection='orthographic';v.orthographicHalfHeight=2;
   v.camera=new THREE.OrthographicCamera(-2,2,2,-2,.01,1000);v.orthographicCamera=v.camera;v.perspectiveCamera=new THREE.PerspectiveCamera(38,1,.01,1000);
   v.camera.position.set(0,0,5);v.camera.lookAt(0,0,0);v.camera.updateMatrixWorld();v.controls={target:new THREE.Vector3(),update(){}};
-  v.renderer={domElement:{getBoundingClientRect:()=>({width:400,height:400})},render(){}};return v;
+  v.renderer={domElement:{getBoundingClientRect:()=>({width:400,height:400})},render(){},setClearColor(){}};return v;
 }
 test('seventh mode uses actual controller/native route/Viewer and reconstructs the saved source pose',async()=>{
   const state={model:structuredClone(source),notes:'Literal original notes.',view:structuredClone(view)},document={id:'triangles',cursor:0,states:[]};document.states=[state];const project={format:'polytope-laboratory',version:1,active:0,documents:[document]},v=viewer(state.model),before=structuredClone(state),radius=v.radius;

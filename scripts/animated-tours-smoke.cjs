@@ -48,8 +48,8 @@ async function main(){
   const checks=[],errors=[],files=[],metrics=[];let page,serial=0,videoProof=null;
   try{
     page=await app.firstWindow();page.setDefaultTimeout(45000);page.on('pageerror',e=>errors.push(e.message));
-    await page.addInitScript(()=>{const get=HTMLCanvasElement.prototype.getContext;HTMLCanvasElement.prototype.getContext=function(kind,...args){const value=get.call(this,kind,...args);if(value&&String(kind).includes('webgl'))this.dataset.actualWebglContext=String(kind);return value;};});await page.reload();
-    await page.waitForFunction(()=>document.getElementById('tour-transition-apply')&&document.getElementById('model-name').textContent==='Tesseract');
+    await page.evaluate(()=>{const get=HTMLCanvasElement.prototype.getContext;HTMLCanvasElement.prototype.getContext=function(kind,...args){const value=get.call(this,kind,...args);if(value&&String(kind).includes('webgl'))this.dataset.actualWebglContext=String(kind);return value;};});
+    await page.waitForFunction(()=>document.getElementById('tour-transition-apply')&&document.getElementById('model-name').textContent==='Tesseract'&&document.getElementById('cancel').hidden);
     await page.evaluate(()=>{window.tourStatuses=[];new MutationObserver(()=>window.tourStatuses.push(document.getElementById('status').textContent)).observe(document.getElementById('status'),{childList:true,subtree:true,characterData:true});});
     const panel=async()=>{if(!await page.locator('#tour-settings').evaluate(e=>e.open))await page.locator('#tour-settings > summary').click();};
     const done=()=>page.waitForFunction(()=>document.getElementById('cancel').hidden&&!document.getElementById('tour-png').disabled);

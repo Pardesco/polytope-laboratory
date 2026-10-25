@@ -23,13 +23,13 @@ export class WorkspaceNumericControls {
   section(nextVertex=false){
     const dimension=this.context.getState().model.dimension;
     const view=this.context.getState().view;
-    const target=JSON.stringify([view.sectionNormal,view.sectionOffset,view.sectionAlignment??null,view.entity]);
-    return this.edit(['section-normal','section-depth','entity-id'],{
+    const target=JSON.stringify([view.derivedMode,view.sectionNormal,view.sectionOffset,view.sectionAlignment??null]);
+    return this.edit(['section-normal','section-depth'],{
       normal:{...this.scalar('section-normal'),kind:'vector',length:dimension,nonzero:true},
       depth:this.scalar('section-depth'),
-    },async({normal,depth},verify)=>{
+    },async({normal,depth},verify,{signal})=>{
       const current=this.context.getState(),v=current.view;
-      if(JSON.stringify([v.sectionNormal,v.sectionOffset,v.sectionAlignment??null,v.entity])!==target)
+      if(JSON.stringify([v.derivedMode,v.sectionNormal,v.sectionOffset,v.sectionAlignment??null])!==target)
         throw Error('Section settings changed. Repeat the edit.');
       let offset=depth;
       if(nextVertex){
@@ -37,11 +37,9 @@ export class WorkspaceNumericControls {
         const events=[...new Set(current.model.vertices.map(p=>p.reduce((sum,x,i)=>sum+x*normal[i]/length,0)).sort((a,b)=>a-b))];
         offset=events.find(value=>value>depth+1e-7)??events[0];
       }
-      const entity=Number(this.input('entity-id').value);
-      if(!Number.isSafeInteger(entity)||entity<0)throw Error('Choose a nonnegative integer entity index.');
-      verify();v.sectionNormal=[...normal];v.sectionOffset=offset;delete v.sectionAlignment;v.entity=entity;
+      verify();v.sectionNormal=[...normal];v.sectionOffset=offset;delete v.sectionAlignment;
       this.input('section-depth').value=String(offset);this.input('section-offset').value=String(offset);
-      this.context.markDirty();await this.context.refreshDerived();
+      this.context.markDirty();await this.context.refreshDerived({signal,throwOnError:true});
     });
   }
   incidenceDual(){

@@ -2,12 +2,15 @@ import {contentSignature,contentParameters} from './element-content-lifecycle.mj
 import {NetTabControls} from './net-tab-controls.mjs';
 import {NetColorPrintingControls} from './net-color-printing-controls.mjs';
 import {ExpressionEntry,captureExpressionOwner,verifyExpressionOwner} from './expression-entry.mjs';
+import {faceNetSummary,currentFaceNet} from './net-presentation.mjs';
+import {NetExportSession} from './net-export-session.mjs';
 
 export class NetEditor{
   constructor(context){
     const {getState,getModel,run,guard,markDirty,refresh,viewer,api,setStatus}=context;
     Object.assign(this,{getState,getModel,run,guard,markDirty,refresh,viewer,api,setStatus});this.context=context;
     this.expressionEntry=new ExpressionEntry(context);this.sequence=0;this.playing=false;
+    this.exports=new NetExportSession({...context,onState:()=>this.updateActions()});
     const inspector=document.querySelector('.inspector');
     const tab=document.createElement('button');tab.dataset.panel='net';tab.textContent='Nets';inspector.querySelector('.inspector-tabs').append(tab);
     const root=document.createElement('div');root.id='net-panel';root.className='inspector-panel';root.hidden=true;
@@ -21,22 +24,61 @@ export class NetEditor{
     const paper=document.createElement('div');paper.innerHTML='<div class="rule"></div><div class="panel-title">PAPER PACKING / PREVIEW</div><label>Paper <select id="net-paper"><option value="a4">A4</option><option value="letter">US Letter</option><option value="a3">A3</option><option value="legal">US Legal</option><option value="custom">Custom</option></select></label><label>Orientation <select id="net-paper-orientation"><option value="portrait">Portrait</option><option value="landscape">Landscape</option></select></label><label id="net-custom-size" hidden>Width / height <span><input id="net-paper-width" value="210"><input id="net-paper-height" value="297"> mm</span></label><label>Margin / gap <span><input id="net-paper-margin" value="10"><input id="net-paper-gap" value="5"> mm</span></label><button id="net-pack" class="wide">Pack and preview at current scale</button><div class="net-history"><button id="net-page-prev">Previous page</button><button id="net-page-next">Next page</button></div><div id="net-paper-status" class="muted"></div><button id="net-packed-pdf" class="wide">Export all packed pages as PDF</button><button id="net-packed-svg" class="wide">Export current paper page SVG</button><p class="muted">Packing preserves E0 and keeps connected pieces intact. Change E0, cuts or paper size if a piece will not fit. No automatic scale change is applied.</p>';root.append(paper);
     this.$('net-paper').onchange=()=>{this.$('net-custom-size').hidden=this.$('net-paper').value!=='custom';};
     this.$('net-pack').onclick=guard(()=>this.pack());
-    this.$('net-page-prev').onclick=()=>this.changePage(-1);this.$('net-page-next').onclick=()=>this.changePage(1);
-    this.$('net-packed-pdf').onclick=guard(async()=>{const packed=getState().netPages;if(!packed)throw new Error('Pack and preview the paper pages first.');const result=await api.savePackedNetPdf(packed.pages.map(p=>p.svg));if(result)setStatus('Exported packed net PDF '+result.path);});
-    this.$('net-packed-svg').onclick=guard(async()=>{const packed=getState().netPages;if(!packed)throw new Error('Pack the paper pages first.');const page=packed.pages[this.config().page||0],result=await api.saveSvg(page.svg,`Net page ${page.id+1}.svg`);if(result)setStatus('Exported paper page '+result.path);});
+    this.$('net-page-prev').onclick=guard(()=>this.changePage(-1));this.$('net-page-next').onclick=guard(()=>this.changePage(1));
+    this.$('net-packed-pdf').onclick=guard(()=>this.export('pdf',{packed:true}));
+    this.$('net-packed-svg').onclick=guard(()=>this.export('svg',{packed:true,currentPage:true}));
     this.$('net-rebuild').onclick=guard(()=>this.build(false));
-    this.$('net-display').onchange=()=>{this.config().display=this.$('net-display').value;this.playing=false;this.activate();markDirty();refresh();};
-    this.$('net-action').onchange=()=>{this.config().action=this.$('net-action').value;markDirty();};
+    this.$('net-display').onchange=guard(()=>this.setDisplay(this.$('net-display').value));
+    this.$('net-action').onchange=guard(()=>this.setAction(this.$('net-action').value));
     this.$('net-tabs').onchange=guard(()=>this.edit('set-tabs',{tabs:this.$('net-tabs').checked}));
-    this.$('net-toggle-edge').onclick=guard(()=>this.edit('toggle-edge',{edge:Number(this.$('net-edge').value)}));
-    this.$('net-component').onchange=()=>{this.config().component=Number(this.$('net-component').value);this.highlight();markDirty();};
+    this.$('net-toggle-edge').onclick=guard(()=>this.edit('toggle-edge',{edge:this.index('net-edge','source edge')}));
+    this.$('net-component').onchange=guard(()=>this.selectComponent(this.index('net-component','component ID')));
     this.$('net-move').onclick=guard(()=>this.move());
-    this.$('net-fold').oninput=()=>{const wasNet=this.getState().view.derivedMode==='net',c=this.config();c.fraction=Number(this.$('net-fold').value);c.display='fold';this.$('net-display').value='fold';this.playing=false;this.activate();markDirty();if(wasNet&&this.getState()?.netLayout)this.show(this.getState().netLayout);else refresh();};
-    this.$('net-play').onclick=()=>{const c=this.config();c.display='fold';this.$('net-display').value='fold';this.activate();this.playing=!this.playing;this.direction=c.fraction>=1?-1:1;markDirty();refresh();};
+    this.$('net-fold').oninput=guard(()=>this.fold(Number(this.$('net-fold').value)));
+    this.$('net-play').onclick=guard(()=>this.toggleFold());
     for(const id of ['net-length','net-move-x','net-move-y','net-angle','net-paper-width','net-paper-height','net-paper-margin','net-paper-gap']){
       this.$(id).type='text';this.$(id).inputMode='text';
     }
     this.tabControls=new NetTabControls(this,root);this.colorPrinting=new NetColorPrintingControls(this,paper);
+    const output=document.createElement('div');output.id='net-export-actions';output.className='net-history';output.innerHTML='<button id="net-export-svg">Export net SVG</button><button id="net-export-pdf">Export net PDF</button>';paper.append(output);
+    this.$('net-export-svg').onclick=guard(()=>this.export('svg'));this.$('net-export-pdf').onclick=guard(()=>this.export('pdf'));
+    this.updateActions();
+  }
+  updateActions(){
+    const state=this.getState(),ready=currentFaceNet(state),packed=ready&&Boolean(state.netPages),blocked=Boolean(state&&(this.context.isExporting?.()||this.exports?.busy));
+    for(const id of ['net-toggle-edge','net-move','net-pack','net-fold','net-play','net-component','net-action','net-display','net-tab-default-apply','net-tab-edge-apply','net-export-svg','net-export-pdf']){const n=this.$(id);if(n)n.disabled=blocked||!ready;}
+    for(const id of ['net-packed-pdf','net-packed-svg']){const n=this.$(id);if(n)n.disabled=blocked||!packed;}
+    const history=state?.netHistory;
+    for(const [id,available] of [['net-undo',ready&&history?.cursor>0],['net-redo',ready&&history?.cursor<history?.states.length-1]]){const n=this.$(id);if(n)n.disabled=blocked||!available;}
+    for(const id of ['net-rebuild','net-separate']){const n=this.$(id);if(n)n.disabled=blocked||state?.model.dimension!==3;}
+    for(const id of ['net-root','net-length','net-tabs']){const n=this.$(id);if(n)n.disabled=blocked;}
+    for(const [id,available] of [['net-page-prev',packed&&state.view.net.page>0],['net-page-next',packed&&(state.view.net.page||0)<state.netPages.pageCount-1]]){const n=this.$(id);if(n)n.disabled=blocked||!available;}
+  }
+  requireEditable(){if(this.context.isExporting?.())throw Error('Finish animation export before changing the net view.');}
+  onExportStateChange(){
+    if(this.context.isExporting?.()){this.playing=false;if(this.drag){this.drag.group.removeAttribute('transform');this.drag=null;}}
+    const c=this.getState()?.view.net;if(c){this.$('net-display').value=c.display;this.$('net-action').value=c.action;this.$('net-component').value=c.component;}
+    this.updateActions();
+  }
+  setDisplay(value){this.requireEditable();if(!['layout','fold','pages'].includes(value))throw Error('Choose a supported net view.');this.config().display=value;this.playing=false;this.activate();this.markDirty();return this.refresh();}
+  setAction(value){this.requireEditable();if(!['move','edge','tabs'].includes(value))throw Error('Choose a supported net mouse action.');this.config().action=value;this.markDirty();}
+  selectComponent(value){this.requireEditable();if(!this.getState().netLayout?.components.some(c=>c.root===value))throw Error('Choose an available net component.');this.config().component=value;this.highlight();this.markDirty();}
+  async export(format,options){
+    const result=await this.exports.run(format,options);
+    if(result)this.setStatus(options?.packed?format==='pdf'?'Exported packed net PDF '+result.path:'Exported paper page '+result.path:format==='pdf'?'Exported calibrated net PDF '+result.path:'Exported calibrated net '+result.path);
+    return result;
+  }
+  fold(value){
+    if(this.context.isExporting?.())throw Error('Finish animation export before changing the net fold.');
+    if(!currentFaceNet(this.getState()))throw Error('Generate a current 3D face net before folding it.');
+    if(!Number.isFinite(value)||value<0||value>1)throw Error('Use a fold fraction between 0 and 1.');
+    const wasNet=this.getState().view.derivedMode==='net',c=this.config();c.fraction=value;c.display='fold';this.$('net-display').value='fold';this.playing=false;this.activate();this.markDirty();
+    return wasNet?this.show(this.getState().netLayout):this.refresh();
+  }
+  toggleFold(){
+    if(this.context.isExporting?.())throw Error('Finish animation export before changing the net fold.');
+    if(!currentFaceNet(this.getState()))throw Error('Generate a current 3D face net before folding it.');
+    const c=this.config();c.display='fold';this.$('net-display').value='fold';this.activate();this.playing=!this.playing;this.direction=c.fraction>=1?-1:1;this.markDirty();return this.refresh();
   }
   index(id,label){const text=this.$(id).value.trim(),value=Number(text);if(!/^\d+$/.test(text)||!Number.isSafeInteger(value))throw Error(`Use a literal nonnegative integer ${label}.`);return value;}
   async build(separate){
@@ -45,7 +87,8 @@ export class NetEditor{
     return this.expressionEntry.run({length:this.$('net-length').value},({length},verify,owner)=>{
       if(length<1||length>1000)throw Error('Reference E0 must be between 1 and 1,000 mm.');
       verify();const s=owner.state,c=this.config(s);c.root=root;c.length=length;c.tabs=tabs;
-      s.netLayout=null;s.netPages=null;s.netSeparate=separate;this.activate();this.markDirty();this.refresh();
+      this.playing=false;this.buildRequest={state:s,model:s.model,root,length,tabs,separate};
+      s.netLayout=null;s.netPages=null;s.netSeparate=separate;this.activate();this.markDirty();return this.refresh();
     });
   }
   async pack(){
@@ -59,7 +102,7 @@ export class NetEditor{
       if(width<20||width>2000||height<20||height>2000||values.margin_mm<0||values.margin_mm>=Math.min(width,height)/2||values.gap_mm<0||values.gap_mm>100)
         throw Error('Use paper dimensions in 20–2,000 mm, margins below half the page size, and gaps in 0–100 mm.');
       verify();const s=owner.state;s.view.netPrint={paper,orientation,width_mm:width,height_mm:height,...values,allow_rotation:true,...colorPrinting};
-      s.netPages=null;const c=this.config(s);c.display='pages';c.page=0;this.$('net-display').value='pages';this.activate();this.markDirty();this.refresh();
+      s.netPages=null;const c=this.config(s);c.display='pages';c.page=0;this.$('net-display').value='pages';this.activate();this.markDirty();return this.refresh();
     });
   }
   async move(){
@@ -70,22 +113,26 @@ export class NetEditor{
   config(s=this.getState()){const c=s.view.net ||= {root:0,length:25,tabs:true,display:'layout',fraction:0,action:'move',component:0};if(c.tabOptions&&(c.tabOptions.sourceId!==s.model.id||c.tabOptions.sourceFingerprint!==s.model.fingerprint))delete c.tabOptions;return c;}
   activate(){const s=this.getState();s.view.derivedMode='net';this.$('derived-mode').value='net';}
   sync(){
-    this.sequence++;this.playing=false;this.$('net-play').textContent='Animate folding';
+    this.sequence++;this.buildRequest=null;this.playing=false;this.$('net-play').textContent='Animate folding';
     const s=this.getState();if(!s)return;const c=this.config(s);
     this.$('net-root').value=c.root;this.$('net-length').value=c.length;this.$('net-tabs').checked=c.tabs;this.$('net-display').value=c.display;this.$('net-action').value=c.action;this.$('net-fold').value=c.fraction;
+    this.$('net-fold-value').textContent=Math.round(c.fraction*100)+'%';
     this.$('net-summary').textContent='Choose a closed 3D shell with simple planar faces. Self-crossing faces are unsupported.';
     this.$('net-component').replaceChildren();this.$('net-fold-evidence').textContent='';
-    const paper=s.view.netPrint||{paper:'a4',orientation:'portrait',width_mm:210,height_mm:297,margin_mm:10,gap_mm:5};for(const [id,key] of Object.entries({'net-paper':'paper','net-paper-orientation':'orientation','net-paper-width':'width_mm','net-paper-height':'height_mm','net-paper-margin':'margin_mm','net-paper-gap':'gap_mm'}))this.$(id).value=paper[key];this.$('net-custom-size').hidden=paper.paper!=='custom';this.$('net-paper-status').textContent='';this.tabControls.show();this.colorPrinting.sync();
+    const paper=s.view.netPrint||{paper:'a4',orientation:'portrait',width_mm:210,height_mm:297,margin_mm:10,gap_mm:5};for(const [id,key] of Object.entries({'net-paper':'paper','net-paper-orientation':'orientation','net-paper-width':'width_mm','net-paper-height':'height_mm','net-paper-margin':'margin_mm','net-paper-gap':'gap_mm'}))this.$(id).value=paper[key];this.$('net-custom-size').hidden=paper.paper!=='custom';this.$('net-paper-status').textContent='';this.tabControls.show();this.colorPrinting.sync();this.updateActions();
   }
   async evaluate(model,state){
-    const sequence=++this.sequence,c=structuredClone(this.config(state)),saved=state.netHistory?.sourceFingerprint===model.fingerprint?state.netHistory.states[state.netHistory.cursor]:null,owner=captureExpressionOwner({...this.context,isBusy:()=>false,isExporting:()=>false}),signature=contentSignature(state);let net=state.netLayout;const contentRestore=!net&&saved?.root===c.root&&saved.edge_length_mm===c.length&&saved.tabs===c.tabs&&JSON.stringify(saved.tab_options??null)===JSON.stringify(c.tabOptions??null);
-    const current=()=>sequence===this.sequence&&this.getState()===state&&contentSignature(state)===signature;
+    const sequence=++this.sequence,c=structuredClone(this.config(state)),saved=state.netHistory?.sourceFingerprint===model.fingerprint?state.netHistory.states[state.netHistory.cursor]:null,owner=captureExpressionOwner({...this.context,isBusy:()=>false,isExporting:()=>false}),signature=contentSignature(state),request=this.buildRequest;
+    const explicit=request?.state===state&&request.model===model&&request.root===c.root&&request.length===c.length&&request.tabs===c.tabs;
+    let net=state.netLayout;const contentRestore=!explicit&&!net&&saved?.root===c.root&&saved.edge_length_mm===c.length&&saved.tabs===c.tabs&&JSON.stringify(saved.tab_options??null)===JSON.stringify(c.tabOptions??null);
+    const current=()=>sequence===this.sequence&&this.buildRequest===request&&this.getState()===state&&contentSignature(state)===signature;
     const verify=()=>verifyExpressionOwner({...this.context,isBusy:()=>false,isExporting:()=>false},owner);
     if(!net||JSON.stringify(net.printSource?.metadata?.offColors?.faces??null)!==JSON.stringify(model.metadata?.offColors?.faces??null)||net.sourceFingerprint!==model.fingerprint||net.root!==c.root||net.referenceEdgeLengthMm!==c.length||net.tabs!==c.tabs||JSON.stringify(net.tabOptions??null)!==JSON.stringify(c.tabOptions??null)||JSON.stringify(net.elementAnnotations??null)!==JSON.stringify(state.view.elementAnnotations??null)){
-      net=await this.run('net',{root:c.root,edge_length_mm:c.length,tabs:c.tabs,...(c.tabOptions?{tab_options:structuredClone(c.tabOptions)}:{}),...(net?.sourceFingerprint===model.fingerprint&&net.root===c.root?{hinges:structuredClone(net.hinges),placements:structuredClone(net.placements??[])}:contentRestore?{hinges:structuredClone(saved.hinges),placements:structuredClone(saved.placements??[])}:state.netSeparate?{hinges:[]}:{}),...contentParameters(state)},model,'Generate rigid face net');
+      net=await this.run('net',{root:c.root,edge_length_mm:c.length,tabs:c.tabs,...(c.tabOptions?{tab_options:structuredClone(c.tabOptions)}:{}),...(explicit?(request.separate?{hinges:[]}:{}):net?.sourceFingerprint===model.fingerprint&&net.root===c.root?{hinges:structuredClone(net.hinges),placements:structuredClone(net.placements??[])}:contentRestore?{hinges:structuredClone(saved.hinges),placements:structuredClone(saved.placements??[])}:state.netSeparate?{hinges:[]}:{}),...contentParameters(state)},model,'Generate rigid face net');
       if(!current())return {stale:true};verify();state.netLayout=net;state.netPages=null;if(!contentRestore)this.remember(state,net);this.markDirty();
     }
     if(c.display==='pages'&&!state.netPages){const packOwner=captureExpressionOwner({...this.context,isBusy:()=>false,isExporting:()=>false});const packed=await this.run('net-pack',{net,...state.view.netPrint||{}},model,'Pack physical paper pages');if(!current()||state.netLayout!==net)return {stale:true};verifyExpressionOwner({...this.context,isBusy:()=>false,isExporting:()=>false},packOwner);state.netPages=packed;this.markDirty();}
+    if(explicit&&this.buildRequest===request)this.buildRequest=null;
     return net;
   }
   async edit(action,params,{verifyPublication,owner}={}){
@@ -113,7 +160,9 @@ export class NetEditor{
   }
   show(net){
     const c=this.config();this.net=net;this.tabControls.show(net);
-    this.$('net-summary').textContent=`${net.faces.length} faces in ${net.components.length} connected piece${net.components.length===1?'':'s'}\n${net.hinges.length} hinges · E0 = ${net.referenceEdgeLengthMm} mm\n${net.overlapPairs.length} face overlap pairs · ${net.tabOverlapPairs.length} tab overlap pairs${net.domain?`\n${net.domain}`:""}`;
+    this.$('net-summary').textContent=faceNetSummary(net);
+    if(this.$('net-domain'))this.$('net-domain').textContent=net.domain??'';
+    this.$('net-summary').dataset.overlap=String(Boolean(net.overlapPairs.length||net.tabOverlapPairs.length));
     this.$('net-tabs').checked=net.tabs;const select=this.$('net-component');select.replaceChildren();
     this.$('net-root').value=net.root;this.$('net-length').value=net.referenceEdgeLengthMm;
     const history=this.getState().netHistory;this.$('net-undo').disabled=!history||history.cursor<=0;this.$('net-redo').disabled=!history||history.cursor>=history.states.length-1;
@@ -134,19 +183,22 @@ export class NetEditor{
       this.viewer.clear();this.$('derived-canvas').hidden=true;const preview=this.$('net-preview');preview.hidden=false;preview.innerHTML=net.svg;this.attach(preview.querySelector('svg'));this.highlight();
       this.$('derived-status').textContent=`${net.faces.length} faces · ${net.components.length} pieces · E0 = ${net.referenceEdgeLengthMm} mm${net.hasOverlap?' · face overlaps':''}${net.hasTabOverlap?' · tab overlaps':''}`;
     }
-    this.$('net-play').textContent=this.playing?'Pause folding':'Animate folding';this.$('net-fold').value=c.fraction;this.$('net-fold-value').textContent=Math.round(c.fraction*100)+'%';
+    this.$('net-play').textContent=this.playing?'Pause folding':'Animate folding';this.$('net-fold').value=c.fraction;this.$('net-fold-value').textContent=Math.round(c.fraction*100)+'%';this.updateActions();
   }
-  changePage(delta){const packed=this.getState().netPages;if(!packed)return;const c=this.config();c.page=Math.max(0,Math.min(packed.pageCount-1,(c.page||0)+delta));c.display='pages';this.$('net-display').value='pages';this.activate();this.markDirty();this.showPage();}
+  changePage(delta){this.requireEditable();const packed=this.getState().netPages;if(!packed)return;if(!Number.isSafeInteger(delta))throw Error('Use a literal integer page step.');const c=this.config();c.page=Math.max(0,Math.min(packed.pageCount-1,(c.page||0)+delta));c.display='pages';this.$('net-display').value='pages';this.activate();this.markDirty();this.showPage();}
   showPage(){const packed=this.getState().netPages;if(!packed)return;const c=this.config();c.page=Math.max(0,Math.min(packed.pageCount-1,c.page||0));const page=packed.pages[c.page];this.viewer.clear();this.$('derived-canvas').hidden=true;const preview=this.$('net-preview');preview.hidden=false;preview.innerHTML=page.svg;
     this.$('net-page-prev').disabled=c.page===0;this.$('net-page-next').disabled=c.page===packed.pageCount-1;
     this.$('net-paper-status').textContent=`Page ${c.page+1} of ${packed.pageCount} · ${page.widthMm} × ${page.heightMm} mm · E0 = ${packed.referenceEdgeLengthMm} mm · 100% source scale${page.paperColorLabel?' / '+page.paperColorLabel:''}${packed.colorPrinting?.crossColorCuts.length?' / '+packed.colorPrinting.crossColorCuts.length+' detached print cuts':''}`;
-    this.$('derived-status').textContent=this.$('net-paper-status').textContent;}
+    const net=this.getState().netLayout,faces=net?.overlapPairs.length??0,tabs=net?.tabOverlapPairs.length??0;
+    if(faces||tabs)this.$('net-paper-status').textContent+=` · ${faces} face overlap pairs · ${tabs} tab overlap pairs. Review before printing.`;
+    this.$('derived-status').textContent=this.$('net-paper-status').textContent;this.updateActions();}
   highlight(){
     const c=this.config();for(const group of this.$('net-preview').querySelectorAll('[data-net-face]'))group.querySelector('polygon').setAttribute('fill',Number(group.dataset.component)===c.component?'#c4e9df':'#e6f5f0');
   }
   attach(svg){
     const local=e=>{const p=new DOMPoint(e.clientX,e.clientY).matrixTransform(svg.getScreenCTM().inverse());return [p.x,p.y];};
     svg.onpointerdown=e=>{
+      if(this.context.isExporting?.())return;
       const face=e.target.closest('[data-net-face]');if(!face)return;e.preventDefault();
       const c=this.config();c.component=Number(face.dataset.component);this.$('net-component').value=c.component;this.highlight();
       const edge=e.target.closest('[data-net-edge]');if(edge){this.$('net-edge').value=edge.dataset.netEdge;this.tabControls.show();}
@@ -155,7 +207,7 @@ export class NetEditor{
     svg.onpointermove=e=>{if(!this.drag||this.drag.svg!==svg)return;const d=this.drag,p=local(e);d.delta=p.map((x,i)=>x-d.start[i]);if(d.mode==='move')d.group.setAttribute('transform',`translate(${d.delta.join(' ')})`);};
     svg.onpointerup=this.guard(async e=>{
       if(!this.drag||this.drag.svg!==svg)return;const d=this.drag;this.drag=null;svg.releasePointerCapture(e.pointerId);
-      if(this.getState()!==d.state)return;
+      if(this.context.isExporting?.()){d.group.removeAttribute('transform');return;}if(this.getState()!==d.state)return;
       if(d.mode==='edge'&&d.edge!==null)await this.edit('toggle-edge',{edge:d.edge});
       else if(d.mode==='move'&&Math.hypot(...d.delta)>.01)await this.edit('move-component',{component:d.component,translation:d.delta});
     });
@@ -163,6 +215,7 @@ export class NetEditor{
   }
   foldStatus(){const c=this.config();this.$('derived-status').textContent=`Rigid net fold ${Math.round(c.fraction*100)}% · ${this.net.components.length} pieces${c.fraction===1?' · source endpoint reconstructed':''}`;this.$('net-fold').value=c.fraction;this.$('net-fold-value').textContent=Math.round(c.fraction*100)+'%';}
   tick(dt){
+    if(this.context.isExporting?.()){this.playing=false;return;}
     if(!this.playing||this.getState()?.view.derivedMode!=='net'||!this.viewer.net){if(this.playing&&this.getState()?.view.derivedMode!=='net')this.playing=false;return;}
     const c=this.config();c.fraction+=dt*this.direction/4;if(c.fraction>=1){c.fraction=1;this.direction=-1;}else if(c.fraction<=0){c.fraction=0;this.direction=1;}
     this.viewer.setFold(c.fraction);this.foldStatus();

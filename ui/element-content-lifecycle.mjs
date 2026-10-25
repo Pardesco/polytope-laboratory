@@ -10,6 +10,15 @@ export function invalidateElementContent(viewer){const job=jobs.get(viewer);job?
 
 export async function prepareElementContent(viewer,state,{describe,signal,isCurrent,referenceEdgeMm=25,canMap=true}={}){
   verifySectionSourcePose(viewer,state);const empty=await prepareEmptySectionSourceContent(viewer,state,{signal,isCurrent});if(empty)return empty;
+  if(state?.view?.elementAnnotations==null){
+    const model=viewer.model,net=viewer.net,cellNet=viewer.cellNet;
+    const current=()=>!signal?.aborted&&isCurrent?.()!==false&&state?.view?.elementAnnotations==null&&viewer.model===model&&viewer.net===net&&viewer.cellNet===cellNet;
+    if(!current())throw abort();invalidateElementContent(viewer);
+    const result=await viewer?.setElementContent?.(null,{signal,isCurrent:current});
+    if(!current())throw abort();
+    if(result?.ready===false)throw Error(result.diagnostic||'Element content could not be cleared.');
+    return result??{ready:true};
+  }
   if(typeof viewer?.setElementContent!=='function'){
     if(state?.view?.elementAnnotations?.entries.length)throw Error('Element content renderer is unavailable.');
     return {ready:true};
@@ -40,7 +49,7 @@ export async function prepareElementContent(viewer,state,{describe,signal,isCurr
       if(result?.ready===false)throw Error(result.diagnostic||'Requested element content cannot be rendered.');
       job.layer=viewer.elementContentLayer;job.model=viewer.model;job.net=viewer.net;job.cellNet=viewer.cellNet;
       return result??{ready:true};
-    })().catch(error=>{job.failed=true;throw error;}).finally(()=>{job.pending=false;});
+    })().catch(error=>{job.failed=true;if(job.controller.signal.aborted||jobs.get(viewer)!==job)throw abort();throw error;}).finally(()=>{job.pending=false;});
   }
   const cancel=()=>job.controller.abort();signal?.addEventListener('abort',cancel,{once:true});if(signal?.aborted)cancel();
   try{const result=await job.promise;verify();return result;}

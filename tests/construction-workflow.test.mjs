@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {generateConstruction} from '../ui/construction-workflow.mjs';
+import {generateConstruction,certifyCurrent} from '../ui/construction-workflow.mjs';
 
 function fixture(){
   let project={documents:[]},exporting=false,resolve,reject;
@@ -44,4 +44,24 @@ test('cancel signal reaches native work and prevents an ignored cancellation fro
   await assert.rejects(pending,{name:'AbortError'});assert.equal(f.calls.length,1);
   const already=fixture();await assert.rejects(generateConstruction(already.context,'cupola',{},'Cupola',{signal:controller.signal}),{name:'AbortError'});
   assert.equal(already.calls.length,0);
+});
+
+function certification(){
+  const model={id:'cube',name:'Cube',dimension:3,embeddingDimension:3,interpretation:'convex-polytope',vertices:[[0,0,0],[1,0,0],[0,1,0],[0,0,1]],edges:[[0,1],[0,2],[0,3],[1,2],[1,3],[2,3]],faces:[[0,1,2],[0,1,3],[0,2,3],[1,2,3]],cells:[],metadata:{}};
+  let state={model,notes:'original',view:{coordinateUnit:'mm',camera:{distance:2}}},document={id:'source',cursor:0,states:[state]},project={documents:[document]},exporting=false,resolve;
+  const calls=[],context={getProject:()=>project,getState:()=>state,getDocument:()=>document,isExporting:()=>exporting,run:(...args)=>{calls.push(args);return new Promise(r=>resolve=r);},addDocument:(...args)=>calls.push(['add',...args])};
+  return {context,calls,state,project,finish:()=>resolve({exact:true}),replace:()=>project={documents:[]},switch:()=>{state={...state};document={id:'other',cursor:0,states:[state]};project.documents.push(document);},export:()=>exporting=true};
+}
+test('exact certification sends the captured decimal coordinates and permits observer motion',async()=>{
+  const f=certification(),pending=certifyCurrent(f.context);f.state.view.camera.distance=10;f.finish();assert.deepEqual(await pending,{exact:true});
+  assert.deepEqual(f.calls[0],['rational-hull',{points:[['0','0','0'],['1','0','0'],['0','1','0'],['0','0','1']],name:'Rational input hull of Cube'},null,'Certify supplied decimal hull']);assert.deepEqual(f.calls[1],['add',{exact:true},'Certify decimal input']);
+});
+test('certification refuses changed project, selection, source, notes, units or export ownership',async()=>{
+  for(const change of [f=>f.replace(),f=>f.switch(),f=>f.state.model.vertices[0][0]=2,f=>f.state.notes='changed',f=>f.state.view.coordinateUnit='cm',f=>f.export()]){
+    const f=certification(),pending=certifyCurrent(f.context);change(f);f.finish();await assert.rejects(pending);assert.equal(f.calls.length,1);
+  }
+});
+test('certification checks the document cap before native work and again before publication',async()=>{
+  const f=certification();f.project.documents.length=100;await assert.rejects(certifyCurrent(f.context),/Close a document/);assert.equal(f.calls.length,0);
+  const later=certification(),pending=certifyCurrent(later.context);later.project.documents.length=100;later.finish();await assert.rejects(pending,/Close a document/);assert.equal(later.calls.length,1);
 });

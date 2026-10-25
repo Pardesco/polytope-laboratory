@@ -24,11 +24,14 @@ function destination(value){
 
 /** A renderer verifies its source after begin's dialog and before write.
  * Tickets authorize only the exact user-selected destination, once. */
-function createTextExport({selectPath,io=fs,now=()=>performance.now(),randomId=randomUUID,ttlMs=TEXT_EXPORT_LIMITS.expiryMs,maxSessions=TEXT_EXPORT_LIMITS.sessions}={}){
+function createTextExport({selectPath,io=fs,now=()=>performance.now(),randomId=randomUUID,ttlMs=TEXT_EXPORT_LIMITS.expiryMs,maxSessions=TEXT_EXPORT_LIMITS.sessions,formats=['csv','json','svg','pdf'],maxBytes=TEXT_EXPORT_LIMITS.bytes}={}){
   requireValue(typeof selectPath==='function','Text export needs a destination selector.');
   requireValue(Number.isFinite(ttlMs)&&ttlMs>0&&ttlMs<=TEXT_EXPORT_LIMITS.expiryMs,'Text export expiry is outside its bound.');
   requireValue(Number.isInteger(maxSessions)&&maxSessions>0&&maxSessions<=TEXT_EXPORT_LIMITS.sessions,'Text export session count is outside its bound.');
   requireValue(typeof now==='function'&&typeof randomId==='function','Text export needs clock and ticket functions.');
+  requireValue(Array.isArray(formats)&&formats.length>0&&new Set(formats).size===formats.length&&formats.every(format=>['csv','json','svg','pdf','off','obj','stl','dxf','vrml','pov'].includes(format)),'Export formats are invalid.');
+  requireValue(Number.isSafeInteger(maxBytes)&&maxBytes>0&&maxBytes<=128*1024*1024,'Export byte limit is invalid.');
+  formats=[...formats];const sizeLabel=(maxBytes/1024/1024)+' MiB';
   const sessions=new Map(),pending=new Map();let closed=false;
   const time=()=>{const value=now();requireValue(Number.isFinite(value),'Text export clock is invalid.');return value;};
   const retire=(record,error)=>{if(!record.error)record.error=error;record.controller.abort();if(sessions.get(record.id)===record)sessions.delete(record.id);};
@@ -39,7 +42,7 @@ function createTextExport({selectPath,io=fs,now=()=>performance.now(),randomId=r
   async function begin(params,{signal}={}){
     requireValue(params&&typeof params==='object'&&!Array.isArray(params)&&Object.keys(params).length===2&&Object.hasOwn(params,'format')&&Object.hasOwn(params,'defaultName'),'Text export requires format and defaultName only.');
     const {format,defaultName}=params;
-    requireValue(['csv','json','svg','pdf'].includes(format),'Text export format is unsupported.');
+    requireValue(formats.includes(format),'Text export format is unsupported.');
     requireValue(typeof defaultName==='string'&&defaultName.length>0&&defaultName.length<=240&&wellFormed(defaultName)&&!/[\\/:\x00-\x1f]/.test(defaultName)&&!['.','..'].includes(defaultName),'Text export default name must be a literal file name.');
     reap();if(closed)throw canceled('Text export is closed.');if(signal?.aborted)throw canceled('Text export canceled.');
     requireValue(sessions.size<maxSessions,'Finish or cancel the pending text exports first.');
@@ -70,13 +73,13 @@ function createTextExport({selectPath,io=fs,now=()=>performance.now(),randomId=r
       let data;
       if(record.format==='pdf'){
         requireValue(text instanceof Uint8Array,'PDF export needs Buffer or Uint8Array bytes.');
-        requireValue(text.byteLength<=TEXT_EXPORT_LIMITS.bytes,'PDF export output exceeds 32 MiB.');
+        requireValue(text.byteLength<=maxBytes,'PDF export output exceeds '+sizeLabel+'.');
         // Electron invoke transports binary output as Uint8Array. Copy only the
         // selected view before any await, so later caller mutation cannot alter it.
         data=Buffer.from(text);
       }else{
-        requireValue(typeof text==='string'&&text.length<=TEXT_EXPORT_LIMITS.bytes&&wellFormed(text),'Text export needs literal well-formed Unicode text within 32 MiB.');
-        requireValue(Buffer.byteLength(text,'utf8')<=TEXT_EXPORT_LIMITS.bytes,'Text export UTF-8 output exceeds 32 MiB.');
+        requireValue(typeof text==='string'&&text.length<=maxBytes&&wellFormed(text),'Text export needs literal well-formed Unicode text within '+sizeLabel+'.');
+        requireValue(Buffer.byteLength(text,'utf8')<=maxBytes,'Text export UTF-8 output exceeds '+sizeLabel+'.');
         data=Buffer.from(text,'utf8');
       }
       const key=process.platform==='win32'?record.path.toLowerCase():record.path,prior=pending.get(key)||Promise.resolve();

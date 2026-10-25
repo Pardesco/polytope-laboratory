@@ -1,5 +1,7 @@
 const { app, BrowserWindow, ipcMain, dialog, Menu } = require('electron');
 const { spawn } = require('node:child_process');
+const {EnginePool}=require('./engine-pool.cjs');
+const {applyWorkspaceMenu}=require('./workspace-menu.cjs');
 const path = require('node:path');
 const fs = require('node:fs/promises');
 const crypto = require('node:crypto');
@@ -7,13 +9,16 @@ const {createProjectStorage}=require('./project-storage.cjs');
 const projectStorage=createProjectStorage({writeProject:(file,project)=>engine({op:'save',params:{path:file,project}})});
 const {createTextExport}=require('./text-export.cjs');
 const textExports=createTextExport({selectPath:({format,defaultName})=>dialog.showSaveDialog(window,{defaultPath:defaultName,filters:[{name:format.toUpperCase()+' supporting data',extensions:[format]}]})});
+const {createGeometryExport}=require('./geometry-export.cjs');
+const geometryExports=createGeometryExport({selectPath:({format,defaultName})=>dialog.showSaveDialog(window,{defaultPath:defaultName,filters:[{name:format.toUpperCase()+' geometry',extensions:[format==='vrml'?'wrl':format]}]})});
 const { createAnimationExportManager, validateExportOptions } = require('./animation-export.cjs');
 const animationExports=createAnimationExportManager();
 const jobs = new Map();
 const queue = [];
+const libraryLoads=new Map();
 const root = path.join(__dirname, '..');
 let window, dirty = false, closeAllowed = false;
-const allowed = new Set(['prepare-dual-morph','evaluate-dual-morph','catalog','regular4d-validate','generate','hull','rational-hull','rational-dual','analyze','validate','validate-project','entity-orientation','compound-add','compound-component','compound-drop','cell-facing','recipe-run','recipe-replay','recipe-branch','prepare-export','validate-tour','face-coincidences','remove-coincident-pairs','blend-faces','subdivide-edges','polygon-prism','polyhedron-prism','attach-at-faces','place-at-faces','source-zonohedron','spring-relaxation','spring-relaxation-preview','convex-core-4d','triangular-geodesic','convex-core','convex-layer-join','fit-strict-layer-join','analyze-strict-segmentotope','scale-reference','dual','incidence-dual','truncate','section','vertex-figure','extrude','transform','symmetry','measure','entity-measure','entity-info','dihedral','align-section','expression','expression-batch','orientation','net','net-edit','net-fold','net-pack','cell-net','cell-net-edit','cell','facet','facet-candidates','facet-search','facet-adopt','arrangement','arrangement-diagram','stellation-union','stellation-enumerate']);
+const allowed = new Set(['prepare-dual-morph','evaluate-dual-morph','catalog','regular4d-validate','generate','hull','rational-hull','rational-dual','analyze','validate','validate-project','entity-orientation','compound-add','compound-component','compound-drop','cell-facing','recipe-run','recipe-replay','recipe-branch','prepare-export','export-options','validate-tour','face-coincidences','remove-coincident-pairs','blend-faces','subdivide-edges','polygon-prism','polyhedron-prism','attach-at-faces','place-at-faces','source-zonohedron','spring-relaxation','spring-relaxation-preview','convex-core-4d','triangular-geodesic','convex-core','convex-layer-join','fit-strict-layer-join','analyze-strict-segmentotope','scale-reference','dual','incidence-dual','truncate','section','vertex-figure','extrude','transform','symmetry','measure','entity-measure','entity-info','dihedral','align-section','expression','expression-batch','orientation','net','net-edit','net-fold','net-pack','cell-net','cell-net-edit','cell','facet','facet-candidates','facet-search','facet-adopt','arrangement','arrangement-diagram','stellation-union','stellation-enumerate']);
 allowed.add('facet-diagram');
 allowed.add('element-content-describe');
 allowed.add('stellation-cell-graph');
@@ -100,36 +105,13 @@ function engine(request, jobId = crypto.randomUUID()) {
 function drainQueue(){
   while(queue.length && jobs.size<3){const task=queue.shift();execute(task.request,task.jobId).then(task.resolve,task.reject);}
 }
+const enginePool=new EnginePool({jobs,spawnWorker:()=>{
+  const executable=app.isPackaged?path.join(process.resourcesPath,'engine','polytope-engine.exe'):(process.env.POLYTOPE_PYTHON||'python');
+  const args=app.isPackaged?[]:['-u',path.join(root,'engine','server.py')];
+  return spawn(executable,args,{cwd:app.isPackaged?process.resourcesPath:root,windowsHide:true,stdio:['pipe','pipe','pipe'],env:{...process.env,PYTHONUTF8:'1',PYTHONIOENCODING:'utf-8',OPENBLAS_NUM_THREADS:'1',OMP_NUM_THREADS:'1'}});
+}});
 function execute(request,jobId){
-  return new Promise((resolve, reject) => {
-    const executable = app.isPackaged ? path.join(process.resourcesPath,'engine','polytope-engine.exe') : (process.env.POLYTOPE_PYTHON || 'python');
-    const args = app.isPackaged ? [] : ['-u',path.join(root,'engine','server.py')];
-    const proc = spawn(executable,args,{cwd:app.isPackaged?process.resourcesPath:root,windowsHide:true,stdio:['pipe','pipe','pipe'],env:{...process.env,PYTHONUTF8:'1',PYTHONIOENCODING:'utf-8',OPENBLAS_NUM_THREADS:'1',OMP_NUM_THREADS:'1'}});
-    proc.stdout.setEncoding('utf8');proc.stderr.setEncoding('utf8');
-    jobs.set(jobId,proc);
-    let output='',error='',settled=false;
-    const finish = (err,value) => {
-      if (settled) return;
-      settled=true; clearTimeout(timer); jobs.delete(jobId); proc.kill();
-      err ? reject(err) : resolve(value);
-      drainQueue();
-    };
-    const timer = setTimeout(() => finish(new Error('Job exceeded the two-minute resource limit. Source geometry remains available.')),120000);
-    proc.on('error', e => finish(new Error('Geometry engine could not start: '+e.message)));
-    proc.stdout.on('data', chunk => {
-      output += chunk.toString('utf8');
-      if (output.length > 128*1024*1024) return finish(new Error('Engine output exceeds the 128 MiB limit.'));
-      const newline=output.indexOf('\n');
-      if (newline < 0) return;
-      try { const result=JSON.parse(output.slice(0,newline)); finish(result.ok ? null : new Error(result.error),result.result); }
-      catch(e) { finish(new Error('Invalid engine response: '+e.message)); }
-    });
-    proc.stderr.on('data', chunk => { error=(error+chunk.toString('utf8')).slice(-4000); });
-    proc.on('exit',code => { if (!settled) finish(new Error(code === null ? 'Job cancelled.' : 'Engine exited before completing: '+error)); });
-    proc.stdin.on('error',e=>finish(e));
-    try { proc.stdin.end(JSON.stringify({...request,id:jobId})+'\n'); }
-    catch(e) { finish(e); }
-  });
+  return enginePool.run(request,jobId).finally(drainQueue);
 }
 
 function trusted(event) {
@@ -141,9 +123,10 @@ function action(name) { window?.webContents.send('menu-action',name); }
 app.whenReady().then(() => {
   handle('engine',(request,id)=>{
     if (!request || !allowed.has(request.op)) throw new Error('Operation is unavailable through the geometry API.');
+    if(libraryLoads.has(id))throw Error('Duplicate job ID.');
     return engine(request,id);
   });
-  handle('cancel',id=>{const p=jobs.get(id);if(p){p.kill();return true;}const i=queue.findIndex(j=>j.jobId===id);if(i>=0){queue.splice(i,1)[0].reject(new Error('Queued job cancelled.'));return true;}return false;});
+  handle('cancel',id=>{const library=libraryLoads.get(id);if(library)library.cancelled=true;if(enginePool.cancel(id))return true;const i=queue.findIndex(j=>j.jobId===id);if(i>=0){queue.splice(i,1)[0].reject(new Error('Queued job cancelled.'));return true;}return Boolean(library);});
   handle('open',async()=>{
     const {canceled,filePaths}=await dialog.showOpenDialog(window,{properties:['openFile'],filters:[{name:'Polytope projects and geometry',extensions:['polyproj','off','dxf','json']}]});
     return canceled ? null : {...await engine({op:'load',params:{path:filePaths[0]}}),path:filePaths[0]};
@@ -162,6 +145,7 @@ app.whenReady().then(() => {
   });
   handle('recovery-info',async()=>{try {const s=await fs.stat(recoveryPath());return {modified:s.mtime.toISOString()};} catch {return null;}});
   handle('dirty',value=>{dirty=Boolean(value);});
+  handle('workspace-availability',value=>applyWorkspaceMenu(Menu.getApplicationMenu(),value));
   handle('export',async(model,format)=>{
     if(!formats[format] || format==='svg') throw new Error('Unsupported model format.');
     const {canceled,filePath}=await dialog.showSaveDialog(window,{defaultPath:(model.name.replace(/[^a-zA-Z0-9 _-]/g,'')||'Model')+'.'+formats[format],filters:[{name:format.toUpperCase(),extensions:[formats[format]]}]});
@@ -266,23 +250,31 @@ app.whenReady().then(() => {
     try{await fs.lstat(filePath);throw new Error('Choose a new copy filename; existing files cannot be overwritten.');}catch(e){if(e.code!=='ENOENT')throw e;}
     return engine({op:'library-edge-count-copy',params:{source_path:p,output_path:filePath}});
   });
-  handle('library-model',async p=>{
+  handle('library-model',async(p,id=crypto.randomUUID())=>{
     if(typeof p!=='string')throw new Error('Choose a linked OFF file.');
+    if(typeof id!=='string'||!/^[a-zA-Z0-9_-]{1,128}$/.test(id))throw Error('Use a bounded library load ID.');
+    if(libraryLoads.has(id)||jobs.has(id)||queue.some(job=>job.jobId===id))throw Error('Duplicate job ID.');
+    if(libraryLoads.size>=40)throw Error('Finish or cancel pending linked model loads before opening more.');
     const entry=libraryPaths.get(path.resolve(p));
     if(!entry) throw new Error('This geometry is not in a supported linked catalog.');
+    const pending={cancelled:false};libraryLoads.set(id,pending);
+    try{
     const [directory,relativePath]=[...entry.roots][0];
     if(await fs.realpath(p)!==entry.realPath)throw new Error('Linked file location changed. Relink its catalog folder before loading it.');
-    const result=await engine({op:'load',params:{path:p}});
+    if(pending.cancelled)throw Error('Linked model loading cancelled.');
+    const result=await engine({op:'load',params:{path:p}},id);
+    if(pending.cancelled)throw Error('Linked model loading cancelled.');
     result.model.metadata.linkedLibraryRoot=directory;
     result.model.metadata.linkedRelativePath=relativePath;
     return result;
+    }finally{libraryLoads.delete(id);}
   });
   async function printDocument(svg) {
     if(typeof svg!=='string'||!svg.startsWith('<svg')||svg.length>16*1024*1024)throw new Error('Choose a 3D face net before printing.');
     const width=Number(svg.match(/width="([\d.e+-]+)mm"/)?.[1]),height=Number(svg.match(/height="([\d.e+-]+)mm"/)?.[1]);
     if(!Number.isFinite(width)||!Number.isFinite(height)||width<=0||height<=0||Math.max(width,height)>2000)throw new Error('Net page dimensions must be positive and no larger than 2,000 mm.');
     const printWindow=createAppWindow({show:false,webPreferences:{sandbox:true,nodeIntegration:false,contextIsolation:true,javascript:false}});
-    const html=`<!doctype html><html><head><meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; img-src data:"><style>@page {size:${width+20}mm ${height+20}mm;margin:10mm}body{margin:0}svg{display:block;width:${width}mm;height:${height}mm}</style></head><body>${svg}</body></html>`;
+    const html=`<!doctype html><html><head><title>Polytope Laboratory - Net</title><meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; img-src data:"><style>@page {size:${width+20}mm ${height+20}mm;margin:10mm}body{margin:0}svg{display:block;width:${width}mm;height:${height}mm}</style></head><body>${svg}</body></html>`;
     await printWindow.loadURL('data:text/html;charset=utf-8,'+encodeURIComponent(html));
     return {printWindow,width,height};
   }
@@ -301,9 +293,9 @@ app.whenReady().then(() => {
     if(!Array.isArray(pages)||!pages.length||pages.length>250||pages.some(svg=>typeof svg!=='string'||!svg.startsWith('<svg'))||pages.reduce((sum,svg)=>sum+svg.length,0)>32*1024*1024)throw new Error('Choose a valid packed net preview with up to 250 pages.');
     const dimensions=pages.map(svg=>['width','height'].map(key=>Number(svg.match(new RegExp(key+'="([\\d.e+-]+)mm"'))?.[1])));
     const [width,height]=dimensions[0];
-    if(dimensions.some(d=>d.some(x=>!Number.isFinite(x)||x<20||x>2000)||d[0]!==width||d[1]!==height))throw new Error('Packed pages must have equal finite paper dimensions in 20Ã¢â‚¬â€œ2,000 mm.');
+    if(dimensions.some(d=>d.some(x=>!Number.isFinite(x)||x<20||x>2000)||d[0]!==width||d[1]!==height))throw new Error('Packed pages must have equal finite paper dimensions in 20–2,000 mm.');
     const printWindow=createAppWindow({show:false,webPreferences:{sandbox:true,nodeIntegration:false,contextIsolation:true,javascript:false}});
-    const html=`<!doctype html><html><head><meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; img-src data:"><style>@page{size:${width}mm ${height}mm;margin:0}body{margin:0}.page{position:relative;width:${width}mm;height:calc(${height}mm - 1px);break-after:page;overflow:hidden}.page:last-child{break-after:auto}svg{position:absolute;top:0;left:0;display:block;width:${width}mm;height:${height}mm}</style></head><body>${pages.map(svg=>'<section class="page">'+svg+'</section>').join('')}</body></html>`;
+    const html=`<!doctype html><html><head><title>Polytope Laboratory - Net</title><meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; img-src data:"><style>@page{size:${width}mm ${height}mm;margin:0}body{margin:0}.page{position:relative;width:${width}mm;height:calc(${height}mm - 1px);break-after:page;overflow:hidden}.page:last-child{break-after:auto}svg{position:absolute;top:0;left:0;display:block;width:${width}mm;height:${height}mm}</style></head><body>${pages.map(svg=>'<section class="page">'+svg+'</section>').join('')}</body></html>`;
     try{await printWindow.loadURL('data:text/html;charset=utf-8,'+encodeURIComponent(html));return printWindow;}catch(e){printWindow.destroy();throw e;}
   }
   handle('save-packed-net-pdf',async pages=>{
@@ -319,6 +311,9 @@ app.whenReady().then(() => {
   handle('text-export-begin',params=>textExports.begin(params));
   handle('text-export-write',(id,data)=>textExports.write(id,data));
   handle('text-export-abort',id=>textExports.abort(id));
+  handle('geometry-export-begin',params=>geometryExports.begin(params));
+  handle('geometry-export-write',(id,data)=>geometryExports.write(id,data));
+  handle('geometry-export-abort',id=>geometryExports.abort(id));
   handle('print-packed-nets',async pages=>{const printWindow=await packedPrintDocument(pages);try{return await new Promise((resolve,reject)=>printWindow.webContents.print({printBackground:true,scaleFactor:100},(ok,reason)=>ok?resolve(true):reject(new Error(reason))));}finally{printWindow.destroy();}});
   handle('fullscreen',()=>{window.setFullScreen(!window.isFullScreen());return window.isFullScreen();});
   handle('animation-begin',async options=>{
@@ -330,10 +325,10 @@ app.whenReady().then(() => {
   handle('animation-finish',id=>animationExports.finish(id));
   handle('animation-abort',id=>animationExports.abort(id));
   const menu = [
-    {label:'File',submenu:[{label:'New document',accelerator:'CmdOrCtrl+N',click:()=>action('new')},{label:'OpenÃ¢â‚¬Â¦',accelerator:'CmdOrCtrl+O',click:()=>action('open')},{label:'Save projectÃ¢â‚¬Â¦',accelerator:'CmdOrCtrl+S',click:()=>action('save')},{label:'Recover autosave',click:()=>action('recover')},{type:'separator'},{label:'Export modelÃ¢â‚¬Â¦',click:()=>action('export')},{label:'Save imageÃ¢â‚¬Â¦',click:()=>action('image')},{label:'PrintÃ¢â‚¬Â¦',accelerator:'CmdOrCtrl+P',click:()=>action('print')},{type:'separator'},{role:'quit'}]},
-    {label:'Edit',submenu:[{label:'Undo geometry',accelerator:'CmdOrCtrl+Z',click:()=>action('undo')},{label:'Redo geometry',accelerator:'CmdOrCtrl+Shift+Z',click:()=>action('redo')},{type:'separator'},{role:'copy'},{role:'paste'},{role:'selectAll'}]},
-    {label:'View',submenu:[{label:'Reset camera',accelerator:'Home',click:()=>action('reset')},{label:'Fullscreen',accelerator:'F11',click:()=>action('fullscreen')},{role:'zoomIn'},{role:'zoomOut'},{role:'resetZoom'}]},
-    {label:'Help',submenu:[{label:'User guide',accelerator:'F1',click:()=>action('help')},{label:'About',click:()=>dialog.showMessageBox(window,{title:'Polytope Laboratory',message:'Polytope Laboratory '+app.getVersion(),detail:'Offline 3D/4D mathematical workspace. Convex operations use float64 predicates. Complete Stella4D parity is in progress.'})}]}
+    {label:'File',submenu:[{label:'New document',accelerator:'CmdOrCtrl+N',click:()=>action('new')},{label:'Open…',accelerator:'CmdOrCtrl+O',click:()=>action('open')},{id:'workspace-save',enabled:false,label:'Save project…',accelerator:'CmdOrCtrl+S',click:()=>action('save')},{label:'Recover autosave',click:()=>action('recover')},{type:'separator'},{id:'workspace-export',enabled:false,label:'Export model…',click:()=>action('export')},{id:'workspace-image',enabled:false,label:'Save image…',click:()=>action('image')},{id:'workspace-print',enabled:false,label:'Print…',accelerator:'CmdOrCtrl+P',click:()=>action('print')},{type:'separator'},{role:'quit'}]},
+    {label:'Edit',submenu:[{id:'workspace-undo',enabled:false,label:'Undo geometry',accelerator:'CmdOrCtrl+Z',click:()=>action('undo')},{id:'workspace-redo',enabled:false,label:'Redo geometry',accelerator:'CmdOrCtrl+Shift+Z',click:()=>action('redo')},{type:'separator'},{role:'copy'},{role:'paste'},{role:'selectAll'}]},
+    {label:'View',submenu:[{id:'workspace-reset',enabled:false,label:'Reset camera',accelerator:'Home',click:()=>action('reset')},{label:'Fullscreen',accelerator:'F11',click:()=>action('fullscreen')},{role:'zoomIn'},{role:'zoomOut'},{role:'resetZoom'}]},
+    {label:'Help',submenu:[{label:'User guide',accelerator:'F1',click:()=>action('help')},{label:'About',click:()=>dialog.showMessageBox(window,{title:'Polytope Laboratory',message:'Polytope Laboratory '+app.getVersion(),detail:'Offline 3D/4D mathematical workspace. Convex operations use float64 predicates. Early community preview. Current focus: usability, performance and reliability.'})}]}
   ];
   Menu.setApplicationMenu(hiddenQualification?null:Menu.buildFromTemplate(menu));
   window=createAppWindow({width:1500,height:960,minWidth:1050,minHeight:720,backgroundColor:'#101722',title:'Polytope Laboratory',show:false,webPreferences:{preload:path.join(__dirname,'preload.cjs'),contextIsolation:true,nodeIntegration:false,sandbox:true}});
@@ -346,4 +341,4 @@ app.whenReady().then(() => {
   if(!hiddenQualification)window.on('ready-to-show',()=>window.show());
   window.loadFile(path.join(root,'dist','index.html'));
 });
-app.on('window-all-closed',()=>{textExports.dispose();for(const proc of jobs.values())proc.kill();animationExports.abortAll().finally(()=>app.quit());});
+app.on('window-all-closed',()=>{for(const job of libraryLoads.values())job.cancelled=true;textExports.dispose();geometryExports.dispose();enginePool.dispose();animationExports.abortAll().finally(()=>app.quit());});

@@ -32,6 +32,22 @@ test('configure validates the actual candidate before publishing settings and mu
   await f.session.seek(.5);assert.deepEqual(f.model,source);assert.equal(view.dualMorph.ratio,.5);
 });
 
+test('automatic radius matches endpoint size using native dual geometry and stores a reproducible numeric radius',async()=>{
+  const f=fixture(),native=f.context.prepare,source=clone(f.model),radii=[];
+  f.context.prepare=async(m,s,c)=>{
+    radii.push(s.radius);const p=await native(m,s,c);p.settings.center=[0,0,0];
+    p.descriptor={dual:{vertices:m.vertices.map(v=>v.map(x=>x*4*s.radius*s.radius))}};return p;
+  };
+  await f.session.configure(settings(),{matchSourceRadius:true});
+  assert.deepEqual(radii,[2,.5]);assert.equal(f.state.view.dualMorph.radius,.5);assert.deepEqual(f.model,source);
+  const saved=clone(f.state.view.dualMorph);await f.session.configure(saved);assert.equal(radii.at(-1),.5);
+});
+
+test('automatic sizing refuses an unavailable native dual without publishing settings',async()=>{
+  const f=fixture();await assert.rejects(f.session.configure(settings(),{matchSourceRadius:true}),/automatic reciprocal radius/);
+  assert.equal(f.state.view.dualMorph,undefined);assert.deepEqual(f.renders,[]);
+});
+
 test('native math/preparation/forged-frame refusal publishes no saved bank or display',async()=>{
   for(const stage of ['prepare','evaluate','binding']){const f=fixture();
     if(stage==='binding'){const evaluate=f.context.evaluate;f.context.evaluate=async(...a)=>{const result=await evaluate(...a);result.binding.sourceContextSha256='forged';return result;};}
@@ -81,6 +97,12 @@ test('play uses absolute elapsed time, independent of RAF cadence; loop and fina
   const f=fixture(),s=settings();s.loop=true;await f.session.configure(s);f.session.play();await f.advance(4500);assert.equal(f.state.view.dualMorph.ratio,.25);assert.equal(f.session.playing,true);f.session.pause();
 });
 
+test('play at the final endpoint replays from the beginning; pausing midway resumes from that pose',async()=>{
+  const f=fixture();await f.session.configure({...settings(),ratio:1});f.session.play();await f.advance(500);
+  assert.equal(f.state.view.dualMorph.ratio,.25);assert.equal(f.session.playing,true);f.session.pause();
+  f.session.play();await f.advance(1000);assert.equal(f.state.view.dualMorph.ratio,.5);f.session.pause();
+});
+
 test('pause/cancel stop ignored-provider native jobs; reset restores source without old view restoration',async()=>{
   for(const operation of ['pause','cancel','reset']){const f=fixture();await f.session.configure(settings());const held=deferred(),native=f.context.evaluate;
     f.context.evaluate=async(...a)=>{const result=await native(...a);await held.promise;return result;};const pending=f.session.seek(.5),rejected=assert.rejects(pending,/canceled|stale|superseded/);
@@ -118,6 +140,35 @@ function controls(f){
   nodes.get('method').options=['sizing','truncation','augmentation','expansion','tilting-quads','tilting-triangles','tilting-to-compound','tilting-to-rectify','via-snub'].map(value=>({value}));
   const c=new DualMorphControls(f.context,{mount:false});c.panel={querySelector:s=>nodes.get(s==='select'?'method':s.replace('#dual-morph-','')),querySelectorAll:()=>[...nodes.values()]};return {c,nodes};
 }
+
+test('new source forms reset the old reciprocal radius and choose an eligible method; saved forms retain settings',async()=>{
+  const f=fixture(),{c,nodes}=controls(f);c.sync();nodes.get('radius').value='9';nodes.get('duration').value='12';
+  const other=clone(f.state);other.model.dimension=4;other.model.embeddingDimension=4;
+  f.doc.states.push(other);f.doc.cursor=1;c.sync();
+  assert.equal(nodes.get('method').value,'expansion');assert.equal(nodes.get('radius').value,'');assert.equal(nodes.get('duration').value,'5');
+  other.view.dualMorph={...settings(),radius:3,ratio:1,duration:7};c.sync();
+  assert.equal(nodes.get('radius').value,3);assert.equal(nodes.get('play').textContent,'Replay');
+  c.sync();assert.equal(nodes.get('radius').value,3);
+});
+
+test('scrubbing pauses playback and ignores only superseded poses, while native refusals remain visible',async()=>{
+  const f=fixture(),{c}=controls(f);await c.configure(settings());c.play();await c.scrub(.4);
+  assert.equal(c.playing,false);assert.equal(f.state.view.dualMorph.ratio,.4);
+  const held=deferred(),native=f.context.evaluate;let calls=0;
+  f.context.evaluate=async(...args)=>{const frame=await native(...args);if(calls++===0)await held.promise;return frame;};
+  const first=c.scrub(.5),last=c.scrub(.8);held.resolve();await Promise.all([first,last]);assert.equal(f.state.view.dualMorph.ratio,.8);
+  f.context.evaluate=async()=>{throw Error('Native topology unresolved');};await assert.rejects(c.scrub(.6),/topology unresolved/);
+});
+
+test('ordinary IPC cancellation errors from a paused playback job cannot discard the new scrub pose',async()=>{
+  const f=fixture(),{c}=controls(f);await c.configure(settings());const native=f.context.evaluate;let calls=0;
+  f.context.evaluate=(m,p,ratio,source,options)=>{
+    if(calls++===0)return new Promise((resolve,reject)=>options.signal.addEventListener('abort',()=>reject(Error('Job cancelled.')),{once:true}));
+    return native(m,p,ratio,source,options);
+  };
+  c.play();await f.advance(100);assert.ok(c.active);
+  await c.scrub(.375);assert.equal(c.playing,false);assert.equal(f.state.view.dualMorph.ratio,.375);assert.deepEqual(f.errors,[]);
+});
 test('controls batch numeric expressions atomically, retain center shape and restore busy/export disabled nodes',async()=>{
   const f=fixture(),{c,nodes}=controls(f);let batch;f.context.evaluateMany=async expressions=>{batch=expressions;return expressions.map(x=>({'sqrt(4)':2,'1/4':.25,'1+1':2,'0':0})[x]);};
   await c.applyInputs();assert.deepEqual(batch,['sqrt(4)','1/4','1+1','0','0','0']);assert.equal(f.state.view.dualMorph.ratio,.25);assert.deepEqual(f.state.view.dualMorph.center,[0,0,0]);

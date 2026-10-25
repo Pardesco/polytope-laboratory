@@ -1,5 +1,5 @@
 // Native exports remain private until the originating source is rechecked.
-export async function publishBoundedExport(api,format,payload,{signal,verifyPublication,defaultName='Supporting panels'}={}){
+export async function publishBoundedExport(api,format,payload,{signal,verifyPublication,defaultName='Supporting panels',extension=format}={}){
   const verify=()=>{
     if(signal?.aborted)throw Object.assign(Error('Export canceled.'),{name:'AbortError'});
     verifyPublication?.();
@@ -8,7 +8,7 @@ export async function publishBoundedExport(api,format,payload,{signal,verifyPubl
   const abort=()=>{if(ticket)api.abortTextExport(ticket.id).catch(()=>{});};
   signal?.addEventListener('abort',abort,{once:true});
   try{
-    ticket=await api.beginTextExport({format,defaultName:defaultName+'.'+format});
+    ticket=await api.beginTextExport({format,defaultName:defaultName+'.'+extension});
     verify();if(!ticket)return null;
     let data=payload;
     if(format==='pdf'){

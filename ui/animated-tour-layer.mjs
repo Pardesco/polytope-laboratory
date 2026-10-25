@@ -49,7 +49,11 @@ export function createAnimatedTourLayerFactory({host,run,ViewerClass=Viewer,crea
       check(state,options);if(token!==sequence||contentSignature(state)!==signature||mode==='net'&&JSON.stringify(v.net||{})!==netSignature)throw abort();prepareLayout(v);
       if(mode==='net'){netViewer.setNet(result);netViewer.setFold(v.net?.fraction??0);netViewer.setDisplay(derivedView(v));}
       else if(mode==='cell-net'){netViewer.setCellNet(result,v.cellNet?.shrink??1);netViewer.setDisplay(derivedView(v));}
-      else{netViewer.setModel(result.model??null);rememberSectionSource(netViewer,result,m);if(result.model)netViewer.setDisplay(derivedView(v));}
+      else{
+        if(mode==='section'||mode==='cell-section')netViewer.setSectionModel(result.model??null,m,{mode});
+        else netViewer.setModel(result.model??null);
+        rememberSectionSource(netViewer,result,m);if(result.model)netViewer.setDisplay(derivedView(v));
+      }
       if(v.derivedCamera)netViewer.restoreCamera(v.derivedCamera);else netViewer.fit();
       if(mode==='cell-section'&&(result.model||hasEmptySectionSource(netViewer)))await netViewer.prepareCapture({...options,isCurrent:()=>token===sequence&&!closed&&getState()===state&&contentSignature(state)===signature&&options.isCurrent?.()!==false});
       check(state,options);netViewer.draw();return result;

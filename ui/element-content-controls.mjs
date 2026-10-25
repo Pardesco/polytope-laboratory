@@ -102,9 +102,52 @@ export class ElementContentControls{
     this.node('x').value=String(placement.offsetMm[0]);this.node('y').value=String(placement.offsetMm[1]);this.node('angle').value=String(placement.rotationDeg);this.node('line-height').value=String(placement.lineHeightMm);
   }
   cancel(){this.entry?.cancel();}
-  invalidate(){if(!this.publishing)this.cancel();for(const job of this.jobs.values())job.controller.abort();this.jobs.clear();this.loadedState=null;this.sync();}
-  async refresh(viewer=this.context.viewer,{signal,isCurrent,referenceEdgeMm=25}={}){
-    const state=this.context.getState();verifySectionSourcePose(viewer,state);const empty=await prepareEmptySectionSourceContent(viewer,state,{signal,isCurrent:()=>this.context.getState()===state&&isCurrent?.()!==false});if(empty)return empty;if(!state?.model){await this.context.render(viewer,null,{});return {ready:true};}
+  invalidate(){if(!this.publishing)this.cancel();for(const job of this.jobs.values())job.controller.abort();this.jobs.clear();this.displayOwners=new WeakMap();this.loadedState=null;this.sync();}
+  displayOwner(viewer){
+    const state=this.context.getState(),document=this.context.getDocument?.(),{angles,...nonPoseView}=state?.view??{};
+    return {state,source:state?.model,document,project:this.context.getProject?.(),cursor:document?.cursor,states:document?.states,documentId:document?.id,
+      notes:JSON.stringify(state?.notes),unit:state?.model?.metadata?.coordinateUnits,view:JSON.stringify(nonPoseView),
+      annotations:state?.view?.elementAnnotations,content:annotationSignature(state),model:viewer.model,net:viewer.net,cellNet:viewer.cellNet,layer:viewer.elementContentLayer};
+  }
+  matchesDisplayOwner(viewer,owner){
+    if(!owner)return false;
+    const current=this.displayOwner(viewer);
+    return Object.keys(current).every(key=>current[key]===owner[key]);
+  }
+  // Only angle-only callers may request this path. A pending/failed refresh is
+  // never a certificate; neither are IDs, counts or source fingerprints.
+  display(viewer=this.context.viewer,{poseOnly=false}={}){
+    const owners=this.displayOwners,receipt=owners?.get(viewer);
+    const isPoseCurrent=()=>this.displayOwners===owners&&owners?.get(viewer)===receipt&&this.matchesDisplayOwner(viewer,receipt?.owner)&&
+      (!receipt.job||this.jobs.get(viewer)===receipt.job&&!receipt.job.controller.signal.aborted&&!receipt.job.failed);
+    const skip=poseOnly&&!viewer.morphFrame&&!viewer.elementContentLayer?.sectionPlan&&isPoseCurrent();
+    const diagnostic=viewer.setDisplay(this.context.getState().view,skip?{elementContentPoseCurrent:isPoseCurrent}:{});
+    return {diagnostic,pending:skip?Promise.resolve({ready:true,poseOnly:true}):this.refresh(viewer,{trackDisplay:true})};
+  }
+  async refresh(viewer=this.context.viewer,{signal,isCurrent,referenceEdgeMm=25,trackDisplay=false}={}){
+    if(!trackDisplay){this.displayOwners?.delete(viewer);return this.refreshValidated(viewer,{signal,isCurrent,referenceEdgeMm});}
+    const owners=this.displayOwners??=new WeakMap(),receipt={};owners.set(viewer,receipt);
+    const owner=this.displayOwner(viewer);
+    // Do not expose an owner until the entire validated publication completed.
+    const result=await this.refreshValidated(viewer,{signal,isCurrent,referenceEdgeMm});
+    owner.layer=viewer.elementContentLayer;
+    if(this.displayOwners===owners&&owners.get(viewer)===receipt&&this.matchesDisplayOwner(viewer,owner)&&!signal?.aborted&&isCurrent?.()!==false){receipt.owner=owner;receipt.job=this.jobs.get(viewer);}
+    return result;
+  }
+  async refreshValidated(viewer=this.context.viewer,{signal,isCurrent,referenceEdgeMm=25}={}){
+    const state=this.context.getState();verifySectionSourcePose(viewer,state);const empty=await prepareEmptySectionSourceContent(viewer,state,{signal,isCurrent:()=>this.context.getState()===state&&isCurrent?.()!==false});if(empty)return empty;
+    if(state?.view?.elementAnnotations==null){
+      // Nothing is being described or painted. Do not clone/validate the source
+      // on every observer frame just to clear an absent annotation document.
+      // Explicit documents, including empty records, keep the full native path.
+      const model=viewer.model,net=viewer.net,cellNet=viewer.cellNet;
+      const verify=()=>{if(signal?.aborted||isCurrent?.()===false||this.context.getState()!==state||state?.view?.elementAnnotations!=null||viewer.model!==model||viewer.net!==net||viewer.cellNet!==cellNet)throw aborted();};
+      verify();this.jobs.get(viewer)?.controller.abort();this.jobs.delete(viewer);
+      const result=await this.context.render(viewer,null,{signal,verifyPublication:verify});verify();
+      if(result?.ready===false)throw Error(result.diagnostic||'Element content could not be cleared.');
+      return result??{ready:true};
+    }
+    if(!state?.model){await this.context.render(viewer,null,{});return {ready:true};}
     const readContext={...this.context,isExporting:()=>false},owner=captureNativeSource(readContext),content=annotationSignature(state),
       key=JSON.stringify([owner.modelSignature,content,owner.notes,owner.unit,referenceEdgeMm]);
     if(signal?.aborted||isCurrent?.()===false)throw aborted();
@@ -124,7 +167,7 @@ export class ElementContentControls{
       let descriptor=null;if(state.view.elementAnnotations){descriptor=await this.context.describe(source,{document:clone(state.view.elementAnnotations),reference_edge_mm:referenceEdgeMm},options);verify();}
       const result=await this.context.render(viewer,descriptor?.entries.length?descriptor:null,options);verify();
       if(result?.ready===false)throw Error(result.diagnostic||'Requested element content cannot be mapped to this presentation.');job.layer=viewer.elementContentLayer;job.model=viewer.model;job.net=viewer.net;job.cellNet=viewer.cellNet;return result??{ready:true};
-    })().catch(error=>{job.failed=true;throw error;}).finally(()=>{job.pending=false;signal?.removeEventListener('abort',cancel);});return job.promise;
+    })().catch(error=>{job.failed=true;if(job.controller.signal.aborted||this.jobs.get(viewer)!==job)throw aborted();throw error;}).finally(()=>{job.pending=false;signal?.removeEventListener('abort',cancel);});return job.promise;
   }
   async prepareCapture(options={}){await this.refresh(this.context.viewer,options);if(options.signal?.aborted||options.isCurrent&& !options.isCurrent())throw aborted();}
   sync(){

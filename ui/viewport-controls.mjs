@@ -56,7 +56,7 @@ export class ViewportControls {
       if(!this.drag||event.pointerId!==this.drag.pointer)return;event.stopImmediatePropagation();event.preventDefault();
       if(this.context.getState()!==this.drag.source){this.endDrag();return;}
       const wrap=value=>((value+180)%360+360)%360-180,view=this.view();view.angles[2]=wrap(this.drag.angles[2]+(event.clientX-this.drag.x)*.35);view.angles[4]=wrap(this.drag.angles[4]-(event.clientY-this.drag.y)*.35);
-      this.context.display();this.context.syncPose();
+      (this.context.displayPose||this.context.display)();this.context.syncPose();
     },true);
     const end=event=>{if(this.drag){event.stopImmediatePropagation();this.endDrag();this.context.markDirty();}};
     canvas.addEventListener('pointerup',end,true);canvas.addEventListener('pointercancel',end,true);
@@ -98,6 +98,7 @@ export class ViewportControls {
     controls.hidden=layout!=='split'||!['section','cell-section','vertex-figure','cell','face'].includes(mode);
     for(const label of controls.querySelectorAll('label')){const field=label.querySelector('input');label.hidden=sectionMode?field?.id==='entity-id':field?.id!=='entity-id';}
     $('apply-section').hidden=!sectionMode;$('section-events').hidden=!sectionMode;
+    this.context.syncDerivedControls?.();
     this.syncPlaying();
   }
   syncPlaying(){$('auto-rotate').textContent=this.playing?'Pause rotation':'Rotate';$('auto-rotate').setAttribute('aria-pressed',String(this.playing));}
@@ -114,6 +115,6 @@ export class ViewportControls {
     if(!this.playing)return false;if(!this.canEdit()){this.stop();return false;}
     const view=this.view(),index=view.rotationPlane??(this.context.getModel()?.dimension===4?2:1),speed=view.rotationSpeed??12;
     view.angles[index]=((view.angles[index]+speed*dt+180)%360+360)%360-180;
-    this.context.display();this.context.syncPose();return true;
+    (this.context.displayPose||this.context.display)();this.context.syncPose();return true;
   }
 }

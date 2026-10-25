@@ -1,0 +1,29 @@
+{
+  "version": "0.27.20",
+  "license": "GPL-3.0-only",
+  "binary": {
+    "file": "Polytope.Laboratory.0.27.20.preview.exe",
+    "bytes": 143244374,
+    "sha256": "8be9e68b92f82f8ca605edd1e252b1154d312f231694728619bb569d7fbcea69"
+  },
+  "sourceArchive": {
+    "file": "Polytope.Laboratory.0.27.20.source.zip",
+    "bytes": 26411337,
+    "sha256": "ff3ed74b608892d26f2d994e501b4efbf5c47a6475c2d9f29c181b51fb9412cf",
+    "archivedSourceFiles": 2522,
+    "verifiedFrozenRuntimeInputs": 1878
+  },
+  "packagedWorkflowAndPortableChecks": 12,
+  "alternatingRotationProfiles": 30,
+  "documentationUpdatesFromSealedSource": [
+    "README.md",
+    "docs/BUILD_STATUS.md",
+    "docs/NEXT_SESSION.md",
+    "docs/SESSION_HANDOFF.md"
+  ],
+  "addedDocumentation": [
+    "docs/RELEASE_0.27.20_PREVIEW.md",
+    "docs/RELEASE_SOURCE_PAIR_0.27.20.json"
+  ],
+  "scope": "Tagged repository uses sealed qualified 0.27.20 source with publication documentation updates only. Attached source ZIP and executable are unchanged. No 0.27.21 implementation or test/performance claims included."
+}

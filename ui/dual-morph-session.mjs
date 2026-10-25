@@ -16,7 +16,7 @@ export class DualMorphSession{
   checked(owner=this.owner,expected=this.expected){this.blocked();if(!owner)throw Error('Prepare a supported dual morph first.');verifyNativeSource(this.context,owner);this.qualifiedView(owner.state.view);if(this.context.mappedContent&&owner.contentSignature!==signature(owner.state.view.elementAnnotations))throw abort('Morph source element annotations changed.');if(signature(owner.state.view.dualMorph)!==expected)throw abort('Morph method, center, radius, ratio, or playback settings changed.');}
   guard(owner,expected,token,controller,verify){return()=>{if(token!==this.generation||controller.signal.aborted)throw abort('Dual morph canceled.');verify?.();this.checked(owner,expected);};}
   sourceContext(owner){return {notes:owner.notes??'',unit:owner.unit};}
-  async configure(settings,{signal,verifyPublication}={}){
+  async configure(settings,{signal,verifyPublication,matchSourceRadius=false}={}){
     if(this.configuration)throw Error('Finish the current morph preparation first.');
     this.blocked();if(settings?.enabled!==true)throw Error('Enable the candidate morph before preparing its display.');if(!morphEligible(this.context.getState()?.model,settings.method))throw Error('This morph method/dimension is unavailable; saved settings are retained.');
     const state=this.context.getState(),view=state.view;
@@ -29,7 +29,15 @@ export class DualMorphSession{
     this.context.onState?.();
     try{
       verify();const source=JSON.parse(owner.modelSignature),sourceContext=this.sourceContext(owner);
-      const prepared=await this.context.prepare(source,clone(settings),sourceContext,{signal:controller.signal,isCurrent});verify();
+      let prepared=await this.context.prepare(source,clone(settings),sourceContext,{signal:controller.signal,isCurrent});verify();
+      if(matchSourceRadius){
+        const center=prepared.settings.center,dual=prepared.descriptor?.dual;
+        const bound=model=>Math.max(...model.vertices.map(point=>Math.hypot(...point.map((value,i)=>value-center[i]))));
+        if(!Array.isArray(center)||!dual?.vertices?.length)throw Error('This morph cannot determine an automatic reciprocal radius. Enter a radius explicitly.');
+        const sourceBound=bound(source),dualBound=bound(dual),radius=settings.radius*Math.sqrt(sourceBound/dualBound);
+        if(!Number.isFinite(radius)||radius<=0)throw Error('Automatic reciprocal radius is unresolved. Enter a radius explicitly.');
+        prepared=await this.context.prepare(source,{...clone(settings),radius},sourceContext,{signal:controller.signal,isCurrent});verify();
+      }
       const frame=await this.context.evaluate(source,prepared,settings.ratio,sourceContext,{signal:controller.signal,isCurrent});verify();
       this.validateFrame(frame,prepared,settings.ratio);
       await this.context.render(frame,{signal:controller.signal,isCurrent});verify();
@@ -64,12 +72,17 @@ export class DualMorphSession{
       if(!isCurrent())throw abort('Morph pose canceled/superseded.');this.validateFrame(frame,prepared,job.ratio);
       await this.context.render(frame,{signal:controller.signal,isCurrent});if(!isCurrent())throw abort('Morph source/settings changed before publication.');
       owner.state.view.dualMorph=clone(frame.settings);this.expected=signature(owner.state.view.dualMorph);this.context.markDirty?.();job.resolve(frame);
-    }catch(error){job.reject(error);if(error.name!=='AbortError'){this.pause();this.context.onError?.(error);}}
+    }catch(error){
+      // IPC cancellation may arrive as an ordinary Error. Retiring that old
+      // request must not pause and discard the user's newly queued scrub pose.
+      const failure=controller.signal.aborted||token!==this.generation?abort('Morph pose canceled.'):error;
+      job.reject(failure);if(failure.name!=='AbortError'){this.pause();this.context.onError?.(failure);}
+    }
     finally{job.cleanup();if(this.active?.controller===controller)this.active=null;this.context.onState?.();this.pump();}
   }
   play(){
     this.blocked();this.checked();if(!this.prepared)throw Error('Prepare a morph first.');if(this.playing)return;
-    this.context.stopOther?.();this.playing=true;const start=this.now(),initial=this.owner.state.view.dualMorph.ratio,duration=this.owner.state.view.dualMorph.duration,loop=this.owner.state.view.dualMorph.loop;
+    this.context.stopOther?.();this.playing=true;const start=this.now(),savedRatio=this.owner.state.view.dualMorph.ratio,initial=savedRatio>=1?0:savedRatio,duration=this.owner.state.view.dualMorph.duration,loop=this.owner.state.view.dualMorph.loop;
     const step=()=>{
       if(!this.playing)return;
       try{this.checked();const elapsed=Math.max(0,(this.now()-start)/1000),value=initial+elapsed/duration,ratio=loop?value-Math.floor(value):Math.min(1,value);

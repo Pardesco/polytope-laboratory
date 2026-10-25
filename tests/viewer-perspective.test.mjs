@@ -9,7 +9,7 @@ import {perspectiveDisplayGeometry} from '../ui/viewer-perspective.mjs';
 const HASH='d'.repeat(64),XW=[[0,0,0,-1],[0,1,0,0],[0,0,1,0],[1,0,0,0]];
 const cross=()=>({dimension:4,embeddingDimension:4,interpretation:'generalized-complex',fingerprint:HASH,vertices:[[1,0,0,0],[-1,0,0,0],[0,1,0,0],[0,-1,0,0],[0,0,1,0],[0,0,-1,0],[0,0,0,1],[0,0,0,-1]],edges:[[0,2],[2,4],[4,0],[0,6]],faces:[[0,2,4]],cells:[]});
 function viewer(model){
-  const value=Object.create(Viewer.prototype);value.group=new THREE.Group();value.setModel(model);value.camera=new THREE.OrthographicCamera(-5,5,5,-5,.01,1000);value.camera.position.set(0,0,20);value.camera.lookAt(0,0,0);value.camera.updateMatrixWorld();value.renderer={domElement:{getBoundingClientRect:()=>({width:400,height:400})}};return value;
+  const value=Object.create(Viewer.prototype);value.group=new THREE.Group();value.setModel(model);value.camera=new THREE.OrthographicCamera(-5,5,5,-5,.01,1000);value.camera.position.set(0,0,20);value.camera.lookAt(0,0,0);value.camera.updateMatrixWorld();value.renderer={setClearColor(){},domElement:{getBoundingClientRect:()=>({width:400,height:400})}};return value;
 }
 const close=(a,b,tolerance=1e-6)=>{assert.equal(a.length,b.length);a.forEach((x,i)=>assert.ok(Math.abs(x-b[i])<tolerance,`${a} != ${b}`));};
 function tesseract(){

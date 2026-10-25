@@ -25,7 +25,7 @@ function viewer(model){
   const v=Object.create(Viewer.prototype);v.group=new THREE.Group();v.setModel(model);v.cameraProjection='orthographic';v.orthographicHalfHeight=2;
   v.camera=new THREE.OrthographicCamera(-2,2,2,-2,.01,1000);v.orthographicCamera=v.camera;v.perspectiveCamera=new THREE.PerspectiveCamera(38,1,.01,1000);
   v.camera.position.set(0,0,5);v.camera.lookAt(0,0,0);v.camera.updateMatrixWorld();v.controls={target:new THREE.Vector3(),update(){}};
-  v.renderer={domElement:{getBoundingClientRect:()=>({width:400,height:400})},render(){}};return v;
+  v.renderer={domElement:{getBoundingClientRect:()=>({width:400,height:400})},render(){},setClearColor(){}};return v;
 }
 const view={projection:'orthographic',angles:[0,0,0,0,0,0],faces:true,edges:true,vertices:true,surfaceColors:'source',surfaceOpacity:1};
 
@@ -43,6 +43,25 @@ test('native changing truncation incidence is rebuilt at each pose; no stale ver
     v.setMorphFrame(frames.truncation[i],source,view);assert.deepEqual([v.model.vertices.length,v.model.edges.length,v.model.faces.length],expected);
     assert.equal(v.pointGeometry.attributes.position.count,expected[0]);assert.equal(v.edgeGeometry.attributes.position.count,expected[1]*2);
   }v.clear();
+});
+
+test('morph poses retain compiled materials while geometry and endpoint topology change; reset disposes each material',()=>{
+  for(const method of ['sizing','truncation','expansion']){
+    const {source,frames}=data.cube,v=viewer(source);
+    v.setMorphFrame(frames[method][0],source,view);
+    const names=['lines','points','surface','highlight'],materials=names.map(name=>v[name].material),disposed=[];
+    materials.forEach((material,index)=>material.addEventListener('dispose',()=>disposed.push(index)));
+    for(const frame of frames[method].slice(1)){
+      const geometry=v.surfaceGeometry;let geometryDisposed=false;geometry.addEventListener('dispose',()=>geometryDisposed=true);
+      v.setMorphFrame(frame,source,view);
+      assert.equal(geometryDisposed,true);assert.notStrictEqual(v.surfaceGeometry,geometry);
+      names.forEach((name,index)=>assert.strictEqual(v[name].material,materials[index]));
+      assert.deepEqual(disposed,[]);assert.strictEqual(v.morphFrame,frame);
+      assert.equal(v.pointGeometry.attributes.position.count,frame.model.vertices.length);
+    }
+    v.clearMorph(source,view);assert.deepEqual(disposed.toSorted(),[0,1,2,3]);
+    names.forEach((name,index)=>assert.notStrictEqual(v[name].material,materials[index]));v.clear();
+  }
 });
 
 test('raw RGBA, notes/units ancestry and mapped colors survive actual fill buffers',()=>{

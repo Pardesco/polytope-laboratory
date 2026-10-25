@@ -4,11 +4,9 @@ A free, open-source desktop app for exploring and constructing 3D and 4D polytop
 
 **This is an early community preview, not yet a direct Stella4D competitor.** Stella4D is a reference for the long-term feature scope. The current priority is to make the existing tools easier to use, faster and more reliable; feature expansion is paused.
 
-[Download the Windows x64 preview](https://github.com/Pardesco/polytope-laboratory/releases/download/v0.26.0/Polytope.Laboratory.0.26.0.preview.exe) | [Release notes](docs/RELEASE_0.26_PREVIEW.md) | [Report an issue](https://github.com/Pardesco/polytope-laboratory/issues)
+[Download the Windows x64 preview](https://github.com/Pardesco/polytope-laboratory/releases/download/v0.27.20/Polytope.Laboratory.0.27.20.preview.exe) | [Release notes](docs/RELEASE_0.27.20_PREVIEW.md) | [Report an issue](https://github.com/Pardesco/polytope-laboratory/issues)
 
-The current preview is **0.26.0**. Run the downloaded executable; a separate Python installation is not required. [Matching source ZIP](https://github.com/Pardesco/polytope-laboratory/releases/download/v0.26.0/Polytope.Laboratory.0.26.0.source.zip).
-
-![Four views of a model in the Windows preview](docs/images/workspace-0.26.png)
+The current preview is **0.27.20**. Run the downloaded executable; a separate Python installation is not required. [Matching source ZIP](https://github.com/Pardesco/polytope-laboratory/releases/download/v0.27.20/Polytope.Laboratory.0.27.20.source.zip).
 
 ## Try it
 
@@ -28,13 +26,13 @@ Click **Guide** or press **F1** for the bundled searchable help. For worked exam
 - **Paper models:** editable nets, folding previews, glue tabs, page layouts and SVG/PDF output.
 - **Projects and animation:** saved construction history, notes, labels, face images, keyframes and PNG/WebM export.
 
-Support depends on the model and operation. A tool being present does not mean it works on every convex, nonconvex, star or singular input. See the [0.26 release notes](docs/RELEASE_0.26_PREVIEW.md) for current limitations and the [technical feature notes](docs/RELEASE_0.26_DEVELOPMENT.md) for details.
+Support depends on the model and operation. A tool being present does not mean it works on every convex, nonconvex, star or singular input. See the [0.27.20 release notes](docs/RELEASE_0.27.20_PREVIEW.md) for current limitations and the [technical feature notes](docs/RELEASE_0.26_DEVELOPMENT.md) for details.
 
 ## Current limitations
 
-The interface still needs work on control organization, labels and how much information it presents. Some operations and animations are slow. Community reports include dual-operation latency and slow dual morphing with unexpected scaling on a 3D truncated tetrahedron; these are investigation targets, not fixes included in 0.26.
+The interface still needs usability testing and refinement. Warm native workers and annotation rotation improvements reduce repeated work, but cold requests and dense geometry can still be slow. Automatic dual-morph radius matches endpoint bounds; the Sizing method can still become smaller at the midpoint. See the release notes for the measured scope and remaining limits.
 
-Most geometry and measurements use floating-point calculations. The **Evidence** tab contains technical validation details: a passing structural check is not a proof of every property of a model. Separate exact workflows have their own limits. These details will remain accessible while the everyday interface is simplified.
+Most geometry and measurements use floating-point calculations. The **Advanced** tab contains technical validation details: a passing structural check is not a proof of every property of a model. Separate exact workflows have their own limits. These details will remain accessible while the everyday interface is simplified.
 
 Some specialized models and operations are incomplete. Dense models can be expensive to display, and net layouts can overlap. Check a layout before printing. Test results for individual workflows do not establish that the entire app is bug-free.
 

@@ -16,6 +16,7 @@ class Element{
       node.value=/value="([^"]+)"/.exec(match[0])?.[1]??'';this.nodes[node.id]=node;
     }
     this.nodes['faceting-criterion'].value='closed';this.nodes['faceting-equivalence'].value='labeled';
+    this.nodes['faceting-symmetry-mode'].value='declared';
   }
   querySelector(selector){return this.nodes[selector.slice(1)];}
   querySelectorAll(selector){return Object.values(this.nodes).filter(node=>selector.startsWith('input:')?
@@ -118,7 +119,7 @@ test('successful app workspace invalidation during commit does not turn publishe
 test('invalid counts, pools, JSON, unsupported criteria and source dimensions refuse atomically',async()=>{
   for(const [field,value] of [['faceting-max_face_vertices','sqrt(4)'],['faceting-node_limit','0'],
     ['faceting-result_limit','129'],['faceting-min_face_types','1.5'],['faceting-actions','not JSON'],
-    ['faceting-plane-counts','not JSON'],['faceting-pool','0,1'],['faceting-criterion','spiky']]){
+    ['faceting-plane-counts','not JSON'],['faceting-pool','0,1'],['faceting-criterion','unsupported-criterion']]){
     const f=fixture();f.nodes[field].value=value;const before=structuredClone(f.owner.getProject());
     await assert.rejects(f.controls.apply('search'));assert.deepEqual(f.owner.getProject(),before);
     assert.equal(f.published.length,0);assert.equal(f.controls.busy,false);

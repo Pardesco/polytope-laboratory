@@ -12,13 +12,52 @@ METERS = {'mm':Fraction(1,1000), 'cm':Fraction(1,100), 'm':Fraction(1),
           'in':Fraction(127,5000), 'ft':Fraction(381,1250)}
 UNIT_NAMES = frozenset(METERS) | {'model'}
 FORMATS = frozenset({'off','json','obj','dxf','vrml','stl','pov'})
+FORMAT_ORDER = ('off','json','obj','stl','dxf','vrml','pov')
 
 
-def prepare_export(model, format, source_unit='model', target_unit='model', document_metadata=None, notes=None):
+def _loose_edges(model):
+    boundary = {tuple(sorted((a, face[(i+1) % len(face)])))
+                for face in model.get('faces', []) for i, a in enumerate(face)}
+    return any(tuple(sorted(edge)) not in boundary for edge in model.get('edges', []))
+
+
+def export_options(model):
+    """Exporter domains, not a structural validation or permission to write."""
+    dimension = model.get('dimension')
+    embedding = model.get('embeddingDimension', dimension)
+    rows = []
+    for format in FORMAT_ORDER:
+        reason = ''
+        if format == 'off':
+            if dimension not in (3, 4) or embedding != dimension:
+                reason = 'OFF needs intrinsic 3D or 4D coordinates. Use JSON to retain this model.'
+            elif _loose_edges(model):
+                reason = 'OFF cannot retain edges outside face boundaries. Use JSON or DXF.'
+        elif format != 'json':
+            if dimension not in (2, 3) or embedding not in (2, 3):
+                reason = 'This format needs 2D or 3D coordinates. Choose a 3D section or cell, or use OFF/JSON.'
+            elif format in ('stl', 'pov') and (dimension != 3 or model.get('interpretation') != 'convex-polytope'):
+                reason = 'Triangulated solid export supports convex 3D boundaries only.'
+        rows.append({'format': format, 'available': not reason, 'reason': reason})
+    return {'formats': rows}
+
+
+def require_export_format(model, format):
+    if format not in FORMATS:
+        raise GeometryError('Choose a supported geometry export format.')
+    option = next(row for row in export_options(model)['formats'] if row['format'] == format)
+    if not option['available']:
+        raise GeometryError(option['reason'])
+
+
+def prepare_export(model, format, source_unit='model', target_unit='model', document_metadata=None, notes=None, include_text=False):
     if format not in FORMATS or source_unit not in UNIT_NAMES or target_unit not in UNIT_NAMES:
         raise GeometryError('Choose a supported format and coordinate units.')
     if not validate(model)['passed']:
         raise GeometryError('Export preparation requires valid source geometry.')
+    require_export_format(model, format)
+    if type(include_text) is not bool:
+        raise GeometryError('Export text preparation must be enabled with a boolean.')
     if (source_unit=='model') != (target_unit=='model'):
         raise GeometryError('Declare physical source units before converting export coordinates.')
     if format=='vrml' and source_unit!='model' and target_unit!='m':
@@ -49,6 +88,10 @@ def prepare_export(model, format, source_unit='model', target_unit='model', docu
         losses.append('Source boundary colors are not represented by this exporter.')
     if format=='dxf' and model.get('faces'):
         losses.append('DXF output contains source edges; faces and cells are omitted.')
+    if format in ('obj','vrml') and _loose_edges(model):
+        losses.append('Edges outside face boundaries are omitted; use JSON or DXF to retain them.')
+    if format in ('stl','pov'):
+        losses.append('Polygon faces are triangulated; original face boundaries are not retained.')
     if format not in ('off','json') and model.get('cells'):
         losses.append('This format cannot retain intrinsic 4D cells.')
     report={'sourceFingerprint':identity(model),'sourceUnit':source_unit,
@@ -57,7 +100,14 @@ def prepare_export(model, format, source_unit='model', target_unit='model', docu
             'precision':'17 significant decimal digits for OFF, OBJ and DXF coordinates',
             'losses':losses,'numericGuarantee':result.get('numeric',{}).get('mode')}
     result.setdefault('provenance',{})['exportContext']=report
-    return {'model':result,'report':report}
+    prepared = {'model': result, 'report': report}
+    if include_text:
+        from .formats import export_model, MAX_FILE_BYTES
+        text = export_model(result, format)
+        if len(text.encode('utf-8')) > MAX_FILE_BYTES:
+            raise GeometryError('Geometry export exceeds the 128 MiB output limit.')
+        prepared['text'] = text
+    return prepared
 
 
 def scale_reference(model, index, desired_length):

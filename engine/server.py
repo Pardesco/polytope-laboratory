@@ -36,7 +36,7 @@ from engine.measurements import entity_measure,entity_info,dihedrals,align_secti
 from engine.view_orientation import orient_entity
 from engine.compounds import add_models, extract_component, remove_component
 from engine.cell_facing import classify_cells
-from engine.export_context import prepare_export, scale_reference
+from engine.export_context import prepare_export, scale_reference, export_options, require_export_format
 from engine.tours import validate_tour
 from engine.face_blending import analyze_coincidences, remove_coincident_pairs, blend_faces
 from engine.edge_subdivision import subdivide_edges
@@ -158,6 +158,7 @@ def dispatch(request):
         atomic_write(params['path'],json.dumps(tour,ensure_ascii=False,allow_nan=False,separators=(',',':')))
         return {'path':params['path']}
     if op == 'prepare-export': return prepare_export(model, **params)
+    if op == 'export-options': return export_options(model)
     if op == 'scale-reference': return scale_reference(model, **params)
     if op == 'recipe-run': return run_recipe(params['document'], params['operation'], params['parameters'], dispatch, params.get('label'))
     if op == 'recipe-branch': return branch_recipe(params['document'], params['parameters'], dispatch, params.get('target'))
@@ -211,6 +212,7 @@ def dispatch(request):
     if op == 'load': return load_file(params['path'])
     if op == 'save': return save_project(params['path'], params['project'])
     if op == 'export':
+        require_export_format(model, params['format'])
         text = export_model(model, params['format'])
         if params.get('path'):
             atomic_write(params['path'], text)

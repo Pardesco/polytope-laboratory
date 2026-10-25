@@ -5,10 +5,11 @@ contextBridge.exposeInMainWorld('polytope',{
   open:()=>ipcRenderer.invoke('open'), save:project=>ipcRenderer.invoke('save',project),
   autosave:project=>ipcRenderer.invoke('autosave',project), recover:()=>ipcRenderer.invoke('recover'),
   recoveryInfo:()=>ipcRenderer.invoke('recovery-info'), setDirty:value=>ipcRenderer.invoke('dirty',value),
+  setWorkspaceAvailability:value=>ipcRenderer.invoke('workspace-availability',value),
   importTour:()=>ipcRenderer.invoke('import-tour'),exportTour:tour=>ipcRenderer.invoke('export-tour',tour),
   export:(model,format)=>ipcRenderer.invoke('export',model,format),
   saveImage:data=>ipcRenderer.invoke('save-image',data),saveSvg:(svg,name)=>ipcRenderer.invoke('save-svg',svg,name),
-  library:()=>ipcRenderer.invoke('library'),libraries:()=>ipcRenderer.invoke('libraries'),unlinkLibrary:path=>ipcRenderer.invoke('unlink-library',path),libraryModel:path=>ipcRenderer.invoke('library-model',path),
+  library:()=>ipcRenderer.invoke('library'),libraries:()=>ipcRenderer.invoke('libraries'),unlinkLibrary:path=>ipcRenderer.invoke('unlink-library',path),libraryModel:(path,id)=>ipcRenderer.invoke('library-model',path,id),
   attachLibraryAudit:path=>ipcRenderer.invoke('attach-library-audit',path),verifyLibraryAudit:path=>ipcRenderer.invoke('verify-library-audit',path),repairLibraryCopy:path=>ipcRenderer.invoke('repair-library-copy',path),
   animationBegin:options=>ipcRenderer.invoke('animation-begin',options),animationWrite:(id,index,data)=>ipcRenderer.invoke('animation-write',id,index,data),animationFinish:id=>ipcRenderer.invoke('animation-finish',id),animationAbort:id=>ipcRenderer.invoke('animation-abort',id),
   print:svg=>ipcRenderer.invoke('print',svg),saveNetPdf:svg=>ipcRenderer.invoke('save-net-pdf',svg),fullscreen:()=>ipcRenderer.invoke('fullscreen'),
@@ -17,5 +18,8 @@ contextBridge.exposeInMainWorld('polytope',{
   beginTextExport:params=>ipcRenderer.invoke('text-export-begin',params),
   writeTextExport:(id,data)=>ipcRenderer.invoke('text-export-write',id,data),
   abortTextExport:id=>ipcRenderer.invoke('text-export-abort',id),
+  beginGeometryExport:params=>ipcRenderer.invoke('geometry-export-begin',params),
+  writeGeometryExport:(id,data)=>ipcRenderer.invoke('geometry-export-write',id,data),
+  abortGeometryExport:id=>ipcRenderer.invoke('geometry-export-abort',id),
   onAction:callback=>{const listener=(_,name)=>callback(name);ipcRenderer.on('menu-action',listener);return ()=>ipcRenderer.removeListener('menu-action',listener);}
 });
