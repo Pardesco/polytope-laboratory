@@ -1,11 +1,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 import * as THREE from 'three';
+import {loadProceduralStudio} from './procedural-environment.mjs';
 import {effectsOptions} from './effects-config.mjs';
 import {configureProceduralBump} from './procedural-bump.mjs';
-export const STUDIO_URLS=Object.freeze([
-  new URL('./assets/studio-cube/px.png',import.meta.url).href,new URL('./assets/studio-cube/nx.png',import.meta.url).href,
-  new URL('./assets/studio-cube/py.png',import.meta.url).href,new URL('./assets/studio-cube/ny.png',import.meta.url).href,
-  new URL('./assets/studio-cube/pz.png',import.meta.url).href,new URL('./assets/studio-cube/nz.png',import.meta.url).href]);
 const abort=()=>Object.assign(Error('Material effect source or configuration changed.'),{name:'AbortError'});
 const encoder=new TextEncoder();
 const signature=view=>JSON.stringify(effectsOptions(view?.materialEffects));
@@ -15,7 +12,15 @@ function modelSignature(viewer){
     throw Error('Material environment source snapshot exceeds 16 MiB.');
   return text;
 }
-const defaultLoader=(urls,onLoad,onError)=>new THREE.CubeTextureLoader().load(urls,onLoad,undefined,onError);
+const defaultLoader=loadProceduralStudio;
+export const REFLECTION_FACE_LIMIT=12000;
+export const reflectionLimited=viewer=>(viewer.model?.faces?.length??0)>REFLECTION_FACE_LIMIT;
+function vertexEnvironment(viewer,texture){
+  const material=viewer.vertexSpheres?.material;if(!material)return;
+  const map=viewer.view?.appearance?.vertexMetal?texture:null;
+  if(material.envMap!==map){material.envMap=map;material.combine=THREE.MixOperation;material.needsUpdate=true;}
+  material.reflectivity=.85;
+}
 
 export function createMaterialEffectOwner(viewer,{loadCube=defaultLoader}={}){
   const owner={model:viewer.model,sourceSignature:modelSignature(viewer),configSignature:signature(viewer.view),
@@ -35,7 +40,7 @@ export function createMaterialEffectOwner(viewer,{loadCube=defaultLoader}={}){
   };
   owner.timer=setTimeout(()=>fail(Error('Built-in studio environment decoding timed out after 10 seconds.')),10000);
   try{
-    owner.texture=loadCube([...STUDIO_URLS],texture=>{
+    owner.texture=loadCube([],texture=>{
       if(owner.disposed||owner.state!=='pending'){disposeTexture();return;}
       try{
         if(viewer.materialEffectsOwner!==owner||viewer.model!==owner.model||modelSignature(viewer)!==owner.sourceSignature||
@@ -53,6 +58,7 @@ export function createMaterialEffectOwner(viewer,{loadCube=defaultLoader}={}){
 }
 
 export function disposeMaterialEffects(viewer){
+  vertexEnvironment(viewer,null);
   const owner=viewer.materialEffectsOwner,material=viewer.surface?.material;
   if(owner){
     if(material?.envMap===owner.texture){material.envMap=null;material.combine=THREE.MultiplyOperation;material.needsUpdate=true;}
@@ -67,9 +73,10 @@ export function applyMaterialEffects(viewer,view,{loadCube=defaultLoader}={}){
   if(!material?.isMeshPhongMaterial||!viewer.model)return options;
   configureProceduralBump(material,options);
   let owner=viewer.materialEffectsOwner;
-  if(options.reflection==='none'){
+  if(options.reflection==='none'||reflectionLimited(viewer)){
+    vertexEnvironment(viewer,null);
     if(owner){if(material.envMap===owner.texture){material.envMap=null;material.combine=THREE.MultiplyOperation;material.needsUpdate=true;}owner.dispose();viewer.materialEffectsOwner=null;}
-    viewer.appearanceEffectsDiagnostic=null;return options;
+    viewer.appearanceEffectsDiagnostic=options.reflection!=='none'?'Reflections disabled above 12,000 source faces for interactive rendering.':null;return options;
   }
   if(owner&&(owner.model!==viewer.model||owner.disposed||owner.state==='pending'&&owner.configSignature!==signature(view))){
     if(material.envMap===owner.texture){material.envMap=null;material.needsUpdate=true;}
@@ -82,6 +89,7 @@ export function applyMaterialEffects(viewer,view,{loadCube=defaultLoader}={}){
     viewer.materialEffectsOwner=owner=createMaterialEffectOwner(viewer,{loadCube});
   }
   if(owner.state==='ready'){
+    vertexEnvironment(viewer,owner.texture);
     const mapping=options.environmentMode==='refraction'?THREE.CubeRefractionMapping:THREE.CubeReflectionMapping;
     if(material.envMap!==owner.texture||material.combine!==THREE.MixOperation||owner.texture.mapping!==mapping){
       owner.texture.mapping=mapping;material.envMap=owner.texture;material.combine=THREE.MixOperation;material.needsUpdate=true;
@@ -107,6 +115,7 @@ export async function prepareMaterialEffects(viewer,{signal,isCurrent=()=>true}=
   const view=viewer.view,model=viewer.model,settings=signature(view);
   const options=applyMaterialEffects(viewer,view);
   if(options.reflection==='none')return {complete:true,reflection:'none',bump:options.bump,environmentMode:options.environmentMode,refractionRatio:1/options.refractiveIndex};
+  if(reflectionLimited(viewer))return {complete:true,reflection:'none',requestedReflection:options.reflection,diagnostic:viewer.appearanceEffectsDiagnostic};
   const owner=viewer.materialEffectsOwner,before=modelSignature(viewer);
   if(!owner)throw Error('Requested studio environment has no owned surface.');
   await waitFor(owner.ready,signal);

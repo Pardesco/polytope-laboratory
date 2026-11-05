@@ -8,6 +8,21 @@ A free, open-source desktop app for exploring and constructing 3D and 4D polytop
 
 The current preview is **0.27.20**. Run the downloaded executable; a separate Python installation is not required. [Matching source ZIP](https://github.com/Pardesco/polytope-laboratory/releases/download/v0.27.20/Polytope.Laboratory.0.27.20.source.zip).
 
+## New on main (unreleased)
+
+The `main` branch now carries the 0.27.21 development source with a large usability round. It is not in the 0.27.20 download yet; [run from source](#run-from-source) to try it. Full notes: [UX round, November 2026](docs/UX_ROUND_2026-11-04.md).
+
+- **Simpler screen:** an essentials-only toolbar with a **View options** popover, a single-row dock with **More**, and **⋯ → Show expert tools** for the full technical controls.
+- **Visual library:** collections (Platonic, Archimedean, Catalan, Kepler–Poinsot, Johnson, Regular 4D…), a thumbnail grid and hover previews.
+- **Build from symmetry:** tap the nodes of a Coxeter–Dynkin diagram (A3–H4) to make uniform polyhedra and polychora with a live preview, up to the 14,400-vertex H4 shapes.
+- **Prism look:** colors by face and cell type, symmetric color pairs on regular shapes, thick edges and studio light; dense models fade edges by depth instead of becoming a hairball.
+- **Direct 4D turning:** Shift-drag rotates through the fourth dimension; let go while moving and it keeps tumbling until you press Esc. 4D perspective is more dramatic by default, with a **Depth** slider beside the projection picker.
+- **Construct gallery:** "What would you like to make?" with plain-language tool cards and live sliders to preview cut corners, expand, dual size and more before applying.
+- **Plain-language analysis:** an overview with a short description of the model, big counts and facts such as "3 cubes meet at every edge".
+- **Export by goal:** 3D print it, make a paper model, save a picture, make a video or GIF, use in other 3D software, or save the exact geometry.
+- **Learn 4D:** a six-chapter interactive lesson (square → cube → tesseract, projections, 4D turning, slicing) under **Help**, plus a refreshed Welcome with walkthroughs.
+- Friendlier status and error messages, and faster startup.
+
 ## Try it
 
 1. Choose a model from the **Library**. Search by name or use the **3D** and **4D** filters.

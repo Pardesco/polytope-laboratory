@@ -45,7 +45,7 @@ async function launch(){
   const env={...process.env,POLYTOPE_TEST_USER_DATA:profile};delete env.ELECTRON_RUN_AS_NODE;
   if(packaged)env.POLYTOPE_PYTHON=path.join(runRoot,'deliberately-unavailable-python.exe');
   const app=await electron.launch({executablePath:packaged||require('electron'),args:packaged?[]:[root],cwd:root,env,timeout:30000});
-  const page=await app.firstWindow();page.setDefaultTimeout(30000);page.on('pageerror',error=>errors.push(error.message));
+  const page=await app.firstWindow();require('./smoke-helpers.cjs').autoReveal(page);page.setDefaultTimeout(30000);page.on('pageerror',error=>errors.push(error.message));
   // Observe the real source view's uploaded WebGL color buffer. This avoids
   // exposing internal Viewer state or changing production instrumentation.
   await page.addInitScript(()=>{

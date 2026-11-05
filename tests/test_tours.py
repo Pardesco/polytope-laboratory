@@ -189,6 +189,9 @@ def test_v2_transition_methods_match_frontend_defaults_without_replacing_record(
     if method=='combination':transition['components']=['orbit','shrink-grow']
     assert validate_tour_transition(transition)==transition
     saved=animated_tour();saved['events'][0]['transition']=transition
+    if method=='morph-to-dual':
+        from engine.operations import dual
+        saved['events'][1]['state']['model']=dual(saved['events'][0]['state']['model'])
     assert validate_tour(saved)['events'][0]['transition']==transition
 
 

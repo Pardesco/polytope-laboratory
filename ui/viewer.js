@@ -1,4 +1,7 @@
+import {captureViewerPNG} from './png-capture-options.mjs';
+import {createTargetSurface} from './target-render.mjs';
 import {ViewerElementContent} from './viewer-element-content.mjs';
+import {pointRadius,pointBounds} from './geometry-bounds.mjs';
 import {transferObservationControls} from './observation-controls.mjs';
 import {ViewerStereo,stereoMode} from './viewer-stereo.mjs';
 import * as THREE from 'three';
@@ -26,6 +29,14 @@ import {planStereographicQuality} from './stereographic-quality.mjs';
 import {samePackedDisplayOwners} from './packed-owner-comparison.mjs';
 import {packedPrimitiveInstances,packedVisiblePointIndices,packedObservationCloud,typedStereographicPublication} from './viewer-stereographic-typed.mjs';
 import {packSurfaceColors} from './packed-surface-colors.mjs';
+import {ENTITY_FIELDS,entityVertices,buildSelectionHighlight,updateSelectionLayer} from './selection-highlight.mjs';
+import {getElementTypes,elementTypeColor} from './element-types.mjs';
+import {displayProjector,writeSurfacePositions} from './dense-display.mjs';
+import {ScreenPickIndex,screenPickKey} from './screen-pick-index.mjs';
+import {isPrism,PRISM_PALETTE,PRISM_FALLBACK,prismPrimitives,prismSurfaceOpacity} from './prism-look.mjs';
+import {prismDisplayTypes} from './prism-type-colors.mjs';
+import {updatePrismDenseEdges} from './prism-dense-edges.mjs';
+import {prismColorClasses,forgetPrismColorClasses} from './prism-color-classes.mjs';
 
 // Borrow worker-owned arrays without overwriting their elements. Reuse GPU
 // attribute handles for equal byte sizes; disposal releases buffers before a
@@ -47,9 +58,10 @@ export class Viewer {
     this.cameraProjection='orthographic';this.camera=this.orthographicCamera;
     this.camera.position.set(3.2,2.2,4.5);
     this.renderer=new THREE.WebGLRenderer({antialias:true,alpha:true,preserveDrawingBuffer:true});
-    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
+    this.renderer.setPixelRatio(Math.min(Math.max(window.devicePixelRatio||1,1),2));
     this.renderer.setClearColor(0x15191f,1);
     this.renderer.outputColorSpace=THREE.SRGBColorSpace;
+    this.renderer.toneMapping=THREE.NoToneMapping;
     container.append(this.renderer.domElement);
     this.bindControls();
     this.group=new THREE.Group();this.scene.add(this.group);
@@ -67,26 +79,29 @@ export class Viewer {
     container.addEventListener('pointercancel',()=>{this.down=null;});
     this.resize();
   }
-  pickAt(x,y,{shiftKey=false}={}){
+  pickAt(x,y,{shiftKey=false,hover=false}={}){
     if(!this.projected||!this.camera||!this.renderer)return {picked:null,candidates:0,diagnostic:null};
     const rect=this.renderer.domElement.getBoundingClientRect();
     if(!rect.width||!rect.height)return {picked:null,candidates:0,diagnostic:null};
     const published=this.publishedPickState||this,view=published.view,visibility=published.visibility,instanceVisibility=published.instanceVisibility,explosionDisplay=published.explosionDisplay;
-    const stereo=this.stereoRenderer?.pick(this.camera,stereoMode(this.view),x,rect.width)??{camera:this.camera,x,width:rect.width};
+    const stereo=this.stereoRenderer?.pick(this.camera,stereoMode(this.view),x,rect.width,this.view)??{camera:this.camera,x,width:rect.width};
     const pickCamera=stereo.camera,pickWidth=stereo.width;
     x=stereo.x;
     const cursor=[x,y],kind=this.cellNet?(shiftKey?'vertex':'face'):(view.pickKind||'vertex');
     this.camera.updateMatrixWorld();this.group.updateMatrixWorld(true);
     const packed=published.packedDisplay;
-    const vertices=[],segments=[],rayHits=[],triangles=packed?published.pickingTriangles:(published.renderTriangles||published.triangles);
+    let vertices=[],segments=[];const rayHits=[],triangles=packed?published.pickingTriangles:(published.renderTriangles||published.triangles);
     const pointToScreen=p=>[(p[0]+1)*pickWidth/2,(1-p[1])*rect.height/2,p[2]];
     const ndc=p=>new THREE.Vector3(...p).project(pickCamera).toArray();
     const clipCoordinates=p=>new THREE.Vector4(...p,1).applyMatrix4(pickCamera.matrixWorldInverse).applyMatrix4(pickCamera.projectionMatrix).toArray();
     const verticesEnabled=this.points.visible||this.vertexSpheres?.visible||this.cellNet&&shiftKey;
-    const edgesEnabled=this.lines.visible||this.edgeCylinders?.visible;
+    const edgesEnabled=this.lines.visible||this.edgeCylinders?.visible||this.prismEdges?.visible;
     const enabled=kind==='vertex'?verticesEnabled:kind==='edge'?edgesEnabled:this.surface.visible;
     const pickPoints=published.instanceProjected||published.projected;
-    if(enabled&&kind==='vertex'&&pickPoints.length<=PICK_LIMIT&&packed){for(let instance=0;instance<packed.vertexIds.length;instance++){
+    const screenKind=enabled&&(kind==='vertex'||kind==='edge'),screenKey=screenKind?screenPickKey(pickCamera,pickWidth,rect.height,this):null,cached=this.screenPickCache;
+    const reuseScreen=screenKind&&cached?.publication===published&&cached.kind===kind&&cached.key===screenKey;
+    if(reuseScreen){if(kind==='vertex')vertices=cached.index.query(x,y);else segments=cached.index.query(x,y);}
+    else if(enabled&&kind==='vertex'&&pickPoints.length<=PICK_LIMIT&&packed){for(let instance=0;instance<packed.vertexIds.length;instance++){
       if(!packed.vertexVisible[instance])continue;const q=ndc(packed.positions.subarray(instance*3,instance*3+3));if(q[2]<-1||q[2]>1)continue;vertices.push({id:packed.vertexIds[instance],point:pointToScreen(q)});
     }}else if(enabled&&kind==='vertex'&&pickPoints.length<=PICK_LIMIT)pickPoints.forEach((p,instance)=>{
       const id=explosionDisplay?explosionDisplay.sourceVertexIds[instance]:instance;
@@ -104,8 +119,10 @@ export class Viewer {
     }else if(enabled&&(kind==='face'||kind==='cell')){
       if(triangles.length<=PICK_LIMIT){const ray=new THREE.Raycaster();ray.setFromCamera(new THREE.Vector2(x/pickWidth*2-1,1-y/rect.height*2),pickCamera);for(const hit of ray.intersectObject(this.surface))if(hit.distance>=pickCamera.near&&hit.distance<=pickCamera.far)rayHits.push(hit);}
     }
+    if(screenKind&&!reuseScreen){const index=new ScreenPickIndex(kind,kind==='vertex'?vertices:segments);this.screenPickCache={publication:published,kind,key:screenKey,index};if(kind==='vertex')vertices=index.query(x,y);else segments=index.query(x,y);}
     const overLimit=enabled&&(kind==='vertex'?pickPoints.length>PICK_LIMIT:kind==='edge'?this.edgeGeometry.attributes.position.count/2>PICK_LIMIT:triangles.length>PICK_LIMIT);
     const result=overLimit?{hits:[],diagnostic:'Picking unavailable: displayed primitive traversal resource limit exceeded.'}:sourceEntityHits(kind,{cursor,vertices,segments,rayHits,triangles,faceOwners:visibility.faceOwners,activeCells:visibility.activeCells,enabled});
+    if(hover){const picked=result.hits[0]??null;return {picked,candidates:result.hits.length,diagnostic:result.diagnostic,...(picked&&published.morphFrame?{sourceOwners:morphSourceOwners(published.morphFrame,kind,picked.id)}:{})};}
     this.pickDiagnostic=result.diagnostic;this.onPickDiagnostic?.(result.diagnostic);
     const cycle=this.sourcePickCycle||(this.sourcePickCycle=new PickCycle()),picked=cycle.choose(result.hits,cursor,kind);
     if(picked&&published.morphFrame){
@@ -149,7 +166,7 @@ export class Viewer {
     }
     this.camera=next;this.cameraProjection=mode;this.updateOrthographic();next.updateProjectionMatrix();this.bindControls();
   }
-  clear({retainedMaterials=new Set()}={}){disposeMaterialEffects(this);this.stereoRenderer?.dispose();this.stereoRenderer=null;this.elementContentLayer?.destroy();this.elementContentLayer=null;this.elementContentDiagnostic=null;this.stereographicWorker?.destroy();this.stereographicWorker=null;this.publishedPickState=null;this.stereographicWorkerDiagnostic=null;this.stereographicWorkerUnavailable=null;for(const o of [...this.group.children]){this.group.remove(o);o.dispose?.();o.geometry?.dispose();if(Array.isArray(o.material))o.material.forEach(m=>{if(!retainedMaterials.has(m))m.dispose();});else if(!retainedMaterials.has(o.material))o.material?.dispose();}this.model=null;this.sectionMaterialSource=null;this.sectionMaterialMode=null;this.morphSource=null;this.morphFrame=null;this.morphSelectedSourceIds=null;this.projected=null;this.explosionPayload=null;this.explosionPrepared=null;this.explosionDisplay=null;this.explosionDiagnostic=null;this.instanceProjected=null;this.instanceVisibility=null;this.explosionTriangleDisplay=null;this.explosionTriangles=null;this.explosionInstanceVisibility=null;this.net=null;this.cellNet=null;this.orientationApplied=false;this.orientationDiagnostic=null;this.facingCache=null;this.facingCacheFingerprint=null;this.facingCacheSourceFingerprint=null;this.facingPlanes=null;this.facingCounts=null;this.facingDiagnostic=null;this.facingApplied=false;this.vertexSpheres=null;this.edgeCylinders=null;this.presentationSourceTriangles=null;this.presentationDiagnostic=null;this.stereographicGeometry=null;this.stereographicKey=null;this.perspectiveGeometry=null;this.perspectiveKey=null;this.perspectiveDiagnostic=null;this.observerBounds=null;this.observerBoundsKey=null;this.renderTriangles=null;this.stereographicDiagnostic=null;}
+  clear({retainedMaterials=new Set()}={}){this.prismEdges=null;this.prismEdgeTints=null;this.prismDiagnostic=null;this.prismTypeCache=null;this.screenPickCache=null;this.selectedEntities=null;this.appearanceGradient?.dispose();this.appearanceGradient=null;this.appearanceGradientKey=null;if(this.scene)this.scene.background=null;disposeMaterialEffects(this);this.stereoRenderer?.dispose();this.stereoRenderer=null;this.elementContentLayer?.destroy();this.elementContentLayer=null;this.elementContentDiagnostic=null;this.stereographicWorker?.destroy();this.stereographicWorker=null;this.publishedPickState=null;this.stereographicWorkerDiagnostic=null;this.stereographicWorkerUnavailable=null;for(const o of [...this.group.children]){this.group.remove(o);o.dispose?.();o.geometry?.dispose();if(Array.isArray(o.material))o.material.forEach(m=>{if(!retainedMaterials.has(m))m.dispose();});else if(!retainedMaterials.has(o.material))o.material?.dispose();}this.model=null;this.sectionMaterialSource=null;this.sectionMaterialMode=null;this.morphSource=null;this.morphFrame=null;this.morphSelectedSourceIds=null;this.projected=null;this.explosionPayload=null;this.explosionPrepared=null;this.explosionDisplay=null;this.explosionDiagnostic=null;this.instanceProjected=null;this.instanceVisibility=null;this.explosionTriangleDisplay=null;this.explosionTriangles=null;this.explosionInstanceVisibility=null;this.net=null;this.cellNet=null;this.orientationApplied=false;this.orientationDiagnostic=null;this.facingCache=null;this.facingCacheFingerprint=null;this.facingCacheSourceFingerprint=null;this.facingPlanes=null;this.facingCounts=null;this.facingDiagnostic=null;this.facingApplied=false;this.vertexSpheres=null;this.edgeCylinders=null;this.presentationSourceTriangles=null;this.presentationDiagnostic=null;this.stereographicGeometry=null;this.stereographicKey=null;this.perspectiveGeometry=null;this.perspectiveKey=null;this.perspectiveDiagnostic=null;this.observerBounds=null;this.observerBoundsKey=null;this.renderTriangles=null;this.stereographicDiagnostic=null;}
   async setElementContent(descriptor,options={}){
     if(options.signal?.aborted||options.isCurrent?.()===false)throw Object.assign(Error('Element content source or request changed.'),{name:'AbortError'});
     options.verifyPublication?.();
@@ -161,15 +178,15 @@ export class Viewer {
   syncElementContent(options={}){
     try{this.elementContentLayer?.rebuild(options);}catch(error){this.elementContentDiagnostic=error.message;if(this.elementContentLayer){this.elementContentLayer.diagnostic=error.message;this.elementContentLayer.clearGeometry();}}
   }
-  setModel(model,{normalization=null,morphSource=null,morphFrame=null,reuseMaterials=false}={}){
+  setModel(model,{normalization=null,morphSource=null,morphFrame=null,reuseMaterials=false,deferDisplay=false}={}){
     // Keep compiled programs alive across related poses. Geometry and all source
     // ownership caches are still rebuilt, including topology-changing endpoints.
     const materials=model&&reuseMaterials?{lines:this.lines?.material,points:this.points?.material,surface:this.surface?.material,highlight:this.highlight?.material}:{};
-    this.clear({retainedMaterials:new Set(Object.values(materials))});this.sourcePickCycle?.reset();this.pickDiagnostic=null;if(!model)return;
-    this.model=model;this.morphSource=morphSource;this.morphFrame=morphFrame;const d=model.embeddingDimension||model.dimension;
-    let center=Array(d).fill(0);model.vertices.forEach(v=>v.forEach((x,k)=>center[k]+=x/model.vertices.length));
-    let radius=Math.max(...model.vertices.map(v=>Math.hypot(...v.map((x,k)=>x-center[k]))))||1;
+    this.clear({retainedMaterials:new Set(Object.values(materials))});this.selectedEntities=null;this.selectionLines=null;this.selectionFill=null;this.sourcePickCycle?.reset();this.pickDiagnostic=null;if(!model)return;
+    this.model=model;this.prismTypeCache=null;this.morphSource=morphSource;this.morphFrame=morphFrame;const d=model.embeddingDimension||model.dimension;
+    let center,radius;
     if(normalization){if(!Array.isArray(normalization.center)||normalization.center.length!==d||normalization.center.some(x=>!Number.isFinite(x))||!Number.isFinite(normalization.radius)||normalization.radius<=0)throw Error("Invalid source morph normalization.");center=[...normalization.center];radius=normalization.radius;}
+    else{center=Array(d).fill(0);model.vertices.forEach(v=>v.forEach((x,k)=>center[k]+=x/model.vertices.length));radius=pointRadius(model.vertices,center)||1;}
     this.center=center;this.radius=radius;this.lastFillRule=null;this.visibilityKey=null;this.colorKey=null;
     this.normalized=model.vertices.map(v=>v.map((x,k)=>(x-center[k])/radius));
     this.edgeGeometry=new THREE.BufferGeometry();this.edgeGeometry.setAttribute('position',new THREE.BufferAttribute(new Float32Array(model.edges.length*6),3));
@@ -181,27 +198,29 @@ export class Viewer {
     this.surface=new THREE.Mesh(this.surfaceGeometry,materials.surface??new THREE.MeshPhongMaterial({color:0x9aaec3,specular:0x18202a,shininess:30,flatShading:true,transparent:true,opacity:model.dimension===4?.22:.86,side:THREE.DoubleSide,depthWrite:false,polygonOffset:true,polygonOffsetFactor:1,polygonOffsetUnits:1}));this.group.add(this.surface);
     this.highlightGeometry=new THREE.BufferGeometry();this.highlightGeometry.setAttribute('position',new THREE.BufferAttribute(new Float32Array(0),3));
     this.highlight=new THREE.Points(this.highlightGeometry,materials.highlight??new THREE.PointsMaterial({color:0xe9ba6b,size:7,sizeAttenuation:false,depthWrite:false}));this.highlight.renderOrder=4;this.group.add(this.highlight);
-    this.selected=[];this.setDisplay({angles:Array(6).fill(0),projection:'orthographic',faces:true,vertices:false});
+    // Workspace/morph callers immediately supply their actual view. Preparing
+    // an intermediate zero-angle orthographic display doubles geometry work.
+    this.selected=[];if(!deferDisplay)this.setDisplay({angles:Array(6).fill(0),projection:'orthographic',faces:true,vertices:false});
   }
-  setSectionModel(model,source,{mode='section'}={}){
+  setSectionModel(model,source,{mode='section',deferDisplay=false}={}){
     if(!['section','cell-section'].includes(mode))throw Error('Unsupported section presentation mode.');
     // This identity scopes GPU material lifetime only. Every result still goes
     // through setModel: topology, colors, ownership and picking are rebuilt.
     // Native request/publication checks remain with the caller; no geometry or
     // source snapshot is reused here, even for an in-place source mutation.
     const reuseMaterials=Boolean(model&&source&&this.model&&this.sectionMaterialSource===source&&this.sectionMaterialMode===mode);
-    this.setModel(model,{reuseMaterials});
+    this.setModel(model,{reuseMaterials,deferDisplay});
     if(model){this.sectionMaterialSource=source;this.sectionMaterialMode=mode;}
   }
   setMorphFrame(frame,source,view,{isCurrent=()=>true,signal}={}){
     if(signal?.aborted||!isCurrent())throw Object.assign(Error("Morph publication canceled."),{name:"AbortError"});
     if(!frame?.model||(source.id??null)!==(frame.sourceModelId??null)||source.fingerprint!==frame.sourceFingerprint)throw Error("Morph frame source differs.");
     const d=source.embeddingDimension||source.dimension,center=Array(d).fill(0);source.vertices.forEach(v=>v.forEach((x,k)=>center[k]+=x/source.vertices.length));
-    const radius=Math.max(...source.vertices.map(v=>Math.hypot(...v.map((x,k)=>x-center[k]))))||1;
-    const selected=this.morphFrame?(this.morphSelectedSourceIds||[]):(this.selected||[]);
-    this.setModel(frame.model,{normalization:{center,radius},morphSource:source,morphFrame:frame,reuseMaterials:this.morphSource===source&&Boolean(this.morphFrame)});
+    const radius=pointRadius(source.vertices,center)||1;
+    const entities=this.selectedEntities,selected=this.morphFrame?(this.morphSelectedSourceIds||[]):(this.selected||[]);
+    this.setModel(frame.model,{normalization:{center,radius},morphSource:source,morphFrame:frame,reuseMaterials:this.morphSource===source&&Boolean(this.morphFrame),deferDisplay:true});
     if(signal?.aborted||!isCurrent())throw Object.assign(Error("Morph publication canceled."),{name:"AbortError"});
-    const status=this.setDisplay(view);this.select(selected);this.draw();return status;
+    const status=this.setDisplay(view);if(entities)this.selectEntities(entities.kind,entities.indices);else this.select(selected);this.draw();return status;
   }
   clearMorph(source,view){if(!this.morphFrame)return;this.setModel(source);this.setDisplay(view);this.draw();}
   rebuildSurfaces(fillRule){
@@ -223,25 +242,28 @@ export class Viewer {
     this.surfaceGeometry.deleteAttribute('color');this.surfaceGeometry.deleteAttribute('normal');this.colorKey=null;
   }
   surfaceColors(mode){
+    const types=mode==='face-type'||mode==='cell-type'?(isPrism(this.view)?prismDisplayTypes(this):getElementTypes(this.model)):null;
+    const classes=isPrism(this.view)?prismColorClasses(this.model,types,mode):null;
     const triangles=this.renderTriangles||this.triangles;
     const packed=this.stereographicGeometry?.packed,previous=this.surfaceGeometry.getAttribute('color');
     let colors;
     if(packed){
       const target=previous?.itemSize===4&&previous.array.length>=triangles.length*12?previous.array:undefined;
-      const result=packSurfaceColors(this.model,packed,this.visibility,mode,{target});
+      const result=packSurfaceColors(this.model,packed,this.visibility,mode,{target,view:this.view});
       colors=result.colors;this.surfaceVertexAlpha=result.vertexAlpha;
     }else{
-    colors=new Float32Array(triangles.length*12);const metadata=this.model.metadata?.offColors;this.surfaceVertexAlpha=false;
+    colors=previous?.itemSize===4&&previous.array.length===triangles.length*12?previous.array:new Float32Array(triangles.length*12);const metadata=this.model.metadata?.offColors;this.surfaceVertexAlpha=false;
     const cache=new Map();
     for(let i=0;i<triangles.length;i++){
       const face=packed?packed.faceIds[i]:triangles[i].face,cell=packed?(packed.cellIds[i]<0?undefined:packed.cellIds[i]):triangles[i].cell;
       const owner=cell??this.visibility.faceOwners[face]?.find(c=>this.visibility.activeCellSet.has(c));
       const key=`${face}:${owner??''}`;let rgba=cache.get(key);
       if(!rgba){const supplied=metadata?.faces?.[face]||metadata?.cells?.[owner];
-      let color=new THREE.Color(0x9aaec3),alpha=1;
+      let color=new THREE.Color(isPrism(this.view)?PRISM_FALLBACK:0x9aaec3),alpha=1;
       if(mode==='source'&&supplied){const factor=supplied.encoding==='byte'?1/255:1;color.setRGB(...supplied.values.slice(0,3).map(x=>x*factor),THREE.SRGBColorSpace);if(supplied.values.length===4)alpha=supplied.values[3]*factor;}
       else if(mode==='cell'&&owner!==undefined)color.setHSL((owner*.173+.58)%1,.32,.6);
       else if(mode==='face')color.setHSL((face*.173+.58)%1,.32,.6);
+      else if(mode==='face-type'||mode==='cell-type'){const hex=classes?.colors[mode==='face-type'?face:owner]??elementTypeColor(types,mode,face,owner,isPrism(this.view)?PRISM_PALETTE:undefined);if(hex)color.set(hex);}
       rgba=[...color.toArray(),alpha];cache.set(key,rgba);}
       if(rgba[3]<1)this.surfaceVertexAlpha=true;
       for(let j=0;j<3;j++)colors.set(rgba,i*12+j*4);
@@ -251,12 +273,28 @@ export class Viewer {
     this.surface.material.vertexColors=true;this.surface.material.color.set(0xffffff);this.surface.material.needsUpdate=true;
   }
   select(ids){
+    this.selectedEntities=null;this.selectionHighlightDiagnostic=null;if(this.selectionLines)this.selectionLines.visible=false;if(this.selectionFill)this.selectionFill.visible=false;
     if(this.morphFrame){const sourceIds=ids||[];this.morphSelectedSourceIds=[...sourceIds];ids=this.model.vertices.flatMap((_,i)=>morphSourceOwners(this.morphFrame,"vertex",i).some(o=>o.kind==="vertex"&&sourceIds.includes(o.id))?[i]:[]);}
     this.selected=ids||[];const published=this.publishedPickState||this,display=published.explosionDisplay,points=published.instanceProjected||published.projected,visibility=published.instanceVisibility||published.visibility;
     const packed=published.packedDisplay,indices=display?this.selected.flatMap(id=>display.vertexInstancesBySource[id]||[]):this.selected,buffer=new Float32Array(indices.length*3);
     indices.forEach((id,i)=>{const p=points?.[id];buffer.set(packed?(packed.vertexVisible[id]?packed.positions.subarray(id*3,id*3+3):[1e30,1e30,1e30]):(!p||p.clipped||!visibility?.vertices[id]?[1e30,1e30,1e30]:p.point),i*3);});
     this.highlightGeometry.setAttribute('position',new THREE.BufferAttribute(buffer,3));this.highlightGeometry.computeBoundingSphere();
   }
+  selectEntities(kind,indices){
+    const source=this.morphSource||this.model,field=ENTITY_FIELDS[kind];
+    if(!field||!Array.isArray(indices)||indices.some(id=>!Number.isInteger(id)||id<0||id>=(source?.[field]?.length??0)))throw Error('Choose valid source entity indices for selection.');
+    indices=[...new Set(indices)];this.select(entityVertices(source,kind,indices));this.selectedEntities={kind,indices};this.updateEntitySelection();
+  }
+  updateEntitySelection(){
+    if(!this.selectedEntities||!this.publishedPickState)return;
+    const published=this.publishedPickState,{kind}=this.selectedEntities;let {indices}=this.selectedEntities;
+    if(published.morphFrame){const sourceIds=new Set(indices);indices=this.model[ENTITY_FIELDS[kind]].flatMap((_,i)=>morphSourceOwners(published.morphFrame,kind,i).some(o=>o.kind===kind&&sourceIds.has(o.id))?[i]:[]);}
+    const data=buildSelectionHighlight({kind,indices,edgePositions:this.edgeGeometry.attributes.position.array,edgeIds:this.lines.userData.sourceEdgeIds,surfacePositions:this.surfaceGeometry.attributes.position.array,triangles:published.packedDisplay?published.pickingTriangles:published.renderTriangles||published.triangles,packedDisplay:published.packedDisplay,faceOwners:published.visibility.faceOwners,activeCells:published.visibility.activeCells});
+    if(published.morphFrame&&kind!=='vertex'&&this.selectedEntities.indices.length&&!indices.length)data.diagnostic='Selection uses vertex dots: this morph frame has no matching source entity ownership.';
+    this.selectionHighlightDiagnostic=data.diagnostic;
+    if(data.lines.length||data.fill.length||this.selectionLines)updateSelectionLayer(this,data);
+  }
+  selectEntitySet(kind,ids){this.selectEntities(kind,ids);}
   primitiveMesh(kind,count){
     const field=kind==='sphere'?'vertexSpheres':'edgeCylinders',limit=kind==='sphere'?PRESENTATION_LIMITS.spheres:PRESENTATION_LIMITS.cylinders;
     let mesh=this[field];if(!count)return mesh;
@@ -271,7 +309,8 @@ export class Viewer {
     return mesh;
   }
   updatePrimitives(view){
-    const spheres=view.vertices===true&&this.presentation.vertexStyle==='sphere',cylinders=view.edges!==false&&this.presentation.edgeStyle==='cylinder';
+    const fallback=prismPrimitives(view,{edges:this.edgeGeometry.attributes.position.count/2,vertices:(this.instanceProjected||this.projected)?.length??0});
+    const spheres=view.vertices===true&&this.presentation.vertexStyle==='sphere'&&!fallback.vertexFallback,cylinders=view.edges!==false&&this.presentation.edgeStyle==='cylinder'&&!fallback.edgeFallback&&!fallback.quadEdges;
     const packed=this.stereographicGeometry?.packed;
     const result=packed?packedPrimitiveInstances(packed,{spheres,cylinders}):primitiveInstances(this.explosionDisplay?{edges:this.explosionDisplay.edgeIndices}:this.model,this.instanceProjected||this.projected,this.instanceVisibility||this.visibility,{spheres,cylinders,edgeSegments:this.stereographicGeometry?.edges??this.perspectiveGeometry?.edges??null});
     if(this.explosionDisplay&&!packed){result.vertices.forEach(v=>v.vertex=this.explosionDisplay.sourceVertexIds[v.vertex]);result.edges.forEach(e=>e.edge=this.explosionDisplay.sourceEdgeIds[e.edge]);}
@@ -289,9 +328,10 @@ export class Viewer {
       rods.material.color.copy(this.lines.material.color);rods.material.opacity=this.lines.material.opacity;
       const transparent=rods.material.opacity<1;if(rods.material.transparent!==transparent){rods.material.transparent=transparent;rods.material.needsUpdate=true;}rods.material.depthWrite=!transparent;
     }
-    this.points.visible=view.vertices===true&&(!spheres||!result.sphereSupported);this.lines.visible=view.edges!==false&&(!cylinders||!result.cylinderSupported);
+    this.points.visible=view.vertices===true&&!fallback.vertexFallback&&(!spheres||!result.sphereSupported);this.lines.visible=view.edges!==false&&(!cylinders||!result.cylinderSupported);
     this.primitiveCounts={spheres:result.vertices.length,cylinders:result.edges.length,collapsedEdges:result.collapsedEdges};
-    this.presentationDiagnostic=[...this.presentation.diagnostics,...this.presentationSurfaceDiagnostics,...result.diagnostics].join(' ')||null;
+    this.prismDiagnostic=fallback.diagnostic||null;
+    this.presentationDiagnostic=[...this.presentation.diagnostics,...this.presentationSurfaceDiagnostics,...result.diagnostics].filter(Boolean).join(' ')||null;
   }
   setExplosion(geometry){
     this.explosionPayload=geometry??null;this.explosionPrepared=null;this.explosionPreparedRule=null;
@@ -312,7 +352,7 @@ export class Viewer {
     const display=this.explosionDisplay,shrink=this.presentation.cellShrink;
     if(this.explosionTriangleDisplay===display&&this.explosionTriangleVisibility===this.visibilityKey&&this.explosionTriangleShrink===shrink){this.instanceVisibility=this.explosionInstanceVisibility;return this.explosionTriangles;}
     const ownerVisible=record=>record.cell===null||this.visibility.activeCellSet.has(record.cell);
-    this.instanceVisibility={vertices:display.vertices.map(v=>ownerVisible(v)&&v.sourceFaceIds.some(f=>this.visibility.faces[f])),edges:display.edges.map(e=>ownerVisible(e)&&this.visibility.edges[e.sourceEdge]&&e.sourceFaceIds.some(f=>this.visibility.faces[f])),faces:this.visibility.faces};
+    this.instanceVisibility={vertices:display.vertices.map(v=>ownerVisible(v)&&this.visibility.vertices[v.sourceVertex]&&v.sourceFaceIds.some(f=>this.visibility.faces[f])),edges:display.edges.map(e=>ownerVisible(e)&&this.visibility.edges[e.sourceEdge]&&e.sourceFaceIds.some(f=>this.visibility.faces[f])),faces:this.visibility.faces};
     this.explosionInstanceVisibility=this.instanceVisibility;
     const centers=new Map();
     if(this.model.dimension===4&&shrink<1)display.entities.forEach(entity=>{const points=entity.vertices.map(v=>display.normalized[v]),center=Array(4).fill(0);points.forEach(p=>p.forEach((x,k)=>center[k]+=x/points.length));centers.set(entity.cell,center);});
@@ -330,8 +370,8 @@ export class Viewer {
     this.net=net;
     if(net.faceTriangles)this.rebuildSurfaces(this.lastFillRule||'nonzero');
     const cloud=[...vertices,...net.targetVertices];
-    const low=[0,1,2].map(i=>Math.min(...cloud.map(p=>p[i]))),high=[0,1,2].map(i=>Math.max(...cloud.map(p=>p[i])));
-    this.netCenter=low.map((x,i)=>(x+high[i])/2);this.netRadius=Math.max(...cloud.map(p=>Math.hypot(...p.map((x,i)=>x-this.netCenter[i]))))||1;
+    const {low,high}=pointBounds(cloud,3);
+    this.netCenter=low.map((x,i)=>(x+high[i])/2);this.netRadius=pointRadius(cloud,this.netCenter)||1;
     const colors=new Float32Array(this.triangles.length*9);
     this.triangles.forEach((triangle,i)=>{const face=net.faces[triangle.face];const color=new THREE.Color().setHSL((face.component*.173+.43)%1,.5,.58);for(let j=0;j<3;j++)colors.set(color.toArray(),i*9+j*3);});
     this.surfaceVertexAlpha=false;this.surfaceGeometry.setAttribute('color',new THREE.BufferAttribute(colors,3));this.surface.material.vertexColors=true;this.surface.material.color.set(0xffffff);this.surface.material.opacity=.65;this.surface.material.needsUpdate=true;
@@ -354,7 +394,7 @@ export class Viewer {
     this.setModel({dimension:3,embeddingDimension:3,interpretation:'rigid-cell-assembly',metadata:{fillSemantics:net.sourceFaceTriangles?'ordinary-simple-planar-faces':'ordinary-convex-faces'},vertices,faces,edges});
     this.cellNet=net;this.cellFaceOwners=owners;this.cellVertexSources=sources;
     if(net.sourceFaceTriangles)this.rebuildSurfaces(this.lastFillRule||'nonzero');
-    const center=[0,1,2].map(i=>vertices.reduce((sum,p)=>sum+p[i],0)/vertices.length),radius=Math.max(...vertices.map(p=>Math.hypot(...p.map((x,i)=>x-center[i]))))||1;
+    const center=[0,1,2].map(i=>vertices.reduce((sum,p)=>sum+p[i],0)/vertices.length),radius=pointRadius(vertices,center)||1;
     this.cellSurfacePoints=surfacePoints.map(p=>p.map((x,i)=>(x-center[i])/radius));
     this.surfaceVertexAlpha=false;this.surface.material.vertexColors=true;this.surface.material.color.set(0xffffff);this.surface.material.opacity=.3;this.surface.material.needsUpdate=true;
     this.selectCellSource(null,null);this.setDisplay({angles:Array(6).fill(0),projection:'orthographic',faces:true,vertices:false});
@@ -448,9 +488,9 @@ export class Viewer {
       }
     }
     const activeCells=cells.flatMap((_,i)=>!hidden.has(i)&&(isolated===null||isolated===i)?[i]:[]);
-    const visibilityKey=JSON.stringify([activeCells,!!(cells.length&&(hidden.size||isolated!==null))]);
+    const visibilityKey=JSON.stringify([activeCells,!!(cells.length&&(hidden.size||isolated!==null)),view.elementVisibility??null]);
     const visibilityChanged=this.visibilityKey!==visibilityKey;
-    if(visibilityChanged){this.visibility=cellVisibility(this.model,[...hidden],isolated);this.visibilityKey=visibilityKey;this.colorKey=null;}
+    if(visibilityChanged){this.visibility=cellVisibility(this.model,[...hidden],isolated,view.elementVisibility);this.visibilityKey=visibilityKey;this.colorKey=null;}
     if(this.lastFillRule!==fillRule||visibilityChanged)this.rebuildSurfaces(fillRule);
     else if(this.lastCellShrink!==this.presentation.cellShrink)this.rebuildPresentationSurfaces(this.presentation.cellShrink);
     const displayNormalized=this.explosionDisplay?.normalized||this.normalized,displayEdges=this.explosionDisplay?.edgeIndices||this.model.edges;
@@ -465,6 +505,8 @@ export class Viewer {
       if(this.stereographicDesiredTriangles!==displayTriangles||this.stereographicDesiredNormalized!==displayNormalized){this.stereographicInputRevision++;this.stereographicDesiredTriangles=displayTriangles;this.stereographicDesiredNormalized=displayNormalized;}
       const descriptor={revision:this.stereographicInputRevision,matrix:frame.matrix,angles:view.angles||[],visibility:this.visibilityKey,fillRule,shrink:this.effectiveCellShrink,explosion:display?{amount:display.amount,direction:display.direction}:null,
         faces:view.faces!==false,edges:view.edges!==false,vertices:view.vertices===true,vertexStyle:this.presentation.vertexStyle,edgeStyle:this.presentation.edgeStyle,vertexRadius:this.presentation.vertexRadius,edgeRadius:this.presentation.edgeRadius,surfaceColors:view.surfaceColors||'source',surfaceOpacity:view.surfaceOpacity??.22,edgeOpacity:view.edgeOpacity??.8,vertexSize:view.vertexSize??3,pickKind:view.pickKind||'vertex'};
+      if(['face-type','cell-type'].includes(view.surfaceColors))descriptor.elementTypesAvailable=(isPrism(view)?prismDisplayTypes(this):getElementTypes(this.model))?.available===true;
+      descriptor.prism=isPrism(view);
       const requested=this.stereographicWorker.update({model:this.model,input,descriptor,camera:this.stereographicCameraMetrics(),view:ownedView,viewSignature:stereographicViewSignature(view)});
       if(!requested&&!this.stereographicWorker.transport.pending.active&&!this.stereographicWorker.transport.pending.queued)return {...this.lastDisplayStatus,stereographicPending:false};
       const pending={...(this.lastDisplayStatus||{}),explosionApplied:Boolean(display),explosionDiagnostic:this.explosionDiagnostic,orientationApplied:frame.applied,orientationDiagnostic:frame.diagnostic,facingApplied:this.facingApplied,facingCounts:this.facingCounts,facingDiagnostic:this.facingDiagnostic,stereographicPending:true,stereographicDiagnostic:this.stereographicWorkerDiagnostic||'Stereographic geometry is refining in the background; picking uses the last published pose.'};
@@ -514,13 +556,14 @@ export class Viewer {
     this.stereographicDiagnostic=this.stereographicGeometry?.diagnostics.join(' ')||null;
     if(this.surface.material.flatShading===stereo){this.surface.material.flatShading=!stereo;this.surface.material.needsUpdate=true;}
     const colorKey=view.surfaceColors||'source';
-    if(!this.net&&!this.cellNet&&this.colorKey!==colorKey){this.surfaceColors(colorKey);this.colorKey=colorKey;}
+    const colorTypes=colorKey==='face-type'||colorKey==='cell-type'?(isPrism(view)?prismDisplayTypes(this):getElementTypes(this.model)):null;
+    if(!this.net&&!this.cellNet&&(this.colorKey!==colorKey||this.surfaceColorTypes!==colorTypes||this.surfaceColorPrism!==isPrism(view))){this.surfaceColors(colorKey);this.colorKey=colorKey;this.surfaceColorTypes=colorTypes;this.surfaceColorPrism=isPrism(view);}
     const colorsPrepared=packed?performance.now():0;
-    if(!this.net&&!this.cellNet)this.surface.material.opacity=Number.isFinite(view.surfaceOpacity)?Math.max(0,Math.min(1,view.surfaceOpacity)):(this.model.dimension===4?.22:.86);
+    if(!this.net&&!this.cellNet)this.surface.material.opacity=prismSurfaceOpacity(view,this.model);
     const transparent=this.surface.material.opacity<1||this.surfaceVertexAlpha;
     if(this.surface.material.transparent!==transparent){this.surface.material.transparent=transparent;this.surface.material.needsUpdate=true;}
     this.surface.material.depthWrite=!transparent;
-    const displayPoint=p=>projectDisplayPoint(p,frame.matrix,view.angles||[],view.projection,perspective?this.perspectiveSettings:undefined);
+    const displayPoint=displayProjector(frame.matrix,view.angles||[],view.projection,perspective?this.perspectiveSettings:undefined);
     this.projected=this.normalized.map(displayPoint);
     if(this.explosionDisplay)this.instanceProjected=displayNormalized.map(displayPoint);
     const projectedVertices=this.instanceProjected||this.projected,vertexVisibility=this.instanceVisibility||this.visibility,vertexKind=this.explosionDisplay?'presentation vertex instances':'source vertices';
@@ -533,19 +576,14 @@ export class Viewer {
     else if(previousPacked||this.edgeGeometry.attributes.position.count!==edgeCount*2){if(previousPacked)this.edgeGeometry.dispose();this.edgeGeometry.setAttribute('position',new THREE.BufferAttribute(new Float32Array(edgeCount*6),3));}
     const edges=this.edgeGeometry.attributes.position.array;
     if(packed){this.lines.userData.sourceEdgeIds=packed.edgeIds;skipped=packed.clippedSegments;}
-    else if(displayGeometry){displayGeometry.edges.forEach((segment,i)=>edges.set([...segment.a,...segment.b],i*6));this.lines.userData.sourceEdgeIds=displayGeometry.edges.map(segment=>this.explosionDisplay?this.explosionDisplay.sourceEdgeIds[segment.edge]:segment.edge);skipped=stereo?displayGeometry.clippedSegments:displayGeometry.clippedEdges;}
-    else {const projected=this.instanceProjected||this.projected;displayEdges.forEach(([a,b],i)=>{const clipped=projected[a].clipped||projected[b].clipped;if(clipped)skipped++;edges.set(clipped||!displayVisibility.edges[i]?[0,0,0,0,0,0]:[...projected[a].point,...projected[b].point],i*6);});this.lines.userData.sourceEdgeIds=this.explosionDisplay?this.explosionDisplay.sourceEdgeIds:displayEdges.map((_,i)=>i);}
+    else if(displayGeometry){displayGeometry.edges.forEach((segment,i)=>{edges.set(segment.a,i*6);edges.set(segment.b,i*6+3);});this.lines.userData.sourceEdgeIds=displayGeometry.edges.map(segment=>this.explosionDisplay?this.explosionDisplay.sourceEdgeIds[segment.edge]:segment.edge);skipped=stereo?displayGeometry.clippedSegments:displayGeometry.clippedEdges;}
+    else {const projected=this.instanceProjected||this.projected;displayEdges.forEach(([a,b],i)=>{const clipped=projected[a].clipped||projected[b].clipped;if(clipped)skipped++;if(clipped||!displayVisibility.edges[i])edges.fill(0,i*6,i*6+6);else {edges.set(projected[a].point,i*6);edges.set(projected[b].point,i*6+3);}});this.lines.userData.sourceEdgeIds=this.explosionDisplay?this.explosionDisplay.sourceEdgeIds:displayEdges.map((_,i)=>i);}
     this.edgeGeometry.attributes.position.needsUpdate=true;if(packed)packedGeometryBounds(this.edgeGeometry,this.stereographicGeometry.bounds);else this.edgeGeometry.computeBoundingSphere();
     const displayedPoints=this.instanceProjected||this.projected;
     if(packed){bindPackedAttribute(this.pointGeometry,'position',packed.positions,3);const indices=packedVisiblePointIndices(packed),old=this.pointGeometry.getIndex();if(old&&old.array.length===indices.length){old.array=indices;old.needsUpdate=true;}else{if(old)this.pointGeometry.dispose();this.pointGeometry.setIndex(new THREE.BufferAttribute(indices,1));}this.points.userData.sourceVertexIds=packed.vertexIds;packedGeometryBounds(this.pointGeometry,this.stereographicGeometry.bounds);}
     else {if(previousPacked||this.pointGeometry.attributes.position.count!==displayedPoints.length){if(previousPacked)this.pointGeometry.dispose();this.pointGeometry.setAttribute('position',new THREE.BufferAttribute(new Float32Array(displayedPoints.length*3),3));}this.pointGeometry.setIndex(null);
     const points=this.pointGeometry.attributes.position.array;displayedPoints.forEach((v,i)=>points.set(v.clipped||!displayVisibility.vertices[i]?[1e30,1e30,1e30]:v.point,i*3));this.points.userData.sourceVertexIds=this.explosionDisplay?this.explosionDisplay.sourceVertexIds:displayedPoints.map((_,i)=>i);this.pointGeometry.attributes.position.needsUpdate=true;this.pointGeometry.computeBoundingSphere();}
-    const surface=this.surfaceGeometry.attributes.position.array;if(!packed)(this.renderTriangles||this.triangles).forEach((t,i)=>{
-      if(displayGeometry||this.explosionDisplay){surface.set(t.points.flat(),i*9);return;}
-      const projected=t.vertices?t.vertices.map(v=>this.projected[v]):t.normalized.map(displayPoint);
-      const clipped=!this.visibility.faces[t.face]||projected.some(p=>p.clipped);
-      surface.set(clipped?Array(9).fill(0):(this.cellNet&&t.vertices?t.vertices.map(v=>this.cellSurfacePoints[v]):projected.map(p=>p.point)).flat(),i*9);
-    });this.surfaceGeometry.attributes.position.needsUpdate=true;
+    const surface=this.surfaceGeometry.attributes.position.array;if(!packed)writeSurfacePositions(surface,this.renderTriangles||this.triangles,{displayGeometry,explosionDisplay:this.explosionDisplay,projected:this.projected,visibility:this.visibility,cellNet:this.cellNet,cellSurfacePoints:this.cellSurfacePoints,displayPoint});this.surfaceGeometry.attributes.position.needsUpdate=true;
     if(stereo&&!packed){
       const normals=new Float32Array(this.renderTriangles.length*9);
       this.renderTriangles.forEach((triangle,i)=>{
@@ -561,19 +599,21 @@ export class Viewer {
     this.points.material.size=Number.isFinite(view.vertexSize)?Math.max(1,Math.min(12,view.vertexSize)):3;
     this.updatePrimitives(view);
     applyViewerAppearance(this,view);
+    updatePrismDenseEdges(this,view);
     applyMaterialEffects(this,view);
     const highlightIds=this.explosionDisplay?this.selected.flatMap(v=>this.explosionDisplay.vertexInstancesBySource[v]||[]):this.selected;
     if(this.highlightGeometry.attributes.position.count!==highlightIds.length)this.highlightGeometry.setAttribute('position',new THREE.BufferAttribute(new Float32Array(highlightIds.length*3),3));
     const highlight=this.highlightGeometry.attributes.position.array;highlightIds.forEach((v,i)=>{const point=displayedPoints[v];if(point)highlight.set(packed?(packed.vertexVisible[v]?packed.positions.subarray(v*3,v*3+3):[1e30,1e30,1e30]):(point.clipped||!displayVisibility.vertices[v]?[1e30,1e30,1e30]:point.point),i*3);});this.highlightGeometry.attributes.position.needsUpdate=true;this.highlightGeometry.computeBoundingSphere();
     this.updateObserverBounds(this.perspectiveGeometry||this.stereographicGeometry||this.projected);this.updateObserverFar();
     this.publishedPickState={morphFrame:this.morphFrame,view:this.view,visibility:this.visibility,instanceVisibility:this.instanceVisibility,explosionDisplay:this.explosionDisplay,projected:this.projected,instanceProjected:this.instanceProjected,renderTriangles:this.renderTriangles,triangles:this.triangles,packedDisplay:packed,pickingTriangles:this.stereographicGeometry?.pickingTriangles,contentRecipe:{net:this.net,cellNet:this.cellNet,netRadius:this.netRadius,cellFaceOwners:this.cellFaceOwners,cellVertexSources:this.cellVertexSources,center:this.center.slice(),radius:this.radius,effectiveCellShrink:this.effectiveCellShrink,explosionDisplay:this.explosionDisplay,normalized:this.normalized,cellSurfacePoints:this.cellSurfacePoints}};
+    this.updateEntitySelection();
     this.syncElementContent({isPoseCurrent:workerOptions.elementContentPoseCurrent});
     if(packed)try{this.onStereographicTiming?.(Object.freeze({stage:'viewer-packed-display',jobId:packed.owner.jobId,phase:packed.phase,patches:packed.counts.patches,segments:packed.counts.segments,attributesMs:attributesPrepared-publicationStarted,colorsMs:colorsPrepared-attributesPrepared,remainingDisplayMs:performance.now()-colorsPrepared,totalMs:performance.now()-publicationStarted}));}catch{}
-    return this.lastDisplayStatus={elementContentDiagnostic:this.elementContentDiagnostic,explosionApplied:Boolean(this.explosionDisplay),explosionDiagnostic:this.explosionDiagnostic,explosionCounts:this.explosionDisplay?{vertices:this.instanceVisibility.vertices.filter(Boolean).length,edges:this.instanceVisibility.edges.filter(Boolean).length,faces:this.explosionDisplay.faces.filter(f=>this.visibility.faces[f.face]&&(f.cell===null||this.visibility.activeCellSet.has(f.cell))).length,entities:this.explosionDisplay.entities.filter(e=>e.cell===null||this.visibility.activeCellSet.has(e.cell)).length,triangles:this.renderTriangles.length,amount:this.explosionDisplay.amount,direction:this.explosionDisplay.direction}:null,clippedEdges:skipped,surfaceSuppressed:this.model.faces.length>0&&!this.fillSupported,suppressedFaces:this.fillDiagnostics?.length||0,filledTriangles:this.renderTriangles?this.renderTriangles.length:this.triangles.length,fillRule,orientationApplied:frame.applied,orientationDiagnostic:frame.diagnostic,facingApplied:this.facingApplied,facingCounts:this.facingCounts,facingDiagnostic:this.facingDiagnostic,presentationDiagnostic:this.presentationDiagnostic,primitiveCounts:this.primitiveCounts,effectiveCellShrink:this.effectiveCellShrink,cellInstances:this.cellInstances,stereographicDiagnostic:this.stereographicDiagnostic,stereographicCounts:this.stereographicGeometry?{segments:this.stereographicGeometry.edges.length,triangles:this.stereographicGeometry.triangles.length,clippedSegments:this.stereographicGeometry.clippedSegments,clippedTriangles:this.stereographicGeometry.clippedTriangles,unresolvedEdges:this.stereographicGeometry.unresolvedEdges,unresolvedTriangles:this.stereographicGeometry.unresolvedTriangles}:null,perspectiveDiagnostic:this.perspectiveDiagnostic,perspectiveCounts:this.perspectiveGeometry?{segments:this.perspectiveGeometry.edges.length,triangles:this.perspectiveGeometry.triangles.length,clippedEdges:this.perspectiveGeometry.clippedEdges,clippedTriangles:this.perspectiveGeometry.clippedTriangles,omittedEdges:this.perspectiveGeometry.omittedEdges,omittedTriangles:this.perspectiveGeometry.omittedTriangles,distance:this.perspectiveSettings.distance,near:this.perspectiveSettings.near}:null};
+    return this.lastDisplayStatus={elementContentDiagnostic:this.elementContentDiagnostic,explosionApplied:Boolean(this.explosionDisplay),explosionDiagnostic:this.explosionDiagnostic,explosionCounts:this.explosionDisplay?{vertices:this.instanceVisibility.vertices.filter(Boolean).length,edges:this.instanceVisibility.edges.filter(Boolean).length,faces:this.explosionDisplay.faces.filter(f=>this.visibility.faces[f.face]&&(f.cell===null||this.visibility.activeCellSet.has(f.cell))).length,entities:this.explosionDisplay.entities.filter(e=>e.cell===null||this.visibility.activeCellSet.has(e.cell)).length,triangles:this.renderTriangles.length,amount:this.explosionDisplay.amount,direction:this.explosionDisplay.direction}:null,clippedEdges:skipped,surfaceSuppressed:this.model.faces.length>0&&!this.fillSupported,suppressedFaces:this.fillDiagnostics?.length||0,filledTriangles:this.renderTriangles?this.renderTriangles.length:this.triangles.length,fillRule,orientationApplied:frame.applied,orientationDiagnostic:frame.diagnostic,facingApplied:this.facingApplied,facingCounts:this.facingCounts,facingDiagnostic:this.facingDiagnostic,presentationDiagnostic:this.presentationDiagnostic,prismDiagnostic:this.prismDiagnostic,primitiveCounts:this.primitiveCounts,effectiveCellShrink:this.effectiveCellShrink,cellInstances:this.cellInstances,stereographicDiagnostic:this.stereographicDiagnostic,stereographicCounts:this.stereographicGeometry?{segments:this.stereographicGeometry.edges.length,triangles:this.stereographicGeometry.triangles.length,clippedSegments:this.stereographicGeometry.clippedSegments,clippedTriangles:this.stereographicGeometry.clippedTriangles,unresolvedEdges:this.stereographicGeometry.unresolvedEdges,unresolvedTriangles:this.stereographicGeometry.unresolvedTriangles}:null,perspectiveDiagnostic:this.perspectiveDiagnostic,perspectiveCounts:this.perspectiveGeometry?{segments:this.perspectiveGeometry.edges.length,triangles:this.perspectiveGeometry.triangles.length,clippedEdges:this.perspectiveGeometry.clippedEdges,clippedTriangles:this.perspectiveGeometry.clippedTriangles,omittedEdges:this.perspectiveGeometry.omittedEdges,omittedTriangles:this.perspectiveGeometry.omittedTriangles,distance:this.perspectiveSettings.distance,near:this.perspectiveSettings.near}:null};
   }
   // Capture owners disable observation to hold an exact camera. Even a settled
   // OrbitControls update can round a fitted pose and invalidate that snapshot.
-  draw(){if(this.controls.enabled!==false)this.controls.update();if(this.stereographicWorker?.snapshot){const camera=this.stereographicCameraMetrics();if(JSON.stringify(camera)!==JSON.stringify(this.stereographicWorker.snapshot.camera))this.setDisplay(this.view);}this.updateObserverFar();const mode=stereoMode(this.view);if(mode==='none')this.renderer.render(this.scene,this.camera);else{this.stereoRenderer??=new ViewerStereo(this.renderer);this.stereoRenderer.render(this.scene,this.camera,mode);}}
+  draw(){if(this.controls.enabled!==false)this.controls.update();if(this.stereographicWorker?.snapshot){const camera=this.stereographicCameraMetrics();if(JSON.stringify(camera)!==JSON.stringify(this.stereographicWorker.snapshot.camera))this.setDisplay(this.view);}this.updateObserverFar();const mode=stereoMode(this.view);if(mode==='none')this.renderer.render(this.scene,this.camera);else{this.stereoRenderer??=new ViewerStereo(this.renderer);this.stereoRenderer.render(this.scene,this.camera,mode,this.view);}}
   observationCloud(){
     const published=this.publishedPickState||this;
     if(published.packedDisplay)return packedObservationCloud(published.packedDisplay);
@@ -625,7 +665,8 @@ export class Viewer {
     this.camera.up.fromArray(value.up?.length===3&&value.up.every(Number.isFinite)?value.up:[0,1,0]);
     this.camera.zoom=Number.isFinite(value.zoom)&&value.zoom>0?value.zoom:1;this.updateOrthographic();this.updateObserverFar();this.camera.updateProjectionMatrix();this.bindControls();
   }
-  image(){this.draw();return this.renderer.domElement.toDataURL('image/png');}
+  createExportSurface(options){return createTargetSurface(this,options);}
+  image(options){return captureViewerPNG(this,options);}
   async prepareCapture(options={}){
     const model=this.model,view=JSON.stringify(this.view),camera=this.camera?JSON.stringify(this.cameraState()):null;
     const result=await this.prepareGeometryCapture(options);
@@ -638,6 +679,12 @@ export class Viewer {
   async prepareGeometryCapture({signal,isCurrent=()=>true}={}){
     const abort=()=>{throw Object.assign(Error('Viewport capture source or pose changed.'),{name:'AbortError'});};
     if(signal?.aborted||!isCurrent())abort();const model=this.model,view=this.view;
+    if(!this.net&&!this.cellNet&&['face-type','cell-type'].includes(view?.surfaceColors)){
+      const types=getElementTypes(model);if(!types?.available&&!isPrism(view))throw Error('Element type colors are unavailable or still computing. Wait for the Analysis report or choose Source colors.');
+      this.prismTypeCache=null;
+      if(isPrism(view))forgetPrismColorClasses(model);
+      if(this.surfaceColorTypes!==types){this.colorKey=null;this.setDisplay(view);}
+    }
     if(view?.projection!=='stereographic'||(model?.embeddingDimension??model?.dimension)!==4||this.net||this.cellNet)return {complete:true,projection:view?.projection||'orthographic'};
     const cameraBefore=this.camera?JSON.stringify(this.cameraState()):null;
     if(this.stereographicCaptureFailure||this.explosionDiagnostic||(view.faces!==false&&this.fillDiagnostics?.length))throw Error(`Viewport capture requires complete requested presentation: ${this.stereographicCaptureFailure||this.explosionDiagnostic||'source face fills were omitted.'}`);

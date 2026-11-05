@@ -1,3 +1,4 @@
+const {openDisclosure}=require('./smoke-helpers.cjs');
 // Actual desktop workflow and repeatable IPC timings, with an isolated profile.
 const {_electron:electron}=require('playwright');
 const fs=require('node:fs/promises'),path=require('node:path'),assert=require('node:assert/strict');
@@ -14,7 +15,7 @@ async function main(){
   const errors=[],checks=[];let page,benchmark;
   try{
     await app.evaluate(({dialog})=>{dialog.showMessageBox=async()=>({response:1});});
-    page=await app.firstWindow();page.setDefaultTimeout(30000);page.on('pageerror',e=>errors.push(e.message));
+    page=await app.firstWindow();require('./smoke-helpers.cjs').autoReveal(page);page.setDefaultTimeout(30000);page.on('pageerror',e=>errors.push(e.message));
     await page.waitForFunction(()=>document.getElementById('model-name')?.textContent==='Tesseract'&&document.getElementById('cancel').hidden);
     await page.evaluate(()=>{
       window.coreStatusMessages=[];
@@ -50,11 +51,13 @@ async function main(){
     checks.push('cuboctahedron dual and six truncated-tetrahedron sizing morph poses through real desktop IPC');
     if(!baseline){
       await page.locator('[data-panel="construct"]').click();
+      await page.locator('#construct-card-gallery-dual').click();
       assert.equal(await page.locator('#make-dual').isVisible(),true);
       assert.equal(await page.locator('#generator').isVisible(),false);
-      await page.locator('#create-model-settings > summary').click();assert.equal(await page.locator('#generator').isVisible(),true);
+      await page.locator('#construct-back-gallery-dual').click();await page.locator('#construct-card-gallery-generator').click();assert.equal(await page.locator('#generator').isVisible(),true);
       await page.locator('[data-panel="evidence"]').click();
       assert.equal(await page.locator('#evidence pre').isVisible(),false);
+      await require('./smoke-helpers.cjs').reveal(page,'#validation-details > summary');
       await page.locator('#validation-details > summary').click();assert.equal(await page.locator('#evidence pre').isVisible(),true);
       await page.locator('#validate').click();await page.waitForFunction(()=>document.getElementById('cancel').hidden);
       assert.equal(await page.locator('#evidence pre').count(),1);
@@ -94,7 +97,7 @@ async function main(){
       checks.push('actual dual, truncation and scale buttons retain source history and undo after Inspector reorganization');
       await page.locator('[data-key="truncated-tetrahedron"]').click();
       await page.waitForFunction(()=>document.getElementById('model-name').textContent==='Truncated tetrahedron'&&document.getElementById('cancel').hidden);
-      await page.locator('#dual-morph-settings > summary').click();
+      await openDisclosure(page,'dual-morph-settings');
       await page.locator('#dual-morph-method').selectOption('sizing');
       await page.locator('#dual-morph-geometry > summary').click();
       await page.locator('#dual-morph-radius').fill('');

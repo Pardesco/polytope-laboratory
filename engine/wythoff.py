@@ -11,6 +11,31 @@ from .geometry import hull, GeometryError
 
 FAMILIES={'A3':[3,3],'B3':[4,3],'H3':[5,3],'A4':[3,3,3],'B4':[4,3,3],'F4':[3,4,3],'H4':[5,3,3]}
 GROUP_ORDERS={'A3':24,'B3':48,'H3':120,'A4':120,'B4':384,'F4':1152,'H4':14400}
+FAMILIES['D4']=[3,3,3]
+GROUP_ORDERS['D4']=192
+
+
+def diagram_edges(family):
+    return [(0,1,3),(1,2,3),(1,3,3)] if family=='D4' else [(i,i+1,m) for i,m in enumerate(FAMILIES[family])]
+
+
+def mirror_gram(family):
+    gram=np.eye(len(FAMILIES[family])+1)
+    for a,b,m in diagram_edges(family):gram[a,b]=gram[b,a]=-math.cos(math.pi/m)
+    return gram
+
+
+def diagram_components(family,nodes):
+    remaining=set(nodes);parts=[]
+    while remaining:
+        part={remaining.pop()};pending=list(part)
+        while pending:
+            node=pending.pop()
+            for a,b,_ in diagram_edges(family):
+                other=b if a==node else a if b==node else None
+                if other in remaining:remaining.remove(other);part.add(other);pending.append(other)
+        parts.append(sorted(part))
+    return parts
 # Euclidean distance on the unit seed sphere, independent of supplied units.
 ORBIT_TOLERANCE=1e-9
 
@@ -83,13 +108,11 @@ def reflection_orbit(family='B4', rings=None, weights=None, max_vertices=4096):
         raise GeometryError('Positive weights must match the ringed nodes.')
     if type(max_vertices) is not int or not 1<=max_vertices<=20000:
         raise GeometryError('Orbit resource limit must be in 1–20,000 vertices.')
-    stabilizer_order=_inactive_stabilizer_order(diagram,rings)
+    stabilizer_order=math.prod(math.factorial(len(part)+1) for part in diagram_components(family,[i for i,r in enumerate(rings) if not r])) if family=='D4' else _inactive_stabilizer_order(diagram,rings)
     expected_size=GROUP_ORDERS[family]//stabilizer_order
     if expected_size>max_vertices:
         raise GeometryError(f'Coxeter orbit requires {expected_size} vertices and exceeds the {max_vertices}-vertex resource limit; no incomplete polytope was returned.')
-    gram=np.eye(d)
-    for i,m in enumerate(diagram):
-        gram[i,i+1]=gram[i+1,i]=-math.cos(math.pi/m)
+    gram=mirror_gram(family)
     roots=np.linalg.cholesky(gram)
     # Scale before solving, including for subnormal or very large weights.
     # Restore supplied model units only after all predicates have passed.
@@ -118,7 +141,7 @@ def reflection_orbit(family='B4', rings=None, weights=None, max_vertices=4096):
     restoration_residual=max(math.hypot(*delta) for delta in restored-np.asarray(vertices))
     if not np.isfinite(scaled_vertices).all() or restoration_residual>ORBIT_TOLERANCE:
         raise GeometryError('Coxeter orbit cannot be resolved in the supplied float64 model units; rescale the seed weights. No incomplete polytope was returned.')
-    return {'vertices':list(scaled_vertices),'family':family,'diagram':diagram,'rings':list(rings),'weights':list(weights),
+    return {'vertices':list(scaled_vertices),'family':family,'diagram':diagram,'diagramEdges':diagram_edges(family),'rings':list(rings),'weights':list(weights),
             'mirrorGramResidual':float(np.max(np.abs(roots@roots.T-gram))),
             'expectedOrbitSize':expected_size,'coxeterGroupOrder':GROUP_ORDERS[family],
             'inactiveStabilizerOrder':stabilizer_order,'orbitTolerance':ORBIT_TOLERANCE,
@@ -130,7 +153,7 @@ def wythoff(family='B4', rings=None, weights=None, max_vertices=4096):
     orbit=reflection_orbit(family,rings,weights,max_vertices)
     vertices=orbit['vertices'];rings=orbit['rings'];weights=orbit['weights'];diagram=orbit['diagram']
     mask=''.join(map(str,rings))
-    result=hull(vertices,f'{family} Wythoff {mask}',{'family':'Convex Wythoff', 'coxeterFamily':family, 'diagram':diagram, 'rings':rings,
+    result=hull(vertices,f'{family} Wythoff {mask}',{'family':'Convex Wythoff', 'coxeterFamily':family, 'diagram':diagram, 'diagramEdges':diagram_edges(family), 'rings':rings,
                                                     'weights':list(weights),'source':'Finite reflection orbit of fundamental-chamber seed',
                                                     'uniformCandidate':len(set(float(w) for w in weights if w))==1})
     result['provenance']={'operation':'wythoff','algorithmVersion':'0.2.0','parameters':{'family':family,'rings':rings,'weights':list(weights)},

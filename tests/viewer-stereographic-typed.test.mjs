@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import * as THREE from 'three';
 import {Viewer} from '../ui/viewer.js';
+import {fakeRenderer} from './helpers/fake-renderer.mjs';
 import {runStereographicWorkerJob,stereographicWorkerTransferables} from '../ui/stereographic-worker-geometry.mjs';
 import {packedPrimitiveInstances} from '../ui/viewer-stereographic-typed.mjs';
 import {resolveExplosion,explosionGeometry} from '../ui/explosion.mjs';
@@ -15,7 +16,7 @@ class HeldWorker{
   reply(transform=x=>x){const result=transform(runStereographicWorkerJob(this.jobs.shift())),delivered=structuredClone(result,{transfer:stereographicWorkerTransferables(result)});this.listeners.get('message')?.({data:delivered});return delivered;}
 }
 function viewer(model=source()){
-  const v=Object.create(Viewer.prototype);v.group=new THREE.Group();v.setModel(model);v.cameraProjection='orthographic';v.orthographicHalfHeight=2;v.camera=new THREE.OrthographicCamera(-2,2,2,-2,.01,1000);v.orthographicCamera=v.camera;v.perspectiveCamera=new THREE.PerspectiveCamera(38,1,.01,1000);v.camera.position.set(0,0,5);v.camera.lookAt(0,0,0);v.camera.updateMatrixWorld();v.controls={target:new THREE.Vector3(),update(){}};v.renderer={domElement:{getBoundingClientRect:()=>({width:400,height:400})},render(){}};
+  const v=Object.create(Viewer.prototype);v.group=new THREE.Group();v.setModel(model);v.cameraProjection='orthographic';v.orthographicHalfHeight=2;v.camera=new THREE.OrthographicCamera(-2,2,2,-2,.01,1000);v.orthographicCamera=v.camera;v.perspectiveCamera=new THREE.PerspectiveCamera(38,1,.01,1000);v.camera.position.set(0,0,5);v.camera.lookAt(0,0,0);v.camera.updateMatrixWorld();v.controls={target:new THREE.Vector3(),update(){}};v.renderer=fakeRenderer({width:400,height:400});
   const worker=new HeldWorker();v.worker=worker;v.stereographicWorkerFactory=()=>worker;v.stereographicWorkerClock={now:()=>0,setTimer:()=>1,clearTimer(){}};v.statuses=[];v.onDisplay=s=>v.statuses.push(s);v.timings=[];v.onStereographicTiming=t=>v.timings.push(t);return v;
 }
 async function publish(v,view={projection:'stereographic',vertices:true}){v.setDisplay(view);v.worker.reply();await tick();assert.ok(v.stereographicGeometry?.packed);return v.stereographicGeometry.packed;}

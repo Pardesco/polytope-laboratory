@@ -2,7 +2,8 @@
 export const APPEARANCE_DEFAULTS=Object.freeze({version:1,preset:'classic',theme:'dark',
   tint:'#ffffff',specular:'#18202a',shininess:30,ambient:.08,hemisphere:.85,
   keyIntensity:1.5,fillIntensity:.48,keyDirection:Object.freeze([4,7,6]),fillDirection:Object.freeze([-5,1,-3]),
-  background:'#15191f',edgeColor:'#9eafc0',vertexColor:'#c8d2dd'});
+  background:'#15191f',edgeColor:'#9eafc0',vertexColor:'#c8d2dd',style:'dark-gallery',
+  backgroundMode:'solid',backgroundBottom:'#080c14',edgeGlow:0,vertexMetal:false});
 export const MATERIAL_PRESETS=Object.freeze({
   classic:Object.freeze({tint:'#ffffff',specular:'#18202a',shininess:30}),
   matte:Object.freeze({tint:'#ffffff',specular:'#000000',shininess:0}),
@@ -24,11 +25,13 @@ export function appearanceOptions(value=undefined){
   const options={...APPEARANCE_DEFAULTS,...value};
   if(options.version!==1||!['classic','matte','polished','warm','custom'].includes(options.preset)||
     !['dark','light','paper','custom'].includes(options.theme))fail('Unsupported saved appearance version or preset.');
-  for(const key of ['tint','specular','background','edgeColor','vertexColor']){
+  if(!['prism','studio','dark-gallery','glass','metal','neon','paper','geomag'].includes(options.style)||
+    !['solid','gradient','radial','transparent'].includes(options.backgroundMode)||typeof options.vertexMetal!=='boolean')fail('Unsupported presentation style or background.');
+  for(const key of ['tint','specular','background','backgroundBottom','edgeColor','vertexColor']){
     if(!color(options[key]))fail(`${key} requires a six-digit hexadecimal color.`);
     options[key]=options[key].toLowerCase();
   }
-  for(const [key,max] of [['shininess',512],['ambient',5],['hemisphere',5],['keyIntensity',10],['fillIntensity',10]])
+  for(const [key,max] of [['shininess',512],['ambient',5],['hemisphere',5],['keyIntensity',10],['fillIntensity',10],['edgeGlow',3]])
     if(typeof options[key]!=='number'||!Number.isFinite(options[key])||options[key]<0||options[key]>max)
       fail(`${key} must be finite between 0 and ${max}.`);
   for(const key of ['keyDirection','fillDirection']){

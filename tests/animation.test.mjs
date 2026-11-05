@@ -58,7 +58,7 @@ test('editing duration, fps and loop retains user values while playback pauses',
 });
 
 test('native export rejects bad formats, timestamps, bytes and frame dimensions',()=>{
-  assert.throws(()=>validateExportOptions({format:'mp4',fps:24,frameCount:2}));
+  assert.throws(()=>validateExportOptions({format:'avi',fps:24,frameCount:2}));
   assert.throws(()=>validateExportOptions({format:'png',fps:24,frameCount:999999}));
   assert.throws(()=>validateExportOptions({format:'png',fps:24,frameCount:2,duration:8}));
   assert.throws(()=>decodeChunk('data:image/png;base64,bm90YXBuZw==','png'));

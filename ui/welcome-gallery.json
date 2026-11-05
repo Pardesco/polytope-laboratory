@@ -1,0 +1,14 @@
+[
+  {"key":"tesseract","name":"Tesseract","caption":"A cube, one dimension higher","dimension":4},
+  {"key":"cell24","name":"24-cell","caption":"Twenty-four octahedral cells","dimension":4},
+  {"key":"cell120","name":"120-cell","caption":"A world of dodecahedral cells","dimension":4},
+  {"key":"cell600","name":"600-cell","caption":"Six hundred tetrahedral cells","dimension":4},
+  {"key":"uniform4-gap","name":"Grand antiprism","caption":"An unexpected four-dimensional form","dimension":4},
+  {"key":"great-stellated-dodecahedron","name":"Great stellated dodecahedron","caption":"Ordered pentagrams in space","dimension":3},
+  {"key":"antiprism-uc5","name":"Five tetrahedra","caption":"Five interwoven components","dimension":3},
+  {"key":"snub-cube","name":"Snub cube","caption":"A chiral Archimedean solid","dimension":3},
+  {"key":"rhombicosidodecahedron","name":"Rhombicosidodecahedron","caption":"Triangles, squares and pentagons","dimension":3},
+  {"key":"stewart-q3q3-s3s3","name":"Stewart toroid","caption":"A polyhedral surface with a tunnel","dimension":3},
+  {"key":"small-stellated-dodecahedron","name":"Small stellated dodecahedron","caption":"Twelve five-pointed faces","dimension":3},
+  {"key":"icosahedron","name":"Icosahedron","caption":"Twenty triangles, endless possibilities","dimension":3}
+]

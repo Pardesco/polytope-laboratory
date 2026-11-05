@@ -37,7 +37,7 @@ async function main(){
   const app=await electron.launch({executablePath:runtime.packaged||require('electron'),args:runtime.packaged?[]:[root],cwd:root,env,timeout:30000});
   let page,stage='startup',sequence=0;const checks=[],errors=[],evidence=[];
   try{
-    page=await app.firstWindow();page.setDefaultTimeout(45000);page.on('pageerror',e=>errors.push(e.message));
+    page=await app.firstWindow();require('./smoke-helpers.cjs').autoReveal(page);page.setDefaultTimeout(45000);page.on('pageerror',e=>errors.push(e.message));
     await page.waitForFunction(()=>document.getElementById('model-name')?.textContent==='Tesseract');
     await page.evaluate(()=>{window.morphHarnessStatuses=[];new MutationObserver(()=>window.morphHarnessStatuses.push(document.getElementById('status').textContent)).observe(document.getElementById('status'),{childList:true,subtree:true,characterData:true});});
     const ready=async()=>{await page.waitForFunction(()=>document.getElementById('cancel').hidden);await page.evaluate(()=>new Promise(resolve=>{let n=5;const tick=()=>--n?requestAnimationFrame(tick):resolve();requestAnimationFrame(tick);}));};

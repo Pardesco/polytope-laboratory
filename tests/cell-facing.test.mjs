@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import * as THREE from 'three';
 import {Viewer} from '../ui/viewer.js';
 import {classifyCellFacing,composeDisplayMatrix,resolveSourcePlanes} from '../ui/cell-facing.mjs';
+import {CellFacingControls} from '../ui/cell-facing-controls.mjs';
 
 const HASH='c'.repeat(64),OTHER_HASH='d'.repeat(64);
 const IDENTITY=[[1,0,0,0],[0,1,0,0],[0,0,1,0],[0,0,0,1]];
@@ -29,6 +30,53 @@ function fixture(){
 function close(actual,expected,tolerance=1e-12){assert.equal(actual.length,expected.length);actual.forEach((x,i)=>assert.ok(Math.abs(x-expected[i])<tolerance,`${actual} differs from ${expected}`));}
 function resolved(){const {model,cache}=fixture();const value=resolveSourcePlanes(model,cache);assert.equal(value.supported,true,value.diagnostic);return value;}
 function viewer(model){const value=Object.create(Viewer.prototype);value.group=new THREE.Group();value.setModel(model);return value;}
+
+function controlFixture(){
+  const data=fixture();let state={model:data.model,notes:'original',view:{cellFacing:'all',angles:Array(6).fill(0)}},exporting=false;
+  let document={id:'source',states:[state],cursor:0},project={documents:[document]};const requests=[],changes=[];
+  const context={getState:()=>state,getDocument:()=>document,getProject:()=>project,isExporting:()=>exporting,getCounts:()=>null,
+    evaluate:(model,{signal})=>new Promise((resolve,reject)=>requests.push({model,signal,resolve,reject})),display:()=>changes.push('display'),markDirty:()=>changes.push('dirty')};
+  const controls=Object.assign(Object.create(CellFacingControls.prototype),{context,busy:false,root:{},select:{value:'front'},output:{}});
+  return {controls,context,requests,changes,cache:data.cache,get state(){return state;},export:()=>exporting=true,
+    navigate:()=>{state={model:structuredClone(data.model),view:{cellFacing:'all',angles:Array(6).fill(0)}};document={id:'second',states:[state],cursor:0};project={documents:[document]};}};
+}
+
+test('pending facing preparation retains its requested mode through observer updates and publishes only into the captured source',async()=>{
+  const f=controlFixture(),source=structuredClone(f.state.model),pending=f.controls.change();
+  assert.notStrictEqual(f.requests[0].model,f.state.model);assert.deepEqual(f.requests[0].model,source);
+  f.state.view.angles[2]=38;f.state.notes='edited independently';f.controls.sync();
+  assert.equal(f.controls.select.value,'front');assert.match(f.controls.output.textContent,/Preparing/);assert.equal(f.controls.busy,true);
+  f.requests[0].resolve(f.cache);await pending;
+  assert.equal(f.state.view.cellFacing,'front');assert.equal(f.state.view.angles[2],38);assert.equal(f.state.notes,'edited independently');
+  assert.deepEqual(f.changes,['display','dirty']);assert.equal(f.controls.busy,false);
+});
+
+test('in-place source edits retaining IDs/fingerprints cannot adopt late facing planes',async()=>{
+  const f=controlFixture(),pending=f.controls.change();f.state.model.vertices[0][0]+=.25;f.requests[0].resolve(f.cache);
+  await assert.rejects(pending,/source.*changed/);assert.equal(f.state.view.cellFacing,'all');assert.equal(f.state.view.cellFacingCache,undefined);assert.deepEqual(f.changes,[]);
+});
+
+test('export and explicit cancellation abort facing work and ignore an uncancellable late native reply',async()=>{
+  for(const action of ['export','cancel']){
+    const f=controlFixture(),pending=f.controls.change();
+    if(action==='export'){f.export();f.controls.sync();}else f.controls.cancel();
+    assert.equal(f.requests[0].signal.aborted,true);assert.equal(f.controls.busy,false);assert.equal(f.controls.select.value,'all');
+    f.requests[0].resolve(f.cache);await assert.rejects(pending,{name:'AbortError'});
+    assert.equal(f.state.view.cellFacing,'all');assert.equal(f.state.view.cellFacingCache,undefined);assert.deepEqual(f.changes,[]);
+  }
+});
+
+test('a retired facing job cannot clear the busy state or output ownership of a new document query',async()=>{
+  const f=controlFixture(),old=f.controls.change();f.navigate();f.controls.sync();assert.equal(f.requests[0].signal.aborted,true);
+  f.controls.select.value='back';const current=f.controls.change();f.requests[0].resolve(f.cache);await assert.rejects(old,{name:'AbortError'});
+  assert.equal(f.controls.busy,true);assert.equal(f.controls.select.value,'back');f.requests[1].resolve(f.cache);await current;
+  assert.equal(f.state.view.cellFacing,'back');assert.deepEqual(f.changes,['display','dirty']);assert.equal(f.controls.busy,false);
+});
+
+test('queued facing edits during export and unsupported modes refuse before native submission',async()=>{
+  const f=controlFixture();f.export();await assert.rejects(f.controls.change(),/Finish or cancel/);assert.equal(f.controls.select.value,'all');assert.equal(f.requests.length,0);
+  const g=controlFixture();g.controls.select.value='unsupported';await assert.rejects(g.controls.change(),/available cell-facing/);assert.equal(g.requests.length,0);
+});
 
 test('literal convex cache is verified and copied without source or incidence mutation',()=>{
   const {model,cache}=fixture(),before=JSON.stringify({model,cache}),value=resolveSourcePlanes(model,cache);

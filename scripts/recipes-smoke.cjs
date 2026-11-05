@@ -12,7 +12,7 @@ async function main(){
   const packaged=process.env.POLYTOPE_TEST_EXECUTABLE,folder=await fs.mkdtemp(path.join(artifacts,packaged?'recipes-packaged-smoke-':'recipes-smoke-'));
   const env={...process.env,POLYTOPE_TEST_USER_DATA:path.join(folder,'profile')};delete env.ELECTRON_RUN_AS_NODE;if(packaged)env.POLYTOPE_PYTHON=path.join(folder,'unavailable-development-python.exe');
   const app=await electron.launch({executablePath:packaged||require('electron'),args:packaged?[]:[root],cwd:root,env,timeout:30000});
-  const page=await app.firstWindow();page.setDefaultTimeout(30000);const checks=[],errors=[];let saveNumber=0;
+  const page=await app.firstWindow();require('./smoke-helpers.cjs').autoReveal(page);page.setDefaultTimeout(30000);const checks=[],errors=[];let saveNumber=0;
   page.on('pageerror',error=>errors.push(error.message));
   const done=async()=>page.waitForFunction(()=>document.getElementById('cancel').hidden);
   const history=async()=>{if(!await page.locator('#history-settings').evaluate(element=>element.open))await page.locator('#history-settings > summary').click();};

@@ -145,8 +145,8 @@ def test_entire_adopted_model_source_attributes_and_maps_must_reconstruct(change
     {'op':'facet-search','model':tetra(),'params':{'cancelled':True}},
     {'op':'facet-search','model':tetra(),'params':{'path':'arbitrary'}},
     {'op':'facet-candidates','model':tetra(),'params':{'criteria':{}}},
-    {'op':'facet-search','model':tetra(),'params':{'criteria':{'spiky':True}}},
-    {'op':'facet-search','model':tetra(),'params':{'criteria':{'tidy_dual':True}}},
+    {'op':'facet-search','model':tetra(),'params':{'criteria':{'spiky':1}}},
+    {'op':'facet-search','model':tetra(),'params':{'criteria':{'tidy_dual':1}}},
     {'op':'facet-adopt','model':tetra(),'params':{}},
     {'op':'facet-adopt','model':tetra(),'params':{'search':{},'result_id':True}},
     {'op':'facet-search','model':tetra(),'params':{'node_limit':10**500}}])
@@ -155,7 +155,7 @@ def test_strict_native_envelopes_refuse_unknown_malformed_or_unsupported_request
 
 
 def test_empty_refused_or_limited_jobs_never_publish_a_model_and_recover_next_json_line():
-    source=tetra();requests=[{'id':'bad','op':'facet-search','model':source,'params':{'criteria':{'spiky':True}}},
+    source=tetra();requests=[{'id':'bad','op':'facet-search','model':source,'params':{'criteria':{'spiky':1}}},
         {'id':'empty','op':'facet-search','model':source,'params':{'candidate_ids':[]}},
         {'id':'limited','op':'facet-search','model':source,'params':{'node_limit':1}},
         {'id':'good','op':'facet-search','model':source,'params':{}}]
@@ -167,6 +167,27 @@ def test_empty_refused_or_limited_jobs_never_publish_a_model_and_recover_next_js
     assert replies[2]['ok'] and replies[2]['result']['status']=='resource-limited' and not replies[2]['result']['results']
     assert replies[3]['ok'] and len(replies[3]['result']['results'])==1
     assert [r['id'] for r in replies]==['bad','empty','limited','good']
+
+
+def test_supported_spiky_and_tidy_dual_filters_preserve_source_and_verify_adoption():
+    source=tetra();before=deepcopy(source)
+    spiky=search(source,criteria={'spiky':True})
+    # An ordinary tetrahedron has no spikes; this is a completed negative
+    # predicate result, rather than a malformed-request refusal.
+    assert spiky['status']=='complete' and spiky['results']==[]
+    assert spiky['criteria']['spiky'] is True and spiky['criteriaRejectedAtLeaves']==1
+    assert verify_search(source,spiky)
+    tidy=search(source,criteria={'tidy_dual':True})
+    assert tidy['status']=='complete' and len(tidy['results'])==1
+    row=tidy['results'][0]
+    assert row['criteriaEvidence']['accepted'] and row['criteriaEvidence']['checks']['tidy_dual']
+    args={'search':tidy,'result_id':row['id']}
+    adopted=recipe(document(source),args)
+    result=adopted['states'][-1]['model']
+    assert verify_faceting_evidence(result)['passed']
+    assert result['provenance']['sourceSnapshot']==source
+    replayed=dispatch({'op':'recipe-replay','params':{'document':adopted}})
+    assert replayed['states'][0]['model']==result and source==before
 
 
 @pytest.mark.parametrize('target',[False,0,[],{},''])

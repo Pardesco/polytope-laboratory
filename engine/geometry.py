@@ -301,6 +301,9 @@ def intrinsic_measures(model):
     """Geometry is authoritative; cached content/boundary scalars are ignored."""
     interpretation=model.get('interpretation');p=points_array(model['vertices']);d=model['dimension']
     if interpretation=='convex-polytope':
+        from .native_uniform_validation import native_uniform_measure
+        native=native_uniform_measure(model)
+        if native is not None:return native
         reference=hull(p)
         same=len(reference['vertices'])==len(p) and Counter(canonical_cycle(f) for f in reference['faces'])==Counter(canonical_cycle(f) for f in model['faces'])
         if d==4:

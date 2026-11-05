@@ -31,6 +31,7 @@ export class CellNetEditor{
     for(const [id,available] of [['cell-net-undo',ready&&history?.cursor>0],['cell-net-redo',ready&&history?.cursor<history?.states.length-1]]){const node=this.$(id);if(node)node.disabled=blocked||!available;}
     for(const id of ['cell-net-build','cell-net-separate']){const node=this.$(id);if(node)node.disabled=blocked||state?.model.dimension!==4;}
     const root=this.$('cell-net-root');if(root)root.disabled=blocked;
+    this.flow?.sync();
   }
   selectComponent(index){if(this.context.isExporting?.())throw Error('Finish animation export before changing the cell-net selection.');if(!this.getState().cellNetLayout?.components.some(c=>c.root===index))throw Error('Choose an available cell-net component.');this.select('cell',index);this.config().component=index;}
   onExportStateChange(){const c=this.getState()?.view.cellNet;if(c)this.$('cell-net-component').value=c.component;this.updateActions();}
@@ -49,15 +50,15 @@ export class CellNetEditor{
   }
   activate(){this.getState().view.derivedMode='cell-net';this.$('derived-mode').value='cell-net';}
   sync(){this.sequence++;this.buildRequest=null;const s=this.getState();if(!s)return;const four=this.getModel().dimension===4;this.root.hidden=!four;this.$('face-net-controls').hidden=four;
-    const c=this.config(s);this.$('cell-net-root').value=c.root;this.$('cell-net-shrink').value=c.shrink;this.$('cell-net-shrink-value').textContent=Math.round(c.shrink*100)+'%';this.$('cell-net-summary').textContent='Generate a whole-cell arrangement from a closed 4D shell with intact orientable 3D cells and simple planar faces.';this.$('cell-net-selection').textContent='';if(this.$('cell-net-checks'))this.$('cell-net-checks').textContent='';this.updateActions();}
+    const c=this.config(s);this.$('cell-net-root').value=c.root;this.$('cell-net-shrink').value=c.shrink;this.$('cell-net-shrink-value').textContent=Math.round(c.shrink*100)+'%';this.$('cell-net-summary').textContent='Generate a whole-cell arrangement from a closed 4D shell with intact orientable 3D cells and simple or regular star planar faces.';this.$('cell-net-selection').textContent='';if(this.$('cell-net-checks'))this.$('cell-net-checks').textContent='';this.updateActions();}
   build(separate){captureExpressionOwner(this.context);const s=this.getState(),root=this.index('cell-net-root','cell');this.config(s).root=root;this.buildRequest={state:s,model:s.model,root,separate};s.cellNetLayout=null;s.cellNetSeparate=separate;this.activate();this.markDirty();this.updateActions();return this.refresh();}
   remember(s,net){if(s.cellNetHistory?.sourceFingerprint&&(s.cellNetHistory.sourceFingerprint!==net.sourceFingerprint||s.cellNetHistory.sourceId&&s.cellNetHistory.sourceId!==net.sourceId))s.cellNetHistory=null;const h=s.cellNetHistory ||= {cursor:-1,states:[]};h.sourceFingerprint=net.sourceFingerprint;h.sourceId=net.sourceId;h.states.splice(h.cursor+1);h.states.push({root:net.root,connections:structuredClone(net.connections),placements:structuredClone(net.placements)});if(h.states.length>100)h.states.shift();h.cursor=h.states.length-1;}
-  async evaluate(model,state){const sequence=++this.sequence,c=structuredClone(this.config(state)),request=this.buildRequest,explicit=request?.state===state&&request.model===model&&request.root===c.root;let net=state.cellNetLayout;
+  async evaluate(model,state,{signal,isCurrent}={}){if(signal?.aborted||isCurrent?.()===false)return {stale:true};const sequence=++this.sequence,c=structuredClone(this.config(state)),request=this.buildRequest,explicit=request?.state===state&&request.model===model&&request.root===c.root;let net=state.cellNetLayout;
     if(!net||net.sourceId!==model.id||net.sourceFingerprint!==model.fingerprint||net.root!==c.root){
       const h=state.cellNetHistory,saved=h?.sourceFingerprint===model.fingerprint&&(!h.sourceId||h.sourceId===model.id)?h.states[h.cursor]:null,restoring=!explicit&&!net&&saved?.root===c.root;
       const owner=captureExpressionOwner({...this.context,isBusy:()=>false,isExporting:()=>false}),historySignature=JSON.stringify(state.cellNetHistory??null);
-      net=await this.run('cell-net',{root:c.root,...explicit?(request.separate?{connections:[]}:{}):restoring?{connections:structuredClone(saved.connections),placements:structuredClone(saved.placements??[])}:state.cellNetSeparate?{connections:[]}:{}},model,'Arrange whole 3D cells');
-      if(this.sequence!==sequence||this.buildRequest!==request||this.getState()!==state)return {stale:true};verifyExpressionOwner({...this.context,isBusy:()=>false,isExporting:()=>false},owner);
+      net=await this.run('cell-net',{root:c.root,...explicit?(request.separate?{connections:[]}:{}):restoring?{connections:structuredClone(saved.connections),placements:structuredClone(saved.placements??[])}:state.cellNetSeparate?{connections:[]}:{}},model,'Arrange whole 3D cells',{signal});
+      if(signal?.aborted||isCurrent?.()===false||this.sequence!==sequence||this.buildRequest!==request||this.getState()!==state)return {stale:true};verifyExpressionOwner({...this.context,isBusy:()=>false,isExporting:()=>false},owner);
       if(JSON.stringify(state.cellNetHistory??null)!==historySignature)throw Error('Saved cell-net history changed while preparing the layout.');
       state.cellNetLayout=net;if(!restoring)this.remember(state,net);this.markDirty();
     }if(explicit&&this.buildRequest===request)this.buildRequest=null;return net;}
@@ -73,7 +74,7 @@ export class CellNetEditor{
     const select=this.$('cell-net-component');select.replaceChildren();if(!net.components.some(item=>item.root===c.component))c.component=net.components[0].root;
     for(const item of net.components){const option=document.createElement('option');option.value=item.root;option.textContent=`C${item.root}: ${item.cells.length} cells`;select.append(option);}select.value=c.component;
     this.$('cell-net-root').value=net.root;this.$('cell-net-shrink-value').textContent=Math.round(c.shrink*100)+'%';
-    this.$('derived-status').textContent=`${net.cells.length} whole cells · ${net.components.length} pieces · cell intersections ignored`;
+    this.$('derived-status').textContent=`${net.cells.length} whole cells · ${net.components.length} piece${net.components.length===1?"":"s"} · cell intersections ignored`;
     if(c.selection)this.select(c.selection.kind,c.selection.index,false);
     this.updateActions();
   }

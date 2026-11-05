@@ -16,7 +16,11 @@ from .operations import require_convex
 def cell_net(model,root=0,connections=None,placements=None):
     if model.get('interpretation')!='convex-polytope':
         from .generalized_concave_cell_nets import ordinary_cell_net
-        return ordinary_cell_net(model,root=root,connections=connections,placements=placements)
+        try:return ordinary_cell_net(model,root=root,connections=connections,placements=placements)
+        except GeometryError as ordinary_error:
+            from .star_cell_nets import star_cell_net
+            try:return star_cell_net(model,root=root,connections=connections,placements=placements)
+            except GeometryError:raise ordinary_error from None
     require_convex(model)
     if model['dimension']!=4 or model['embeddingDimension']!=4:
         raise GeometryError('Whole-cell nets require a convex 4D source in intrinsic 4D coordinates.')

@@ -12,6 +12,19 @@ test('a successful native reply completes its own status and releases busy state
   await Promise.resolve();assert.equal(id,'1');f.advance();d.resolve(result);assert.equal(await pending,result);
   assert.equal(f.jobs.pending.size,0);assert.deepEqual(f.calls.filter(x=>x[0]==='complete'),[['complete','Dual','Dual completed in 1.25 s']]);
 });
+
+test('a caller may observe its own status token before native submission without changing default ownership',async()=>{
+  const f=fixture();let token,invoked=false;
+  const pending=f.jobs.run(()=>{invoked=true;assert.equal(token,'File');return 42;},'File',{onStatusOwner:value=>token=value});
+  assert.equal(token,'File');assert.equal(invoked,false);assert.equal(await pending,42);
+  assert.deepEqual(f.calls.filter(call=>call[0]==='complete').map(call=>call[1]),['File']);
+});
+
+test('a failing status observer starts no native work and retains no pending job',async()=>{
+  const f=fixture();let called=false;
+  await assert.rejects(f.jobs.run(()=>called=true,'File',{onStatusOwner(){throw Error('Observer failed');}}),/Observer failed/);
+  assert.equal(called,false);assert.equal(f.jobs.pending.size,0);
+});
 test('global Cancel settles promptly without waiting for native cancellation or its held reply',async()=>{
   const f=fixture(),d=deferred(),pending=f.jobs.run(()=>d.promise,'Dual');await Promise.resolve();
   const refused=assert.rejects(pending,{name:'AbortError'});f.jobs.cancel();assert.equal(f.jobs.pending.size,0);await refused;

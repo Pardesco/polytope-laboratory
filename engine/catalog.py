@@ -38,6 +38,8 @@ def _sources():
             if provider=='antiprism':
                 from .uniform_snub_catalog import uniform_snub_metadata
                 record.update(uniform_snub_metadata(key,source_sha=entry['sha256']))
+                from .library_navigation import navigation_metadata
+                record.update(navigation_metadata(record))
             mathematical_labels=regular4d_metadata(key)
             if mathematical_labels:
                 mathematical_labels['aliases']=list(dict.fromkeys(record['aliases']+mathematical_labels['aliases']))
@@ -47,6 +49,16 @@ def _sources():
 
 
 def get_catalog():
+    from .catalog_index import catalog_index
+    return catalog_index(_build_catalog)
+
+
+def _build_catalog():
+    from .compound4 import compound4_catalog
+    from .scaliform4 import scaliform4_catalog
+    from .uniform_compounds import uniform_compound_catalog
+    from .near_miss_catalog import near_miss_catalog
+    from .compound_catalog import compound_catalog
     from .generators import CATALOG
     from .specialized_catalog import specialized_catalog
     from .miratope_expanded_catalog import expanded_catalog
@@ -58,10 +70,35 @@ def get_catalog():
         labels=regular4d_metadata(record['key'])
         if labels:record.update(labels)
     from .uniform_snub_catalog import uniform_snub_catalog
-    return records + uniform_snub_catalog() + specialized_catalog() + expanded_catalog() + stewart_catalog() + stewart_family_catalog() + exact_regular_catalog()
+    from .uniform4 import uniform4_catalog
+    from .star_uniform4 import star_uniform4_catalog
+    from .library_navigation import enrich_catalog, family_catalog
+    native=[r for r in uniform4_catalog() if r['key'].startswith('uniform4-')]
+    return enrich_catalog(records + uniform_snub_catalog() + specialized_catalog() + expanded_catalog() + stewart_catalog() + stewart_family_catalog() + exact_regular_catalog() + compound_catalog() + native + family_catalog() + near_miss_catalog() + star_uniform4_catalog() + uniform_compound_catalog() + compound4_catalog() + scaliform4_catalog())
 
 
 def load_catalog_model(key):
+    if isinstance(key,str) and key.startswith('compound4-'):
+        from .compound4 import load_compound4
+        return load_compound4(key)
+    if isinstance(key,str) and key.startswith('scaliform4-'):
+        from .scaliform4 import load_scaliform4
+        return load_scaliform4(key)
+    if isinstance(key,str) and key.startswith('star-uniform4-'):
+        from .star_uniform4 import load_star_uniform4
+        return load_star_uniform4(key)
+    if isinstance(key,str) and key.startswith('near-miss-'):
+        from .near_miss_catalog import load_near_miss_model
+        return load_near_miss_model(key)
+    if isinstance(key, str) and key.startswith('compound-'):
+        from .compound_catalog import load_compound_model
+        return load_compound_model(key)
+    from .uniform4 import load_uniform4
+    native=load_uniform4(key)
+    if native is not None:return native
+    from .library_navigation import load_family
+    family=load_family(key)
+    if family is not None:return family
     from .uniform_snub_catalog import load_uniform_snub_model
     uniform_variant=load_uniform_snub_model(key)
     if uniform_variant is not None:return uniform_variant
@@ -76,7 +113,10 @@ def load_catalog_model(key):
     if stewart is not None: return stewart
     from .miratope_expanded_catalog import load_expanded_model
     expanded = load_expanded_model(key)
-    if expanded is not None: return expanded
+    if expanded is not None:
+        from .polychoron_relationships import classification_metadata
+        expanded['metadata'].update(classification_metadata({**expanded['metadata'],'name':expanded['name'],'dimension':expanded['dimension']}))
+        return expanded
     from .specialized_catalog import load_specialized_model
     specialized = load_specialized_model(key)
     if specialized is not None: return specialized

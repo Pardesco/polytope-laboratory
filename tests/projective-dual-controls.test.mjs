@@ -15,6 +15,11 @@ function environment(){const document=structuredClone(fixture.document),state=do
  const context={getState:()=>current,getProject:()=>project,getDocument:()=>document,isExporting:()=>false,run:async(op,params,model)=>JSON.parse(execFileSync('python',['-B','-c',"import json,sys;from engine import server;print(json.dumps(server.dispatch(json.load(sys.stdin))))"],{cwd:fileURLToPath(new URL('../',import.meta.url)),input:JSON.stringify({op,params,model}),windowsHide:true,encoding:'utf8',maxBuffer:8*1024*1024})),markDirty(){},saveImage:async i=>images.push(i),openView:(record,o)=>{const view={record,options:o,selected:[],select:(...args)=>view.selected.push(args),destroy(){view.closed=true;},image:()=>JSON.stringify(record.edges.map(e=>e.clipPoints))};views.push(view);return view;}};
  return {state,document,project,context,views,images,setState:s=>current=s,controls:new ProjectiveDualControls(context,{mount:false})};
 }
+test('projective save reviews camera/source ownership and closes its pending export',async()=>{
+ const e=environment();await e.controls.preview();let review;
+ e.context.saveImage=async(image,name,options)=>{review=options;options.verify();await assert.rejects(e.controls.export(),/current projective image export/);e.state.view.projectiveDualCamera={zoom:2};assert.throws(options.verify,/Projective view changed/);e.controls.close();assert.equal(options.signal.aborted,true);return null;};
+ await assert.rejects(e.controls.export());assert.ok(review);assert.equal(e.controls.imageExport,null);
+});
 test('actual Three wire objects retain source IDs and literal color alpha with no fake ideal vertices',()=>{
  const record=fixture.record,group=projectiveWireObjects(record),lines=group.children.filter(o=>o.isLine),points=group.children.find(o=>o.isPoints);
  try{assert.equal(lines.length,24);assert.equal(points.userData.sourceFaces.length,8);assert.equal(record.vertices.filter(v=>v.kind==='ideal-numerical').length,4);assert.deepEqual(lines.map(o=>o.userData.sourceEdge),record.edges.map(e=>e.sourceEdge));assert.equal(lines[0].material.opacity,127/255);assert.equal(lines[0].material.color.r,20/255);

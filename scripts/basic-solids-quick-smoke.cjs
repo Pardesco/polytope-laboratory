@@ -4,7 +4,7 @@ async function main(){
   const folder=await fs.mkdtemp(path.join(root,'artifacts','basic-solids-quick-')),profile=path.join(folder,'profile');await fs.mkdir(profile);
   const env={...process.env,POLYTOPE_TEST_USER_DATA:profile};delete env.ELECTRON_RUN_AS_NODE;delete env.POLYTOPE_TEST_MODE;
   const app=await require('playwright')._electron.launch({executablePath:require('electron'),args:[root],cwd:root,env});
-  const page=await app.firstWindow(),errors=[];page.on('pageerror',error=>errors.push(error.message));
+  const page=await app.firstWindow();require('./smoke-helpers.cjs').autoReveal(page),errors=[];page.on('pageerror',error=>errors.push(error.message));
   try{
     await page.waitForFunction(()=>document.getElementById('model-name')?.textContent==='Tesseract');await page.locator('#toggle-inspector').click();await page.locator('[data-panel="construct"]').click();await page.locator('#basic-solid-settings > summary').click();
     for(const [index,key] of ['edge01','edge02','edge03','edge12','edge13','edge23'].entries())await page.locator('#basic-'+key).fill(['3','4','5','5','sqrt(34)','sqrt(41)'][index]);await page.locator('#basic-unit').selectOption('mm');

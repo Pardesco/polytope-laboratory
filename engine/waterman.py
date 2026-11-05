@@ -88,8 +88,8 @@ def _native_gate(model):
     return result
 
 
-def waterman_fcc(radius_squared=10, *, center=(0,0,0), **unsupported):
-    """Hull of integer even-sum FCC sites in an exact rational closed ball.
+def waterman_ball(radius_squared=10, *, center=(0,0,0), lattice="FCC", **unsupported):
+    """Hull of SC, FCC or BCC integer sites in an exact rational closed ball.
 
     Coordinates remain in the original lattice frame. Selection is exact;
     ordered hull incidence, normals and measurements are float64 approximate.
@@ -97,6 +97,10 @@ def waterman_fcc(radius_squared=10, *, center=(0,0,0), **unsupported):
     """
     if unsupported:
         raise GeometryError('Unknown or unsupported Waterman parameters: '+', '.join(sorted(unsupported)))
+    if type(lattice) is not str or lattice not in ('SC','FCC','BCC'):
+        raise GeometryError('Waterman lattice must be SC, FCC or BCC.')
+    lattice_name={'SC':'SC integer sites','FCC':'FCC integer even coordinate sum','BCC':'BCC integer sites with equal coordinate parity'}[lattice]
+    lattice_rule={'SC':'all integer triples','FCC':'x+y+z is even','BCC':'x, y and z have the same parity'}[lattice]
     threshold,raw_threshold=_rational(radius_squared,'squared radius')
     if threshold<=0:
         raise GeometryError('Waterman squared radius must be positive.')
@@ -122,7 +126,8 @@ def waterman_fcc(radius_squared=10, *, center=(0,0,0), **unsupported):
     origin_squared_denominator=denominator*denominator
     right=threshold.numerator*origin_squared_denominator
     for point in product(*(range(lo,hi+1) for lo,hi in bounds)):
-        if sum(point)%2:continue
+        if lattice=='FCC' and sum(point)%2:continue
+        if lattice=='BCC' and not point[0]%2==point[1]%2==point[2]%2:continue
         squared=sum((coordinate*denominator-c)**2 for coordinate,c in zip(point,origin_numerators))
         left=squared*threshold.denominator
         if left<=right:
@@ -133,11 +138,11 @@ def waterman_fcc(radius_squared=10, *, center=(0,0,0), **unsupported):
             distances.append(str(Fraction(squared,origin_squared_denominator)))
     if len(selected)<4:
         raise GeometryError('Waterman ball selects fewer than four sites; a full 3D hull is unavailable.')
-    source={'lattice':'FCC integer even coordinate sum','center':[str(value) for value in origin],
+    source={'lattice':lattice_name,'center':[str(value) for value in origin],
             'radiusSquared':str(threshold),'coordinates':selected}
     source_bytes=_json_bytes(source,MAX_PAYLOAD_BYTES)
     try:
-        model=hull(selected,'FCC Waterman ball')
+        model=hull(selected,f'{lattice} Waterman ball (r²={threshold}; origin '+', '.join(str(value) for value in origin)+')')
     except (ValueError,OverflowError,ArithmeticError) as exc:
         raise GeometryError('Waterman approximate full-dimensional hull failed: '+str(exc)) from exc
     if len(model['vertices'])>MAX_OUTPUT_VERTICES:
@@ -153,25 +158,25 @@ def waterman_fcc(radius_squared=10, *, center=(0,0,0), **unsupported):
     nonextreme=[i for i,v in enumerate(selected_to_output) if v is None]
     model['numeric'].update(selectionArithmetic='exact bounded integer/Fraction squared distances',
                             selectionCertificateScope='ball membership only; hull predicates and measures remain approximate')
-    model['provenance']={'operation':'waterman-fcc','algorithmVersion':VERSION,
+    model['provenance']={'operation':'waterman-fcc' if lattice=='FCC' else 'waterman-lattice','algorithmVersion':VERSION,
         'parameters':{'radius_squared':str(threshold),'center':[str(value) for value in origin]},
         'rawInput':{'radius_squared':raw_threshold,'center':[raw for value,raw in parsed]},
-        'definition':'convex hull of all integer even-sum FCC sites inside or on the exact rational ball; original lattice frame retained',
+        'definition':'convex hull of '+lattice_name+' inside or on the exact rational ball; original lattice frame retained',
         'hullEvidence':hull_evidence}
-    model['metadata']={'family':'Waterman','watermanFcc':{'schemaVersion':1,'algorithmVersion':VERSION,
+    model['metadata']={'family':'Waterman',('watermanFcc' if lattice=='FCC' else 'watermanBall'):{'schemaVersion':1,'algorithmVersion':VERSION,
         'sourceSnapshot':source,'sourceSnapshotSha256':hashlib.sha256(source_bytes).hexdigest(),
         'selectedPointCount':len(selected),'outputVertexToSelectedPoint':output_to_source,
         'selectedPointToOutputVertex':selected_to_output,'nonextremeSelectedPointIds':nonextreme,
         'facetSelectedPointIds':[[output_to_source[v] for v in face] for face in model['facetVertices']],
         'faceSelectedPointCycles':[[output_to_source[v] for v in face] for face in model['faces']],
-        'selectionCertificate':{'property':'complete FCC membership in the supplied closed rational ball',
+        'selectionCertificate':{'property':'complete '+lattice+' membership in the supplied closed rational ball',
             'arithmetic':'bounded exact integers/Fraction','certified':True,'exhausted':True,
             'originCommonDenominator':str(denominator),
             'originScaledNumerators':[str(value) for value in origin_numerators],
             'thresholdNumerator':str(threshold.numerator),'thresholdDenominator':str(threshold.denominator),
             'membershipRule':'sum((site*D-originNumerator)^2) * thresholdDenominator <= thresholdNumerator * D^2',
             'projectionRadiusIntegerCeiling':extent,'boundingBox':[list(pair) for pair in bounds],
-            'inspectedBoxSiteCount':inspected,'latticeRule':'x+y+z is even',
+            'inspectedBoxSiteCount':inspected,'latticeRule':lattice_rule,
             'selectedSquaredDistances':distances,'boundarySelectedPointIds':boundary,
             'doesNotCertify':['convex hull topology','float64 supports','float64 measures','Stella sequences or 4D variants']},
         'rootDefinition':'centered author root N means squared radius 2*N; this API accepts squared radius directly',
@@ -182,7 +187,16 @@ def waterman_fcc(radius_squared=10, *, center=(0,0,0), **unsupported):
                           'absoluteLatticeCoordinate':MAX_LATTICE_COORDINATE,'payloadBytes':MAX_PAYLOAD_BYTES},
         'sourceModelId':model['id'],'sourceFingerprint':identity(model),
         'evidenceScope':'generated source only; output maps apply while current geometry matches sourceFingerprint'}}
+    if lattice!='FCC':
+        model['provenance']['parameters']['lattice']=lattice
+        model['metadata']['watermanBall']['lattice']=lattice
+        model['metadata']['watermanBall']['rootDefinition']='No author-root mapping asserted for this lattice; squared radius is supplied directly.'
     return _native_gate(model)
+
+
+def waterman_fcc(radius_squared=10, *, center=(0,0,0), **unsupported):
+    if unsupported:raise GeometryError('Unknown or unsupported Waterman parameters: '+', '.join(sorted(unsupported)))
+    return waterman_ball(radius_squared,center=center)
 
 
 def centered_waterman_root(root=5, **unsupported):

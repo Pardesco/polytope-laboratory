@@ -1,0 +1,33 @@
+.construct-gallery [hidden] { display: none !important; }
+.construct-gallery-intro { color: var(--text); margin: 0 0 8px; font-size: 14px; font-weight: 600; }
+#construct-tool-search { width: 100%; min-height: 36px; margin: 0 0 8px; border-radius: 8px; background: var(--panel2); }
+.construct-category, .construct-recent { margin: 16px 0 0; }
+.construct-category h3, .construct-recent h3 { margin: 0 0 8px; color: var(--muted); font-size: 11px; font-weight: 600; letter-spacing: .04em; }
+.construct-card-grid { display: grid; gap: 8px; }
+.construct-tool-card { display: flex; gap: 8px; width: 100%; padding: 8px; border-radius: 8px; text-align: left; align-items: flex-start; background: var(--panel2); }
+.construct-tool-card:hover:enabled { border-color: var(--accent); background: #26323b; }
+.construct-tool-card svg { flex: 0 0 24px; width: 24px; height: 24px; margin-top: 2px; fill: none; stroke: currentColor; stroke-width: 1.3; stroke-linejoin: round; stroke-linecap: round; color: var(--accent); }
+.construct-card-copy { display: grid; gap: 4px; min-width: 0; }
+.construct-card-copy strong { font-size: 12px; font-weight: 600; color: var(--text); }
+.construct-card-copy > span { font-size: 11px; line-height: 1.4; color: var(--muted); }
+.construct-tool-card:disabled { opacity: .7; }
+.construct-card-reason { font-size: 10px; color: #d2b68b; line-height: 1.4; }
+.construct-recent-row { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 8px; }
+.construct-recent-row button { font-size: 11px; padding: 8px; text-align: left; border-radius: 8px; }
+.construct-gallery .construct-source-shell { display: contents; }
+.construct-gallery .construct-source-heading, .construct-tool-summary { display: none !important; }
+.construct-gallery .construct-tool-pane { margin: 0; padding: 0; min-width: 0; }
+.construct-pane-header { display: grid; grid-template-columns: minmax(0,1fr) 32px; gap: 8px; align-items: center; }
+.construct-pane-header h3 { grid-column: 1/-1; margin: 8px 0 0; font-size: 17px; line-height: 1.3; }
+.construct-back { justify-self: start; padding: 8px; white-space: nowrap; border-radius: 8px; }
+.construct-pane-header .construct-pane-help { position: static; margin: 0; width: 32px; height: 32px; border-radius: 50%; justify-self: end; }
+.construct-pane-description { margin: 8px 0 16px; color: var(--muted); }
+.construct-gallery .construct-tool-controls { border: 0; margin: 0; padding: 0; background: transparent; min-width: 0; }
+.construct-tool-controls > label, .construct-tool-controls > button, .construct-tool-controls > select, .construct-tool-controls > textarea { margin-top: 8px; }
+.construct-gallery .construct-primary { background: #315064; color: #edf7ff; border-color: #749ab2; padding: 8px 12px; width: 100%; margin: 16px 0 8px; font-weight: 600; border-radius: 8px; }
+.construct-gallery .construct-primary:hover:enabled { background: #3b6079; }
+.construct-more-options { margin-top: 16px; border-top: 1px solid var(--border); padding-top: 8px; }
+.construct-more-options > summary { color: var(--muted); }
+.construct-tool-pane label { gap: 8px; }
+.construct-tool-pane input:not([type='checkbox']), .construct-tool-pane textarea, .construct-tool-pane select { max-width: 100%; }
+@media (min-width: 1800px) { .construct-card-grid { grid-template-columns: repeat(auto-fit,minmax(220px,1fr)); } }

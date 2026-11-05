@@ -2,13 +2,14 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import * as THREE from 'three';
 import {Viewer} from '../ui/viewer.js';
+import {fakeRenderer} from './helpers/fake-renderer.mjs';
 import {sourceEntityHits,PickCycle,clipNdcSegment,clipCameraSegment,pointSegmentDistance} from '../ui/entity-picking.mjs';
 
 const fixture=()=>({dimension:4,embeddingDimension:4,interpretation:'generalized-complex',fingerprint:'c'.repeat(64),vertices:[[1,0,0,0],[-1,0,0,0],[0,1,0,0],[0,-1,0,0],[0,0,1,0],[0,0,-1,0],[0,0,0,1],[0,0,0,-1]],edges:[[0,2],[2,4],[4,0]],faces:[[0,2,4]],cells:[]});
 function viewer(model){
   const value=Object.create(Viewer.prototype);value.group=new THREE.Group();value.setModel(model);
   value.camera=new THREE.OrthographicCamera(-2,2,2,-2,.01,100);value.camera.position.set(0,0,5);value.camera.lookAt(0,0,0);value.camera.updateMatrixWorld();
-  value.renderer={domElement:{getBoundingClientRect:()=>({width:400,height:400})}};value.picks=[];value.onPick=(...args)=>value.picks.push(args);return value;
+  value.renderer=fakeRenderer({width:400,height:400});value.picks=[];value.onPick=(...args)=>value.picks.push(args);return value;
 }
 const ids=result=>result.hits.map(h=>h.id);
 

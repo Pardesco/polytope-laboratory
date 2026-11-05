@@ -15,7 +15,7 @@ async function main(){
   const env={...process.env,POLYTOPE_TEST_USER_DATA:profile};delete env.ELECTRON_RUN_AS_NODE;
   if(executable)env.POLYTOPE_PYTHON='C:\\unavailable-development-python.exe';
   const app=await electron.launch({executablePath:executable||require('electron'),args:executable?[]:[root],cwd:root,env,timeout:30000});
-  const page=await app.firstWindow();page.setDefaultTimeout(25000);const errors=[],checks=[],evidence=[];
+  const page=await app.firstWindow();require('./smoke-helpers.cjs').autoReveal(page);page.setDefaultTimeout(25000);const errors=[],checks=[],evidence=[];
   page.on('pageerror',error=>errors.push(error.message));
   const snapshotFile=path.join(artifacts,'graphics-snapshot.polyproj');
   const reportFile=path.join(artifacts,executable?'graphics-packaged-smoke.json':'graphics-desktop-smoke.json');

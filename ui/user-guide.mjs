@@ -1,8 +1,23 @@
 // SPDX-License-Identifier: GPL-3.0-only
 // Bundled offline help. Opening help never changes the mathematical document.
+import {GUIDE_REFERENCES} from './guide-reference-index.mjs';
+import {GUIDE_GOALS,refreshGuideTopics,NEW_GROUP_GUIDE_TOPICS} from './guide-refresh.mjs';
+import {shortcutTable} from './shortcut-bindings.mjs';
+import {FEATURE_ACTION_INDEX} from './guide-action-index.mjs';
 const topic=(id,title,where,keywords,paragraphs)=>({id,title,where,keywords,paragraphs});
-export const GUIDE_TOPICS=[
+export const GUIDE_TOPICS=refreshGuideTopics([
+  topic('discover','Finding tools and shortcuts','Header → Search commands','command palette ctrl k ctrl shift p fuzzy help shortcuts',[
+    'Press Ctrl+K or Ctrl+Shift+P to search actions, inspector fields, view choices, every indexed Library model and Guide topics. The palette searches tool names and their location paths. Arrow keys choose a result; Enter runs a button or focuses an editable field. Escape closes the palette.',
+    'Choosing an inspector result opens Inspector, selects its tab, expands its containing groups and highlights the control. Disabled results show the available explanation. File actions use their usual dialogs and confirmations.',
+    'Press ? outside a text field to see the shortcut sheet. Press F1 on a focused control, or the ? button in a group heading, to open its offline help.'
+  ]),
+  topic('metadata','Model information','Advanced → Model information; Analysis → Model information','title author description notes references urls tags license source metadata',[
+    'Edit the title, author, description, references/URLs, comma-separated tags, license and source under Advanced, then Save model information. Analysis shows the saved information read-only. The separate Notes field remains a document-state note.',
+    'Information belongs to the current document history state. Save updates that state and marks the project dirty; it does not create a geometry history step. Subsequent constructions and promoted documents inherit the information. Native projects and JSON retain it.',
+    'OFF/4OFF exports carry a bounded JSON comment for model information and document notes. Polytope Laboratory restores this comment on import; other OFF readers may discard comments. URLs and license text are stored as plain text and never opened automatically. Additional fields accepts a JSON object; unknown imported fields are retained.'
+  ]),
   topic('start','Getting started','Library, Inspector, and the two viewports','new open save guide quick start',[
+    'Help → Welcome (also in Search commands) opens the featured gallery, six Show me how walkthroughs and three bundled sample projects. Gallery models and samples open as additional documents. Walkthroughs reveal real controls; use Next, Skip step or Exit tour at any time. Don’t show again is a local preference; Welcome can always be reopened.',
     'Choose a model from the Library, or open your own OFF, JSON or native project. The base view shows your source model. The derived view shows a section, dual, net or another analysis of that source.',
     'Open Inspector for Analysis, Construct, Nets and Advanced. Construct starts with dual and truncation; open Create a model or Advanced constructions for other tools. Analysis shows common measurements first, with more information available on request. A disabled action usually requires a different source dimension or a supported geometry domain.',
     'Use native projects to retain documents, notes, history, annotations and display settings. A geometry export carries fewer kinds of information; the export dialog reports losses.',
@@ -24,7 +39,7 @@ export const GUIDE_TOPICS=[
   topic('projects','Projects, history and recovery','File menu and document tabs','save open undo redo replay branch metadata notes recover autosave',[
     'A native project contains multiple documents. Each document has its own source, history and view. Undo and Redo move through that document; editing an earlier step can create a new branch.',
     'Replay repeats recorded constructions from their saved parameters. Preview results are adopted explicitly. Cancel stops pending work; a late result must not replace a changed source.',
-    'Save writes the native project and retains a prior-file backup. Recovery offers autosaved work after an interrupted session. Project metadata stores title, author, references and additional fields; notes are saved per state.'
+    'Save writes the native project and retains a prior-file backup. Recovery offers autosaved work after an interrupted session. Advanced → Model information stores title, author, references, tags, license, source and additional fields; Analysis shows the saved information. Notes are saved per state.'
   ]),
   topic('expressions','Expressions and physical units','Numeric fields and Analysis → Units','sqrt phi tau trig angles cosd sind diag rational polygon equation',[
     'Numeric fields accept arithmetic, parentheses, roots, constants and supported functions. Try sqrt(5)/2, cosd(60), phi or diag(5/2). Use commas between coordinates in a vector.',
@@ -38,6 +53,7 @@ export const GUIDE_TOPICS=[
   ]),
   topic('selection','Selection and measurements','Inspector → Analysis','pick identify vertex edge face cell distance angle dihedral circumradius',[
     'For vertex distance or a three-vertex angle, choose the kind and enter source indices, then press Measure. Editing either field clears the prior result and cancels its pending check. A fresh click measures the current inputs; changing models discards old feedback.',
+    'Element types lists symmetry orbits for vertices, edges, faces and cells. Choose a type button to select the full set. Face type and Cell type coloring use these numerical orbits; polygon side counts do not assert regularity.',
     'Click an entity in the viewport, or choose its kind and source index in Analysis. Repeated net copies share the same source ID. Ambiguous projected selections can be cycled rather than merged.',
     'Measurements use intrinsic geometry rather than projected pixel distances. Affine-flat distance treats the selected objects as infinite flats; bounded distance instead uses vertices, finite edges, simple planar 3D face regions including concave faces, and qualified convex 4D cells.',
     'Bounded face and cell measurements report closest points and numerical distance bounds. Star/self-crossing faces, inferred holes and unsupported generalized cell interiors receive a diagnostic. Export construction measurements as CSV or JSON with their units.'
@@ -57,6 +73,8 @@ export const GUIDE_TOPICS=[
     'A local vertex figure describes the incident neighborhood. The 4D construction matcher checks it against finite supported candidates and reports ambiguous matches; it is not a universal completion solver.'
   ]),
   topic('construction','Constructions and source domains','Inspector → Construct','hull dual reciprocal truncate rectify mirror scale transform coxeter wythoff',[
+    'Construct groups tools under Modify, Fit & refine, Facet & stellate and Create. Construct polar dual, Add Dual, Truncate / rectify and Make faces regular stay visible. Advanced options start collapsed.',
+    'Face subdivision and Conway operators offers centroid, midpoint and kis refinement and d/a/k/t/j/e notation, applied right to left. A bounded numerical match uses a familiar convex uniform catalog name; other results retain notation applied to the source name. Add Dual keeps primal and polar as separate components.',
     'Choose a construction appropriate to the source dimension and interpretation. A convex hull intentionally changes the boundary. Other source-preserving operations retain literal incidence and refuse domains they cannot handle.',
     'Cancel discards pending computation replies immediately, including a result that has finished in the engine but has not reached the workspace. You can retry without waiting for that reply. Certify current belongs to the selected source, units and notes; changing them or opening a replacement project discards its pending result.',
     'Convex polar duals and 3D/4D source-incidence duals have different domains. Reciprocal constructions require a center and radius; planes through the center can make a finite reciprocal impossible.',
@@ -82,7 +100,7 @@ export const GUIDE_TOPICS=[
     'Select the outside pair and choose tongue-in-groove, internal support, no internal support or disconnected policy. Preview shows the pairing, cuts and physical tabs. Edit the detached layout, then Save edits; Restore saved reopens it.',
     'Export SVG or packed PDF at the chosen millimeter scale. Source face text and eligible PNG follow their original owners. Select larger paper or smaller E0 when an intact part cannot fit. Ambiguous contacts and star or immersed pieces receive a diagnostic.'
   ]),
-  topic('sphere','Project onto a sphere','Inspector → Construct → Advanced constructions → Project vertices onto sphere','sphere project radial radius center xyz xyzw',[
+  topic('sphere','Project onto a sphere','Inspector → Construct → Fit & refine → Project vertices onto sphere','sphere project radial radius center xyz xyzw',[
     'Enter a center in XYZ or XYZW coordinates and a positive radius, or leave either field empty. The default center is the mean source vertex position; the default radius is the mean source distance from that center.',
     'Vertices move along their existing rays to the sphere. Source edges, ordered faces, cells, colors, units and element content stay associated with the same owners.',
     'A vertex at the center, collapsed geometry, or a newly nonplanar face/cell prevents adoption. Explicitly subdivide a face before projecting if necessary. Projection does not establish regularity; convex results receive separate supporting-facet checks.'
@@ -97,7 +115,8 @@ export const GUIDE_TOPICS=[
     'Fit geometric conditions can target regular faces, equal edges or equal face areas. Inspect convergence and residuals before adopting. A valid geometry with unmet targets is explicitly a near miss.',
     'Fitting preserves the source incidence. Nonplanarity, collapsed rank, unsupported geometry or failed supporting facets prevent adoption. Equalities within numerical tolerance are not exact regularity certificates.'
   ]),
-  topic('augmentation','Augmentation, excavation and placement','Inspector → Construct → Advanced constructions → Attachment or placement','attach drill pyramid cupola face matching memory addition compound',[
+  topic('augmentation','Augmentation, excavation and placement','Inspector → Construct → Modify → Augment / excavate','attach drill pyramid cupola face matching memory addition compound',[
+    'Modify → Augment / excavate applies a generated piece, library model or memory to a picked face. Excavate reverses the piece inward; Drill opposite faces (prism) creates a supported straight tunnel. A picked vertex supports separate model copies. Results enter construction history.',
     'Augmentation attaches a chosen model at matching ordered source faces. Orientation, scale, face choice and coincidence policy determine the seam; Preview shows the proposed result before adoption.',
     'Excavation removes matched face pairs and retains the remaining source boundary within supported domains. Drilling follows supported additional coincidences. These operations do not provide arbitrary solid Boolean subtraction.',
     'Placing models on faces or vertices creates positioned instances. Those instances need not share edges with the base. Source owners, components and color policies remain explicit.'
@@ -135,33 +154,46 @@ export const GUIDE_TOPICS=[
     'Animate rotations, supported explosions, ordinary-cell or surface section depth and folding using time-based tracks. Keyframes and tours retain reproducible camera/view states.',
     'Eight scoped 3D dual-morph methods include sizing, truncation, augmentation, expansion and four tilting methods. Sizing and expansion also support finite closed ordinary star/nonconvex 3D boundaries, including the four regular stars. Generalized 4D expansion retains actual source/polar product cells and finite star winding. Each method reports its own source domain and transitions.',
     'Open Dual morph in the bottom toolbar, choose a method and Apply. Leave reciprocal radius empty to match the source size. Drag the ratio slider to pause and inspect a pose. Replay starts again from the beginning; Play resumes a paused pose. Reset returns to the source. Saved projects retain the resolved radius and pose.',
+    'Sizing displays two separate layers: the source shrinks while its dual grows. Automatic radius matches their endpoint sizes; the middle pose can be smaller. The camera and source normalization stay fixed during playback. Use Fit export frames when an animation needs a single camera covering every sampled pose.',
     'Dual-morph ratio keyframes combine with rotation and carry source-owned text/PNG into PNG and WebM frames. Choose Fit export frames to sample every export time and save one camera containing their displayed geometry; your original pose is restored. The fit covers sampled geometry, not every intervening playback instant or label extent.',
     'PNG/video export prepares the required assets and supports cancellation. Unsupported combinations receive a diagnostic. A smooth display animation does not establish continuous mathematical equivalence outside its declared domain.'
   ]),
   topic('exports','Exporting and sharing','File → Export, Capture image and Print','off 4off obj stl pov vrml dxf json csv pdf svg png',[
+    'Export type → Printable model exports struts or thickened panels from displayed geometry, including 4D projections, or the checked outer solid of a supported complete 3D source. Set physical size in millimeters. STL defaults to binary; the ASCII STL checkbox switches its encoding. Strut/panel shells may overlap and need slicer review; Solid has its own exterior and hollowing checks.',
     'Use native projects for editable work. OFF/4OFF and JSON carry geometry; format-specific exports such as OBJ, STL, VRML, DXF or POV-Ray have dimension and interpretation limits.',
     'Choose Model or Derived result, a file format and output units. The dialog disables unavailable formats and explains data losses before you choose a file. Declare physical Coordinate units under Construct, Scale, reflect and extrude before converting millimeters, inches or other physical units. Physical VRML uses meters.',
     'Escape or Close cancels the pending export. A late destination choice cannot write after its export dialog has closed. Opening the dialog again starts a fresh review; an older completion cannot close or replace that review. The same rule applies to net SVG/PDF exported from this dialog.',
-    'JSON retains project metadata and notes. OFF needs intrinsic 3D/4D boundary geometry; use JSON or DXF for loose edges. STL and POV-Ray require convex 3D boundaries. A geometry export uses the source coordinates; rotations, display morphs and camera zoom do not alter them. Use PNG for the displayed pose.',
+    'JSON retains project metadata and notes. OFF/4OFF carries them in a Polytope Laboratory JSON comment; other readers may discard comments. OFF needs intrinsic 3D/4D boundary geometry; use JSON or DXF for loose edges. Intrinsic STL and POV-Ray use their convex 3D boundary domain. Displayed triangle surfaces and Printable model have separate export domains. Intrinsic export uses source coordinates; choose Displayed geometry for the prepared projection, or PNG for a raster image.',
     'PNG capture renders the current prepared view. Packed nets export physical SVG/PDF pages. Attach the native project and a reproducible description when reporting a bug.'
   ]),
   topic('numeric','Numerical evidence and unsupported domains','Inspector → Advanced','exact rational float tolerance certified validation generalized manifold',[
+    'Open Symmetry checks in Advanced with Expert tools enabled to compute numerical source symmetries, inspect element orbits and stabilizers, or compare a restricted subgroup. A complete full-group result requires an exhausted search and verified closure; resource-limited and subgroup results retain their restricted scope. Coordinates and predicates remain approximate.',
     'Verify regular 4D identity shows current progress and checks the selected source. A new check clears its prior receipt; changing models discards pending feedback. Notes, unit-display declarations and view rotation do not change this intrinsic check.',
     'Analysis and incidence validation show a loading message while checking the selected source. A report from another model or an earlier check cannot replace the current result. View rotation, notes and coordinate-unit display changes do not change intrinsic incidence checks.',
     'Ordinary coordinates and measurements use approximate float64 predicates. Validation means the reported checks passed for the supplied interpretation; it does not certify every mathematical property.',
     'Exact rational hull/dual and surface-section workflows carry evidence about supplied rational coordinates. The viewport still uses approximate display values; decimal input does not recover intended radicals.',
     'Generalized objects retain their literal ordered incidence. They need not satisfy convex topology. A refusal identifies a limit of the selected operation; constructing a hull is an explicit change of geometry.'
   ])
-];
+]);
 
 const CONTEXT=[['coincidic-','regiment'],['density-','density'],['generalized-density','density'],['projective-dual','projective-dual'],['assembly-','coincident-assembly'],['source-reflection','construction'],['reflect-literal','construction'],['sphere-project','sphere'],['incidence-dual','construction'],['make-incidence-dual','construction'],['incidence-','truncation'],['cell-net','cell-nets'],['net-','nets'],['reinforcement','nets'],['element-','content'],['source-label','content'],['dual-morph','animation'],['tour','animation'],['animation','animation'],['material-','appearance'],['surface-','appearance'],['appearance','appearance'],['multiple-views','views'],['perspective','views'],['stereo','views'],['library','library'],['search','library'],['catalog','library'],['measurement','selection'],['selection','selection'],['units','expressions'],['expression','expressions'],['exact-section','sections'],['section','sections'],['vertex-figure','sections'],['expand','expansion'],['fitting','expansion'],['augmentation','augmentation'],['face-placement','augmentation'],['automatic-facet','faceting'],['faceting','faceting'],['stellation','faceting'],['basic-solid','specialized'],['stephanoid','specialized'],['project-metadata','projects'],['rational','numeric']];
+export const GROUP_GUIDE_TOPICS={
+  'fit-refine-controls':'expansion','facet-stellate-controls':'faceting','face-conway-settings':'construction','face-surgery-settings':'augmentation','element-types':'selection','add-dual-controls':'construction','printable-settings':'exports',
+  'transform-model-settings':'construction','dual-options-settings':'construction','create-model-settings':'specialized','advanced-construction-settings':'construction','wythoff-model-settings':'construction','hull-model-settings':'construction',
+  'selection-details':'selection','entity-orientation-settings':'selection','entity-measurement-settings':'selection','analysis-details':'selection','validation-details':'numeric',
+  'project-metadata-settings':'metadata','model-information-summary':'metadata','expression-settings':'expressions','info-panel':'selection','construct-panel':'construction','evidence-panel':'numeric','net-panel':'nets',
+  ...NEW_GROUP_GUIDE_TOPICS
+};
 export function guideContext(element){
-  for(let node=element;node;node=node.parentElement){const id=node.id||'';const found=CONTEXT.find(([prefix])=>id.startsWith(prefix));if(found)return found[1];}
+  if(element?.closest?.('#star-uniform4-cell-types'))return 'star-polychora';
+  if(element?.closest?.('#element-types'))return 'selection';
+  const focused=[['section-density','density-sections'],['information-','information'],['symmetry-direction','symmetry-orientation'],['conway-','conway'],['zone-','zones'],['surgery-','augmentation'],['printable-','printing'],['png-','images']].find(([prefix])=>(element?.id??'').startsWith(prefix));if(focused&&!GROUP_GUIDE_TOPICS[element.id])return focused[1];
+  for(let node=element;node;node=node.parentElement){const id=node.id||'';if(node.dataset?.guideTopic)return node.dataset.guideTopic;if(GROUP_GUIDE_TOPICS[id])return GROUP_GUIDE_TOPICS[id];const found=CONTEXT.find(([prefix])=>id.startsWith(prefix));if(found)return found[1];}
   return 'start';
 }
 export function searchGuide(query,topics=GUIDE_TOPICS){
   const words=String(query).normalize('NFKC').toLocaleLowerCase().trim().split(/\s+/).filter(Boolean);
-  return topics.filter(t=>{const text=[t.title,t.where,t.keywords,...t.paragraphs].join(' ').normalize('NFKC').toLocaleLowerCase();return words.every(w=>text.includes(w));});
+  return topics.filter(t=>{const text=[t.title,t.goal,t.where,t.keywords,...t.paragraphs,...(t.steps??[]),t.tips,...(t.links??[]).map(([,label])=>label)].join(' ').normalize('NFKC').toLocaleLowerCase();return words.every(w=>text.includes(w));});
 }
 export class UserGuide{
   constructor(dialog){
@@ -176,13 +208,30 @@ export class UserGuide{
     // Also handle renderer-delivered F1 (including embedded/automated windows).
     document.addEventListener('keydown',event=>{if(event.key==='F1'&&!event.repeat){event.preventDefault();this.show();}});this.render();
   }
-  show(){if(this.dialog.open){this.search.focus();return;}this.previousFocus=document.activeElement;this.current=guideContext(this.previousFocus);this.search.value='';this.render();this.dialog.showModal();this.search.focus();}
+  show(topic){if(this.dialog.open){if(topic){this.current=topic;this.search.value='';this.render();}this.search.focus();return;}this.previousFocus=document.activeElement;this.current=topic||guideContext(this.previousFocus);this.search.value='';this.render();this.dialog.showModal();this.search.focus();}
+  topicLink(id,label){const link=this.create('a',label??GUIDE_TOPICS.find(t=>t.id===id)?.title??id);link.href='#guide-'+id;link.dataset.guideTopic=id;link.onclick=event=>{event.preventDefault();this.current=id;this.search.value='';this.render();this.article.setAttribute('tabindex','-1');this.article.focus();};return link;}
   render(){
     const matches=searchGuide(this.search.value);this.count.textContent=matches.length+' matching topics';this.list.replaceChildren();
     if(!matches.some(t=>t.id===this.current))this.current=matches[0]?.id??null;
-    for(const t of matches){const button=this.create('button',t.title);button.type='button';button.dataset.topic=t.id;button.setAttribute('aria-current',String(t.id===this.current));button.onclick=()=>{this.current=t.id;this.render();this.list.querySelector(`[data-topic="${t.id}"]`)?.focus();};this.list.append(button);}
+    for(const goal of [null,...GUIDE_GOALS]){
+      const topics=matches.filter(t=>(t.goal??null)===goal);if(!topics.length)continue;
+      if(goal)this.list.append(this.create('h4',goal));
+      for(const t of topics){const button=this.create('button',t.title);button.type='button';button.dataset.topic=t.id;button.setAttribute('aria-current',String(t.id===this.current));button.onclick=()=>{this.current=t.id;this.render();this.list.querySelector(`[data-topic="${t.id}"]`)?.focus();};this.list.append(button);}
+    }
     this.article.replaceChildren();const t=matches.find(t=>t.id===this.current);
     if(!t){this.article.append(this.create('p','No topics match. Try a shorter phrase or clear the search.'));return;}
     this.article.append(this.create('h3',t.title),this.create('p',t.where,'guide-location'),...t.paragraphs.map(p=>this.create('p',p)));
+    if(t.steps){const steps=this.create('ol');for(const step of t.steps)steps.append(this.create('li',step));this.article.append(this.create('h4','Try it'),steps);}
+    if(t.tips)this.article.append(this.create('h4','Tips and limits'),this.create('p',t.tips));
+    if(t.links){const links=this.create('ul');for(const [id,label] of t.links){const row=this.create('li');row.append(this.topicLink(id,label));links.append(row);}this.article.append(links);}
+    if(t.shortcuts){const table=this.create('dl');for(const row of shortcutTable())table.append(this.create('dt',row.keys),this.create('dd',row.label+' · '+row.scope));this.article.append(table,this.create('h4','Find new actions with Ctrl+K'));const list=this.create('ul');for(const item of FEATURE_ACTION_INDEX){const row=this.create('li');row.append(this.topicLink(item.topic,item.label),this.create('span',' — search “'+item.query+'”'));list.append(row);}this.article.append(list);}
+    if(t.related?.length){const related=this.create('nav');related.setAttribute('aria-label','Related Guide topics');for(const id of t.related)related.append(this.topicLink(id),this.create('br'));this.article.append(this.create('h4','Related topics'),related);}
+    const references=GUIDE_REFERENCES[t.id]??[];
+    if(references.length){
+      const notes=this.create('nav');notes.setAttribute('aria-label','Offline feature notes');
+      for(const name of references){const link=this.create('a',name.replace(/\.md$/,'').replaceAll('_',' '));link.href='#guide-note-'+name;
+        link.onclick=async event=>{event.preventDefault();const owner=this.current;const {loadGuideDocument}=await import('./guide-documents.mjs');const content=await loadGuideDocument(name);if(this.current!==owner||!this.dialog.open)return;const body=this.create('pre',content,'guide-note');this.article.replaceChildren(this.create('h3',link.textContent),body);};notes.append(link,this.create('br'));}
+      this.article.append(this.create('h4','Offline feature notes'),notes);
+    }
   }
 }

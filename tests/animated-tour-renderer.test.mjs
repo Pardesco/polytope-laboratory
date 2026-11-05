@@ -71,6 +71,28 @@ test('actual saved rotation advances inside a hold; both live transition models 
     assert.ok(h.renderer.current(p));assert.match(h.renderer.image(p),/^data:image\/png/);assert.deepEqual(h.sourceState,h.original);assert.deepEqual(h.bank,before);
   }finally{await h.renderer.close();}
 });
+
+test('target-resolution tour uses detached exact-size layers for both transitioning saved models and split panes',async()=>{
+  const h=harness(tour(state('a',{layout:'split'}))),created=[],disposed=[],factory=h.renderer.createLayer;
+  h.renderer.createLayer=options=>{
+    const context=factory(options);assert.equal(options.exporting,true);
+    for(const viewer of [context.viewer,context.netViewer])viewer.createExportSurface=value=>{
+      const output=canvas(h.log,'target-'+viewer.renderer.domElement.name);Object.assign(output,{width:value.width,height:value.height});created.push(value);
+      return {canvas:output,copy:()=>{output.frame=structuredClone(viewer.renderer.domElement.frame);},dispose:()=>disposed.push(output)};
+    };
+    return context;
+  };
+  const outputBefore={width:h.output.width,height:h.output.height},capture=h.renderer.createExportRenderer({format:'png',size:'vertical',framing:'fit',margin:.05,supersample:2});
+  try{
+    assert.deepEqual([capture.canvas.width,capture.canvas.height],[1080,1920]);
+    const p=await capture.apply(1.25);assert.equal(capture.current(p),true);assert.equal(h.renderer.published,null);assert.deepEqual({width:h.output.width,height:h.output.height},outputBefore);
+    assert.deepEqual(created.map(o=>[o.width,o.height,o.supersample,o.margin]),[[540,1920,2,.05],[540,1920,2,.05],[1080,1920,2,.05]]);
+    const copies=h.log.filter(e=>e.kind==='copy'&&e.source?.startsWith('target-'));assert.deepEqual(copies.map(c=>c.rect),[[0,0,540,1920],[540,0,540,1920],[0,0,1080,1920]]);
+    assert.deepEqual(p.layers.map(l=>l.transitionPose.translation[0]),[-1,1]);assert.equal(created[0].referenceSize.width,200);assert.equal(created[2].referenceSize.width,400);
+    await capture.apply(1.3);assert.equal(created.length,3,'Target surfaces are reused for later fine poses');
+  }finally{await capture.close();await h.renderer.close();}
+  assert.equal(disposed.length,3);assert.deepEqual(h.sourceState,h.original);
+});
 test('sparse/reordered absolute seeks reproduce exact Three display coordinates and composed transforms',async()=>{
   const h=harness();try{await h.renderer.apply(.5);const first=structuredClone(h.actors[0].viewer.projected);await h.renderer.apply(3.5);await h.renderer.apply(1.25);await h.renderer.apply(.5);assert.deepEqual(h.actors[0].viewer.projected,first);assert.equal(h.renderer.published.time,.5);}finally{await h.renderer.close();}
 });

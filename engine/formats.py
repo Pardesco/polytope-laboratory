@@ -10,6 +10,8 @@ import hashlib
 import re
 import numpy as np
 from .geometry import GeometryError, hull, validate, identity, MAX_VERTICES, canonical_cycle, intrinsic_measures, rank
+from .input_limits import input_boundary, bounded_text, parse_json, model_limits, hull_budget, MAX_BOUNDARY, MAX_REFERENCES
+from .input_limits import line_limit, MAX_OFF_LINES, MAX_OFF_RECORD_CHARS
 
 MAX_FILE_BYTES = 128 * 1024 * 1024
 
@@ -32,9 +34,13 @@ def _off_color(tokens):
 
 def _off_boundaries(records, count):
     boundaries, colors = [], []
+    references = 0
     for record in records:
         tokens = record.split()
         size = int(tokens[0]) if tokens else 0
+        references += size
+        if size > MAX_BOUNDARY or references > MAX_REFERENCES:
+            raise GeometryError(f'OFF import limits: {MAX_BOUNDARY:,} indices per boundary; {MAX_REFERENCES:,} references per table.')
         if size < 3 or len(tokens) < size + 1:
             raise GeometryError('Invalid boundary size or out-of-range element ID.')
         indices = [int(token) for token in tokens[1:size + 1]]
@@ -45,10 +51,15 @@ def _off_boundaries(records, count):
     return boundaries, colors
 
 
+@input_boundary('OFF import')
 def parse_off(text, name='Imported OFF'):
-    if len(text.encode('utf-8')) > MAX_FILE_BYTES:
-        raise GeometryError('OFF import exceeds the 128 MiB resource limit.')
+    text = bounded_text(text, 'OFF import', MAX_FILE_BYTES)
+    line_limit(text, MAX_OFF_LINES, 'OFF import')
+    from .document_metadata import read_document_comment
+    document = read_document_comment(text)
     lines = [s.split('#', 1)[0].strip() for s in text.splitlines()]
+    if any(len(line) > MAX_OFF_RECORD_CHARS for line in lines):
+        raise GeometryError(f'OFF records exceed the {MAX_OFF_RECORD_CHARS:,}-character limit (comments excluded).')
     lines = [s for s in lines if s]
     if not lines or lines[0] not in ('OFF', '4OFF'):
         raise GeometryError('Expected an OFF or 4OFF marker on the first non-comment line.')
@@ -60,7 +71,7 @@ def parse_off(text, name='Imported OFF'):
         nv, nf, ne = counts[:3]
         nc = counts[3] if d == 4 else 0
         if not 1 <= nv <= MAX_VERTICES or min(nf, ne, nc) < 0 or max(nf, ne, nc) > 1000000:
-            raise GeometryError('Element counts exceed import resource limits.')
+            raise GeometryError(f'Element counts exceed import resource limits: 1–{MAX_VERTICES:,} vertices; 0–1,000,000 faces, edges or cells.')
         if len(lines) != 2 + nv + nf + nc:
             raise GeometryError('Truncated file or unexpected trailing records.')
         vertices = [[float(x) for x in line.split()] for line in lines[2:2+nv]]
@@ -79,6 +90,10 @@ def parse_off(text, name='Imported OFF'):
                  'provenance': {'operation': 'import-off', 'algorithmVersion': '0.1.0'}}
         if any(color is not None for color in face_colors + cell_colors):
             model['metadata']['offColors'] = {'faces': face_colors, 'cells': cell_colors}
+        if document is not None:
+            model['metadata']['documentMetadata'] = document['metadata']
+            model['metadata']['documentNotes'] = document['notes']
+        model_limits(model)
         report = validate(model)
         if not report['passed']:
             diagnostic = '; '.join(report['errors'])
@@ -95,6 +110,7 @@ def parse_off(text, name='Imported OFF'):
             raise GeometryError('Invalid OFF incidence: ' + diagnostic)
         # Recognize convexity only when complete supplied incidence equals the hull.
         try:
+            hull_budget(vertices)
             reference = hull(vertices)
             same = len(reference['vertices']) == len(vertices) and Counter(canonical_cycle(f) for f in reference['faces']) == Counter(canonical_cycle(f) for f in faces)
             if d == 4:
@@ -106,8 +122,8 @@ def parse_off(text, name='Imported OFF'):
                 model['facetVertices'] = reference['facetVertices']
                 model['facetEquations'] = reference['facetEquations']
                 model['measure'] = reference['measure']
-        except GeometryError:
-            pass
+        except GeometryError as exc:
+            model['metadata']['convexRecognition'] = 'Not classified: ' + str(exc)
         model['validation'] = validate(model)
         model['fingerprint'] = identity(model)
         return model
@@ -126,6 +142,10 @@ def export_off(model):
     if d == 4:
         counts.append(len(model['cells']))
     lines = [header, ' '.join(map(str, counts)), '# Coordinates: x y z' + (' w' if d == 4 else '')]
+    metadata = model.get('metadata', {})
+    if 'documentMetadata' in metadata or 'documentNotes' in metadata:
+        from .document_metadata import document_comment
+        lines.append(document_comment(metadata.get('documentMetadata', {}), metadata.get('documentNotes', '')))
     lines += [' '.join(format(x, '.17g') for x in p) for p in model['vertices']]
     def records(boundaries, key):
         colors = model.get('metadata', {}).get('offColors', {}).get(key)
@@ -157,22 +177,25 @@ def export_off(model):
     return '\n'.join(lines) + '\n'
 
 
+@input_boundary('OFF repair')
 def repair_off_edge_count(text, name='Repaired OFF copy'):
     """Produce a validated copy changing only the edge count header token.
 
     Coordinates, incidence, comments and colors retain their original spelling.
     This explicit API never writes and never weakens strict parse_off checks.
     """
-    if len(text.encode('utf-8')) > MAX_FILE_BYTES:
-        raise GeometryError('OFF import exceeds the 128 MiB resource limit.')
+    bounded_text(text, 'OFF repair', MAX_FILE_BYTES)
+    line_limit(text, MAX_OFF_LINES, 'OFF repair')
     lines = text.splitlines(keepends=True)
     indices = [i for i, line in enumerate(lines) if line.split('#', 1)[0].strip()]
     try:
-        marker = lines[indices[0]].split('#', 1)[0].strip()
+        marker = lines[indices[0]].split('#', 1)[0].strip().removeprefix('\ufeff')
         if marker not in ('OFF', '4OFF'):
             raise GeometryError('Expected an OFF or 4OFF marker.')
         line_index = indices[1]
         header, separator, comment = lines[line_index].partition('#')
+        if len(header) > MAX_OFF_RECORD_CHARS:
+            raise GeometryError(f'OFF count header exceeds the {MAX_OFF_RECORD_CHARS:,}-character record limit.')
         matches = list(re.finditer(r'\S+', header))
         counts = [int(match.group()) for match in matches]
         if len(counts) != (4 if marker == '4OFF' else 3):
@@ -215,7 +238,11 @@ def export_model(model, format_name):
         raise GeometryError(f'{format_name.upper()} export requires an intrinsic 2D/3D model. Promote a 4D section or cell first; projection would be lossy.')
     p = [list(v) + ([0] if len(v) == 2 else []) for v in model['vertices']]
     if format_name == 'obj':
-        return '# Intrinsic geometry; model units\n' + '\n'.join('v ' + ' '.join(format(x, '.17g') for x in v) for v in p) + '\n' + '\n'.join('f ' + ' '.join(str(v+1) for v in f) for f in model['faces']) + '\n'
+        from .interchange import colored_obj
+        return colored_obj(model)[0]
+    if format_name == 'x3d':
+        from .interchange import export_x3d
+        return export_x3d(model)
     if format_name == 'vrml':
         return '#VRML V2.0 utf8\nShape { geometry IndexedFaceSet { solid FALSE coord Coordinate { point [\n' + ',\n'.join(' '.join(map(str,v)) for v in p) + '\n] } coordIndex [\n' + ',\n'.join(', '.join(map(str,f)) + ', -1' for f in model['faces']) + '\n] } }\n'
     if format_name == 'dxf':
@@ -256,34 +283,50 @@ def export_model(model, format_name):
     raise GeometryError('Unknown export format: ' + format_name)
 
 
-def validate_project(project):
+@input_boundary('Project validation')
+def validate_project(project, *, require_views=False):
     from .history import _json_bytes
     _json_bytes(project, MAX_FILE_BYTES)
-    if not isinstance(project, dict) or project.get('format') != 'polytope-laboratory' or project.get('version') != 1:
+    if not isinstance(project, dict) or project.get('format') != 'polytope-laboratory' or type(project.get('version')) is not int or project.get('version') != 1:
         raise GeometryError('Unsupported project format/version. Original file remains unchanged.')
     documents = project.get('documents')
     if not isinstance(documents, list) or not 1 <= len(documents) <= 100:
         raise GeometryError('Project must contain 1–100 documents.')
     from .model_memories import memory_documents
     from .tours import tour_documents
-    for doc in documents + memory_documents(project.get('memories')) + tour_documents(project.get('tour')):
+    # This request alone may reuse independently computed geometry results for
+    # identical complete literal models. Views/history/certificates remain per
+    # state; supplied fingerprints, reports and measure scalars grant no reuse.
+    all_documents = documents + memory_documents(project.get('memories')) + tour_documents(project.get('tour'))
+    multiple_states = len(all_documents)>1 or any(isinstance(doc,dict) and isinstance(doc.get('states'),list) and len(doc['states'])>1 for doc in all_documents)
+    geometry_checks = None
+    if multiple_states:
+        from .analysis_cache import AnalysisCache
+        geometry_checks = AnalysisCache(max_entries=8)
+    resolve_geometry = geometry_checks.resolve if geometry_checks is not None else lambda model, operation: operation(model)
+    def validate_imported(source):
+        model_limits(source)
+        return validate(source)
+    for doc in all_documents:
         if not isinstance(doc,dict) or not isinstance(doc.get('states'),list) or not 1 <= len(doc['states']) <= 200:
             raise GeometryError('Invalid document history.')
         if type(doc.get('cursor')) is not int or not 0 <= doc['cursor'] < len(doc['states']):
             raise GeometryError('Invalid history cursor.')
         for state in doc['states']:
-            if isinstance(state, dict) and 'view' not in state:
-                # Original v1 snapshots could omit presentation entirely.
+            if not require_views and isinstance(state, dict) and 'view' not in state:
                 state['view'] = {}
             if not isinstance(state, dict) or not isinstance(state.get('view'), dict):
                 raise GeometryError('Every project state requires geometry and a display-state record.')
-            report = validate(state.get('model',{}))
+            for field in ('netLayout', 'netPages', 'cellNetLayout'):
+                if state.get(field) is not None and not isinstance(state[field], dict):
+                    raise GeometryError(f'Project {field} must be an object.')
+            report = resolve_geometry(state.get('model',{}), validate_imported)
             if not report['passed']:
                 raise GeometryError('Project contains invalid geometry: ' + '; '.join(report['errors']))
             state['model']['fingerprint']=identity(state['model'])
             from .display_state import validate_view
             validate_view(state['model'], state['view'])
-            recomputed=intrinsic_measures(state['model'])
+            recomputed=resolve_geometry(state['model'], intrinsic_measures)
             if recomputed is None:state['model'].pop('measure',None)
             else:state['model']['measure']=recomputed
             if state.get('netLayout'):
@@ -335,11 +378,30 @@ def save_project(path, project):
     return {'path': str(path)}
 
 
+@input_boundary('File import')
 def load_file(path):
     path = Path(path)
     if path.stat().st_size > MAX_FILE_BYTES:
         raise GeometryError('File exceeds the 128 MiB resource limit.')
-    text = path.read_text(encoding='utf-8-sig')
+    if path.suffix.lower() == '.dxf':
+        with path.open('rb') as stream:
+            if stream.read(22).startswith(b'AutoCAD Binary DXF'):
+                raise GeometryError('Binary DXF is unsupported; export ASCII DXF (not binary), with faces or polygon meshes instead of ACIS solids.')
+    with path.open('rb') as stream:
+        chunks, size = [], 0
+        while size <= MAX_FILE_BYTES:
+            chunk = stream.read(min(1024 * 1024, MAX_FILE_BYTES + 1 - size))
+            if not chunk:
+                break
+            chunks.append(chunk)
+            size += len(chunk)
+        raw = b''.join(chunks)
+    if len(raw) > MAX_FILE_BYTES:
+        raise GeometryError('File exceeds the 128 MiB resource limit (including files changed during reading).')
+    try:
+        text = raw.decode('utf-8-sig')
+    except UnicodeError as exc:
+        raise GeometryError('File import requires valid UTF-8 text; invalid byte sequence found.') from exc
     if path.suffix.lower() == '.off':
         result = parse_off(text,path.stem)
         result['metadata']['sourcePath'] = str(path)
@@ -348,9 +410,9 @@ def load_file(path):
         from .dxf import parse_dxf
         result = parse_dxf(text, path.stem)
         result['metadata']['sourcePath'] = str(path)
-        result['provenance']['sourceFileSha256'] = hashlib.sha256(path.read_bytes()).hexdigest()
+        result['provenance']['sourceFileSha256'] = hashlib.sha256(raw).hexdigest()
         return {'model': result}
-    data = json.loads(text)
+    data = parse_json(text)
     if isinstance(data, dict) and data.get('format') == 'polytope-laboratory':
         return {'project': validate_project(data)}
     if path.suffix.lower() == '.json' and isinstance(data, dict) and 'vertices' in data:
@@ -358,6 +420,6 @@ def load_file(path):
             'active':0,'documents':[{'cursor':0,'states':[{'model':data,'view':{}}]}]})
         result = checked['documents'][0]['states'][0]['model']
         result.setdefault('metadata', {})['sourcePath'] = str(path)
-        result.setdefault('provenance', {})['sourceFileSha256'] = hashlib.sha256(path.read_bytes()).hexdigest()
+        result.setdefault('provenance', {})['sourceFileSha256'] = hashlib.sha256(raw).hexdigest()
         return {'model': result}
     raise GeometryError('JSON must contain a supported project or complete geometry model.')

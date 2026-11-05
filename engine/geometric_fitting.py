@@ -81,6 +81,9 @@ class _WorkLimit(Exception):pass
 
 
 def fit_geometry(source,options=None,*,cancel=None):
+    if type(options) is dict and (set(options)&{'objectives','keep_symmetry','fix_scale'} or options.get('mode')=='planar-faces'):
+        from engine.condition_fitting import fit_conditions
+        return fit_conditions(source,options,cancel=cancel)
     original=_clone(source);source_digest=_digest(original);options_digest=_digest(options)
     if len(json.dumps(original).encode())>LIMITS['sourceBytes']:raise GeometryError('Fitting source exceeds 8 MiB.')
     if type(original) is not dict or original.get('dimension') not in (3,4) or original.get('embeddingDimension',original.get('dimension'))!=original.get('dimension') or original.get('interpretation')!='convex-polytope':
@@ -93,7 +96,14 @@ def fit_geometry(source,options=None,*,cancel=None):
     if any(len(face)>LIMITS['faceVertices'] for face in original['faces']):raise GeometryError('Fitting face exceeds 32 vertices.')
     args=_options({} if options is None else options,original)
     points=np.asarray(original['vertices'],dtype=float);origin=points.mean(axis=0)
-    check=deepcopy(original);_qualify(check,origin)
+    check=deepcopy(original)
+    try:_qualify(check,origin)
+    except GeometryError:
+        if not any(' is not a planar polygon.' in error or ' is not affine dimension 3.' in error for error in validate(check)['errors']):raise
+        from engine.condition_fitting import fit_conditions
+        result=fit_conditions(source,{**args,'fix_scale':args['target'] is None},cancel=cancel)
+        if _digest(options)!=options_digest:raise GeometryError('Fitting controls changed; no model published.')
+        return result
     edges=np.asarray(original['edges'],dtype=int);scale=float(np.mean(np.linalg.norm(points[edges[:,0]]-points[edges[:,1]],axis=1)))
     if not math.isfinite(scale) or scale<=np.finfo(float).tiny:raise GeometryError('Fitting edge normalization is unresolved.')
     initial=(points-origin)/scale;d=original['dimension'];faces=original['faces']

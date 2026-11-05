@@ -14,10 +14,14 @@ from .dual_morph_augmentation import prepare_augmentation
 from .dual_morph_triangles import prepare_tilting_triangles
 from .dual_morph_compound import prepare_tilting_compound
 from .dual_morph_rectify import prepare_tilting_rectify
+from .dual_morph_cache import PreparedSizingCache
+from .dual_morph_4d import prepare_sizing_4d, prepare_truncation_4d
 
 VERSION='0.1.0-development'
 INVENTORY=('sizing','truncation','augmentation','expansion','tilting-quads','tilting-triangles','tilting-to-compound','tilting-to-rectify','via-snub')
 SUPPORTED=('sizing','truncation','augmentation','expansion','tilting-quads','tilting-triangles','tilting-to-compound','tilting-to-rectify')
+_SIZING_CACHE=PreparedSizingCache()
+_CONVEX_4D_CACHE=PreparedSizingCache()
 
 
 def require(value,message):
@@ -28,7 +32,8 @@ def digest(value):return hashlib.sha256(json.dumps(value,sort_keys=True,separato
 
 
 def normalize_settings(model,value):
-    require(type(value) is dict and not set(value)-{'version','enabled','method','center','radius','ratio','duration','loop'},'Saved dual morph has unsupported fields.')
+    require(type(value) is dict and not set(value)-{'version','enabled','method','center','radius','ratio','duration','loop','interpolateColors'},'Saved dual morph has unsupported fields.')
+    require('interpolateColors' not in value or type(value['interpolateColors']) is bool,'Morph color interpolation must be boolean.')
     result=_clone(value);require(result.get('version')==1 and type(result.get('version')) is int,'Saved dual morph version is unsupported.')
     require(type(result.get('enabled')) is bool and type(result.get('loop')) is bool,'Saved dual morph enabled/loop must be boolean.')
     require(result.get('method') in INVENTORY,'Unknown dual-morph method.')
@@ -49,7 +54,9 @@ def prepare(model,settings,context):
     settings=normalize_settings(model,settings);require(settings['method'] in SUPPORTED,'This inventoried morph method is not implemented; source settings remain readable.')
     context=source_context(context);state={'model':model,'view':{'coordinateUnit':context['unit']},'notes':context['notes']}
     method=settings['method'];factory=(prepare_generalized_sizing if model.get('interpretation')=='generalized-complex' else prepare_sizing) if method=='sizing' else prepare_truncation if method=='truncation' else prepare_augmentation if method=='augmentation' else prepare_tilting_triangles if method=='tilting-triangles' else prepare_tilting_compound if method=='tilting-to-compound' else prepare_tilting_rectify if method=='tilting-to-rectify' else ((prepare_generalized_expansion_4d if model.get('dimension')==4 else prepare_generalized_expansion) if method=='expansion' and model.get('interpretation')=='generalized-complex' else prepare_dual_morph)
+    if model.get('dimension')==4 and method in ('sizing','truncation'):factory=prepare_sizing_4d if method=='sizing' else prepare_truncation_4d
     plan=factory(state,center=settings['center'],radius=settings['radius']);descriptor=plan.descriptor()
+    if 'interpolateColors' in settings:descriptor['interpolateColors']=settings['interpolateColors']
     settings['center']=descriptor['center']
     prepared={'version':1,'algorithmVersion':VERSION,'settings':settings,'sourceModelId':model.get('id'),
               'sourceFingerprint':identity(model),'sourceAttributesSha256':digest(_clone(model)),
@@ -71,10 +78,20 @@ def dispatch_dual_morph(request):
     require(op=='evaluate-dual-morph' and set(params)=={'prepared','ratio','sourceContext'},'Dual morph evaluation requires prepared/ratio/sourceContext.')
     prepared=params['prepared'];require(type(prepared) is dict,'Dual morph prepared record must be an object.')
     ratio=params['ratio'];require(type(ratio) in (int,float) and math.isfinite(ratio) and 0<=ratio<=1,'Dual morph ratio must lie between zero and one.')
-    plan,rebuilt=prepare(model,prepared.get('settings'),params['sourceContext'])
+    if type(prepared.get('settings')) is dict and prepared['settings'].get('method') in ('sizing','truncation') and model.get('interpretation')=='convex-polytope' and model.get('dimension')==4 and model.get('embeddingDimension',4)==4:
+        settings=normalize_settings(model,prepared['settings']);context=source_context(params['sourceContext'])
+        plan,rebuilt=_CONVEX_4D_CACHE.resolve(model,settings,context,prepare)
+    elif type(prepared.get('settings')) is dict and prepared['settings'].get('method')=='sizing' and model.get('interpretation')=='convex-polytope' and model.get('dimension')==3 and model.get('embeddingDimension',3)==3:
+        settings=normalize_settings(model,prepared['settings']);context=source_context(params['sourceContext'])
+        plan,rebuilt=_SIZING_CACHE.resolve(model,settings,context,prepare)
+    else:
+        plan,rebuilt=prepare(model,prepared.get('settings'),params['sourceContext'])
     require(prepared==rebuilt,'Dual morph preparation/source attributes/units/notes changed or its coefficients were forged.')
     method=rebuilt['settings']['method'];frame=plan.evaluate(method,ratio) if method in ('expansion','tilting-quads') else plan.evaluate(ratio)
     if frame['endpoint']:frame['sourceMaps']=endpoint_maps(frame['model'],'source' if ratio==0 else 'dual')
+    if rebuilt['settings'].get('interpolateColors'):
+        from .dual_morph_colors import interpolate_frame_colors
+        interpolate_frame_colors(frame,model,rebuilt['descriptor']['dual'])
     frame['binding']={key:rebuilt[key] for key in ('sourceModelId','sourceFingerprint','sourceAttributesSha256','sourceContextSha256','descriptorSha256')}
     frame['settings']=deepcopy(rebuilt['settings']);frame['settings']['ratio']=float(ratio)
     return _clone(frame)

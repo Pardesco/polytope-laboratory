@@ -8,7 +8,7 @@ async function main(){
   if(runtime.packaged)env.POLYTOPE_PYTHON=path.join(folder,'unavailable-python.exe');let app,page,cdp;const errors=[];
   try{
     app=await electron.launch({executablePath:runtime.executablePath,args:runtime.packaged?[]:[root],cwd:root,env,timeout:30000});await app.evaluate(({dialog})=>{dialog.showMessageBox=async()=>({response:1});});
-    page=await app.firstWindow();page.setDefaultTimeout(30000);page.on('pageerror',e=>errors.push(e.message));await page.waitForFunction(()=>document.getElementById('model-name')?.textContent==='Tesseract'&&document.getElementById('cancel').hidden);
+    page=await app.firstWindow();require('./smoke-helpers.cjs').autoReveal(page);page.setDefaultTimeout(30000);page.on('pageerror',e=>errors.push(e.message));await page.waitForFunction(()=>document.getElementById('model-name')?.textContent==='Tesseract'&&document.getElementById('cancel').hidden);
     await app.evaluate(({BrowserWindow})=>BrowserWindow.getAllWindows()[0].setContentSize(1500,950));
     const loading=await page.evaluate(()=>performance.now());await page.locator('[data-key="cell120"]').click();await page.waitForFunction(()=>document.getElementById('model-name').textContent==='120-cell'&&document.getElementById('cancel').hidden);const loaded=await page.evaluate(()=>performance.now());
     await page.locator('#viewport-layout').selectOption('split');await page.waitForFunction(()=>!document.getElementById('promote').disabled&&document.getElementById('cancel').hidden);

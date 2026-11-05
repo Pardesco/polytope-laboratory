@@ -1,0 +1,35 @@
+#export-dialog.export-goals { width:min(760px,calc(100vw - 48px)); padding:24px; border-radius:16px; overscroll-behavior:contain; }
+.export-goals .dialog-heading { margin-bottom:16px; }
+.export-goals h2 { margin:0; font-size:22px; }
+#export-goals-chooser > p { color:#c3ced9; margin:0 0 16px; font-size:14px; }
+#export-goal-cards { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; }
+.export-goal-card { display:flex; align-items:flex-start; gap:16px; min-width:0; min-height:112px; padding:16px; text-align:left; background:#222c36; border:1px solid #445260; border-radius:8px; color:#edf4fa; }
+.export-goal-card:hover { background:#293b49; border-color:#82bbc9; }
+.export-goal-card[data-last-used="true"] { border-color:#759da9; }
+.export-goal-card > span:last-child { display:grid; gap:8px; min-width:0; }
+.export-goal-card strong { font-size:15px; line-height:1.4; }
+.export-goal-card small { color:#b8c8d7; line-height:1.5; font-size:12px; }
+.export-goal-icon { flex:0 0 32px; width:32px; height:32px; padding:8px; box-sizing:content-box; color:#97d9db; background:#263f49; border-radius:8px; }
+.export-goal-icon svg { width:32px; height:32px; }
+.export-goal-reason:empty { display:none; }
+.export-goals button:focus-visible,.export-goals select:focus-visible,.export-goals input:focus-visible,.export-goals summary:focus-visible { outline:2px solid #a2e6ed; outline-offset:3px; }
+.export-goals .export-goal-link { background:transparent; border-color:transparent; color:#b2e4ef; padding:8px 0; text-align:left; }
+#export-goal-title { font-size:20px; margin:16px 0 8px; }
+#export-goal-description,#export-goal-message { line-height:1.6; margin:8px 0 16px; }
+#export-goal-message { color:#bfd1dd; font-size:12px; }
+.export-goal-fields { display:grid; gap:16px; margin:24px 0 16px; }
+.export-goals label { display:flex; justify-content:space-between; align-items:center; gap:16px; font-size:13px; line-height:1.5; margin:8px 0; }
+.export-goal-fields label { margin:0; }
+.export-goals label > select,.export-goals label > input:not([type="checkbox"]) { width:58%; min-width:0; padding:8px; }
+.export-goal-fields label:has(input[type="checkbox"]) { justify-content:flex-start; flex-direction:row-reverse; width:fit-content; }
+#export-all-formats,#export-media-more { border-top:1px solid #43515f; margin-top:16px; padding-top:8px; }
+#export-all-formats > summary,#export-media-more > summary { padding:8px 0; color:#b2e4ef; cursor:pointer; }
+#export-original-controls { padding:8px 0; }
+#export-goal-footer { margin-top:16px; display:grid; gap:16px; }
+#export-goal-footer:empty { display:none; }
+#export-goal-footer #export-preview { font-size:12px; line-height:1.6; max-height:160px; overflow:auto; }
+#export-goal-footer > button { min-height:40px; margin:0; }
+#export-media-more #png-settings { position:static; }
+#export-media-more #png-settings > .settings-body { position:static; width:auto; padding:8px 0; box-shadow:none; border:0; background:transparent; max-height:none; }
+.export-goals [hidden] { display:none !important; }
+@media(max-width:600px) { #export-goal-cards { grid-template-columns:1fr; } #export-dialog.export-goals { padding:16px; } .export-goals label { align-items:flex-start; flex-direction:column; gap:8px; } .export-goals label > select,.export-goals label > input:not([type="checkbox"]) { width:100%; } }

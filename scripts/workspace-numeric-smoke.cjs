@@ -71,7 +71,7 @@ async function main(){
   const checks=[],errors=[],files=[];let page,serial=0,group='startup';
   try{
     assert.equal((await app.evaluate(({app})=>app.polytopeQualification))?.mode,runtime.hidden?'hidden-no-focus':undefined);
-    page=await app.firstWindow();page.setDefaultTimeout(30000);page.on('pageerror',e=>errors.push(e.message));
+    page=await app.firstWindow();require('./smoke-helpers.cjs').autoReveal(page);page.setDefaultTimeout(30000);page.on('pageerror',e=>errors.push(e.message));
     await page.waitForFunction(()=>document.getElementById('model-name').textContent==='Tesseract'&&document.getElementById('torus-settings'));
     await page.evaluate(()=>{window.workspaceNumericStatuses=[];new MutationObserver(()=>window.workspaceNumericStatuses.push(document.getElementById('status').textContent)).observe(document.getElementById('status'),{childList:true,subtree:true,characterData:true});});
     const done=()=>page.waitForFunction(()=>document.getElementById('cancel').hidden);
@@ -145,7 +145,7 @@ async function main(){
     const hJobs=await jobs(hStart),batches=hJobs.filter(r=>r.op==='expression-batch');assert.equal(batches.length,1);assert.equal(batches[0].params.expressions.length,36);assert.equal(batches[0].params.mode,'real');assert.deepEqual(hJobs.find(r=>r.op==='hull').params.points,hullPoints);
     checks.push('A real 36-coordinate point-cloud hull uses exactly one native expression-batch job and retains the independent cube boundary');
 
-    group='exact-hull-and-waterman';await inspector('evidence');await page.locator('#rational-points').fill('0, 0\n4 - 1/10^40, 0\n0, 1/2');const exactStart=await mark(),exact=await create('rational-hull','exact-rational-hull'),em=active(exact.project).model;
+    group='exact-hull-and-waterman';await inspector('evidence');await require('./smoke-helpers.cjs').reveal(page,'#rational-points');await page.locator('#rational-points').fill('0, 0\n4 - 1/10^40, 0\n0, 1/2');const exactStart=await mark(),exact=await create('rational-hull','exact-rational-hull'),em=active(exact.project).model;
     assert.ok(em.rationalCoordinates.some(row=>row.includes(belowFour)));assert.equal(em.certificate.exhausted,true);assert.equal(em.certificate.exactFacetCount,3);
     assert.equal((await jobs(exactStart)).find(r=>r.op==='rational-hull').params.points[1][0],belowFour);
     for(const [text,closed] of [['4 - 1/10^40',false],['4',true]]){

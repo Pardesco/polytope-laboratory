@@ -8,7 +8,7 @@ export function literalNetIndex(text,count,label){
 }
 export function faceNetSummary(net){
   const pieces=net.components.length,faces=net.overlapPairs.length,tabs=net.tabOverlapPairs.length;
-  return `${net.faces.length} faces in ${pieces} connected piece${pieces===1?'':'s'}\n${net.hinges.length} hinges · E0 = ${net.referenceEdgeLengthMm} mm\n`+
+  return (net.visibleSurface?'Assembled from the outer surface.\n':'')+`${net.faces.length} faces in ${pieces} connected piece${pieces===1?'':'s'}\n${net.hinges.length} hinges · E0 = ${net.referenceEdgeLengthMm} mm\n`+
     (faces||tabs?`${faces} face overlap pairs · ${tabs} tab overlap pairs. Check the layout before printing.`:'No face or tab overlaps in the flat layout.');
 }
 export function cellNetSummary(net){return `${net.cells.length} complete cells · ${net.components.length} connected pieces\n${net.connections.length} face connections\nCell intersections not checked.`;}

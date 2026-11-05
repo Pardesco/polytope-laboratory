@@ -113,7 +113,7 @@ async function main(){
   const checks=[],errors=[],files=[];let page,serial=0;
   try{
     assert.equal((await app.evaluate(({app})=>app.polytopeQualification))?.mode,runtime.hidden?'hidden-no-focus':undefined);
-    page=await app.firstWindow();page.setDefaultTimeout(30000);page.on('pageerror',e=>errors.push(e.message));
+    page=await app.firstWindow();require('./smoke-helpers.cjs').autoReveal(page);page.setDefaultTimeout(30000);page.on('pageerror',e=>errors.push(e.message));
     await page.waitForFunction(()=>document.getElementById('net-length')&&document.getElementById('cell-net-move')&&document.getElementById('model-name').textContent==='Tesseract');
     await page.evaluate(()=>{window.expressionStatuses=[];new MutationObserver(()=>window.expressionStatuses.push(document.getElementById('status').textContent))
       .observe(document.getElementById('status'),{childList:true,subtree:true,characterData:true});});

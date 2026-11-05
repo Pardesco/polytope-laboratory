@@ -8,6 +8,7 @@ from copy import deepcopy
 import hashlib
 import json
 import math
+from .polish_names import incidence_cut_name
 
 import numpy as np
 
@@ -137,6 +138,9 @@ def _supporting_boundary(model):
 
 
 def incidence_truncate(source, *, preset='manual', amount=1/3, reference_face=None, cap_colors='inherit'):
+    if type(source) is dict and source.get('dimension')==4:
+        from .incidence_truncation4d import incidence_truncate4d
+        return incidence_truncate4d(source,preset,amount,reference_face,cap_colors)
     original,points,local,edge_ids,links,incident=_source(source)
     t,reference,parameters=_options(local,original['faces'],preset,amount,reference_face,cap_colors)
     sha=hashlib.sha256(_json_bytes(original,LIMITS['sourceBytes'])).hexdigest()
@@ -201,7 +205,7 @@ def incidence_truncate(source, *, preset='manual', amount=1/3, reference_face=No
               'fillRule':original.get('metadata',{}).get('fillRule','nonzero')}
     if 'coordinateUnits' in original.get('metadata',{}):metadata['coordinateUnits']=deepcopy(original['metadata']['coordinateUnits'])
     result.update(id='incidence-cut-'+hashlib.sha256((sha+json.dumps(parameters,sort_keys=True)).encode()).hexdigest(),
-                  name=('Quasitruncation' if t>.5 else 'Rectification' if t==.5 else 'Truncation')+' of '+original.get('name','source'),metadata=metadata,
+                  name=incidence_cut_name(original,t),metadata=metadata,
                   provenance={'operation':'incidence-truncate','algorithmVersion':VERSION,**binding,'parameters':parameters,'convexified':False})
     if 0<t<=.5 and original['interpretation']=='convex-polytope':
         try:

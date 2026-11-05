@@ -2,12 +2,13 @@
  * the renderer; native results never replace the user's active document. */
 import {attachElementContentCapture,contentParameters,contentSignature} from './element-content-lifecycle.mjs';
 import {Viewer} from './viewer.js';
+import {densitySectionParameters,densitySectionDisplay} from './density-section-controls.mjs';
 import {hasSectionSourceContent,rememberSectionSource,hasEmptySectionSource} from './section-source-content.mjs';
 const abort=()=>Object.assign(Error('Tour layer preparation cancelled.'),{name:'AbortError'});
 
 export function createAnimatedTourLayerFactory({host,run,ViewerClass=Viewer,createElement=tag=>document.createElement(tag)}){
   if(!host||typeof run!=='function')throw Error('Tour layers require a preview host and native dispatcher.');
-  return ({slot,getState,width,height,isCurrent})=>{
+  return ({slot,getState,width,height,isCurrent,exporting=false})=>{
     const owner=createElement('div');owner.dataset.tourSlot=String(slot);
     Object.assign(owner.style,{position:'fixed',left:'-20000px',top:'0',pointerEvents:'none'});
     const containers=[createElement('div'),createElement('div')];owner.append(...containers);host.append(owner);
@@ -17,6 +18,7 @@ export function createAnimatedTourLayerFactory({host,run,ViewerClass=Viewer,crea
     try{viewers.push(new ViewerClass(containers[0]));viewers.push(new ViewerClass(containers[1]));}
     catch(error){dispose();throw error;}
     const [viewer,netViewer]=viewers;let sequence=0,closed=false;
+    if(exporting)for(const v of viewers){v.renderer.setPixelRatio(1);v.resize();}
     const detach=viewers.map(v=>attachElementContentCapture(v,{getState,isCurrent:()=>!closed&&isCurrent?.()!==false,
       canMap:()=>v===viewer||Boolean(v.net||v.cellNet)||hasSectionSourceContent(v.model)||hasEmptySectionSource(v),referenceEdgeMm:()=>v.net?.referenceEdgeLengthMm??25,
       describe:(model,params,options)=>run('element-content-describe',params,model,'Prepare tour element content',options)}));
@@ -36,7 +38,10 @@ export function createAnimatedTourLayerFactory({host,run,ViewerClass=Viewer,crea
       }else if(mode==='cell-net'){
         const settings=v.cellNet||{},cache=state.cellNetLayout;
         result=cache?.sourceFingerprint===m.fingerprint&&cache.root===(settings.root??0)?structuredClone(cache):await call('cell-net',{root:settings.root??0,...state.cellNetSeparate?{connections:[]}: {}});
-      }else if(mode==='section')result=await call('section',{normal:v.sectionNormal,offset:v.sectionOffset??0,fill_rule:v.fillRule||'nonzero'});
+      }else if(mode==='section'){
+        const params=densitySectionParameters(v);result=await call('section',params);
+        if(params.section_domain==='density'&&JSON.stringify(densitySectionParameters(getState()?.view??{}))!==JSON.stringify(params))throw abort();
+      }
       else if(mode==='cell-section'){
         const plane=JSON.stringify([v.sectionNormal,v.sectionOffset??0,v.fillRule||'nonzero']);
         result=await call('section',{normal:structuredClone(v.sectionNormal),offset:v.sectionOffset??0,fill_rule:v.fillRule||'nonzero',section_domain:'ordinary-cells'});
@@ -53,6 +58,7 @@ export function createAnimatedTourLayerFactory({host,run,ViewerClass=Viewer,crea
         if(mode==='section'||mode==='cell-section')netViewer.setSectionModel(result.model??null,m,{mode});
         else netViewer.setModel(result.model??null);
         rememberSectionSource(netViewer,result,m);if(result.model)netViewer.setDisplay(derivedView(v));
+        if(result.model?.metadata?.densitySection)netViewer.setDisplay({...derivedView(v),...densitySectionDisplay(result.model)});
       }
       if(v.derivedCamera)netViewer.restoreCamera(v.derivedCamera);else netViewer.fit();
       if(mode==='cell-section'&&(result.model||hasEmptySectionSource(netViewer)))await netViewer.prepareCapture({...options,isCurrent:()=>token===sequence&&!closed&&getState()===state&&contentSignature(state)===signature&&options.isCurrent?.()!==false});

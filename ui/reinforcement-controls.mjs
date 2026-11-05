@@ -93,9 +93,9 @@ export class ReinforcementControls{
     if(action==='restore'){this.node('cycles').value=form.cycles;this.session.form=this.session.signature(this.form());}
     this.node('status').textContent=action==='csv'||action==='json'?`${result.report.rows.length} measurements exported.`:action==='pdf'?`${result.pages.length} support sheets exported; physical net scale retained.`:`${result.panels?.length??this.session.reply?.panels.length??0} internal support panels; physical net scale retained.`;this.node('status').dataset.status='complete';return result;
   }catch(error){this.node('status').textContent=error.message;this.node('status').dataset.status=error.name==='AbortError'?'user-cancelled':'refused';throw error;}finally{this.sync();}}
-  cancel(){this.session.cancel();}
-  invalidate(){this.session.invalidate();this.sync();}
-  sync(){const c=this.context,model=c.getState()?.model,eligible=model?.dimension===3&&model.interpretation==='convex-polytope';
+  cancel(){this.session.cancel();this.fabrication?.cancel();}
+  invalidate(){this.session.invalidate();this.fabrication?.cancel();this.sync();}
+  sync(){this.fabrication?.sync();const c=this.context,model=c.getState()?.model,eligible=model?.dimension===3&&model.interpretation==='convex-polytope';
     if(this.session.reply){try{verifyNativeSource(this.session.context,this.session.owner);if(this.session.signature(this.form())!==this.session.form)this.session.clear();}catch{this.session.clear();}}
     const disabled=this.session.busy||c.isExporting()||!eligible;for(const node of this.panel.querySelectorAll('button,input,textarea,select'))node.disabled=disabled;
     this.node('cancel').disabled=!this.session.busy;for(const key of ['save','svg','pdf'])this.node(key).disabled=disabled||!this.session.reply;this.node('restore').disabled=disabled||!c.getState()?.view.netReinforcement;

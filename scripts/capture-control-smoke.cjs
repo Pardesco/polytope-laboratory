@@ -11,7 +11,7 @@ async function main(){
     try{
       app=await electron.launch({executablePath:runtime.executablePath,args:runtime.packaged?[]:[root],cwd:root,env,timeout:30000});
       await app.evaluate(({BrowserWindow,dialog})=>{BrowserWindow.getAllWindows()[0].setContentSize(1500,950);dialog.showMessageBox=async()=>({response:1});});
-      page=await app.firstWindow();page.setDefaultTimeout(30000);page.on('pageerror',e=>errors.push(e.message));
+      page=await app.firstWindow();require('./smoke-helpers.cjs').autoReveal(page);page.setDefaultTimeout(30000);page.on('pageerror',e=>errors.push(e.message));
       const ready=()=>page.waitForFunction(()=>document.getElementById('cancel').hidden&&!document.getElementById('animation-png').disabled);
       const save=async label=>{await ready();const file=path.join(directory,label+'.polyproj');await app.evaluate(({dialog},file)=>{dialog.showSaveDialog=async()=>({canceled:false,filePath:file});},file);await page.locator('#save').click();await page.waitForFunction(file=>document.getElementById('status').textContent==='Saved '+file,file);return active(JSON.parse(await fs.readFile(file,'utf8')));};
       const orbit=async(id,key,label)=>{

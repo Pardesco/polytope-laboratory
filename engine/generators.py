@@ -102,6 +102,8 @@ def regular(key):
     entry = next((e for e in CATALOG if e['key'] == key), None)
     if not entry:
         raise GeometryError(f'Unknown catalog key: {key}')
+    from .library_navigation import navigation_metadata
+    entry={**entry,**navigation_metadata(entry)}
     d = entry['dimension']
     if key in CATALAN_SOURCES:
         from .operations import dual
@@ -178,7 +180,14 @@ def polygon(n, radius=1):
 
 
 def generate(kind, **params):
-    if kind in ('edge-tetrahedron','triangular-prism','triangular-grid'):
+    if kind=='uniform-compound':
+        from .uniform_compounds import uniform_compound
+        return uniform_compound(**params)
+    if kind=='uniform-family':
+        from .uniform4 import uniform_family
+        return uniform_family(**params)
+    # 'block' with sizes is the original cuboid generator; dimensions/subdivisions select the subdivided block.
+    if kind in ('edge-tetrahedron','triangular-prism','triangular-grid') or kind=='block' and 'sizes' not in params:
         from .basic_solids import basic_solid
         return basic_solid(kind,**params)
     if kind == 'stephanoid':
@@ -221,6 +230,17 @@ def generate(kind, **params):
         result['provenance']['generator'] = {'kind': kind, 'parameters': retained}
         _json_bytes(result, MAX_PAYLOAD_BYTES)
         return result
+    if kind == 'waterman-lattice':
+        import json
+        from .history import _json_bytes
+        from .waterman import waterman_ball, MAX_PAYLOAD_BYTES
+        unknown=set(params)-{'radius_squared','center','lattice'}
+        if unknown:raise GeometryError('Unknown Waterman lattice parameters: '+', '.join(sorted(unknown)))
+        retained=json.loads(_json_bytes(params,MAX_PAYLOAD_BYTES))
+        result=waterman_ball(**params)
+        result['provenance']['generator']={'kind':kind,'parameters':retained}
+        _json_bytes(result,MAX_PAYLOAD_BYTES)
+        return result
     if kind in ('rational-podium', 'rational-antipodium'):
         from copy import deepcopy
         from .podia import rational_podium, rational_antipodium
@@ -236,11 +256,19 @@ def generate(kind, **params):
     if kind == 'torus':
         from copy import deepcopy
         from .torus import polyhedral_torus
-        unknown = set(params)-{'ring_segments', 'arm_segments', 'arm_ratio', 'ring_radius', 'face_colors'}
+        unknown = set(params)-{'ring_segments', 'arm_segments', 'arm_ratio', 'ring_radius', 'face_colors', 'twist'}
         if unknown:
             raise GeometryError('Unknown torus generator parameters: '+', '.join(sorted(unknown)))
         result = polyhedral_torus(**params)
         result['provenance']['generator'] = {'kind': kind, 'parameters': deepcopy(params)}
+        return result
+    if kind == 'gyrochoron':
+        from .step_prisms import gyrochoron
+        unknown=set(params)-{'n','step','radius'}
+        if unknown:raise GeometryError('Unknown gyrochoron parameters: '+', '.join(sorted(unknown)))
+        from copy import deepcopy
+        result=gyrochoron(**params)
+        result['provenance']['generator']={'kind':kind,'parameters':deepcopy(params)}
         return result
     if kind in ('rational-antiprism', 'antiduoprism', 'step-prism'):
         from copy import deepcopy
@@ -317,6 +345,9 @@ def generate(kind, **params):
     if kind == 'wythoff':
         from .wythoff import wythoff
         return wythoff(**params)
+    if kind == 'coxeter-builder':
+        from .coxeter_builder import build_coxeter
+        return build_coxeter(**params)
     if kind == 'regular':
         return regular(params.get('key', 'tesseract'))
     if kind == 'polygon':

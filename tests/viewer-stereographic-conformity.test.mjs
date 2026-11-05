@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import * as THREE from 'three';
 import {Viewer} from '../ui/viewer.js';
+import {fakeRenderer} from './helpers/fake-renderer.mjs';
 import {runStereographicWorkerJob,stereographicWorkerTransferables} from '../ui/stereographic-worker-geometry.mjs';
 import {stereographicTriangle} from '../ui/stereographic.mjs';
 
@@ -26,7 +27,7 @@ function viewer({worker=true,model=source()}={}){
   const v=Object.create(Viewer.prototype);v.group=new THREE.Group();v.setModel(model);
   v.cameraProjection='orthographic';v.orthographicHalfHeight=2;v.camera=new THREE.OrthographicCamera(-2,2,2,-2,.01,1000);v.orthographicCamera=v.camera;
   v.perspectiveCamera=new THREE.PerspectiveCamera(38,1,.01,1000);v.camera.position.set(0,0,8);v.camera.lookAt(0,0,0);v.camera.updateMatrixWorld();
-  v.controls={target:new THREE.Vector3(),update(){}};v.renderer={domElement:{getBoundingClientRect:()=>({width:400,height:400})},render(){}};
+  v.controls={target:new THREE.Vector3(),update(){}};v.renderer=fakeRenderer({width:400,height:400});
   v.worker=worker?new HeldWorker():null;v.stereographicWorkerFactory=()=>v.worker;v.stereographicWorkerClock={now:()=>0,setTimer:()=>1,clearTimer(){}};
   v.statuses=[];v.onDisplay=s=>v.statuses.push(s);return v;
 }

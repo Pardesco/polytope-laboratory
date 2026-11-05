@@ -37,6 +37,8 @@ def dual(model, center=None, radius=1):
     if np.min(offsets) <= TOLERANCE * max(float(np.max(np.ptp(p, axis=0))), np.finfo(float).tiny):
         raise GeometryError('Reciprocation center must lie strictly inside every supporting half-space; this choice gives an unbounded or singular polar.')
     result = hull(center + eq[:, :-1] * (radius ** 2 / offsets[:, None]), 'Dual of ' + model['name'])
+    from .view_links import attach_dual_links
+    attach_dual_links(model,result,eq)
     return record(result, model, 'dual', {'center': center.tolist(), 'radius': radius})
 
 
@@ -50,8 +52,11 @@ def truncate(model, amount=1/3):
     return record(hull(points, label + model['name']), model, 'truncate', {'amount': amount, 'definition': 'hull of directed edge-cut points'})
 
 
-def section(model, normal=None, offset=0, fill_rule='nonzero', section_domain='surface'):
-    if section_domain not in ('surface','ordinary-cells'): raise GeometryError('Choose surface or ordinary-cells section domain.')
+def section(model, normal=None, offset=0, fill_rule='nonzero', section_domain='surface', density_threshold=1):
+    if section_domain=='density':
+        from .filled_sections import filled_section
+        return filled_section(model,normal,offset,fill_rule,density_threshold)
+    if section_domain not in ('surface','ordinary-cells'): raise GeometryError('Choose surface, ordinary-cells, or density section domain.')
     if section_domain=='ordinary-cells':
         from .ordinary_cell_sections import ordinary_cell_section
         return ordinary_cell_section(model,normal,offset,fill_rule)
@@ -113,7 +118,11 @@ def convex_section(model, normal=None, offset=0):
     return {'status': 'full-dimensional', 'model': result, 'intersection': local.tolist(), 'sourceReferences': [source_refs[i] for i in used], **common}
 
 
-def vertex_figure(model, vertex=0, fraction=0.15):
+def vertex_figure(model, vertex=0, fraction=0.15, mode='slicing', placement='midpoint'):
+    if mode=='combinatorial':
+        from .combinatorial_vertex_figures import combinatorial_vertex_figure
+        return combinatorial_vertex_figure(model,vertex,placement)
+    if mode!='slicing':raise GeometryError('Choose slicing or combinatorial vertex-figure mode.')
     require_convex(model)
     p = points_array(model['vertices'])
     if not 0 <= vertex < len(p) or not 0 < fraction < 1:

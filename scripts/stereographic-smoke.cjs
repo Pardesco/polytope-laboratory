@@ -12,7 +12,7 @@ async function main(){
   const profile=path.join(folder,'profile');await fs.mkdir(profile);await fs.writeFile(path.join(profile,'linked-libraries.json'),JSON.stringify({version:1,paths:[]}));
   const env={...process.env,POLYTOPE_TEST_USER_DATA:profile};delete env.ELECTRON_RUN_AS_NODE;if(packaged)env.POLYTOPE_PYTHON=path.join(folder,'unavailable-python.exe');
   const app=await electron.launch({executablePath:packaged||require('electron'),args:packaged?[]:[root],cwd:root,env,timeout:30000});
-  const page=await app.firstWindow();page.setDefaultTimeout(30000);const errors=[],checks=[],evidence=[];let sequence=0;
+  const page=await app.firstWindow();require('./smoke-helpers.cjs').autoReveal(page);page.setDefaultTimeout(30000);const errors=[],checks=[],evidence=[];let sequence=0;
   page.on('pageerror',error=>errors.push(error.message));
   const ready=async()=>{await page.waitForFunction(()=>document.getElementById('cancel').hidden);for(let i=0;i<5;i++)await page.evaluate(()=>new Promise(requestAnimationFrame));};
   async function save(label){await ready();await page.keyboard.press('Escape');const file=path.join(folder,`${++sequence}-${label}.polyproj`);await app.evaluate(({dialog},file)=>{dialog.showSaveDialog=async()=>({canceled:false,filePath:file});},file);await page.evaluate(()=>document.getElementById('status').textContent='');await page.locator('#save').click();await page.waitForFunction(file=>document.getElementById('status').textContent==='Saved '+file,file);return {file,project:JSON.parse(await fs.readFile(file,'utf8'))};}

@@ -530,6 +530,10 @@ def annotated_net_svg(document, source, net, *, expected_face_ids=None):
     elif net.get('tabRecords') is not None:
         from .net_color_printing import legacy_tab_records
         safe_net['tabRecords'] = legacy_tab_records(source, safe_net)
+    from .net_paper_ux import fold_types
+    safe_net['foldTypes']=fold_types(source['vertices'],source['faces'],source['edges'])
+    safe_net['components']=[{'root':c['root']} for c in net.get('components',[])]
+    if net.get('pieceNumbers'):safe_net['pieceNumbers']=deepcopy(net['pieceNumbers'])
     safe_net['status'] = 'Source-bound face annotations; physical millimeter placement'
     root = ET.fromstring(net_svg(safe_net))
     defs = ET.SubElement(root, '{' + SVG + '}defs')

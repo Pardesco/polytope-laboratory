@@ -21,7 +21,7 @@ async function main(){
     if(runtime.packaged)env.POLYTOPE_PYTHON=path.join(folder,'unavailable-development-python.exe');
     result.developmentPythonUnavailable=runtime.packaged;
     app=await electron.launch({executablePath:runtime.executablePath,args:runtime.packaged?[]:[root],cwd:root,env,timeout:30000});
-    const page=await app.firstWindow();const pageErrors=[];page.on('pageerror',e=>pageErrors.push(e.message));
+    const page=await app.firstWindow();require('./smoke-helpers.cjs').autoReveal(page);const pageErrors=[];page.on('pageerror',e=>pageErrors.push(e.message));
     await page.waitForFunction(()=>document.getElementById('model-name')?.textContent==='Tesseract'&&document.getElementById('cancel').hidden);
     result.qualification=await app.evaluate(({app})=>app.polytopeQualification);
     assert.equal(result.qualification?.mode,'hidden-no-focus');assert.equal(result.qualification.profile,profile);

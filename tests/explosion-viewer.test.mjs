@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import * as THREE from 'three';
 import {Viewer} from '../ui/viewer.js';
+import {fakeRenderer} from './helpers/fake-renderer.mjs';
 import {resolveExplosion,explosionGeometry} from '../ui/explosion.mjs';
 import {projectDisplayPoint} from '../ui/display-frame.mjs';
 
@@ -15,7 +16,7 @@ function tesseract(){
   const model={id:'tesseract',fingerprint:HASH,dimension:4,embeddingDimension:4,interpretation:'convex-polytope',vertices,edges,faces,cells};
   const cache={algorithmVersion:'cell-facing-1',sourceFingerprint:HASH,normalization:{center:[0,0,0,0],radius:2},sourceCellIds:cells.map((_,i)=>i),cells:cells.map((f,cell)=>{const normal=Array(4).fill(0);normal[cell>>1]=cell%2?1:-1;return {cell,sourceVertexIds:[...new Set(f.flatMap(id=>faces[id]))].sort((a,b)=>a-b),normalizedPlane:{normal,offset:.5}};})};return {model,cache};
 }
-function viewer(model){const v=Object.create(Viewer.prototype);v.group=new THREE.Group();v.setModel(model);v.camera=new THREE.OrthographicCamera(-5,5,5,-5,.01,1000);v.camera.position.set(0,0,20);v.camera.lookAt(0,0,0);v.camera.updateMatrixWorld();v.renderer={domElement:{getBoundingClientRect:()=>({width:400,height:400})}};return v;}
+function viewer(model){const v=Object.create(Viewer.prototype);v.group=new THREE.Group();v.setModel(model);v.camera=new THREE.OrthographicCamera(-5,5,5,-5,.01,1000);v.camera.position.set(0,0,20);v.camera.lookAt(0,0,0);v.camera.updateMatrixWorld();v.renderer=fakeRenderer({width:400,height:400});return v;}
 const pose=(model,amount=1,options={})=>explosionGeometry(resolveExplosion(model,options),amount);
 const buffers=v=>Object.fromEntries(['pointGeometry','edgeGeometry','surfaceGeometry','highlightGeometry'].map(k=>[k,Object.fromEntries(Object.entries(v[k].attributes).map(([name,a])=>[name,[a.itemSize,[...a.array]]]))]));
 

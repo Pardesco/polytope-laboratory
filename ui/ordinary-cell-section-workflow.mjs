@@ -8,6 +8,7 @@ const plane=state=>signature([state.view.sectionNormal,state.view.sectionOffset,
 export class OrdinaryCellSectionWorkflow{
  constructor(context){this.context=context;this.generation=0;this.receipts=new WeakMap();this.active=null;}
  cancel(){this.generation++;this.active?.abort();this.active=null;}
+ cancelActive(){const active=this.active;if(!active)return false;this.active=null;active.abort();return true;}
  async evaluate(parameters,{signal,isCurrent=()=>true,exportOwner}={}){
   this.cancel();const generation=this.generation,controller=new AbortController();this.active=controller;
   const cancel=()=>controller.abort();signal?.addEventListener('abort',cancel,{once:true});if(signal?.aborted)cancel();

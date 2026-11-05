@@ -4,7 +4,7 @@ async function main(){
   const folder=await fs.mkdtemp(path.join(root,'artifacts','multi-view-quick-')),profile=path.join(folder,'profile');await fs.mkdir(profile);
   const env={...process.env,POLYTOPE_TEST_USER_DATA:profile};delete env.ELECTRON_RUN_AS_NODE;delete env.POLYTOPE_TEST_MODE;
   const app=await require('playwright')._electron.launch({executablePath:require('electron'),args:[root],cwd:root,env});
-  const page=await app.firstWindow(),errors=[];page.on('pageerror',error=>errors.push(error.message));
+  const page=await app.firstWindow();require('./smoke-helpers.cjs').autoReveal(page),errors=[];page.on('pageerror',error=>errors.push(error.message));
   try{
     await page.waitForFunction(()=>document.getElementById('model-name')?.textContent==='Tesseract');
     await app.evaluate(({dialog},destination)=>{dialog.showSaveDialog=async()=>({canceled:false,filePath:destination});},path.join(folder,'six-views.png'));

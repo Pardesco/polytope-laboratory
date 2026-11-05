@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {StepPrismControls} from '../ui/step-prism-controls.mjs';
 import {numericControlFixture,deferred,flush} from './numeric-control-fixture.mjs';
-const fixture=()=>numericControlFixture(StepPrismControls.prototype,{'step-prism-n':'13','step-prism-step':'-2','step-prism-radius':'sqrt(4)','generate-step-prism':''});
+const fixture=()=>numericControlFixture(StepPrismControls.prototype,{'step-prism-kind':'step-prism','step-prism-n':'13','step-prism-step':'-2','step-prism-radius':'sqrt(4)','generate-step-prism':''});
 test('order/step expressions and evaluated radius publish unchanged signed parameters in one native job',async()=>{
   const f=fixture();f.nodes['step-prism-n'].value='2+3';f.nodes['step-prism-step'].value='-(1+1)';await f.control.generate();
   assert.deepEqual(f.calls,[['step-prism',{n:5,step:-2,radius:2}]]);assert.equal(f.expressionCalls.length,1);
@@ -46,7 +46,7 @@ test('cancel/refusal releases busy lock; native rank degeneracy remains a diagno
 });
 test('constructor uses existing compact anchors and text numeric fields',async()=>{
   const previous=globalThis.document;
-  try{const f=fixture(),inserted=[];globalThis.document={createElement:()=>f.panel,getElementById:id=>id==='antiprism-settings'?{after:panel=>inserted.push(panel)}:null};
+  try{const f=fixture(),inserted=[];f.panel.insertAdjacentHTML=()=>{};f.nodes['step-prism-previous']={};f.nodes['step-prism-next']={};globalThis.document={createElement:()=>f.panel,getElementById:id=>id==='antiprism-settings'?{after:panel=>inserted.push(panel)}:null};
     const control=new StepPrismControls(f.context);assert.deepEqual(inserted,[f.panel]);assert.match(f.panel.innerHTML,/maxlength="512"/);
     await f.nodes['generate-step-prism'].onclick();assert.equal(control.busy,false);assert.equal(f.calls.length,1);
   }finally{if(previous===undefined)delete globalThis.document;else globalThis.document=previous;}

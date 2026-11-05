@@ -1,5 +1,8 @@
 import {NumericEntry} from './numeric-entry.mjs';
 import {captureNativeSource,verifyNativeSource} from './native-source-binding.mjs';
+import {FacetingDiagramEditor} from './faceting-diagram-editor.mjs';
+import {labelDiagramPicks,activateDiagramKey} from './diagram-accessibility.mjs';
+import {explainAvailability} from './availability-copy.mjs';
 const clone=value=>JSON.parse(JSON.stringify(value));
 const id=/^facet-[0-9a-f]{64}$/;
 
@@ -33,7 +36,16 @@ export class FacetingDiagramControls{
     this.node('cancel').onclick=()=>this.cancel();
     this.node('add-cycle').onclick=context.guard(()=>this.editPicked(false));
     this.node('remove-cycle').onclick=context.guard(()=>this.editPicked(true));
-    this.node('chart').onclick=context.guard(event=>this.pick(event));this.sync();
+    this.node('chart').onclick=context.guard(event=>this.pick(event));
+    this.node('chart').onkeydown=event=>activateDiagramKey(event,this.node('chart').onclick);
+    this.editor=new FacetingDiagramEditor(this);
+    const advanced=document.createElement('details'),summary=document.createElement('summary');summary.textContent='Candidate IDs and linked search options';
+    const fields=['seeds','reflections','link','hide-lines','hide-vertices','save'].map(key=>this.node(key).parentElement).filter(Boolean);
+    if(fields.length){advanced.append(summary,...new Set(fields),this.choices);panel.append(advanced);}
+    for(const key of ['vertex','reflections','hide-lines','hide-vertices'])this.node(key).onchange=context.guard(async()=>{
+      if(this.reply){await this.apply('build');if(this.reply)await this.apply('save');}
+    });
+    this.sync();
   }
   node(key){return this.panel.querySelector('#faceting-diagram-'+key)??this.choices?.querySelector('#faceting-diagram-'+key);}
   read(){return {vertex:this.node('vertex').value,seeds:this.node('seeds').value,
@@ -53,9 +65,14 @@ export class FacetingDiagramControls{
     if(this.signature()!==this.form||this.searchSignature()!==this.searchForm)throw Error('Diagram source, fields or search changed. Draw again.');
     if(this.reply.diagram.status!=='complete')throw Error('Incomplete diagrams cannot save or adopt.');
   }
-  async apply(action){
+  setFields(p){
+    this.node('vertex').value=String(p.vertex_id);this.node('seeds').value=(p.seed_ids??[]).join('\n');
+    this.node('reflections').checked=p.reflections;this.node('link').checked=Boolean(p.search);
+    this.node('hide-lines').checked=p.hide_diagram_when_selected;this.node('hide-vertices').checked=p.hide_vertices_when_selected;
+  }
+  async apply(action,savedState=null){
     if(this.busy||this.context.isExporting())throw Error('Finish or cancel the current action first.');
-    if(!['build','restore','save','adopt'].includes(action))throw Error('Choose a supported diagram action.');
+    if(!['build','restore','save','adopt','make-base'].includes(action))throw Error('Choose a supported diagram action.');
     const model=this.context.getState()?.model;
     if(model?.dimension!==3||(model.embeddingDimension??3)!==3)throw Error('Faceting diagrams require intrinsic3D source coordinates.');
     if(!Array.isArray(model.vertices)||model.vertices.length<4||model.vertices.length>12)throw Error('The current bounded diagram domain supports4–12 source vertices.');
@@ -69,11 +86,12 @@ export class FacetingDiagramControls{
       else parameters.seed_ids=this.seeds(input.seeds);
       params={catalogue:clone(this.context.catalogue()),parameters};
     }else if(action==='restore'){
-      const saved=this.context.getState().view.facetingDiagram;
+      const saved=savedState??this.context.getState().view.facetingDiagram;
       if(!saved)throw Error('This source has no saved diagram parameters.');params={state:clone(saved)};
     }else{
       this.verifyReply();
       if(action==='adopt'&&!this.reply.adoptionParameters)throw Error('Draft diagrams need a verified retained search result before adoption.');
+      if(action==='make-base'&&!this.reply.previewModel)throw Error('Select at least one verified facet first.');
     }
     const entry=new NumericEntry(this.context);this.entry=entry;this.busy=true;this.sync();
     try{return await entry.run({confirm:{text:'0',min:0,max:0}},async(_,numericVerify,{source,signal})=>{
@@ -83,9 +101,11 @@ export class FacetingDiagramControls{
       if(action==='save'){
         await this.context.save(clone(this.reply.state),options);return;
       }
-      if(action==='adopt'){
+      if(action==='adopt'||action==='make-base'){
         this.publishing=true;
-        try{await this.context.commit('facet-adopt',clone(this.reply.adoptionParameters),'Adopt diagram-linked faceting',options);}
+        try{await this.context.commit(action==='adopt'?'facet-adopt':'facet-diagram-adopt',
+          clone(action==='adopt'?this.reply.adoptionParameters:{state:this.reply.state}),
+          action==='adopt'?'Adopt diagram-linked faceting':'Make diagram faceting base model',options);}
         finally{this.publishing=false;}
         this.invalidate({cancelActive:false});return;
       }
@@ -95,18 +115,17 @@ export class FacetingDiagramControls{
         this.node('status').dataset.status=reply.diagram.status;return reply;
       }
       // Parse/validate before a native-linked preview can become visible.
-      const svgRoot=checkedDiagramSVG(reply.svg);verify();
-      if(reply.adoptionParameters&&this.context.preview){await this.context.preview(reply.diagram.adoption.model,options);verify();this.previewVisible=true;}
+      const svgRoot=labelDiagramPicks(checkedDiagramSVG(reply.svg));verify();
+      if(reply.previewModel&&this.context.preview){this.previewVisible=true;await this.context.preview(reply.previewModel,options);verify();}
+      else if(this.previewVisible){this.context.clearPreview?.();this.previewVisible=false;}
       this.install(reply,options,svgRoot);verify();this.reply=clone(reply);
       if(action==='restore'){
-        const p=reply.diagram.parameters;this.node('vertex').value=String(p.vertex_id);
-        this.node('seeds').value=(p.seed_ids??[]).join('\n');this.node('reflections').checked=p.reflections;
-        this.node('link').checked=Boolean(p.search);this.node('hide-lines').checked=p.hide_diagram_when_selected;
-        this.node('hide-vertices').checked=p.hide_vertices_when_selected;
+        this.setFields(reply.diagram.parameters);
       }
       this.owner=captureNativeSource(this.context);this.form=this.signature();this.searchForm=this.searchSignature();
+      this.editor.installed(reply);if(action==='build')this.editor.record(reply);
       this.node('status').textContent=`${reply.diagram.vertices.length} projected source vertices; ${reply.diagram.lines.length} planes. `+
-        (reply.adoptionParameters?'Linked native result verified.':'Draft cycles; no search-validity claim.')+
+        (reply.adoptionParameters?'Linked native result verified.':`${reply.diagram.selection.expandedCycles.length} replicated facets. Ordered surface; no closed-solid claim.`)+
         (!reply.diagram.presentationComplete?' Exact finite paint omissions recorded.':'');
       this.node('status').dataset.status='complete';return reply;
     });}catch(error){this.clear();this.node('status').textContent=error.message;
@@ -123,6 +142,7 @@ export class FacetingDiagramControls{
     const diagram=this.reply.diagram,vertex=node.getAttribute('data-source-vertex-id'),candidate=node.getAttribute('data-candidate-id'),plane=node.getAttribute('data-plane-id');
     if(vertex!==null){
       if(!/^(0|[1-9]\d*)$/.test(vertex)||!diagram.vertices.some(row=>row.sourceVertexId===Number(vertex)))throw Error('Diagram pick has no native vertex owner.');
+      if(this.editor.pickVertex(Number(vertex)))return;
       this.node('vertex').value=vertex;this.clear();this.node('pick').textContent=`Selected source vertex ${vertex}; Draw to use its chart.`;this.sync();return;
     }
     const line=plane!==null?diagram.lines.find(row=>row.planeId===plane):
@@ -155,8 +175,8 @@ export class FacetingDiagramControls{
   }
   clear(){this.reply=null;this.picked=null;this.node('cycle').replaceChildren();this.node('chart').replaceChildren();this.node('chart').hidden=true;
     if(this.previewVisible){this.context.clearPreview?.();this.previewVisible=false;}}
-  cancel(){this.entry?.cancel();}
-  invalidate({cancelActive=true}={}){if(cancelActive&&!this.publishing)this.cancel();this.clear();this.vertexModel=null;this.sync();}
+  cancel(){this.entry?.cancel();if(this.editor?.preparing)this.context.cancelPreparation?.();}
+  invalidate({cancelActive=true}={}){if(cancelActive&&!this.publishing)this.cancel();this.clear();this.editor.reset();this.vertexModel=null;this.sync();}
   sync(){
     const model=this.context.getState()?.model,eligible=model?.dimension===3&&(model.embeddingDimension??3)===3&&model.vertices?.length>=4&&model.vertices.length<=12;
     if(model!==this.vertexModel){
@@ -169,9 +189,16 @@ export class FacetingDiagramControls{
     const disabled=this.busy||this.context.isExporting()||!eligible;
     for(const node of this.panel.querySelectorAll('button,input,select,textarea'))node.disabled=disabled;
     for(const node of this.choices.querySelectorAll('button,select'))node.disabled=disabled||!this.reply||!this.picked?.length;
-    this.node('cancel').disabled=!this.busy;
+    this.node('cancel').disabled=!this.busy&&!this.editor?.preparing;
     this.node('restore').disabled=disabled||!this.context.getState()?.view.facetingDiagram;
     this.node('save').disabled=disabled||!this.reply;
     this.node('adopt').disabled=disabled||!this.reply?.adoptionParameters;
+    this.editor?.sync();
+    explainAvailability(this.panel,disabled?'Choose an intrinsic 3D source and finish the current construction/export.':'Draw a complete diagram before editing or adopting it.',disabled?{}:{
+      'faceting-diagram-restore':'Save a diagram in this document before restoring it.',
+      'faceting-diagram-cancel':'No diagram job is running.',
+      'faceting-diagram-adopt':'Draw a diagram linked to a complete search result first.',
+      'faceting-editor-undo':'No earlier diagram edit is available.',
+      'faceting-editor-redo':'No later diagram edit is available.'});
   }
 }

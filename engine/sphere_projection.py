@@ -19,7 +19,8 @@ def _rank(points):
     return int(np.sum(np.linalg.svd(relative/scale,compute_uv=False)>EPS))
 
 
-def project_sphere(source,center=None,radius=None):
+def project_sphere(source,center=None,radius=None,sphere=None):
+    reference=None
     try:original=deepcopy(source);raw=json.dumps(original,allow_nan=False,sort_keys=True,separators=(',',':')).encode()
     except (TypeError,ValueError,OverflowError) as error:raise GeometryError('Sphere projection requires finite JSON source data.') from error
     if len(raw)>16*1024*1024:raise GeometryError('Sphere projection source exceeds 16 MiB.')
@@ -35,6 +36,11 @@ def project_sphere(source,center=None,radius=None):
     points=np.asarray(original['vertices'],dtype=float)
     if points.ndim!=2 or points.shape[1]!=d or not np.isfinite(points).all() or np.max(np.abs(points),initial=0)>1e100:
         raise GeometryError('Sphere projection requires bounded finite source coordinates.')
+    if sphere is not None:
+        if center is not None or radius is not None:raise GeometryError('Named reference spheres cannot be combined with explicit center/radius.')
+        if d!=3:raise GeometryError('Named reference spheres require intrinsic 3D geometry.')
+        from .sphere_targets import sphere_target
+        reference=sphere_target(original,sphere);center=reference['center'];radius=reference['radius']
     if center is not None and (type(center) is not list or len(center)!=d or any(type(x) not in (int,float) or not math.isfinite(x) or abs(x)>1e100 for x in center)):
         raise GeometryError('Sphere center needs finite intrinsic coordinates matching the source dimension.')
     origin=points.mean(axis=0) if center is None else np.asarray(center,dtype=float)
@@ -73,13 +79,16 @@ def project_sphere(source,center=None,radius=None):
         'radius':resolved,'radiusPolicy':'mean source vertex radius' if radius is None else 'explicit radius',
         'maximumRadiusResidual':float(np.max(np.abs(np.linalg.norm(projected-origin,axis=1)-resolved))),
         'facesPlanar':True,'cellsPlanar':True,'incidenceUnchanged':True,'hullRepair':False,'qualification':qualification}
+    from .sphere_targets import edge_variation
+    evidence['edgeVariation']=edge_variation(result)
+    if reference is not None:evidence.update(referenceSphere=sphere,referenceRelativeResidual=reference['relativeResidual'])
     metadata={'family':'Sphere projection','sphereProjection':evidence,'sourceMetadata':deepcopy(original.get('metadata',{}))}
     for key in ('coordinateUnits','offColors'):
         if key in original.get('metadata',{}):metadata[key]=deepcopy(original['metadata'][key])
     result.update(id='sphere-'+hashlib.sha256(json.dumps([evidence['sourceSnapshotSha256'],origin.tolist(),resolved]).encode()).hexdigest(),
         name='Sphere projection of '+original.get('name','source'),metadata=metadata,
         provenance={'operation':'sphere-project','algorithmVersion':VERSION,'sourceModelId':original.get('id'),
-            'parameters':{'center':center,'radius':radius},'sourceVertexIds':list(range(len(points))),'convexified':False})
+            'parameters':{'sphere':sphere} if sphere is not None else {'center':center,'radius':radius},'sourceVertexIds':list(range(len(points))),'convexified':False})
     result['validation']=validate(result)
     if not result['validation']['passed']:raise GeometryError('Sphere projection failed literal source incidence validation.')
     result['fingerprint']=identity(result)
@@ -99,5 +108,5 @@ def dispatch_sphere_projection(request):
         raise GeometryError('Sphere projection requires its supported source request.')
     if request.get('algorithmVersion',VERSION)!=VERSION:raise GeometryError('Unsupported sphere projection algorithm version.')
     params=request.get('params',{})
-    if type(params) is not dict or set(params)-{'center','radius'}:raise GeometryError('Unsupported sphere projection controls.')
+    if type(params) is not dict or set(params)-{'center','radius','sphere'}:raise GeometryError('Unsupported sphere projection controls.')
     return project_sphere(request.get('model'),**params)

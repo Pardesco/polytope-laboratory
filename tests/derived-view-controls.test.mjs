@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {DerivedViewControls,derivedEntityDomain,derivedEntityIndex,derivedInputKey} from '../ui/derived-view-controls.mjs';
+import {DerivedViewControls,DerivedWork,derivedEntityDomain,derivedEntityIndex,derivedInputKey} from '../ui/derived-view-controls.mjs';
 import {numericControlFixture,deferred} from './numeric-control-fixture.mjs';
 function fixture(mode='section'){
   const f=numericControlFixture(Object.prototype,{});Object.assign(f.state.view,{derivedMode:mode,sectionNormal:[0,0,1],sectionOffset:0,entity:1});
@@ -9,6 +9,21 @@ function fixture(mode='section'){
     refreshDerived:()=>calls.push('refresh'),syncViewport:()=>calls.push('viewport'),applyPlane:next=>calls.push(['plane',next]),promote:()=>calls.push('promote')};
   const controls=new DerivedViewControls(context);controls.restoreInputs();controls.sync();return {...f,context,controls,calls,nodes,getInput};
 }
+
+test('new derived work cancels the previous job without canceling its export owner',()=>{
+  const work=new DerivedWork(),parent=new AbortController(),first=work.begin(parent.signal),second=work.begin();
+  assert.equal(first.signal.aborted,true);assert.equal(parent.signal.aborted,false);
+  work.finish(first);assert.equal(work.active,second);assert.equal(second.signal.aborted,false);
+  work.cancel();assert.equal(second.signal.aborted,true);assert.equal(work.active,null);
+});
+
+test('derived work follows parent cancellation and detaches completed requests',()=>{
+  const work=new DerivedWork(),parent=new AbortController(),first=work.begin(parent.signal);
+  work.finish(first);parent.abort();assert.equal(first.signal.aborted,false);
+  const second=work.begin(parent.signal);assert.equal(second.signal.aborted,true);
+  const freshParent=new AbortController(),third=work.begin(freshParent.signal);
+  freshParent.abort();assert.equal(third.signal.aborted,true);work.finish(third);assert.equal(work.active,null);
+});
 test('entity domains match the selected intrinsic view and literal IDs reject coercion',()=>{
   const f=fixture();assert.deepEqual(derivedEntityDomain(f.state.model,'cell'),{kind:'face',count:4});
   f.state.model.dimension=4;f.state.model.cells=[[0,1,2,3]];assert.deepEqual(derivedEntityDomain(f.state.model,'cell'),{kind:'cell',count:1});
@@ -60,11 +75,18 @@ test('source changes cancel manual preparation and do not carry its pending stat
   const f=fixture(),hold=deferred();let canceled=0;f.context.applyPlane=()=>hold.promise;f.context.cancelPlane=()=>{canceled++;hold.reject(Error('Canceled plane'));};
   const pending=f.controls.apply(false);const next=structuredClone(f.state);f.setProject({active:0,documents:[{id:'other',cursor:0,states:[next]}]});f.controls.sync();await assert.rejects(pending,/Canceled/);assert.equal(canceled,1);assert.equal(f.controls.pending,null);
 });
-test('debounced depth invalidates stale promotion immediately and cancels superseded/source/export work',t=>{
-  t.mock.timers.enable({apis:['setTimeout']});
-  const f=fixture();f.controls.setOffset('.25');assert.equal(f.state.view.sectionOffset,.25);assert.equal(f.getInput('promote').disabled,true);assert.equal(f.getInput('section-depth').value,'0.25');assert.throws(()=>f.controls.promote(),/current/);
-  t.mock.timers.tick(199);assert.equal(f.calls.includes('refresh'),false);f.controls.setOffset('.5');t.mock.timers.tick(201);assert.equal(f.calls.filter(x=>x==='refresh').length,1);
-  f.calls.length=0;f.controls.setOffset('.6');f.setExport(true);f.controls.onExportStateChange();t.mock.timers.tick(201);assert.equal(f.calls.includes('refresh'),false);
-  f.setExport(false);f.controls.setOffset('.7');f.setProject({...f.project});t.mock.timers.tick(201);assert.equal(f.calls.includes('refresh'),false);
-  f.controls.setOffset('.8');f.controls.setMode('cell');f.calls.length=0;t.mock.timers.tick(201);assert.deepEqual(f.calls,[]);
+test('live depth evaluates at once, coalesces drags to the newest depth and stops for superseded/source/export work',async()=>{
+  const f=fixture();let holds=[];f.context.refreshDerived=()=>{f.calls.push('refresh');const hold=deferred();holds.push(hold);return hold.promise;};
+  const settle=async()=>{for(let i=0;i<5;i++)await Promise.resolve();};
+  const release=async()=>{const hold=holds.shift();hold.resolve();await settle();};
+  f.controls.setOffset('.25');assert.equal(f.state.view.sectionOffset,.25);assert.equal(f.getInput('promote').disabled,true);assert.equal(f.getInput('section-depth').value,'0.25');assert.throws(()=>f.controls.promote(),/current/);
+  assert.equal(f.calls.filter(x=>x==='refresh').length,1);
+  // Drag while the first plane evaluates: depth display follows, state commits only at job boundaries.
+  f.controls.setOffset('.3');f.controls.setOffset('.5');assert.equal(f.state.view.sectionOffset,.25);assert.equal(f.getInput('section-depth').value,'0.5');
+  assert.equal(f.calls.filter(x=>x==='refresh').length,1);
+  await release();assert.equal(f.state.view.sectionOffset,.5);assert.equal(f.calls.filter(x=>x==='refresh').length,2);
+  await release();assert.equal(f.calls.filter(x=>x==='refresh').length,2);assert.equal(f.controls.live,null);
+  f.calls.length=0;f.controls.setOffset('.6');f.controls.setOffset('.65');f.setExport(true);f.controls.onExportStateChange();await release();assert.equal(f.calls.filter(x=>x==='refresh').length,1);assert.equal(f.state.view.sectionOffset,.6);
+  f.setExport(false);f.controls.onExportStateChange();f.calls.length=0;f.controls.setOffset('.7');f.controls.setOffset('.75');f.setProject({...f.project});await release();assert.equal(f.calls.filter(x=>x==='refresh').length,1);
+  f.calls.length=0;f.controls.setOffset('.8');f.controls.setOffset('.85');f.controls.setMode('cell');await release();await release();assert.equal(f.calls.filter(x=>x==='refresh').length,2);assert.equal(f.state.view.sectionOffset,.8);
 });

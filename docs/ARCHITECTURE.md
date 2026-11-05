@@ -1,5 +1,85 @@
 # Architecture and contracts
 
+[Image capture ownership](IMAGE_CAPTURE_RELIABILITY_2026-10-25.md) binds
+main screenshots to source/view/actual camera and canvas size before async
+preparation. Observation holders span preparation and destination review.
+Client-known bounded image ticket IDs support pending-chooser cancellation;
+the dedicated PNG profile uses copied bytes and fsynced atomic replacement.
+Legacy image callers share atomic writes, retaining their own capture checks.
+
+[Reviewed direct printing](NET_PRINT_OWNERSHIP_2026-10-25.md) prepares a
+private bounded-ID document, then rechecks source/layout/settings before
+committing the native dialog. One desktop manager owns prepared/active print
+windows through cancellation, expiry and cleanup. Net output exposes global
+Cancel; legacy direct printing shares the manager. Existing paper CSS and
+100% scale remain unchanged. Actual printer qualification is still pending.
+
+[Document-field edits](DOCUMENT_FIELD_EDITS_2026-10-25.md) use lightweight
+revision/dirty bookkeeping for notes and observer cameras. Pending file-read
+ownership and tour preview invalidation remain immediate. Notes additionally
+synchronize their morph source owner; unchanged text is a no-op and export-queued
+text is restored. Geometry/settings/busy/export changes retain full panel sync.
+
+[Net drag ownership](NET_DRAG_OWNERSHIP_2026-10-25.md) binds SVG gestures
+to pointer, source state/model, layout and editor sequence. Provisional DOM
+translation is removed before the native edit await, cancellation, view
+replacement or export. Motion uses cheap identity checks; release verifies
+current print/content inputs before existing native publication checks.
+
+[Derived document context](DERIVED_DOCUMENT_CONTEXT_2026-10-25.md) shares initial
+state construction between promotion and memory snapshots. Document units, notes,
+metadata and fill/color policy transfer; source-bound cameras, selections and
+annotation ownership do not. addDocument enforces the native 100-document bound
+before mutation. Geometry export supplies captured document fields explicitly,
+including empty notes/metadata, so native model hints cannot resurrect cleared
+content. Existing publication checks and native standalone defaults remain intact.
+
+Derived [Cancel ownership](CANCEL_CONTENT_2026-10-25.md) includes debounce/manual/
+presentation phases and revokes publication before aborting work. Active-only
+ordinary-cell cancellation retains completed independently rechecked receipts.
+Fold annotation diagnostics use a display token plus source/Viewer/mode/sequence
+fences; the token retains no workspace data after its callback completes.
+
+Derived [action publication](DERIVED_PUBLICATION_2026-10-25.md) commits model/result
+globals after presentation awaits and a final sequence/source/input ownership
+check. Failures expose no derived model; only the latest request updates availability.
+Derived export review follows these boundaries while Model export stays independent.
+Opening review pauses playback and reevaluates an interrupted frozen section plane.
+
+Portable annotation [source emission](PORTABLE_SOURCE_STREAM_2026-10-25.md) writes
+canonical tagged JSON directly with incremental UTF-8 bounds, retaining complete
+visits, exact numeric/key order and source/hash/descriptor checks. A null-prototype
+per-call table holds at most 2,048 small integer spellings; it retains no source
+authority. Own enumerable index validation rejects disguised sparse arrays.
+
+Annotation [source encoding](ANNOTATION_SOURCE_ENCODING_2026-10-25.md) extracts
+binary64 words through private synchronous scratch storage, retaining exact native
+portable spellings. Memory-signature array checks inspect every own data slot and
+compare enumerable slot/key counts, preserving hidden-index semantics and refusing
+extra enumerable properties. Complete walks, resource checks and ownership remain.
+
+Workspace [selection restoration](NAVIGATION_DISPLAY_2026-10-25.md) sets source
+selection before its one full base display. That display still prepares geometry,
+highlight positions, picking and annotations together. Interactive selection retains
+its ordinary full display and content validation; navigation uses no pose shortcut.
+
+Memory/tour [native result publication](MEMORY_TOUR_PUBLICATION_2026-10-25.md)
+rechecks export and document ownership after awaits. Memory Swap supplies a final
+bank verifier and synchronous slot callback to restoreMemoryState so document,
+slot and dirty notification share one continuation. Tour pause forwards its
+AbortSignal through NativeJobs; the tour bank is verified before preview adoption.
+
+The shared native [validation-key encoder](VALIDATION_KEY_ENCODING_2026-10-25.md)
+uses a conservative ASCII size bound during plain-type/node preflight to select
+bounded C JSON encoding. The streaming fallback retains exact size eligibility;
+both paths use complete canonical literal keys and the same cache ownership/budgets.
+
+Project validation now has [bounded request-local reuse](PROJECT_VALIDATION_REUSE_2026-10-25.md)
+for identical complete literal model records. It retains per-state view/net/
+certificate/history checks and bypasses keying for single-state projects.
+Pending file reads are canceled when workspace revisions/export make adoption
+ineligible; status completion remains scoped to the operation that owns it.
+
 The desktop shell is Electron, the visualization layer is Three.js, and the replaceable geometry process is Python/NumPy/SciPy. This prioritizes a runnable mathematical prototype over selecting the eventual principal C++/Rust kernel prematurely. Exact geometry and production-scale nonconvex kernels remain separate workstreams.
 
 `desktop/main.cjs` owns native file access, approved local catalog paths, process lifetime, cancellation and printing. A sandboxed renderer has no Node access. Narrow contextBridge methods expose whitelisted computation and native-dialog file actions. Navigation and child windows are blocked. Geometry jobs run in up to three isolated processes, with a bounded queue and two-minute timeout. Cancellation kills active jobs or removes queued requests; inputs remain unchanged.

@@ -23,6 +23,16 @@ test('save is unavailable until review is complete, and native domain refusals n
   f.context.describe=async()=>({formats:[{format:'obj',available:false,reason:'Intrinsic 4D cannot be OBJ.'}]});
   await assert.rejects(f.session.prepare(),/4D/);assert.deepEqual(f.calls,[]);
 });
+
+test('review sends explicit cleared notes and metadata instead of falling back to imported model hints',async()=>{
+  for(const metadata of [undefined,{}]){
+    const f=fixture();f.state.notes='';f.state.model.metadata.documentNotes='Old imported notes';
+    f.state.model.metadata.documentMetadata={title:'Old imported title'};
+    if(metadata===undefined)delete f.state.view.documentMetadata;else f.state.view.documentMetadata=metadata;
+    const before=structuredClone(f.state);await f.session.prepare();
+    assert.equal(f.calls[0][1].notes,'');assert.deepEqual(f.calls[0][1].document_metadata,{});assert.deepEqual(f.state,before);
+  }
+});
 test('source, derived geometry, options, units and metadata changes during preparation reject stale output',async()=>{
   for(const change of [f=>f.state.model.vertices[0][0]=4,f=>f.state.model.metadata.offColors.faces[0].values[0]=.3,
     f=>f.state.view.coordinateUnit='cm',f=>f.state.notes='new',f=>f.state.view.documentMetadata={author:'changed'},

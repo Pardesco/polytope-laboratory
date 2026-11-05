@@ -70,13 +70,17 @@ def _topology(vertices, edges, faces):
 
 
 def polyhedral_torus(ring_segments=10, arm_segments=8, arm_ratio=0.5,
-                     ring_radius=1.0, *, face_colors=None):
+                     ring_radius=1.0, *, face_colors=None, twist=0):
     """Generate an untwisted ring torus with outward ordered periodic quads.
 
     Counts are literal angular subdivisions, not star symbols. arm_ratio is
     minor/major radius; only numerically resolved 0 < ratio < 1 is supported.
     The resulting genus-one surface declares no solid volume or convexity.
     """
+    if type(twist) is not int or abs(twist)>128:raise GeometryError('Torus twist must be an integer arm-step count from -128 to 128.')
+    if twist:
+        from .twisted_torus import twisted_torus
+        return twisted_torus(ring_segments,arm_segments,arm_ratio,ring_radius,face_colors,twist)
     n = _count(ring_segments, 'ring segment count')
     m = _count(arm_segments, 'arm segment count')
     size = n*m

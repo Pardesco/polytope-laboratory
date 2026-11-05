@@ -248,3 +248,20 @@ test('actual warmed native process cancellation terminates a bounded long search
   assert.equal(replies.length,1);assert.equal(replies[0].id,'warm');assert.equal(replies[0].ok,true);
   assert.deepEqual(source,before);assert.equal(f.published.length,0);
 });
+
+test('tidy dual and independent spiky option combine with existing type/plane/partial filters',async()=>{
+  const f=fixture();f.nodes['faceting-criterion'].value='tidy-dual';f.nodes['faceting-spiky-filter'].checked=true;
+  f.nodes['faceting-partial'].checked=true;f.nodes['faceting-max_faces_per_plane'].value='2';
+  await f.controls.apply('search');const args=f.calls.find(row=>row[0]==='facet-search')[1];
+  assert.equal(args.criteria.spiky,true);assert.equal(args.criteria.tidy_dual,true);
+  assert.equal(args.criteria.accept_partial,true);assert.equal(args.criteria.max_faces_per_plane,2);
+});
+
+test('previous/next result traversal previews retained results without wrapping or committing',async()=>{
+  const f=fixture();f.receipt.results.push({...structuredClone(f.receipt.results[0]),id:'second'});
+  await f.controls.apply('search');assert.equal(f.nodes['faceting-previous'].disabled,true);
+  await f.nodes['faceting-next'].onclick();assert.equal(f.nodes['faceting-result'].value,'second');
+  assert.equal(f.previews.length,1);assert.equal(f.nodes['faceting-next'].disabled,true);
+  await f.nodes['faceting-previous'].onclick();assert.equal(f.previews.length,2);assert.equal(f.published.length,0);
+  await assert.rejects(f.controls.stepResult(-1),/No retained/);
+});

@@ -156,6 +156,7 @@ def unfold(model, root=0, edge_length_mm=25, tabs=True, hinges=None, cut_edges=N
         for i in item['faces']:
             coords[i]+=shift;r,t=transforms[i];transforms[i]=(r,t+np.r_[shift,0])
         cursor+=high[0]-low[0]+10
+    automatic_placement=placements is None
     placements=[] if placements is None else placements
     if not isinstance(placements,list):raise GeometryError('Component placements must be a list of root/translation/angle records.')
     roots={c['root'] for c in components};seen=set()
@@ -200,7 +201,8 @@ def unfold(model, root=0, edge_length_mm=25, tabs=True, hinges=None, cut_edges=N
         result['elementAnnotations'] = deepcopy(element_annotations)
     from .net_color_printing import attach_print_source
     attach_print_source(result,model)
-    return result
+    from .net_paper_ux import finish_net
+    return finish_net(model,result,None if automatic_placement else placements)
 
 
 def fold_net(net,fraction=1):
@@ -244,6 +246,9 @@ def reconstruct_net(model,net):
 
 
 def edit_net(model,net,action,edge=None,component=None,translation=None,angle=0,tabs=None,tab_options=None):
+    if action=='arrange-pieces':
+        from .net_paper_ux import arrange_net
+        return arrange_net(model,reconstruct_net(model,net))
     if net.get('tabOptions') is not None or action=='set-tab-options':
         from .net_tabs import edit_tabbed
         return edit_tabbed(model,net,action,tab_options=tab_options,edge=edge,component=component,translation=translation,angle=angle,tabs=tabs)
@@ -260,7 +265,7 @@ def edit_net(model,net,action,edge=None,component=None,translation=None,angle=0,
         r=Rotation.from_rotvec([0,0,math.radians(angle)]).as_matrix()[:2,:2]
         for i in item['faces']:targets[i]=(targets[i]-center)@r.T+center+delta
     elif action!='set-tabs':raise GeometryError('Net edits are toggle-edge, move-component, or set-tabs.')
-    base=unfold(model,root=net['root'],edge_length_mm=net['referenceEdgeLengthMm'],tabs=net['tabs'] if tabs is None else bool(tabs),hinges=hinges,element_annotations=net.get('elementAnnotations'))
+    base=unfold(model,root=net['root'],edge_length_mm=net['referenceEdgeLengthMm'],tabs=net['tabs'] if tabs is None else bool(tabs),hinges=hinges,placements=[],element_annotations=net.get('elementAnnotations'))
     placements=[]
     for item in base['components']:
         i=item['root'];p=np.asarray(base['faces'][i]['points']);q=targets[i]
@@ -293,6 +298,8 @@ def net_svg(net):
         svg, _ = annotated_net_svg(document, document['source'], net,
                                   expected_face_ids=net.get('annotationFaceIds'))
         return svg
+    from .net_paper_ux import piece_numbers,edge_labels
+    numbers=piece_numbers(net)
     low,high=np.asarray(net['bounds']); margin=8
     width,height=high-low+2*margin
     out=[f'<svg xmlns="http://www.w3.org/2000/svg" width="{width:.8g}mm" height="{height:.8g}mm" viewBox="0 0 {width:.8g} {height:.8g}">',
@@ -305,24 +312,35 @@ def net_svg(net):
         if component!=face['component']:
             if component is not None:out.append('</g>')
             component=face['component'];out.append(f'<g data-net-component="{component}">')
+            cloud=np.concatenate([f['points'] for f in net['faces'] if f['component']==component]+[t['points'] for t in tab_geometry(net) if any(f['id']==t['face'] and f['component']==component for f in net['faces'])])
+            corner=cloud.min(axis=0)-low+margin
+            out.append(f'<text data-piece-number="{numbers[component]}" x="{corner[0]:.8g}" y="{corner[1]-.7:.8g}" font-size="2.6" font-weight="bold" fill="#243942" pointer-events="none">P{numbers[component]}</text>')
         p=np.asarray(face['points'])-low+margin
         points=' '.join(f'{x:.8g},{y:.8g}' for x,y in p)
         out.append(f'<g data-net-face="{face["id"]}" data-component="{component}"><polygon points="{points}" fill="#e6f5f0" stroke="none"/>')
+        out.append(f'<title>P{numbers[component]} / source face F{face["id"]}</title>')
         center=p.mean(axis=0)
-        out.append(f'<text x="{center[0]:.8g}" y="{center[1]:.8g}" font-size="3" text-anchor="middle" fill="#28534d" pointer-events="none">F{face["id"]}</text>')
+        labels=edge_labels(p,face['edges'])
+        face_size=min(2.8,min(np.linalg.norm(b-a) for a,b in zip(p,np.roll(p,-1,axis=0)))*.1)
+        half=np.array([len(str(face['id']))*.35+.4,.65])*face_size
+        face_box=np.array([center+half*[x,y] for x,y in ((-1,-1),(1,-1),(1,1),(-1,1))])
+        if not any(overlaps(face_box,label['box']) for label in labels.values()):
+            out.append(f'<text x="{center[0]:.8g}" y="{center[1]:.8g}" font-size="{face_size:.8g}" dominant-baseline="central" text-anchor="middle" fill="#28534d" pointer-events="none">F{face["id"]}</text>')
         for i,edge in enumerate(face['edges']):
             a,b=p[i],p[(i+1)%len(p)]
-            mid=(a+b)/2
-            u=(b-a)/np.linalg.norm(b-a);outward=np.array([u[1],-u[0]])
-            if net.get('fillSemantics')=='simple-planar-source-faces':
-                if np.sum(p[:,0]*np.roll(p[:,1],-1)-p[:,1]*np.roll(p[:,0],-1))<0:outward=-outward
-            elif np.dot(outward,mid-center)<0:outward=-outward
-            label=mid-outward*2
-            style='stroke="#359da6" stroke-dasharray="1.5 1"' if edge['hinge'] else 'stroke="#243942"'
-            out.append(f'<path d="M {a[0]:.8g} {a[1]:.8g} L {b[0]:.8g} {b[1]:.8g}" {style} stroke-width="0.22"/>')
+            placement=labels.get(i)
+            fold=net.get('foldTypes',{}).get(str(edge['id']),'unknown')
+            dash={'valley':'1.5 1','mountain':'3 .8 .5 .8','flat':'.3 .3','unknown':'.4 1'}[fold]
+            tab=tab_lookup.get((edge['id'],face['id']))
+            crease=edge['hinge'] or tab is not None
+            style=f'stroke="#359da6" stroke-dasharray="{dash if edge["hinge"] else "1.5 1"}"' if crease else 'stroke="#243942"'
+            out.append(f'<path data-fold-type="{fold if edge["hinge"] else "tab-valley" if tab else "cut"}" d="M {a[0]:.8g} {a[1]:.8g} L {b[0]:.8g} {b[1]:.8g}" {style} stroke-width="0.22"/>')
             out.append(f'<path data-net-edge="{edge["id"]}" d="M {a[0]:.8g} {a[1]:.8g} L {b[0]:.8g} {b[1]:.8g}" fill="none" stroke="transparent" stroke-width="2.5"/>')
             if not edge['hinge']:
-                out.append(f'<text x="{label[0]:.8g}" y="{label[1]:.8g}" text-anchor="middle" font-size="1.9" fill="#476374" pointer-events="none">E{edge["id"]}</text>')
+                if placement:
+                    size=placement['size'];label=placement['center'];angle=placement['angle']
+                    if angle>90 or angle<-90:angle+=180
+                    out.append(f'<text data-edge-label="{edge["id"]}" x="{label[0]:.8g}" y="{label[1]:.8g}" transform="rotate({angle:.8g} {label[0]:.8g} {label[1]:.8g})" text-anchor="middle" dominant-baseline="central" font-size="{size:.8g}" fill="#243942" stroke="white" stroke-width="{size*.1:.8g}" paint-order="stroke" pointer-events="none">E{edge["id"]}</text>')
                 tab=tab_lookup.get((edge['id'],face['id']))
                 if tab and tab['face']==face['id']:
                     a,ta,tb,b=np.asarray(tab['points'])-low+margin
@@ -330,5 +348,10 @@ def net_svg(net):
                     out.append(f'<path data-net-tab="{edge["id"]}" d="M {a[0]:.8g} {a[1]:.8g} L {ta[0]:.8g} {ta[1]:.8g} L {tb[0]:.8g} {tb[1]:.8g} L {b[0]:.8g} {b[1]:.8g}" fill="none" stroke="{color}" stroke-width="0.18"/>')
         out.append('</g>')
     if component is not None:out.append('</g>')
+    legend_size=min(2,max(.5,(width-15)/25))
+    out.append(f'<g data-fold-legend="printed-side"><path d="M 3 {height-5.5:.8g} h 8" stroke="#359da6" stroke-dasharray="1.5 1"/><text x="12" y="{height-5:.8g}" font-size="{legend_size:.8g}">Valley / glue tabs (printed side)</text><path d="M 3 {height-2.5:.8g} h 8" stroke="#359da6" stroke-dasharray="3 .8 .5 .8"/><text x="12" y="{height-2:.8g}" font-size="{legend_size:.8g}">Mountain (printed side)</text></g>')
     out.append('</svg>')
+    if net.get('visibleSurface') and net.get('printSource'):
+        from .visible_surface_print import decorate
+        return decorate(net,'\n'.join(out))
     return '\n'.join(out)

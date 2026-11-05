@@ -56,3 +56,32 @@ test('another status instance cannot complete this instance, even with matching 
   for (const token of [alien, undefined, null, {}]) assert.equal(b.status.complete(token, 'Wrong'), false);
   assert.equal(b.shown.at(-1), 'Analyze…');
 });
+
+test('quick deferred work never replaces the visible status; slow work reports progress and completion', async t => {
+  t.mock.timers.enable({apis: ['setTimeout']});
+  const {status, shown} = fixture();
+  status.set('Opened project.polyproj');
+  const quick = status.defer('Evaluate section…');
+  assert.equal(status.settle(quick), false);
+  t.mock.timers.tick(1000);
+  assert.deepEqual(shown, ['Opened project.polyproj']);
+  const slow = status.defer('Evaluate section…');
+  t.mock.timers.tick(400);
+  assert.equal(shown.at(-1), 'Evaluate section…');
+  assert.equal(status.settle(slow), true);
+  assert.equal(status.complete(slow, 'Evaluate section completed in 0.50 s'), true);
+  assert.equal(shown.at(-1), 'Evaluate section completed in 0.50 s');
+});
+
+test('a deferred message stays hidden once newer status is set, and a stale-load diagnosis can still report', t => {
+  t.mock.timers.enable({apis: ['setTimeout']});
+  const {status, shown} = fixture(), token = status.defer('Open…');
+  status.set('Saved project.polyproj');
+  t.mock.timers.tick(1000);
+  assert.equal(shown.at(-1), 'Saved project.polyproj');
+  assert.equal(status.complete(token, 'File loading canceled'), false);
+  const loading = status.defer('Open…');
+  assert.equal(status.complete(loading, 'File loading canceled'), true);
+  t.mock.timers.tick(1000);
+  assert.equal(shown.at(-1), 'File loading canceled');
+});

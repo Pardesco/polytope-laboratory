@@ -9,6 +9,13 @@ from .animation_state import validate_animation_sequence
 def validate_view(model, view):
     if not isinstance(view,dict):
         raise GeometryError('Saved view must be an object.')
+    from .element_visibility import validate_element_visibility
+    validate_element_visibility(model,view.get('elementVisibility'))
+    if 'multiViews' in view:
+        from .multi_view_state import validate_multi_views
+        validate_multi_views(view['multiViews'])
+    from .element_type_state import validate_element_type_view
+    validate_element_type_view(model,view)
     if 'generalizedDensity' in view:
         from .generalized_density import validate_density_state
         validate_density_state(model,view['generalizedDensity'],unit=view.get('coordinateUnit','model'))
@@ -38,9 +45,15 @@ def validate_view(model, view):
                           'cellFacing':{'all','hide-front','hide-back','front','back'}}.items():
         if field in view and (type(view[field]) is not str or view[field] not in options):
             raise GeometryError('Saved '+field+' is unsupported.')
+    for field,options in (('vertexFigureMode',('slicing','combinatorial')),('vertexFigurePlacement',('midpoint','unit-distance'))):
+        if field in view and (type(view[field]) is not str or view[field] not in options):
+            raise GeometryError('Saved '+field+' is unsupported.')
     for field in ('surfaceOpacity','sectionOffset','rotationSpeed'):
         if field in view and not finite(view[field]):
             raise GeometryError('Saved '+field+' must be finite.')
+    for field,minimum,maximum in (('stereoEyeSeparation',0,1),('stereoConvergence',.01,1000)):
+        if field in view and (not finite(view[field]) or not minimum<=view[field]<=maximum):
+            raise GeometryError('Saved '+field+' is outside its stereo display range.')
     if 'surfaceOpacity' in view and not 0<=view['surfaceOpacity']<=1:
         raise GeometryError('Saved surface opacity must lie between zero and one.')
     distance=view.get('perspectiveDistance4D',3)
@@ -55,6 +68,8 @@ def validate_view(model, view):
         view['dualMorph']=normalize_settings(model,view['dualMorph'])
     if 'documentMetadata' in view:
         metadata=view['documentMetadata']
+        from .document_metadata import validate_metadata
+        validate_metadata(metadata)
         if type(metadata) is not dict or any(key in metadata and type(metadata[key]) is not str for key in ('title','author','reference','description')):
             raise GeometryError('Saved project metadata needs text fields in a JSON object.')
         if 'custom' in metadata and type(metadata['custom']) is not dict:

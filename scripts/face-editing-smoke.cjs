@@ -1,3 +1,4 @@
+const {openDisclosure}=require('./smoke-helpers.cjs');
 // Real UI operations, native project snapshots, and independent literal fixtures.
 // Run only after the matching application build is ready.
 const {_electron:electron}=require('playwright');
@@ -42,11 +43,11 @@ async function main(){
   const env={...process.env,POLYTOPE_TEST_USER_DATA:profile};delete env.ELECTRON_RUN_AS_NODE;
   if(packaged)env.POLYTOPE_PYTHON=path.join(folder,'unavailable-development-python.exe');
   const app=await electron.launch({executablePath:packaged||require('electron'),args:packaged?[]:[root],cwd:root,env,timeout:30000});
-  const page=await app.firstWindow();page.setDefaultTimeout(30000);
+  const page=await app.firstWindow();require('./smoke-helpers.cjs').autoReveal(page);page.setDefaultTimeout(30000);
   const errors=[],checks=[];let saveNumber=0;
   page.on('pageerror',error=>errors.push(error.message));
   const done=()=>page.waitForFunction(()=>document.getElementById('cancel').hidden);
-  const disclosure=async id=>{if(!await page.locator('#'+id).evaluate(element=>element.open))await page.locator('#'+id+' > summary').click();};
+  const disclosure=id=>openDisclosure(page,id);
   const construct=async()=>{if(await page.locator('#toggle-inspector').getAttribute('aria-pressed')!=='true')await page.locator('#toggle-inspector').click();await page.locator('[data-panel="construct"]').click();};
   const facePanel=async()=>{await construct();await disclosure('face-editing-settings');};
   const save=async label=>{

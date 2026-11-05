@@ -86,7 +86,11 @@ def apply_options(model, net, options):
 def unfold_tabbed(model, tab_options, **params):
     from .generalized_nets import unfold_source
     options=validate_options(model,tab_options)
-    return apply_options(model,unfold_source(model,**params),options)
+    result=apply_options(model,unfold_source(model,**params),options)
+    if params.get('placements') is None and len(result['components'])>1:
+        from .net_paper_ux import arrange_net
+        return arrange_net(model,result)
+    return result
 
 
 def edit_tabbed(model, net, action, tab_options=None, **params):

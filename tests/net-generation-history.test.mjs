@@ -25,6 +25,18 @@ function fixture(cell){
 
 for(const cell of [false,true]){
   const label=cell?'whole-cell':'face';
+  test(label+' derived cancellation passes its signal and refuses late layout/history writes',async()=>{
+    const f=fixture(cell),hold=deferred(),controller=new AbortController(),before=structuredClone(f.s);
+    let passedSignal;
+    f.editor.run=async(_op,_params,_model,_label,options)=>{passedSignal=options.signal;return hold.promise;};
+    const pending=f.editor.evaluate(f.m,f.s,{signal:controller.signal});
+    assert.equal(passedSignal,controller.signal);controller.abort();hold.resolve(f.generate({root:0,edge_length_mm:25,tabs:true}));
+    assert.deepEqual(await pending,{stale:true});assert.deepEqual(f.s,before);
+  });
+  test(label+' already canceled derived requests start no native work',async()=>{
+    const f=fixture(cell),controller=new AbortController();controller.abort();
+    assert.deepEqual(await f.editor.evaluate(f.m,f.s,{signal:controller.signal}),{stale:true});assert.equal(f.calls.length,0);
+  });
   test(label+' explicit separation/reset supersede saved edits and append reversible history',async()=>{
     const f=fixture(cell),original=structuredClone(f.s[f.bank]);
     await f.editor.build(true);assert.deepEqual(f.calls[0][f.edges],[]);assert.deepEqual(f.s[f.key][f.edges],[]);

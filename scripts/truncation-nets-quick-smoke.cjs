@@ -4,7 +4,7 @@ async function main(){
   const folder=await fs.mkdtemp(path.join(root,'artifacts','truncation-nets-quick-')),profile=path.join(folder,'profile');await fs.mkdir(profile);
   const fixture=spawnSync('python',['-c','import json; from tests.test_generalized_nets import l_prism; print(json.dumps(l_prism()))'],{cwd:root,windowsHide:true,encoding:'utf8'});assert.equal(fixture.status,0,fixture.stderr);const sourcePath=path.join(folder,'l-prism.json');await fs.writeFile(sourcePath,fixture.stdout);
   const env={...process.env,POLYTOPE_TEST_USER_DATA:profile};delete env.ELECTRON_RUN_AS_NODE;delete env.POLYTOPE_TEST_MODE;
-  const app=await require('playwright')._electron.launch({executablePath:require('electron'),args:[root],cwd:root,env});const page=await app.firstWindow(),errors=[];page.on('pageerror',e=>errors.push(e.message));page.on('console',m=>{if(m.type()==='error')errors.push(m.text());});
+  const app=await require('playwright')._electron.launch({executablePath:require('electron'),args:[root],cwd:root,env});const page=await app.firstWindow();require('./smoke-helpers.cjs').autoReveal(page),errors=[];page.on('pageerror',e=>errors.push(e.message));page.on('console',m=>{if(m.type()==='error')errors.push(m.text());});
   const open=async filePath=>{await app.evaluate(({dialog},filePath)=>{dialog.showOpenDialog=async()=>({canceled:false,filePaths:[filePath]});},filePath);await page.locator('#open').click();};
   try{
     await page.waitForFunction(()=>document.getElementById('model-name')?.textContent==='Tesseract');

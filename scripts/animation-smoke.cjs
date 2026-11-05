@@ -15,22 +15,26 @@ async function main(){
   const env={...process.env,POLYTOPE_TEST_USER_DATA:profile};delete env.ELECTRON_RUN_AS_NODE;
   if(packaged)env.POLYTOPE_PYTHON='C:\\unavailable-development-python.exe';
   const app=await electron.launch({executablePath:packaged||require('electron'),args:packaged?[]:[root],cwd:root,env,timeout:30000});
-  const page=await app.firstWindow();page.setDefaultTimeout(30000);
+  const page=await app.firstWindow();require('./smoke-helpers.cjs').autoReveal(page);page.setDefaultTimeout(30000);
   const errors=[],checks=[];let videoProof;page.on('pageerror',error=>{errors.push(error.message);console.error('Renderer:',error.message);});
   await page.evaluate(()=>{window.animationEncoderDiagnostic={videoEncoder:typeof VideoEncoder,videoFrame:typeof VideoFrame};});
   const saveDialog=file=>app.evaluate(({dialog},filePath)=>{dialog.showSaveDialog=async()=>({canceled:false,filePath});},file);
-  async function change(id,value){await page.locator(id).fill(String(value));await page.locator(id).dispatchEvent('change');}
+  // Numeric fields commit on blur/Enter (numeric-entry); a synthetic change event no longer commits them.
+  async function change(id,value){await page.locator(id).fill(String(value));await page.locator(id).press('Tab');}
   async function openAnimation(){if(!await page.locator('#animation-settings').evaluate(element=>element.open))await page.locator('#animation-settings > summary').click();}
   async function waitDone(file){await page.waitForFunction(path=>document.getElementById('animation-progress').textContent.includes('Exported '+path),file);await page.waitForFunction(()=>!document.getElementById('animation-png').disabled);}
   try{
     await page.waitForFunction(()=>document.getElementById('model-name')?.textContent==='Tesseract');
     await page.waitForFunction(()=>document.getElementById('animation-play')&&!document.getElementById('animation-controls').hidden);
+    // W5 viewer UX: the auto-opened Tesseract starts with the introductory XW spin (docs/VIEWER_UX.md). Pause it so the keyframe baseline is deterministic.
+    assert.equal(await page.locator('#auto-rotate').getAttribute('aria-pressed'),'true');await page.locator('#auto-rotate').click();assert.equal(await page.locator('#auto-rotate').getAttribute('aria-pressed'),'false');
+    const startXW=Number(await page.locator('#plane-2').inputValue()),endXW=startXW+45; // .125 turn
     await openAnimation();
     await change('#animation-duration',.25);await change('#animation-fps',8);
     await page.locator('#animation-plane').selectOption('2');await page.locator('#animation-turns').fill('.125');await page.locator('#animation-rotation').click();
     await page.locator('#animation-end').click();
     await page.waitForFunction(()=>document.getElementById('animation-position').textContent.startsWith('0.250'));
-    assert.ok(Math.abs(Number(await page.locator('#plane-2').inputValue())-69)<1e-6);
+    assert.ok(Math.abs(Number(await page.locator('#plane-2').inputValue())-endXW)<1e-6);
     await page.locator('#animation-start').click();await page.locator('#animation-play').click();
     await page.waitForFunction(()=>document.getElementById('animation-play').textContent==='Play'&&document.getElementById('animation-position').textContent.startsWith('0.250'));
     checks.push('4D rotation endpoints and time-based playback');
@@ -42,7 +46,7 @@ async function main(){
     const projectFile=path.join(output,'animation.polyproj');await saveDialog(projectFile);await page.locator('#save').click();
     await page.waitForFunction(path=>document.getElementById('status').textContent.startsWith('Saved '+path),projectFile);
     const project=JSON.parse(await fs.readFile(projectFile,'utf8')),active=project.documents[project.active],saved=active.states[active.cursor].view.animation;
-    assert.equal(saved.version,1);assert.equal(saved.duration,.25);assert.equal(saved.keyframes[1].angles[2],69);checks.push('animation tracks persisted in full project view state');
+    assert.equal(saved.version,1);assert.equal(saved.duration,.25);assert.ok(Math.abs(saved.keyframes[1].angles[2]-endXW)<1e-6);checks.push('animation tracks persisted in full project view state');
     await app.evaluate(({dialog},file)=>{dialog.showOpenDialog=async()=>({canceled:false,filePaths:[file]});},projectFile);
     const reopened=await page.evaluate(async()=>{const result=await window.polytope.open(),doc=result.project.documents[result.project.active];return doc.states[doc.cursor].view.animation;});
     assert.deepEqual(reopened,saved);checks.push('saved animation tracks reopen intact through geometry engine');
@@ -51,7 +55,7 @@ async function main(){
     await page.locator('#animation-settings > summary').click();
     await page.locator('#viewport-layout').selectOption('split');
     await page.locator('#section-normal').fill('0.3, 0.5, 0.7, 1');await page.locator('#apply-section').click();
-    await page.waitForFunction(()=>document.getElementById('derived-status').textContent.includes('vertices')&&document.getElementById('status').textContent.startsWith('Evaluate section completed'));
+    await page.waitForFunction(()=>document.getElementById('derived-status').textContent.includes('vertices')&&document.getElementById('cancel').hidden);
     await openAnimation();
     await page.locator('#animation-section').click();
     const sections=path.join(output,'section.frames');await saveDialog(sections);await page.locator('#animation-png').click();await waitDone(sections);
@@ -82,15 +86,21 @@ async function main(){
     const poseEndpoints=require('./video-pose-endpoint-proof.cjs').provePoseEndpoints({first:raw.subarray(0,size),last:raw.subarray(raw.length-size),references:referencePixels});
     videoProof={qualified:true,codec:stream.codec_name,width:stream.width,height:stream.height,decodedFrameCount:Number(stream.nb_read_frames),decodedSourceTimes:probe.frames.map(f=>Number(f.pts_time)),referenceManifest:expectedManifest,poseEndpoints};
     checks.push('offscreen WebM decodes exact source timestamps and uniquely matching independent PNG endpoint poses');
-    await change('#animation-duration',10);await change('#animation-fps',20);
+    // Hidden-mode PNG export writes ~120 frames/s, so a short sequence can finish before Cancel lands. Use the longest
+    // allowed sequence (300 s x 60 fps = 18,000 frames) for the cancel and document-switch checks.
+    await change('#animation-duration',300);await change('#animation-fps',60);
     const cancelled=path.join(output,'cancelled.frames');await saveDialog(cancelled);await page.locator('#animation-png').click();
     await page.waitForFunction(()=>document.getElementById('animation-progress').textContent.startsWith('Frame '));await page.locator('#animation-cancel').click();
     await page.waitForFunction(()=>document.getElementById('animation-progress').textContent==='Animation export cancelled.'&&!document.getElementById('animation-png').disabled);
     await assert.rejects(()=>fs.access(cancelled));assert.equal((await fs.readdir(output)).filter(file=>file.startsWith('.polytope-animation-')).length,0);checks.push('cancel removes staging files without publishing incomplete frames');
-    const switched=path.join(output,'switched.frames');await saveDialog(switched);await page.locator('#animation-png').click();
-    await page.waitForFunction(()=>document.getElementById('animation-progress').textContent.startsWith('Frame '));
-    await page.locator('[data-key="cube"]').click();await page.waitForFunction(()=>document.getElementById('model-name').textContent==='Cube');
-    await page.waitForFunction(()=>!document.getElementById('animation-png').disabled);await assert.rejects(()=>fs.access(switched));checks.push('document switch cancels in-flight export without publishing frames');
+    // Library entries are disabled while an animation export runs, so open Cube first, return to the Tesseract tab,
+    // start the export there and switch documents mid-export through the Cube document tab.
+    const tabCount=await page.locator('#document-tabs button').count();await page.locator('[data-key="cube"]').click();await page.waitForFunction(()=>document.getElementById('model-name').textContent==='Cube');
+    await page.waitForFunction(count=>document.querySelectorAll('#document-tabs button').length===count+1,tabCount);await page.locator('#document-tabs button').nth(tabCount-1).click();await page.waitForFunction(()=>document.getElementById('model-name').textContent==='Tesseract');
+    await openAnimation();const switched=path.join(output,'switched.frames');await saveDialog(switched);await page.locator('#animation-png').click();
+    await page.waitForFunction(()=>document.getElementById('animation-progress').textContent.startsWith('Frame '));assert.equal(await page.locator('[data-key="cube"]').isDisabled(),true);
+    await page.locator('#document-tabs button').nth(tabCount).click();await page.waitForFunction(()=>document.getElementById('model-name').textContent==='Cube');
+    await page.waitForFunction(()=>!document.getElementById('animation-png').disabled);await assert.rejects(()=>fs.access(switched));assert.equal((await fs.readdir(output)).filter(file=>file.startsWith('.polytope-animation-')).length,0);checks.push('document switch cancels in-flight export without publishing frames');
     await openAnimation();
     assert.equal(await page.locator('#animation-controls').isVisible(),true);await change('#animation-duration',.2);await change('#animation-fps',10);await page.locator('#animation-plane').selectOption('3');await page.locator('#animation-rotation').click();await page.locator('#animation-end').click();
     await page.waitForFunction(()=>document.getElementById('animation-position').textContent.startsWith('0.200'));

@@ -7,7 +7,8 @@ from engine.geometry import GeometryError
 DEFAULTS={'version':1,'preset':'classic','theme':'dark','tint':'#ffffff','specular':'#18202a',
     'shininess':30,'ambient':.08,'hemisphere':.85,'keyIntensity':1.5,'fillIntensity':.48,
     'keyDirection':[4,7,6],'fillDirection':[-5,1,-3],'background':'#15191f',
-    'edgeColor':'#9eafc0','vertexColor':'#c8d2dd'}
+    'edgeColor':'#9eafc0','vertexColor':'#c8d2dd','style':'dark-gallery',
+    'backgroundMode':'solid','backgroundBottom':'#080c14','edgeGlow':0,'vertexMetal':False}
 
 
 def validate_appearance(value):
@@ -18,11 +19,14 @@ def validate_appearance(value):
         type(options['preset']) is not str or options['preset'] not in ('classic','matte','polished','warm','custom') or
         type(options['theme']) is not str or options['theme'] not in ('dark','light','paper','custom')):
         raise GeometryError('Unsupported saved appearance version or preset.')
-    for key in ('tint','specular','background','edgeColor','vertexColor'):
+    if (type(options['style']) is not str or options['style'] not in ('prism','studio','dark-gallery','glass','metal','neon','paper','geomag') or
+        type(options['backgroundMode']) is not str or options['backgroundMode'] not in ('solid','gradient','radial','transparent') or type(options['vertexMetal']) is not bool):
+        raise GeometryError('Unsupported presentation style or background.')
+    for key in ('tint','specular','background','backgroundBottom','edgeColor','vertexColor'):
         text=options[key]
         if type(text) is not str or len(text)!=7 or text[0]!='#' or any(c not in '0123456789abcdefABCDEF' for c in text[1:]):
             raise GeometryError('Saved '+key+' requires a six-digit hexadecimal color.')
-    for key,maximum in (('shininess',512),('ambient',5),('hemisphere',5),('keyIntensity',10),('fillIntensity',10)):
+    for key,maximum in (('shininess',512),('ambient',5),('hemisphere',5),('keyIntensity',10),('fillIntensity',10),('edgeGlow',3)):
         x=options[key]
         if type(x) not in (int,float) or not 0<=x<=maximum or not math.isfinite(x):
             raise GeometryError('Saved '+key+' exceeds its finite appearance range.')

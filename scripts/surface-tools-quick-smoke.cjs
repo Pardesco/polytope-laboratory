@@ -4,7 +4,7 @@ async function main(){
   const folder=await fs.mkdtemp(path.join(root,'artifacts','surface-tools-quick-')),profile=path.join(folder,'profile');await fs.mkdir(profile);
   const env={...process.env,POLYTOPE_TEST_USER_DATA:profile};delete env.ELECTRON_RUN_AS_NODE;delete env.POLYTOPE_TEST_MODE;
   const app=await require('playwright')._electron.launch({executablePath:require('electron'),args:[root],cwd:root,env});
-  const page=await app.firstWindow(),errors=[],consoleErrors=[];page.on('pageerror',e=>errors.push(e.message));page.on('console',m=>{if(m.type()==='error')consoleErrors.push(m.text());});
+  const page=await app.firstWindow();require('./smoke-helpers.cjs').autoReveal(page),errors=[],consoleErrors=[];page.on('pageerror',e=>errors.push(e.message));page.on('console',m=>{if(m.type()==='error')consoleErrors.push(m.text());});
   const frame=()=>page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
   try{
     await page.waitForFunction(()=>document.getElementById('model-name')?.textContent==='Tesseract');

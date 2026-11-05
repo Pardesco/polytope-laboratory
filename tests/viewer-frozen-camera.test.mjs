@@ -32,6 +32,6 @@ test('reenabling observation resumes control updates before rendering',()=>{
 test('frozen stereo observation still draws through its stereo renderer without moving the source camera',()=>{
   const {viewer}=fixture(),calls=[];viewer.view.stereoMode='parallel';
   viewer.stereoRenderer={render:(...args)=>calls.push(args)};const before=viewer.cameraState();viewer.draw();
-  assert.equal(viewer.controls.updates,0);assert.equal(calls.length,1);assert.deepEqual(calls[0],[viewer.scene,viewer.camera,'parallel']);
+  assert.equal(viewer.controls.updates,0);assert.equal(calls.length,1);assert.deepEqual(calls[0].slice(0,3),[viewer.scene,viewer.camera,'parallel']);assert.equal(calls[0][3]?.stereoMode,'parallel');
   assert.deepEqual(viewer.cameraState(),before);
 });

@@ -6,7 +6,7 @@ async function main(){
   const fixture=spawnSync('python',['-c','import json; from tests.test_generalized_cell_nets import dented_simplex; print(json.dumps(dented_simplex()))'],{cwd:root,windowsHide:true,encoding:'utf8'});assert.equal(fixture.status,0,fixture.stderr);
   const sourcePath=path.join(folder,'concave-4d.json');await fs.writeFile(sourcePath,fixture.stdout);
   const env={...process.env,POLYTOPE_TEST_USER_DATA:profile};delete env.ELECTRON_RUN_AS_NODE;delete env.POLYTOPE_TEST_MODE;
-  const app=await require('playwright')._electron.launch({executablePath:require('electron'),args:[root],cwd:root,env});const page=await app.firstWindow(),errors=[];
+  const app=await require('playwright')._electron.launch({executablePath:require('electron'),args:[root],cwd:root,env});const page=await app.firstWindow();require('./smoke-helpers.cjs').autoReveal(page),errors=[];
   page.on('pageerror',e=>errors.push(e.message));page.on('console',m=>{if(m.type()==='error')errors.push(m.text());});
   const open=async filePath=>{await app.evaluate(({dialog},filePath)=>{dialog.showOpenDialog=async()=>({canceled:false,filePaths:[filePath]});},filePath);await page.locator('#open').click();};
   const save=async filePath=>{await app.evaluate(({dialog},filePath)=>{dialog.showSaveDialog=async()=>({canceled:false,filePath});},filePath);await page.locator('#save').click();await page.waitForFunction(()=>document.getElementById('status')?.textContent.startsWith('Saved'));return JSON.parse(await fs.readFile(filePath,'utf8'));};

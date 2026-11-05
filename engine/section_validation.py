@@ -21,24 +21,50 @@ class SectionValidationCache:
         # Tuple/list or numeric/string object-key coercion must not create hits
         # for a different direct-Python input. The walk also bounds cycles and
         # oversized individual strings before JSON allocates their wire form.
-        pending = [model]; nodes = 0
+        pending = [model]; nodes = 0; upper_bytes = 0
         while pending:
             value = pending.pop(); nodes += 1
             if nodes > 65536:
                 return None
             kind = type(value)
             if kind is dict:
-                if len(value) > 65536 - nodes - len(pending) or any(type(k) is not str or len(k) > self.max_entry_bytes for k in value):
+                if len(value) > 65536 - nodes - len(pending):
                     return None
+                upper_bytes += 2 + 2 * len(value)  # Braces, commas and colons.
+                for key in value:
+                    if type(key) is not str or len(key) > self.max_entry_bytes:
+                        return None
+                    upper_bytes += 2 + 12 * len(key)
                 pending.extend(value.values())
             elif kind is list:
                 if len(value) > 65536 - nodes - len(pending):
                     return None
+                upper_bytes += 2 + len(value)  # Brackets and commas.
                 pending.extend(value)
             elif kind is str:
                 if len(value) > self.max_entry_bytes:
                     return None
-            elif value is not None and kind not in (int, float, bool):
+                # ensure_ascii uses at most two six-byte escapes per codepoint.
+                upper_bytes += 2 + 12 * len(value)
+            elif kind is int:
+                # One decimal digit per binary bit is a conservative bound,
+                # without constructing an arbitrarily large decimal string.
+                upper_bytes += value.bit_length() + 2
+            elif kind is float:
+                upper_bytes += 32  # Covers every finite Python float repr.
+            elif value is None or kind is bool:
+                upper_bytes += 5
+            else:
+                return None
+        # The plain-type/node walk also proves an allocation bound. When its
+        # conservative ASCII size fits, use the C encoder rather than retaining
+        # thousands of Python iterencode fragments. Overestimates fall back to
+        # streaming, preserving exact byte-limit eligibility and canonical keys.
+        if upper_bytes <= min(self.max_entry_bytes, self.max_total_bytes):
+            try:
+                return json.dumps(model, ensure_ascii=True, allow_nan=False,
+                                  sort_keys=True, separators=(',', ':'))
+            except (TypeError, ValueError, RecursionError):
                 return None
         # Streaming stops collecting oversized inputs without retaining a large
         # encoded model. Non-JSON direct Python callers simply use validation.

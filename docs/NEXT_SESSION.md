@@ -1,11 +1,286 @@
-# Published checkpoint ? October 24, 2026
+> Published October 24, 2026: [0.27.20 community preview](https://github.com/Pardesco/polytope-laboratory/releases/tag/v0.27.20) is now public, with matching executable/source ZIP. GitHub main and tag v0.27.20 use the verified sealed source plus publication documentation updates (commit `62abb4c`). Local 0.27.21 remains unqualified. Older public-0.26.0 statements below are historical.
 
-The public community preview is 0.27.20. See [release notes](RELEASE_0.27.20_PREVIEW.md)
-and [source correspondence](RELEASE_SOURCE_PAIR_0.27.20.json). This tag contains
-the sealed qualified 0.27.20 runtime. Later 0.27.21 development remains local and
-unqualified. Text below is the preserved historical local checkpoint.
+## UX round - November 4, 2026 (read first)
 
-# Current priority - October 23, 2026
+[UX_ROUND_2026-11-04.md](UX_ROUND_2026-11-04.md): goal = best polytope app, user friendly with a simplified UI. 16 Codex packages merged via `polytope-orchestra` (construct tool gallery, View options + Expert tools toggle, Prism default look, analysis overview, visual library, Coxeter Shape builder, Shift-drag 4D, nets flow, live sliders, friendly messages, startup speed, welcome refresh, export by goal, Learn 4D). Node 3,093/3,093, pytest 5,862, hidden canary + 17 smokes pass. Version still 0.27.21; not packaged.
+
+# October 25 continuation: prioritize impact, defer broad qualification
+
+## Overnight program - October 26, 2026 (read first)
+
+October 26 continuation: [specialist PNG destination review](SPECIALIST_PNG_REVIEW_2026-10-26.md)
+completes the paused multiple-view/projective save follow-up. Source and camera
+checks now precede writing after destination selection; closing aborts the pending
+chooser. 56 related tests and the 293-module build pass. The core Electron smoke
+could not start because Windows denied its sandbox token runtime-folder access;
+native chooser/app qualification remains pending. No ACL workaround, commit,
+package or publication. Overnight packages predate this change.
+
+[OVERNIGHT_2026-10-26.md](OVERNIGHT_2026-10-26.md): Claude led ~35 parallel Codex
+feature packages toward Stella4D parity, merged in a private integration repo
+(`C:\Users\Randall\Documents\polytope-orchestra`) and synced here after full
+Node/pytest suites, the hidden canary and the 18-script hidden Electron smoke
+battery passed. Use `npm run test:features:run` on Windows (the declared suite
+now exceeds the cmd.exe line limit; qualifiers spawn directly). Development
+version is still 0.27.21: bump the version before any packaged qualification.
+
+## Claude session - October 25 evening (read first)
+
+[CLAUDE_SESSION_2026-10-25.md](CLAUDE_SESSION_2026-10-25.md): the first real
+launch of 0.27.21 found that the app **could not open a window** (net-printing
+`window.on('closed')` before window creation); fixed. Also: live section depth
+while dragging, quiet status for quick jobs, closable tabs with Undo and
+library tab reuse, plain-language selection measurements, morph Play without
+Apply, and stale test mocks that had silently disabled 18 main-process tests.
+Node `test:features` 2,352/2,352 and native pytest 4,524 pass. Older smoke
+scripts still use pre-10-22 inspector selectors (see that doc). Lesson: run at
+least one actual Electron launch (`npm run test:hidden` or `test:core`) after
+any `desktop/main.cjs` change; unit tests do not boot it.
+
+## Paused at Randall's request - October 25, 2026
+
+Stopped at the verified [PNG capture/save checkpoint](IMAGE_CAPTURE_RELIABILITY_2026-10-25.md).
+Rechecked `artifacts/image-capture-checks-20261025-152038/result.json`: selected
+source/test hashes still match; 467 focused tests, the 171-module production
+build and desktop syntax checks passed. No code changes were made during the
+follow-up specialist PNG review, and no validation job from that review remains
+running. The existing dirty worktree is preserved; nothing was committed,
+packaged or released. Development 0.27.21 remains unqualified.
+
+On resume, the next candidate is forwarding multiple-view/projective PNG
+source/dialog ownership through the reviewed destination handshake. Their
+saveImage callbacks already write atomically; their current post-save source
+check can still detect a change only after publication. This was inspected,
+not implemented. Broad GUI/package/fresh-user checks, consolidated review
+refresh and earlier native engine rebuild obligations remain deferred.
+
+This requested pause supersedes the continuation instructions below until
+Randall resumes the goal.
+
+Newest: [image capture reliability](IMAGE_CAPTURE_RELIABILITY_2026-10-25.md)
+owns the main screenshot through preparation and destination review, supports
+prompt cancellation and writes PNGs through fsynced sibling replacement.
+Legacy saveImage callers also gain atomic writes. **467 focused tests, the
+171-module build and desktop syntax checks pass** in
+`artifacts/image-capture-checks-20261025-152038`. Actual desktop/dialog
+qualification remains deferred. Continue the active goal; refresh review/
+package inputs and retain earlier native engine rebuild obligations.
+
+Newest: [reviewed net printing](NET_PRINT_OWNERSHIP_2026-10-25.md) checks
+current source/layout after private page preparation before opening the
+printer dialog. A single main-process owner handles duplicate requests,
+cancellation and window cleanup; global Cancel includes net output.
+**379 focused Node tests, 13 native tests, the 170-module build and desktop
+syntax checks pass** in `artifacts/net-print-checks-20261025-151015`.
+Real printer/dialog qualification remains deferred. Continue the active
+goal; refresh review/package inputs and retain earlier engine rebuild duties.
+
+Newest: [document-field edits](DOCUMENT_FIELD_EDITS_2026-10-25.md) avoid
+full construction-panel synchronization for notes and camera-end events.
+Revisions, recovery, stale-read cancellation, tour invalidation and notes-bound
+morph retirement remain checked. **286 focused tests and the 169-module build
+pass** in `artifacts/document-field-checks-20261025-150311`. No native
+implementation changed. Continue the active goal; broad packaged/visible
+qualification remains deferred and earlier rebuild/review obligations remain.
+
+Newest: [net drag ownership](NET_DRAG_OWNERSHIP_2026-10-25.md) rolls back
+uncommitted SVG movement, releases pointer capture and fences gestures to
+their source/layout/sequence. Net export cancels provisional drags before
+reviewing output. **258 focused tests and the 169-module build pass** in
+`artifacts/net-drag-checks-20261025-145838`. No native implementation changed.
+Continue the high-impact goal; broad packaged/visible qualification remains
+deferred and earlier rebuild/review obligations remain.
+
+Newest: [document context preservation](DERIVED_DOCUMENT_CONTEXT_2026-10-25.md)
+preserves units/notes/metadata in promoted geometry and derived memories, enforces
+the common 100-document limit and prevents JSON export from resurrecting cleared
+imported notes/metadata. **173 focused tests and the 169-module build pass** in
+`artifacts/document-export-checks-20261025-145229`. Native Save/Open, physical-scale
+export and cleared-field reimport are covered. No native implementation changed.
+Next inspect remaining net/export/transformation handoffs for document attributes
+and scale. Continue the active goal; broad release qualification stays deferred.
+
+Newest: [cancel/content ownership](CANCEL_CONTENT_2026-10-25.md) stops delayed and
+active derived work, releases canceled plane locks, preserves completed section
+receipts and fences stale folded-net diagnostics. **156 focused tests and the
+169-module build pass** in `artifacts/cancel-content-checks-20261025-142848`.
+No native changes here. Next inspect promotion handoffs for source units/notes
+and data preservation. Continue the active goal with everyday workflow coherence
+first and broad release qualification deferred. Older receipts bind earlier inputs.
+
+Newest: [completed derived publication](DERIVED_PUBLICATION_2026-10-25.md) stages
+section models until content completes, fences stale completion/status updates,
+clears failed availability and updates derived export/memories at request boundaries.
+Geometry export pauses source-changing playback and reevaluates an interrupted
+section frame at its frozen applied plane. **174 focused tests including nested
+cases and the 169-module build pass** in
+`artifacts/derived-publication-checks-20261025-141502`. No native changes here.
+Next inspect global Cancel/debounced derived work and late folded-net annotation
+messages. Continue the active goal; broad release qualification remains deferred.
+
+Newest: [portable source streaming](PORTABLE_SOURCE_STREAM_2026-10-25.md) emits
+canonical bytes without a temporary tagged tree, enforces portable bytes during
+emission and rejects disguised sparse arrays. Bounded per-call scalar spellings
+reuse no source authority. Key CPU median 6.173 to 4.578 ms; navigation timings
+remain noisy. **419 focused tests including nested cases and the 169-module build
+pass** in `artifacts/portable-stream-checks-20261025-135356`; comparison:
+`artifacts/annotation-source-profile-5pJNLp`. Prioritize coherent everyday workflows,
+responsiveness and usability over further small encoding work. The user asked
+about Stella4D viability: substantial working breadth exists, but most ledger
+areas remain prototype conformance and full equivalence is unproven. Continue the
+active goal; broad release checks remain deferred. Native source is unchanged here.
+
+Newest: [annotation source encoding](ANNOTATION_SOURCE_ENCODING_2026-10-25.md)
+removes per-number buffer/BigInt allocations and repeated array-index parsing,
+retaining complete walks and checks. Portable key CPU median 8.808 to 5.951 ms;
+state signature 3.085 to 2.574 ms. Navigation timings are noisy; do not generalize
+their median difference. **403 focused tests including nested cases and the
+169-module build pass** in `artifacts/annotation-source-checks-20261025-133411`;
+comparison: `artifacts/annotation-source-profile-13CN9t`. Next profile remaining
+source walks/container construction while preserving literal mutation/resource/
+ownership checks. Native source is unchanged here; continue the active goal and
+defer broad release qualification. Earlier receipts bind earlier runtime inputs.
+
+Newest: [single navigation display](NAVIGATION_DISPLAY_2026-10-25.md) restores
+saved selection before one full geometry/content display. Annotated saved-selection
+CPU navigation measures 362.793 to 338.682 ms; unannotated differences are noisy.
+**171 focused Node tests and the 169-module build pass** in
+`artifacts/navigation-display-checks-20261025-132422`; comparison:
+`artifacts/navigation-display-profile-OcTGR2`. Next profile the remaining ~350 ms
+annotated preparation cost, retaining complete literal source/resource/ownership
+checks. Native source is unchanged here. The goal remains active and broad release
+qualification stays deferred; older receipts bind earlier inputs.
+
+Newest: [memory/tour publication](MEMORY_TOUR_PUBLICATION_2026-10-25.md) closes
+export/capacity races in memory Open/Swap/Add, commits swap document/slot together,
+checks bank ownership before adoption, forwards tour validation cancellation and
+blocks late tour import during export. **148 focused Node tests and the 169-module
+build pass** in `artifacts/memory-tour-publication-20261025-131235`. No native
+source changed in this pass. Next investigate the duplicate full base display
+when renderWorkspace restores a saved entity selection. The broader goal stays
+active and release qualification remains deferred; older receipts bind earlier inputs.
+
+Newest: [bounded validation-key encoding](VALIDATION_KEY_ENCODING_2026-10-25.md)
+uses the C JSON encoder only after proving its allocation fits existing limits;
+streaming handles overestimates with identical complete keys. Warm 600-cell
+analysis measures 10.284 to 3.927 ms; six-state validation 489.637 to 423.187 ms.
+**109 native tests and three subtests pass** in
+`artifacts/validation-key-checks-20261025-130030`; comparison:
+`artifacts/validation-key-profile-j1y_o5hf`. Native cache code also changed:
+refresh final review/proof inputs and rebuild the engine for packaging. Continue
+the goal; broad release testing stays deferred. Earlier receipts bind earlier inputs.
+
+Latest: [project geometry reuse](PROJECT_VALIDATION_REUSE_2026-10-25.md) avoids
+repeated native checks/measures for identical complete models within one project
+validation, while single-state projects bypass reuse and per-state checks remain.
+Six-state 600-cell validation measures 2.046 to 0.486 s median with complete output
+and saved-byte equality. Obsolete Open/Recover reads now abort on workspace edits
+or export transitions without overwriting newer status. **227 native tests,
+140 Node tests and the 169-module build pass** in
+`artifacts/project-workflow-native-20261025-124730`; final comparison:
+`artifacts/project-validation-profile-g6l8p8s7`. formats.py changed: refresh native
+qualification/review and rebuild the engine for final packaging. The goal remains
+active; older checkpoints below bind earlier source snapshots.
+
+Current: [Library/file workflow](LIBRARY_FILE_WORKFLOW_2026-10-25.md) prepares
+searches once, avoids rebuilding Library rows during model navigation, makes
+Open/Recover cancellable across preload/main/engine stages, and prevents their
+overlap. **93 focused tests, the 169-module build and desktop syntax checks pass**
+in `artifacts/library-file-workflow-20261025-121616`. Search timings/result equality
+are preserved in `artifacts/catalog-query-profile-FfLDv8`. Next investigations:
+repeated native work in multi-state project loading and automatic invalidation
+of file reads after workspace edits. The goal stays active; earlier checkpoints
+below bind prior source snapshots. Broad release qualification remains deferred.
+
+Newest: [export/Save reliability](EXPORT_SAVE_RELIABILITY_2026-10-25.md) guards
+view/cell/reset/highlight edits, fixes active-drag camera ownership and queued
+camera events, fences/cancels native cell-facing work, serializes Save dialogs,
+and freezes animation cameras before preparation/dialog waits. **192 focused
+tests and the 169-module build pass** in
+`artifacts/export-save-workflow-20261025-115547`. The implementation goal remains
+active; broad source/package/visible qualification remains deferred. Earlier
+checkpoints below describe prior source snapshots.
+
+Latest: [pose workflow continuation](POSE_WORKFLOW_2026-10-25.md) removes 27
+construction-panel synchronizations from angle-only displays, omits intermediate
+default geometry displays, and gates/streamlines all six manual angle sliders.
+**115 focused tests and the 169-module build pass** in
+`artifacts/pose-workflow-20261025-113419`. CPU-only initialization has identical
+buffer hashes and a modest measured saving; visible desktop timing is pending.
+Next: remaining direct viewport toggle/cell-visibility export guards. Older
+checkpoints below bind prior source snapshots. The goal remains active.
+
+Latest continuation: [core impact work](CORE_IMPACT_2026-10-25.md) implements
+obsolete derived-work cancellation, warm inspection workers, dense bounds,
+reduced morph scans, bounded/deduplicated recovery writes and hidden-render
+avoidance. **127 focused checks and the 169-module build pass**; source-worker
+measurements show substantial avoided startup costs. Packaged timing, broad
+source qualification and release checks remain deferred. The goal remains active.
+The first-fix checkpoint below predates this continuation.
+
+Randall requested highest-impact implementation first, with noncritical testing
+at the end before final release. Focused checks remain part of each fix.
+
+Navigation now aborts automatic analysis and manual validation when their report
+ticket no longer owns any output. Previously stale results were hidden but their
+jobs continued, occupying workers or the FIFO queue ahead of current work.
+Shared analysis remains active if manual validation replaces only its validation
+output. Existing complete literal-source publication checks remain intact.
+
+Changed: `ui/model-reports.mjs`, `ui/app.js`, `tests/model-reports.test.mjs`.
+The four relevant report/job/pool suites pass **31 tests**, including ten rapid
+navigation selections, worker retirement and ignored late responses. The
+**168-module production build passes**. No Electron launch or desktop timing
+measurement was performed; worker restart costs and visible navigation benefit
+remain unmeasured. Broad checks and final packaging remain deferred.
+
+The October 24 source qualification receipts describe the prior inputs and do
+not qualify this changed workspace. Preserve those receipts. The sealed 0.27.20
+baseline is unchanged. See the updated 0.27.21 handoff before final qualification.
+
+# Current priority - October 24, 2026
+
+0.27.21 source work is implemented and locally verified. Start with
+[HANDOFF_0.27.21.md](HANDOFF_0.27.21.md) and
+[RELEASE_0.27.21_DEVELOPMENT.md](RELEASE_0.27.21_DEVELOPMENT.md).
+The active goal is to complete as much important core performance/reliability
+work as possible; feature expansion remains paused.
+
+Pose ownership now uses detached literal snapshots, avoiding per-frame JSON
+conversion while detecting nested edits. Convex intrinsic 3D sizing retains one
+bounded native plan, keyed by complete literal source/settings/context, while
+preserving the full preparation comparison. Other methods retain reconstruction.
+Repeat native analysis also reuses reports only for a complete unchanged literal
+model, with bounded LRU storage; first analysis and edited models retain the
+protected original analyzer. See [the analysis evidence](NATIVE_ANALYSIS_REUSE.md).
+The truncated-tetrahedron investigation confirms matching automatic-radius
+endpoints, the defined half-radius sizing midpoint and a fixed Viewer camera.
+
+All 2,075 shipped-code Node tests, 4,476 native tests plus 96 subtests, and the
+168-module build pass. Native has one skip; Node has none. Both source qualifiers
+bind the same 2,474 unchanged inputs. See [source qualification](SOURCE_QUALIFICATION_0.27.21.md)
+for repaired inherited tests and preserved initial runs. CPU-only comparisons: saved Grand hexacosichoron ownership checks
+0.47959 to 0.27139 ms for a text label; truncated-tetrahedron warm native sizing
+3.67552 to 1.01077 ms/pose, with exactly equal sampled frames. These are not
+packaged app/GPU/FPS measurements. The handoff gives exact sequential normal-
+session package, alternating profile, workflow, portable and sealing commands.
+Real native JSON-lines repeat-analysis comparisons match complete old/new
+reports: 600-cell median 1,226.371 to 18.405 ms. This excludes Electron IPC and
+visible navigation. The packaged profiler now has a required `--navigation`
+phase for the pending normal-session comparison.
+
+No Electron launch, package, freeze, seal, commit or publication was performed.
+Do not retry managed-sandbox launches/ACL workarounds. The last qualified local
+pair remains **0.27.20** (`artifacts/source-pair-0.27.20.json`); its archive and
+portable hashes still match. Six old frozen runtime inputs differ; a new snapshot
+module and two native caches are added. All three protected importers and 1,665 prior
+engine inputs are unchanged. Production remains the documented 0.26.0 preview.
+
+Normal-session packaged checks and independent review are next; the
+[review brief](CLAUDE_REVIEW_0.27.21.md) is ready. Fresh-user task observation
+remains outstanding; use the prepared [protocol](CORE_WORKFLOW_OBSERVATION.md). The broader development goal remains active.
+
+## Preserved October 23, 2026 checkpoint
 
 ## Final status (Claude, October 23, 2026): qualified locally, supersedes "pending" text below
 

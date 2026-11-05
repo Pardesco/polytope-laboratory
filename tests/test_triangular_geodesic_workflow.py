@@ -191,14 +191,31 @@ def test_geometry_equal_rgba_unit_asset_edits_get_new_full_attribute_source_root
     assert current == before
 
 
-def test_view_angles_notes_only_do_not_create_geometry_source_root():
+def test_view_angles_only_do_not_create_geometry_source_root():
     current = native_dispatch({'op': 'recipe-run', 'params': {'document': document(), 'operation': 'transform', 'parameters': {'scale': 1}}})
     current['states'][-1]['view']['angles'] = [17, 0, 0, 0, 0, 0]
-    current['states'][-1]['notes'] = 'Edited notes'
     result = run_geodesic(current, {'frequency': 2})
     assert len(result['operationHistory']['nodes']) == 3
     assert result['operationHistory']['nodes'][-1]['parent'] == current['states'][-1]['operationNode']
-    assert result['states'][-1]['view']['angles'][0] == 17 and result['states'][-1]['notes'] == 'Edited notes'
+    assert result['states'][-1]['view']['angles'][0] == 17
+
+
+def test_edited_notes_reseed_literal_content_before_geodesic_and_replay():
+    current = native_dispatch({'op': 'recipe-run', 'params': {'document': document(), 'operation': 'transform', 'parameters': {'scale': 1}}})
+    current['states'][-1]['notes'] = 'Edited notes'
+    current['states'][-1]['view']['angles'][0] = 17
+    before = deepcopy(current)
+    result = run_geodesic(current, {'frequency': 2})
+    nodes = result['operationHistory']['nodes']
+    assert len(nodes) == 4 and nodes[:2] == before['operationHistory']['nodes']
+    source, operation = nodes[-2:]
+    assert source['op'] == 'source' and source['parent'] == current['states'][-1]['operationNode']
+    assert source['inputs'] == [] and source['snapshot']['model'] == model(current)
+    assert source['snapshot']['notes'] == 'Edited notes'
+    assert operation['parent'] == source['id'] and operation['inputs'] == [source['id']]
+    replayed = replay_geodesic_document(result)['states'][0]
+    assert replayed['model'] == model(result) and replayed['notes'] == 'Edited notes'
+    assert result['states'][-1]['view']['angles'][0] == 17 and current == before
 
 
 @pytest.mark.parametrize('mutate', [

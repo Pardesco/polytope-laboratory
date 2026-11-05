@@ -40,7 +40,7 @@ async function main(){
   const env={...process.env,POLYTOPE_TEST_USER_DATA:profile};delete env.ELECTRON_RUN_AS_NODE;
   if(packaged)env.POLYTOPE_PYTHON=path.join(runRoot,'unavailable-development-python.exe');
   const app=await electron.launch({executablePath:packaged||require('electron'),args:packaged?[]:[root],cwd:root,env,timeout:30000});
-  const page=await app.firstWindow();page.setDefaultTimeout(30000);page.on('pageerror',error=>errors.push(error.message));
+  const page=await app.firstWindow();require('./smoke-helpers.cjs').autoReveal(page);page.setDefaultTimeout(30000);page.on('pageerror',error=>errors.push(error.message));
   try{
     await app.evaluate(({BrowserWindow})=>BrowserWindow.getAllWindows().find(window=>!window.isDestroyed()).setContentSize(1484,900));
     await page.waitForFunction(()=>document.getElementById('model-name')?.textContent==='Tesseract');
@@ -69,8 +69,8 @@ async function main(){
     assert.equal(await page.locator('#viewport-layout').inputValue(),'single');assert.equal(await page.locator('#derived-canvas').isVisible(),false);
     for(const id of ['surface-settings','rotation-settings','animation-settings','history-settings'])assert.equal(await page.locator('#'+id).evaluate(node=>node.open),false);
     for(const id of ['surface-settings','rotation-settings','animation-settings','history-settings']){
-      await page.locator('#'+id+' summary').click();assert.equal(await page.locator('#'+id+' .settings-body').isVisible(),true);
-      await page.locator('#'+id+' summary').click();assert.equal(await page.locator('#'+id+' .settings-body').isVisible(),false);
+      await page.locator('#'+id+' > summary').click();assert.equal(await page.locator('#'+id+' .settings-body').isVisible(),true);
+      await page.locator('#'+id+' > summary').click();assert.equal(await page.locator('#'+id+' .settings-body').isVisible(),false);
     }
     checks.push('large geometry workspace at 1484 by 900 with restrained header and collapsed advanced controls');
     await page.locator('#toggle-library').click();const expanded=await metrics();assert.ok(expanded.base.width>initial.base.width+100);
@@ -82,11 +82,14 @@ async function main(){
     const splitWidth=(await metrics()).base.width;assert.ok(splitWidth<initial.base.width*0.8);
     await page.locator('#viewport-layout').selectOption('single');
     checks.push('collapsible library/inspector and usable single/comparison geometry layouts');
-    await page.locator('#rotation-settings summary').click();
+    // W5 viewer UX: the auto-opened Tesseract starts with the introductory XW spin (docs/VIEWER_UX.md). Pause rotation ends it so the explicit spin checks below start from rest.
+    assert.equal(await page.locator('#auto-rotate').getAttribute('aria-pressed'),'true','auto-opened Tesseract should start with the introductory spin');
+    await page.locator('#auto-rotate').click();assert.equal(await page.locator('#auto-rotate').getAttribute('aria-pressed'),'false');
+    await page.locator('#rotation-settings > summary').click();
     const xw=await page.locator('#auto-rotation-plane').evaluate(select=>Array.from(select.options).find(option=>option.textContent.toUpperCase().includes('XW'))?.value);
     assert.ok(xw!==undefined,'4D spin should offer an XW rotation plane');await page.locator('#auto-rotation-plane').selectOption(xw);
     await page.locator('#auto-rotation-speed').evaluate(input=>{input.value='24';input.dispatchEvent(new Event('input',{bubbles:true}));input.dispatchEvent(new Event('change',{bubbles:true}));});
-    await page.locator('#rotation-settings summary').click();
+    await page.locator('#rotation-settings > summary').click();
     await page.locator('#fit-view').click();
     const tesseractBefore=active((await snapshot('tesseract-before')).project);
     assert.equal(tesseractBefore.view.rotationPlane,2);assert.equal(tesseractBefore.view.rotationSpeed,24);
@@ -104,8 +107,9 @@ async function main(){
     await page.keyboard.down('Shift');await page.mouse.move(canvas.x+canvas.width*.45,canvas.y+canvas.height*.45);
     await page.mouse.down();await page.mouse.move(canvas.x+canvas.width*.45+60,canvas.y+canvas.height*.45+30,{steps:8});await page.mouse.up();await page.keyboard.up('Shift');
     const dragged=active((await snapshot('tesseract-four-dimensional-drag')).project);
-    assert.notEqual(dragged.view.angles[2],still.view.angles[2]);assert.notEqual(dragged.view.angles[4],still.view.angles[4]);
-    [0,1,3,5].forEach(index=>assert.equal(dragged.view.angles[index],still.view.angles[index]));
+    // Shift-drag composes camera-relative W-plane rotations and re-expresses them as the six saved angles
+    // (docs/DIRECT_4D.md), so several angle values may change; at least one W plane must turn.
+    assert.ok([2,4,5].some(index=>dragged.view.angles[index]!==still.view.angles[index]),'Shift-drag must turn a W plane');
     assert.deepEqual(geometry(dragged.model),geometry(still.model));
     assert.deepEqual(dragged.view.camera,still.view.camera,'4D dragging should preserve the observer camera');
     await page.waitForFunction(()=>document.getElementById('cancel').hidden);
@@ -133,8 +137,10 @@ async function main(){
     await page.locator('#viewport-layout').selectOption('split');await page.locator('#camera-projection').selectOption('orthographic');await page.locator('#render-style').selectOption('wireframe');
     const saved=await snapshot('cube-display-persistence');
     await page.locator('#viewport-layout').selectOption('single');await page.locator('#camera-projection').selectOption('perspective');await page.locator('#render-style').selectOption('solid');
-    await app.evaluate(({dialog},file)=>{dialog.showOpenDialog=async()=>({canceled:false,filePaths:[file]});},saved.path);
+    // W31 desktop: Open over unsaved display edits asks first (confirm-project-open); choose 'Open without saving'.
+    await app.evaluate(({dialog},file)=>{dialog.showOpenDialog=async()=>({canceled:false,filePaths:[file]});dialog.showMessageBox=async(...args)=>{globalThis.lastOpenConfirm=args.at(-1).message;return {response:1};};},saved.path);
     await page.locator('#open').click();await page.waitForFunction(()=>document.getElementById('camera-projection').value==='orthographic'&&document.getElementById('viewport-layout').value==='split');
+    assert.equal(await app.evaluate(()=>globalThis.lastOpenConfirm),'Open project with unsaved changes?');
     assert.equal(await page.locator('#render-style').inputValue(),'wireframe');
     const restored=active((await snapshot('cube-restored')).project);
     assert.deepEqual(geometry(restored.model),geometry(active(saved.project).model));assert.deepEqual(restored.view.camera,active(saved.project).view.camera);
@@ -143,7 +149,7 @@ async function main(){
     await page.locator('#viewport-layout').selectOption('single');await page.locator('#render-style').selectOption('solid');await page.locator('#fit-view').click();
     await page.waitForFunction(()=>document.getElementById('cancel').hidden);
     await page.screenshot({path:path.join(artifacts,packaged?'workspace-ui-cube-packaged.png':'workspace-ui-cube.png')});
-    await page.locator('#toggle-inspector').click();await page.locator('[data-panel="construct"]').click();assert.equal(await page.locator('#make-dual').isVisible(),true);await page.locator('#toggle-inspector').click();
+    await page.locator('#toggle-inspector').click();await page.locator('[data-panel="construct"]').click();assert.equal(await page.locator('#construct-card-gallery-dual').isVisible(),true);await page.locator('#toggle-inspector').click();
     checks.push('mathematical construction tools remain accessible in the hidden-by-default inspector');
     assert.deepEqual(errors,[]);
     const result={passed:true,packaged:Boolean(packaged),developmentPythonUnavailable:Boolean(packaged),seconds:(performance.now()-started)/1000,checks,pageErrors:errors,fixtureDirectory:runRoot,initialViewport:initial,cameraFit:{perspective:frustum,orthographic:orthographicFrustum,tesseract:tesseractFrustum}};

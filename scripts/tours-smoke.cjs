@@ -1,5 +1,6 @@
 // Native saved tours and deterministic preview workflow in an isolated profile.
 const {_electron:electron}=require('playwright');
+const {reveal}=require('./smoke-helpers.cjs');
 const fs=require('node:fs/promises');
 const path=require('node:path');
 const assert=require('node:assert/strict');
@@ -11,7 +12,7 @@ async function main(){
   const packaged=process.env.POLYTOPE_TEST_EXECUTABLE,folder=await fs.mkdtemp(path.join(artifacts,packaged?'tours-packaged-smoke-':'tours-smoke-'));
   const env={...process.env,POLYTOPE_TEST_USER_DATA:path.join(folder,'profile')};delete env.ELECTRON_RUN_AS_NODE;if(packaged)env.POLYTOPE_PYTHON=path.join(folder,'unavailable-development-python.exe');
   const app=await electron.launch({executablePath:packaged||require('electron'),args:packaged?[]:[root],cwd:root,env,timeout:30000});
-  const page=await app.firstWindow();page.setDefaultTimeout(30000);const checks=[],errors=[];let saveNumber=0;
+  const page=await app.firstWindow();require('./smoke-helpers.cjs').autoReveal(page);page.setDefaultTimeout(30000);const checks=[],errors=[];let saveNumber=0;
   page.on('pageerror',error=>errors.push(error.message));
   const panel=async()=>{if(!await page.locator('#tour-settings').evaluate(element=>element.open))await page.locator('#tour-settings > summary').click();};
   const done=async()=>page.waitForFunction(()=>document.getElementById('cancel').hidden&&!document.getElementById('tour-add').disabled);
@@ -23,11 +24,12 @@ async function main(){
   };
   const open=async file=>{
     const expected=JSON.parse(await fs.readFile(file,'utf8')).tour;
-    await panel();await page.locator('#tour-duration').fill('127');await page.locator('#tour-duration').dispatchEvent('change');await done();
-    await app.evaluate(({dialog},file)=>{dialog.showOpenDialog=async()=>({canceled:false,filePaths:[file]});},file);await page.locator('#open').click();
+    await panel();await page.locator('#tour-duration').fill('127');await page.locator('#tour-duration').press('Tab');await done();
+    // W31 desktop: the edited duration makes Open ask first (confirm-project-open); the stub chooses 'Open without saving'.
+    await app.evaluate(({dialog},file)=>{dialog.showOpenDialog=async()=>({canceled:false,filePaths:[file]});dialog.showMessageBox=async()=>({response:1});},file);await page.locator('#open').click();
     await page.waitForFunction(expected=>document.getElementById('tour-event').options.length===expected.events.length&&document.getElementById('tour-event').value===String(expected.cursor)&&document.getElementById('tour-duration').value===String(expected.events[expected.cursor].duration),expected);await done();
   };
-  const duration=async value=>{await page.locator('#tour-duration').fill(String(value));await page.locator('#tour-duration').dispatchEvent('change');await done();};
+  const duration=async value=>{await page.locator('#tour-duration').fill(String(value));await page.locator('#tour-duration').press('Tab');await done();};
   const seek=async time=>{await panel();await page.locator('#tour-scrub').evaluate((input,time)=>{input.value=String(time);input.dispatchEvent(new Event('input',{bubbles:true}));},time);await done();};
   try{
     await page.waitForFunction(()=>document.getElementById('model-name').textContent==='Tesseract'&&document.getElementById('tour-add'));await done();await panel();
@@ -37,7 +39,7 @@ async function main(){
     checks.push('empty controls and Add persist a full native 4D event snapshot');
     await page.locator('[data-key="cube"]').click();await page.waitForFunction(()=>document.getElementById('model-name').textContent==='Cube');await done();await panel();await page.locator('#tour-add').click();await duration(.4);
     const cube=(await save('cube-event')).project,source=active(cube).model;
-    await page.locator('#toggle-inspector').click();await page.locator('[data-panel="construct"]').click();await page.locator('#model-scale').fill('2');await page.locator('#scale').click();await page.waitForFunction(()=>document.getElementById('model-name').textContent==='Transform of Cube');await done();
+    await page.locator('#toggle-inspector').click();await page.locator('[data-panel="construct"]').click();await reveal(page,'#model-scale');await page.locator('#model-scale').fill('2');await page.locator('#scale').click();await page.waitForFunction(()=>document.getElementById('model-name').textContent==='Transform of Cube');await done();
     const scaled=(await save('source-scaled')).project;assert.deepEqual(scaled.tour,cube.tour);assert.deepEqual(active(scaled).model.vertices,source.vertices.map(point=>point.map(value=>2*value)));
     await panel();await page.locator('#tour-add').click();await duration(.2);const captured=(await save('recorded-operation-event')).project;
     assert.equal(captured.tour.events.length,3);assert.equal(captured.tour.events[2].state.operationNode,active(scaled).operationNode);assert.deepEqual(geometry(captured.tour.events[1].state.model),geometry(source));
@@ -69,7 +71,8 @@ async function main(){
     await page.locator('#model-name').click();await page.keyboard.press('Control+Alt+t');await page.waitForFunction(()=>document.getElementById('tour-event').options.length===5);await done();await panel();await page.locator('#tour-delete').click();await done();
     assert.deepEqual((await save('shortcut-add-deleted')).project.tour.events,ignored.tour.events);checks.push('Add keyboard shortcut captures an event and Delete restores the prior event sequence');
     if(!await page.locator('#animation-settings').evaluate(element=>element.open))await page.locator('#animation-settings > summary').click();
-    for(const [id,value] of [['#animation-duration','20'],['#animation-fps','30']]){await page.locator(id).fill(value);await page.locator(id).dispatchEvent('change');}
+    // Hidden-mode PNG export writes ~120 frames/s; use the longest sequence (300 s x 60 fps) so the export is still running when Cancel is clicked.
+    for(const [id,value] of [['#animation-duration','300'],['#animation-fps','60']]){await page.locator(id).fill(value);await page.locator(id).press('Tab');}
     await page.locator('#animation-target').selectOption('base');const cancelled=path.join(folder,'tour-guard.frames');
     await app.evaluate(({dialog},file)=>{dialog.showSaveDialog=async()=>({canceled:false,filePath:file});},cancelled);await page.locator('#animation-png').click();await page.waitForFunction(()=>document.getElementById('animation-progress').textContent.startsWith('Frame '));
     for(const id of ['tour-add','tour-replace','tour-delete','tour-play','tour-event','tour-scrub','tour-merge','tour-save'])assert.equal(await page.locator('#'+id).isEnabled(),false);

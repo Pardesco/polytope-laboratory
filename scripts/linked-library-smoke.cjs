@@ -9,7 +9,7 @@ async function launch(){
   const env={...process.env,POLYTOPE_TEST_USER_DATA:profile};delete env.ELECTRON_RUN_AS_NODE;
   if(packaged)env.POLYTOPE_PYTHON=path.join(artifacts,'unavailable-python.exe');
   const app=await electron.launch({executablePath:packaged||require('electron'),args:packaged?[]:[root],cwd:root,env,timeout:30000});
-  const page=await app.firstWindow();page.setDefaultTimeout(30000);
+  const page=await app.firstWindow();require('./smoke-helpers.cjs').autoReveal(page);page.setDefaultTimeout(30000);
   await page.waitForFunction(()=>document.getElementById('model-name')?.textContent==='Tesseract');
   // Wait until asynchronous startup link restoration has finished.
   await page.evaluate(async()=>{await window.polytope.libraries();});

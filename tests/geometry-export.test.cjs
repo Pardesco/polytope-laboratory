@@ -6,7 +6,7 @@ for(const format of GEOMETRY_EXPORT_FORMATS)test(format+' uses a one-shot atomic
   const {root,file}=await fixture(t);await fs.writeFile(file,'prior content');
   const exporter=createGeometryExport({selectPath:async()=>file}),ticket=await exporter.begin({format,defaultName:'Model.'+format});
   assert.equal(await fs.readFile(file,'utf8'),'prior content');const text='Literal geometry π 研究\n';
-  assert.equal((await exporter.write(ticket.id,text)).bytes,Buffer.byteLength(text));assert.equal(await fs.readFile(file,'utf8'),text);
+  assert.equal((await exporter.write(ticket.id,['3mf','glb'].includes(format)?new Uint8Array(Buffer.from(text)):text)).bytes,Buffer.byteLength(text));assert.equal(await fs.readFile(file,'utf8'),text);
   assert.deepEqual(await fs.readdir(root),['selected.file']);await assert.rejects(exporter.write(ticket.id,text),/unavailable/);
 });
 test('geometry profile permits output beyond the supporting-data limit without widening its formats or size',async t=>{

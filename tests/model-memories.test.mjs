@@ -123,7 +123,7 @@ test('nesting and serialized slot/total byte limits are enforced before publicat
 function controlsFixture({restoreState,getDerivedState,isExporting}={}){
   let current=cube(),dirty=0;const project={memories:storeMemory(createMemories(),1,section(),{documentId:'section-source'})};
   const controls=Object.create(MemoryControls.prototype);controls.busy=false;controls.nodes={slot:{value:'1'},source:{value:'base'}};controls.sync=()=>{};
-  controls.context={getProject:()=>project,getState:()=>current,getSource:()=>({documentId:'current-source'}),getDerivedState,isExporting:isExporting||(()=>false),restoreState:restoreState||((state)=>{current=state;}),markDirty:()=>{dirty++;},setStatus:()=>{}};
+  controls.context={getProject:()=>project,getState:()=>current,getSource:()=>({documentId:'current-source'}),getDerivedState,isExporting:isExporting||(()=>false),restoreState:restoreState||((state,label,options={})=>{options.verifyPublication?.();current=state;options.onPublication?.();dirty++;}),markDirty:()=>{dirty++;},setStatus:()=>{}};
   return {controls,project,current:()=>current,setCurrent:state=>{current=state;},dirty:()=>dirty};
 }
 
@@ -135,7 +135,7 @@ test('UI swap keeps original memory when authoritative restore validation reject
 
 test('UI swap publishes only after successful restore and retains original current geometry',async()=>{
   const fixture=controlsFixture(),before=fixture.project.memories,current=fixture.current();let observed;
-  fixture.controls.context.restoreState=async(state)=>{observed=fixture.project.memories;fixture.setCurrent(state);};
+  fixture.controls.context.restoreState=async(state,label,options)=>{observed=fixture.project.memories;options.verifyPublication();fixture.setCurrent(state);options.onPublication();fixture.controls.context.markDirty();};
   await fixture.controls.swap(1);assert.equal(observed,before);assert.deepEqual(fixture.current(),section());assert.deepEqual(retrieveMemory(fixture.project.memories,1),current);assert.equal(fixture.dirty(),1);
 });
 

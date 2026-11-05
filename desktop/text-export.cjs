@@ -29,7 +29,7 @@ function createTextExport({selectPath,io=fs,now=()=>performance.now(),randomId=r
   requireValue(Number.isFinite(ttlMs)&&ttlMs>0&&ttlMs<=TEXT_EXPORT_LIMITS.expiryMs,'Text export expiry is outside its bound.');
   requireValue(Number.isInteger(maxSessions)&&maxSessions>0&&maxSessions<=TEXT_EXPORT_LIMITS.sessions,'Text export session count is outside its bound.');
   requireValue(typeof now==='function'&&typeof randomId==='function','Text export needs clock and ticket functions.');
-  requireValue(Array.isArray(formats)&&formats.length>0&&new Set(formats).size===formats.length&&formats.every(format=>['csv','json','svg','pdf','off','obj','stl','dxf','vrml','pov'].includes(format)),'Export formats are invalid.');
+  requireValue(Array.isArray(formats)&&formats.length>0&&new Set(formats).size===formats.length&&formats.every(format=>['csv','json','svg','pdf','png','off','obj','stl','dxf','vrml','pov','3mf','glb','x3d'].includes(format)),'Export formats are invalid.');
   requireValue(Number.isSafeInteger(maxBytes)&&maxBytes>0&&maxBytes<=128*1024*1024,'Export byte limit is invalid.');
   formats=[...formats];const sizeLabel=(maxBytes/1024/1024)+' MiB';
   const sessions=new Map(),pending=new Map();let closed=false;
@@ -39,14 +39,14 @@ function createTextExport({selectPath,io=fs,now=()=>performance.now(),randomId=r
   const check=record=>{reap();if(closed||record.error||record.controller.signal.aborted||sessions.get(record.id)!==record)throw record.error||canceled('Text export canceled.');};
   const listen=(record,signal)=>{const abort=()=>retire(record,canceled('Text export canceled.'));signal?.addEventListener('abort',abort,{once:true});if(signal?.aborted)abort();return()=>signal?.removeEventListener('abort',abort);};
   const idValue=id=>requireValue(typeof id==='string'&&/^[A-Za-z0-9_-]{1,128}$/.test(id),'Text export ticket is invalid.');
-  async function begin(params,{signal}={}){
+  async function begin(params,{signal,id:requestedId}={}){
     requireValue(params&&typeof params==='object'&&!Array.isArray(params)&&Object.keys(params).length===2&&Object.hasOwn(params,'format')&&Object.hasOwn(params,'defaultName'),'Text export requires format and defaultName only.');
     const {format,defaultName}=params;
     requireValue(formats.includes(format),'Text export format is unsupported.');
     requireValue(typeof defaultName==='string'&&defaultName.length>0&&defaultName.length<=240&&wellFormed(defaultName)&&!/[\\/:\x00-\x1f]/.test(defaultName)&&!['.','..'].includes(defaultName),'Text export default name must be a literal file name.');
     reap();if(closed)throw canceled('Text export is closed.');if(signal?.aborted)throw canceled('Text export canceled.');
     requireValue(sessions.size<maxSessions,'Finish or cancel the pending text exports first.');
-    const id=randomId();idValue(id);requireValue(!sessions.has(id),'Text export ticket collision.');
+    const id=requestedId===undefined?randomId():requestedId;idValue(id);requireValue(!sessions.has(id),'Text export ticket collision.');
     const record={id,format,expires:time()+ttlMs,state:'selecting',controller:new AbortController(),path:null,error:null};sessions.set(id,record);const remove=listen(record,signal);
     let rejectAbort;const interrupted=new Promise((_,reject)=>{rejectAbort=()=>reject(record.error||canceled('Text export canceled.'));record.controller.signal.addEventListener('abort',rejectAbort,{once:true});});
     try{
@@ -71,9 +71,9 @@ function createTextExport({selectPath,io=fs,now=()=>performance.now(),randomId=r
     try{
       check(record);
       let data;
-      if(record.format==='pdf'){
-        requireValue(text instanceof Uint8Array,'PDF export needs Buffer or Uint8Array bytes.');
-        requireValue(text.byteLength<=maxBytes,'PDF export output exceeds '+sizeLabel+'.');
+      if(record.format==='pdf'||record.format==='png'||record.format==='3mf'||record.format==='glb'||record.format==='stl'&&text instanceof Uint8Array){
+        const label=record.format.toUpperCase();requireValue(text instanceof Uint8Array,label+' export needs Buffer or Uint8Array bytes.');
+        requireValue(text.byteLength<=maxBytes,label+' export output exceeds '+sizeLabel+'.');
         // Electron invoke transports binary output as Uint8Array. Copy only the
         // selected view before any await, so later caller mutation cannot alter it.
         data=Buffer.from(text);

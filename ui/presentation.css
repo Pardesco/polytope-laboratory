@@ -1,0 +1,10 @@
+#presentation-settings .settings-body { width:min(390px,90vw); display:grid; gap:10px; }
+#presentation-showcase { position:fixed; inset:0; z-index:10000; background:#0c1015; color:#fff; overflow:hidden; }
+#presentation-showcase[hidden] { display:none; }
+#presentation-canvas { display:block; width:100%; height:100%; object-fit:contain; }
+#presentation-status { position:absolute; top:28px; left:36px; right:36px; font-size:17px; text-shadow:0 1px 6px #000; white-space:pre-wrap; }
+.presentation-hud { position:absolute; top:24px; right:28px; display:flex; gap:8px; opacity:0; transition:opacity .3s; }
+#presentation-showcase[data-controls="visible"] .presentation-hud, .presentation-hud:focus-within { opacity:1; }
+.presentation-hud button { background:#101722ce; color:#f5f7fa; border:1px solid #8798ad66; padding:8px 14px; border-radius:6px; }
+body.presentation-mode { overflow:hidden; }
+body.presentation-mode > :not(#presentation-showcase) { visibility:hidden; }

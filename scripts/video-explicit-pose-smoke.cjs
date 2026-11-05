@@ -47,7 +47,7 @@ window.ready=(async()=>{
   const proof={format:'polytope-explicit-pose-browser-component-proof',version:1,passed:false,scope:'Actual Chromium VideoEncoder and VP8 WebM mux component; independent previously captured GPU PNG poses. Shipped animated-tour integration/native staging/release remain unqualified.',folder,runtime,sourceBefore:before,referenceSequence:sequence,errors};
   try{
     app=await electron.launch({executablePath:runtime.packaged,args:[],cwd:root,env,timeout:30000});
-    const mainPage=await app.firstWindow();mainPage.on('pageerror',e=>errors.push(e.message));
+    const mainPage=await app.firstWindow();require('./smoke-helpers.cjs').autoReveal(mainPage);mainPage.on('pageerror',e=>errors.push(e.message));
     await mainPage.waitForFunction(()=>document.getElementById('model-name')?.textContent==='Tesseract',{},{timeout:30000});
     const next=app.waitForEvent('window',{timeout:30000});
     await app.evaluate(async({BrowserWindow},file)=>{globalThis.explicitPoseWindow=new BrowserWindow({show:true,width:1000,height:720,webPreferences:{sandbox:true,contextIsolation:true,nodeIntegration:false}});await globalThis.explicitPoseWindow.loadFile(file);},html);

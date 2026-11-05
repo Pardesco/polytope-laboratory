@@ -66,7 +66,10 @@ export class StellationCellControls{
   }
   publish(ids){this.context.getConfig().selectedRegions=ids;this.context.applySelection(ids);this.render();this.sync();}
   apply(action,regionId=null){
-    this.verify();const graph=this.receipt.graph,config=this.context.getConfig(),before=selected(config),after=selectStellationCells(graph,before,action,regionId);if(same(before,after)){this.node('status').textContent=action==='fill'?'No provably inaccessible enclosed regions to fill.':'Selection unchanged.';return after;}
+    this.verify();return this.replaceSelection(selectStellationCells(this.receipt.graph,selected(this.context.getConfig()),action,regionId),action,regionId);
+  }
+  replaceSelection(after,action,regionId=null){
+    this.verify();const graph=this.receipt.graph,config=this.context.getConfig(),before=selected(config);checkedIds(graph,after);if(same(before,after)){this.node('status').textContent=action==='fill'?'No provably inaccessible enclosed regions to fill.':'Selection unchanged.';return after;}
     let history=this.history();const previous=history?.steps[history.cursor-1];if(!history||previous&&!same(previous.after,before)||history.cursor===0&&history.steps.length&&!same(history.steps[0].before,before))history={version:1,sourceFingerprint:graph.sourceFingerprint,arrangementSha256:graph.arrangementSha256,steps:[],cursor:0};
     history=structuredClone(history);history.steps=history.steps.slice(0,history.cursor);history.steps.push({before,after,action,regionId});history.steps=history.steps.slice(-32);history.cursor=history.steps.length;config.cellSelectionHistory=history;this.publish(after);return after;
   }
@@ -80,7 +83,7 @@ export class StellationCellControls{
     for(const node of nodes){if(!layers.has(node.outsidePlaneCount))layers.set(node.outsidePlaneCount,[]);layers.get(node.outsidePlaneCount).push(node);}
     const position=new Map(),columns=Math.min(12,Math.max(1,...[...layers.values()].map(row=>row.length))),width=columns*66+80;let height=40;
     for(const [layer,row]of [...layers].sort((a,b)=>b[0]-a[0])){for(let i=0;i<row.length;i++)position.set(row[i].id,[70+i%12*66,height+Math.floor(i/12)*64]);height+=Math.ceil(row.length/12)*64+30;}
-    const svg=svgEl('svg',{xmlns:svgNS,viewBox:`0 0 ${width} ${height}`,width,height,role:'img','aria-label':'Individual source-region cell dependency diagram'});svg.style.background='#11202d';
+    const svg=svgEl('svg',{xmlns:svgNS,viewBox:`0 0 ${width} ${height}`,width,height,role:'group','aria-label':'Individual source-region cell dependency diagram'});svg.style.background='#11202d';
     const metadata=svgEl('metadata');metadata.textContent=JSON.stringify({sourceId:graph.sourceId,sourceFingerprint:graph.sourceFingerprint,arrangementSha256:graph.arrangementSha256,domain:graph.domain,fillDefinition:graph.fillDefinition,numericMode:graph.numericMode,selectedRegionIds:[...selection]});svg.append(metadata);
     for(const [layer,row]of layers){const label=svgEl('text',{x:8,y:position.get(row[0].id)[1]+4,'font-size':10,fill:'#a8c1d0'});label.textContent='L'+layer;svg.append(label);}
     for(const link of graph.links){const [a,b]=link.regions;if(!position.has(a)||!position.has(b))continue;const p=position.get(a),q=position.get(b),line=svgEl('line',{x1:p[0],y1:p[1],x2:q[0],y2:q[1],stroke:'#698ba2','stroke-width':2});line.dataset.regions=link.regions.join(',');line.dataset.sourceFaces=link.sourceFaceIds.join(',');const title=svgEl('title');title.textContent=`R${a} / R${b}; source facial planes ${link.sourceFaceIds.join(', ')}`;line.append(title);svg.append(line);}

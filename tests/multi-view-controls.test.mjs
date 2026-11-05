@@ -28,6 +28,25 @@ test('source/workspace changes close the frozen grid and a held capture cannot s
  const f=fixture();await f.controls.open();let release,entered;const enteredPromise=new Promise(r=>entered=r);f.controls.session.views[0].viewer.prepareCapture=()=>{entered();return new Promise(r=>release=r);};const pending=f.controls.export();await enteredPromise;f.source.metadata.literal.rgba[3]=.25;f.controls.sync();assert.equal(f.controls.session,null);release();await assert.rejects(pending,{name:'AbortError'});assert.equal(f.saved.length,0);
  await f.controls.open();f.setProject({changed:true});f.controls.sync();assert.equal(f.controls.session,null);f.controls.destroy();
 });
+test('grid save forwards live ownership and close cancellation to destination review',async()=>{
+ const f=fixture();await f.controls.open();let review;
+ f.context.saveImage=async(image,name,options)=>{review=options;assert.equal(name,'Multiple views.png');options.verify();f.created[0].camera.zoom=2;assert.throws(options.verify,{name:'AbortError'});return null;};
+ await assert.rejects(f.controls.export(),{name:'AbortError'});assert.equal(f.controls.busy,false);assert.equal(f.created[0].controls.enabled,true);f.controls.close();assert.equal(review.signal.aborted,true);
+});
 test('invalid saved settings and enabled source morph refuse explicitly',async()=>{
  assert.deepEqual(multiViewGrid(6),{columns:3,rows:2});assert.throws(()=>multiViewSettings({version:1,count:7,cameras:[]}));const f=fixture();f.state.view.dualMorph={enabled:true};await assert.rejects(f.controls.open(),/enabled dual morph/);assert.equal(f.created.length,0);
+});
+test('independent 4D projections/orientations and maximized slot survive grid close, project JSON and reopen',async()=>{
+ const f=fixture();f.source.dimension=f.source.embeddingDimension=4;f.source.vertices=f.source.vertices.map(p=>[...p,0]);f.state.view.angles=[1,2,3,4,5,6];f.state.view.projection='perspective';
+ await f.controls.open();await f.controls.setCount(6);const record=f.controls.session.views[4];assert.equal(record.sourceProjection.hidden,false);
+ record.sourceProjection.value='stereographic';record.sourceProjection.onchange();record.pose.value='XW';record.pose.onchange();
+ assert.equal(record.view.projection,'stereographic');assert.deepEqual(record.view.angles,[1,2,93,4,5,6]);assert.equal(f.controls.session.views[0].view.projection,'perspective');assert.deepEqual(f.state.view.angles,[1,2,3,4,5,6]);
+ f.controls.maximize(4);assert.equal(f.state.view.multiViews.maximized,4);const saved=JSON.parse(JSON.stringify(f.state.view.multiViews));f.controls.close();f.state.view.multiViews=saved;await f.controls.open();
+ assert.equal(f.controls.session.maximized,4);assert.equal(f.controls.session.views.filter(r=>!r.tile.hidden).length,1);assert.equal(f.controls.session.views[4].view.projection,'stereographic');assert.deepEqual(f.controls.session.views[4].view.angles,[1,2,93,4,5,6]);
+ f.controls.maximize(4);assert.equal(f.state.view.multiViews.maximized,null);for(const count of [1,2,4,6]){await f.controls.setCount(count);assert.equal(f.controls.session.views.length,count);assert.equal(f.controls.session.maximized,null);assert.deepEqual(multiViewGrid(count),{columns:count===1?1:count===6?3:2,rows:count<=2?1:2});}
+ f.controls.destroy();
+});
+test('layout validation rejects malformed saved presentations and maximized slots',()=>{
+ for(const extra of [{maximized:4},{maximized:-1},{maximized:1.5},{presentations:[{projection:'unknown',angles:Array(6).fill(0)}]},{presentations:[{projection:'perspective',angles:[0,0,0,0,0,NaN]}]},{presentations:Array(7).fill(null)}])assert.throws(()=>multiViewSettings({version:1,count:4,cameras:[],...extra}),/invalid/);
+ assert.equal(multiViewSettings({version:1,count:2,cameras:[]}).maximized,null);
 });

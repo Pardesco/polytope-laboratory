@@ -128,7 +128,7 @@ async function main(){
     // Resizing the existing test window creates no other window or dialog.
     // <=650 CSS viewport height makes the selected fine tolerance exactly .004.
     await app.evaluate(({BrowserWindow})=>BrowserWindow.getAllWindows()[0].setContentSize(1280,760));
-    page=await app.firstWindow();page.setDefaultTimeout(30000);page.on('pageerror',e=>errors.push(e.message));
+    page=await app.firstWindow();require('./smoke-helpers.cjs').autoReveal(page);page.setDefaultTimeout(30000);page.on('pageerror',e=>errors.push(e.message));
     await page.addInitScript(probeInit);await page.reload();
     await page.waitForFunction(()=>document.getElementById('model-name')?.textContent==='Tesseract');
     await page.evaluate(()=>{window.__seamStatuses=[];new MutationObserver(()=>window.__seamStatuses.push(document.getElementById('status').textContent)).observe(document.getElementById('status'),{childList:true,characterData:true,subtree:true});});

@@ -1,6 +1,8 @@
+const {openDisclosure}=require('./smoke-helpers.cjs');
 // Run after the Memories UI and native project integration have been built.
 // Dialog substitutions and profiles are confined to this test process.
 const {_electron:electron}=require('playwright');
+const {reveal}=require('./smoke-helpers.cjs');
 const fs=require('node:fs/promises');
 const path=require('node:path');
 const assert=require('node:assert/strict');
@@ -12,9 +14,9 @@ async function main(){
   const packaged=process.env.POLYTOPE_TEST_EXECUTABLE,folder=await fs.mkdtemp(path.join(artifacts,packaged?'memories-packaged-smoke-':'memories-smoke-'));
   const env={...process.env,POLYTOPE_TEST_USER_DATA:path.join(folder,'profile')};delete env.ELECTRON_RUN_AS_NODE;if(packaged)env.POLYTOPE_PYTHON=path.join(folder,'unavailable-development-python.exe');
   const app=await electron.launch({executablePath:packaged||require('electron'),args:packaged?[]:[root],cwd:root,env,timeout:30000});
-  const page=await app.firstWindow();page.setDefaultTimeout(30000);const checks=[],errors=[];let saveNumber=0;
+  const page=await app.firstWindow();require('./smoke-helpers.cjs').autoReveal(page);page.setDefaultTimeout(30000);const checks=[],errors=[];let saveNumber=0;
   page.on('pageerror',error=>errors.push(error.message));
-  const openPanel=async()=>{if(!await page.locator('#memories-settings').evaluate(element=>element.open))await page.locator('#memories-settings > summary').click();};
+  const openPanel=()=>openDisclosure(page,'memories-settings');
   const choose=async slot=>{await openPanel();await page.locator('#memory-slot').selectOption(String(slot));};
   const done=async()=>page.waitForFunction(()=>!document.getElementById('memory-slot').disabled&&document.getElementById('cancel').hidden);
   const save=async label=>{
@@ -67,7 +69,7 @@ async function main(){
     await page.locator('[data-key="cube"]').click();await page.waitForFunction(()=>document.getElementById('model-name').textContent==='Cube');await done();
     await choose(4);await page.locator('#memory-source').selectOption('base');await page.locator('#memory-store').click();await done();
     const addSource=(await save('add-source')).project,storedCube=addSource.memories.slots[3].state.model;
-    await page.locator('[data-panel="construct"]').click();await page.locator('#model-scale').fill('2');await page.locator('#scale').click();await done();
+    await page.locator('[data-panel="construct"]').click();await reveal(page,'#model-scale');await page.locator('#model-scale').fill('2');await page.locator('#scale').click();await done();
     const scaled=(await save('scaled-add-source')).project;assert.deepEqual(active(scaled).model.vertices,storedCube.vertices.map(point=>point.map(coordinate=>2*coordinate)));
     await choose(4);await page.locator('#memory-add').click();await done();const added=(await save('added-memory')).project,compound=active(added).model;
     assert.equal(compound.dimension,3);assert.equal(compound.vertices.length,16);assert.equal(compound.edges.length,24);assert.equal(compound.faces.length,12);
@@ -76,7 +78,8 @@ async function main(){
     for(let index=0;index<scaled.documents.length;index++)assert.deepEqual(added.documents[index].states.map(state=>geometry(state.model)),scaled.documents[index].states.map(state=>geometry(state.model)));
     checks.push('Add preserves stored/current source sizes and creates an independent 16-vertex compound without mutating memories');
     if(!await page.locator('#animation-settings').evaluate(element=>element.open))await page.locator('#animation-settings > summary').click();
-    for(const [id,value] of [['#animation-duration','20'],['#animation-fps','30']]){await page.locator(id).fill(value);await page.locator(id).dispatchEvent('change');}
+    // Hidden-mode PNG export writes ~120 frames/s; use the longest sequence (300 s x 60 fps) so the export is still running when Cancel is clicked.
+    for(const [id,value] of [['#animation-duration','300'],['#animation-fps','60']]){await page.locator(id).fill(value);await page.locator(id).press('Tab');}
     await page.locator('#animation-target').selectOption('base');const cancelled=path.join(folder,'memory-guard.frames');
     await app.evaluate(({dialog},file)=>{dialog.showSaveDialog=async()=>({canceled:false,filePath:file});},cancelled);await page.locator('#animation-png').click();
     await page.waitForFunction(()=>document.getElementById('animation-progress').textContent.startsWith('Frame '));

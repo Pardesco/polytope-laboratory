@@ -1,0 +1,943 @@
+{
+  "schemaVersion": 1,
+  "family": "Near-miss Johnson solids",
+  "generator": "scripts/build-near-miss-catalog.py",
+  "backend": {
+    "numpy": "1.26.4",
+    "scipy": "1.11.4"
+  },
+  "entries": [
+    {
+      "file": "chamfered-cube.json",
+      "sha256": "987febbc05762db560ba2ee6e2d1a02b1f27eff0f274322ad2e3696222b3209d",
+      "record": {
+        "key": "near-miss-chamfered-cube",
+        "name": "Chamfered cube (near miss)",
+        "dimension": 3,
+        "family": "Near-miss Johnson solids",
+        "counts": [
+          32,
+          48,
+          18,
+          0
+        ],
+        "faceTypes": {
+          "4": 6,
+          "6": 12
+        },
+        "faceConfiguration": "6 x 4-gon, 12 x 6-gon",
+        "vertexConfigurations": {
+          "4.6.6": 24,
+          "6.6.6": 8
+        },
+        "symmetryGroup": "Oh",
+        "symmetryOrder": 48,
+        "nearMiss": true,
+        "approximate": true,
+        "regular": false,
+        "uniform": false,
+        "convex": true,
+        "chiral": false,
+        "aliases": [
+          "near miss",
+          "near-miss Johnson solid",
+          "Chamfered cube",
+          "chamfered cube"
+        ],
+        "nearMissRealization": {
+          "approximate": true,
+          "regularityEstablished": false,
+          "certified": false,
+          "construction": "Radial plane cuts of the six degree-4 vertices of the rhombic dodecahedron (dual of rectified cube).",
+          "metrics": {
+            "maximumEdgeDeviationPercent": 2.3989268392992757,
+            "maximumFaceEdgeDeviationPercent": 3.1731949109383817,
+            "maximumFaceAngleDeviationDegrees": 10.528779365509306,
+            "maximumPlanarity": 7.771561172376096e-16,
+            "aggregateAngleDeviationDegrees": 505.3814095444469,
+            "definition": "Maximum edge error from global mean; face edges from face mean; angles from regular n-gon; planarity is best-fit-plane coordinate residual / mean edge.",
+            "certified": false
+          },
+          "fitting": {
+            "method": "condition_arrays regular-faces + equal-edges; symmetry-invariant least-squares initialization and constrained SLSQP",
+            "symmetry": {
+              "order": 48,
+              "complete": true,
+              "invariantDimension": 3,
+              "scope": "supplied source Euclidean symmetries; no intended higher symmetry inferred"
+            },
+            "success": true,
+            "evaluations": 48,
+            "termination": "Optimization terminated successfully",
+            "cost": 0.3926952131602354,
+            "initialPlanarityWeight": 10000,
+            "supportClearanceMeanEdges": 0.0001,
+            "independentPlanarityConstraints": 1,
+            "iterationLimit": 400,
+            "globalMinimumEstablished": false,
+            "certified": false
+          },
+          "symmetry": {
+            "group": "Oh",
+            "order": 48,
+            "properOrder": 24,
+            "complete": true,
+            "certified": false
+          },
+          "sourceFingerprint": "cba71ace2ff97444c3beb27662073ea3975e0b1f58f1dc49208b07c836d998b9",
+          "references": [
+            "https://en.wikipedia.org/wiki/Near-miss_Johnson_solid"
+          ],
+          "numericContract": "Original float64 local fit; fixed incidence; approximate faces; no global optimality or exact regularity certificate."
+        }
+      }
+    },
+    {
+      "file": "chamfered-dodecahedron.json",
+      "sha256": "7c4df6748224795954273a92a113d3bbaa76ec0a88c24073d3359530ece9b4a5",
+      "record": {
+        "key": "near-miss-chamfered-dodecahedron",
+        "name": "Chamfered dodecahedron (near miss)",
+        "dimension": 3,
+        "family": "Near-miss Johnson solids",
+        "counts": [
+          80,
+          120,
+          42,
+          0
+        ],
+        "faceTypes": {
+          "5": 12,
+          "6": 30
+        },
+        "faceConfiguration": "12 x 5-gon, 30 x 6-gon",
+        "vertexConfigurations": {
+          "5.6.6": 60,
+          "6.6.6": 20
+        },
+        "symmetryGroup": "Ih",
+        "symmetryOrder": 120,
+        "nearMiss": true,
+        "approximate": true,
+        "regular": false,
+        "uniform": false,
+        "convex": true,
+        "chiral": false,
+        "aliases": [
+          "near miss",
+          "near-miss Johnson solid",
+          "Chamfered dodecahedron",
+          "chamfered dodecahedron"
+        ],
+        "nearMissRealization": {
+          "approximate": true,
+          "regularityEstablished": false,
+          "certified": false,
+          "construction": "Radial plane cuts of the twelve degree-5 vertices of the rhombic triacontahedron (dual of rectified icosahedron).",
+          "metrics": {
+            "maximumEdgeDeviationPercent": 0.7997083485263623,
+            "maximumFaceEdgeDeviationPercent": 1.0634429839267656,
+            "maximumFaceAngleDeviationDegrees": 3.434948822922432,
+            "maximumPlanarity": 1.039489494897535e-15,
+            "aggregateAngleDeviationDegrees": 412.19385875064313,
+            "definition": "Maximum edge error from global mean; face edges from face mean; angles from regular n-gon; planarity is best-fit-plane coordinate residual / mean edge.",
+            "certified": false
+          },
+          "fitting": {
+            "method": "condition_arrays regular-faces + equal-edges; symmetry-invariant least-squares initialization and constrained SLSQP",
+            "symmetry": {
+              "order": 120,
+              "complete": true,
+              "invariantDimension": 3,
+              "scope": "supplied source Euclidean symmetries; no intended higher symmetry inferred"
+            },
+            "success": true,
+            "evaluations": 87,
+            "termination": "Optimization terminated successfully",
+            "cost": 0.10049584635476391,
+            "initialPlanarityWeight": 10000,
+            "supportClearanceMeanEdges": 0.0001,
+            "independentPlanarityConstraints": 1,
+            "iterationLimit": 400,
+            "globalMinimumEstablished": false,
+            "certified": false
+          },
+          "symmetry": {
+            "group": "Ih",
+            "order": 120,
+            "properOrder": 60,
+            "complete": true,
+            "certified": false
+          },
+          "sourceFingerprint": "e51086392f2aba5cfec9e896b9309017638e247cc3ffb25196338c7a48323b13",
+          "references": [
+            "https://en.wikipedia.org/wiki/Near-miss_Johnson_solid"
+          ],
+          "numericContract": "Original float64 local fit; fixed incidence; approximate faces; no global optimality or exact regularity certificate."
+        }
+      }
+    },
+    {
+      "file": "rectified-truncated-icosahedron.json",
+      "sha256": "ef03a98887cd2fabc65f9ad3391c07e44219f65c242e2a29cd0523af41238634",
+      "record": {
+        "key": "near-miss-rectified-truncated-icosahedron",
+        "name": "Rectified truncated icosahedron (near miss)",
+        "dimension": 3,
+        "family": "Near-miss Johnson solids",
+        "counts": [
+          90,
+          180,
+          92,
+          0
+        ],
+        "faceTypes": {
+          "3": 60,
+          "5": 12,
+          "6": 20
+        },
+        "faceConfiguration": "60 x 3-gon, 12 x 5-gon, 20 x 6-gon",
+        "vertexConfigurations": {
+          "3.5.3.6": 60,
+          "3.6.3.6": 30
+        },
+        "symmetryGroup": "Ih",
+        "symmetryOrder": 120,
+        "nearMiss": true,
+        "approximate": true,
+        "regular": false,
+        "uniform": false,
+        "convex": true,
+        "chiral": false,
+        "aliases": [
+          "near miss",
+          "near-miss Johnson solid",
+          "Rectified truncated icosahedron",
+          "rectified truncated icosahedron"
+        ],
+        "nearMissRealization": {
+          "approximate": true,
+          "regularityEstablished": false,
+          "certified": false,
+          "construction": "Rectify the uniform truncated icosahedron (atI).",
+          "metrics": {
+            "maximumEdgeDeviationPercent": 1.4549995305681573,
+            "maximumFaceEdgeDeviationPercent": 1.4549995305681462,
+            "maximumFaceAngleDeviationDegrees": 3.1529354355537684,
+            "maximumPlanarity": 1.8318679906315083e-15,
+            "aggregateAngleDeviationDegrees": 549.7600532328855,
+            "definition": "Maximum edge error from global mean; face edges from face mean; angles from regular n-gon; planarity is best-fit-plane coordinate residual / mean edge.",
+            "certified": false
+          },
+          "fitting": {
+            "method": "condition_arrays regular-faces + equal-edges; symmetry-invariant least-squares initialization and constrained SLSQP",
+            "symmetry": {
+              "order": 120,
+              "complete": true,
+              "invariantDimension": 3,
+              "scope": "supplied source Euclidean symmetries; no intended higher symmetry inferred"
+            },
+            "success": true,
+            "evaluations": 45,
+            "termination": "Optimization terminated successfully",
+            "cost": 0.09527741476621986,
+            "initialPlanarityWeight": 10000,
+            "supportClearanceMeanEdges": 0.0001,
+            "independentPlanarityConstraints": 1,
+            "iterationLimit": 400,
+            "globalMinimumEstablished": false,
+            "certified": false
+          },
+          "symmetry": {
+            "group": "Ih",
+            "order": 120,
+            "properOrder": 60,
+            "complete": true,
+            "certified": false
+          },
+          "sourceFingerprint": "74500132d3090373da80b226435326f1df88fcb88aef38f59f1bb1a220822705",
+          "references": [
+            "https://en.wikipedia.org/wiki/Near-miss_Johnson_solid"
+          ],
+          "numericContract": "Original float64 local fit; fixed incidence; approximate faces; no global optimality or exact regularity certificate."
+        }
+      }
+    },
+    {
+      "file": "truncated-truncated-icosahedron.json",
+      "sha256": "1e93dc5312ef61e711b5ada331ffc09ddc0e83d794e59b9c9a378b47feba4741",
+      "record": {
+        "key": "near-miss-truncated-truncated-icosahedron",
+        "name": "Truncated truncated icosahedron (near miss)",
+        "dimension": 3,
+        "family": "Near-miss Johnson solids",
+        "counts": [
+          180,
+          270,
+          92,
+          0
+        ],
+        "faceTypes": {
+          "3": 60,
+          "10": 12,
+          "12": 20
+        },
+        "faceConfiguration": "60 x 3-gon, 12 x 10-gon, 20 x 12-gon",
+        "vertexConfigurations": {
+          "3.10.12": 120,
+          "3.12.12": 60
+        },
+        "symmetryGroup": "Ih",
+        "symmetryOrder": 120,
+        "nearMiss": true,
+        "approximate": true,
+        "regular": false,
+        "uniform": false,
+        "convex": true,
+        "chiral": false,
+        "aliases": [
+          "near miss",
+          "near-miss Johnson solid",
+          "Truncated truncated icosahedron",
+          "truncated truncated icosahedron"
+        ],
+        "nearMissRealization": {
+          "approximate": true,
+          "regularityEstablished": false,
+          "certified": false,
+          "construction": "Truncate all vertices of the uniform truncated icosahedron, initially at edge fraction 0.2 (ttI).",
+          "metrics": {
+            "maximumEdgeDeviationPercent": 2.1299797923294506,
+            "maximumFaceEdgeDeviationPercent": 2.111539687601882,
+            "maximumFaceAngleDeviationDegrees": 2.062973364831656,
+            "maximumPlanarity": 1.122973242173586e-14,
+            "aggregateAngleDeviationDegrees": 542.4825868147325,
+            "definition": "Maximum edge error from global mean; face edges from face mean; angles from regular n-gon; planarity is best-fit-plane coordinate residual / mean edge.",
+            "certified": false
+          },
+          "fitting": {
+            "method": "condition_arrays regular-faces + equal-edges; symmetry-invariant least-squares initialization and constrained SLSQP",
+            "symmetry": {
+              "order": 120,
+              "complete": true,
+              "invariantDimension": 5,
+              "scope": "supplied source Euclidean symmetries; no intended higher symmetry inferred"
+            },
+            "success": true,
+            "evaluations": 21,
+            "termination": "Optimization terminated successfully",
+            "cost": 0.17664578752901294,
+            "initialPlanarityWeight": 10000,
+            "supportClearanceMeanEdges": 0.0001,
+            "independentPlanarityConstraints": 2,
+            "iterationLimit": 400,
+            "globalMinimumEstablished": false,
+            "certified": false
+          },
+          "symmetry": {
+            "group": "Ih",
+            "order": 120,
+            "properOrder": 60,
+            "complete": true,
+            "certified": false
+          },
+          "sourceFingerprint": "314f95c65da2019f4207384c6ba584f42e54a9cdf9390e6a1233c754448c2699",
+          "references": [
+            "https://en.wikipedia.org/wiki/Near-miss_Johnson_solid"
+          ],
+          "numericContract": "Original float64 local fit; fixed incidence; approximate faces; no global optimality or exact regularity certificate."
+        }
+      }
+    },
+    {
+      "file": "expanded-truncated-icosahedron.json",
+      "sha256": "271d55853af51b886355c13e88835d41eff09ef41fafb39ddce1738e8554e3b7",
+      "record": {
+        "key": "near-miss-expanded-truncated-icosahedron",
+        "name": "Expanded truncated icosahedron (near miss)",
+        "dimension": 3,
+        "family": "Near-miss Johnson solids",
+        "counts": [
+          180,
+          360,
+          182,
+          0
+        ],
+        "faceTypes": {
+          "3": 60,
+          "4": 90,
+          "5": 12,
+          "6": 20
+        },
+        "faceConfiguration": "60 x 3-gon, 90 x 4-gon, 12 x 5-gon, 20 x 6-gon",
+        "vertexConfigurations": {
+          "3.4.5.4": 60,
+          "3.4.6.4": 120
+        },
+        "symmetryGroup": "Ih",
+        "symmetryOrder": 120,
+        "nearMiss": true,
+        "approximate": true,
+        "regular": false,
+        "uniform": false,
+        "convex": true,
+        "chiral": false,
+        "aliases": [
+          "near miss",
+          "near-miss Johnson solid",
+          "Expanded truncated icosahedron",
+          "expanded truncated icosahedron"
+        ],
+        "nearMissRealization": {
+          "approximate": true,
+          "regularityEstablished": false,
+          "certified": false,
+          "construction": "Two successive rectifications of the uniform truncated icosahedron (etI = aatI topology).",
+          "metrics": {
+            "maximumEdgeDeviationPercent": 1.98618346878906,
+            "maximumFaceEdgeDeviationPercent": 1.7413875850953442,
+            "maximumFaceAngleDeviationDegrees": 1.5490758884045808,
+            "maximumPlanarity": 1.7763568394002505e-15,
+            "aggregateAngleDeviationDegrees": 401.54506876338775,
+            "definition": "Maximum edge error from global mean; face edges from face mean; angles from regular n-gon; planarity is best-fit-plane coordinate residual / mean edge.",
+            "certified": false
+          },
+          "fitting": {
+            "method": "condition_arrays regular-faces + equal-edges; symmetry-invariant least-squares initialization and constrained SLSQP",
+            "symmetry": {
+              "order": 120,
+              "complete": true,
+              "invariantDimension": 5,
+              "scope": "supplied source Euclidean symmetries; no intended higher symmetry inferred"
+            },
+            "success": true,
+            "evaluations": 66,
+            "termination": "Optimization terminated successfully",
+            "cost": 0.08799914357724503,
+            "initialPlanarityWeight": 10000,
+            "supportClearanceMeanEdges": 0.0001,
+            "independentPlanarityConstraints": 0,
+            "iterationLimit": 400,
+            "globalMinimumEstablished": false,
+            "certified": false
+          },
+          "symmetry": {
+            "group": "Ih",
+            "order": 120,
+            "properOrder": 60,
+            "complete": true,
+            "certified": false
+          },
+          "sourceFingerprint": "8aa29d1fba4c14e38975983703390b6aa9b771afd42d1a2a081b138b167d9573",
+          "references": [
+            "https://en.wikipedia.org/wiki/Near-miss_Johnson_solid"
+          ],
+          "numericContract": "Original float64 local fit; fixed incidence; approximate faces; no global optimality or exact regularity certificate."
+        }
+      }
+    },
+    {
+      "file": "truncated-triakis-tetrahedron.json",
+      "sha256": "739b88a66dd42d878ab9c4e68498f5844df363f5bd466566f11a3b3efbda46a5",
+      "record": {
+        "key": "near-miss-truncated-triakis-tetrahedron",
+        "name": "Truncated triakis tetrahedron (near miss)",
+        "dimension": 3,
+        "family": "Near-miss Johnson solids",
+        "counts": [
+          28,
+          42,
+          16,
+          0
+        ],
+        "faceTypes": {
+          "5": 12,
+          "6": 4
+        },
+        "faceConfiguration": "12 x 5-gon, 4 x 6-gon",
+        "vertexConfigurations": {
+          "5.5.5": 4,
+          "5.5.6": 24
+        },
+        "symmetryGroup": "Td",
+        "symmetryOrder": 24,
+        "nearMiss": true,
+        "approximate": true,
+        "regular": false,
+        "uniform": false,
+        "convex": true,
+        "chiral": false,
+        "aliases": [
+          "near miss",
+          "near-miss Johnson solid",
+          "Truncated triakis tetrahedron",
+          "truncated triakis tetrahedron"
+        ],
+        "nearMissRealization": {
+          "approximate": true,
+          "regularityEstablished": false,
+          "certified": false,
+          "construction": "Radial plane cuts of only the four degree-6 vertices of the triakis tetrahedron (t6kT).",
+          "metrics": {
+            "maximumEdgeDeviationPercent": 3.0850440206925733,
+            "maximumFaceEdgeDeviationPercent": 2.781109949198224,
+            "maximumFaceAngleDeviationDegrees": 5.179964254577747,
+            "maximumPlanarity": 8.326672684688676e-16,
+            "aggregateAngleDeviationDegrees": 155.116641514274,
+            "definition": "Maximum edge error from global mean; face edges from face mean; angles from regular n-gon; planarity is best-fit-plane coordinate residual / mean edge.",
+            "certified": false
+          },
+          "fitting": {
+            "method": "condition_arrays regular-faces + equal-edges; symmetry-invariant least-squares initialization and constrained SLSQP",
+            "symmetry": {
+              "order": 24,
+              "complete": true,
+              "invariantDimension": 5,
+              "scope": "supplied source Euclidean symmetries; no intended higher symmetry inferred"
+            },
+            "success": true,
+            "evaluations": 123,
+            "termination": "Optimization terminated successfully",
+            "cost": 0.0650789475448763,
+            "initialPlanarityWeight": 10000,
+            "supportClearanceMeanEdges": 0.0001,
+            "independentPlanarityConstraints": 2,
+            "iterationLimit": 400,
+            "globalMinimumEstablished": false,
+            "certified": false
+          },
+          "symmetry": {
+            "group": "Td",
+            "order": 24,
+            "properOrder": 12,
+            "complete": true,
+            "certified": false
+          },
+          "sourceFingerprint": "7641dd774386346f2d641d6ea43f83fc509f373b3acf28dc8cd090a5c2b98a36",
+          "references": [
+            "https://en.wikipedia.org/wiki/Near-miss_Johnson_solid"
+          ],
+          "numericContract": "Original float64 local fit; fixed incidence; approximate faces; no global optimality or exact regularity certificate.",
+          "publishedComparison": {
+            "source": "https://www.orchidpalms.com/polyhedra/acrohedra/nearmiss/jsmn.htm",
+            "entry": "Number 22",
+            "published": {
+              "aggregateEdgeErrorUnitEdge": 0.316,
+              "diagonalError": 3.07,
+              "aggregateAngleDeviationDegrees": 52.47
+            },
+            "passed": null,
+            "scope": "Different constrained objective: published hexagons stay regular; this fit allows all faces to vary. Aggregate reference values are not maximum residuals and are not a numerical agreement claim."
+          }
+        }
+      }
+    },
+    {
+      "file": "associahedron-k5.json",
+      "sha256": "1e50cd0452e213ac1b8a98af070bc2f3fa6f68f9c23622efdc76927ead5a6479",
+      "record": {
+        "key": "near-miss-associahedron-k5",
+        "name": "Associahedron K5 (near miss)",
+        "dimension": 3,
+        "family": "Near-miss Johnson solids",
+        "counts": [
+          14,
+          21,
+          9,
+          0
+        ],
+        "faceTypes": {
+          "4": 3,
+          "5": 6
+        },
+        "faceConfiguration": "3 x 4-gon, 6 x 5-gon",
+        "vertexConfigurations": {
+          "4.5.5": 12,
+          "5.5.5": 2
+        },
+        "symmetryGroup": "D3h",
+        "symmetryOrder": 12,
+        "nearMiss": true,
+        "approximate": true,
+        "regular": false,
+        "uniform": false,
+        "convex": true,
+        "chiral": false,
+        "aliases": [
+          "near miss",
+          "near-miss Johnson solid",
+          "Associahedron K5",
+          "associahedron k5"
+        ],
+        "nearMissRealization": {
+          "approximate": true,
+          "regularityEstablished": false,
+          "certified": false,
+          "construction": "Radial plane cuts of the three degree-4 vertices of the polar of a triangular prism (t4dP3).",
+          "metrics": {
+            "maximumEdgeDeviationPercent": 7.923106887521092,
+            "maximumFaceEdgeDeviationPercent": 7.748546667659928,
+            "maximumFaceAngleDeviationDegrees": 8.714892796236862,
+            "maximumPlanarity": 4.440892098500626e-16,
+            "aggregateAngleDeviationDegrees": 150.52389775986296,
+            "definition": "Maximum edge error from global mean; face edges from face mean; angles from regular n-gon; planarity is best-fit-plane coordinate residual / mean edge.",
+            "certified": false
+          },
+          "fitting": {
+            "method": "condition_arrays regular-faces + equal-edges; symmetry-invariant least-squares initialization and constrained SLSQP",
+            "symmetry": {
+              "order": 12,
+              "complete": true,
+              "invariantDimension": 5,
+              "scope": "supplied source Euclidean symmetries; no intended higher symmetry inferred"
+            },
+            "success": true,
+            "evaluations": 57,
+            "termination": "Optimization terminated successfully",
+            "cost": 0.18284893448300155,
+            "initialPlanarityWeight": 10000,
+            "supportClearanceMeanEdges": 0.0001,
+            "independentPlanarityConstraints": 2,
+            "iterationLimit": 400,
+            "globalMinimumEstablished": false,
+            "certified": false
+          },
+          "symmetry": {
+            "group": "D3h",
+            "order": 12,
+            "properOrder": 6,
+            "complete": true,
+            "certified": false
+          },
+          "sourceFingerprint": "946eae7e9f739167673552e63711a0f649963ff94c899d9f0dfab9e3090a337d",
+          "references": [
+            "https://en.wikipedia.org/wiki/Near-miss_Johnson_solid"
+          ],
+          "numericContract": "Original float64 local fit; fixed incidence; approximate faces; no global optimality or exact regularity certificate."
+        }
+      }
+    },
+    {
+      "file": "wedge-4-5.json",
+      "sha256": "fda3810c52231edc28062f42193e6f902feeb7178d6ae42cdc6045665349b65f",
+      "record": {
+        "key": "near-miss-wedge-4-5",
+        "name": "Square-pentagon wedge (near miss)",
+        "dimension": 3,
+        "family": "Near-miss Johnson solids",
+        "counts": [
+          9,
+          17,
+          10,
+          0
+        ],
+        "faceTypes": {
+          "3": 7,
+          "4": 2,
+          "5": 1
+        },
+        "faceConfiguration": "7 x 3-gon, 2 x 4-gon, 1 x 5-gon",
+        "vertexConfigurations": {
+          "3.3.3.4": 2,
+          "3.3.3.5": 3,
+          "3.3.4.4": 2,
+          "3.4.5": 2
+        },
+        "symmetryGroup": "Cs",
+        "symmetryOrder": 2,
+        "nearMiss": true,
+        "approximate": true,
+        "regular": false,
+        "uniform": false,
+        "convex": true,
+        "chiral": false,
+        "aliases": [
+          "near miss",
+          "near-miss Johnson solid",
+          "Square-pentagon wedge",
+          "wedge 4 5"
+        ],
+        "nearMissRealization": {
+          "approximate": true,
+          "regularityEstablished": false,
+          "certified": false,
+          "construction": "Regular square and pentagon joined by one regular square and a convex belt of seven triangles; optimize the two hinge angles.",
+          "metrics": {
+            "maximumEdgeDeviationPercent": 2.4997970773875,
+            "maximumFaceEdgeDeviationPercent": 2.6191107603869446,
+            "maximumFaceAngleDeviationDegrees": 2.642221697861143,
+            "maximumPlanarity": 4.440892098500627e-16,
+            "aggregateAngleDeviationDegrees": 37.79971207085147,
+            "definition": "Maximum edge error from global mean; face edges from face mean; angles from regular n-gon; planarity is best-fit-plane coordinate residual / mean edge.",
+            "certified": false
+          },
+          "fitting": {
+            "method": "condition_arrays regular-faces + equal-edges; symmetry-invariant least-squares initialization and constrained SLSQP",
+            "symmetry": {
+              "order": 2,
+              "complete": true,
+              "invariantDimension": 14,
+              "scope": "supplied source Euclidean symmetries; no intended higher symmetry inferred"
+            },
+            "success": true,
+            "evaluations": 372,
+            "termination": "Optimization terminated successfully",
+            "cost": 0.009557056381230786,
+            "initialPlanarityWeight": 10000,
+            "supportClearanceMeanEdges": 0.0001,
+            "independentPlanarityConstraints": 1,
+            "iterationLimit": 400,
+            "globalMinimumEstablished": false,
+            "certified": false
+          },
+          "symmetry": {
+            "group": "Cs",
+            "order": 2,
+            "properOrder": 1,
+            "complete": true,
+            "certified": false
+          },
+          "sourceFingerprint": "0f19bbc4e23c05505fe59864bf72e15a66dcd673b38a7397630b0577fd60f8a3",
+          "references": [
+            "https://www.orchidpalms.com/polyhedra/acrohedra/nearmiss/jsmn.htm"
+          ],
+          "numericContract": "Original float64 local fit; fixed incidence; approximate faces; no global optimality or exact regularity certificate.",
+          "publishedComparison": {
+            "source": "https://www.orchidpalms.com/polyhedra/acrohedra/nearmiss/jsmn.htm",
+            "entry": "Number 7 and its two square augmentations",
+            "published": {
+              "aggregateEdgeErrorUnitEdge": 0.194,
+              "aggregateAngleDeviationDegrees": 34.0,
+              "diagonalError": 0.0
+            },
+            "referenceMeasured": {
+              "aggregateEdgeErrorUnitEdge": 0.19185205985733167,
+              "aggregateAngleDeviationDegrees": 33.634720665835964
+            },
+            "absoluteTolerance": {
+              "aggregateEdgeErrorUnitEdge": 0.005,
+              "aggregateAngleDeviationDegrees": 0.5
+            },
+            "passed": true,
+            "scope": "Independent regular-square/pentagon reference with triangular distortion. Catalog fit subsequently allows every face to vary, so its maxima and aggregate errors differ."
+          }
+        }
+      }
+    },
+    {
+      "file": "wedge-4-5-top-augmented.json",
+      "sha256": "aa405458d7500297d6f9f564d067a125fef6b3ee94f79f7414d3b2e873cdc29c",
+      "record": {
+        "key": "near-miss-wedge-4-5-top-augmented",
+        "name": "Top-augmented square-pentagon wedge (near miss)",
+        "dimension": 3,
+        "family": "Near-miss Johnson solids",
+        "counts": [
+          10,
+          21,
+          13,
+          0
+        ],
+        "faceTypes": {
+          "3": 11,
+          "4": 1,
+          "5": 1
+        },
+        "faceConfiguration": "11 x 3-gon, 1 x 4-gon, 1 x 5-gon",
+        "vertexConfigurations": {
+          "3.3.3.3": 1,
+          "3.3.3.3.3": 2,
+          "3.3.3.3.4": 2,
+          "3.3.3.5": 3,
+          "3.4.5": 2
+        },
+        "symmetryGroup": "Cs",
+        "symmetryOrder": 2,
+        "nearMiss": true,
+        "approximate": true,
+        "regular": false,
+        "uniform": false,
+        "convex": true,
+        "chiral": false,
+        "aliases": [
+          "near miss",
+          "near-miss Johnson solid",
+          "Top-augmented square-pentagon wedge",
+          "wedge 4 5 top augmented"
+        ],
+        "nearMissRealization": {
+          "approximate": true,
+          "regularityEstablished": false,
+          "certified": false,
+          "construction": "Attach a regular square pyramid to the square base of the square-pentagon wedge.",
+          "metrics": {
+            "maximumEdgeDeviationPercent": 2.4266615123520907,
+            "maximumFaceEdgeDeviationPercent": 2.577575149098399,
+            "maximumFaceAngleDeviationDegrees": 2.5999119249243416,
+            "maximumPlanarity": 4.440892098500629e-16,
+            "aggregateAngleDeviationDegrees": 40.5376812025022,
+            "definition": "Maximum edge error from global mean; face edges from face mean; angles from regular n-gon; planarity is best-fit-plane coordinate residual / mean edge.",
+            "certified": false
+          },
+          "fitting": {
+            "method": "condition_arrays regular-faces + equal-edges; symmetry-invariant least-squares initialization and constrained SLSQP",
+            "symmetry": {
+              "order": 2,
+              "complete": true,
+              "invariantDimension": 16,
+              "scope": "supplied source Euclidean symmetries; no intended higher symmetry inferred"
+            },
+            "success": true,
+            "evaluations": 524,
+            "termination": "Optimization terminated successfully",
+            "cost": 0.009489117819787157,
+            "initialPlanarityWeight": 10000,
+            "supportClearanceMeanEdges": 0.0001,
+            "independentPlanarityConstraints": 1,
+            "iterationLimit": 400,
+            "globalMinimumEstablished": false,
+            "certified": false
+          },
+          "symmetry": {
+            "group": "Cs",
+            "order": 2,
+            "properOrder": 1,
+            "complete": true,
+            "certified": false
+          },
+          "sourceFingerprint": "b5f8e61f1c02bb20c44f7c91261432400847d9319e255cb24e3b1e4eb45b514d",
+          "references": [
+            "https://www.orchidpalms.com/polyhedra/acrohedra/nearmiss/jsmn.htm"
+          ],
+          "numericContract": "Original float64 local fit; fixed incidence; approximate faces; no global optimality or exact regularity certificate.",
+          "publishedComparison": {
+            "source": "https://www.orchidpalms.com/polyhedra/acrohedra/nearmiss/jsmn.htm",
+            "entry": "Number 7 and its two square augmentations",
+            "published": {
+              "aggregateEdgeErrorUnitEdge": 0.194,
+              "aggregateAngleDeviationDegrees": 34.0,
+              "diagonalError": 0.0
+            },
+            "referenceMeasured": {
+              "aggregateEdgeErrorUnitEdge": 0.1918520598573321,
+              "aggregateAngleDeviationDegrees": 33.63472066583597
+            },
+            "absoluteTolerance": {
+              "aggregateEdgeErrorUnitEdge": 0.005,
+              "aggregateAngleDeviationDegrees": 0.5
+            },
+            "passed": true,
+            "scope": "Independent regular-square/pentagon reference with triangular distortion. Catalog fit subsequently allows every face to vary, so its maxima and aggregate errors differ."
+          }
+        }
+      }
+    },
+    {
+      "file": "wedge-4-5-side-augmented.json",
+      "sha256": "1183832354b5a09d8c4d7681d38de45f95d60825ec73ffc1725a704271b3f67e",
+      "record": {
+        "key": "near-miss-wedge-4-5-side-augmented",
+        "name": "Side-augmented square-pentagon wedge (near miss)",
+        "dimension": 3,
+        "family": "Near-miss Johnson solids",
+        "counts": [
+          10,
+          21,
+          13,
+          0
+        ],
+        "faceTypes": {
+          "3": 11,
+          "4": 1,
+          "5": 1
+        },
+        "faceConfiguration": "11 x 3-gon, 1 x 4-gon, 1 x 5-gon",
+        "vertexConfigurations": {
+          "3.3.3.3": 1,
+          "3.3.3.3.4": 2,
+          "3.3.3.4": 2,
+          "3.3.3.5": 5
+        },
+        "symmetryGroup": "Cs",
+        "symmetryOrder": 2,
+        "nearMiss": true,
+        "approximate": true,
+        "regular": false,
+        "uniform": false,
+        "convex": true,
+        "chiral": false,
+        "aliases": [
+          "near miss",
+          "near-miss Johnson solid",
+          "Side-augmented square-pentagon wedge",
+          "wedge 4 5 side augmented"
+        ],
+        "nearMissRealization": {
+          "approximate": true,
+          "regularityEstablished": false,
+          "certified": false,
+          "construction": "Attach a regular square pyramid to the joining square of the square-pentagon wedge.",
+          "metrics": {
+            "maximumEdgeDeviationPercent": 2.466949878995095,
+            "maximumFaceEdgeDeviationPercent": 2.6172852758745258,
+            "maximumFaceAngleDeviationDegrees": 2.6401646320127035,
+            "maximumPlanarity": 6.661338147750939e-16,
+            "aggregateAngleDeviationDegrees": 40.73424073259588,
+            "definition": "Maximum edge error from global mean; face edges from face mean; angles from regular n-gon; planarity is best-fit-plane coordinate residual / mean edge.",
+            "certified": false
+          },
+          "fitting": {
+            "method": "condition_arrays regular-faces + equal-edges; symmetry-invariant least-squares initialization and constrained SLSQP",
+            "symmetry": {
+              "order": 2,
+              "complete": true,
+              "invariantDimension": 16,
+              "scope": "supplied source Euclidean symmetries; no intended higher symmetry inferred"
+            },
+            "success": true,
+            "evaluations": 321,
+            "termination": "Optimization terminated successfully",
+            "cost": 0.009566635781272587,
+            "initialPlanarityWeight": 10000,
+            "supportClearanceMeanEdges": 0.0001,
+            "independentPlanarityConstraints": 1,
+            "iterationLimit": 400,
+            "globalMinimumEstablished": false,
+            "certified": false
+          },
+          "symmetry": {
+            "group": "Cs",
+            "order": 2,
+            "properOrder": 1,
+            "complete": true,
+            "certified": false
+          },
+          "sourceFingerprint": "24ba099abcf5d74797dfe2823d8040a4ad89a0c7c8ceae962b26df8d4e4d025e",
+          "references": [
+            "https://www.orchidpalms.com/polyhedra/acrohedra/nearmiss/jsmn.htm"
+          ],
+          "numericContract": "Original float64 local fit; fixed incidence; approximate faces; no global optimality or exact regularity certificate.",
+          "publishedComparison": {
+            "source": "https://www.orchidpalms.com/polyhedra/acrohedra/nearmiss/jsmn.htm",
+            "entry": "Number 7 and its two square augmentations",
+            "published": {
+              "aggregateEdgeErrorUnitEdge": 0.194,
+              "aggregateAngleDeviationDegrees": 34.0,
+              "diagonalError": 0.0
+            },
+            "referenceMeasured": {
+              "aggregateEdgeErrorUnitEdge": 0.1918520598573321,
+              "aggregateAngleDeviationDegrees": 33.6347206658361
+            },
+            "absoluteTolerance": {
+              "aggregateEdgeErrorUnitEdge": 0.005,
+              "aggregateAngleDeviationDegrees": 0.5
+            },
+            "passed": true,
+            "scope": "Independent regular-square/pentagon reference with triangular distortion. Catalog fit subsequently allows every face to vary, so its maxima and aggregate errors differ."
+          }
+        }
+      }
+    }
+  ]
+}

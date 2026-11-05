@@ -136,16 +136,24 @@ test('external export blocks programmatic configure/play/seek/reset/capture and 
 });
 
 function controls(f){
-  globalThis.document={activeElement:null};const nodes=new Map();for(const id of ['method','center','radius','ratio','duration','loop','apply','play','pause','reset','scrub','result'])nodes.set(id,{value:({method:'expansion',center:'0, 0, 0',radius:'sqrt(4)',ratio:'1/4',duration:'1+1',scrub:'0'})[id]??'',checked:false,disabled:false});
+  globalThis.document={activeElement:null};const nodes=new Map();for(const id of ['method','center','radius','ratio','duration','loop','colors','apply','play','pause','reset','scrub','result'])nodes.set(id,{value:({method:'expansion',center:'0, 0, 0',radius:'sqrt(4)',ratio:'1/4',duration:'1+1',scrub:'0'})[id]??'',checked:false,disabled:false});
   nodes.get('method').options=['sizing','truncation','augmentation','expansion','tilting-quads','tilting-triangles','tilting-to-compound','tilting-to-rectify','via-snub'].map(value=>({value}));
   const c=new DualMorphControls(f.context,{mount:false});c.panel={querySelector:s=>nodes.get(s==='select'?'method':s.replace('#dual-morph-','')),querySelectorAll:()=>[...nodes.values()]};return {c,nodes};
 }
+
+test('color interpolation checkbox is saved atomically and restored with saved morph settings',async()=>{
+  const f=fixture(),{c,nodes}=controls(f);nodes.get('colors').checked=true;
+  f.context.evaluateMany=async xs=>xs.map(x=>({'sqrt(4)':2,'1/4':.25,'1+1':2,'0':0})[x]);
+  await c.applyInputs();assert.equal(f.state.view.dualMorph.interpolateColors,true);
+  nodes.get('colors').checked=false;c.sync();assert.equal(nodes.get('colors').checked,true);
+  f.state.view.dualMorph.interpolateColors=false;assert.throws(()=>c.checked(),/settings changed/);
+});
 
 test('new source forms reset the old reciprocal radius and choose an eligible method; saved forms retain settings',async()=>{
   const f=fixture(),{c,nodes}=controls(f);c.sync();nodes.get('radius').value='9';nodes.get('duration').value='12';
   const other=clone(f.state);other.model.dimension=4;other.model.embeddingDimension=4;
   f.doc.states.push(other);f.doc.cursor=1;c.sync();
-  assert.equal(nodes.get('method').value,'expansion');assert.equal(nodes.get('radius').value,'');assert.equal(nodes.get('duration').value,'5');
+  assert.equal(nodes.get('method').value,'sizing');assert.equal(nodes.get('radius').value,'');assert.equal(nodes.get('duration').value,'5');
   other.view.dualMorph={...settings(),radius:3,ratio:1,duration:7};c.sync();
   assert.equal(nodes.get('radius').value,3);assert.equal(nodes.get('play').textContent,'Replay');
   c.sync();assert.equal(nodes.get('radius').value,3);
@@ -175,7 +183,7 @@ test('controls batch numeric expressions atomically, retain center shape and res
   f.setExport(true);c.sync();assert.equal(nodes.get('apply').disabled,true);assert.equal(nodes.get('play').disabled,true);f.setExport(false);c.sync();assert.equal(nodes.get('apply').disabled,false);
   assert.deepEqual(nodes.get('method').options.map(({value,disabled})=>[value,disabled]),[['sizing',false],['truncation',false],['augmentation',false],['expansion',false],['tilting-quads',false],['tilting-triangles',false],['tilting-to-compound',false],['tilting-to-rectify',false],['via-snub',true]]);
   const four=fixture();four.state.model.dimension=4;four.state.model.embeddingDimension=4;const other=controls(four);other.c.sync();
-  assert.deepEqual(other.nodes.get('method').options.map(({value,disabled})=>[value,disabled]),[['sizing',true],['truncation',true],['augmentation',true],['expansion',false],['tilting-quads',false],['tilting-triangles',true],['tilting-to-compound',true],['tilting-to-rectify',true],['via-snub',true]]);
+  assert.deepEqual(other.nodes.get('method').options.map(({value,disabled})=>[value,disabled]),[['sizing',false],['truncation',false],['augmentation',true],['expansion',false],['tilting-quads',false],['tilting-triangles',true],['tilting-to-compound',true],['tilting-to-rectify',true],['via-snub',true]]);
 });
 test('held expression/native form changes and cancel reject publication; camera-only motion remains allowed',async()=>{
   for(const change of ['expression','native','cancel']){const f=fixture(),{c,nodes}=controls(f),held=deferred();

@@ -1,7 +1,19 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {selectStellationCells,StellationCellControls} from '../ui/stellation-cell-controls.mjs';
+import {StellationControls} from '../ui/stellation.js';
 const graph=()=>({sourceFingerprint:'source-fingerprint',arrangementSha256:'owned-arrangement',nodes:[{id:0,selectable:true,outsidePlaneCount:0,supports:[]},{id:1,selectable:true,outsidePlaneCount:1,supports:[0]},{id:2,selectable:true,outsidePlaneCount:1,supports:[0]},{id:3,selectable:false,outsidePlaneCount:2,supports:[1,2]}],adjacency:{0:[1,2],1:[0,3],2:[0,3],3:[1,2]},exteriorSeedIds:[3]});
+
+test('canceled stellation preparation cannot retain a late arrangement or start subsequent union work',async()=>{
+  const state={model:{fingerprint:'same'}},controller=new AbortController(),calls=[];let resolve;
+  const hold=new Promise(done=>resolve=done),settings={boxScale:3,planeIds:null,diagramPlane:0,selectedRegions:[0]};
+  const controls=Object.assign(Object.create(StellationControls.prototype),{sequence:0,config:()=>settings,getState:()=>state,
+    run:async(op,_params,_model,_label,options)=>{assert.equal(options.signal,controller.signal);calls.push(op);return hold;},
+    markDirty:()=>{throw Error('A canceled arrangement must not modify the project');}});
+  const pending=controls.evaluate(state.model,state,{signal:controller.signal});controller.abort();resolve({regions:[]});
+  assert.deepEqual(await pending,{model:null,stale:true});assert.equal(state.arrangement,undefined);assert.deepEqual(calls,['arrangement']);
+  assert.deepEqual(await controls.evaluate(state.model,state,{signal:controller.signal}),{model:null,stale:true});assert.equal(calls.length,1);
+});
 test('independent cavity/opening/unknown graph, exact source IDs, support and layer selection',()=>{
  assert.deepEqual(selectStellationCells(graph(),[1,2],'fill'),[0,1,2]);assert.deepEqual(selectStellationCells(graph(),[1],'fill'),[1]);assert.deepEqual(selectStellationCells(graph(),[],'supports',1),[0,1]);assert.deepEqual(selectStellationCells(graph(),[],'layer',1),[1,2]);
  const unknown=graph();unknown.exteriorSeedIds.push(0);assert.deepEqual(selectStellationCells(unknown,[1,2],'fill'),[1,2]);unknown.nodes[0].facetAdjacencyUnresolved=true;assert.throws(()=>selectStellationCells(unknown,[],'supports',1),/uncertain/);assert.throws(()=>selectStellationCells(graph(),[3],'fill'));

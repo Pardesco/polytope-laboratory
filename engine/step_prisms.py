@@ -63,3 +63,14 @@ def step_prism(n, step, radius=1.0):
         'parameters': {'n': n, 'step': step, 'radius': radius},
         'definitionSource': DEFINITION}
     return result
+
+
+def gyrochoron(n,step,radius=1.):
+    from .operations import dual
+    source=step_prism(n,step,radius)
+    result=dual(source,center=[0,0,0,0],radius=radius)
+    result['name']=f'{n}-{step} gyrochoron'
+    result['metadata']['gyrochoron']={'parameters':{'n':n,'step':step,'radius':radius},
+        'definition':'Origin-centered polar dual of the correlated-vertex step prism, with reciprocation sphere radius equal to factor radius.',
+        'sourceStepPrismFingerprint':source['fingerprint'],'certified':False}
+    return result

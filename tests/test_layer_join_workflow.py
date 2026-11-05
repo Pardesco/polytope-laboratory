@@ -265,6 +265,6 @@ def test_json_lines_continue_after_syntax_nonfinite_and_compact_schema_errors():
     replies=protocol(['{"op":','undefined',json.dumps(bad),json.dumps(nonfinite),json.dumps(good)])
     assert [r['ok'] for r in replies]==[False,False,False,False,True]
     assert [r['id'] for r in replies]==[None,None,'bad','nonfinite','good']
-    assert [r['type'] for r in replies[:2]]==['JSONDecodeError','JSONDecodeError']
+    assert [r['type'] for r in replies[:2]]==['GeometryError','GeometryError']
     assert all(r['type']=='GeometryError' for r in replies[2:4])
     assert counts(replies[4]['result'])==(9,20,18,7)

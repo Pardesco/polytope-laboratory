@@ -9,6 +9,7 @@ import uuid
 import numpy as np
 
 from .geometry import GeometryError, MAX_VERTICES, TOLERANCE, identity, rank, validate
+from .input_limits import input_boundary, line_limit
 
 MAX_FILE_BYTES = 128 * 1024 * 1024
 MAX_PAIRS = 1_000_000
@@ -78,13 +79,14 @@ def _pairs(text):
         raise GeometryError('DXF text contains an invalid Unicode value.') from exc
     if encoded_size > MAX_FILE_BYTES:
         raise GeometryError('DXF file exceeds the 128 MiB limit.')
+    line_limit(text, 2 * MAX_PAIRS, f'DXF group-pair ({MAX_PAIRS:,} pairs)')
     lines = text.lstrip('\ufeff').splitlines()
     while lines and not lines[-1].strip():
         lines.pop()
     if len(lines) % 2:
         raise GeometryError('DXF must contain complete group-code/value pairs.')
     if len(lines) // 2 > MAX_PAIRS:
-        raise GeometryError('DXF group-pair resource limit exceeded.')
+        raise GeometryError(f'DXF group-pair resource limit exceeded: at most {MAX_PAIRS:,} pairs.')
     pairs = []
     for i in range(0, len(lines), 2):
         code = _integer(lines[i].strip(), f'group code at line {i+1}')
@@ -244,6 +246,7 @@ class _Builder:
         self.vertices, self.sources, self.faces, self.face_sources = [], [], [], []
         self.edges, self.edge_index, self.edge_sources = [], {}, []
         self.exact, self.grid, self.comparisons = {}, {}, 0
+        self.layer = '0'
 
     def _cell(self, point):
         tn, td = self.tolerance.as_integer_ratio()
@@ -251,29 +254,29 @@ class _Builder:
 
     def vertex(self, point, entity, slot):
         if len(self.sources) >= MAX_SOURCE_VERTICES:
-            raise GeometryError('DXF source-vertex resource limit exceeded.')
-        key = tuple(point)
+            raise GeometryError(f'DXF source-vertex resource limit exceeded: at most {MAX_SOURCE_VERTICES:,} occurrences.')
+        key = (self.layer, tuple(point))
         found = self.exact.get(key)
         cell = None
         if found is None and self.tolerance:
             cell = self._cell(point)
             candidates = sorted(v for delta in product((-1, 0, 1), repeat=3)
-                                for v in self.grid.get(tuple(a+b for a, b in zip(cell, delta)), []))
+                                for v in self.grid.get((self.layer, tuple(a+b for a, b in zip(cell, delta))), []))
             for candidate in candidates:
                 self.comparisons += 1
                 if self.comparisons > MAX_WELD_COMPARISONS:
-                    raise GeometryError('DXF welding comparison resource limit exceeded.')
+                    raise GeometryError(f'DXF welding comparison resource limit exceeded: at most {MAX_WELD_COMPARISONS:,} comparisons.')
                 if math.dist(point, self.vertices[candidate]) <= self.tolerance:
                     found = candidate
                     break
         if found is None:
             if len(self.vertices) >= MAX_VERTICES:
-                raise GeometryError('DXF retained-vertex resource limit exceeded.')
+                raise GeometryError(f'DXF retained-vertex resource limit exceeded: at most {MAX_VERTICES:,} vertices.')
             found = len(self.vertices)
             self.vertices.append(point)
             if self.tolerance:
                 cell = cell or self._cell(point)
-                self.grid.setdefault(cell, []).append(found)
+                self.grid.setdefault((self.layer, cell), []).append(found)
         self.exact[key] = found
         source = len(self.sources)
         self.sources.append({'entity': entity, 'slot': slot, 'coordinates': point, 'modelVertex': found})
@@ -306,6 +309,7 @@ class _Builder:
         return index
 
 
+@input_boundary('DXF import')
 def parse_dxf(text, name='DXF import', *, weld_tolerance=0.0):
     """Return a validated WCS XYZ complex. Welding is absolute in source units."""
     if isinstance(weld_tolerance, bool) or not isinstance(weld_tolerance, (int, float)):
@@ -332,23 +336,29 @@ def parse_dxf(text, name='DXF import', *, weld_tolerance=0.0):
     layers, header = _layers(sections.get('TABLES', [])), _header(sections.get('HEADER', []))
     records = _records(sections['ENTITIES'])
     if len(records) > MAX_ENTITIES:
-        raise GeometryError('DXF entity resource limit exceeded.')
+        raise GeometryError(f'DXF entity resource limit exceeded: at most {MAX_ENTITIES:,} records.')
     builder, entities, warnings = _Builder(tolerance), [], []
     i = 0
     while i < len(records):
         record = records[i]
         kind, fields = record['type'], record['fields']
-        if kind not in {'3DFACE', 'LINE', 'POINT', 'POLYLINE'}:
+        if kind in {'3DSOLID','REGION','BODY'}:
+            raise GeometryError(f'DXF {kind} contains ACIS solid/region data, which is unsupported. Export tessellated 3DFACE or POLYLINE meshes; no partial model returned.')
+        if kind not in {'3DFACE', 'LINE', 'POINT', 'POLYLINE', 'LWPOLYLINE'}:
             raise GeometryError(f'DXF unsupported entity {kind} at record {i}; no partial model returned.')
         source_id = len(entities)
         info = _style(record, layers)
         entities.append(info)
+        builder.layer = info['layer']
         if kind in {'POINT', 'LINE'}:
             points = [_point(fields)] + ([_point(fields, 11)] if kind == 'LINE' else [])
             mapped = [builder.vertex(point, source_id, k) for k, point in enumerate(points)]
             info['modelVertices'] = [v for v, source in mapped]
             if kind == 'LINE':
                 info['modelEdges'] = [builder.edge(*info['modelVertices'], {'entity': source_id, 'kind': 'LINE'})]
+        elif kind == 'LWPOLYLINE':
+            from .dxf_breadth import lightweight
+            lightweight(fields, info, builder, source_id)
         elif kind == '3DFACE':
             points = [_point(fields, code) for code in (10, 11, 12)]
             fourth = any(_one(fields, code) is not None for code in (13, 23, 33))
@@ -366,6 +376,11 @@ def parse_dxf(text, name='DXF import', *, weld_tolerance=0.0):
             info.update(modelFaces=[face], invisibleEdgeFlags=mask, implicitFourthCorner=not fourth)
         else:
             flags = _int(fields, 70)
+            if flags & 16:
+                from .dxf_breadth import polygon_mesh
+                i = polygon_mesh(records, i, info, builder, source_id)
+                i += 1
+                continue
             if not flags & 64 or flags & ~(64 | 128):
                 raise GeometryError('DXF POLYLINE supports polyface meshes (flag 64) only.')
             declared = [_int(fields, code) for code in (71, 72)]
@@ -438,6 +453,9 @@ def parse_dxf(text, name='DXF import', *, weld_tolerance=0.0):
              'provenance': {'operation': 'import-dxf', 'algorithmVersion': '0.1.0',
                             'sourceSha256': hashlib.sha256(text.encode('utf-8')).hexdigest(),
                             'parameters': {'weldTolerance': tolerance}}}
+    from .dxf_breadth import layer_components
+    model['components'] = layer_components(builder, entities)
+    metadata['dxf']['welding']['crossLayerWelding'] = False
     model['validation'] = validate(model)
     if not model['validation']['passed']:
         raise GeometryError('Invalid DXF incidence: ' + '; '.join(model['validation']['errors']))

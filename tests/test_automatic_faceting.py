@@ -193,8 +193,8 @@ def test_duplicate_source_cycle_colors_are_not_arbitrarily_assigned():
     {'max_face_vertices':True},{'max_face_vertices':9},{'max_candidates':0},
     {'max_cycles_per_plane':10**500},{'node_limit':0},{'node_limit':True},
     {'result_limit':129},{'cancelled':True},{'criteria':{'accept_partial':1}},
-    {'criteria':{'criterion':'isohedral'}},{'criteria':{'spiky':True}}])
-def test_invalid_options_and_unimplemented_baseline_filters_fail_explicitly(kwargs):
+    {'criteria':{'criterion':'isohedral'}},{'criteria':{'spiky':1}}])
+def test_invalid_options_and_malformed_filters_fail_explicitly(kwargs):
     with pytest.raises(GeometryError):enumerate_facetings(tetra(),**kwargs)
 
 
@@ -633,8 +633,8 @@ def test_partial_crossed_faceting_has_three_result_types_and_retains_its_literal
     {'max_faces_per_plane':False},{'max_faces_per_plane':10**500},
     {'plane_face_counts':[]},{'plane_face_counts':{'unknown':1}},
     {'plane_face_counts':{'unknown':True}},{'plane_face_counts':{'unknown':-1}},
-    {'plane_face_counts':{'\ud800':1}}, {'tidy_dual':True},{'spiky':True}])
-def test_invalid_type_plane_and_still_unsupported_dual_spiky_filters_refuse_atomically(criteria):
+    {'plane_face_counts':{'\ud800':1}}, {'tidy_dual':1},{'spiky':1}])
+def test_invalid_type_plane_and_malformed_dual_spiky_filters_refuse_atomically(criteria):
     source=tetra();before=deepcopy(source)
     with pytest.raises(GeometryError):enumerate_facetings(source,criteria=criteria)
     assert source==before

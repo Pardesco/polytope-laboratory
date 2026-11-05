@@ -5,7 +5,7 @@ async function main(){
   const env={...process.env,POLYTOPE_TEST_USER_DATA:profile};delete env.ELECTRON_RUN_AS_NODE;delete env.POLYTOPE_TEST_MODE;
   const app=await require('playwright')._electron.launch({executablePath:require('electron'),args:[root],cwd:root,env});
   try{
-    const page=await app.firstWindow(),errors=[];page.on('pageerror',error=>errors.push(error.message));
+    const page=await app.firstWindow();require('./smoke-helpers.cjs').autoReveal(page),errors=[];page.on('pageerror',error=>errors.push(error.message));
     await page.waitForFunction(()=>document.getElementById('model-name')?.textContent==='Tesseract');
     for(const mode of ['anaglyph','parallel','cross-eyed','none']){
       await page.locator('#stereo-mode').selectOption(mode);

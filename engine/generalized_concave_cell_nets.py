@@ -200,7 +200,7 @@ def _ordinary_cell_net(model,qualification,root=0,connections=None,placements=No
             'validation':{'allCellsRepresented':len(records)==len(cells),'rigidityPreserved':True,'connectedFacesJoined':True,'maxRigidDistanceError':rigid_error,
                           'maxConnectedFaceGap':max(gaps,default=0),'commonHyperplaneResidual':residual*span,'tolerance':tolerance,'cellIntersectionsChecked':False},
             'intersectionPolicy':'Complete intact cells retained; intersections between arranged cells are ignored.'}
-    result['sourceFaceTriangles']=qualification['faceTriangles']
+    if qualification['faceTriangles'] is not None:result['sourceFaceTriangles']=qualification['faceTriangles']
     return result
 
 

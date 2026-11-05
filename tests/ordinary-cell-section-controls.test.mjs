@@ -60,6 +60,15 @@ test('native complete concave/holed sections drive production Viewer colors and 
  await assert.rejects(()=>workflow.promote(result),/ownership changed|result.*changed/);assert.equal(published.length,0);
 });
 
+test('active-only cancellation preserves completed section receipts and permits promotion retry',async()=>{
+ const f=structuredClone(fixtures[0]),{c,published}=context(f),workflow=new OrdinaryCellSectionWorkflow(c),result=await workflow.evaluate(f.params),generation=workflow.generation;
+ assert.equal(workflow.cancelActive(),false);assert.equal(workflow.generation,generation);
+ const run=c.run;let release;c.run=()=>new Promise(resolve=>release=resolve);
+ const canceled=workflow.promote(result);await new Promise(resolve=>setImmediate(resolve));assert.equal(workflow.cancelActive(),true);assert.equal(workflow.generation,generation);
+ release(f.history);await assert.rejects(canceled,{name:'AbortError'});assert.equal(published.length,0);
+ c.run=run;await workflow.promote(result);assert.equal(published.length,1);
+});
+
 test('complete-cell derived mode refreshes depth animation and independent saved tour native routing without changing other mode fences',async()=>{
  const f=structuredClone(fixtures[0]),state=f.state;state.view={...display,...state.view};delete state.view.elementAnnotations;
  let refreshed=0,drawn=0;const base=actualViewer(state.model),derived=actualViewer(f.result.model);derived.draw=()=>drawn++;
@@ -67,10 +76,10 @@ test('complete-cell derived mode refreshes depth animation and independent saved
  try{await renderer.renderTracks({source:{modelId:state.model.id,fingerprint:state.model.fingerprint},view:{...state.view,sectionOffset:.4},frame:{sectionOffset:.4},foldNet:null,baseExplosion:null},{});assert.equal(refreshed,1);assert.equal(state.view.sectionOffset,.4);assert.strictEqual(derived.model,f.moved.model);assert.ok(drawn>0);}
  finally{base.clear();derived.clear();}
  const calls=[],nodes=[],createElement=()=>({dataset:{},style:{},append(){},remove(){}}),host={append(node){nodes.push(node);}};
- class LayerViewer{constructor(){this.renderer={dispose(){},forceContextLoss(){}};this.controls={dispose(){}};this.model=null;}clear(){}resize(){}setModel(model){this.model=model;}setDisplay(view){this.view=view;}restoreCamera(){}fit(){}draw(){}async prepareCapture(){return {};}}
+ class LayerViewer{constructor(){this.renderer={dispose(){},forceContextLoss(){}};this.controls={dispose(){}};this.model=null;}clear(){}resize(){}setModel(model){this.model=model;}setSectionModel(model,source,{mode='section'}={}){this.setModel(model);this.sectionMaterialSource=source;this.sectionMaterialMode=mode;}setDisplay(view){this.view=view;}restoreCamera(){}fit(){}draw(){}async prepareCapture(){return {};}}
  let held=false,release;const factory=createAnimatedTourLayerFactory({host,createElement,ViewerClass:LayerViewer,run:async(op,params,model)=>{calls.push({op,params,model});return held?new Promise(resolve=>release=resolve):structuredClone(f.moved);}});
  const layer=factory({slot:0,getState:()=>state,width:320,height:200,isCurrent:()=>true});
- try{await layer.refreshDerived();assert.equal(calls.length,1);assert.equal(calls[0].op,'section');assert.equal(calls[0].params.section_domain,'ordinary-cells');assert.equal(calls[0].params.offset,.4);assert.strictEqual(calls[0].model,state.model);assert.deepEqual(layer.netViewer.model,f.moved.model);
+ try{await layer.refreshDerived();assert.equal(calls.length,1);assert.equal(calls[0].op,'section');assert.equal(calls[0].params.section_domain,'ordinary-cells');assert.equal(calls[0].params.offset,.4);assert.strictEqual(calls[0].model,state.model);assert.deepEqual(layer.netViewer.model,f.moved.model);assert.strictEqual(layer.netViewer.sectionMaterialSource,state.model);assert.equal(layer.netViewer.sectionMaterialMode,'cell-section');
   const previous=layer.netViewer.model;held=true;const pending=layer.refreshDerived();await new Promise(r=>setImmediate(r));state.view.sectionOffset=.6;release(f.result);await assert.rejects(()=>pending,/cancelled/);assert.strictEqual(layer.netViewer.model,previous);
  }
  finally{layer.dispose();}

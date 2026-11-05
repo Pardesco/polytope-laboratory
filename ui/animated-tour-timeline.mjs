@@ -3,6 +3,7 @@
 import {normalizeTour,TOUR_LIMITS} from './tour.mjs';
 import {normalizeTransition,evaluateTransition} from './transitions.mjs';
 import {normalizeSequence,evaluateNormalized,ANIMATION_LIMITS} from './animation.mjs';
+import {dualTourTransition} from './dual-tour-transition.mjs';
 
 export const ANIMATED_TOUR_LIMITS=Object.freeze({events:TOUR_LIMITS.events,
   bytes:TOUR_LIMITS.totalBytes,intervals:200,duration:366000,
@@ -85,7 +86,12 @@ export function prepareAnimatedTourTimeline(value,{loop=false}={}){
   const result=Object.freeze({version:1,tour,loop,duration,
     intervals:Object.freeze(intervals),eventStarts:Object.freeze(eventStarts),
     scope:'presentation plan; source geometry unchanged; native/render/capture qualification required'});
-  owned.set(result,{animations});return result;
+  const morphs=new Map();
+  for(const interval of intervals)if(interval.kind==='transition'&&tour.events[interval.index].transition.method==='morph-to-dual'){
+    const event=tour.events[interval.index],sequence=animations[interval.index],terminal=sequence?evaluateNormalized(sequence,sequence.loop?event.duration%sequence.duration:Math.min(event.duration,sequence.duration)):null;
+    morphs.set(interval.index,freeze(dualTourTransition(event.state,tour.events[interval.nextIndex].state,event.transition,terminal)));
+  }
+  owned.set(result,{animations,morphs});return result;
 }
 function checked(timeline){
   const data=owned.get(timeline);if(!data)fail('Use an owned prepared animated tour timeline; foreign or forged plans are unsupported.');
@@ -124,7 +130,12 @@ export function evaluateAnimatedTour(timeline,time){
   if(interval.kind==='hold')layers=[layer(timeline,data,interval.index,localTime,'active',identity)];
   else{
     const event=timeline.tour.events[interval.index],poses=evaluateTransition(event.transition,localTime);
-    layers=[layer(timeline,data,interval.index,event.duration,'outgoing',poses.outgoing),
+    const morph=data.morphs.get(interval.index);
+    if(morph){
+      const time=poses.incoming.opacity*event.transition.duration;
+      layers=[Object.freeze({...layer(timeline,data,interval.index,event.duration,'outgoing',identity),state:morph.state,dualTarget:morph.target,
+        animation:Object.freeze({sequence:morph.sequence,time,frame:freeze(evaluateNormalized(morph.sequence,time))})})];
+    }else layers=[layer(timeline,data,interval.index,event.duration,'outgoing',poses.outgoing),
       layer(timeline,data,interval.nextIndex,0,'incoming',poses.incoming)];
   }
   return Object.freeze({time,duration,index:interval.index,phase:interval.kind,localTime,

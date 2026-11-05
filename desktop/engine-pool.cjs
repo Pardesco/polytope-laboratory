@@ -1,5 +1,26 @@
 // Reuse Python imports for frequent pure calculations. Other jobs stay isolated.
 const REUSABLE_OPERATIONS=new Set(['section','net','net-edit','net-fold','net-pack','cell-net','cell-net-edit','export-options','prepare-export','catalog','generate','expression','expression-batch','analyze','validate','dual','prepare-dual-morph','evaluate-dual-morph']);
+REUSABLE_OPERATIONS.add('live-construction-preview');
+for(const op of ['net-reinforcement','net-measurements','net-reinforcement-pages','net-reinforcement-parts','net-measurement-export'])REUSABLE_OPERATIONS.add(op);
+REUSABLE_OPERATIONS.add('element-types');
+REUSABLE_OPERATIONS.add('coxeter-build');
+REUSABLE_OPERATIONS.add('uniform-compound');
+REUSABLE_OPERATIONS.add('information-panel');
+REUSABLE_OPERATIONS.add('polychoron-relationships');
+REUSABLE_OPERATIONS.add('incidence-truncate-preview');
+REUSABLE_OPERATIONS.add('verify-dual-tour');
+REUSABLE_OPERATIONS.add('symmetry-orientation');
+REUSABLE_OPERATIONS.add('geometry-fit-deviation');
+REUSABLE_OPERATIONS.add('symmetry-axes');
+for(const op of ['facet-candidates','facet-search','facet-diagram'])REUSABLE_OPERATIONS.add(op);
+REUSABLE_OPERATIONS.add('prepare-printable-export');
+REUSABLE_OPERATIONS.add('prepare-view-export');
+for(const op of ['stellation-cell-graph','stellation-diagram-data','arrangement-diagram','stellation-enumerate','arrangement','stellation-union'])REUSABLE_OPERATIONS.add(op);
+REUSABLE_OPERATIONS.add('stellation-supported-enumerate');
+REUSABLE_OPERATIONS.add('stellation-miller-enumerate');
+// These queries compute from each full JSON-lines request. Reuse imports only;
+// no result/identity shortcut or renderer publication guard is introduced.
+for(const op of ['measure','entity-measure','entity-info','dihedral','align-section','entity-orientation','cell-facing','vertex-figure','cell','element-content-describe'])REUSABLE_OPERATIONS.add(op);
 class EnginePool{
   constructor({spawnWorker,jobs=new Map(),maxWorkers=3,timeoutMs=120000,idleTimeoutMs=60000,maxBytes=128*1024*1024}){
     this.spawnWorker=spawnWorker;this.jobs=jobs;this.maxWorkers=maxWorkers;

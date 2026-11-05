@@ -19,6 +19,21 @@ function compare(f){
   else assert.notStrictEqual(actual.notes,entry.state.notes);
 }
 
+test('dense array checks retain nonenumerable data semantics and refuse disguised custom keys',()=>{
+  const f=fixture(),array=[1,2,3];f.model.metadata.array=array;
+  Object.defineProperty(array,'1',{enumerable:false});
+  Object.defineProperty(array,'hidden',{value:()=>assert.fail('Hidden data invoked'),enumerable:false});
+  compare(f);const owner=captureNativeSource(f.context);verifyNativeSource(f.context,owner);
+  for(const key of ['custom','01','-1','4294967295']){
+    Object.defineProperty(array,key,{value:0,enumerable:true,configurable:true});
+    assert.throws(()=>memorySourceSignature(f.state,source(f)),/custom array/);
+    assert.throws(()=>storeMemory(undefined,1,f.state,source(f)),/custom array/);
+    delete array[key];verifyNativeSource(f.context,owner);
+  }
+  let reads=0;Object.defineProperty(array,'1',{get(){reads++;return 2;},enumerable:false,configurable:true});
+  assert.throws(()=>memorySourceSignature(f.state,source(f)),/accessors/);assert.equal(reads,0);
+});
+
 test('signatures exactly match validated detached memory JSON across numeric, Unicode, key order and prototype-looking data',()=>{
   const f=fixture();f.model.metadata={numbers:[-0,1e-9,1e21,Number.MIN_VALUE,Number.MAX_VALUE],
     strings:['quotes " and backslash \\',String.fromCharCode(0),String.fromCharCode(0xd800),'\u20ac\ud83d\ude00'],

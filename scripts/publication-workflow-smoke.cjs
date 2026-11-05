@@ -9,7 +9,7 @@ async function main(){
   let app,page;const errors=[],checks=[],findings={};
   try{
     app=await electron.launch({executablePath:runtime.executablePath,args:runtime.packaged?[]:[root],cwd:root,env,timeout:30000});
-    await app.evaluate(({dialog})=>{dialog.showMessageBox=async()=>({response:1});});page=await app.firstWindow();page.setDefaultTimeout(20000);page.on('pageerror',e=>errors.push(e.message));
+    await app.evaluate(({dialog})=>{dialog.showMessageBox=async()=>({response:1});});page=await app.firstWindow();require('./smoke-helpers.cjs').autoReveal(page);page.setDefaultTimeout(20000);page.on('pageerror',e=>errors.push(e.message));
     const settled=()=>page.waitForFunction(()=>document.getElementById('cancel').hidden);
     await page.waitForFunction(()=>document.getElementById('model-name')?.textContent==='Tesseract'&&document.getElementById('cancel').hidden);
     const observe=()=>page.evaluate(()=>{window.publicationStatuses=[];new MutationObserver(()=>window.publicationStatuses.push(document.getElementById('status').textContent)).observe(document.getElementById('status'),{childList:true,subtree:true,characterData:true});});await observe();
@@ -27,7 +27,7 @@ async function main(){
     const arm=op=>app.evaluate((_e,op)=>{const h=globalThis.publicationHarness;h.op=op;h.pending=[];h.requests=[];h.canceled=[];h.returned=0;},op);
     const held=()=>app.evaluate(async()=>{const end=Date.now()+10000;while(!globalThis.publicationHarness.pending.length){if(Date.now()>end)throw Error('Native result was not held');await new Promise(r=>setTimeout(r,10));}});
     const release=async()=>{await app.evaluate(()=>{const h=globalThis.publicationHarness;h.op=null;for(const p of h.pending)p.release();});await app.evaluate(async()=>{const end=Date.now()+10000;while(globalThis.publicationHarness.returned===0){if(Date.now()>end)throw Error('Native reply did not return');await new Promise(r=>setTimeout(r,10));}});};
-    const advanced=async()=>{if(!await page.locator('#inspector-region').isVisible())await page.locator('#toggle-inspector').click();await page.locator('[data-panel="evidence"]').click();};
+    const advanced=async()=>{if(!await page.locator('#inspector-region').isVisible())await page.locator('#toggle-inspector').click();await page.locator('[data-panel="evidence"]').click();await require('./smoke-helpers.cjs').reveal(page,'#certify-current');};
     const certify=async()=>{await advanced();await page.locator('#certify-current').click();await held();};
 
     await page.locator('#toggle-inspector').click();await page.locator('[data-panel="construct"]').click();

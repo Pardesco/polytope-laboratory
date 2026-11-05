@@ -9,7 +9,7 @@ async function main(){
   const folder=await fs.mkdtemp(path.join(artifacts,'ui-design-smoke-'));
   const env={...process.env,POLYTOPE_TEST_USER_DATA:path.join(folder,'profile')};delete env.ELECTRON_RUN_AS_NODE;
   const app=await electron.launch({executablePath:process.env.POLYTOPE_TEST_EXECUTABLE||require('electron'),args:process.env.POLYTOPE_TEST_EXECUTABLE?[]:[root],cwd:root,env});
-  const page=await app.firstWindow();page.setDefaultTimeout(30000);
+  const page=await app.firstWindow();require('./smoke-helpers.cjs').autoReveal(page);page.setDefaultTimeout(30000);
   const errors=[],checks=[],layouts=[];page.on('pageerror',error=>errors.push(error.message));
   const resize=async(width,height)=>{await app.evaluate(({BrowserWindow},{width,height})=>BrowserWindow.getAllWindows()[0].setContentSize(width,height),{width,height});await page.waitForTimeout(150);};
   const capture=async name=>{await page.screenshot({path:path.join(folder,name+'.png')});};

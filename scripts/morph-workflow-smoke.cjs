@@ -1,3 +1,4 @@
+const {openDisclosure}=require('./smoke-helpers.cjs');
 // Actual desktop input, layout, replay, capture and native-project round trip.
 const {_electron:electron}=require('playwright');
 const fs=require('node:fs/promises'),path=require('node:path'),assert=require('node:assert/strict');
@@ -13,9 +14,9 @@ async function main(){
   try{
     app=await electron.launch({executablePath:runtime.executablePath,args:runtime.packaged?[]:[root],cwd:root,env,timeout:30000});
     await app.evaluate(({dialog})=>{dialog.showMessageBox=async()=>({response:1});});
-    page=await app.firstWindow();page.setDefaultTimeout(30000);page.on('pageerror',error=>errors.push(error.message));
+    page=await app.firstWindow();require('./smoke-helpers.cjs').autoReveal(page);page.setDefaultTimeout(30000);page.on('pageerror',error=>errors.push(error.message));
     const ready=()=>page.waitForFunction(()=>document.getElementById('cancel').hidden);
-    const openPanel=async()=>{if(!await page.locator('#dual-morph-settings').evaluate(n=>n.open))await page.locator('#dual-morph-settings > summary').click();};
+    const openPanel=()=>openDisclosure(page,'dual-morph-settings');
     const save=async name=>{
       await ready();const file=path.join(folder,name+'.polyproj');
       await app.evaluate(({dialog},file)=>{dialog.showSaveDialog=async()=>({canceled:false,filePath:file});},file);
@@ -23,7 +24,7 @@ async function main(){
       return {file,project:JSON.parse(await fs.readFile(file,'utf8'))};
     };
     await page.waitForFunction(()=>document.getElementById('model-name')?.textContent==='Tesseract'&&document.getElementById('cancel').hidden);
-    assert.equal(await page.locator('#dual-morph-method').inputValue(),'expansion');
+    assert.equal(await page.locator('#dual-morph-method').inputValue(),'sizing'); // W29: convex 4D sources default to the first eligible inventory method (sizing), matching 3D.
     await openPanel();
     const layout=async()=>page.evaluate(()=>{
       const panel=document.getElementById('dual-morph-controls').getBoundingClientRect(),canvas=document.getElementById('base-canvas').getBoundingClientRect();
@@ -35,9 +36,9 @@ async function main(){
       const bounds=await layout();assert.equal(bounds.overflow,false);assert.ok(bounds.panel.top>=0&&bounds.panel.bottom<=bounds.shelfTop);
       assert.ok(bounds.panel.left>=0&&bounds.panel.right<=bounds.width);assert.ok(bounds.shelfHeight<60);assert.ok(bounds.canvasHeight>400);
     }
-    await page.locator('#dual-morph-settings > summary').focus();await page.keyboard.press('Escape');
+    await page.locator('#dual-morph-controls .chrome-drawer-close').focus();await page.keyboard.press('Escape');
     assert.equal(await page.locator('#dual-morph-settings').evaluate(n=>n.open),false);
-    await page.keyboard.press('Enter');assert.equal(await page.locator('#dual-morph-settings').evaluate(n=>n.open),true);
+    await page.keyboard.press('Enter');await page.locator('#open-dual-morph-settings').focus();await page.keyboard.press('Enter');assert.equal(await page.locator('#dual-morph-settings').evaluate(n=>n.open),true);
     await page.locator('#rotation-settings > summary').click();assert.equal(await page.locator('#dual-morph-settings').evaluate(n=>n.open),false);
     checks.push('eligible 4D default, bounded morph panel at two sizes, keyboard open/Escape and sibling disclosure');
 

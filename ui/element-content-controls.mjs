@@ -1,6 +1,7 @@
 import {NumericEntry} from './numeric-entry.mjs';
 import {prepareEmptySectionSourceContent,verifySectionSourcePose} from './section-source-content.mjs';
 import {captureNativeSource,verifyNativeSource} from './native-source-binding.mjs';
+import {snapshotDisplayValue,matchesDisplayValue} from './element-content-display-owner.mjs';
 
 export const ELEMENT_CONTENT_LIMITS=Object.freeze({pngBytes:4*1024*1024,markup:4096,listCharacters:128*1024,listEntries:1024});
 const names={vertex:'vertices',edge:'edges',face:'faces',cell:'cells'};
@@ -103,16 +104,25 @@ export class ElementContentControls{
   }
   cancel(){this.entry?.cancel();}
   invalidate(){if(!this.publishing)this.cancel();for(const job of this.jobs.values())job.controller.abort();this.jobs.clear();this.displayOwners=new WeakMap();this.loadedState=null;this.sync();}
-  displayOwner(viewer){
-    const state=this.context.getState(),document=this.context.getDocument?.(),{angles,...nonPoseView}=state?.view??{};
+  displayIdentity(viewer){
+    const state=this.context.getState(),document=this.context.getDocument?.();
     return {state,source:state?.model,document,project:this.context.getProject?.(),cursor:document?.cursor,states:document?.states,documentId:document?.id,
-      notes:JSON.stringify(state?.notes),unit:state?.model?.metadata?.coordinateUnits,view:JSON.stringify(nonPoseView),
-      annotations:state?.view?.elementAnnotations,content:annotationSignature(state),model:viewer.model,net:viewer.net,cellNet:viewer.cellNet,layer:viewer.elementContentLayer};
+      unit:state?.model?.metadata?.coordinateUnits,annotations:state?.view?.elementAnnotations,
+      model:viewer.model,net:viewer.net,cellNet:viewer.cellNet,layer:viewer.elementContentLayer};
+  }
+  displayOwner(viewer){
+    const identity=this.displayIdentity(viewer),{angles,...nonPoseView}=identity.state?.view??{};
+    return {...identity,notes:snapshotDisplayValue(identity.state?.notes),view:snapshotDisplayValue(nonPoseView)};
   }
   matchesDisplayOwner(viewer,owner){
     if(!owner)return false;
-    const current=this.displayOwner(viewer);
-    return Object.keys(current).every(key=>current[key]===owner[key]);
+    const current=this.displayIdentity(viewer);
+    if(!Object.keys(current).every(key=>current[key]===owner[key]))return false;
+    const {angles,...nonPoseView}=current.state?.view??{};
+    // The snapshot includes annotations once, including their literal nested
+    // source/assets. Comparing values still detects in-place edits; no identity
+    // or content hash stands in for the ordinary publication/capture checks.
+    return matchesDisplayValue(current.state?.notes,owner.notes)&&matchesDisplayValue(nonPoseView,owner.view);
   }
   // Only angle-only callers may request this path. A pending/failed refresh is
   // never a certificate; neither are IDs, counts or source fingerprints.

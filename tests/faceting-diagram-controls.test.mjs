@@ -23,7 +23,13 @@ class FixtureParser{
   parseFromString(text){
     const nodes=Array.from(text.matchAll(/<(\w+)\b([^>]*)>/g),m=>({localName:m[1],namespaceURI:'http://www.w3.org/2000/svg',
       attributes:Array.from(m[2].matchAll(/([\w:-]+)="([^"]*)"/g),a=>({name:a[1],value:a[2]}))}));
-    const root=nodes[0]??{localName:'invalid'};root.querySelectorAll=()=>nodes.slice(1);
+    for(const node of nodes){
+      node.getAttribute=name=>node.attributes.find(a=>a.name===name)?.value??null;
+      node.setAttribute=(name,value)=>{const attr=node.attributes.find(a=>a.name===name);if(attr)attr.value=value;else node.attributes.push({name,value});};
+      node.children=[];node.append=child=>node.children.push(child);
+      node.ownerDocument={createElementNS:(_ns,localName)=>({localName})};
+    }
+    const root=nodes[0]??{localName:'invalid'};root.querySelectorAll=selector=>selector==='*'?nodes.slice(1):nodes.slice(1).filter(n=>n.attributes.some(a=>['data-source-vertex-id','data-candidate-id','data-plane-id'].includes(a.name)));
     return {documentElement:root,querySelector:()=>null};
   }
 }
@@ -174,7 +180,7 @@ test('held linked preview uses publication fence and leaves no stale diagram or 
     catch(error){finished.resolve(error.message);throw error;}};
   const action=f.controls.apply('build');while(!entered)await tick();
   f.owner.getState().notes='new notes';const failed=assert.rejects(action,/changed/);held.resolve();await failed;
-  assert.match(await finished.promise,/changed/);assert.equal(f.previews.length,0);assert.equal(f.controls.reply,null);
+  assert.match(await finished.promise,/changed/);assert.equal(f.previews.filter(value=>value!=='cleared').length,0);assert.equal(f.controls.reply,null);
   assert.deepEqual(f.source,before);
 });
 
@@ -196,4 +202,30 @@ test('reflected replica removal removes its actual seed orbit and forged plane l
   assert.deepEqual(f.controls.reply,before);assert.equal(f.controls.picked,undefined);
   f.controls.pick(pick({'data-plane-id':replica.line.planeId,'data-candidate-id':replica.id}));f.controls.editPicked(true);
   assert.equal(f.controls.node('seeds').value,'');await f.controls.apply('build');assert.equal(f.controls.reply.diagram.selection.facets.length,0);
+});
+
+test('ordered vertex picking previews, saves, removes and undoes/redoes diagram edits without changing base geometry',async()=>{
+  const f=await fixture(),c=f.controls,before=clone(f.source);
+  await c.apply('build');c.editor.node('start').onclick();
+  const pick=vertex=>({target:{closest:()=>({getAttribute:key=>key==='data-source-vertex-id'?String(vertex):null})}});
+  c.pick(pick(1));c.pick(pick(2));assert.deepEqual(c.editor.pending,[0,1,2]);
+  await c.editor.node('finish').onclick();assert.equal(c.reply.previewModel.faces.length,1);
+  assert.equal(c.editor.node('facets').children.length,1);assert.equal(c.editor.node('base').disabled,false);
+  assert.equal(f.saved.length,1);assert.deepEqual(f.source,before);
+  await c.editor.node('undo').onclick();assert.equal(c.reply.previewModel,null);
+  assert.equal(c.editor.node('base').disabled,true);
+  await c.editor.node('redo').onclick();assert.equal(c.reply.previewModel.faces.length,1);
+  await c.editor.node('remove').onclick();assert.equal(c.reply.previewModel,null);
+  await c.editor.node('undo').onclick();assert.equal(c.reply.previewModel.faces.length,1);
+  const saved=clone(c.reply.state);await c.editor.node('base').onclick();
+  assert.equal(f.published[0][0],'facet-diagram-adopt');assert.deepEqual(f.published[0][1],{state:saved});
+});
+
+test('diagram restore leaves picked cycles editable and make-base publication rejects a changed source',async()=>{
+  const f=await fixture(),c=f.controls;await c.apply('build');
+  await c.editor.edit([f.pool.candidates[0].id]);c.invalidate();await c.apply('restore');
+  assert.equal(c.editor.node('facets').children.length,1);
+  const held=deferred();f.context.commit=async(op,params,label,options)=>{await held.promise;options.verifyPublication();f.published.push(params);};
+  const pending=c.apply('make-base');await tick();f.owner.getState().notes='changed';held.resolve();
+  await assert.rejects(pending,/changed/);assert.equal(f.published.length,0);
 });

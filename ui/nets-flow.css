@@ -1,0 +1,24 @@
+#net-panel .nets-step { margin: 0 0 24px; padding: 0; min-width: 0; }
+#net-panel .nets-step > h2 { display: flex; align-items: center; gap: 8px; margin: 0 0 16px; font-size: 14px; font-weight: 600; color: var(--text); }
+.nets-step-number { display: inline-grid; place-items: center; flex: 0 0 24px; height: 24px; border: 1px solid #657b93; border-radius: 50%; color: #d1e7ff; font-size: 12px; }
+#net-panel .nets-type-card { margin: 0 0 8px; padding: 8px; border: 1px solid var(--border); border-radius: 8px; background: #171d24; }
+#net-panel .nets-type-card[data-available="true"] { border-color: #617e9d; background: #1b2836; }
+#net-panel .nets-type-action { margin: 0; padding: 8px; text-align: left; white-space: normal; line-height: 1.4; font-weight: 600; }
+#net-panel .nets-type-action:disabled { opacity: 1; color: #9da9b6; background: #212830; }
+#net-panel .nets-type-card p { margin: 8px 0 0; font-size: 11px; }
+#net-panel .nets-type-reason { color: #b9c7d6; }
+#net-panel .nets-output-actions { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 8px; margin: 8px 0; }
+#net-panel .nets-output-actions button { min-width: 0; padding: 8px 4px; white-space: nowrap; }
+#net-panel #net-print { background: #294c70; border-color: #668bad; color: #f0f6ff; }
+#net-panel .net-history { display: flex; gap: 8px; margin: 8px 0; }
+#net-panel .net-history button { flex: 1; min-width: 0; }
+#net-panel .inspector-group { margin: 8px 0; }
+#net-panel label { gap: 8px; margin: 8px 0; }
+#net-panel label > span { min-width: 0; }
+#net-panel label > span input { max-width: 56px; }
+#net-panel button:focus-visible, #net-panel summary:focus-visible { outline: 2px solid #9dcdff; outline-offset: 2px; }
+#evidence-panel > #advanced-intro { margin: 0 0 16px; }
+#evidence-panel .advanced-section { margin: 0 0 16px; }
+#evidence-panel .advanced-section > h2 { margin: 16px 0 8px; font-size: 14px; font-weight: 600; }
+#net-panel .inspector-group > summary, #evidence-panel .inspector-group > summary { position: relative; padding-right: 40px; }
+#net-panel .inspector-group > summary .group-help, #evidence-panel .inspector-group > summary .group-help { position: absolute; right: 8px; top: 50%; transform: translateY(-50%); }

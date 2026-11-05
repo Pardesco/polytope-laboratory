@@ -11,6 +11,7 @@ from . import element_annotations as content
 
 INDEX_OPERATIONS = {'transform', 'scale-reference', 'spring-relaxation', 'sphere-project', 'reflect-source'}
 RETAINED_OPERATIONS = {'facet', 'facet-adopt'}
+RETAINED_OPERATIONS.add('facet-diagram-adopt')
 MAX_DETACHED = 8
 FIELDS = {'vertex': 'vertices', 'edge': 'edges', 'face': 'faces', 'cell': 'cells'}
 

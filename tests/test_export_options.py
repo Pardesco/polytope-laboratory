@@ -13,9 +13,9 @@ def availability(model):
 
 
 @pytest.mark.parametrize('key,available',[
-    ('cube', {'off','json','obj','stl','dxf','vrml','pov'}),
+    ('cube', {'off','json','obj','stl','dxf','vrml','pov','x3d'}),
     ('tesseract', {'off','json'}),
-    ('great-icosahedron', {'off','json','obj','dxf','vrml'}),
+    ('great-icosahedron', {'off','json','obj','dxf','vrml','x3d'}),
 ])
 def test_format_domains_are_enforced_before_serialization_or_file_selection(key, available, tmp_path):
     model = regular(key)
@@ -24,7 +24,11 @@ def test_format_domains_are_enforced_before_serialization_or_file_selection(key,
         if row['available']:
             assert not row['reason']
             result = prepare_export(model, format, include_text=True)
-            assert result['text'] == export_model(result['model'], format)
+            expected=export_model(result['model'], format)
+            if format=='obj':
+                expected=expected.replace('mtllib materials.mtl\n','mtllib __POLYTOPE_MTL__\n')
+                assert result['materials'].startswith('newmtl ')
+            assert result['text'] == expected
         else:
             assert row['reason']
             with pytest.raises(GeometryError):
@@ -51,8 +55,8 @@ def test_off_refuses_loose_edges_instead_of_writing_an_unreadable_header():
     assert not availability(model)['off']['available']
     with pytest.raises(GeometryError, match='edges outside face'):
         prepare_export(model, 'off')
-    for format in ('obj','vrml'):
-        assert any('Edges outside face' in loss for loss in prepare_export(model, format)['report']['losses'])
+    assert any('Edges outside face' in loss for loss in prepare_export(model, 'vrml')['report']['losses'])
+    assert 'l 1 8\n' in prepare_export(model, 'obj', include_text=True)['text']
     assert prepare_export(model,'json',include_text=True)['text']
     assert prepare_export(model,'dxf',include_text=True)['text']
 

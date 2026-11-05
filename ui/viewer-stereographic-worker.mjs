@@ -18,7 +18,7 @@ const abort=message=>Object.assign(Error(message),{name:'AbortError'});
 export function stereographicViewSignature(view){
   const fields=['projection','angles','fillRule','hiddenCells','isolatedCell','cellFacing','cellShrink','faces','edges','vertices','vertexStyle','edgeStyle','vertexRadius','edgeRadius','surfaceColors','surfaceOpacity','edgeOpacity','vertexSize','pickKind'];
   const selected={};for(const key of fields)selected[key]=view?.[key]??null;
-  selected.angles=view?.angles||[];selected.hiddenCells=view?.hiddenCells||[];
+  selected.prism=view?.appearance?.style==='prism';selected.angles=view?.angles||[];selected.hiddenCells=view?.hiddenCells||[];
   selected.frame=view?.orientationFrame?{matrix:view.orientationFrame.matrix??null,sourceFingerprint:view.orientationFrame.sourceFingerprint??null}:null;
   selected.cache=view?.cellFacingCache?{sourceFingerprint:view.cellFacingCache.sourceFingerprint??null,algorithmVersion:view.cellFacingCache.algorithmVersion??null}:null;
   return JSON.stringify(selected);

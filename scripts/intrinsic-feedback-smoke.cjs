@@ -6,7 +6,7 @@ async function main(){
  const runtime=await require('./hidden-runtime.cjs').hiddenRuntime(),env={...process.env,POLYTOPE_TEST_USER_DATA:profile};delete env.ELECTRON_RUN_AS_NODE;delete env.POLYTOPE_TEST_MODE;if(runtime.packaged)env.POLYTOPE_PYTHON=path.join(folder,'unavailable-python.exe');
  let app,page;const errors=[],findings={},checks=[];
  try{
-  app=await electron.launch({executablePath:runtime.executablePath,args:runtime.packaged?[]:[root],cwd:root,env,timeout:30000});await app.evaluate(({dialog})=>{dialog.showMessageBox=async()=>({response:1});});page=await app.firstWindow();page.setDefaultTimeout(20000);page.on('pageerror',e=>errors.push(e.message));
+  app=await electron.launch({executablePath:runtime.executablePath,args:runtime.packaged?[]:[root],cwd:root,env,timeout:30000});await app.evaluate(({dialog})=>{dialog.showMessageBox=async()=>({response:1});});page=await app.firstWindow();require('./smoke-helpers.cjs').autoReveal(page);page.setDefaultTimeout(20000);page.on('pageerror',e=>errors.push(e.message));
   const ready=()=>page.waitForFunction(()=>document.getElementById('cancel').hidden);
   await page.waitForFunction(()=>document.getElementById('model-name').textContent==='Tesseract'&&document.getElementById('cancel').hidden);
   await app.evaluate(({ipcMain})=>{const original=ipcMain._invokeHandlers.get('engine'),h=globalThis.intrinsicHarness={original,op:null,pending:[],returned:0};ipcMain.removeHandler('engine');ipcMain.handle('engine',async(event,request,id)=>{const held=request.op===h.op,result=await original(event,request,id);if(held)await new Promise(resolve=>h.pending.push({resolve,result}));h.returned++;return result;});});

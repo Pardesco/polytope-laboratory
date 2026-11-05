@@ -1,9 +1,12 @@
 import {NumericEntry} from './numeric-entry.mjs';
 import {holdObservationControls} from './observation-controls.mjs';
+import {holdExportPreview} from './export-preview.mjs';
 import {fitAnimationFrames} from './animation-framing.mjs';
 import {requireMorphAnimation} from './morph-animation-adapter.mjs';
 import {createSequence,normalizeSequence,evaluateNormalized,sequenceFrameTimes,setSequenceKeyframe,resizeSequence,withSequenceTracks} from './animation.mjs';
-import {recordRenderedVideo} from './video-recorder.mjs';
+import {recordRenderedVideo} from './deferred-media.mjs';
+import {recordRenderedGif} from './deferred-media.mjs';
+import {mediaControls,mediaControlKeys,readMediaControls,createViewerMediaSurface} from './media-export-options.mjs';
 import {requireTrackCapabilities,createTrackSweep,AnimationTrackSessions,captureAnimationView} from './animation-track-controls.mjs';
 
 const PLANES=['XY','XZ','XW','YZ','YW','ZW'];
@@ -39,9 +42,11 @@ export class AnimationControls {
       <div class="button-row"><button id="animation-play">Play</button><button id="animation-start">Go to start</button><button id="animation-end">Go to end</button></div>
       <label>Capture view <select id="animation-target"><option value="base">Base model</option><option value="section">Section</option><option value="net">Face net</option></select></label>
       <button id="animation-fit" class="wide">Fit export frames</button>
+      ${mediaControls('animation')}
+      <button id="animation-export" class="wide">Export selected format</button>
       <div class="button-row"><button id="animation-png">Export PNG frames</button><button id="animation-webm">Export WebM video</button></div>
       <button id="animation-cancel" class="wide" hidden>Cancel animation export</button>
-      <p class="muted">PNG and WebM include both endpoint poses.</p>
+      <p class="muted">All formats render exact saved poses offline at the target resolution, including both endpoints. GIF delays round to centiseconds (minimum 1). MP4 uses constant frame rate.</p>
       <output id="animation-progress"></output>`;
     this.nodes=Object.fromEntries([...this.container.querySelectorAll('[id]')].map(node=>[node.id.replace('animation-',''),node]));
     PLANES.forEach((label,index)=>this.nodes.plane.add(new Option(label,String(index))));
@@ -55,6 +60,7 @@ export class AnimationControls {
     this.nodes.start.onclick=wrap(()=>this.scrub(0));this.nodes.end.onclick=wrap(()=>this.scrub(this.sequence().duration));
     this.nodes.time.oninput=wrap(()=>this.scrub(Number(this.nodes.time.value)));
     this.nodes.png.onclick=wrap(()=>this.export('png'));this.nodes.webm.onclick=wrap(()=>this.export('webm'));this.nodes.cancel.onclick=()=>this.cancel();
+    this.nodes.export.onclick=wrap(()=>this.export(this.nodes.format.value));
     this.nodes.fit.onclick=wrap(()=>fitAnimationFrames(this));
     this.sync();
   }
@@ -147,11 +153,12 @@ export class AnimationControls {
     this.nodes.section.disabled=dimension<3;
     for(const name of ['duration','fps','loop','rotation','section','keyframe','play','start','end','time','png','webm','fit','target','turns','plane','explosion','fold','explosion-direction','explosion-endpoint','explosion-pose','fold-pose','morph','morph-pose','morph-endpoint'])if(this.editing||this.exporting||this.externalExporting())this.nodes[name].disabled=true;else this.nodes[name].disabled=name==='section'&&dimension<3;
     const caps=typeof this.context.capabilities==='function'?this.context.capabilities():this.context.capabilities;
+    for(const name of ['export',...mediaControlKeys])if(this.nodes[name])this.nodes[name].disabled=Boolean(this.editing||this.exporting||this.externalExporting());
     this.nodes['track-options'].hidden=!caps?.explosion&&!caps?.fold&&!caps?.morphRatio;this.nodes.morph.disabled||=caps?.morphRatio!==true||state.view.dualMorph?.enabled!==true;this.nodes['morph-pose'].disabled||=!sequence.tracks?.morphRatio;this.nodes['morph-pose'].value=state.view.dualMorph?.ratio??0;this.nodes.explosion.disabled||=caps?.explosion!==true;this.nodes.fold.disabled||=caps?.fold!==true;
     this.nodes['explosion-pose'].disabled||=!sequence.tracks?.explosion;this.nodes['fold-pose'].disabled||=!sequence.tracks?.fold;
     this.nodes['explosion-pose'].value=state.view.explosionAmount??0;this.nodes['fold-pose'].value=state.view.foldFraction??state.view.net?.fraction??0;
     this.nodes.target.querySelector('option[value="net"]').disabled=!sequence.tracks?.fold||!this.context.netViewer&&!this.context.sectionViewer;
-    if(state.view.dualMorph?.enabled===true){for(const name of ['explosion','fold','explosion-pose','fold-pose'])this.nodes[name].disabled=true;if(!sequence.tracks?.morphRatio){for(const name of ['play','start','end','time','png','webm','fit'])this.nodes[name].disabled=true;this.nodes.progress.textContent='Add a dual-morph ratio sweep to animate this enabled morph.';}this.nodes.section.disabled=true;}
+    if(state.view.dualMorph?.enabled===true){for(const name of ['explosion','fold','explosion-pose','fold-pose'])this.nodes[name].disabled=true;if(!sequence.tracks?.morphRatio){for(const name of ['play','start','end','time','png','webm','fit','export'])if(this.nodes[name])this.nodes[name].disabled=true;this.nodes.progress.textContent='Add a dual-morph ratio sweep to animate this enabled morph.';}this.nodes.section.disabled=true;}
   }
   assertActive(source,generation){this.assertNoExternalExport();if(this.generation!==generation || this.context.getState()!==source)throw canceled();}
   async apply(sequence,time,source,generation,{forceSection=false}={}){
@@ -204,6 +211,7 @@ export class AnimationControls {
   async export(format){
     this.assertNoExternalExport();requireMorphAnimation(this.context.getState(),this.sequence(),'Animation export');
     if(this.exporting)throw new Error('An animation export is already running.');
+    const options=readMediaControls(this.nodes,format);
     await this.configure();this.context.stopLegacy?.();this.pause();
     const source=this.context.getState(),sequence=this.sequence(),generation=this.generation,target=this.nodes.target.value;
     if(sequence.tracks?.morphRatio&&target!=='base')throw Error('Dual-morph export currently requires Base model capture; source sections/nets are not evaluated morph geometry.');
@@ -214,27 +222,32 @@ export class AnimationControls {
     if(!viewer)throw new Error('The requested capture view is unavailable.');
     const times=sequenceFrameTimes(sequence),originalTime=this.time,snapshot=captureAnimationView(source,this.context.getState);
     const controller=new AbortController();this.exportController=controller;this.exportView=snapshot;
-    this.exporting=true;this.exportAbort=false;this.update();this.context.onExportStateChange?.();let session=null;
-    let trackSession=null,observation=null;
+    this.exporting=true;this.exportAbort=false;let session=null;
+    let trackSession=null,observation=null,surface=null,preview=null;
     try{
-      if(format==='webm'&&(typeof VideoEncoder!=='function'||typeof VideoEncoder.isConfigSupported!=='function'||typeof VideoFrame!=='function'))throw new Error('Explicit-pose WebCodecs video encoding is unavailable. Export PNG frames instead.');
+      this.update();this.context.onExportStateChange?.();
+      // Lock observation before preparation and the native save dialog. Both
+      // can await for a long time; the captured camera must already be stable.
+      observation=holdObservationControls([this.context.viewer,this.context.sectionViewer,this.context.netViewer]);
+      preview=holdExportPreview([this.context.viewer,this.context.sectionViewer,this.context.netViewer]);
+      if(['webm','mp4'].includes(format)&&(typeof VideoEncoder!=='function'||typeof VideoEncoder.isConfigSupported!=='function'||typeof VideoFrame!=='function'))throw new Error('Explicit-pose WebCodecs video encoding is unavailable. Export GIF or PNG frames instead.');
       if(target==='section'){if(source.view.derivedMode!=='cell-section')source.view.derivedMode='section';snapshot.accept();}
       if(sequence.version>=2){trackSession=await this.trackSessions.prepare(sequence);this.assertActive(source,generation);}
       session=await this.context.api.animationBegin({format,name:source.model.name,fps:sequence.fps,frameCount:times.length,duration:sequence.duration});
       if(!session)return;
       this.assertActive(source,generation);
-      observation=holdObservationControls([this.context.viewer,this.context.sectionViewer,this.context.netViewer]);
       const check=()=>{this.assertActive(source,generation);if(this.exportAbort||controller.signal.aborted||this.exportController!==controller||!this.exporting)throw canceled();if(!snapshot.current())throw new Error('Animation source view changed; export cancelled.');};
       if(format==='png'){
+        surface=createViewerMediaSurface(viewer,options,message=>this.context.setStatus?.(message));
         for(let index=0;index<times.length;index++){
           check();await this.apply(sequence,times[index],source,generation,{forceSection:target==='section'});check();
-          await this.prepareCapture(viewer,check,controller.signal);const image=viewer.image();check();
+          await this.prepareCapture(viewer,check,controller.signal);if(surface){if(!viewer.createExportSurface)viewer.draw();surface.copy();}const image=surface?surface.canvas.toDataURL('image/png'):viewer.image();check();
           await this.context.api.animationWrite(session.id,index,image);check();
           this.nodes.progress.textContent=`Frame ${index+1} / ${times.length}`;
           // Yield so cancellation and document switches can interrupt long jobs.
           await delay(0);
         }
-      }else await this.recordVideo(viewer,sequence,times,source,generation,session.id,check,target);
+      }else await this.recordVideo(viewer,sequence,times,source,generation,session.id,check,target,options);
       check();const result=await this.context.api.animationFinish(session.id);session=null;
       this.nodes.progress.textContent=`Exported ${result.path}`;this.context.setStatus?.(`Exported animation ${result.path}`);
     }catch(error){if(this.exportAbort||generation!==this.generation)this.nodes.progress.textContent='Animation export cancelled.';else throw error;}
@@ -252,20 +265,20 @@ export class AnimationControls {
           this.context.viewer.draw();this.context.sectionViewer?.draw();
         }
       }finally{
-        this.exportView=null;observation?.release();
-        this.exporting=false;this.exportRecorder=null;this.update();this.context.onExportStateChange?.();
+        this.exportView=null;surface?.dispose?.();preview?.release();
+        try{observation?.release();}
+        finally{this.exporting=false;this.exportRecorder=null;this.update();this.context.onExportStateChange?.();}
       }
     }
   }
-  async recordVideo(viewer,sequence,times,source,generation,id,check,target){
+  async recordVideo(viewer,sequence,times,source,generation,id,check,target,options=readMediaControls(this.nodes,'webm')){
     // A dedicated 2D capture surface gets a fresh pixel copy even when the
     // WebGL viewport has been scrolled offscreen or its window is occluded.
-    const displayed=viewer.renderer.domElement,capture=document.createElement('canvas');capture.width=displayed.width;capture.height=displayed.height;
-    const pixels=capture.getContext('2d',{alpha:false});if(!pixels)throw new Error('Video capture surface could not be created.');
-    const copy=async()=>{await this.prepareCapture(viewer,check);viewer.draw();check();pixels.drawImage(displayed,0,0,capture.width,capture.height);check();};
-    await recordRenderedVideo({canvas:capture,fps:sequence.fps,frameCount:times.length,frameTimes:times,check,
+    const surface=createViewerMediaSurface(viewer,options,message=>this.context.setStatus?.(message));
+    const copy=async()=>{await this.prepareCapture(viewer,check);if(!viewer.createExportSurface)viewer.draw();check();surface.copy();check();};
+    try{await (options.format==='gif'?recordRenderedGif:recordRenderedVideo)({...options,canvas:surface.canvas,fps:sequence.fps,frameCount:times.length,frameTimes:times,check,
       renderFrame:async index=>{await this.apply(sequence,times[index],source,generation,{forceSection:target==='section'});check();await copy();},
       writeChunk:(index,data)=>this.context.api.animationWrite(id,index,data),onRecorder:recorder=>{this.exportRecorder=recorder;},
-      progress:value=>{this.nodes.progress.textContent=typeof value==='string'?value:`Recording frame ${value} / ${times.length}`;}});
+      progress:value=>{this.nodes.progress.textContent=typeof value==='string'?value:`Encoding frame ${value} / ${times.length}`;}});}finally{surface?.dispose?.();}
   }
 }

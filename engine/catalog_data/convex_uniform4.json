@@ -1,0 +1,3037 @@
+{
+  "schemaVersion": 1,
+  "countSource": "https://en.wikipedia.org/wiki/Uniform_4-polytope",
+  "indexConvention": "Olshevsky convex uniform indices O1\u2013O64; U numbers are reserved for polyhedra.",
+  "entries": [
+    {
+      "key": "simplex4",
+      "name": "5-cell",
+      "dimension": 4,
+      "family": "Convex uniform 4D",
+      "uniformIndex": 1,
+      "bowers": "pen",
+      "counts": [
+        5,
+        10,
+        10,
+        5
+      ],
+      "aliases": [
+        "pen",
+        "O1"
+      ],
+      "symbol": "x3o3o3o",
+      "coxeterDiagram": "x3o3o3o",
+      "convex": true,
+      "uniform": true,
+      "vertexTransitive": true,
+      "regular": true,
+      "chiral": false,
+      "classificationVerified": true,
+      "numericContract": "Native float64 construction; no exact certificate",
+      "coxeterFamily": "A4",
+      "rings": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "symmetryGroup": "[3,3,3]",
+      "cellTypes": [
+        {
+          "key": "tetrahedron",
+          "count": 5
+        }
+      ],
+      "cellTypeBasis": "Native cell boundary signature (V/E/F and polygon multiplicities), convex uniform cell domain."
+    },
+    {
+      "key": "uniform4-rap",
+      "name": "Rectified 5-cell",
+      "dimension": 4,
+      "family": "Convex uniform 4D",
+      "uniformIndex": 2,
+      "bowers": "rap",
+      "counts": [
+        10,
+        30,
+        30,
+        10
+      ],
+      "aliases": [
+        "rap",
+        "O2"
+      ],
+      "symbol": "o3x3o3o",
+      "coxeterDiagram": "o3x3o3o",
+      "convex": true,
+      "uniform": true,
+      "vertexTransitive": true,
+      "regular": false,
+      "chiral": false,
+      "classificationVerified": true,
+      "numericContract": "Native float64 construction; no exact certificate",
+      "coxeterFamily": "A4",
+      "rings": [
+        0,
+        1,
+        0,
+        0
+      ],
+      "symmetryGroup": "[3,3,3]",
+      "cellTypes": [
+        {
+          "key": "octahedron",
+          "count": 5
+        },
+        {
+          "key": "tetrahedron",
+          "count": 5
+        }
+      ],
+      "cellTypeBasis": "Native cell boundary signature (V/E/F and polygon multiplicities), convex uniform cell domain."
+    },
+    {
+      "key": "uniform4-tip",
+      "name": "Truncated 5-cell",
+      "dimension": 4,
+      "family": "Convex uniform 4D",
+      "uniformIndex": 3,
+      "bowers": "tip",
+      "counts": [
+        20,
+        40,
+        30,
+        10
+      ],
+      "aliases": [
+        "tip",
+        "O3"
+      ],
+      "symbol": "x3x3o3o",
+      "coxeterDiagram": "x3x3o3o",
+      "convex": true,
+      "uniform": true,
+      "vertexTransitive": true,
+      "regular": false,
+      "chiral": false,
+      "classificationVerified": true,
+      "numericContract": "Native float64 construction; no exact certificate",
+      "coxeterFamily": "A4",
+      "rings": [
+        1,
+        1,
+        0,
+        0
+      ],
+      "symmetryGroup": "[3,3,3]",
+      "cellTypes": [
+        {
+          "key": "tetrahedron",
+          "count": 5
+        },
+        {
+          "key": "truncated-tetrahedron",
+          "count": 5
+        }
+      ],
+      "cellTypeBasis": "Native cell boundary signature (V/E/F and polygon multiplicities), convex uniform cell domain."
+    },
+    {
+      "key": "uniform4-srip",
+      "name": "Cantellated 5-cell",
+      "dimension": 4,
+      "family": "Convex uniform 4D",
+      "uniformIndex": 4,
+      "bowers": "srip",
+      "counts": [
+        30,
+        90,
+        80,
+        20
+      ],
+      "aliases": [
+        "srip",
+        "O4"
+      ],
+      "symbol": "x3o3x3o",
+      "coxeterDiagram": "x3o3x3o",
+      "convex": true,
+      "uniform": true,
+      "vertexTransitive": true,
+      "regular": false,
+      "chiral": false,
+      "classificationVerified": true,
+      "numericContract": "Native float64 construction; no exact certificate",
+      "coxeterFamily": "A4",
+      "rings": [
+        1,
+        0,
+        1,
+        0
+      ],
+      "symmetryGroup": "[3,3,3]",
+      "cellTypes": [
+        {
+          "key": "cuboctahedron",
+          "count": 5
+        },
+        {
+          "key": "octahedron",
+          "count": 5
+        },
+        {
+          "key": "uniform-prism-3",
+          "count": 10
+        }
+      ],
+      "cellTypeBasis": "Native cell boundary signature (V/E/F and polygon multiplicities), convex uniform cell domain."
+    },
+    {
+      "key": "uniform4-spid",
+      "name": "Runcinated 5-cell",
+      "dimension": 4,
+      "family": "Convex uniform 4D",
+      "uniformIndex": 5,
+      "bowers": "spid",
+      "counts": [
+        20,
+        60,
+        70,
+        30
+      ],
+      "aliases": [
+        "spid",
+        "O5"
+      ],
+      "symbol": "x3o3o3x",
+      "coxeterDiagram": "x3o3o3x",
+      "convex": true,
+      "uniform": true,
+      "vertexTransitive": true,
+      "regular": false,
+      "chiral": false,
+      "classificationVerified": true,
+      "numericContract": "Native float64 construction; no exact certificate",
+      "coxeterFamily": "A4",
+      "rings": [
+        1,
+        0,
+        0,
+        1
+      ],
+      "symmetryGroup": "[3,3,3]",
+      "cellTypes": [
+        {
+          "key": "tetrahedron",
+          "count": 10
+        },
+        {
+          "key": "uniform-prism-3",
+          "count": 20
+        }
+      ],
+      "cellTypeBasis": "Native cell boundary signature (V/E/F and polygon multiplicities), convex uniform cell domain."
+    },
+    {
+      "key": "uniform4-deca",
+      "name": "Bitruncated 5-cell",
+      "dimension": 4,
+      "family": "Convex uniform 4D",
+      "uniformIndex": 6,
+      "bowers": "deca",
+      "counts": [
+        30,
+        60,
+        40,
+        10
+      ],
+      "aliases": [
+        "deca",
+        "O6"
+      ],
+      "symbol": "o3x3x3o",
+      "coxeterDiagram": "o3x3x3o",
+      "convex": true,
+      "uniform": true,
+      "vertexTransitive": true,
+      "regular": false,
+      "chiral": false,
+      "classificationVerified": true,
+      "numericContract": "Native float64 construction; no exact certificate",
+      "coxeterFamily": "A4",
+      "rings": [
+        0,
+        1,
+        1,
+        0
+      ],
+      "symmetryGroup": "[3,3,3]",
+      "cellTypes": [
+        {
+          "key": "truncated-tetrahedron",
+          "count": 10
+        }
+      ],
+      "cellTypeBasis": "Native cell boundary signature (V/E/F and polygon multiplicities), convex uniform cell domain."
+    },
+    {
+      "key": "uniform4-grip",
+      "name": "Cantitruncated 5-cell",
+      "dimension": 4,
+      "family": "Convex uniform 4D",
+      "uniformIndex": 7,
+      "bowers": "grip",
+      "counts": [
+        60,
+        120,
+        80,
+        20
+      ],
+      "aliases": [
+        "grip",
+        "O7"
+      ],
+      "symbol": "x3x3x3o",
+      "coxeterDiagram": "x3x3x3o",
+      "convex": true,
+      "uniform": true,
+      "vertexTransitive": true,
+      "regular": false,
+      "chiral": false,
+      "classificationVerified": true,
+      "numericContract": "Native float64 construction; no exact certificate",
+      "coxeterFamily": "A4",
+      "rings": [
+        1,
+        1,
+        1,
+        0
+      ],
+      "symmetryGroup": "[3,3,3]",
+      "cellTypes": [
+        {
+          "key": "truncated-octahedron",
+          "count": 5
+        },
+        {
+          "key": "truncated-tetrahedron",
+          "count": 5
+        },
+        {
+          "key": "uniform-prism-3",
+          "count": 10
+        }
+      ],
+      "cellTypeBasis": "Native cell boundary signature (V/E/F and polygon multiplicities), convex uniform cell domain."
+    },
+    {
+      "key": "uniform4-prip",
+      "name": "Runcitruncated 5-cell",
+      "dimension": 4,
+      "family": "Convex uniform 4D",
+      "uniformIndex": 8,
+      "bowers": "prip",
+      "counts": [
+        60,
+        150,
+        120,
+        30
+      ],
+      "aliases": [
+        "prip",
+        "O8"
+      ],
+      "symbol": "x3x3o3x",
+      "coxeterDiagram": "x3x3o3x",
+      "convex": true,
+      "uniform": true,
+      "vertexTransitive": true,
+      "regular": false,
+      "chiral": false,
+      "classificationVerified": true,
+      "numericContract": "Native float64 construction; no exact certificate",
+      "coxeterFamily": "A4",
+      "rings": [
+        1,
+        1,
+        0,
+        1
+      ],
+      "symmetryGroup": "[3,3,3]",
+      "cellTypes": [
+        {
+          "key": "cuboctahedron",
+          "count": 5
+        },
+        {
+          "key": "truncated-tetrahedron",
+          "count": 5
+        },
+        {
+          "key": "uniform-prism-3",
+          "count": 10
+        },
+        {
+          "key": "uniform-prism-6",
+          "count": 10
+        }
+      ],
+      "cellTypeBasis": "Native cell boundary signature (V/E/F and polygon multiplicities), convex uniform cell domain."
+    },
+    {
+      "key": "uniform4-gippid",
+      "name": "Omnitruncated 5-cell",
+      "dimension": 4,
+      "family": "Convex uniform 4D",
+      "uniformIndex": 9,
+      "bowers": "gippid",
+      "counts": [
+        120,
+        240,
+        150,
+        30
+      ],
+      "aliases": [
+        "gippid",
+        "O9"
+      ],
+      "symbol": "x3x3x3x",
+      "coxeterDiagram": "x3x3x3x",
+      "convex": true,
+      "uniform": true,
+      "vertexTransitive": true,
+      "regular": false,
+      "chiral": false,
+      "classificationVerified": true,
+      "numericContract": "Native float64 construction; no exact certificate",
+      "coxeterFamily": "A4",
+      "rings": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "symmetryGroup": "[3,3,3]",
+      "cellTypes": [
+        {
+          "key": "truncated-octahedron",
+          "count": 10
+        },
+        {
+          "key": "uniform-prism-6",
+          "count": 20
+        }
+      ],
+      "cellTypeBasis": "Native cell boundary signature (V/E/F and polygon multiplicities), convex uniform cell domain."
+    },
+    {
+      "key": "tesseract",
+      "name": "Tesseract",
+      "dimension": 4,
+      "family": "Convex uniform 4D",
+      "uniformIndex": 10,
+      "bowers": "tes",
+      "counts": [
+        16,
+        32,
+        24,
+        8
+      ],
+      "aliases": [
+        "tes",
+        "O10"
+      ],
+      "symbol": "x4o3o3o",
+      "coxeterDiagram": "x4o3o3o",
+      "convex": true,
+      "uniform": true,
+      "vertexTransitive": true,
+      "regular": true,
+      "chiral": false,
+      "classificationVerified": true,
+      "numericContract": "Native float64 construction; no exact certificate",
+      "coxeterFamily": "B4",
+      "rings": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "symmetryGroup": "[4,3,3]",
+      "cellTypes": [
+        {
+          "key": "cube",
+          "count": 8
+        }
+      ],
+      "cellTypeBasis": "Native cell boundary signature (V/E/F and polygon multiplicities), convex uniform cell domain."
+    },
+    {
+      "key": "uniform4-rit",
+      "name": "Rectified tesseract",
+      "dimension": 4,
+      "family": "Convex uniform 4D",
+      "uniformIndex": 11,
+      "bowers": "rit",
+      "counts": [
+        32,
+        96,
+        88,
+        24
+      ],
+      "aliases": [
+        "rit",
+        "O11"
+      ],
+      "symbol": "o4x3o3o",
+      "coxeterDiagram": "o4x3o3o",
+      "convex": true,
+      "uniform": true,
+      "vertexTransitive": true,
+      "regular": false,
+      "chiral": false,
+      "classificationVerified": true,
+      "numericContract": "Native float64 construction; no exact certificate",
+      "coxeterFamily": "B4",
+      "rings": [
+        0,
+        1,
+        0,
+        0
+      ],
+      "symmetryGroup": "[4,3,3]",
+      "cellTypes": [
+        {
+          "key": "cuboctahedron",
+          "count": 8
+        },
+        {
+          "key": "tetrahedron",
+          "count": 16
+        }
+      ],
+      "cellTypeBasis": "Native cell boundary signature (V/E/F and polygon multiplicities), convex uniform cell domain."
+    },
+    {
+      "key": "cross4",
+      "name": "16-cell",
+      "dimension": 4,
+      "family": "Convex uniform 4D",
+      "uniformIndex": 12,
+      "bowers": "hex",
+      "counts": [
+        8,
+        24,
+        32,
+        16
+      ],
+      "aliases": [
+        "hex",
+        "O12"
+      ],
+      "symbol": "o4o3o3x",
+      "coxeterDiagram": "o4o3o3x",
+      "convex": true,
+      "uniform": true,
+      "vertexTransitive": true,
+      "regular": true,
+      "chiral": false,
+      "classificationVerified": true,
+      "numericContract": "Native float64 construction; no exact certificate",
+      "coxeterFamily": "B4",
+      "rings": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "symmetryGroup": "[4,3,3]",
+      "cellTypes": [
+        {
+          "key": "tetrahedron",
+          "count": 16
+        }
+      ],
+      "cellTypeBasis": "Native cell boundary signature (V/E/F and polygon multiplicities), convex uniform cell domain."
+    },
+    {
+      "key": "uniform4-tat",
+      "name": "Truncated tesseract",
+      "dimension": 4,
+      "family": "Convex uniform 4D",
+      "uniformIndex": 13,
+      "bowers": "tat",
+      "counts": [
+        64,
+        128,
+        88,
+        24
+      ],
+      "aliases": [
+        "tat",
+        "O13"
+      ],
+      "symbol": "x4x3o3o",
+      "coxeterDiagram": "x4x3o3o",
+      "convex": true,
+      "uniform": true,
+      "vertexTransitive": true,
+      "regular": false,
+      "chiral": false,
+      "classificationVerified": true,
+      "numericContract": "Native float64 construction; no exact certificate",
+      "coxeterFamily": "B4",
+      "rings": [
+        1,
+        1,
+        0,
+        0
+      ],
+      "symmetryGroup": "[4,3,3]",
+      "cellTypes": [
+        {
+          "key": "tetrahedron",
+          "count": 16
+        },
+        {
+          "key": "truncated-cube",
+          "count": 8
+        }
+      ],
+      "cellTypeBasis": "Native cell boundary signature (V/E/F and polygon multiplicities), convex uniform cell domain."
+    },
+    {
+      "key": "uniform4-srit",
+      "name": "Cantellated tesseract",
+      "dimension": 4,
+      "family": "Convex uniform 4D",
+      "uniformIndex": 14,
+      "bowers": "srit",
+      "counts": [
+        96,
+        288,
+        248,
+        56
+      ],
+      "aliases": [
+        "srit",
+        "O14"
+      ],
+      "symbol": "x4o3x3o",
+      "coxeterDiagram": "x4o3x3o",
+      "convex": true,
+      "uniform": true,
+      "vertexTransitive": true,
+      "regular": false,
+      "chiral": false,
+      "classificationVerified": true,
+      "numericContract": "Native float64 construction; no exact certificate",
+      "coxeterFamily": "B4",
+      "rings": [
+        1,
+        0,
+        1,
+        0
+      ],
+      "symmetryGroup": "[4,3,3]",
+      "cellTypes": [
+        {
+          "key": "octahedron",
+          "count": 16
+        },
+        {
+          "key": "rhombicuboctahedron",
+          "count": 8
+        },
+        {
+          "key": "uniform-prism-3",
+          "count": 32
+        }
+      ],
+      "cellTypeBasis": "Native cell boundary signature (V/E/F and polygon multiplicities), convex uniform cell domain."
+    },
+    {
+      "key": "uniform4-sidpith",
+      "name": "Runcinated tesseract",
+      "dimension": 4,
+      "family": "Convex uniform 4D",
+      "uniformIndex": 15,
+      "bowers": "sidpith",
+      "counts": [
+        64,
+        192,
+        208,
+        80
+      ],
+      "aliases": [
+        "sidpith",
+        "O15"
+      ],
+      "symbol": "x4o3o3x",
+      "coxeterDiagram": "x4o3o3x",
+      "convex": true,
+      "uniform": true,
+      "vertexTransitive": true,
+      "regular": false,
+      "chiral": false,
+      "classificationVerified": true,
+      "numericContract": "Native float64 construction; no exact certificate",
+      "coxeterFamily": "B4",
+      "rings": [
+        1,
+        0,
+        0,
+        1
+      ],
+      "symmetryGroup": "[4,3,3]",
+      "cellTypes": [
+        {
+          "key": "cube",
+          "count": 32
+        },
+        {
+          "key": "tetrahedron",
+          "count": 16
+        },
+        {
+          "key": "uniform-prism-3",
+          "count": 32
+        }
+      ],
+      "cellTypeBasis": "Native cell boundary signature (V/E/F and polygon multiplicities), convex uniform cell domain."
+    },
+    {
+      "key": "uniform4-tah",
+      "name": "Bitruncated tesseract",
+      "dimension": 4,
+      "family": "Convex uniform 4D",
+      "uniformIndex": 16,
+      "bowers": "tah",
+      "counts": [
+        96,
+        192,
+        120,
+        24
+      ],
+      "aliases": [
+        "tah",
+        "O16"
+      ],
+      "symbol": "o4x3x3o",
+      "coxeterDiagram": "o4x3x3o",
+      "convex": true,
+      "uniform": true,
+      "vertexTransitive": true,
+      "regular": false,
+      "chiral": false,
+      "classificationVerified": true,
+      "numericContract": "Native float64 construction; no exact certificate",
+      "coxeterFamily": "B4",
+      "rings": [
+        0,
+        1,
+        1,
+        0
+      ],
+      "symmetryGroup": "[4,3,3]",
+      "cellTypes": [
+        {
+          "key": "truncated-octahedron",
+          "count": 8
+        },
+        {
+          "key": "truncated-tetrahedron",
+          "count": 16
+        }
+      ],
+      "cellTypeBasis": "Native cell boundary signature (V/E/F and polygon multiplicities), convex uniform cell domain."
+    },
+    {
+      "key": "uniform4-thex",
+      "name": "Truncated 16-cell",
+      "dimension": 4,
+      "family": "Convex uniform 4D",
+      "uniformIndex": 17,
+      "bowers": "thex",
+      "counts": [
+        48,
+        120,
+        96,
+        24
+      ],
+      "aliases": [
+        "thex",
+        "O17"
+      ],
+      "symbol": "o4o3x3x",
+      "coxeterDiagram": "o4o3x3x",
+      "convex": true,
+      "uniform": true,
+      "vertexTransitive": true,
+      "regular": false,
+      "chiral": false,
+      "classificationVerified": true,
+      "numericContract": "Native float64 construction; no exact certificate",
+      "coxeterFamily": "B4",
+      "rings": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "symmetryGroup": "[4,3,3]",
+      "cellTypes": [
+        {
+          "key": "octahedron",
+          "count": 8
+        },
+        {
+          "key": "truncated-tetrahedron",
+          "count": 16
+        }
+      ],
+      "cellTypeBasis": "Native cell boundary signature (V/E/F and polygon multiplicities), convex uniform cell domain."
+    },
+    {
+      "key": "uniform4-grit",
+      "name": "Cantitruncated tesseract",
+      "dimension": 4,
+      "family": "Convex uniform 4D",
+      "uniformIndex": 18,
+      "bowers": "grit",
+      "counts": [
+        192,
+        384,
+        248,
+        56
+      ],
+      "aliases": [
+        "grit",
+        "O18"
+      ],
+      "symbol": "x4x3x3o",
+      "coxeterDiagram": "x4x3x3o",
+      "convex": true,
+      "uniform": true,
+      "vertexTransitive": true,
+      "regular": false,
+      "chiral": false,
+      "classificationVerified": true,
+      "numericContract": "Native float64 construction; no exact certificate",
+      "coxeterFamily": "B4",
+      "rings": [
+        1,
+        1,
+        1,
+        0
+      ],
+      "symmetryGroup": "[4,3,3]",
+      "cellTypes": [
+        {
+          "key": "truncated-cuboctahedron",
+          "count": 8
+        },
+        {
+          "key": "truncated-tetrahedron",
+          "count": 16
+        },
+        {
+          "key": "uniform-prism-3",
+          "count": 32
+        }
+      ],
+      "cellTypeBasis": "Native cell boundary signature (V/E/F and polygon multiplicities), convex uniform cell domain."
+    },
+    {
+      "key": "uniform4-proh",
+      "name": "Runcitruncated tesseract",
+      "dimension": 4,
+      "family": "Convex uniform 4D",
+      "uniformIndex": 19,
+      "bowers": "proh",
+      "counts": [
+        192,
+        480,
+        368,
+        80
+      ],
+      "aliases": [
+        "proh",
+        "O19"
+      ],
+      "symbol": "x4x3o3x",
+      "coxeterDiagram": "x4x3o3x",
+      "convex": true,
+      "uniform": true,
+      "vertexTransitive": true,
+      "regular": false,
+      "chiral": false,
+      "classificationVerified": true,
+      "numericContract": "Native float64 construction; no exact certificate",
+      "coxeterFamily": "B4",
+      "rings": [
+        1,
+        1,
+        0,
+        1
+      ],
+      "symmetryGroup": "[4,3,3]",
+      "cellTypes": [
+        {
+          "key": "cuboctahedron",
+          "count": 16
+        },
+        {
+          "key": "truncated-cube",
+          "count": 8
+        },
+        {
+          "key": "uniform-prism-3",
+          "count": 32
+        },
+        {
+          "key": "uniform-prism-8",
+          "count": 24
+        }
+      ],
+      "cellTypeBasis": "Native cell boundary signature (V/E/F and polygon multiplicities), convex uniform cell domain."
+    },
+    {
+      "key": "uniform4-prit",
+      "name": "Runcitruncated 16-cell",
+      "dimension": 4,
+      "family": "Convex uniform 4D",
+      "uniformIndex": 20,
+      "bowers": "prit",
+      "counts": [
+        192,
+        480,
+        368,
+        80
+      ],
+      "aliases": [
+        "prit",
+        "O20"
+      ],
+      "symbol": "x4o3x3x",
+      "coxeterDiagram": "x4o3x3x",
+      "convex": true,
+      "uniform": true,
+      "vertexTransitive": true,
+      "regular": false,
+      "chiral": false,
+      "classificationVerified": true,
+      "numericContract": "Native float64 construction; no exact certificate",
+      "coxeterFamily": "B4",
+      "rings": [
+        1,
+        0,
+        1,
+        1
+      ],
+      "symmetryGroup": "[4,3,3]",
+      "cellTypes": [
+        {
+          "key": "cube",
+          "count": 24
+        },
+        {
+          "key": "rhombicuboctahedron",
+          "count": 8
+        },
+        {
+          "key": "truncated-tetrahedron",
+          "count": 16
+        },
+        {
+          "key": "uniform-prism-6",
+          "count": 32
+        }
+      ],
+      "cellTypeBasis": "Native cell boundary signature (V/E/F and polygon multiplicities), convex uniform cell domain."
+    },
+    {
+      "key": "uniform4-gidpith",
+      "name": "Omnitruncated tesseract",
+      "dimension": 4,
+      "family": "Convex uniform 4D",
+      "uniformIndex": 21,
+      "bowers": "gidpith",
+      "counts": [
+        384,
+        768,
+        464,
+        80
+      ],
+      "aliases": [
+        "gidpith",
+        "O21"
+      ],
+      "symbol": "x4x3x3x",
+      "coxeterDiagram": "x4x3x3x",
+      "convex": true,
+      "uniform": true,
+      "vertexTransitive": true,
+      "regular": false,
+      "chiral": false,
+      "classificationVerified": true,
+      "numericContract": "Native float64 construction; no exact certificate",
+      "coxeterFamily": "B4",
+      "rings": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "symmetryGroup": "[4,3,3]",
+      "cellTypes": [
+        {
+          "key": "truncated-cuboctahedron",
+          "count": 8
+        },
+        {
+          "key": "truncated-octahedron",
+          "count": 16
+        },
+        {
+          "key": "uniform-prism-6",
+          "count": 32
+        },
+        {
+          "key": "uniform-prism-8",
+          "count": 24
+        }
+      ],
+      "cellTypeBasis": "Native cell boundary signature (V/E/F and polygon multiplicities), convex uniform cell domain."
+    },
+    {
+      "key": "cell24",
+      "name": "24-cell",
+      "dimension": 4,
+      "family": "Convex uniform 4D",
+      "uniformIndex": 22,
+      "bowers": "ico",
+      "counts": [
+        24,
+        96,
+        96,
+        24
+      ],
+      "aliases": [
+        "ico",
+        "O22"
+      ],
+      "symbol": "x3o4o3o",
+      "coxeterDiagram": "x3o4o3o",
+      "convex": true,
+      "uniform": true,
+      "vertexTransitive": true,
+      "regular": true,
+      "chiral": false,
+      "classificationVerified": true,
+      "numericContract": "Native float64 construction; no exact certificate",
+      "coxeterFamily": "F4",
+      "rings": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "symmetryGroup": "[3,4,3]",
+      "cellTypes": [
+        {
+          "key": "octahedron",
+          "count": 24
+        }
+      ],
+      "cellTypeBasis": "Native cell boundary signature (V/E/F and polygon multiplicities), convex uniform cell domain."
+    },
+    {
+      "key": "uniform4-rico",
+      "name": "Rectified 24-cell",
+      "dimension": 4,
+      "family": "Convex uniform 4D",
+      "uniformIndex": 23,
+      "bowers": "rico",
+      "counts": [
+        96,
+        288,
+        240,
+        48
+      ],
+      "aliases": [
+        "rico",
+        "O23"
+      ],
+      "symbol": "o3x4o3o",
+      "coxeterDiagram": "o3x4o3o",
+      "convex": true,
+      "uniform": true,
+      "vertexTransitive": true,
+      "regular": false,
+      "chiral": false,
+      "classificationVerified": true,
+      "numericContract": "Native float64 construction; no exact certificate",
+      "coxeterFamily": "F4",
+      "rings": [
+        0,
+        1,
+        0,
+        0
+      ],
+      "symmetryGroup": "[3,4,3]",
+      "cellTypes": [
+        {
+          "key": "cube",
+          "count": 24
+        },
+        {
+          "key": "cuboctahedron",
+          "count": 24
+        }
+      ],
+      "cellTypeBasis": "Native cell boundary signature (V/E/F and polygon multiplicities), convex uniform cell domain."
+    },
+    {
+      "key": "uniform4-tico",
+      "name": "Truncated 24-cell",
+      "dimension": 4,
+      "family": "Convex uniform 4D",
+      "uniformIndex": 24,
+      "bowers": "tico",
+      "counts": [
+        192,
+        384,
+        240,
+        48
+      ],
+      "aliases": [
+        "tico",
+        "O24"
+      ],
+      "symbol": "x3x4o3o",
+      "coxeterDiagram": "x3x4o3o",
+      "convex": true,
+      "uniform": true,
+      "vertexTransitive": true,
+      "regular": false,
+      "chiral": false,
+      "classificationVerified": true,
+      "numericContract": "Native float64 construction; no exact certificate",
+      "coxeterFamily": "F4",
+      "rings": [
+        1,
+        1,
+        0,
+        0
+      ],
+      "symmetryGroup": "[3,4,3]",
+      "cellTypes": [
+        {
+          "key": "cube",
+          "count": 24
+        },
+        {
+          "key": "truncated-octahedron",
+          "count": 24
+        }
+      ],
+      "cellTypeBasis": "Native cell boundary signature (V/E/F and polygon multiplicities), convex uniform cell domain."
+    },
+    {
+      "key": "uniform4-srico",
+      "name": "Cantellated 24-cell",
+      "dimension": 4,
+      "family": "Convex uniform 4D",
+      "uniformIndex": 25,
+      "bowers": "srico",
+      "counts": [
+        288,
+        864,
+        720,
+        144
+      ],
+      "aliases": [
+        "srico",
+        "O25"
+      ],
+      "symbol": "x3o4x3o",
+      "coxeterDiagram": "x3o4x3o",
+      "convex": true,
+      "uniform": true,
+      "vertexTransitive": true,
+      "regular": false,
+      "chiral": false,
+      "classificationVerified": true,
+      "numericContract": "Native float64 construction; no exact certificate",
+      "coxeterFamily": "F4",
+      "rings": [
+        1,
+        0,
+        1,
+        0
+      ],
+      "symmetryGroup": "[3,4,3]",
+      "cellTypes": [
+        {
+          "key": "cuboctahedron",
+          "count": 24
+        },
+        {
+          "key": "rhombicuboctahedron",
+          "count": 24
+        },
+        {
+          "key": "uniform-prism-3",
+          "count": 96
+        }
+      ],
+      "cellTypeBasis": "Native cell boundary signature (V/E/F and polygon multiplicities), convex uniform cell domain."
+    },
+    {
+      "key": "uniform4-spic",
+      "name": "Runcinated 24-cell",
+      "dimension": 4,
+      "family": "Convex uniform 4D",
+      "uniformIndex": 26,
+      "bowers": "spic",
+      "counts": [
+        144,
+        576,
+        672,
+        240
+      ],
+      "aliases": [
+        "spic",
+        "O26"
+      ],
+      "symbol": "x3o4o3x",
+      "coxeterDiagram": "x3o4o3x",
+      "convex": true,
+      "uniform": true,
+      "vertexTransitive": true,
+      "regular": false,
+      "chiral": false,
+      "classificationVerified": true,
+      "numericContract": "Native float64 construction; no exact certificate",
+      "coxeterFamily": "F4",
+      "rings": [
+        1,
+        0,
+        0,
+        1
+      ],
+      "symmetryGroup": "[3,4,3]",
+      "cellTypes": [
+        {
+          "key": "octahedron",
+          "count": 48
+        },
+        {
+          "key": "uniform-prism-3",
+          "count": 192
+        }
+      ],
+      "cellTypeBasis": "Native cell boundary signature (V/E/F and polygon multiplicities), convex uniform cell domain."
+    },
+    {
+      "key": "uniform4-cont",
+      "name": "Bitruncated 24-cell",
+      "dimension": 4,
+      "family": "Convex uniform 4D",
+      "uniformIndex": 27,
+      "bowers": "cont",
+      "counts": [
+        288,
+        576,
+        336,
+        48
+      ],
+      "aliases": [
+        "cont",
+        "O27"
+      ],
+      "symbol": "o3x4x3o",
+      "coxeterDiagram": "o3x4x3o",
+      "convex": true,
+      "uniform": true,
+      "vertexTransitive": true,
+      "regular": false,
+      "chiral": false,
+      "classificationVerified": true,
+      "numericContract": "Native float64 construction; no exact certificate",
+      "coxeterFamily": "F4",
+      "rings": [
+        0,
+        1,
+        1,
+        0
+      ],
+      "symmetryGroup": "[3,4,3]",
+      "cellTypes": [
+        {
+          "key": "truncated-cube",
+          "count": 48
+        }
+      ],
+      "cellTypeBasis": "Native cell boundary signature (V/E/F and polygon multiplicities), convex uniform cell domain."
+    },
+    {
+      "key": "uniform4-grico",
+      "name": "Cantitruncated 24-cell",
+      "dimension": 4,
+      "family": "Convex uniform 4D",
+      "uniformIndex": 28,
+      "bowers": "grico",
+      "counts": [
+        576,
+        1152,
+        720,
+        144
+      ],
+      "aliases": [
+        "grico",
+        "O28"
+      ],
+      "symbol": "x3x4x3o",
+      "coxeterDiagram": "x3x4x3o",
+      "convex": true,
+      "uniform": true,
+      "vertexTransitive": true,
+      "regular": false,
+      "chiral": false,
+      "classificationVerified": true,
+      "numericContract": "Native float64 construction; no exact certificate",
+      "coxeterFamily": "F4",
+      "rings": [
+        1,
+        1,
+        1,
+        0
+      ],
+      "symmetryGroup": "[3,4,3]",
+      "cellTypes": [
+        {
+          "key": "truncated-cube",
+          "count": 24
+        },
+        {
+          "key": "truncated-cuboctahedron",
+          "count": 24
+        },
+        {
+          "key": "uniform-prism-3",
+          "count": 96
+        }
+      ],
+      "cellTypeBasis": "Native cell boundary signature (V/E/F and polygon multiplicities), convex uniform cell domain."
+    },
+    {
+      "key": "uniform4-prico",
+      "name": "Runcitruncated 24-cell",
+      "dimension": 4,
+      "family": "Convex uniform 4D",
+      "uniformIndex": 29,
+      "bowers": "prico",
+      "counts": [
+        576,
+        1440,
+        1104,
+        240
+      ],
+      "aliases": [
+        "prico",
+        "O29"
+      ],
+      "symbol": "x3x4o3x",
+      "coxeterDiagram": "x3x4o3x",
+      "convex": true,
+      "uniform": true,
+      "vertexTransitive": true,
+      "regular": false,
+      "chiral": false,
+      "classificationVerified": true,
+      "numericContract": "Native float64 construction; no exact certificate",
+      "coxeterFamily": "F4",
+      "rings": [
+        1,
+        1,
+        0,
+        1
+      ],
+      "symmetryGroup": "[3,4,3]",
+      "cellTypes": [
+        {
+          "key": "rhombicuboctahedron",
+          "count": 24
+        },
+        {
+          "key": "truncated-octahedron",
+          "count": 24
+        },
+        {
+          "key": "uniform-prism-3",
+          "count": 96
+        },
+        {
+          "key": "uniform-prism-6",
+          "count": 96
+        }
+      ],
+      "cellTypeBasis": "Native cell boundary signature (V/E/F and polygon multiplicities), convex uniform cell domain."
+    },
+    {
+      "key": "uniform4-gippic",
+      "name": "Omnitruncated 24-cell",
+      "dimension": 4,
+      "family": "Convex uniform 4D",
+      "uniformIndex": 30,
+      "bowers": "gippic",
+      "counts": [
+        1152,
+        2304,
+        1392,
+        240
+      ],
+      "aliases": [
+        "gippic",
+        "O30"
+      ],
+      "symbol": "x3x4x3x",
+      "coxeterDiagram": "x3x4x3x",
+      "convex": true,
+      "uniform": true,
+      "vertexTransitive": true,
+      "regular": false,
+      "chiral": false,
+      "classificationVerified": true,
+      "numericContract": "Native float64 construction; no exact certificate",
+      "coxeterFamily": "F4",
+      "rings": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "symmetryGroup": "[3,4,3]",
+      "cellTypes": [
+        {
+          "key": "truncated-cuboctahedron",
+          "count": 48
+        },
+        {
+          "key": "uniform-prism-6",
+          "count": 192
+        }
+      ],
+      "cellTypeBasis": "Native cell boundary signature (V/E/F and polygon multiplicities), convex uniform cell domain."
+    },
+    {
+      "key": "uniform4-sadi",
+      "name": "Snub 24-cell",
+      "dimension": 4,
+      "family": "Convex uniform 4D",
+      "uniformIndex": 31,
+      "bowers": "sadi",
+      "counts": [
+        96,
+        432,
+        480,
+        144
+      ],
+      "aliases": [
+        "sadi",
+        "O31"
+      ],
+      "symbol": "s{3,4,3}",
+      "coxeterDiagram": "s{3,4,3}",
+      "convex": true,
+      "uniform": true,
+      "vertexTransitive": true,
+      "regular": false,
+      "chiral": false,
+      "classificationVerified": true,
+      "numericContract": "Native float64 construction; no exact certificate",
+      "symmetryGroup": "[3+,4,3]",
+      "cellTypes": [
+        {
+          "key": "icosahedron",
+          "count": 24
+        },
+        {
+          "key": "tetrahedron",
+          "count": 120
+        }
+      ],
+      "cellTypeBasis": "Native cell boundary signature (V/E/F and polygon multiplicities), convex uniform cell domain."
+    },
+    {
+      "key": "cell120",
+      "name": "120-cell",
+      "dimension": 4,
+      "family": "Convex uniform 4D",
+      "uniformIndex": 32,
+      "bowers": "hi",
+      "counts": [
+        600,
+        1200,
+        720,
+        120
+      ],
+      "aliases": [
+        "hi",
+        "O32"
+      ],
+      "symbol": "x5o3o3o",
+      "coxeterDiagram": "x5o3o3o",
+      "convex": true,
+      "uniform": true,
+      "vertexTransitive": true,
+      "regular": true,
+      "chiral": false,
+      "classificationVerified": true,
+      "numericContract": "Native float64 construction; no exact certificate",
+      "coxeterFamily": "H4",
+      "rings": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "symmetryGroup": "[5,3,3]",
+      "cellTypes": [
+        {
+          "key": "dodecahedron",
+          "count": 120
+        }
+      ],
+      "cellTypeBasis": "Native cell boundary signature (V/E/F and polygon multiplicities), convex uniform cell domain."
+    },
+    {
+      "key": "uniform4-rahi",
+      "name": "Rectified 120-cell",
+      "dimension": 4,
+      "family": "Convex uniform 4D",
+      "uniformIndex": 33,
+      "bowers": "rahi",
+      "counts": [
+        1200,
+        3600,
+        3120,
+        720
+      ],
+      "aliases": [
+        "rahi",
+        "O33"
+      ],
+      "symbol": "o5x3o3o",
+      "coxeterDiagram": "o5x3o3o",
+      "convex": true,
+      "uniform": true,
+      "vertexTransitive": true,
+      "regular": false,
+      "chiral": false,
+      "classificationVerified": true,
+      "numericContract": "Native float64 construction; no exact certificate",
+      "coxeterFamily": "H4",
+      "rings": [
+        0,
+        1,
+        0,
+        0
+      ],
+      "symmetryGroup": "[5,3,3]",
+      "cellTypes": [
+        {
+          "key": "icosidodecahedron",
+          "count": 120
+        },
+        {
+          "key": "tetrahedron",
+          "count": 600
+        }
+      ],
+      "cellTypeBasis": "Native cell boundary signature (V/E/F and polygon multiplicities), convex uniform cell domain."
+    },
+    {
+      "key": "uniform4-rox",
+      "name": "Rectified 600-cell",
+      "dimension": 4,
+      "family": "Convex uniform 4D",
+      "uniformIndex": 34,
+      "bowers": "rox",
+      "counts": [
+        720,
+        3600,
+        3600,
+        720
+      ],
+      "aliases": [
+        "rox",
+        "O34"
+      ],
+      "symbol": "o5o3x3o",
+      "coxeterDiagram": "o5o3x3o",
+      "convex": true,
+      "uniform": true,
+      "vertexTransitive": true,
+      "regular": false,
+      "chiral": false,
+      "classificationVerified": true,
+      "numericContract": "Native float64 construction; no exact certificate",
+      "coxeterFamily": "H4",
+      "rings": [
+        0,
+        0,
+        1,
+        0
+      ],
+      "symmetryGroup": "[5,3,3]",
+      "cellTypes": [
+        {
+          "key": "icosahedron",
+          "count": 120
+        },
+        {
+          "key": "octahedron",
+          "count": 600
+        }
+      ],
+      "cellTypeBasis": "Native cell boundary signature (V/E/F and polygon multiplicities), convex uniform cell domain."
+    },
+    {
+      "key": "cell600",
+      "name": "600-cell",
+      "dimension": 4,
+      "family": "Convex uniform 4D",
+      "uniformIndex": 35,
+      "bowers": "ex",
+      "counts": [
+        120,
+        720,
+        1200,
+        600
+      ],
+      "aliases": [
+        "ex",
+        "O35"
+      ],
+      "symbol": "o5o3o3x",
+      "coxeterDiagram": "o5o3o3x",
+      "convex": true,
+      "uniform": true,
+      "vertexTransitive": true,
+      "regular": true,
+      "chiral": false,
+      "classificationVerified": true,
+      "numericContract": "Native float64 construction; no exact certificate",
+      "coxeterFamily": "H4",
+      "rings": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "symmetryGroup": "[5,3,3]",
+      "cellTypes": [
+        {
+          "key": "tetrahedron",
+          "count": 600
+        }
+      ],
+      "cellTypeBasis": "Native cell boundary signature (V/E/F and polygon multiplicities), convex uniform cell domain."
+    },
+    {
+      "key": "uniform4-thi",
+      "name": "Truncated 120-cell",
+      "dimension": 4,
+      "family": "Convex uniform 4D",
+      "uniformIndex": 36,
+      "bowers": "thi",
+      "counts": [
+        2400,
+        4800,
+        3120,
+        720
+      ],
+      "aliases": [
+        "thi",
+        "O36"
+      ],
+      "symbol": "x5x3o3o",
+      "coxeterDiagram": "x5x3o3o",
+      "convex": true,
+      "uniform": true,
+      "vertexTransitive": true,
+      "regular": false,
+      "chiral": false,
+      "classificationVerified": true,
+      "numericContract": "Native float64 construction; no exact certificate",
+      "coxeterFamily": "H4",
+      "rings": [
+        1,
+        1,
+        0,
+        0
+      ],
+      "symmetryGroup": "[5,3,3]",
+      "cellTypes": [
+        {
+          "key": "tetrahedron",
+          "count": 600
+        },
+        {
+          "key": "truncated-dodecahedron",
+          "count": 120
+        }
+      ],
+      "cellTypeBasis": "Native cell boundary signature (V/E/F and polygon multiplicities), convex uniform cell domain."
+    },
+    {
+      "key": "uniform4-srahi",
+      "name": "Cantellated 120-cell",
+      "dimension": 4,
+      "family": "Convex uniform 4D",
+      "uniformIndex": 37,
+      "bowers": "srahi",
+      "counts": [
+        3600,
+        10800,
+        9120,
+        1920
+      ],
+      "aliases": [
+        "srahi",
+        "O37"
+      ],
+      "symbol": "x5o3x3o",
+      "coxeterDiagram": "x5o3x3o",
+      "convex": true,
+      "uniform": true,
+      "vertexTransitive": true,
+      "regular": false,
+      "chiral": false,
+      "classificationVerified": true,
+      "numericContract": "Native float64 construction; no exact certificate",
+      "coxeterFamily": "H4",
+      "rings": [
+        1,
+        0,
+        1,
+        0
+      ],
+      "symmetryGroup": "[5,3,3]",
+      "cellTypes": [
+        {
+          "key": "octahedron",
+          "count": 600
+        },
+        {
+          "key": "rhombicosidodecahedron",
+          "count": 120
+        },
+        {
+          "key": "uniform-prism-3",
+          "count": 1200
+        }
+      ],
+      "cellTypeBasis": "Native cell boundary signature (V/E/F and polygon multiplicities), convex uniform cell domain."
+    },
+    {
+      "key": "uniform4-sidpixhi",
+      "name": "Runcinated 120-cell",
+      "dimension": 4,
+      "family": "Convex uniform 4D",
+      "uniformIndex": 38,
+      "bowers": "sidpixhi",
+      "counts": [
+        2400,
+        7200,
+        7440,
+        2640
+      ],
+      "aliases": [
+        "sidpixhi",
+        "O38"
+      ],
+      "symbol": "x5o3o3x",
+      "coxeterDiagram": "x5o3o3x",
+      "convex": true,
+      "uniform": true,
+      "vertexTransitive": true,
+      "regular": false,
+      "chiral": false,
+      "classificationVerified": true,
+      "numericContract": "Native float64 construction; no exact certificate",
+      "coxeterFamily": "H4",
+      "rings": [
+        1,
+        0,
+        0,
+        1
+      ],
+      "symmetryGroup": "[5,3,3]",
+      "cellTypes": [
+        {
+          "key": "dodecahedron",
+          "count": 120
+        },
+        {
+          "key": "tetrahedron",
+          "count": 600
+        },
+        {
+          "key": "uniform-prism-3",
+          "count": 1200
+        },
+        {
+          "key": "uniform-prism-5",
+          "count": 720
+        }
+      ],
+      "cellTypeBasis": "Native cell boundary signature (V/E/F and polygon multiplicities), convex uniform cell domain."
+    },
+    {
+      "key": "uniform4-xhi",
+      "name": "Bitruncated 120-cell",
+      "dimension": 4,
+      "family": "Convex uniform 4D",
+      "uniformIndex": 39,
+      "bowers": "xhi",
+      "counts": [
+        3600,
+        7200,
+        4320,
+        720
+      ],
+      "aliases": [
+        "xhi",
+        "O39"
+      ],
+      "symbol": "o5x3x3o",
+      "coxeterDiagram": "o5x3x3o",
+      "convex": true,
+      "uniform": true,
+      "vertexTransitive": true,
+      "regular": false,
+      "chiral": false,
+      "classificationVerified": true,
+      "numericContract": "Native float64 construction; no exact certificate",
+      "coxeterFamily": "H4",
+      "rings": [
+        0,
+        1,
+        1,
+        0
+      ],
+      "symmetryGroup": "[5,3,3]",
+      "cellTypes": [
+        {
+          "key": "truncated-icosahedron",
+          "count": 120
+        },
+        {
+          "key": "truncated-tetrahedron",
+          "count": 600
+        }
+      ],
+      "cellTypeBasis": "Native cell boundary signature (V/E/F and polygon multiplicities), convex uniform cell domain."
+    },
+    {
+      "key": "uniform4-srix",
+      "name": "Cantellated 600-cell",
+      "dimension": 4,
+      "family": "Convex uniform 4D",
+      "uniformIndex": 40,
+      "bowers": "srix",
+      "counts": [
+        3600,
+        10800,
+        8640,
+        1440
+      ],
+      "aliases": [
+        "srix",
+        "O40"
+      ],
+      "symbol": "o5x3o3x",
+      "coxeterDiagram": "o5x3o3x",
+      "convex": true,
+      "uniform": true,
+      "vertexTransitive": true,
+      "regular": false,
+      "chiral": false,
+      "classificationVerified": true,
+      "numericContract": "Native float64 construction; no exact certificate",
+      "coxeterFamily": "H4",
+      "rings": [
+        0,
+        1,
+        0,
+        1
+      ],
+      "symmetryGroup": "[5,3,3]",
+      "cellTypes": [
+        {
+          "key": "cuboctahedron",
+          "count": 600
+        },
+        {
+          "key": "icosidodecahedron",
+          "count": 120
+        },
+        {
+          "key": "uniform-prism-5",
+          "count": 720
+        }
+      ],
+      "cellTypeBasis": "Native cell boundary signature (V/E/F and polygon multiplicities), convex uniform cell domain."
+    },
+    {
+      "key": "uniform4-tex",
+      "name": "Truncated 600-cell",
+      "dimension": 4,
+      "family": "Convex uniform 4D",
+      "uniformIndex": 41,
+      "bowers": "tex",
+      "counts": [
+        1440,
+        4320,
+        3600,
+        720
+      ],
+      "aliases": [
+        "tex",
+        "O41"
+      ],
+      "symbol": "o5o3x3x",
+      "coxeterDiagram": "o5o3x3x",
+      "convex": true,
+      "uniform": true,
+      "vertexTransitive": true,
+      "regular": false,
+      "chiral": false,
+      "classificationVerified": true,
+      "numericContract": "Native float64 construction; no exact certificate",
+      "coxeterFamily": "H4",
+      "rings": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "symmetryGroup": "[5,3,3]",
+      "cellTypes": [
+        {
+          "key": "icosahedron",
+          "count": 120
+        },
+        {
+          "key": "truncated-tetrahedron",
+          "count": 600
+        }
+      ],
+      "cellTypeBasis": "Native cell boundary signature (V/E/F and polygon multiplicities), convex uniform cell domain."
+    },
+    {
+      "key": "uniform4-grahi",
+      "name": "Cantitruncated 120-cell",
+      "dimension": 4,
+      "family": "Convex uniform 4D",
+      "uniformIndex": 42,
+      "bowers": "grahi",
+      "counts": [
+        7200,
+        14400,
+        9120,
+        1920
+      ],
+      "aliases": [
+        "grahi",
+        "O42"
+      ],
+      "symbol": "x5x3x3o",
+      "coxeterDiagram": "x5x3x3o",
+      "convex": true,
+      "uniform": true,
+      "vertexTransitive": true,
+      "regular": false,
+      "chiral": false,
+      "classificationVerified": true,
+      "numericContract": "Native float64 construction; no exact certificate",
+      "coxeterFamily": "H4",
+      "rings": [
+        1,
+        1,
+        1,
+        0
+      ],
+      "symmetryGroup": "[5,3,3]",
+      "cellTypes": [
+        {
+          "key": "truncated-icosidodecahedron",
+          "count": 120
+        },
+        {
+          "key": "truncated-tetrahedron",
+          "count": 600
+        },
+        {
+          "key": "uniform-prism-3",
+          "count": 1200
+        }
+      ],
+      "cellTypeBasis": "Native cell boundary signature (V/E/F and polygon multiplicities), convex uniform cell domain."
+    },
+    {
+      "key": "uniform4-prix",
+      "name": "Runcitruncated 120-cell",
+      "dimension": 4,
+      "family": "Convex uniform 4D",
+      "uniformIndex": 43,
+      "bowers": "prix",
+      "counts": [
+        7200,
+        18000,
+        13440,
+        2640
+      ],
+      "aliases": [
+        "prix",
+        "O43"
+      ],
+      "symbol": "x5x3o3x",
+      "coxeterDiagram": "x5x3o3x",
+      "convex": true,
+      "uniform": true,
+      "vertexTransitive": true,
+      "regular": false,
+      "chiral": false,
+      "classificationVerified": true,
+      "numericContract": "Native float64 construction; no exact certificate",
+      "coxeterFamily": "H4",
+      "rings": [
+        1,
+        1,
+        0,
+        1
+      ],
+      "symmetryGroup": "[5,3,3]",
+      "cellTypes": [
+        {
+          "key": "cuboctahedron",
+          "count": 600
+        },
+        {
+          "key": "truncated-dodecahedron",
+          "count": 120
+        },
+        {
+          "key": "uniform-prism-10",
+          "count": 720
+        },
+        {
+          "key": "uniform-prism-3",
+          "count": 1200
+        }
+      ],
+      "cellTypeBasis": "Native cell boundary signature (V/E/F and polygon multiplicities), convex uniform cell domain."
+    },
+    {
+      "key": "uniform4-prahi",
+      "name": "Runcitruncated 600-cell",
+      "dimension": 4,
+      "family": "Convex uniform 4D",
+      "uniformIndex": 44,
+      "bowers": "prahi",
+      "counts": [
+        7200,
+        18000,
+        13440,
+        2640
+      ],
+      "aliases": [
+        "prahi",
+        "O44"
+      ],
+      "symbol": "x5o3x3x",
+      "coxeterDiagram": "x5o3x3x",
+      "convex": true,
+      "uniform": true,
+      "vertexTransitive": true,
+      "regular": false,
+      "chiral": false,
+      "classificationVerified": true,
+      "numericContract": "Native float64 construction; no exact certificate",
+      "coxeterFamily": "H4",
+      "rings": [
+        1,
+        0,
+        1,
+        1
+      ],
+      "symmetryGroup": "[5,3,3]",
+      "cellTypes": [
+        {
+          "key": "rhombicosidodecahedron",
+          "count": 120
+        },
+        {
+          "key": "truncated-tetrahedron",
+          "count": 600
+        },
+        {
+          "key": "uniform-prism-5",
+          "count": 720
+        },
+        {
+          "key": "uniform-prism-6",
+          "count": 1200
+        }
+      ],
+      "cellTypeBasis": "Native cell boundary signature (V/E/F and polygon multiplicities), convex uniform cell domain."
+    },
+    {
+      "key": "uniform4-grix",
+      "name": "Cantitruncated 600-cell",
+      "dimension": 4,
+      "family": "Convex uniform 4D",
+      "uniformIndex": 45,
+      "bowers": "grix",
+      "counts": [
+        7200,
+        14400,
+        8640,
+        1440
+      ],
+      "aliases": [
+        "grix",
+        "O45"
+      ],
+      "symbol": "o5x3x3x",
+      "coxeterDiagram": "o5x3x3x",
+      "convex": true,
+      "uniform": true,
+      "vertexTransitive": true,
+      "regular": false,
+      "chiral": false,
+      "classificationVerified": true,
+      "numericContract": "Native float64 construction; no exact certificate",
+      "coxeterFamily": "H4",
+      "rings": [
+        0,
+        1,
+        1,
+        1
+      ],
+      "symmetryGroup": "[5,3,3]",
+      "cellTypes": [
+        {
+          "key": "truncated-icosahedron",
+          "count": 120
+        },
+        {
+          "key": "truncated-octahedron",
+          "count": 600
+        },
+        {
+          "key": "uniform-prism-5",
+          "count": 720
+        }
+      ],
+      "cellTypeBasis": "Native cell boundary signature (V/E/F and polygon multiplicities), convex uniform cell domain."
+    },
+    {
+      "key": "uniform4-gidpixhi",
+      "name": "Omnitruncated 120-cell",
+      "dimension": 4,
+      "family": "Convex uniform 4D",
+      "uniformIndex": 46,
+      "bowers": "gidpixhi",
+      "counts": [
+        14400,
+        28800,
+        17040,
+        2640
+      ],
+      "aliases": [
+        "gidpixhi",
+        "O46"
+      ],
+      "symbol": "x5x3x3x",
+      "coxeterDiagram": "x5x3x3x",
+      "convex": true,
+      "uniform": true,
+      "vertexTransitive": true,
+      "regular": false,
+      "chiral": false,
+      "classificationVerified": true,
+      "numericContract": "Native float64 construction; no exact certificate",
+      "coxeterFamily": "H4",
+      "rings": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "symmetryGroup": "[5,3,3]",
+      "cellTypes": [
+        {
+          "key": "truncated-icosidodecahedron",
+          "count": 120
+        },
+        {
+          "key": "truncated-octahedron",
+          "count": 600
+        },
+        {
+          "key": "uniform-prism-10",
+          "count": 720
+        },
+        {
+          "key": "uniform-prism-6",
+          "count": 1200
+        }
+      ],
+      "cellTypeBasis": "Native cell boundary signature (V/E/F and polygon multiplicities), convex uniform cell domain."
+    },
+    {
+      "key": "uniform4-gap",
+      "name": "Grand antiprism",
+      "dimension": 4,
+      "family": "Convex uniform 4D",
+      "uniformIndex": 47,
+      "bowers": "gap",
+      "counts": [
+        100,
+        500,
+        720,
+        320
+      ],
+      "aliases": [
+        "gap",
+        "O47"
+      ],
+      "symbol": "Non-Wythoffian (no ring diagram)",
+      "coxeterDiagram": "Non-Wythoffian (no ring diagram)",
+      "convex": true,
+      "uniform": true,
+      "vertexTransitive": true,
+      "regular": false,
+      "chiral": false,
+      "classificationVerified": true,
+      "numericContract": "Native float64 construction; no exact certificate",
+      "symmetryGroup": "[[10,2+,10]]",
+      "cellTypes": [
+        {
+          "key": "tetrahedron",
+          "count": 300
+        },
+        {
+          "key": "uniform-antiprism-5",
+          "count": 20
+        }
+      ],
+      "cellTypeBasis": "Native cell boundary signature (V/E/F and polygon multiplicities), convex uniform cell domain."
+    },
+    {
+      "key": "uniform4-prism-tetrahedron",
+      "name": "Tetrahedron prism",
+      "dimension": 4,
+      "family": "Convex uniform polyhedral prisms",
+      "baseKey": "tetrahedron",
+      "uniformIndex": 48,
+      "bowers": "tepe",
+      "aliases": [
+        "tepe",
+        "O48",
+        "Tetrahedron \u00d7 interval"
+      ],
+      "counts": [
+        8,
+        16,
+        14,
+        6
+      ],
+      "symbol": "{3,3} \u00d7 { }",
+      "coxeterDiagram": "x3o3o2x",
+      "symmetryGroup": "[3,3,2]",
+      "convex": true,
+      "uniform": true,
+      "regular": false,
+      "vertexTransitive": true,
+      "chiral": false,
+      "classificationVerified": true,
+      "numericContract": "Native equal-edge polyhedron \u00d7 interval; float64, no exact certificate",
+      "cellTypes": [
+        {
+          "key": "tetrahedron",
+          "count": 2
+        },
+        {
+          "key": "uniform-prism-3",
+          "count": 4
+        }
+      ],
+      "cellTypeBasis": "Native cell boundary signature (V/E/F and polygon multiplicities), convex uniform cell domain."
+    },
+    {
+      "key": "uniform4-prism-truncated-tetrahedron",
+      "name": "Truncated tetrahedron prism",
+      "dimension": 4,
+      "family": "Convex uniform polyhedral prisms",
+      "baseKey": "truncated-tetrahedron",
+      "uniformIndex": 49,
+      "bowers": "tuttip",
+      "aliases": [
+        "tuttip",
+        "O49",
+        "Truncated tetrahedron \u00d7 interval"
+      ],
+      "counts": [
+        24,
+        48,
+        34,
+        10
+      ],
+      "symbol": "truncated-tetrahedron \u00d7 { }",
+      "coxeterDiagram": "x3x3o2x",
+      "symmetryGroup": "[3,3,2]",
+      "convex": true,
+      "uniform": true,
+      "regular": false,
+      "vertexTransitive": true,
+      "chiral": false,
+      "classificationVerified": true,
+      "numericContract": "Native equal-edge polyhedron \u00d7 interval; float64, no exact certificate",
+      "cellTypes": [
+        {
+          "key": "truncated-tetrahedron",
+          "count": 2
+        },
+        {
+          "key": "uniform-prism-3",
+          "count": 4
+        },
+        {
+          "key": "uniform-prism-6",
+          "count": 4
+        }
+      ],
+      "cellTypeBasis": "Native cell boundary signature (V/E/F and polygon multiplicities), convex uniform cell domain."
+    },
+    {
+      "key": "uniform4-prism-cuboctahedron",
+      "name": "Cuboctahedron prism",
+      "dimension": 4,
+      "family": "Convex uniform polyhedral prisms",
+      "baseKey": "cuboctahedron",
+      "uniformIndex": 50,
+      "bowers": "cope",
+      "aliases": [
+        "cope",
+        "O50",
+        "Cuboctahedron \u00d7 interval"
+      ],
+      "counts": [
+        24,
+        60,
+        52,
+        16
+      ],
+      "symbol": "r{4,3} \u00d7 { }",
+      "coxeterDiagram": "o4x3o2x",
+      "symmetryGroup": "[4,3,2]",
+      "convex": true,
+      "uniform": true,
+      "regular": false,
+      "vertexTransitive": true,
+      "chiral": false,
+      "classificationVerified": true,
+      "numericContract": "Native equal-edge polyhedron \u00d7 interval; float64, no exact certificate",
+      "cellTypes": [
+        {
+          "key": "cube",
+          "count": 6
+        },
+        {
+          "key": "cuboctahedron",
+          "count": 2
+        },
+        {
+          "key": "uniform-prism-3",
+          "count": 8
+        }
+      ],
+      "cellTypeBasis": "Native cell boundary signature (V/E/F and polygon multiplicities), convex uniform cell domain."
+    },
+    {
+      "key": "uniform4-prism-octahedron",
+      "name": "Octahedron prism",
+      "dimension": 4,
+      "family": "Convex uniform polyhedral prisms",
+      "baseKey": "octahedron",
+      "uniformIndex": 51,
+      "bowers": "ope",
+      "aliases": [
+        "ope",
+        "O51",
+        "Octahedron \u00d7 interval"
+      ],
+      "counts": [
+        12,
+        30,
+        28,
+        10
+      ],
+      "symbol": "{3,4} \u00d7 { }",
+      "coxeterDiagram": "o4o3x2x",
+      "symmetryGroup": "[4,3,2]",
+      "convex": true,
+      "uniform": true,
+      "regular": false,
+      "vertexTransitive": true,
+      "chiral": false,
+      "classificationVerified": true,
+      "numericContract": "Native equal-edge polyhedron \u00d7 interval; float64, no exact certificate",
+      "cellTypes": [
+        {
+          "key": "octahedron",
+          "count": 2
+        },
+        {
+          "key": "uniform-prism-3",
+          "count": 8
+        }
+      ],
+      "cellTypeBasis": "Native cell boundary signature (V/E/F and polygon multiplicities), convex uniform cell domain."
+    },
+    {
+      "key": "uniform4-prism-rhombicuboctahedron",
+      "name": "Rhombicuboctahedron prism",
+      "dimension": 4,
+      "family": "Convex uniform polyhedral prisms",
+      "baseKey": "rhombicuboctahedron",
+      "uniformIndex": 52,
+      "bowers": "sircope",
+      "aliases": [
+        "sircope",
+        "O52",
+        "Rhombicuboctahedron \u00d7 interval"
+      ],
+      "counts": [
+        48,
+        120,
+        100,
+        28
+      ],
+      "symbol": "rhombicuboctahedron \u00d7 { }",
+      "coxeterDiagram": "x4o3x2x",
+      "symmetryGroup": "[4,3,2]",
+      "convex": true,
+      "uniform": true,
+      "regular": false,
+      "vertexTransitive": true,
+      "chiral": false,
+      "classificationVerified": true,
+      "numericContract": "Native equal-edge polyhedron \u00d7 interval; float64, no exact certificate",
+      "cellTypes": [
+        {
+          "key": "cube",
+          "count": 18
+        },
+        {
+          "key": "rhombicuboctahedron",
+          "count": 2
+        },
+        {
+          "key": "uniform-prism-3",
+          "count": 8
+        }
+      ],
+      "cellTypeBasis": "Native cell boundary signature (V/E/F and polygon multiplicities), convex uniform cell domain."
+    },
+    {
+      "key": "uniform4-prism-truncated-cube",
+      "name": "Truncated cube prism",
+      "dimension": 4,
+      "family": "Convex uniform polyhedral prisms",
+      "baseKey": "truncated-cube",
+      "uniformIndex": 53,
+      "bowers": "ticcup",
+      "aliases": [
+        "ticcup",
+        "O53",
+        "Truncated cube \u00d7 interval"
+      ],
+      "counts": [
+        48,
+        96,
+        64,
+        16
+      ],
+      "symbol": "truncated-cube \u00d7 { }",
+      "coxeterDiagram": "x4x3o2x",
+      "symmetryGroup": "[4,3,2]",
+      "convex": true,
+      "uniform": true,
+      "regular": false,
+      "vertexTransitive": true,
+      "chiral": false,
+      "classificationVerified": true,
+      "numericContract": "Native equal-edge polyhedron \u00d7 interval; float64, no exact certificate",
+      "cellTypes": [
+        {
+          "key": "truncated-cube",
+          "count": 2
+        },
+        {
+          "key": "uniform-prism-3",
+          "count": 8
+        },
+        {
+          "key": "uniform-prism-8",
+          "count": 6
+        }
+      ],
+      "cellTypeBasis": "Native cell boundary signature (V/E/F and polygon multiplicities), convex uniform cell domain."
+    },
+    {
+      "key": "uniform4-prism-truncated-octahedron",
+      "name": "Truncated octahedron prism",
+      "dimension": 4,
+      "family": "Convex uniform polyhedral prisms",
+      "baseKey": "truncated-octahedron",
+      "uniformIndex": 54,
+      "bowers": "tope",
+      "aliases": [
+        "tope",
+        "O54",
+        "Truncated octahedron \u00d7 interval"
+      ],
+      "counts": [
+        48,
+        96,
+        64,
+        16
+      ],
+      "symbol": "truncated-octahedron \u00d7 { }",
+      "coxeterDiagram": "o4x3x2x",
+      "symmetryGroup": "[4,3,2]",
+      "convex": true,
+      "uniform": true,
+      "regular": false,
+      "vertexTransitive": true,
+      "chiral": false,
+      "classificationVerified": true,
+      "numericContract": "Native equal-edge polyhedron \u00d7 interval; float64, no exact certificate",
+      "cellTypes": [
+        {
+          "key": "cube",
+          "count": 6
+        },
+        {
+          "key": "truncated-octahedron",
+          "count": 2
+        },
+        {
+          "key": "uniform-prism-6",
+          "count": 8
+        }
+      ],
+      "cellTypeBasis": "Native cell boundary signature (V/E/F and polygon multiplicities), convex uniform cell domain."
+    },
+    {
+      "key": "uniform4-prism-truncated-cuboctahedron",
+      "name": "Truncated cuboctahedron prism",
+      "dimension": 4,
+      "family": "Convex uniform polyhedral prisms",
+      "baseKey": "truncated-cuboctahedron",
+      "uniformIndex": 55,
+      "bowers": "gircope",
+      "aliases": [
+        "gircope",
+        "O55",
+        "Truncated cuboctahedron \u00d7 interval"
+      ],
+      "counts": [
+        96,
+        192,
+        124,
+        28
+      ],
+      "symbol": "truncated-cuboctahedron \u00d7 { }",
+      "coxeterDiagram": "x4x3x2x",
+      "symmetryGroup": "[4,3,2]",
+      "convex": true,
+      "uniform": true,
+      "regular": false,
+      "vertexTransitive": true,
+      "chiral": false,
+      "classificationVerified": true,
+      "numericContract": "Native equal-edge polyhedron \u00d7 interval; float64, no exact certificate",
+      "cellTypes": [
+        {
+          "key": "cube",
+          "count": 12
+        },
+        {
+          "key": "truncated-cuboctahedron",
+          "count": 2
+        },
+        {
+          "key": "uniform-prism-6",
+          "count": 8
+        },
+        {
+          "key": "uniform-prism-8",
+          "count": 6
+        }
+      ],
+      "cellTypeBasis": "Native cell boundary signature (V/E/F and polygon multiplicities), convex uniform cell domain."
+    },
+    {
+      "key": "uniform4-prism-snub-cube",
+      "name": "Snub cube prism",
+      "dimension": 4,
+      "family": "Convex uniform polyhedral prisms",
+      "baseKey": "snub-cube",
+      "uniformIndex": 56,
+      "bowers": "sniccup",
+      "aliases": [
+        "sniccup",
+        "O56",
+        "Snub cube (A) \u00d7 interval"
+      ],
+      "counts": [
+        48,
+        144,
+        136,
+        40
+      ],
+      "symbol": "s{4,3} \u00d7 { }",
+      "coxeterDiagram": "s{4,3} \u00d7 { }",
+      "symmetryGroup": "O ? A1",
+      "convex": true,
+      "uniform": true,
+      "regular": false,
+      "vertexTransitive": true,
+      "chiral": false,
+      "classificationVerified": true,
+      "numericContract": "Native equal-edge polyhedron \u00d7 interval; float64, no exact certificate",
+      "cellTypes": [
+        {
+          "key": "cube",
+          "count": 6
+        },
+        {
+          "key": "snub-cube",
+          "count": 2
+        },
+        {
+          "key": "uniform-prism-3",
+          "count": 32
+        }
+      ],
+      "cellTypeBasis": "Native cell boundary signature (V/E/F and polygon multiplicities), convex uniform cell domain."
+    },
+    {
+      "key": "uniform4-prism-dodecahedron",
+      "name": "Dodecahedron prism",
+      "dimension": 4,
+      "family": "Convex uniform polyhedral prisms",
+      "baseKey": "dodecahedron",
+      "uniformIndex": 57,
+      "bowers": "dope",
+      "aliases": [
+        "dope",
+        "O57",
+        "Dodecahedron \u00d7 interval"
+      ],
+      "counts": [
+        40,
+        80,
+        54,
+        14
+      ],
+      "symbol": "{5,3} \u00d7 { }",
+      "coxeterDiagram": "x5o3o2x",
+      "symmetryGroup": "[5,3,2]",
+      "convex": true,
+      "uniform": true,
+      "regular": false,
+      "vertexTransitive": true,
+      "chiral": false,
+      "classificationVerified": true,
+      "numericContract": "Native equal-edge polyhedron \u00d7 interval; float64, no exact certificate",
+      "cellTypes": [
+        {
+          "key": "dodecahedron",
+          "count": 2
+        },
+        {
+          "key": "uniform-prism-5",
+          "count": 12
+        }
+      ],
+      "cellTypeBasis": "Native cell boundary signature (V/E/F and polygon multiplicities), convex uniform cell domain."
+    },
+    {
+      "key": "uniform4-prism-icosidodecahedron",
+      "name": "Icosidodecahedron prism",
+      "dimension": 4,
+      "family": "Convex uniform polyhedral prisms",
+      "baseKey": "icosidodecahedron",
+      "uniformIndex": 58,
+      "bowers": "iddip",
+      "aliases": [
+        "iddip",
+        "O58",
+        "Icosidodecahedron \u00d7 interval"
+      ],
+      "counts": [
+        60,
+        150,
+        124,
+        34
+      ],
+      "symbol": "r{5,3} \u00d7 { }",
+      "coxeterDiagram": "o5x3o2x",
+      "symmetryGroup": "[5,3,2]",
+      "convex": true,
+      "uniform": true,
+      "regular": false,
+      "vertexTransitive": true,
+      "chiral": false,
+      "classificationVerified": true,
+      "numericContract": "Native equal-edge polyhedron \u00d7 interval; float64, no exact certificate",
+      "cellTypes": [
+        {
+          "key": "icosidodecahedron",
+          "count": 2
+        },
+        {
+          "key": "uniform-prism-3",
+          "count": 20
+        },
+        {
+          "key": "uniform-prism-5",
+          "count": 12
+        }
+      ],
+      "cellTypeBasis": "Native cell boundary signature (V/E/F and polygon multiplicities), convex uniform cell domain."
+    },
+    {
+      "key": "uniform4-prism-icosahedron",
+      "name": "Icosahedron prism",
+      "dimension": 4,
+      "family": "Convex uniform polyhedral prisms",
+      "baseKey": "icosahedron",
+      "uniformIndex": 59,
+      "bowers": "ipe",
+      "aliases": [
+        "ipe",
+        "O59",
+        "Icosahedron \u00d7 interval"
+      ],
+      "counts": [
+        24,
+        72,
+        70,
+        22
+      ],
+      "symbol": "{3,5} \u00d7 { }",
+      "coxeterDiagram": "o5o3x2x",
+      "symmetryGroup": "[5,3,2]",
+      "convex": true,
+      "uniform": true,
+      "regular": false,
+      "vertexTransitive": true,
+      "chiral": false,
+      "classificationVerified": true,
+      "numericContract": "Native equal-edge polyhedron \u00d7 interval; float64, no exact certificate",
+      "cellTypes": [
+        {
+          "key": "icosahedron",
+          "count": 2
+        },
+        {
+          "key": "uniform-prism-3",
+          "count": 20
+        }
+      ],
+      "cellTypeBasis": "Native cell boundary signature (V/E/F and polygon multiplicities), convex uniform cell domain."
+    },
+    {
+      "key": "uniform4-prism-truncated-dodecahedron",
+      "name": "Truncated dodecahedron prism",
+      "dimension": 4,
+      "family": "Convex uniform polyhedral prisms",
+      "baseKey": "truncated-dodecahedron",
+      "uniformIndex": 60,
+      "bowers": "tiddip",
+      "aliases": [
+        "tiddip",
+        "O60",
+        "Truncated dodecahedron \u00d7 interval"
+      ],
+      "counts": [
+        120,
+        240,
+        154,
+        34
+      ],
+      "symbol": "truncated-dodecahedron \u00d7 { }",
+      "coxeterDiagram": "x5x3o2x",
+      "symmetryGroup": "[5,3,2]",
+      "convex": true,
+      "uniform": true,
+      "regular": false,
+      "vertexTransitive": true,
+      "chiral": false,
+      "classificationVerified": true,
+      "numericContract": "Native equal-edge polyhedron \u00d7 interval; float64, no exact certificate",
+      "cellTypes": [
+        {
+          "key": "truncated-dodecahedron",
+          "count": 2
+        },
+        {
+          "key": "uniform-prism-10",
+          "count": 12
+        },
+        {
+          "key": "uniform-prism-3",
+          "count": 20
+        }
+      ],
+      "cellTypeBasis": "Native cell boundary signature (V/E/F and polygon multiplicities), convex uniform cell domain."
+    },
+    {
+      "key": "uniform4-prism-rhombicosidodecahedron",
+      "name": "Rhombicosidodecahedron prism",
+      "dimension": 4,
+      "family": "Convex uniform polyhedral prisms",
+      "baseKey": "rhombicosidodecahedron",
+      "uniformIndex": 61,
+      "bowers": "sriddip",
+      "aliases": [
+        "sriddip",
+        "O61",
+        "Rhombicosidodecahedron \u00d7 interval"
+      ],
+      "counts": [
+        120,
+        300,
+        244,
+        64
+      ],
+      "symbol": "rhombicosidodecahedron \u00d7 { }",
+      "coxeterDiagram": "x5o3x2x",
+      "symmetryGroup": "[5,3,2]",
+      "convex": true,
+      "uniform": true,
+      "regular": false,
+      "vertexTransitive": true,
+      "chiral": false,
+      "classificationVerified": true,
+      "numericContract": "Native equal-edge polyhedron \u00d7 interval; float64, no exact certificate",
+      "cellTypes": [
+        {
+          "key": "cube",
+          "count": 30
+        },
+        {
+          "key": "rhombicosidodecahedron",
+          "count": 2
+        },
+        {
+          "key": "uniform-prism-3",
+          "count": 20
+        },
+        {
+          "key": "uniform-prism-5",
+          "count": 12
+        }
+      ],
+      "cellTypeBasis": "Native cell boundary signature (V/E/F and polygon multiplicities), convex uniform cell domain."
+    },
+    {
+      "key": "uniform4-prism-truncated-icosahedron",
+      "name": "Truncated icosahedron prism",
+      "dimension": 4,
+      "family": "Convex uniform polyhedral prisms",
+      "baseKey": "truncated-icosahedron",
+      "uniformIndex": 62,
+      "bowers": "tipe",
+      "aliases": [
+        "tipe",
+        "O62",
+        "Truncated icosahedron \u00d7 interval"
+      ],
+      "counts": [
+        120,
+        240,
+        154,
+        34
+      ],
+      "symbol": "truncated-icosahedron \u00d7 { }",
+      "coxeterDiagram": "o5x3x2x",
+      "symmetryGroup": "[5,3,2]",
+      "convex": true,
+      "uniform": true,
+      "regular": false,
+      "vertexTransitive": true,
+      "chiral": false,
+      "classificationVerified": true,
+      "numericContract": "Native equal-edge polyhedron \u00d7 interval; float64, no exact certificate",
+      "cellTypes": [
+        {
+          "key": "truncated-icosahedron",
+          "count": 2
+        },
+        {
+          "key": "uniform-prism-5",
+          "count": 12
+        },
+        {
+          "key": "uniform-prism-6",
+          "count": 20
+        }
+      ],
+      "cellTypeBasis": "Native cell boundary signature (V/E/F and polygon multiplicities), convex uniform cell domain."
+    },
+    {
+      "key": "uniform4-prism-truncated-icosidodecahedron",
+      "name": "Truncated icosidodecahedron prism",
+      "dimension": 4,
+      "family": "Convex uniform polyhedral prisms",
+      "baseKey": "truncated-icosidodecahedron",
+      "uniformIndex": 63,
+      "bowers": "griddip",
+      "aliases": [
+        "griddip",
+        "O63",
+        "Truncated icosidodecahedron \u00d7 interval"
+      ],
+      "counts": [
+        240,
+        480,
+        304,
+        64
+      ],
+      "symbol": "truncated-icosidodecahedron \u00d7 { }",
+      "coxeterDiagram": "x5x3x2x",
+      "symmetryGroup": "[5,3,2]",
+      "convex": true,
+      "uniform": true,
+      "regular": false,
+      "vertexTransitive": true,
+      "chiral": false,
+      "classificationVerified": true,
+      "numericContract": "Native equal-edge polyhedron \u00d7 interval; float64, no exact certificate",
+      "cellTypes": [
+        {
+          "key": "cube",
+          "count": 30
+        },
+        {
+          "key": "truncated-icosidodecahedron",
+          "count": 2
+        },
+        {
+          "key": "uniform-prism-10",
+          "count": 12
+        },
+        {
+          "key": "uniform-prism-6",
+          "count": 20
+        }
+      ],
+      "cellTypeBasis": "Native cell boundary signature (V/E/F and polygon multiplicities), convex uniform cell domain."
+    },
+    {
+      "key": "uniform4-prism-snub-dodecahedron",
+      "name": "Snub dodecahedron prism",
+      "dimension": 4,
+      "family": "Convex uniform polyhedral prisms",
+      "baseKey": "snub-dodecahedron",
+      "uniformIndex": 64,
+      "bowers": "sniddip",
+      "aliases": [
+        "sniddip",
+        "O64",
+        "Snub dodecahedron (A) \u00d7 interval"
+      ],
+      "counts": [
+        120,
+        360,
+        334,
+        94
+      ],
+      "symbol": "s{5,3} \u00d7 { }",
+      "coxeterDiagram": "s{5,3} \u00d7 { }",
+      "symmetryGroup": "I ? A1",
+      "convex": true,
+      "uniform": true,
+      "regular": false,
+      "vertexTransitive": true,
+      "chiral": false,
+      "classificationVerified": true,
+      "numericContract": "Native equal-edge polyhedron \u00d7 interval; float64, no exact certificate",
+      "cellTypes": [
+        {
+          "key": "snub-dodecahedron",
+          "count": 2
+        },
+        {
+          "key": "uniform-prism-3",
+          "count": 80
+        },
+        {
+          "key": "uniform-prism-5",
+          "count": 12
+        }
+      ],
+      "cellTypeBasis": "Native cell boundary signature (V/E/F and polygon multiplicities), convex uniform cell domain."
+    },
+    {
+      "key": "uniform4-prism-cube",
+      "name": "Cube prism",
+      "dimension": 4,
+      "family": "Convex uniform polyhedral prisms",
+      "baseKey": "cube",
+      "uniformIndex": 10,
+      "bowers": "tes",
+      "aliases": [
+        "tes",
+        "O10",
+        "Cube \u00d7 interval"
+      ],
+      "counts": [
+        16,
+        32,
+        24,
+        8
+      ],
+      "symbol": "{4,3} \u00d7 { }",
+      "coxeterDiagram": "x4o3o2x",
+      "symmetryGroup": "[4,3,2]",
+      "convex": true,
+      "uniform": true,
+      "regular": true,
+      "vertexTransitive": true,
+      "chiral": false,
+      "classificationVerified": true,
+      "numericContract": "Native equal-edge polyhedron \u00d7 interval; float64, no exact certificate",
+      "cellTypes": [
+        {
+          "key": "cube",
+          "count": 8
+        }
+      ],
+      "cellTypeBasis": "Native cell boundary signature (V/E/F and polygon multiplicities), convex uniform cell domain."
+    }
+  ]
+}

@@ -247,6 +247,7 @@ def unfold_generalized(model, root=0, edge_length_mm=25, tabs=True, hinges=None,
         for i in item['faces']:
             coords[i]+=shift;r,t=transforms[i];transforms[i]=(r,t+np.r_[shift,0])
         cursor+=high[0]-low[0]+10
+    automatic_placement=placements is None
     placements=[] if placements is None else placements
     if not isinstance(placements,list):raise GeometryError('Component placements must be a list of root/translation/angle records.')
     roots={c['root'] for c in components};seen=set()
@@ -296,11 +297,17 @@ def unfold_generalized(model, root=0, edge_length_mm=25, tabs=True, hinges=None,
         result['elementAnnotations'] = deepcopy(element_annotations)
     from .net_color_printing import attach_print_source
     attach_print_source(result,model)
-    return result
+    if model.get('metadata',{}).get('visibleSurface'):
+        result['visibleSurface']={**model['metadata']['visibleSurface'],'paperPieces':len(components)}
+    from .net_paper_ux import finish_net
+    return finish_net(model,result,None if automatic_placement else placements)
 
 
 
 def unfold_source(model, **params):
+    if model.get('metadata',{}).get('visibleSurface') and params.get('hinges') is None and not params.get('cut_edges'):
+        from .visible_surface import unfold_visible_surface
+        return unfold_visible_surface(model,**params)
     if model.get('interpretation') == 'convex-polytope':
         return convex_unfold(model, **params)
     return unfold_generalized(model, **params)
@@ -311,6 +318,9 @@ def reconstruct_source_net(model,net):
 
 
 def edit_source_net(model,net,action,edge=None,component=None,translation=None,angle=0,tabs=None,tab_options=None):
+    if action=='arrange-pieces':
+        from .net_paper_ux import arrange_net
+        return arrange_net(model,reconstruct_source_net(model,net))
     if net.get('tabOptions') is not None or action=='set-tab-options':
         from .net_tabs import edit_tabbed
         return edit_tabbed(model,net,action,tab_options=tab_options,edge=edge,component=component,translation=translation,angle=angle,tabs=tabs)
@@ -327,7 +337,7 @@ def edit_source_net(model,net,action,edge=None,component=None,translation=None,a
         r=Rotation.from_rotvec([0,0,math.radians(angle)]).as_matrix()[:2,:2]
         for i in item['faces']:targets[i]=(targets[i]-center)@r.T+center+delta
     elif action!='set-tabs':raise GeometryError('Net edits are toggle-edge, move-component, or set-tabs.')
-    base=unfold_source(model,root=net['root'],edge_length_mm=net['referenceEdgeLengthMm'],tabs=net['tabs'] if tabs is None else bool(tabs),hinges=hinges,element_annotations=net.get('elementAnnotations'))
+    base=unfold_source(model,root=net['root'],edge_length_mm=net['referenceEdgeLengthMm'],tabs=net['tabs'] if tabs is None else bool(tabs),hinges=hinges,placements=[],element_annotations=net.get('elementAnnotations'))
     placements=[]
     for item in base['components']:
         i=item['root'];p=np.asarray(base['faces'][i]['points']);q=targets[i]

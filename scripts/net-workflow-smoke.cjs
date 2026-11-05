@@ -1,5 +1,6 @@
 // Core net workflow and identical native-IPC workloads before/after worker reuse.
 const {_electron:electron}=require('playwright'),fs=require('node:fs/promises'),path=require('node:path'),os=require('node:os'),assert=require('node:assert/strict');
+const {reveal:revealControl}=require('./smoke-helpers.cjs');
 const root=path.resolve(__dirname,'..'),visible=process.argv.includes('--visible'),baseline=process.argv.includes('--baseline'),historyReset=process.argv.includes('--history-reset'),exportBusy=process.argv.includes('--export-busy'),dialogPdf=process.argv.includes('--dialog-pdf');
 const active=project=>{const document=project.documents[project.active];return document.states[document.cursor];};
 async function main(){
@@ -12,9 +13,9 @@ async function main(){
     app=await electron.launch({executablePath:runtime.executablePath,args:runtime.packaged?[]:[root],cwd:root,env,timeout:30000});
     await app.evaluate(({dialog})=>{dialog.showMessageBox=async()=>({response:1});});
     await app.evaluate(({ipcMain})=>{const original=ipcMain._invokeHandlers.get('text-export-write');if(typeof original!=='function')throw Error('Text export handler required.');const h=globalThis.netWriteHarness={original,writes:[]};ipcMain.removeHandler('text-export-write');ipcMain.handle('text-export-write',(event,id,...args)=>{h.writes.push(id);return original(event,id,...args);});});
-    page=await app.firstWindow();page.setDefaultTimeout(30000);page.on('pageerror',error=>errors.push(error.message));
+    page=await app.firstWindow();require('./smoke-helpers.cjs').autoReveal(page);page.setDefaultTimeout(30000);page.on('pageerror',error=>errors.push(error.message));
     const save=async name=>{const file=path.join(folder,name+'.polyproj');await app.evaluate(({dialog},file)=>{dialog.showSaveDialog=async()=>({canceled:false,filePath:file});},file);await page.locator('#save').click();await page.waitForFunction(file=>document.getElementById('status').textContent==='Saved '+file,file);return {file,project:JSON.parse(await fs.readFile(file,'utf8'))};};
-    const reveal=async id=>{const root=page.locator('#'+id);if(!await root.evaluate(node=>node.open))await root.locator(':scope > summary').click();};
+    const reveal=async id=>{await require('./smoke-helpers.cjs').reveal(page,'#'+id);const root=page.locator('#'+id);if(!await root.evaluate(node=>node.open))await root.locator(':scope > summary').click();};
     const settled=()=>page.waitForFunction(()=>document.getElementById('cancel').hidden);
     const busyControls=async cell=>{
       const prefix=cell?'cell-net':'net',key=cell?'cellNet':'net';
@@ -138,7 +139,7 @@ async function main(){
       await output('net-export-svg','after-refused-net','svg');
       if(dialogPdf){
         const priorPdf=path.join(folder,'prior-dialog-net.pdf');await fs.writeFile(priorPdf,'prior complete PDF');
-        await page.locator('#export').click();await page.waitForFunction(()=>!document.getElementById('confirm-export').disabled);
+        await page.locator('#export').click();await revealControl(page,'#export-net-pdf');await page.waitForFunction(()=>!document.getElementById('confirm-export').disabled);
         await page.locator('#toast').evaluate(node=>{node.textContent='';});
         await app.evaluate(({dialog})=>{dialog.showSaveDialog=()=>new Promise(resolve=>{globalThis.resolveDialogPdf=resolve;});});await page.locator('#export-net-pdf').click();
         await page.locator('#model-unit').evaluate(select=>{select.value='mm';select.dispatchEvent(new Event('change',{bubbles:true}));});
@@ -148,7 +149,7 @@ async function main(){
         await page.locator('#model-unit').evaluate(select=>{select.value='model';select.dispatchEvent(new Event('change',{bubbles:true}));});
         if(await page.locator('#export-dialog').evaluate(n=>n.open))await page.locator('#close-export').click();
         const canceledPdf=path.join(folder,'canceled-dialog-net.pdf');await fs.writeFile(canceledPdf,'prior complete PDF');
-        await page.locator('#export').click();await page.waitForFunction(()=>!document.getElementById('confirm-export').disabled);await page.locator('#toast').evaluate(n=>{n.textContent='';});
+        await page.locator('#export').click();await revealControl(page,'#export-net-pdf');await page.waitForFunction(()=>!document.getElementById('confirm-export').disabled);await page.locator('#toast').evaluate(n=>{n.textContent='';});
         await app.evaluate(()=>globalThis.netWriteHarness.writes=[]);await page.locator('#export-dialog').evaluate(dialog=>{window.netCloseBlock=event=>event.stopImmediatePropagation();dialog.addEventListener('close',window.netCloseBlock,true);});
         await app.evaluate(({dialog})=>{dialog.showSaveDialog=()=>new Promise(resolve=>{globalThis.resolveDialogPdf=resolve;});});await page.locator('#export-net-pdf').click();
         await page.locator('#export-dialog').evaluate(n=>n.close());
@@ -156,7 +157,7 @@ async function main(){
         await page.waitForFunction(()=>!document.getElementById('net-export-svg').disabled);assert.equal(await app.evaluate(()=>globalThis.netWriteHarness.writes.length),0);
         await page.locator('#export-dialog').evaluate(dialog=>{dialog.removeEventListener('close',window.netCloseBlock,true);delete window.netCloseBlock;});
         assert.equal((await fs.readFile(canceledPdf)).equals(Buffer.from('prior complete PDF')),true,'Closing General Export must cancel its pending net PDF');
-        await page.locator('#export').click();await page.waitForFunction(()=>!document.getElementById('confirm-export').disabled);
+        await page.locator('#export').click();await revealControl(page,'#export-net-pdf');await page.waitForFunction(()=>!document.getElementById('confirm-export').disabled);
         await page.locator('#export-dialog').evaluate(dialog=>dialog.dispatchEvent(new Event('close')));assert.equal(await page.locator('#confirm-export').isEnabled(),true);
         const pdf=await output('export-net-pdf','dialog-net-retry','pdf');
         assert.equal(pdf.bytes.subarray(0,5).toString(),'%PDF-');checks.push('General Export net PDF preserves prior files after source-unit changes or closing the export dialog, then retries successfully');

@@ -1,3 +1,4 @@
+const {openDisclosure}=require('./smoke-helpers.cjs');
 // Future face-attachment integration qualification. Not registered in .14.
 // GUI execution is root-only after native/history/UI mounting. --self-test
 // uses independent literal fixtures and never launches or qualifies an app.
@@ -76,10 +77,10 @@ async function main(){
   const app=await electron.launch({executablePath:runtime.packaged||require('electron'),args:runtime.packaged?[]:[root],cwd:root,env,timeout:30000});
   const checks=[],errors=[],files=[];let page,serial=0;
   try{
-    page=await app.firstWindow();page.setDefaultTimeout(30000);page.on('pageerror',error=>errors.push(error.message));
+    page=await app.firstWindow();require('./smoke-helpers.cjs').autoReveal(page);page.setDefaultTimeout(30000);page.on('pageerror',error=>errors.push(error.message));
     await page.waitForFunction(()=>document.getElementById('augmentation-settings')&&document.getElementById('model-name').textContent==='Tesseract');
     const done=()=>page.waitForFunction(()=>document.getElementById('cancel').hidden);
-    const disclose=async id=>{if(!await page.locator('#'+id).evaluate(n=>n.open))await page.locator('#'+id+' > summary').click();};
+    const disclose=id=>openDisclosure(page,id);
     const save=async label=>{
       await done();const file=path.join(folder,`${++serial}-${label}.polyproj`);
       await app.evaluate(({dialog},file)=>{dialog.showSaveDialog=async()=>({canceled:false,filePath:file});},file);

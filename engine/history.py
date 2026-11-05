@@ -10,6 +10,7 @@ import json
 import math
 
 from .geometry import GeometryError, VERSION, TOLERANCE, identity, validate
+from .input_limits import input_boundary
 
 MAX_NODES = 1024
 MAX_NODE_BYTES = 32 * 1024 * 1024
@@ -17,8 +18,17 @@ MAX_BYTES = 128 * 1024 * 1024
 MAX_DEPTH = 64
 MAX_VALUES = 8_000_000
 ALGORITHM_VERSIONS = MappingProxyType({'transform': VERSION, 'section': VERSION,
-    'dual': VERSION, 'incidence-dual': '0.5.0', 'truncate': VERSION,
+    'face-surgery':'0.1.0',
+    'dual': VERSION, 'add-dual': '0.1.0', 'incidence-dual': '0.5.0', 'truncate': VERSION,
     'extrude': VERSION, 'cell': '0.2.0', 'facet': VERSION, 'facet-adopt':'0.1.0', 'scale-reference': VERSION, 'remove-coincident-pairs': '0.1.0', 'blend-faces': '0.1.0', 'compound-component': '0.1.0', 'compound-drop': '0.1.0', 'subdivide-edges':'0.1.0', 'polygon-prism':'0.2.0', 'polyhedron-prism':'0.1.0', 'convex-layer-join':'0.1.0', 'fit-strict-layer-join':'0.1.0', 'attach-at-faces':'0.1.0', 'triangular-geodesic':'0.1.0', 'convex-core':'0.1.0', 'place-at-faces':'0.1.0', 'convex-core-4d':'0.1.0', 'source-zonohedron':'0.1.0', 'spring-relaxation':'0.1.0', 'element-content':'0.1.0', 'expand-runcinate':'0.1.0', 'geometry-fit':'0.1.0', 'exact-surface-section':'0.1.0', 'incidence-truncate':'0.1.0', 'sphere-project':'0.1.0', 'projective-incidence-dual':'0.1.0', 'reflect-source':'0.1.0', 'coincidic-record':'0.1.0', 'coincidic-compound':'0.1.0'})
+ALGORITHM_VERSIONS = MappingProxyType({**ALGORITHM_VERSIONS, **dict.fromkeys(('subdivide-faces','conway','axis-zonohedron','add-zones'),'0.1.0')})
+ALGORITHM_VERSIONS = MappingProxyType({**ALGORITHM_VERSIONS,'facet-diagram-adopt':'0.1.0'})
+ALGORITHM_VERSIONS = MappingProxyType({**ALGORITHM_VERSIONS,'stellation-make-base':'0.1.0'})
+ALGORITHM_VERSIONS = MappingProxyType({**ALGORITHM_VERSIONS,'visible-surface':'0.1.0'})
+ALGORITHM_VERSIONS = MappingProxyType({**ALGORITHM_VERSIONS,'uniform-compound':'0.1.0'})
+ALGORITHM_VERSIONS = MappingProxyType({**ALGORITHM_VERSIONS, **dict.fromkeys(('blend-regions','merge-compound','pseudo-uniform'),'0.1.0')})
+ALGORITHM_VERSIONS = MappingProxyType({**ALGORITHM_VERSIONS,'coxeter-build':'0.1.0'})
+ALGORITHM_VERSIONS = MappingProxyType({**ALGORITHM_VERSIONS,'generate':'0.1.0'})
 REPLAY_OPERATIONS = frozenset(ALGORITHM_VERSIONS)
 NUMERIC_POLICY = MappingProxyType({'mode': 'float64-approximate', 'tolerance': TOLERANCE})
 NODE_KEYS = frozenset({'id', 'parent', 'inputs', 'op', 'params', 'numericPolicy',
@@ -46,7 +56,10 @@ def _json_bytes(value, limit=MAX_BYTES):
             if kind is dict:
                 if any(type(key) is not str for key in item):
                     raise GeometryError('Operation history requires string JSON keys.')
-                string_bytes += sum(len(key.encode('utf-8')) for key in item)
+                try:
+                    string_bytes += sum(len(key.encode('utf-8')) for key in item)
+                except UnicodeError as exc:
+                    raise GeometryError('Operation history requires valid UTF-8 JSON keys.') from exc
                 values = item.values()
             else:
                 values = item
@@ -54,7 +67,10 @@ def _json_bytes(value, limit=MAX_BYTES):
                 raise GeometryError('Operation history exceeds structural resource bounds.')
             stack.extend((child, depth + 1, next_ancestors) for child in values)
         elif kind is str:
-            string_bytes += len(item.encode('utf-8'))
+            try:
+                string_bytes += len(item.encode('utf-8'))
+            except UnicodeError as exc:
+                raise GeometryError('Operation history requires valid UTF-8 JSON strings.') from exc
         elif isinstance(item, float):
             if not math.isfinite(item):
                 raise GeometryError('Operation history requires finite JSON numbers.')
@@ -89,11 +105,14 @@ def canonical_model(model):
     return fields
 
 
+@input_boundary('History snapshot')
 def _snapshot(state):
+    from .input_limits import model_limits
     detached = json.loads(_json_bytes(state, MAX_NODE_BYTES))
     if (type(detached) is not dict or type(detached.get('model')) is not dict
             or type(detached.get('view')) is not dict):
         raise GeometryError('History snapshots require model and view objects.')
+    model_limits(detached['model'])
     checked = validate(detached['model'])
     if not checked['passed']:
         raise GeometryError('Invalid history snapshot: ' + '; '.join(checked['errors']))

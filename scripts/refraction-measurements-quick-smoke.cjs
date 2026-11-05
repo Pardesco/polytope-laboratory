@@ -3,7 +3,7 @@ const root=path.resolve(__dirname,'..');
 async function main(){
   const folder=await fs.mkdtemp(path.join(root,'artifacts','refraction-measurements-quick-')),profile=path.join(folder,'profile');await fs.mkdir(profile);
   const env={...process.env,POLYTOPE_TEST_USER_DATA:profile};delete env.ELECTRON_RUN_AS_NODE;delete env.POLYTOPE_TEST_MODE;
-  const app=await require('playwright')._electron.launch({executablePath:require('electron'),args:[root],cwd:root,env});const page=await app.firstWindow(),errors=[];
+  const app=await require('playwright')._electron.launch({executablePath:require('electron'),args:[root],cwd:root,env});const page=await app.firstWindow();require('./smoke-helpers.cjs').autoReveal(page),errors=[];
   page.on('pageerror',e=>errors.push(e.message));page.on('console',m=>{if(m.type()==='error')errors.push(m.text());});
   const capture=async name=>{const filePath=path.join(folder,name);await app.evaluate(({dialog},filePath)=>{dialog.showSaveDialog=async()=>({canceled:false,filePath});},filePath);await page.locator('#image').click();for(let i=0;i<100;i++){try{if((await fs.stat(filePath)).size>100)return fs.readFile(filePath);}catch{}await new Promise(resolve=>setTimeout(resolve,100));}throw Error('PNG capture did not finish.');};
   try{

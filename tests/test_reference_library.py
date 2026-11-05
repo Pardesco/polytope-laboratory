@@ -11,7 +11,7 @@ from engine.incidence_dual import incidence_dual
 from engine.geometry import canonical_cycle, GeometryError, hull, identity
 from engine.symmetry import geometric_symmetry
 from engine.operations import dual, section, transform
-from engine.nets import unfold, extract_entity
+from engine.nets import unfold, fold_net, extract_entity
 from engine.formats import parse_off, export_off, save_project, load_file
 from engine.faceting import facet
 
@@ -105,8 +105,18 @@ def test_regular_stars_preserve_winding_links_genus_metric_and_full_symmetry(key
     lengths=[np.linalg.norm(p[a]-p[b])/r for a,b in model['edges']]
     assert lengths==pytest.approx([edge_radius]*counts[1],abs=1e-8)
     group=geometric_symmetry(model);assert group['complete'] and group['order']==120 and group['properOrder']==60
-    for unsupported in (dual,unfold):
-        with pytest.raises(GeometryError):unsupported(model)
+    with pytest.raises(GeometryError):dual(model)
+    if step == 2:
+        with pytest.raises(GeometryError):unfold(model)
+    else:
+        net=unfold(model)
+        assert net['sourceFingerprint']==identity(model) and net['sourceEdges']==model['edges']
+        assert net['validation']['allFacesRepresented'] and net['validation']['areaPreserved']
+        assert {f['id'] for f in net['faces']}==set(range(len(model['faces'])))
+        for face in net['faces']:
+            assert face['sourceVertices']==model['faces'][face['id']]
+        assert fold_net(net,1)['validation']['endpointReconstructed']
+        assert fold_net(net,.5)['validation']['hingesJoined']
     sliced=section(model)
     assert sliced['status']=='surface-intersection'
     assert sliced['model']['interpretation']=='surface-section'
@@ -133,7 +143,15 @@ def test_incidence_dual_domain_singularities_and_scale_covariance():
     cube=regular('cube');open_shell=facet(cube,cube['faces'][:-1])
     with pytest.raises(GeometryError,match='two distinct face'):incidence_dual(open_shell)
     with pytest.raises(GeometryError,match='singular'):incidence_dual(cube,center=[1,0,0])
-    with pytest.raises(GeometryError):incidence_dual(regular('tesseract'))
+    tesseract=regular('tesseract');before=deepcopy(tesseract)
+    reciprocal=incidence_dual(tesseract);restored=incidence_dual(reciprocal)
+    assert [len(reciprocal[k]) for k in ('vertices','edges','faces','cells')]==[8,24,32,16]
+    assert np.asarray(restored['vertices'])==pytest.approx(np.asarray(tesseract['vertices']),abs=1e-8)
+    assert [canonical_cycle(f) for f in restored['faces']]==[canonical_cycle(f) for f in tesseract['faces']]
+    assert [set(c) for c in restored['cells']]==[set(c) for c in tesseract['cells']]
+    assert tesseract==before
+    open4=deepcopy(tesseract);open4['cells'].pop()
+    with pytest.raises(GeometryError):incidence_dual(open4)
     with pytest.raises(GeometryError):incidence_dual(cube,radius=0)
     duplicate=facet(cube,cube['faces']+[cube['faces'][0]])
     with pytest.raises(GeometryError,match='two distinct face'):incidence_dual(duplicate)

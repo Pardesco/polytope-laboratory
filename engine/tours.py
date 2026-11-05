@@ -14,7 +14,7 @@ MAX_EVENT_BYTES=32*1024*1024
 MAX_BYTES=128*1024*1024
 MAX_DURATION=3600
 TRANSITION_METHODS=('instant','sideways','orbit','shrink-grow','explode-grow',
-                    'shrink-implode','explode-implode','combination')
+                    'shrink-implode','explode-implode','morph-to-dual','combination')
 TRANSITION_DEFAULTS={'version':1,'method':'instant','duration':0,
     'easing':'smoothstep','angle':0,'distance':2,'tilt':0,'orbits':1,'spin':0,
     'explosionSize':3,'direction':1,'components':[]}
@@ -85,7 +85,7 @@ def _transition(value):
     if type(components) is not list or len(components)>4:
         raise GeometryError('Transition components require at most four supported methods.')
     if method=='combination':
-        allowed=TRANSITION_METHODS[1:-1]
+        allowed=tuple(m for m in TRANSITION_METHODS[1:-1] if m!='morph-to-dual')
         if (not components or any(type(item) is not str or item not in allowed for item in components)
                 or len(set(components))!=len(components)):
             raise GeometryError('Combination transitions require distinct supported component methods.')
@@ -146,6 +146,11 @@ def tour_documents(tour):
                 from .animation_state import validate_animation_sequence
                 validate_animation_sequence(state['view']['animation'])
         documents.append({'cursor':0,'states':[state]})
+    if tour['version']==2:
+        for index,event in enumerate(events):
+            if event['transition'].get('method')=='morph-to-dual':
+                from .dual_morph_tour import verify_dual_tour
+                verify_dual_tour(event['state']['model'],events[(index+1)%len(events)]['state']['model'])
     return documents
 
 

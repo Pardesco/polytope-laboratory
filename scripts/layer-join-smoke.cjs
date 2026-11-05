@@ -1,3 +1,4 @@
+const {openDisclosure}=require('./smoke-helpers.cjs');
 // Actual parallel-layer UI qualification. Authoring/self-tests launch no app.
 // GUI execution requires a matching hidden runtime canary and root HWND watcher.
 const fs=require('node:fs/promises'),path=require('node:path'),assert=require('node:assert/strict');
@@ -124,7 +125,7 @@ async function main(){
   const app=await electron.launch({executablePath:runtime.packaged||require('electron'),args:runtime.packaged?[]:[root],cwd:root,env,timeout:30000});
   const checks=[],errors=[],files=[];let page,serial=0;
   try{
-    assert.equal((await app.evaluate(({app})=>app.polytopeQualification))?.mode,runtime.hidden?'hidden-no-focus':undefined);page=await app.firstWindow();page.setDefaultTimeout(30000);page.on('pageerror',e=>errors.push(e.message));
+    assert.equal((await app.evaluate(({app})=>app.polytopeQualification))?.mode,runtime.hidden?'hidden-no-focus':undefined);page=await app.firstWindow();require('./smoke-helpers.cjs').autoReveal(page);page.setDefaultTimeout(30000);page.on('pageerror',e=>errors.push(e.message));
     await page.waitForFunction(()=>document.getElementById('layer-join-settings')&&document.getElementById('model-name').textContent==='Tesseract');
     await page.evaluate(()=>{window.layerStatuses=[];new MutationObserver(()=>window.layerStatuses.push(document.getElementById('status').textContent)).observe(document.getElementById('status'),{childList:true,subtree:true,characterData:true});});
     // Delay only an already-computed real native transport response. Never
@@ -140,7 +141,7 @@ async function main(){
     const held=()=>app.evaluate(()=>new Promise((resolve,reject)=>{const deadline=Date.now()+30000,t=setInterval(()=>{if(globalThis.layerNativeGate.held){clearInterval(t);resolve();}else if(Date.now()>deadline){clearInterval(t);reject(Error('Actual layer native reply gate was not reached.'));}},10);}));
     const release=()=>app.evaluate(()=>{if(!globalThis.layerNativeGate.held)throw Error('No native layer reply is held.');globalThis.layerNativeGate.release();});
     const done=()=>page.waitForFunction(()=>document.getElementById('cancel').hidden);
-    const disclose=async id=>{if(!await page.locator('#'+id).evaluate(n=>n.open))await page.locator('#'+id+' > summary').click();};
+    const disclose=id=>openDisclosure(page,id);
     const construct=async()=>{if(await page.locator('#toggle-inspector').getAttribute('aria-pressed')!=='true')await page.locator('#toggle-inspector').click();await page.locator('[data-panel="construct"]').click();await disclose('layer-join-settings');if(!await page.locator('#layer-join-settings details').evaluate(n=>n.open))await page.locator('#layer-join-settings details > summary').click();};
     const save=async label=>{await done();const file=path.join(folder,`${String(++serial).padStart(2,'0')}-${label}.polyproj`);await app.evaluate(({dialog},file)=>{dialog.showSaveDialog=async()=>({canceled:false,filePath:file});},file);await page.locator('#save').click();await page.waitForFunction(file=>window.layerStatuses.includes('Saved '+file),file);await done();const bytes=await fs.readFile(file);files.push({file,sha256:hash(bytes)});return {file,project:JSON.parse(bytes)};};
     const settle=async()=>{await done();await page.keyboard.press('Escape');await page.evaluate(async()=>{document.activeElement?.blur?.();for(let i=0;i<3;i++)await new Promise(requestAnimationFrame);});await done();};

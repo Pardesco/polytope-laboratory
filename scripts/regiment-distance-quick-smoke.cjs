@@ -4,7 +4,7 @@ const root=path.resolve(__dirname,'..'),active=p=>{const d=p.documents[p.active]
 async function main(){
   const folder=await fs.mkdtemp(path.join(root,'artifacts','regiment-distance-quick-'));
   const env={...process.env,POLYTOPE_TEST_USER_DATA:path.join(folder,'profile')};delete env.ELECTRON_RUN_AS_NODE;delete env.POLYTOPE_TEST_MODE;
-  const app=await require('playwright')._electron.launch({executablePath:require('electron'),args:[root],cwd:root,env}),page=await app.firstWindow(),errors=[];page.on('pageerror',e=>errors.push(e.message));page.on('console',m=>{if(m.type()==='error')errors.push(m.text());});
+  const app=await require('playwright')._electron.launch({executablePath:require('electron'),args:[root],cwd:root,env}),page=await app.firstWindow();require('./smoke-helpers.cjs').autoReveal(page),errors=[];page.on('pageerror',e=>errors.push(e.message));page.on('console',m=>{if(m.type()==='error')errors.push(m.text());});
   const ready=async()=>{await page.waitForFunction(()=>document.getElementById('cancel').hidden);await page.evaluate(()=>new Promise(resolve=>{let n=5;const tick=()=>--n?requestAnimationFrame(tick):resolve();requestAnimationFrame(tick);}));};
   const reveal=async selector=>page.locator(selector).evaluate(n=>{for(let p=n;p;p=p.parentElement)if(p.tagName==='DETAILS')p.open=true;});
   const dialog=async file=>app.evaluate(({dialog},file)=>{dialog.showSaveDialog=async()=>({canceled:false,filePath:file});},file);

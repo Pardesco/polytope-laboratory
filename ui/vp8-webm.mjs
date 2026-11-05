@@ -1,4 +1,4 @@
-// Unmounted bounded VP8-only streaming WebM writer. No bitstream transcoding.
+// Bounded VP8-only streaming WebM writer for offline frame export.
 const LIMIT=32*1024*1024,TOTAL=512*1024*1024;
 const fail=message=>{throw Error(message);};
 const integer=(x,min,max,label)=>Number.isSafeInteger(x)&&x>=min&&x<=max?x:fail('Invalid '+label+'.');

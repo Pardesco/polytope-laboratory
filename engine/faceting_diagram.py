@@ -127,6 +127,8 @@ def _verify_catalogue(job):
         d=c['domain'];perms=c['symmetry']['group']['permutations']
         args={'max_face_vertices':d['maximumFaceVertices'],'max_candidates':d['maximumCandidates'],
               'max_cycles_per_plane':d['maximumCyclesPerPlane'],'symmetry_permutations':perms}
+        if 'sourceSymmetryOptions' in c:
+            args.pop('symmetry_permutations');args['source_symmetry']=c['sourceSymmetryOptions']
         fresh=candidate_facets(job.source,**args,cancelled=job.candidate_callback)
     except (KeyError,TypeError) as exc:raise GeometryError('Diagram candidate receipt is malformed.') from exc
     if _hash(fresh)!=_hash(c):raise GeometryError('Diagram candidate planes/cycles/subgroup/source evidence failed reconstruction.')
@@ -489,7 +491,8 @@ def to_svg(diagram,*,width=640,height=480):
         cx,cy=xy([0,0]);output.append(f'<circle data-role="source-center" cx="{cx:.12g}" cy="{cy:.12g}" r="5" fill="#318bd8"/>')
     if not (p['hide_vertices_when_selected'] and selected):
         for vertex,point in points.items():
-            x,y=xy(point);output.append(f'<circle data-source-vertex-id="{vertex}" cx="{x:.12g}" cy="{y:.12g}" r="3" fill="#fff" stroke="#344054"/>')
+            x,y=xy(point);output.append(f'<circle data-source-vertex-id="{vertex}" cx="{x:.12g}" cy="{y:.12g}" r="6" fill="#fff" stroke="#344054"/>')
+            output.append(f'<text data-source-vertex-id="{vertex}" x="{x+8:.12g}" y="{y-5:.12g}" font-size="12">V{vertex}</text>')
     infinite=[r['sourceVertexId'] for r in checked['vertices'] if r.get('status')=='at-infinity']
     warning='At infinity: '+','.join(map(str,infinite)) if infinite else ''
     if not checked['presentationComplete']:warning+='; finite paint omissions: see exact receipt'

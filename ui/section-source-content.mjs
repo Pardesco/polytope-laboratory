@@ -1,5 +1,6 @@
 /** Literal rank-loss content on complete ordinary-cell section regions. */
 import {portableContentSource} from './element-content-source.mjs';
+import {pointRadius,pointBounds} from './geometry-bounds.mjs';
 import {contentPresentationFrame} from './element-content-mapping.mjs';
 const names={vertex:'vertices',edge:'edges',face:'faces',cell:'cells'},eq=(a,b)=>JSON.stringify(a)===JSON.stringify(b);
 const fail=m=>{throw Error('Section source content: '+m);};
@@ -40,8 +41,8 @@ export function planSectionSourceContent(source,model,entries,sourceHash){
  if(Math.abs(norm(plane.normal)-1)>1e-7||norm(sub(plane.origin,plane.normal.map(x=>x*plane.offset)))>1e-7||columns.some((c,k)=>Math.abs(dot(c,plane.normal))>1e-7||columns.some((d,j)=>Math.abs(dot(c,d)-(j===k?1:0))>1e-7)))fail('Section embedding is not an orthonormal source plane.');
  const refs=model.metadata.sourceReferences,edgeRefs=model.metadata.edgeSourceReferences,faceRefs=model.metadata.faceSourceReferences,regions=model.metadata.cellSectionRegions;
  if(!Array.isArray(refs)||refs.length!==model.vertices.length||!Array.isArray(edgeRefs)||edgeRefs.length!==model.edges.length||!Array.isArray(faceRefs)||faceRefs.length!==model.faces.length||!Array.isArray(regions))fail('Literal native source maps are missing.');
- const span=Math.max(...[0,1,2,3].map(k=>Math.max(...source.vertices.map(p=>p[k]))-Math.min(...source.vertices.map(p=>p[k]))));
- const tol=Math.max(span*1e-7,Number.EPSILON*64*Math.max(1,...source.vertices.map(p=>norm(p))));
+ const {low,high}=pointBounds(source.vertices,4),span=Math.max(...high.map((x,k)=>x-low[k]));
+ const tol=Math.max(span*1e-7,Number.EPSILON*64*pointRadius(source.vertices,null,1));
  const world=model.vertices.map((p,v)=>{
   if(!finite(p,3)||!Array.isArray(refs[v])||!refs[v].length||refs[v].length>64)fail('Cut vertex source references are invalid.');
   const q=plane.origin.map((x,k)=>x+dot(plane.basis[k],p));

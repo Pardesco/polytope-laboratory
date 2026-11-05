@@ -5,7 +5,7 @@ import {fileURLToPath} from 'node:url';
 import {WatermanControls} from '../ui/waterman-controls.mjs';
 import {numericControlFixture,deferred,flush} from './numeric-control-fixture.mjs';
 const near='39999999999999999999999999999999999999999/10000000000000000000000000000000000000000';
-const fixture=()=>numericControlFixture(WatermanControls.prototype,{'waterman-mode':'exact-sphere','waterman-root':'5','waterman-radius-squared':'3/4',
+const fixture=()=>numericControlFixture(WatermanControls.prototype,{'waterman-lattice':'FCC','waterman-increment':'2','waterman-origin':'custom','waterman-mode':'exact-sphere','waterman-root':'5','waterman-radius-squared':'3/4',
   'waterman-x':'1/2','waterman-y':'1/2','waterman-z':'1/2','generate-waterman':'','waterman-root-row':'','waterman-radius-row':'','waterman-x-row':'','waterman-y-row':'','waterman-z-row':''});
 test('exact sphere fields reach native generation as canonical strings, never float divisions',async()=>{
   const f=fixture(),before=structuredClone(f.project);assert.equal(await f.control.generate(),f.result);

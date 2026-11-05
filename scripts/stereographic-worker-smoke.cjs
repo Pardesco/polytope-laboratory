@@ -47,7 +47,7 @@ function instrumentation(){
 async function main(){
   const artifacts=process.env.POLYTOPE_TEST_ARTIFACTS?path.resolve(process.env.POLYTOPE_TEST_ARTIFACTS):path.join(root,'artifacts');await fs.mkdir(artifacts,{recursive:true});const packaged=process.env.POLYTOPE_TEST_EXECUTABLE,folder=await fs.mkdtemp(path.join(artifacts,packaged?'stereographic-worker-packaged-':'stereographic-worker-smoke-'));
   const profile=path.join(folder,'profile');await fs.mkdir(profile);await fs.writeFile(path.join(profile,'linked-libraries.json'),JSON.stringify({version:1,paths:[]}));const env={...process.env,POLYTOPE_TEST_USER_DATA:profile};delete env.ELECTRON_RUN_AS_NODE;if(packaged)env.POLYTOPE_PYTHON=path.join(folder,'unavailable-development-python.exe');
-  const app=await electron.launch({executablePath:packaged||require('electron'),args:packaged?[]:[root],cwd:root,env,timeout:30000}),page=await app.firstWindow();page.setDefaultTimeout(45000);const checks=[],evidence=[],errors=[];let saved=0;
+  const app=await electron.launch({executablePath:packaged||require('electron'),args:packaged?[]:[root],cwd:root,env,timeout:30000}),page=await app.firstWindow();require('./smoke-helpers.cjs').autoReveal(page);page.setDefaultTimeout(45000);const checks=[],evidence=[],errors=[];let saved=0;
   page.on('pageerror',error=>errors.push(error.message));
   const done=()=>page.waitForFunction(()=>document.getElementById('cancel')?.hidden);
   const probe=()=>page.evaluate(()=>window.__stereoWorkerProbe.snapshot());

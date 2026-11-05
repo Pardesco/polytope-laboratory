@@ -14,7 +14,7 @@ async function main(){
   const env={...process.env,POLYTOPE_TEST_USER_DATA:path.join(folder,'profile')};delete env.ELECTRON_RUN_AS_NODE;
   if(packaged)env.POLYTOPE_PYTHON=path.join(folder,'unavailable-development-python.exe');
   const app=await electron.launch({executablePath:packaged||require('electron'),args:packaged?[]:[root],cwd:root,env,timeout:30000});
-  const page=await app.firstWindow();page.setDefaultTimeout(45000);const checks=[],errors=[];let saves=0,videoProof=null;
+  const page=await app.firstWindow();require('./smoke-helpers.cjs').autoReveal(page);page.setDefaultTimeout(45000);const checks=[],errors=[];let saves=0,videoProof=null;
   page.on('pageerror',error=>{errors.push(error.message);console.error('Renderer:',error.message);});
   await page.evaluate(()=>{window.animationTrackInputTrace=[];for(const type of ['click','change','input','keydown'])document.addEventListener(type,event=>{const target=event.target.closest?.('[id]');window.animationTrackInputTrace.push({time:performance.now(),type,id:target?.id,value:target?.value,key:event.key,trusted:event.isTrusted,projection:document.getElementById('projection')?.value,layout:document.getElementById('viewport-layout')?.value});if(window.animationTrackInputTrace.length>200)window.animationTrackInputTrace.shift();},true);});
   const done=()=>page.waitForFunction(()=>document.getElementById('cancel').hidden);

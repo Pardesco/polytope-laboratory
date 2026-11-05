@@ -47,7 +47,7 @@ async function main(){
   const app=await electron.launch({executablePath:runtime.packaged||require('electron'),args:runtime.packaged?[]:[root],cwd:root,env,timeout:30000});
   const checks=[],evidence=[],errors=[];let page,stage='startup',serial=0;
   try{
-    page=await app.firstWindow();page.setDefaultTimeout(45000);page.on('pageerror',e=>errors.push(e.message));
+    page=await app.firstWindow();require('./smoke-helpers.cjs').autoReveal(page);page.setDefaultTimeout(45000);page.on('pageerror',e=>errors.push(e.message));
     await page.waitForFunction(()=>document.getElementById('model-name')?.textContent==='Tesseract'&&document.getElementById('element-content-settings'));
     await page.evaluate(()=>{window.elementSmokeStatuses=[];new MutationObserver(()=>window.elementSmokeStatuses.push(document.getElementById('status').textContent)).observe(document.getElementById('status'),{childList:true,subtree:true,characterData:true});});
     const settled=async()=>{await page.waitForFunction(()=>document.getElementById('cancel').hidden);await page.evaluate(()=>new Promise(resolve=>{let n=8;const tick=()=>--n?requestAnimationFrame(tick):resolve();requestAnimationFrame(tick);}));};

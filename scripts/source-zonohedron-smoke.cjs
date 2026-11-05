@@ -112,7 +112,7 @@ async function main(){
   const checks=[],errors=[],files=[];let page,serial=0;
   try{
     assert.equal((await app.evaluate(({app})=>app.polytopeQualification))?.mode,runtime.hidden?'hidden-no-focus':undefined);
-    page=await app.firstWindow();page.setDefaultTimeout(30000);page.on('pageerror',e=>errors.push(e.message));
+    page=await app.firstWindow();require('./smoke-helpers.cjs').autoReveal(page);page.setDefaultTimeout(30000);page.on('pageerror',e=>errors.push(e.message));
     await page.waitForFunction(()=>document.getElementById('zonohedron-selection-list')&&document.getElementById('model-name').textContent==='Tesseract');
     await page.evaluate(()=>{window.zonoStatuses=[];new MutationObserver(()=>window.zonoStatuses.push(document.getElementById('status').textContent)).observe(document.getElementById('status'),{childList:true,subtree:true,characterData:true});});
     const done=()=>page.waitForFunction(()=>document.getElementById('cancel').hidden);

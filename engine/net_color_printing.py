@@ -85,7 +85,7 @@ def _forest(source,net,colors):
     params={'root':net['root'],'edge_length_mm':net['referenceEdgeLengthMm'],'tabs':net['tabs'],
             'hinges':[e for e in net['hinges'] if e not in cuts],'element_annotations':net.get('elementAnnotations')}
     if net.get('tabOptions') is not None:params['tab_options']=net['tabOptions']
-    base=unfold_source(source,**params);targets={f['id']:np.asarray(f['points']) for f in net['faces']};placements=[]
+    base=unfold_source(source,placements=[],**params);targets={f['id']:np.asarray(f['points']) for f in net['faces']};placements=[]
     for item in base['components']:
         fi=item['root'];p=np.asarray(base['faces'][fi]['points']);q=targets[fi];u,v=p[1]-p[0],q[1]-q[0]
         theta=math.atan2(float(u[0]*v[1]-u[1]*v[0]),float(u@v));rotation=np.array([[math.cos(theta),-math.sin(theta)],[math.sin(theta),math.cos(theta)]])
@@ -127,6 +127,8 @@ def pack_colors(net,color_mode,paper_color,print_fill,color_source_id,color_sour
     if paper_color!='all' and (type(paper_color) is not int or not 0<=paper_color<len(colors)):raise GeometryError('Paper color must be all or an existing representative source face ID.')
     if effective=='mixed' and paper_color!='all':raise GeometryError('A paper-color batch requires separate-color printing; use all for mixed printing.')
     print_net,cuts=_forest(source,net,colors) if effective=='separate' and source is not None else (deepcopy(net),[])
+    from .net_paper_ux import piece_numbers
+    print_net['pieceNumbers']={str(root):number for root,number in piece_numbers(print_net).items()}
     groups={}
     if effective=='mixed':groups['mixed']={'id':'mixed','label':'Mixed source colors','rgba':None,'faceIds':[f['id'] for f in print_net['faces']]}
     else:

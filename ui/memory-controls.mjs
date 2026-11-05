@@ -1,4 +1,5 @@
 import {createMemories,normalizeMemories,storeMemory,retrieveMemoryEntry,swapMemory,clearMemory} from './model-memories.mjs';
+import {bindings,matchesShortcut} from './shortcut-bindings.mjs';
 
 export class MemoryControls {
   constructor(context){
@@ -82,13 +83,17 @@ export class MemoryControls {
   async swap(slot=this.selectedSlot()){
     return this.operate(async(project,state)=>{
       const captured=await this.capture(project,state),originalBank=this.bank(project);
-      // Build and validate replacement first, but publish only after the
-      // authoritative restore succeeds. Failures keep the original memory.
+      // The authoritative restore verifies both owners immediately before
+      // adoption, then commits the slot in that same synchronous publication.
       const swapped=swapMemory(originalBank,slot,captured.state,captured.source);this.assertCurrent(project,state);
-      await this.context.restoreState(swapped.state,`Swap memory ${slot}`);
+      let published=false;
+      await this.context.restoreState(swapped.state,`Swap memory ${slot}`,{
+        verifyPublication:()=>{this.assertCurrent(project,state);if(project.memories!==originalBank)throw new Error('Model memories changed while the swap ran. The replacement was discarded.');},
+        onPublication:()=>{project.memories=swapped.memories;published=true;}
+      });
       if(this.context.getProject()!==project)throw new Error('Project changed while swapping the memory.');
-      if(project.memories!==originalBank)throw new Error('Model memories changed while the swap ran. The replacement was discarded.');
-      project.memories=swapped.memories;this.nodes.slot.value=String(slot);this.context.markDirty();this.context.setStatus?.(`Swapped with memory ${slot}: ${swapped.state.model.name||'model'}.`);
+      if(!published)throw new Error('The model restore did not commit the memory swap.');
+      this.nodes.slot.value=String(slot);this.context.setStatus?.(`Swapped with memory ${slot}: ${swapped.state.model.name||'model'}.`);
     });
   }
   async clear(slot=this.selectedSlot()){
@@ -103,7 +108,9 @@ export class MemoryControls {
       const current=retrieveMemoryEntry(storeMemory(createMemories(),1,captured.state,captured.source),1).state;
       this.assertCurrent(project,state);
       if(project.memories!==originalBank)throw new Error('Model memories changed while addition ran. Repeat the action.');
-      await this.context.addStates(current,entry.state,`Add memory ${slot}`);
+      await this.context.addStates(current,entry.state,`Add memory ${slot}`,{verifyPublication:()=>{
+        this.assertCurrent(project,state);if(project.memories!==originalBank)throw new Error('Model memories changed while addition ran. Repeat the action.');
+      }});
       if(this.context.getProject()!==project)throw new Error('Project changed while adding the memory.');
       this.nodes.slot.value=String(slot);this.context.setStatus?.(`Added memory ${slot}: ${entry.state.model.name||'model'}.`);
     });
@@ -112,7 +119,8 @@ export class MemoryControls {
     if(event.defaultPrevented||event.repeat||event.metaKey||!event.altKey||this.busy||this.context.isExporting?.()||event.getModifierState?.('AltGraph'))return;
     const target=event.target;if(target?.isContentEditable||target?.closest?.('input,textarea,select,[contenteditable]:not([contenteditable="false"]),[role="textbox"]')||document.querySelector('dialog[open]'))return;
     const match=/^Digit([1-9])$/.exec(event.code||'')||/^([1-9])$/.exec(event.key||'');if(!match)return;
-    const action=event.ctrlKey?(event.shiftKey?null:'store'):(event.shiftKey?'swap':'open');if(!action)return;
+    const keyEvent={key:match[1],ctrlKey:event.ctrlKey,altKey:event.altKey,shiftKey:event.shiftKey,metaKey:event.metaKey};
+    const action=[['memoryOpen','open'],['memoryStore','store'],['memorySwap','swap']].find(([id])=>bindings[id].keys.some(key=>matchesShortcut(keyEvent,key)))?.[1];if(!action)return;
     event.preventDefault();this.actions[action](Number(match[1]));
   }
   destroy(){this.syncGeneration++;document.removeEventListener('keydown',this.keyHandler);this.details.remove();}

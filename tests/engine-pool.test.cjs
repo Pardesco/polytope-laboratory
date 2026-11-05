@@ -18,6 +18,26 @@ test('frequent calculations reuse one worker and each result belongs to its requ
     request=h.pool.run({op:'evaluate-dual-morph'},'second');assert.equal(h.processes.length,1);h.processes[0].reply({ratio:.5});assert.deepEqual(await request,{ratio:.5});assert.equal(h.jobs.size,0);
   }finally{h.pool.dispose();}
 });
+
+test('diagram rebuilds and faceting searches reuse a warm read-only worker',async()=>{
+  const h=harness();
+  try{for(const [i,op] of ['facet-candidates','facet-diagram','facet-search','facet-diagram'].entries()){
+    const job=h.pool.run({op,params:{i}},'facet-'+i);assert.equal(h.processes.length,1);
+    h.processes[0].reply({i});assert.deepEqual(await job,{i});
+  }}finally{h.pool.dispose();}
+});
+test('inspection, derived entity and annotation queries share warm imports with independent full requests',async()=>{
+  const h=harness();
+  try{
+    const operations=['measure','entity-measure','entity-info','dihedral','align-section','entity-orientation','cell-facing','vertex-figure','cell','element-content-describe','stellation-cell-graph','stellation-diagram-data','stellation-supported-enumerate','arrangement-diagram','stellation-enumerate','arrangement','stellation-union','geometry-fit-deviation'];
+    for(const [index,op] of operations.entries()){
+      const model={id:'same-id',fingerprint:'same-claim',vertices:[[index,0,0]]},params={index};
+      const promise=h.pool.run({op,model,params},String(index));
+      assert.equal(h.processes.length,1);assert.deepEqual(h.processes[0].sent.at(-1),{op,model,params,id:String(index)});
+      h.processes[0].reply({owner:index});assert.deepEqual(await promise,{owner:index});
+    }
+  }finally{h.pool.dispose();}
+});
 test('section requests reuse bounded workers across distinct planes and a native refusal',async()=>{
   const h=harness();
   try{

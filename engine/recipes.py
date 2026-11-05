@@ -79,7 +79,20 @@ def run_recipe(document, operation, parameters, dispatcher, label=None):
     if type(model) is not dict:
         raise GeometryError('This operation produced no model to commit.')
     view = copy.deepcopy(source['view'])
-    for field in ('entitySelection','sectionAlignment','orientationFrame','cellFacingCache'):
+    if operation == 'coxeter-build' or operation == 'generate' and parameters.get('kind') == 'coxeter-builder':
+        for field in ('net','cellNet','netPrint','foldFraction','explosionAmount','animation','dualMorph','camera','derivedCamera'):
+            view.pop(field,None)
+        view.update(derivedMode='section',sectionNormal=[int(i==model['dimension']-1) for i in range(model['dimension'])],sectionOffset=0,entity=0)
+    if operation in ('blend-regions','merge-compound','pseudo-uniform'):
+        for field in ('net','cellNet','netPrint','dualMorph','animation'):view.pop(field,None)
+        view.update(derivedMode='section',fillRule='nonzero')
+    if operation == 'visible-surface':
+        for field in ('net','cellNet','netPrint','dualMorph','animation'):view.pop(field,None)
+        view.update(derivedMode='net',fillRule='nonzero')
+    if operation == 'facet-diagram-adopt':
+        for field in ('net','cellNet','foldFraction','explosionAmount','animation','dualMorph'):
+            view.pop(field,None)
+    for field in ('entitySelection','sectionAlignment','orientationFrame','cellFacingCache','elementVisibility'):
         view.pop(field, None)
     view.pop('coincidicComparison', None)
     view.update(cellFacing='all', hiddenCells=[], isolatedCell=None)
@@ -97,11 +110,21 @@ def run_recipe(document, operation, parameters, dispatcher, label=None):
     if operation == 'section' and parameters.get('section_domain')=='ordinary-cells':
         view.update(derivedMode='face' if model['faces'] else 'section')
         view.pop('dualMorph', None)
+    if operation == 'section' and parameters.get('section_domain')=='density':
+        view.pop('densitySection',None);view.pop('dualMorph',None)
+        view.update(derivedMode='face',fillRule='nonzero',surfaceColors='source',surfaceOpacity=1)
+        boundary=model.get('metadata',{}).get('densitySection',{}).get('boundaryEdges')
+        if boundary is not None:
+            visible={tuple(sorted(e)) for e in boundary}
+            view['elementVisibility']={'version':1,'sourceFingerprint':model['fingerprint'],'hidden':{'vertices':[],'edges':[i for i,e in enumerate(model['edges']) if tuple(sorted(e)) not in visible],'faces':[],'cells':[]}}
     if operation == 'exact-surface-section':
         view.update(derivedMode='face' if model['faces'] else 'section-evidence', sectionNormal=[0,0,1])
         view.pop('dualMorph', None)
     if operation in ('incidence-truncate','sphere-project','incidence-dual','reflect-source'): view.pop('dualMorph', None)
     if operation == 'incidence-dual': view['derivedMode'] = 'incidence-dual'
+    if operation == 'stellation-make-base':
+        view.pop('stellation',None)
+        view['derivedMode']='section'
     node_id = str(uuid.uuid4())
     state = {'model':model, 'view':view, 'label':label or operation,
              'notes':source.get('notes',''), 'operationNode':node_id}

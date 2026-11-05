@@ -7,7 +7,7 @@ async function main(){
   const folder=await fs.mkdtemp(path.join(root,'artifacts','feature-0.25-quick-'));
   const env={...process.env,POLYTOPE_TEST_USER_DATA:path.join(folder,'profile')};delete env.ELECTRON_RUN_AS_NODE;delete env.POLYTOPE_TEST_MODE;
   const app=await require('playwright')._electron.launch({executablePath:require('electron'),args:[root],cwd:root,env});
-  const page=await app.firstWindow(),errors=[],checks=[];page.on('pageerror',e=>errors.push(e.message));
+  const page=await app.firstWindow();require('./smoke-helpers.cjs').autoReveal(page),errors=[],checks=[];page.on('pageerror',e=>errors.push(e.message));
   const reveal=async selector=>page.locator(selector).evaluate(n=>{for(let p=n;p;p=p.parentElement)if(p.tagName==='DETAILS')p.open=true;});
   const ready=async()=>{await page.waitForFunction(()=>document.getElementById('cancel').hidden);await page.evaluate(()=>new Promise(resolve=>{let count=5;const tick=()=>--count?requestAnimationFrame(tick):resolve();requestAnimationFrame(tick);}));};
   const save=async label=>{await ready();const file=path.join(folder,label+'.polyproj');await app.evaluate(({dialog},file)=>{dialog.showSaveDialog=async()=>({canceled:false,filePath:file});},file);await page.evaluate(()=>document.getElementById('status').textContent='');await page.locator('#save').click();await page.waitForFunction(file=>document.getElementById('status').textContent==='Saved '+file,file);return {file,state:active(JSON.parse(await fs.readFile(file,'utf8')))};};

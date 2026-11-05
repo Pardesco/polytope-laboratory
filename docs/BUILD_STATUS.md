@@ -1,11 +1,172 @@
-# Published checkpoint ? October 24, 2026
+> Published October 24, 2026: [0.27.20 community preview](https://github.com/Pardesco/polytope-laboratory/releases/tag/v0.27.20) is now public, with matching executable/source ZIP. GitHub main and tag v0.27.20 use the verified sealed source plus publication documentation updates (commit `62abb4c`). Local 0.27.21 remains unqualified. Older public-0.26.0 statements below are historical.
 
-The public community preview is 0.27.20. See [release notes](RELEASE_0.27.20_PREVIEW.md)
-and [source correspondence](RELEASE_SOURCE_PAIR_0.27.20.json). This tag contains
-the sealed qualified 0.27.20 runtime. Later 0.27.21 development remains local and
-unqualified. Text below is the preserved historical local checkpoint.
+# October 25 continuation
 
-# 0.27.19 verified local checkpoint - October 22, 2026
+## Paused at Randall's request - October 25, 2026
+
+Stopped at the verified [PNG capture/save checkpoint](IMAGE_CAPTURE_RELIABILITY_2026-10-25.md).
+Rechecked `artifacts/image-capture-checks-20261025-152038/result.json`: selected
+source/test hashes still match; 467 focused tests, the 171-module production
+build and desktop syntax checks passed. No code changes were made during the
+follow-up specialist PNG review, and no validation job from that review remains
+running. The existing dirty worktree is preserved; nothing was committed,
+packaged or released. Development 0.27.21 remains unqualified.
+
+On resume, the next candidate is forwarding multiple-view/projective PNG
+source/dialog ownership through the reviewed destination handshake. Their
+saveImage callbacks already write atomically; their current post-save source
+check can still detect a change only after publication. This was inspected,
+not implemented. Broad GUI/package/fresh-user checks, consolidated review
+refresh and earlier native engine rebuild obligations remain deferred.
+
+This requested pause supersedes the continuation instructions below until
+Randall resumes the goal.
+
+Newest: [image capture reliability](IMAGE_CAPTURE_RELIABILITY_2026-10-25.md)
+owns the main screenshot through preparation and destination review, supports
+prompt cancellation and writes PNGs through fsynced sibling replacement.
+Legacy saveImage callers also gain atomic writes. **467 focused tests, the
+171-module build and desktop syntax checks pass** in
+`artifacts/image-capture-checks-20261025-152038`. Actual desktop/dialog
+qualification remains deferred. Continue the active goal; refresh review/
+package inputs and retain earlier native engine rebuild obligations.
+
+Newest: [reviewed net printing](NET_PRINT_OWNERSHIP_2026-10-25.md) checks
+current source/layout after private page preparation before opening the
+printer dialog. A single main-process owner handles duplicate requests,
+cancellation and window cleanup; global Cancel includes net output.
+**379 focused Node tests, 13 native tests, the 170-module build and desktop
+syntax checks pass** in `artifacts/net-print-checks-20261025-151015`.
+Real printer/dialog qualification remains deferred. Continue the active
+goal; refresh review/package inputs and retain earlier engine rebuild duties.
+
+Newest: [document-field edits](DOCUMENT_FIELD_EDITS_2026-10-25.md) avoid
+full construction-panel synchronization for notes and camera-end events.
+Revisions, recovery, stale-read cancellation, tour invalidation and notes-bound
+morph retirement remain checked. **286 focused tests and the 169-module build
+pass** in `artifacts/document-field-checks-20261025-150311`. No native
+implementation changed. Continue the active goal; broad packaged/visible
+qualification remains deferred and earlier rebuild/review obligations remain.
+
+Newest: [net drag ownership](NET_DRAG_OWNERSHIP_2026-10-25.md) rolls back
+uncommitted SVG movement, releases pointer capture and fences gestures to
+their source/layout/sequence. Net export cancels provisional drags before
+reviewing output. **258 focused tests and the 169-module build pass** in
+`artifacts/net-drag-checks-20261025-145838`. No native implementation changed.
+Continue the high-impact goal; broad packaged/visible qualification remains
+deferred and earlier rebuild/review obligations remain.
+
+Newest: [document context preservation](DERIVED_DOCUMENT_CONTEXT_2026-10-25.md)
+passes **173 focused tests and the 169-module production build** in
+`artifacts/document-export-checks-20261025-145229`. Promotion/memory context and
+the common document limit are preserved; cleared imported fields remain cleared
+through Save/Open, base/derived JSON export and reimport. No native implementation
+changed. The goal continues; broad release qualification remains deferred.
+
+Newest: [cancel/content ownership](CANCEL_CONTENT_2026-10-25.md) passes **156
+focused tests and the 169-module production build** in
+`artifacts/cancel-content-checks-20261025-142848`. Cancel covers delayed/active
+derived work while retaining completed section receipts; obsolete fold errors
+cannot replace newer diagnostics. Native code is unchanged. Continue the goal
+with broad release qualification deferred; older receipts bind earlier inputs.
+
+Newest: [derived publication](DERIVED_PUBLICATION_2026-10-25.md) passes **174
+focused tests including nested cases and the 169-module production build** in
+`artifacts/derived-publication-checks-20261025-141502`. Completed current results
+alone enable promotion/memory/export; modal export pauses playback and completes
+an interrupted frozen section. Native code is unchanged. Continue the active goal
+with broad release qualification deferred; older receipts bind earlier inputs.
+
+Newest: [portable source streaming](PORTABLE_SOURCE_STREAM_2026-10-25.md) passes
+**419 focused tests including nested cases and the 169-module production build**
+in `artifacts/portable-stream-checks-20261025-135356`. Source key CPU median:
+6.173 to 4.578 ms with matching bytes. General navigation timings remain noisy.
+Native code is unchanged here. The goal continues with broad release testing deferred.
+
+Newest: [annotation source encoding](ANNOTATION_SOURCE_ENCODING_2026-10-25.md)
+passes **403 focused tests including nested cases and the 169-module build** in
+`artifacts/annotation-source-checks-20261025-133411`. Complete portable key CPU
+encoding improves 8.808 to 5.951 ms with identical outputs; navigation timings
+remain noisy. No native source changed here. The goal continues and broad release
+qualification remains deferred; older receipts bind earlier runtime inputs.
+
+Newest: [navigation display](NAVIGATION_DISPLAY_2026-10-25.md) passes **171 focused
+Node tests and the 169-module production build** in
+`artifacts/navigation-display-checks-20261025-132422`. Annotated saved-selection
+source CPU comparison (363 to 339 ms) is `artifacts/navigation-display-profile-OcTGR2`;
+unannotated timings are noisy. Native source is unchanged here. Continue the goal;
+broad release qualification remains deferred and older receipts bind prior inputs.
+
+Newest: [memory/tour publication](MEMORY_TOUR_PUBLICATION_2026-10-25.md) passes
+**148 focused Node tests and the 169-module production build** in
+`artifacts/memory-tour-publication-20261025-131235`. This is source workflow
+ownership/cancellation coverage, not packaged qualification. No native source
+changed in this pass; earlier native rebuild/review obligations remain. The
+high-impact goal continues with broad release checks deferred.
+
+Newest: [bounded validation-key encoding](VALIDATION_KEY_ENCODING_2026-10-25.md)
+passes **109 native tests and three subtests** in
+`artifacts/validation-key-checks-20261025-130030`. Full-output source comparison
+is `artifacts/validation-key-profile-j1y_o5hf`; warm analysis improves 10.284 to
+3.927 ms. Native section_validation.py changed; rebuild and refresh final proof/
+review inputs before packaging. No frontend source changed or build reran in
+this pass. The goal continues; broad release qualification remains deferred.
+
+Current: [project validation/read invalidation](PROJECT_VALIDATION_REUSE_2026-10-25.md)
+passes **227 focused native tests, 140 Node tests and the 169-module build**.
+Repeated-state native validation has measured improvements with full output/file
+equality; single-state projects keep the direct path. Native formats.py changed,
+so refresh source proof/review and rebuild the engine before packaging. Earlier
+receipts below are historical snapshots.
+
+Newest: [Library and file loading](LIBRARY_FILE_WORKFLOW_2026-10-25.md) passes
+**93 focused tests, the 169-module build and desktop syntax checks**. Search
+matches the preserved baseline while avoiding repeated parsing/text work.
+Open/Recover cancellation crosses real main/preload code in mocked Electron;
+actual native-dialog/packaged behavior remains pending. Older receipts below
+describe earlier source snapshots.
+
+Current: [export and Save reliability](EXPORT_SAVE_RELIABILITY_2026-10-25.md)
+passes **192 focused tests and the 169-module build**. Native geometry is
+unchanged. Browser/native-dialog and packaged capture behavior remain pending;
+earlier source receipts below bind earlier snapshots.
+
+Newest: [pose workflow improvements](POSE_WORKFLOW_2026-10-25.md) pass **115
+focused tests and the 169-module build**, with identical buffer hashes in the
+CPU-only initialization comparison. Prior receipts below remain historical;
+packaged/visible performance and full requalification are pending.
+
+[Six core workflow improvements](CORE_IMPACT_2026-10-25.md) are implemented.
+The current source passes **127 focused tests and the 169-module build**;
+real source-worker comparisons demonstrate avoided inspection startup costs.
+Broad qualification and packaged measurements remain deferred under Randall's
+current priority. October 24 full-suite receipts below bind earlier inputs and
+do not qualify this changed workspace. The development goal remains active.
+
+# 0.27.21 development checkpoint - October 24, 2026
+
+Local source/test/build work is complete; packaged qualification is pending.
+Read [HANDOFF_0.27.21.md](HANDOFF_0.27.21.md) and
+[RELEASE_0.27.21_DEVELOPMENT.md](RELEASE_0.27.21_DEVELOPMENT.md).
+Detached literal pose ownership reduces repeated annotation JSON conversion;
+bounded exact-input reuse reduces warm convex 3D sizing preparation work.
+Native frames remain exactly equal in the sampled comparison. The sizing-scale
+investigation and Viewer checks retain a fixed camera and normalization.
+Repeat native analysis also reuses reports for complete unchanged models within
+a bounded LRU cache. Complete decoded reports match the old native server;
+actual desktop revisit profiling is prepared and remains pending.
+
+2,075 shipped-code Node tests, 4,476 native tests plus 96 subtests and the
+168-module build pass. Native has one skip; Node has none. The complete qualifiers
+bind the same 2,474 unchanged inputs; see [source qualification](SOURCE_QUALIFICATION_0.27.21.md). Measurements cover isolated computation and native pipe round trips;
+no new packaged/desktop/GPU/FPS result is claimed.
+The last qualified local pair is **0.27.20**, with successful
+`artifacts/source-pair-0.27.20.json`; its archive/portable bytes remain unchanged.
+No Electron launch, packaging, freeze, sealing, commit or publication was run.
+Protected importers remain unchanged. Core development is active and feature
+expansion remains paused. See NEXT_SESSION for current priorities.
+
+## Historical 0.27.19 checkpoint - October 22, 2026
 
 Paused at Randall's requested stopping point. Read the
 [next-session handoff](HANDOFF_0.27.19.md) and

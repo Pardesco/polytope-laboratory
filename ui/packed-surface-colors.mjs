@@ -1,9 +1,12 @@
+import {isPrism,PRISM_PALETTE,PRISM_FALLBACK} from './prism-look.mjs';
+import {prismColorClasses} from './prism-color-classes.mjs';
 /** Isolated candidate for validated packed publications; not yet wired into
  * Viewer. Source/owner binding is checked before any target write. No borrowed
  * worker array is mutated. Palette work is per source face/cell, never a
  * per-patch string key, Map lookup, Color allocation, or TypedArray.set call.
  */
 import * as THREE from 'three';
+import {getElementTypes,elementTypeColor} from './element-types.mjs';
 
 export const PACKED_COLOR_LIMITS=Object.freeze({patches:250000,faces:100000,cells:20000,bytes:32*1024*1024,ownerReferences:1000000});
 const fail=message=>{throw Error(`Packed surface colors: ${message}`);};
@@ -27,10 +30,12 @@ function sourceColor(record,color){
  * retains its unused suffix. Errors before packing leave it unchanged.
  * visibility is the source cellVisibility result for this published pose.
  */
-export function packSurfaceColors(model,packed,visibility,mode='source',{target,limits:overrides={}}={}){
+export function packSurfaceColors(model,packed,visibility,mode='source',{target,limits:overrides={},view}={}){
   const cap=limits(overrides),owner=packed?.owner;
   if(!model||typeof model.fingerprint!=='string'||!/^[a-f0-9]{64}$/.test(model.fingerprint)||owner?.modelId!==(model.id??null)||owner?.fingerprint!==model.fingerprint||owner?.sourceKey!==JSON.stringify([model.id??null,model.fingerprint]))fail('Publication is not bound to this source model.');
-  if(!['source','face','cell'].includes(mode))fail('Choose source, face, or cell color mode.');
+  if(!['source','face','cell','face-type','cell-type'].includes(mode))fail('Choose source, face, cell, or element type color mode.');
+  const types=mode==='face-type'||mode==='cell-type'?getElementTypes(model):null;
+  const classes=isPrism(view)?prismColorClasses(model,types,mode):null;
   for(const kind of ['vertices','edges','faces','cells'])if(!Array.isArray(model[kind])||packed.sourceCounts?.[kind]!==model[kind].length)fail('Publication source counts are stale.');
   const faceIds=typed(packed.faceIds,Uint32Array,'face owners'),cellIds=typed(packed.cellIds,Int32Array,'cell owners'),n=faceIds.length,nf=model.faces.length,nc=model.cells.length;
   if(cellIds.length!==n||n>cap.patches||nf>cap.faces||nc>cap.cells)fail('Patch/source allocation limit exceeded.');
@@ -49,17 +54,17 @@ export function packSurfaceColors(model,packed,visibility,mode='source',{target,
   // malformed slot must never leave a partly recolored old visible mesh.
   for(let i=0;i<n;i++)if(faceIds[i]>=nf||cellIds[i]< -1||cellIds[i]>=nc)fail('Patch source ownership is invalid.');
   const faceColors=model.metadata?.offColors?.faces,cellColors=model.metadata?.offColors?.cells;
-  const facePalette=new Float64Array(nf*4),cellPalette=new Float64Array(nc*4),faceSeen=new Uint8Array(nf),cellSeen=new Uint8Array(nc),hasFaceColor=new Uint8Array(nf),scratch=new THREE.Color(),defaultColor=new THREE.Color(0x9aaec3),neutral=[defaultColor.r,defaultColor.g,defaultColor.b,1];
+  const facePalette=new Float64Array(nf*4),cellPalette=new Float64Array(nc*4),faceSeen=new Uint8Array(nf),cellSeen=new Uint8Array(nc),hasFaceColor=new Uint8Array(nf),scratch=new THREE.Color(),defaultColor=new THREE.Color(isPrism(view)?PRISM_FALLBACK:0x9aaec3),neutral=[defaultColor.r,defaultColor.g,defaultColor.b,1];
   // Palette preparation remains bounded by source size, before target writes.
   // Only actually referenced owners need color conversion/validation.
   for(let i=0;i<n;i++){
     const f=faceIds[i],c=cellIds[i]>=0?cellIds[i]:fallback[f];
-    if(!faceSeen[f]){let rgba=neutral;if(mode==='face'){scratch.setHSL((f*.173+.58)%1,.32,.6);rgba=[scratch.r,scratch.g,scratch.b,1];}else if(mode==='source'&&faceColors?.[f]){rgba=sourceColor(faceColors[f],scratch);hasFaceColor[f]=1;}for(let j=0;j<4;j++)facePalette[f*4+j]=rgba[j];faceSeen[f]=1;}
-    if(c>=0&&!cellSeen[c]&&(mode==='cell'||mode==='source'&&!hasFaceColor[f])){let rgba=neutral;if(mode==='cell'){scratch.setHSL((c*.173+.58)%1,.32,.6);rgba=[scratch.r,scratch.g,scratch.b,1];}else if(cellColors?.[c])rgba=sourceColor(cellColors[c],scratch);for(let j=0;j<4;j++)cellPalette[c*4+j]=rgba[j];cellSeen[c]=1;}
+    if(!faceSeen[f]){let rgba=neutral;if(mode==='face'){scratch.setHSL((f*.173+.58)%1,.32,.6);rgba=[scratch.r,scratch.g,scratch.b,1];}else if(mode==='face-type'){const hex=classes?.colors[f]??elementTypeColor(types,mode,f,undefined,isPrism(view)?PRISM_PALETTE:undefined);if(hex){scratch.set(hex);rgba=[scratch.r,scratch.g,scratch.b,1];}}else if(mode==='source'&&faceColors?.[f]){rgba=sourceColor(faceColors[f],scratch);hasFaceColor[f]=1;}for(let j=0;j<4;j++)facePalette[f*4+j]=rgba[j];faceSeen[f]=1;}
+    if(c>=0&&!cellSeen[c]&&(mode==='cell'||mode==='cell-type'||mode==='source'&&!hasFaceColor[f])){let rgba=neutral;if(mode==='cell'){scratch.setHSL((c*.173+.58)%1,.32,.6);rgba=[scratch.r,scratch.g,scratch.b,1];}else if(mode==='cell-type'){const hex=classes?.colors[c]??elementTypeColor(types,mode,f,c,isPrism(view)?PRISM_PALETTE:undefined);if(hex){scratch.set(hex);rgba=[scratch.r,scratch.g,scratch.b,1];}}else if(cellColors?.[c])rgba=sourceColor(cellColors[c],scratch);for(let j=0;j<4;j++)cellPalette[c*4+j]=rgba[j];cellSeen[c]=1;}
   }
   const colors=target??new Float32Array(n*12);let vertexAlpha=false;
   for(let i=0,d=0;i<n;i++,d+=12){
-    const f=faceIds[i],c=cellIds[i]>=0?cellIds[i]:fallback[f],useCell=c>=0&&(mode==='cell'||mode==='source'&&!hasFaceColor[f]),palette=useCell?cellPalette:facePalette,offset=(useCell?c:f)*4,r=palette[offset],g=palette[offset+1],b=palette[offset+2],a=palette[offset+3];
+    const f=faceIds[i],c=cellIds[i]>=0?cellIds[i]:fallback[f],useCell=c>=0&&(mode==='cell'||mode==='cell-type'||mode==='source'&&!hasFaceColor[f]),palette=useCell?cellPalette:facePalette,offset=(useCell?c:f)*4,r=palette[offset],g=palette[offset+1],b=palette[offset+2],a=palette[offset+3];
     vertexAlpha||=a<1;colors[d]=colors[d+4]=colors[d+8]=r;colors[d+1]=colors[d+5]=colors[d+9]=g;colors[d+2]=colors[d+6]=colors[d+10]=b;colors[d+3]=colors[d+7]=colors[d+11]=a;
   }
   return {colors,vertexAlpha,patches:n,requiredBytes};

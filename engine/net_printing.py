@@ -25,6 +25,8 @@ def pack_net(net,paper='a4',orientation='portrait',width_mm=None,height_mm=None,
     if orientation=='landscape':width,height=height,width
     if not isinstance(margin_mm,(int,float)) or not isinstance(gap_mm,(int,float)) or not math.isfinite(margin_mm) or not math.isfinite(gap_mm) or not 0<=margin_mm<min(width,height)/2 or not 0<=gap_mm<=100:
         raise GeometryError('Use nonnegative finite margins below half the page size, and gaps in 0–100 mm.')
+    from .net_paper_ux import piece_numbers
+    numbers=piece_numbers(net)
     tabs=tab_geometry(net);faces={f['id']:f for f in net['faces']};parts=[];padding=4
     for component in net['components']:
         ids=set(component['faces']);cloud=np.concatenate([faces[i]['points'] for i in ids]+[t['points'] for t in tabs if t['face'] in ids])
@@ -55,7 +57,7 @@ def pack_net(net,paper='a4',orientation='portrait',width_mm=None,height_mm=None,
         rotation=np.array([[0,-1],[1,0]]) if quarter else np.eye(2)
         corners=np.asarray([[part['low'][0],part['low'][1]],[part['low'][0],part['high'][1]],[part['high'][0],part['low'][1]],[part['high'][0],part['high'][1]]])@rotation.T
         translation=np.asarray([x,y])-corners.min(axis=0)
-        page['parts'].append({'component':part['root'],'faceIds':part['faceIds'],'angle':quarter*90,'translation':translation.tolist(),'inkBounds':[[x,y],[x+pw,y+ph]]})
+        page['parts'].append({'component':part['root'],'pieceNumber':numbers[part['root']],'faceIds':part['faceIds'],'angle':quarter*90,'translation':translation.tolist(),'inkBounds':[[x,y],[x+pw,y+ph]]})
     result_pages=[];all_ids=[]
     for index,page in enumerate(pages):
         page_faces=[];page_tabs=[]

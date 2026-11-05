@@ -4,7 +4,6 @@
 import {MEMORY_LIMITS} from './model-memories.mjs';
 const encoder=new TextEncoder();
 const plain=value=>value!==null&&typeof value==='object'&&!Array.isArray(value)&&(Object.getPrototypeOf(value)===Object.prototype||Object.getPrototypeOf(value)===null);
-const arrayKey=(key,length)=>Number.isInteger(Number(key))&&Number(key)>=0&&String(Number(key))===key&&Number(key)<length;
 const fail=message=>{throw Error(`Memory 1 ${message}`);};
 
 export function memorySourceSignature(state,source){
@@ -35,13 +34,18 @@ export function memorySourceSignature(state,source){
     if(Array.isArray(value)){
       if(value.length>MEMORY_LIMITS.nodesPerSlot-budget.nodes)fail('exceeds the memory item limit.');
       if(collect)emit('[');
+      let enumerable=0;
       for(let index=0;index<value.length;index++){
         const descriptor=Object.getOwnPropertyDescriptor(value,String(index));
         if(!descriptor||!('value' in descriptor))fail('must not contain sparse arrays or accessors.');
+        if(descriptor.enumerable)enumerable++;
         if(index){budget.bytes++;check();if(collect)emit(',');}
         walk(descriptor.value,depth+1,collect);
       }
-      if(Object.keys(value).some(key=>!arrayKey(key,value.length)))fail('cannot contain custom array properties.');
+      // Every required own index was inspected above. Matching its enumerable
+      // count rejects all extra enumerable keys without reparsing index strings.
+      // Nonenumerable indices/data retain the existing memory wire semantics.
+      if(Object.keys(value).length!==enumerable)fail('cannot contain custom array properties.');
       if(collect)emit(']');
     }else{
       if(collect)emit('{');let count=0;

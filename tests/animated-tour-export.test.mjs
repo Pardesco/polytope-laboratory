@@ -28,6 +28,18 @@ test('PNG native staging uses exact uniform times/endpoints and exports moving i
   assert.deepEqual(frames[2].layers.map(l=>[l.role,l.animation.frame.angles[0],l.transitionPose.translation[0]]),[['outgoing',90,-1],['incoming',0,1]]);
   assert.equal(frames.at(-1).layers[0].animation.frame.angles[0],180);assert.equal(h.renderer.published.time,.025);assert.equal(h.exporter.exporting,false);assert.deepEqual(h.source,h.initial);assert.deepEqual(h.original,h.before);assert.ok(!h.events.some(e=>e[0]==='abort'));
 });
+
+test('tour export encodes a separate target renderer without rescaling or advancing the visible preview',async()=>{
+  for(const format of ['png','webm']){
+    let capture,closed=0;const times=[],h=fixture({recordVideo:async options=>{assert.equal(options.canvas,capture.canvas);assert.deepEqual([options.canvas.width,options.canvas.height],[1080,1920]);for(let i=0;i<options.frameCount;i++)await options.renderFrame(i);}});
+    await h.renderer.apply(.025);const preview=h.renderer.published;
+    h.renderer.createExportRenderer=options=>{
+      assert.equal(options.size,'vertical');assert.equal(options.supersample,2);let published;
+      capture={canvas:{width:1080,height:1920},async apply(time){times.push(time);published={time,complete:true};return published;},current:p=>p===published,image:p=>{assert.equal(p,published);return 'target-png';},cancel(){},async close(){closed++;}};return capture;
+    };
+    await h.exporter.export(format,{fps:10,size:'vertical',supersample:2});assert.deepEqual(times,[0,.1,.2,.3,.4]);assert.equal(closed,1);assert.equal(h.renderer.published,preview);assert.equal(h.renderer.canvas.pose,.025);assert.equal(h.exporter.captureRenderer,null);assert.deepEqual(h.source,h.initial);
+  }
+});
 test('PNG cannot read or write a frame before its awaited fine multi-layer preparation',async()=>{
   const g=gate(),h=fixture({wait:()=>g.promise}),exported=h.exporter.export('png',{fps:10});await until(()=>h.events.some(e=>e[0]==='prepare'));assert.equal(h.writes.length,0);assert.equal(h.events.some(e=>e[0]==='image'),false);g.resolve();await exported;assert.equal(h.writes.length,5);
 });
@@ -41,7 +53,7 @@ test('incomplete frames and failed native writes abort once and release export b
   for(const kind of ['incomplete','write']){const h=fixture();if(kind==='incomplete')h.renderer.incomplete=true;else h.api.animationWrite=async()=>{throw Error('Native writer rejected chunk.');};await assert.rejects(h.exporter.export('png',{fps:10}),kind==='incomplete'?/complete fine/:/writer rejected/);assert.equal(h.events.filter(e=>e[0]==='abort').length,1);assert.equal(h.exporter.exporting,false);assert.equal(h.events.at(-1)[1],false);assert.ok(!h.events.some(e=>e[0]==='finish'));}
 });
 test('readable long tours, invalid FPS/format and overlapping export refuse without creating extra native sessions',async()=>{
-  const h=fixture();await assert.rejects(h.exporter.export('gif'),/PNG or WebM/);await assert.rejects(h.exporter.export('png',{fps:1.5}),/integer/);h.renderer.timeline=prepareAnimatedTourTimeline({...bank(),events:[{...bank().events[0],duration:301,transition:{method:'instant'}}]});await assert.rejects(h.exporter.export('png'),/300 seconds/);assert.equal(h.events.some(e=>e[0]==='begin'),false);
+  const h=fixture();await assert.rejects(h.exporter.export('avi'),/format/i);await assert.rejects(h.exporter.export('png',{fps:1.5}),/integer/);h.renderer.timeline=prepareAnimatedTourTimeline({...bank(),events:[{...bank().events[0],duration:301,transition:{method:'instant'}}]});await assert.rejects(h.exporter.export('png'),/300 seconds/);assert.equal(h.events.some(e=>e[0]==='begin'),false);
   const g=gate(),busy=fixture({wait:()=>g.promise}),exported=busy.exporter.export('png',{fps:10});await until(()=>busy.events.some(e=>e[0]==='prepare'));await assert.rejects(busy.exporter.export('png'),/already running/);g.resolve();await exported;assert.equal(busy.events.filter(e=>e[0]==='begin').length,1);
 });
 test('a cancelled native destination creates no frames and returns to the prior prepared tour time',async()=>{

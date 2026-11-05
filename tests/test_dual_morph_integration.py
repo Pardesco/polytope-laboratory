@@ -73,7 +73,7 @@ class MountedMorph(unittest.TestCase):
             p=prepare(m,settings(method));self.assertEqual(counts(evaluate(m,p,.5)),n)
             self.assertEqual(counts(evaluate(m,p,1)),(8,24,32,16))
         for method in ('sizing','truncation'):
-            with self.assertRaises(GeometryError):prepare(m,settings(method))
+            p=prepare(m,settings(method));self.assertTrue(validate(evaluate(m,p,.5)['model'])['passed'])
         self.assertEqual(m,before)
 
     def test_strict_full_source_attribute_and_context_binding(self):

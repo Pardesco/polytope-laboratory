@@ -55,6 +55,100 @@ const display=(f,poseOnly=false)=>f.control.display(f.v,{poseOnly}).pending;
 const mesh=v=>v.elementContentLayer.group.children.find(o=>o.isMesh);
 const positions=v=>Array.from(mesh(v).geometry.attributes.position.array);
 
+test('actual app pose display skips construction-panel work while retaining content and diagnostic updates',async()=>{
+  const source=await readFile(new URL('../ui/app.js',import.meta.url),'utf8');
+  const code=source.slice(source.indexOf('function displayBase('),source.indexOf('function displayDiagnostic('))+
+    source.slice(source.indexOf('function syncDerivedSelection('),source.indexOf('function selectionSummary('));
+  const names=[...new Set([...code.matchAll(/\b(\w+)(?:\?\.|\.)sync\(\)/g)].map(match=>match[1]))];
+  assert.ok(names.length>=25,'Exercise the actual construction panel synchronization list');
+  const f=fixture(),syncs=[],diagnostics=[];let pending;
+  const content={display:(...args)=>{const result=f.control.display(...args);pending=result.pending;return result;},node:()=>({dataset:{}})};
+  const scope={state:()=>f.state,elementContent:content,base:f.v,derived:{model:null},coxeterBuilder:null,displayDiagnostic:value=>diagnostics.push(value),syncDerivedSelection(){}};
+  for(const name of names)scope[name]={sync:()=>syncs.push(name)};
+  try{
+    runInNewContext(code,scope);scope.displayBase();await pending;
+    assert.equal(syncs.length,names.length);syncs.length=0;
+    const descriptions=f.counts.describes;
+    for(let i=0;i<10;i++){f.state.view.angles[2]+=2;scope.displayBase({poseOnly:true});}
+    assert.equal(syncs.length,0);assert.equal(diagnostics.length,11);assert.equal(f.counts.describes,descriptions);
+    scope.displayBase();await pending;
+    assert.equal(syncs.length,names.length);
+  }finally{f.v.clear();}
+});
+
+test('pose panel optimization cannot authorize stale annotation content in the actual app display path',async()=>{
+  const source=await readFile(new URL('../ui/app.js',import.meta.url),'utf8');
+  const code=source.slice(source.indexOf('function displayBase('),source.indexOf('function displayDiagnostic('))+
+    source.slice(source.indexOf('function syncDerivedSelection('),source.indexOf('function selectionSummary('));
+  const f=fixture();let pending;
+  const content={display:(...args)=>{const result=f.control.display(...args);pending=result.pending;return result;},node:()=>({dataset:{}})};
+  const scope={state:()=>f.state,elementContent:content,base:f.v,derived:{model:null},coxeterBuilder:null,displayDiagnostic(){},syncDerivedSelection(){}};
+  for(const match of code.matchAll(/\b(\w+)(?:\?\.|\.)sync\(\)/g))scope[match[1]]={sync(){}};
+  try{
+    runInNewContext(code,scope);scope.displayBase();await pending;
+    const descriptions=f.counts.describes;
+    f.state.view.elementAnnotations.entries[0].text.markup='Edited literal text';
+    scope.displayBase({poseOnly:true});await pending;
+    assert.equal(f.counts.describes,descriptions+1);
+  }finally{f.v.clear();}
+});
+
+test('warmed pose ownership does not stringify notes, annotations or the non-pose view',async()=>{
+  const f=fixture(),stringify=JSON.stringify;try{
+    // Include native annotation source/assets plus a large opaque image payload.
+    // The descriptor fixture still supplies the actual decoded 2x2 PNG.
+    f.state.view.elementAnnotations.source=structuredClone(f.f.source);
+    f.state.view.elementAnnotations.assets={png:{mime:'image/png',base64:'A'.repeat(4*1024*1024)}};
+    await display(f);const annotations=f.state.view.elementAnnotations,describes=f.counts.describes;
+    JSON.stringify=(value,...args)=>{
+      if(value===annotations||value===f.state.notes||value?.elementAnnotations===annotations)throw Error('Pose ownership serialized display content');
+      return stringify(value,...args);
+    };
+    for(let i=0;i<5;i++){f.state.view.angles[2]+=3;assert.equal((await display(f,true)).poseOnly,true);}
+    assert.equal(f.counts.describes,describes);
+  }finally{JSON.stringify=stringify;f.v.clear();}
+});
+
+for(const change of ['placement','asset-bytes','asset-metadata','annotation-source','nested-view','property-add','property-delete'])test(`literal pose ownership detects ${change} mutation`,async()=>{
+  const f=fixture();try{
+    const annotations=f.state.view.elementAnnotations;
+    annotations.entries[0].text.placement={offsetMm:[0,0]};
+    annotations.assets={png:{base64:'AAAA',width:2}};annotations.source=structuredClone(f.f.source);
+    f.state.view.camera={position:[0,0,6]};await display(f);
+    if(change==='placement')annotations.entries[0].text.placement.offsetMm[0]=1;
+    if(change==='asset-bytes')annotations.assets.png.base64='BBBB';
+    if(change==='asset-metadata')annotations.assets.png.width=3;
+    if(change==='annotation-source')annotations.source.vertices[0][0]+=.125;
+    if(change==='nested-view')f.state.view.camera.position[0]=1;
+    if(change==='property-add')f.state.view.extraSetting=false;
+    if(change==='property-delete')delete f.state.view.vertices;
+    let full=0;const refresh=f.control.refresh.bind(f.control);f.control.refresh=(...args)=>{full++;return refresh(...args);};
+    assert.notEqual((await display(f,true)).poseOnly,true);assert.equal(full,1);
+  }finally{f.v.clear();}
+});
+
+test('held full refresh cannot certify content mutated in place while it was awaiting publication',async()=>{
+  const f=fixture(),gate=deferred(),entered=deferred();try{
+    const describe=f.context.describe;
+    f.context.describe=async(...args)=>{entered.resolve();await gate.promise;return describe(...args);};
+    const pending=display(f),rejected=assert.rejects(pending,/changed/i);await entered.promise;
+    f.state.view.elementAnnotations.entries[0].text.markup='Edited in flight';gate.resolve();await rejected;
+    assert.equal(f.control.displayOwners.get(f.v).owner,undefined);
+    f.context.describe=describe;assert.notEqual((await display(f,true)).poseOnly,true);
+    assert.equal(f.v.elementContentLayer.descriptor.entries[0].text.markup,'Edited in flight');
+  }finally{gate.resolve();f.v.clear();}
+});
+
+test('queued stereographic pose rechecks literal annotation ownership before publishing',async()=>{
+  const f=fixture({mode:'stereographic',worker:true});try{
+    await display(f);await drain(f.v);f.state.view.angles[2]=8;assert.equal((await display(f,true)).poseOnly,true);
+    f.state.view.elementAnnotations.entries[0].text.markup='Changed while worker pending';
+    await drain(f.v);assert.match(f.v.elementContentDiagnostic,/changed|ownership/i);assert.equal(f.v.elementContentLayer.group.children.length,0);
+    await display(f);await drain(f.v);assert.equal(f.v.elementContentDiagnostic,null);
+    assert.equal(f.v.elementContentLayer.descriptor.entries[0].text.markup,'Changed while worker pending');
+  }finally{f.v.clear();}
+});
+
 for(const empty of [false,true])test(`${empty?'explicit empty':'annotated'} document: N pose displays never capture/enumerate source`,async()=>{
   const f=fixture({empty});try{
     await display(f);const before=JSON.stringify(f.state),describes=f.counts.describes,publications=f.counts.publications,layer=f.v.elementContentLayer;
@@ -201,19 +295,36 @@ test('an initially hidden face has its retained material before rotation reveals
 test('all six actual app plane-slider handlers request pose display',async()=>{
   const source=await readFile(new URL('../ui/app.js',import.meta.url),'utf8'),line=source.split('\n').find(s=>s.startsWith('PLANES.forEach(([a,b,label],i)=>'));
   assert.ok(line,'Find the actual slider setup');
-  const state={view:{angles:Array(6).fill(0)}},created=[],calls=[];
+  const state={model:{dimension:4},view:{angles:Array(6).fill(0)}},created=[],calls=[];
   const el=kind=>{const node={kind,setAttribute(){},append(){}};created.push(node);return node;};
-  runInNewContext(line,{PLANES:Array.from({length:6},(_,i)=>[0,1,String(i)]),el,$:()=>({append(){}}),state:()=>state,format:String,displayPose:()=>calls.push('pose'),displayBase:()=>calls.push('full'),markDirty:()=>calls.push('dirty')});
+  const viewport=Object.assign(Object.create(ViewportControls.prototype),{stop(){},context:{getState:()=>state,getModel:()=>state.model,isExporting:()=>false,
+    displayPose:()=>calls.push('pose'),syncPose(){},markPoseDirty:()=>calls.push('dirty'),markDirty(){throw Error('Unnecessary full panel synchronization');}}});
+  runInNewContext(line,{PLANES:Array.from({length:6},(_,i)=>[0,1,String(i)]),el,$:()=>({append(){}}),guard:fn=>fn,viewportControls:viewport});
   const inputs=created.filter(node=>node.kind==='input');assert.equal(inputs.length,6);
   inputs.forEach((input,i)=>{input.value=String(10+i);input.oninput();assert.equal(state.view.angles[i],10+i);});
   assert.deepEqual(calls,Array.from({length:6},()=>['pose','dirty']).flat());
+});
+
+test('manual angle changes stop competing playback and reject export, unavailable-plane and empty-workspace edits',()=>{
+  let exporting=false,state={model:{dimension:3},view:{angles:Array(6).fill(0)}};const calls=[];
+  const viewport=Object.assign(Object.create(ViewportControls.prototype),{playing:true,stop(){this.playing=false;},context:{
+    getState:()=>state,getModel:()=>state?.model,isExporting:()=>exporting,
+    stopTrack:()=>calls.push('pause-track'),cancelProjectionFit:()=>calls.push('cancel-fit'),displayPose:()=>calls.push('pose'),syncPose:()=>calls.push('sync'),markPoseDirty:()=>calls.push('dirty')}});
+  viewport.setAngle(1,'27.5');assert.equal(state.view.angles[1],27.5);assert.equal(viewport.playing,false);
+  assert.deepEqual(calls,['cancel-fit','pause-track','pose','sync','dirty']);calls.length=0;
+  const before=structuredClone(state);exporting=true;assert.throws(()=>viewport.setAngle(1,'18'),/export/);assert.deepEqual(state,before);assert.deepEqual(calls,['sync']);
+  exporting=false;
+  for(const [index,text] of [[2,'18'],[6,'18'],[-1,'18'],[0,''],[0,'NaN'],[0,'181']]){
+    assert.throws(()=>viewport.setAngle(index,text),/available rotation/);assert.deepEqual(state,before);
+  }
+  state=null;assert.throws(()=>viewport.setAngle(0,'12'),/Choose a model/);
 });
 
 test('actual 4D drag handler changes only angles and requests pose display',async()=>{
   const source=await readFile(new URL('../ui/viewport-controls.mjs',import.meta.url),'utf8'),match=source.match(/canvas\.addEventListener\('pointermove',event=>\{([\s\S]*?)\n    \},true\);/);
   assert.ok(match,'Find the actual pointer handler');
   const state={model:{id:'retained'},notes:'retain',view:{angles:Array(6).fill(0),faces:true}},before=structuredClone(state),calls=[];
-  const controls=Object.assign(Object.create(ViewportControls.prototype),{drag:{source:state,pointer:1,x:0,y:0,angles:[...state.view.angles]},context:{getState:()=>state,displayPose:()=>calls.push('pose'),display:()=>calls.push('full'),syncPose:()=>calls.push('sync')}});
+  const controls=Object.assign(Object.create(ViewportControls.prototype),{drag:{source:state,pointer:1,x:0,y:0,angles:[...state.view.angles]},context:{getState:()=>state,isExporting:()=>false,displayPose:()=>calls.push('pose'),display:()=>calls.push('full'),syncPose:()=>calls.push('sync'),markPoseDirty:()=>calls.push('dirty')}});
   const handler=new Function('event',match[1]);handler.call(controls,{pointerId:1,clientX:10,clientY:10,stopImmediatePropagation(){},preventDefault(){}});
-  before.view.angles[2]=3.5;before.view.angles[4]=-3.5;assert.deepEqual(state,before);assert.deepEqual(calls,['pose','sync']);
+  before.view.angles[2]=3.5;before.view.angles[4]=-3.5;assert.deepEqual(state,before);assert.deepEqual(calls,['pose','sync','dirty']);
 });

@@ -1,0 +1,8 @@
+# Preserve the exact line endings named by the retained source SHA-256 records.
+antiprism/models/*.off text eol=lf
+antiprism/COPYING text eol=lf
+antiprism/RESOURCE_NOTICE.html text eol=lf
+antiprism/sources/*.off text eol=crlf
+miratope/raw/*.off text eol=crlf
+miratope/LICENSE text eol=crlf
+uniform_snub/skilling.off text eol=lf

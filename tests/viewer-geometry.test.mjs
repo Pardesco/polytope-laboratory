@@ -2,10 +2,53 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import * as THREE from 'three';
 import {Viewer} from '../ui/viewer.js';
+import {pointRadius,pointBounds} from '../ui/geometry-bounds.mjs';
 
 // Exercise the actual buffers/materials without requiring a WebGL context.
 function viewer(model){const value=Object.create(Viewer.prototype);value.group=new THREE.Group();value.setModel(model);return value;}
 const triangle={dimension:3,vertices:[[0,0,0],[1,0,0],[0,1,0]],edges:[[0,1],[1,2],[2,0]],faces:[[0,1,2]],cells:[]};
+
+test('bounds retain literal Math.hypot results and handle clouds above the function argument limit',()=>{
+  const points=[[1,2,3,4],[-8,5,2,-9],[0,-2,7,1]],center=[.1,-3,4,2];
+  assert.equal(pointRadius(points,center),Math.max(...points.map(p=>Math.hypot(...p.map((x,k)=>x-center[k])))));
+  assert.deepEqual(pointBounds(points,4),{low:[-8,-2,2,-9],high:[1,5,7,4]});
+  assert.equal(pointRadius([],null,1),1);
+  const large=Array.from({length:200000},(_,i)=>[i%2?-3:3,4,0]);
+  assert.equal(pointRadius(large),5);assert.deepEqual(pointBounds(large,3),{low:[-3,4,0],high:[3,4,0]});
+});
+
+test('dense source normalization does not overflow the JavaScript argument stack',()=>{
+  const vertices=Array.from({length:200000},(_,i)=>[i%2?-3:3,4,0]);
+  const model={dimension:3,vertices,edges:[],faces:[],cells:[]},value=viewer(model);
+  assert.deepEqual(value.center,[0,value.center[1],0]);assert.ok(Math.abs(value.center[1]-4)<1e-10);
+  assert.ok(Math.abs(value.radius-3)<1e-10);assert.equal(value.normalized.length,vertices.length);value.clear();
+});
+
+test('supplied morph normalization skips frame bounds while retaining normalized vertices',()=>{
+  const value=Object.create(Viewer.prototype);value.group=new THREE.Group();
+  // Ordinary source arrays retain all their data, but these scanning methods
+  // expose the redundant bounds work that used to precede normalization.
+  const vertices=structuredClone(triangle.vertices);vertices.forEach=()=>{throw Error('unnecessary frame center scan');};
+  value.setModel({...triangle,vertices},{normalization:{center:[2,3,4],radius:5}});
+  assert.deepEqual(value.center,[2,3,4]);assert.equal(value.radius,5);
+  assert.deepEqual(value.normalized,[[-.4,-.6,-.8],[-.2,-.6,-.8],[-.4,-.4,-.8]]);value.clear();
+});
+
+test('deferred model display builds only the requested pose with identical complete buffers',()=>{
+  const model={...structuredClone(triangle),dimension:4,embeddingDimension:4,vertices:[[0,0,0,0],[1,0,0,1],[0,1,0,-1]]};
+  const eager=viewer(model),deferred=Object.create(Viewer.prototype);deferred.group=new THREE.Group();let displays=0;
+  deferred.setDisplay=function(...args){displays++;return Viewer.prototype.setDisplay.apply(this,args);};
+  const view={angles:[0,0,23,0,16,0],projection:'orthographic',faces:true,edges:true,vertices:false,surfaceOpacity:.4};
+  try{
+    deferred.setModel(model,{deferDisplay:true});assert.equal(displays,0);assert.equal(deferred.surfaceGeometry.getAttribute('position').count,0);
+    eager.setDisplay(view);deferred.setDisplay(view);assert.equal(displays,1);
+    assert.deepEqual(deferred.center,eager.center);assert.equal(deferred.radius,eager.radius);
+    for(const key of ['edgeGeometry','pointGeometry','surfaceGeometry'])for(const name of Object.keys(eager[key].attributes)){
+      assert.deepEqual(deferred[key].getAttribute(name).array,eager[key].getAttribute(name).array,key+' '+name);
+    }
+    assert.deepEqual(deferred.projected,eager.projected);assert.deepEqual(deferred.sourceTriangles,eager.sourceTriangles);
+  }finally{eager.clear();deferred.clear();}
+});
 function validNormals(value){const p=value.surfaceGeometry.getAttribute('position'),n=value.surfaceGeometry.getAttribute('normal');assert.equal(n.count,p.count);assert.ok([...n.array].every(Number.isFinite));return [...n.array];}
 
 test('matte surfaces retain source RGBA and restrained optional edge/point overlays',()=>{

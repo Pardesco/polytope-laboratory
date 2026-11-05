@@ -1,19 +1,24 @@
 import {NumericEntry} from './numeric-entry.mjs';
+import {explainAvailability} from './availability-copy.mjs';
 import {captureNativeSource,verifyNativeSource} from './native-source-binding.mjs';
 
 const clone=value=>JSON.parse(JSON.stringify(value));
 const limits={max_face_vertices:[3,8],max_candidates:[1,4096],max_cycles_per_plane:[1,4096],
   node_limit:[1,200000],result_limit:[1,128],min_face_types:[1,4096],max_face_types:[0,4096],max_faces_per_plane:[0,4096]};
 const generation=['max_face_vertices','max_candidates','max_cycles_per_plane'];
-const statusText=receipt=>`${receipt.status}: ${receipt.results?.length??receipt.candidates?.length??0} ${receipt.results?'results':'candidates'}. `+
+export const facetingStatusText=receipt=>`${receipt.status}: ${receipt.results?.length??receipt.candidates?.length??0} ${receipt.results?'results':'candidates'}. `+
+  (receipt.results?(receipt.status==='complete'?'Search exhausted within the recorded candidate domain. ':'Search not exhausted; retained results are a lower bound. '):'')+
   (receipt.countMeaning??'Candidate domain only.')+(receipt.limitReasons?.length?` ${receipt.limitReasons.join('; ')}.`:'');
+const statusText=facetingStatusText;
 
 export class AutomaticFacetingControls{
   constructor(context){
     this.context=context;this.busy=false;this.catalogue=null;this.search=null;
     const panel=document.createElement('details');panel.id='automatic-faceting-settings';
     panel.innerHTML='<summary>Automatic facets (3D)</summary><label>Criterion <select id="faceting-criterion"><option value="closed">Closed incidence</option><option value="isohedral">Isohedral in selected subgroup</option><option value="tidy-dual">Tidy faceting and finite polar dual</option><option value="tidy">Tidy · closed single-link domain</option><option value="spiky">Spiky · no hull-boundary edges</option><option value="tidy-spiky">Tidy and spiky</option></select></label><label>Dual center · blank source vertex mean <input id="faceting-dual-center" value="" placeholder="x; y; z" maxlength="512"></label><label>Dual sphere radius <input id="faceting-dual-radius" value="1" maxlength="512"></label><p class="muted">Polar duals use source face and vertex incidence. Near-singular numerical domains stop with a diagnostic. Search remains bounded to closed single-link facetings on 4–12 source vertices.</p><div class="button-row"><label>Min types <input id="faceting-min_face_types" value="1"></label><label>Max types · 0 unlimited <input id="faceting-max_face_types" value="0"></label></div><label><input id="faceting-partial" type="checkbox"> Allow unused source vertices</label><label><input id="faceting-coplanar" type="checkbox"> Allow coplanar faces sharing vertices</label><label><input id="faceting-invariant" type="checkbox"> Keep selected subgroup symmetry</label><label>Source symmetry <select id="faceting-symmetry-mode"><option value="declared">Declared subgroup · blank identity</option><option value="all">Discover full source group</option><option value="proper">Discover rotations only</option></select></label><p class="muted">Automatic discovery preserves exact source distances and ordered incidence. Rounded coordinates may have less exact symmetry than a nominal regular solid.</p><label>Result equivalence <select id="faceting-equivalence"><option value="labeled">Labeled cycles</option><option value="subgroup">Verified subgroup</option></select></label><details><summary>Bounds and source actions</summary><label>Face corners <input id="faceting-max_face_vertices" value="8"></label><label>Candidate cap <input id="faceting-max_candidates" value="4096"></label><label>Candidate cap per plane <input id="faceting-max_cycles_per_plane" value="4096"></label><label>Search nodes <input id="faceting-node_limit" value="200000"></label><label>Stored results <input id="faceting-result_limit" value="128"></label><label>Source symmetry work cap <input id="faceting-symmetry-work" value="500000"></label><label>Subgroup elements · blank identity <textarea id="faceting-actions" rows="3" spellcheck="false" placeholder="Complete vertex-permutation list"></textarea></label><label>Result faces per plane · 0 unlimited <input id="faceting-max_faces_per_plane" value="0"></label><label>Exact result plane counts <textarea id="faceting-plane-counts" rows="2" spellcheck="false" placeholder="{&quot;plane-…&quot;: 1}"></textarea></label></details><button id="faceting-candidates">Build candidate pool</button><output id="faceting-candidate-summary"></output><label>Candidate IDs · blank all <textarea id="faceting-pool" rows="3" spellcheck="false"></textarea></label><div class="button-row"><button id="faceting-source-faces">Use source faces</button><button id="faceting-search">Search</button><button id="faceting-cancel">Cancel</button></div><output id="faceting-status" aria-live="polite"></output><label>Result <select id="faceting-result"></select></label><div class="button-row"><button id="faceting-preview">Preview</button><button id="faceting-adopt">Adopt</button><button id="faceting-clear">Clear preview</button></div><div id="facet-preview" hidden style="height:220px;position:relative"></div><pre id="faceting-evidence" class="code-box"></pre>';
+    panel.innerHTML+='<label><input id="faceting-spiky-filter" type="checkbox"> Also require spiky (exclude every hull-boundary segment)</label><p class="muted">Types are facet orbits under the result stabilizer in the selected subgroup. Partial results may omit vertices. Candidate/per-plane caps can omit results; result plane counts instead filter accepted facetings.</p><div class="button-row"><button id="faceting-previous">Previous result</button><button id="faceting-next">Next result</button></div>';
     document.getElementById('facet').after(panel);this.panel=panel;
+    for(const [key,delta] of [['previous',-1],['next',1]])this.node(key).onclick=context.guard(()=>this.stepResult(delta));
     for(const action of ['candidates','search','preview','adopt'])this.node(action).onclick=context.guard(()=>this.apply(action));
     this.node('cancel').onclick=()=>this.cancel();this.node('source-faces').onclick=context.guard(()=>this.useSourceFaces());
     this.node('criterion').onchange=context.guard(()=>this.sync());
@@ -26,7 +31,7 @@ export class AutomaticFacetingControls{
   read(){
     const value={};for(const key of Object.keys(limits))value[key]=this.node(key).value;
     for(const key of ['criterion','equivalence','actions','plane-counts','pool','dual-center','dual-radius','symmetry-mode','symmetry-work'])value[key]=this.node(key).value;
-    for(const key of ['partial','coplanar','invariant'])value[key]=this.node(key).checked;
+    for(const key of ['partial','coplanar','invariant','spiky-filter'])value[key]=this.node(key).checked;
     return value;
   }
   signature(){return JSON.stringify(this.read());}
@@ -69,7 +74,7 @@ export class AutomaticFacetingControls{
         args.equivalence=input.equivalence;args.invariant_under_subgroup=input.invariant;
         args.criteria={accept_partial:input.partial,coplanar_vertices:input.coplanar?'allow':'disjoint',isohedral:input.criterion==='isohedral'};
         if(['tidy','tidy-spiky'].includes(input.criterion))args.criteria.tidy=true;
-        if(['spiky','tidy-spiky'].includes(input.criterion))args.criteria.spiky=true;
+        if(['spiky','tidy-spiky'].includes(input.criterion)||input['spiky-filter'])args.criteria.spiky=true;
         if(input.criterion==='tidy-dual'){
           args.criteria.tidy_dual=true;args.criteria.dual_center=null;
           fields.dual_radius={text:input['dual-radius'],min:0.0001,max:10000};
@@ -144,6 +149,12 @@ export class AutomaticFacetingControls{
     this.node('pool').value=this.catalogue.candidates.filter(row=>row.sourceFaceIds.length).map(row=>row.id).join('\n');
     this.clearPreview();this.sync();
   }
+  async stepResult(delta){
+    this.selected();
+    const index=this.search.results.findIndex(row=>row.id===this.node('result').value),next=this.search.results[index+delta];
+    if(!next)throw Error('No retained result in that direction.');
+    this.node('result').value=next.id;this.clearPreview();await this.apply('preview');
+  }
   clearPreview(){this.context.clearPreview?.();this.panel.querySelector('#facet-preview').hidden=true;}
   invalidate({cancelActive=true}={}){if(cancelActive&&!this.publishing)this.cancel();this.catalogue=null;this.search=null;this.clearPreview();
     this.node('result').replaceChildren();this.node('candidate-summary').textContent='';this.node('evidence').textContent='';
@@ -162,5 +173,17 @@ export class AutomaticFacetingControls{
     this.node('cancel').disabled=!this.busy;
     this.node('source-faces').disabled=disabled||!this.catalogue;
     this.node('preview').disabled=this.node('adopt').disabled=disabled||stale||!this.search?.results.length;
+    const index=this.search?.results.findIndex(row=>row.id===this.node('result').value)??-1;
+    this.node('previous').disabled=disabled||stale||index<=0;
+    this.node('next').disabled=disabled||stale||index<0||index>=this.search.results.length-1;
+    explainAvailability(this.panel,disabled?'Choose an intrinsic 3D source and finish the current search/export.':'Search for a current result before previewing or adopting it.',disabled?{}:{
+      'faceting-actions':'Choose Declared subgroup to enter literal source actions.',
+      'faceting-symmetry-work':'Choose source symmetry discovery to set its work cap.',
+      'faceting-dual-center':'Choose Tidy faceting and finite polar dual to set reciprocation.',
+      'faceting-dual-radius':'Choose Tidy faceting and finite polar dual to set reciprocation.',
+      'faceting-cancel':'No faceting search is running.',
+      'faceting-source-faces':'Build the candidate pool first.',
+      'faceting-previous':'No previous result is available.',
+      'faceting-next':'No next result is available.'});
   }
 }

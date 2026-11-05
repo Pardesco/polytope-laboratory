@@ -1,14 +1,15 @@
 // Hold real native results in isolated IPC to audit catalog publication.
 const {_electron:electron}=require('playwright'),fs=require('node:fs/promises'),path=require('node:path'),assert=require('node:assert/strict');
+const {menuless}=require('./smoke-helpers.cjs');
 const root=path.resolve(__dirname,'..'),baseline=process.argv.includes('--baseline');
 async function main(){
   const folder=await fs.mkdtemp(path.join(root,'artifacts','catalog-workflow-')),profile=path.join(folder,'profile');await fs.mkdir(profile);
   await fs.writeFile(path.join(profile,'linked-libraries.json'),JSON.stringify({version:1,paths:[]}));
-  const runtime=await require('./hidden-runtime.cjs').hiddenRuntime(),env={...process.env,POLYTOPE_TEST_USER_DATA:profile};delete env.ELECTRON_RUN_AS_NODE;delete env.POLYTOPE_TEST_MODE;
+  const runtime=await require('./hidden-runtime.cjs').hiddenRuntime(),env={...process.env,POLYTOPE_TEST_USER_DATA:profile};delete env.ELECTRON_RUN_AS_NODE;if(process.env.POLYTOPE_TEST_MODE!=='hidden-no-focus')delete env.POLYTOPE_TEST_MODE;
   if(runtime.packaged)env.POLYTOPE_PYTHON=path.join(folder,'unavailable-python.exe');let app,page;const errors=[],checks=[],findings={};
   try{
     app=await electron.launch({executablePath:runtime.executablePath,args:runtime.packaged?[]:[root],cwd:root,env,timeout:30000});
-    await app.evaluate(({dialog})=>{dialog.showMessageBox=async()=>({response:1});});page=await app.firstWindow();page.setDefaultTimeout(30000);page.on('pageerror',error=>errors.push(error.message));
+    await app.evaluate(({dialog})=>{dialog.showMessageBox=async()=>({response:1});});page=await app.firstWindow();require('./smoke-helpers.cjs').autoReveal(page);page.setDefaultTimeout(30000);page.on('pageerror',error=>errors.push(error.message));
     const settled=()=>page.waitForFunction(()=>document.getElementById('cancel').hidden);
     await page.waitForFunction(()=>document.getElementById('model-name')?.textContent==='Tesseract'&&document.getElementById('cancel').hidden);
     await page.evaluate(()=>{window.catalogStatuses=[];new MutationObserver(()=>window.catalogStatuses.push(document.getElementById('status').textContent)).observe(document.getElementById('status'),{childList:true,subtree:true,characterData:true});});
@@ -47,11 +48,13 @@ async function main(){
     const multiple=await save('multiple-selections');assert.equal(multiple.project.documents.length,initial.project.documents.length+2);
     checks.push('distinct catalog selections each open a document; late earlier selections preserve the latest focus');
 
-    findings.fileMenuLabels=await app.evaluate(({Menu})=>Menu.getApplicationMenu().items.find(item=>item.label==='File').submenu.items.map(item=>item.label));
+    // Hidden-no-focus mode installs no application menu, so the File menu label check only runs with a native menu.
+    const hiddenMenu=await menuless(app);if(hiddenMenu)console.log('[hidden-no-focus] no application menu: skipping the File menu label assertion.');
+    findings.fileMenuLabels=hiddenMenu?null:await app.evaluate(({Menu})=>Menu.getApplicationMenu().items.find(item=>item.label==='File').submenu.items.map(item=>item.label));
     findings.historyCloseLabel=await page.locator('#history-parameters-close').textContent();
     if(!baseline){
       assert.equal(findings.loadingMarked,true);for(const key of ['lateProjectPublication','lateCanceledPublication','earlierSelectionStoleFocus'])assert.equal(findings[key],false,key);
-      assert.ok(findings.fileMenuLabels.includes('Open\u2026'));assert.equal(findings.historyCloseLabel,'\u00d7');
+      if(!hiddenMenu)assert.ok(findings.fileMenuLabels.includes('Open\u2026'));assert.equal(findings.historyCloseLabel,'\u00d7');
       await openOriginal();await arm(['cube']);await click('cube');await held(1);
       await page.locator('[data-key="cube"]').evaluate(button=>{button.onclick();});
       findings.duplicateNativeJobs=await app.evaluate(()=>globalThis.catalogHarness.requests.filter(r=>r.key==='cube').length);assert.equal(findings.duplicateNativeJobs,1);

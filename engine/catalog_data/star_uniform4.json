@@ -1,0 +1,7535 @@
+{
+  "schemaVersion": 1,
+  "sourceIndex": "https://bendwavy.org/klitzing/dimensions/polychora-neu.htm",
+  "scope": "Verified nonconvex linear rational-angle Wythoffians only; not a complete uniform-polychoron enumeration.",
+  "entries": [
+    {
+      "key": "star-uniform4-quidpith",
+      "name": "quasi(dis)prismatotesseractihexadecachoron",
+      "dimension": 4,
+      "family": "Star uniform polychora (Wythoffian)",
+      "bowers": "quidpith",
+      "aliases": [
+        "quidpith",
+        "quasi(dis)prismatotesseractihexadecachoron",
+        "x3/2o3o4x"
+      ],
+      "symbol": "x3/2o3o4x",
+      "coxeterDiagram": "x3/2o3o4x",
+      "diagram": [
+        "3/2",
+        "3",
+        "4"
+      ],
+      "rings": [
+        1,
+        0,
+        0,
+        1
+      ],
+      "counts": [
+        64,
+        192,
+        208,
+        80
+      ],
+      "cellTypes": [
+        {
+          "bowers": "tet",
+          "name": "tetrahedron",
+          "counts": [
+            4,
+            6,
+            4
+          ],
+          "facePolygons": {
+            "3": 4
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/tet.htm",
+          "count": 16,
+          "key": "tetrahedron"
+        },
+        {
+          "bowers": "trip",
+          "name": "triangular prism",
+          "counts": [
+            6,
+            9,
+            5
+          ],
+          "facePolygons": {
+            "3": 2,
+            "4": 3
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/trip.htm",
+          "count": 32,
+          "key": "uniform-prism-3"
+        },
+        {
+          "bowers": "cube",
+          "name": "cube",
+          "counts": [
+            8,
+            12,
+            6
+          ],
+          "facePolygons": {
+            "4": 6
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/cube.htm",
+          "count": 32,
+          "key": "cube"
+        }
+      ],
+      "symmetryGroup": "B4",
+      "symmetryGroups": [
+        "B4",
+        "[3/2,3,4]",
+        "[4,3,3]",
+        "[3,3,4]"
+      ],
+      "convex": false,
+      "uniform": true,
+      "regular": false,
+      "vertexTransitive": true,
+      "chiral": false,
+      "classificationVerified": true,
+      "referenceUrls": [
+        "https://bendwavy.org/klitzing/incmats/quidpith.htm",
+        "https://bendwavy.org/klitzing/dimensions/polychora-neu.htm"
+      ],
+      "numericContract": "Native rational-angle reflection orbits; approximate float64, no exact certificate",
+      "cellTypeBasis": "Published incidence-matrix counts and polygon windings; native boundary signatures checked on generation.",
+      "coxeterFamily": "B4"
+    },
+    {
+      "key": "star-uniform4-qrit",
+      "name": "quasirhombated tesseract",
+      "dimension": 4,
+      "family": "Star uniform polychora (Wythoffian)",
+      "bowers": "qrit",
+      "aliases": [
+        "qrit",
+        "quasirhombated tesseract",
+        "o3x3o4/3x"
+      ],
+      "symbol": "o3x3o4/3x",
+      "coxeterDiagram": "o3x3o4/3x",
+      "diagram": [
+        "3",
+        "3",
+        "4/3"
+      ],
+      "rings": [
+        0,
+        1,
+        0,
+        1
+      ],
+      "counts": [
+        96,
+        288,
+        248,
+        56
+      ],
+      "cellTypes": [
+        {
+          "bowers": "oct",
+          "name": "octahedron",
+          "counts": [
+            6,
+            12,
+            8
+          ],
+          "facePolygons": {
+            "3": 8
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/oct.htm",
+          "count": 16,
+          "key": "octahedron"
+        },
+        {
+          "bowers": "trip",
+          "name": "triangular prism",
+          "counts": [
+            6,
+            9,
+            5
+          ],
+          "facePolygons": {
+            "3": 2,
+            "4": 3
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/trip.htm",
+          "count": 32,
+          "key": "uniform-prism-3"
+        },
+        {
+          "bowers": "querco",
+          "name": "quasirhombicuboctahedron",
+          "counts": [
+            24,
+            48,
+            26
+          ],
+          "facePolygons": {
+            "3": 8,
+            "4": 18
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/querco.htm",
+          "count": 8
+        }
+      ],
+      "symmetryGroup": "B4",
+      "symmetryGroups": [
+        "B4",
+        "[3,3,4/3]",
+        "[4,3,3]",
+        "[3,3,4]"
+      ],
+      "convex": false,
+      "uniform": true,
+      "regular": false,
+      "vertexTransitive": true,
+      "chiral": false,
+      "classificationVerified": true,
+      "referenceUrls": [
+        "https://bendwavy.org/klitzing/incmats/qrit.htm",
+        "https://bendwavy.org/klitzing/dimensions/polychora-neu.htm"
+      ],
+      "numericContract": "Native rational-angle reflection orbits; approximate float64, no exact certificate",
+      "cellTypeBasis": "Published incidence-matrix counts and polygon windings; native boundary signatures checked on generation.",
+      "coxeterFamily": "B4"
+    },
+    {
+      "key": "star-uniform4-quitit",
+      "name": "quasitruncated tesseract",
+      "dimension": 4,
+      "family": "Star uniform polychora (Wythoffian)",
+      "bowers": "quitit",
+      "aliases": [
+        "quitit",
+        "quasitruncated tesseract",
+        "o3o3x4/3x"
+      ],
+      "symbol": "o3o3x4/3x",
+      "coxeterDiagram": "o3o3x4/3x",
+      "diagram": [
+        "3",
+        "3",
+        "4/3"
+      ],
+      "rings": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "counts": [
+        64,
+        128,
+        88,
+        24
+      ],
+      "cellTypes": [
+        {
+          "bowers": "tet",
+          "name": "tetrahedron",
+          "counts": [
+            4,
+            6,
+            4
+          ],
+          "facePolygons": {
+            "3": 4
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/tet.htm",
+          "count": 16,
+          "key": "tetrahedron"
+        },
+        {
+          "bowers": "quith",
+          "name": "quasitruncated hexahedron",
+          "counts": [
+            24,
+            36,
+            14
+          ],
+          "facePolygons": {
+            "3": 8,
+            "8/3": 6
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/quith.htm",
+          "count": 8
+        }
+      ],
+      "symmetryGroup": "B4",
+      "symmetryGroups": [
+        "B4",
+        "[3,3,4/3]",
+        "[4,3,3]",
+        "[3,3,4]"
+      ],
+      "convex": false,
+      "uniform": true,
+      "regular": false,
+      "vertexTransitive": true,
+      "chiral": false,
+      "classificationVerified": true,
+      "referenceUrls": [
+        "https://bendwavy.org/klitzing/incmats/quitit.htm",
+        "https://bendwavy.org/klitzing/dimensions/polychora-neu.htm"
+      ],
+      "numericContract": "Native rational-angle reflection orbits; approximate float64, no exact certificate",
+      "cellTypeBasis": "Published incidence-matrix counts and polygon windings; native boundary signatures checked on generation.",
+      "coxeterFamily": "B4"
+    },
+    {
+      "key": "star-uniform4-paqrit",
+      "name": "prismatoquasirhombated tesseract",
+      "dimension": 4,
+      "family": "Star uniform polychora (Wythoffian)",
+      "bowers": "paqrit",
+      "aliases": [
+        "paqrit",
+        "prismatoquasirhombated tesseract",
+        "x3x3o4/3x"
+      ],
+      "symbol": "x3x3o4/3x",
+      "coxeterDiagram": "x3x3o4/3x",
+      "diagram": [
+        "3",
+        "3",
+        "4/3"
+      ],
+      "rings": [
+        1,
+        1,
+        0,
+        1
+      ],
+      "counts": [
+        192,
+        480,
+        368,
+        80
+      ],
+      "cellTypes": [
+        {
+          "bowers": "tut",
+          "name": "truncated tetrahedron",
+          "counts": [
+            12,
+            18,
+            8
+          ],
+          "facePolygons": {
+            "3": 4,
+            "6": 4
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/tut.htm",
+          "count": 16,
+          "key": "truncated-tetrahedron"
+        },
+        {
+          "bowers": "hip",
+          "name": "hexagonal prism",
+          "counts": [
+            12,
+            18,
+            8
+          ],
+          "facePolygons": {
+            "4": 6,
+            "6": 2
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/hip.htm",
+          "count": 32,
+          "key": "uniform-prism-6"
+        },
+        {
+          "bowers": "cube",
+          "name": "cube",
+          "counts": [
+            8,
+            12,
+            6
+          ],
+          "facePolygons": {
+            "4": 6
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/cube.htm",
+          "count": 24,
+          "key": "cube"
+        },
+        {
+          "bowers": "querco",
+          "name": "quasirhombicuboctahedron",
+          "counts": [
+            24,
+            48,
+            26
+          ],
+          "facePolygons": {
+            "3": 8,
+            "4": 18
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/querco.htm",
+          "count": 8
+        }
+      ],
+      "symmetryGroup": "B4",
+      "symmetryGroups": [
+        "B4",
+        "[3,3,4/3]",
+        "[4,3,3]",
+        "[3,3,4]"
+      ],
+      "convex": false,
+      "uniform": true,
+      "regular": false,
+      "vertexTransitive": true,
+      "chiral": false,
+      "classificationVerified": true,
+      "referenceUrls": [
+        "https://bendwavy.org/klitzing/incmats/paqrit.htm",
+        "https://bendwavy.org/klitzing/dimensions/polychora-neu.htm"
+      ],
+      "numericContract": "Native rational-angle reflection orbits; approximate float64, no exact certificate",
+      "cellTypeBasis": "Published incidence-matrix counts and polygon windings; native boundary signatures checked on generation.",
+      "coxeterFamily": "B4"
+    },
+    {
+      "key": "star-uniform4-quiproh",
+      "name": "quasiprismatorhombated hexadecachoron",
+      "dimension": 4,
+      "family": "Star uniform polychora (Wythoffian)",
+      "bowers": "quiproh",
+      "aliases": [
+        "quiproh",
+        "quasiprismatorhombated hexadecachoron",
+        "x3o3x4/3x"
+      ],
+      "symbol": "x3o3x4/3x",
+      "coxeterDiagram": "x3o3x4/3x",
+      "diagram": [
+        "3",
+        "3",
+        "4/3"
+      ],
+      "rings": [
+        1,
+        0,
+        1,
+        1
+      ],
+      "counts": [
+        192,
+        480,
+        368,
+        80
+      ],
+      "cellTypes": [
+        {
+          "bowers": "co",
+          "name": "cuboctahedron",
+          "counts": [
+            12,
+            24,
+            14
+          ],
+          "facePolygons": {
+            "3": 8,
+            "4": 6
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/co.htm",
+          "count": 16,
+          "key": "cuboctahedron"
+        },
+        {
+          "bowers": "trip",
+          "name": "triangular prism",
+          "counts": [
+            6,
+            9,
+            5
+          ],
+          "facePolygons": {
+            "3": 2,
+            "4": 3
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/trip.htm",
+          "count": 32,
+          "key": "uniform-prism-3"
+        },
+        {
+          "bowers": "stop",
+          "name": "(tristrophic) octagrammic prism",
+          "counts": [
+            16,
+            24,
+            10
+          ],
+          "facePolygons": {
+            "4": 8,
+            "8/3": 2
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/stop.htm",
+          "count": 24
+        },
+        {
+          "bowers": "quith",
+          "name": "quasitruncated hexahedron",
+          "counts": [
+            24,
+            36,
+            14
+          ],
+          "facePolygons": {
+            "3": 8,
+            "8/3": 6
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/quith.htm",
+          "count": 8
+        }
+      ],
+      "symmetryGroup": "B4",
+      "symmetryGroups": [
+        "B4",
+        "[3,3,4/3]",
+        "[4,3,3]",
+        "[3,3,4]"
+      ],
+      "convex": false,
+      "uniform": true,
+      "regular": false,
+      "vertexTransitive": true,
+      "chiral": false,
+      "classificationVerified": true,
+      "referenceUrls": [
+        "https://bendwavy.org/klitzing/incmats/quiproh.htm",
+        "https://bendwavy.org/klitzing/dimensions/polychora-neu.htm"
+      ],
+      "numericContract": "Native rational-angle reflection orbits; approximate float64, no exact certificate",
+      "cellTypeBasis": "Published incidence-matrix counts and polygon windings; native boundary signatures checked on generation.",
+      "coxeterFamily": "B4"
+    },
+    {
+      "key": "star-uniform4-gaqrit",
+      "name": "great quasirhombated tesseract",
+      "dimension": 4,
+      "family": "Star uniform polychora (Wythoffian)",
+      "bowers": "gaqrit",
+      "aliases": [
+        "gaqrit",
+        "great quasirhombated tesseract",
+        "o3x3x4/3x"
+      ],
+      "symbol": "o3x3x4/3x",
+      "coxeterDiagram": "o3x3x4/3x",
+      "diagram": [
+        "3",
+        "3",
+        "4/3"
+      ],
+      "rings": [
+        0,
+        1,
+        1,
+        1
+      ],
+      "counts": [
+        192,
+        384,
+        248,
+        56
+      ],
+      "cellTypes": [
+        {
+          "bowers": "tut",
+          "name": "truncated tetrahedron",
+          "counts": [
+            12,
+            18,
+            8
+          ],
+          "facePolygons": {
+            "3": 4,
+            "6": 4
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/tut.htm",
+          "count": 16,
+          "key": "truncated-tetrahedron"
+        },
+        {
+          "bowers": "trip",
+          "name": "triangular prism",
+          "counts": [
+            6,
+            9,
+            5
+          ],
+          "facePolygons": {
+            "3": 2,
+            "4": 3
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/trip.htm",
+          "count": 32,
+          "key": "uniform-prism-3"
+        },
+        {
+          "bowers": "quitco",
+          "name": "quasitruncated cuboctahedron",
+          "counts": [
+            48,
+            72,
+            26
+          ],
+          "facePolygons": {
+            "4": 12,
+            "6": 8,
+            "8/3": 6
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/quitco.htm",
+          "count": 8
+        }
+      ],
+      "symmetryGroup": "B4",
+      "symmetryGroups": [
+        "B4",
+        "[3,3,4/3]",
+        "[4,3,3]",
+        "[3,3,4]"
+      ],
+      "convex": false,
+      "uniform": true,
+      "regular": false,
+      "vertexTransitive": true,
+      "chiral": false,
+      "classificationVerified": true,
+      "referenceUrls": [
+        "https://bendwavy.org/klitzing/incmats/gaqrit.htm",
+        "https://bendwavy.org/klitzing/dimensions/polychora-neu.htm"
+      ],
+      "numericContract": "Native rational-angle reflection orbits; approximate float64, no exact certificate",
+      "cellTypeBasis": "Published incidence-matrix counts and polygon windings; native boundary signatures checked on generation.",
+      "coxeterFamily": "B4"
+    },
+    {
+      "key": "star-uniform4-gaquidpoth",
+      "name": "great quasidisprismatotesseractihexadecachoron",
+      "dimension": 4,
+      "family": "Star uniform polychora (Wythoffian)",
+      "bowers": "gaquidpoth",
+      "aliases": [
+        "gaquidpoth",
+        "great quasidisprismatotesseractihexadecachoron",
+        "x3x3x4/3x"
+      ],
+      "symbol": "x3x3x4/3x",
+      "coxeterDiagram": "x3x3x4/3x",
+      "diagram": [
+        "3",
+        "3",
+        "4/3"
+      ],
+      "rings": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "counts": [
+        384,
+        768,
+        464,
+        80
+      ],
+      "cellTypes": [
+        {
+          "bowers": "toe",
+          "name": "truncated octahedron",
+          "counts": [
+            24,
+            36,
+            14
+          ],
+          "facePolygons": {
+            "4": 6,
+            "6": 8
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/toe.htm",
+          "count": 16,
+          "key": "truncated-octahedron"
+        },
+        {
+          "bowers": "hip",
+          "name": "hexagonal prism",
+          "counts": [
+            12,
+            18,
+            8
+          ],
+          "facePolygons": {
+            "4": 6,
+            "6": 2
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/hip.htm",
+          "count": 32,
+          "key": "uniform-prism-6"
+        },
+        {
+          "bowers": "stop",
+          "name": "(tristrophic) octagrammic prism",
+          "counts": [
+            16,
+            24,
+            10
+          ],
+          "facePolygons": {
+            "4": 8,
+            "8/3": 2
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/stop.htm",
+          "count": 24
+        },
+        {
+          "bowers": "quitco",
+          "name": "quasitruncated cuboctahedron",
+          "counts": [
+            48,
+            72,
+            26
+          ],
+          "facePolygons": {
+            "4": 12,
+            "6": 8,
+            "8/3": 6
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/quitco.htm",
+          "count": 8
+        }
+      ],
+      "symmetryGroup": "B4",
+      "symmetryGroups": [
+        "B4",
+        "[3,3,4/3]",
+        "[4,3,3]",
+        "[3,3,4]"
+      ],
+      "convex": false,
+      "uniform": true,
+      "regular": false,
+      "vertexTransitive": true,
+      "chiral": false,
+      "classificationVerified": true,
+      "referenceUrls": [
+        "https://bendwavy.org/klitzing/incmats/gaquidpoth.htm",
+        "https://bendwavy.org/klitzing/dimensions/polychora-neu.htm"
+      ],
+      "numericContract": "Native rational-angle reflection orbits; approximate float64, no exact certificate",
+      "cellTypeBasis": "Published incidence-matrix counts and polygon windings; native boundary signatures checked on generation.",
+      "coxeterFamily": "B4"
+    },
+    {
+      "key": "star-uniform4-quippic",
+      "name": "quasiprismatotetracontoctachoron",
+      "dimension": 4,
+      "family": "Star uniform polychora (Wythoffian)",
+      "bowers": "quippic",
+      "aliases": [
+        "quippic",
+        "quasiprismatotetracontoctachoron",
+        "x3o4o3/2x"
+      ],
+      "symbol": "x3o4o3/2x",
+      "coxeterDiagram": "x3o4o3/2x",
+      "diagram": [
+        "3",
+        "4",
+        "3/2"
+      ],
+      "rings": [
+        1,
+        0,
+        0,
+        1
+      ],
+      "counts": [
+        144,
+        576,
+        672,
+        240
+      ],
+      "cellTypes": [
+        {
+          "bowers": "oct",
+          "name": "octahedron",
+          "counts": [
+            6,
+            12,
+            8
+          ],
+          "facePolygons": {
+            "3": 8
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/oct.htm",
+          "count": 48,
+          "key": "octahedron"
+        },
+        {
+          "bowers": "trip",
+          "name": "triangular prism",
+          "counts": [
+            6,
+            9,
+            5
+          ],
+          "facePolygons": {
+            "3": 2,
+            "4": 3
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/trip.htm",
+          "count": 192,
+          "key": "uniform-prism-3"
+        }
+      ],
+      "symmetryGroup": "F4",
+      "symmetryGroups": [
+        "F4",
+        "[3,4,3/2]",
+        "[3,4,3]"
+      ],
+      "convex": false,
+      "uniform": true,
+      "regular": false,
+      "vertexTransitive": true,
+      "chiral": false,
+      "classificationVerified": true,
+      "referenceUrls": [
+        "https://bendwavy.org/klitzing/incmats/quippic.htm",
+        "https://bendwavy.org/klitzing/dimensions/polychora-neu.htm"
+      ],
+      "numericContract": "Native rational-angle reflection orbits; approximate float64, no exact certificate",
+      "cellTypeBasis": "Published incidence-matrix counts and polygon windings; native boundary signatures checked on generation.",
+      "coxeterFamily": "F4"
+    },
+    {
+      "key": "star-uniform4-qrico",
+      "name": "quasirhombated icositetrachoron",
+      "dimension": 4,
+      "family": "Star uniform polychora (Wythoffian)",
+      "bowers": "qrico",
+      "aliases": [
+        "qrico",
+        "quasirhombated icositetrachoron",
+        "x3o4/3x3o"
+      ],
+      "symbol": "x3o4/3x3o",
+      "coxeterDiagram": "x3o4/3x3o",
+      "diagram": [
+        "3",
+        "4/3",
+        "3"
+      ],
+      "rings": [
+        1,
+        0,
+        1,
+        0
+      ],
+      "counts": [
+        288,
+        864,
+        720,
+        144
+      ],
+      "cellTypes": [
+        {
+          "bowers": "querco",
+          "name": "quasirhombicuboctahedron",
+          "counts": [
+            24,
+            48,
+            26
+          ],
+          "facePolygons": {
+            "3": 8,
+            "4": 18
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/querco.htm",
+          "count": 24
+        },
+        {
+          "bowers": "trip",
+          "name": "triangular prism",
+          "counts": [
+            6,
+            9,
+            5
+          ],
+          "facePolygons": {
+            "3": 2,
+            "4": 3
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/trip.htm",
+          "count": 96,
+          "key": "uniform-prism-3"
+        },
+        {
+          "bowers": "co",
+          "name": "cuboctahedron",
+          "counts": [
+            12,
+            24,
+            14
+          ],
+          "facePolygons": {
+            "3": 8,
+            "4": 6
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/co.htm",
+          "count": 24,
+          "key": "cuboctahedron"
+        }
+      ],
+      "symmetryGroup": "F4",
+      "symmetryGroups": [
+        "F4",
+        "[3,4/3,3]",
+        "[3,4,3]"
+      ],
+      "convex": false,
+      "uniform": true,
+      "regular": false,
+      "vertexTransitive": true,
+      "chiral": false,
+      "classificationVerified": true,
+      "referenceUrls": [
+        "https://bendwavy.org/klitzing/incmats/qrico.htm",
+        "https://bendwavy.org/klitzing/dimensions/polychora-neu.htm"
+      ],
+      "numericContract": "Native rational-angle reflection orbits; approximate float64, no exact certificate",
+      "cellTypeBasis": "Published incidence-matrix counts and polygon windings; native boundary signatures checked on generation.",
+      "coxeterFamily": "F4"
+    },
+    {
+      "key": "star-uniform4-paqri",
+      "name": "prismatoquasirhombated icositetrachoron",
+      "dimension": 4,
+      "family": "Star uniform polychora (Wythoffian)",
+      "bowers": "paqri",
+      "aliases": [
+        "paqri",
+        "prismatoquasirhombated icositetrachoron",
+        "x3x4o3/2x"
+      ],
+      "symbol": "x3x4o3/2x",
+      "coxeterDiagram": "x3x4o3/2x",
+      "diagram": [
+        "3",
+        "4",
+        "3/2"
+      ],
+      "rings": [
+        1,
+        1,
+        0,
+        1
+      ],
+      "counts": [
+        576,
+        1440,
+        1104,
+        240
+      ],
+      "cellTypes": [
+        {
+          "bowers": "toe",
+          "name": "truncated octahedron",
+          "counts": [
+            24,
+            36,
+            14
+          ],
+          "facePolygons": {
+            "4": 6,
+            "6": 8
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/toe.htm",
+          "count": 24,
+          "key": "truncated-octahedron"
+        },
+        {
+          "bowers": "hip",
+          "name": "hexagonal prism",
+          "counts": [
+            12,
+            18,
+            8
+          ],
+          "facePolygons": {
+            "4": 6,
+            "6": 2
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/hip.htm",
+          "count": 96,
+          "key": "uniform-prism-6"
+        },
+        {
+          "bowers": "trip",
+          "name": "triangular prism",
+          "counts": [
+            6,
+            9,
+            5
+          ],
+          "facePolygons": {
+            "3": 2,
+            "4": 3
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/trip.htm",
+          "count": 96,
+          "key": "uniform-prism-3"
+        },
+        {
+          "bowers": "querco",
+          "name": "quasirhombicuboctahedron",
+          "counts": [
+            24,
+            48,
+            26
+          ],
+          "facePolygons": {
+            "3": 8,
+            "4": 18
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/querco.htm",
+          "count": 24
+        }
+      ],
+      "symmetryGroup": "F4",
+      "symmetryGroups": [
+        "F4",
+        "[3,4,3/2]",
+        "[3,4,3]"
+      ],
+      "convex": false,
+      "uniform": true,
+      "regular": false,
+      "vertexTransitive": true,
+      "chiral": false,
+      "classificationVerified": true,
+      "referenceUrls": [
+        "https://bendwavy.org/klitzing/incmats/paqri.htm",
+        "https://bendwavy.org/klitzing/dimensions/polychora-neu.htm"
+      ],
+      "numericContract": "Native rational-angle reflection orbits; approximate float64, no exact certificate",
+      "cellTypeBasis": "Published incidence-matrix counts and polygon windings; native boundary signatures checked on generation.",
+      "coxeterFamily": "F4"
+    },
+    {
+      "key": "star-uniform4-gic",
+      "name": "great tetracontoctachoron",
+      "dimension": 4,
+      "family": "Star uniform polychora (Wythoffian)",
+      "bowers": "gic",
+      "aliases": [
+        "gic",
+        "great tetracontoctachoron",
+        "o3x4/3x3o"
+      ],
+      "symbol": "o3x4/3x3o",
+      "coxeterDiagram": "o3x4/3x3o",
+      "diagram": [
+        "3",
+        "4/3",
+        "3"
+      ],
+      "rings": [
+        0,
+        1,
+        1,
+        0
+      ],
+      "counts": [
+        288,
+        576,
+        336,
+        48
+      ],
+      "cellTypes": [
+        {
+          "bowers": "quith",
+          "name": "quasitruncated hexahedron",
+          "counts": [
+            24,
+            36,
+            14
+          ],
+          "facePolygons": {
+            "3": 8,
+            "8/3": 6
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/quith.htm",
+          "count": 48
+        }
+      ],
+      "symmetryGroup": "F4",
+      "symmetryGroups": [
+        "F4",
+        "[3,4/3,3]",
+        "[3,4,3]"
+      ],
+      "convex": false,
+      "uniform": true,
+      "regular": false,
+      "vertexTransitive": true,
+      "chiral": false,
+      "classificationVerified": true,
+      "referenceUrls": [
+        "https://bendwavy.org/klitzing/incmats/gic.htm",
+        "https://bendwavy.org/klitzing/dimensions/polychora-neu.htm"
+      ],
+      "numericContract": "Native rational-angle reflection orbits; approximate float64, no exact certificate",
+      "cellTypeBasis": "Published incidence-matrix counts and polygon windings; native boundary signatures checked on generation.",
+      "coxeterFamily": "F4"
+    },
+    {
+      "key": "star-uniform4-gaqri",
+      "name": "great quasirhombated icositetrachoron",
+      "dimension": 4,
+      "family": "Star uniform polychora (Wythoffian)",
+      "bowers": "gaqri",
+      "aliases": [
+        "gaqri",
+        "great quasirhombated icositetrachoron",
+        "x3x4/3x3o"
+      ],
+      "symbol": "x3x4/3x3o",
+      "coxeterDiagram": "x3x4/3x3o",
+      "diagram": [
+        "3",
+        "4/3",
+        "3"
+      ],
+      "rings": [
+        1,
+        1,
+        1,
+        0
+      ],
+      "counts": [
+        576,
+        1152,
+        720,
+        144
+      ],
+      "cellTypes": [
+        {
+          "bowers": "quitco",
+          "name": "quasitruncated cuboctahedron",
+          "counts": [
+            48,
+            72,
+            26
+          ],
+          "facePolygons": {
+            "4": 12,
+            "6": 8,
+            "8/3": 6
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/quitco.htm",
+          "count": 24
+        },
+        {
+          "bowers": "trip",
+          "name": "triangular prism",
+          "counts": [
+            6,
+            9,
+            5
+          ],
+          "facePolygons": {
+            "3": 2,
+            "4": 3
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/trip.htm",
+          "count": 96,
+          "key": "uniform-prism-3"
+        },
+        {
+          "bowers": "quith",
+          "name": "quasitruncated hexahedron",
+          "counts": [
+            24,
+            36,
+            14
+          ],
+          "facePolygons": {
+            "3": 8,
+            "8/3": 6
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/quith.htm",
+          "count": 24
+        }
+      ],
+      "symmetryGroup": "F4",
+      "symmetryGroups": [
+        "F4",
+        "[3,4/3,3]",
+        "[3,4,3]"
+      ],
+      "convex": false,
+      "uniform": true,
+      "regular": false,
+      "vertexTransitive": true,
+      "chiral": false,
+      "classificationVerified": true,
+      "referenceUrls": [
+        "https://bendwavy.org/klitzing/incmats/gaqri.htm",
+        "https://bendwavy.org/klitzing/dimensions/polychora-neu.htm"
+      ],
+      "numericContract": "Native rational-angle reflection orbits; approximate float64, no exact certificate",
+      "cellTypeBasis": "Published incidence-matrix counts and polygon windings; native boundary signatures checked on generation.",
+      "coxeterFamily": "F4"
+    },
+    {
+      "key": "star-uniform4-gaquapac",
+      "name": "great quasiprismatotetracontoctachoron",
+      "dimension": 4,
+      "family": "Star uniform polychora (Wythoffian)",
+      "bowers": "gaquapac",
+      "aliases": [
+        "gaquapac",
+        "great quasiprismatotetracontoctachoron",
+        "x3x4/3x3x"
+      ],
+      "symbol": "x3x4/3x3x",
+      "coxeterDiagram": "x3x4/3x3x",
+      "diagram": [
+        "3",
+        "4/3",
+        "3"
+      ],
+      "rings": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "counts": [
+        1152,
+        2304,
+        1392,
+        240
+      ],
+      "cellTypes": [
+        {
+          "bowers": "quitco",
+          "name": "quasitruncated cuboctahedron",
+          "counts": [
+            48,
+            72,
+            26
+          ],
+          "facePolygons": {
+            "4": 12,
+            "6": 8,
+            "8/3": 6
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/quitco.htm",
+          "count": 48
+        },
+        {
+          "bowers": "hip",
+          "name": "hexagonal prism",
+          "counts": [
+            12,
+            18,
+            8
+          ],
+          "facePolygons": {
+            "4": 6,
+            "6": 2
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/hip.htm",
+          "count": 192,
+          "key": "uniform-prism-6"
+        }
+      ],
+      "symmetryGroup": "F4",
+      "symmetryGroups": [
+        "F4",
+        "[3,4/3,3]",
+        "[3,4,3]"
+      ],
+      "convex": false,
+      "uniform": true,
+      "regular": false,
+      "vertexTransitive": true,
+      "chiral": false,
+      "classificationVerified": true,
+      "referenceUrls": [
+        "https://bendwavy.org/klitzing/incmats/gaquapac.htm",
+        "https://bendwavy.org/klitzing/dimensions/polychora-neu.htm"
+      ],
+      "numericContract": "Native rational-angle reflection orbits; approximate float64, no exact certificate",
+      "cellTypeBasis": "Published incidence-matrix counts and polygon windings; native boundary signatures checked on generation.",
+      "coxeterFamily": "F4"
+    },
+    {
+      "key": "star-uniform4-gax",
+      "name": "grand hexacosachoron",
+      "dimension": 4,
+      "family": "Star uniform polychora (Wythoffian)",
+      "bowers": "gax",
+      "aliases": [
+        "gax",
+        "grand hexacosachoron",
+        "x3o3o5/2o"
+      ],
+      "symbol": "x3o3o5/2o",
+      "coxeterDiagram": "x3o3o5/2o",
+      "diagram": [
+        "3",
+        "3",
+        "5/2"
+      ],
+      "rings": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "counts": [
+        120,
+        720,
+        1200,
+        600
+      ],
+      "cellTypes": [
+        {
+          "bowers": "tet",
+          "name": "tetrahedron",
+          "counts": [
+            4,
+            6,
+            4
+          ],
+          "facePolygons": {
+            "3": 4
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/tet.htm",
+          "count": 600,
+          "key": "tetrahedron"
+        }
+      ],
+      "symmetryGroup": "H4",
+      "symmetryGroups": [
+        "H4",
+        "[3,3,5/2]",
+        "[5,3,3]",
+        "[3,3,5]"
+      ],
+      "convex": false,
+      "uniform": true,
+      "regular": true,
+      "vertexTransitive": true,
+      "chiral": false,
+      "classificationVerified": true,
+      "referenceUrls": [
+        "https://bendwavy.org/klitzing/incmats/gax.htm",
+        "https://bendwavy.org/klitzing/dimensions/polychora-neu.htm"
+      ],
+      "numericContract": "Native rational-angle reflection orbits; approximate float64, no exact certificate",
+      "cellTypeBasis": "Published incidence-matrix counts and polygon windings; native boundary signatures checked on generation.",
+      "coxeterFamily": "H4"
+    },
+    {
+      "key": "star-uniform4-raggix",
+      "name": "rectified grand hexacosachoron",
+      "dimension": 4,
+      "family": "Star uniform polychora (Wythoffian)",
+      "bowers": "raggix",
+      "aliases": [
+        "raggix",
+        "rectified grand hexacosachoron",
+        "o3x3o5/2o"
+      ],
+      "symbol": "o3x3o5/2o",
+      "coxeterDiagram": "o3x3o5/2o",
+      "diagram": [
+        "3",
+        "3",
+        "5/2"
+      ],
+      "rings": [
+        0,
+        1,
+        0,
+        0
+      ],
+      "counts": [
+        720,
+        3600,
+        3600,
+        720
+      ],
+      "cellTypes": [
+        {
+          "bowers": "oct",
+          "name": "octahedron",
+          "counts": [
+            6,
+            12,
+            8
+          ],
+          "facePolygons": {
+            "3": 8
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/oct.htm",
+          "count": 600,
+          "key": "octahedron"
+        },
+        {
+          "bowers": "gike",
+          "name": "great icosahedron",
+          "counts": [
+            12,
+            30,
+            20
+          ],
+          "facePolygons": {
+            "3": 20
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/gike.htm",
+          "count": 120,
+          "key": "great-icosahedron"
+        }
+      ],
+      "symmetryGroup": "H4",
+      "symmetryGroups": [
+        "H4",
+        "[3,3,5/2]",
+        "[5,3,3]",
+        "[3,3,5]"
+      ],
+      "convex": false,
+      "uniform": true,
+      "regular": false,
+      "vertexTransitive": true,
+      "chiral": false,
+      "classificationVerified": true,
+      "referenceUrls": [
+        "https://bendwavy.org/klitzing/incmats/raggix.htm",
+        "https://bendwavy.org/klitzing/dimensions/polychora-neu.htm"
+      ],
+      "numericContract": "Native rational-angle reflection orbits; approximate float64, no exact certificate",
+      "cellTypeBasis": "Published incidence-matrix counts and polygon windings; native boundary signatures checked on generation.",
+      "coxeterFamily": "H4"
+    },
+    {
+      "key": "star-uniform4-rigogishi",
+      "name": "rectified great grand stellated hecatonicosachoron",
+      "dimension": 4,
+      "family": "Star uniform polychora (Wythoffian)",
+      "bowers": "rigogishi",
+      "aliases": [
+        "rigogishi",
+        "rectified great grand stellated hecatonicosachoron",
+        "o3o3x5/2o"
+      ],
+      "symbol": "o3o3x5/2o",
+      "coxeterDiagram": "o3o3x5/2o",
+      "diagram": [
+        "3",
+        "3",
+        "5/2"
+      ],
+      "rings": [
+        0,
+        0,
+        1,
+        0
+      ],
+      "counts": [
+        1200,
+        3600,
+        3120,
+        720
+      ],
+      "cellTypes": [
+        {
+          "bowers": "tet",
+          "name": "tetrahedron",
+          "counts": [
+            4,
+            6,
+            4
+          ],
+          "facePolygons": {
+            "3": 4
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/tet.htm",
+          "count": 600,
+          "key": "tetrahedron"
+        },
+        {
+          "bowers": "gid",
+          "name": "great icosidodecahedron",
+          "counts": [
+            30,
+            60,
+            32
+          ],
+          "facePolygons": {
+            "3": 20,
+            "5/2": 12
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/gid.htm",
+          "count": 120,
+          "key": "antiprism-u54"
+        }
+      ],
+      "symmetryGroup": "H4",
+      "symmetryGroups": [
+        "H4",
+        "[3,3,5/2]",
+        "[5,3,3]",
+        "[3,3,5]"
+      ],
+      "convex": false,
+      "uniform": true,
+      "regular": false,
+      "vertexTransitive": true,
+      "chiral": false,
+      "classificationVerified": true,
+      "referenceUrls": [
+        "https://bendwavy.org/klitzing/incmats/rigogishi.htm",
+        "https://bendwavy.org/klitzing/dimensions/polychora-neu.htm"
+      ],
+      "numericContract": "Native rational-angle reflection orbits; approximate float64, no exact certificate",
+      "cellTypeBasis": "Published incidence-matrix counts and polygon windings; native boundary signatures checked on generation.",
+      "coxeterFamily": "H4"
+    },
+    {
+      "key": "star-uniform4-gogishi",
+      "name": "great grand stellated hecatonicosachoron",
+      "dimension": 4,
+      "family": "Star uniform polychora (Wythoffian)",
+      "bowers": "gogishi",
+      "aliases": [
+        "gogishi",
+        "great grand stellated hecatonicosachoron",
+        "o3o3o5/2x"
+      ],
+      "symbol": "o3o3o5/2x",
+      "coxeterDiagram": "o3o3o5/2x",
+      "diagram": [
+        "3",
+        "3",
+        "5/2"
+      ],
+      "rings": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "counts": [
+        600,
+        1200,
+        720,
+        120
+      ],
+      "cellTypes": [
+        {
+          "bowers": "gissid",
+          "name": "great stellated dodecahedron",
+          "counts": [
+            20,
+            30,
+            12
+          ],
+          "facePolygons": {
+            "5/2": 12
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/gissid.htm",
+          "count": 120,
+          "key": "great-stellated-dodecahedron"
+        }
+      ],
+      "symmetryGroup": "H4",
+      "symmetryGroups": [
+        "H4",
+        "[3,3,5/2]",
+        "[5,3,3]",
+        "[3,3,5]"
+      ],
+      "convex": false,
+      "uniform": true,
+      "regular": true,
+      "vertexTransitive": true,
+      "chiral": false,
+      "classificationVerified": true,
+      "referenceUrls": [
+        "https://bendwavy.org/klitzing/incmats/gogishi.htm",
+        "https://bendwavy.org/klitzing/dimensions/polychora-neu.htm"
+      ],
+      "numericContract": "Native rational-angle reflection orbits; approximate float64, no exact certificate",
+      "cellTypeBasis": "Published incidence-matrix counts and polygon windings; native boundary signatures checked on generation.",
+      "coxeterFamily": "H4"
+    },
+    {
+      "key": "star-uniform4-taggix",
+      "name": "truncated grand hexacosachoron",
+      "dimension": 4,
+      "family": "Star uniform polychora (Wythoffian)",
+      "bowers": "taggix",
+      "aliases": [
+        "taggix",
+        "truncated grand hexacosachoron",
+        "x3x3o5/2o"
+      ],
+      "symbol": "x3x3o5/2o",
+      "coxeterDiagram": "x3x3o5/2o",
+      "diagram": [
+        "3",
+        "3",
+        "5/2"
+      ],
+      "rings": [
+        1,
+        1,
+        0,
+        0
+      ],
+      "counts": [
+        1440,
+        4320,
+        3600,
+        720
+      ],
+      "cellTypes": [
+        {
+          "bowers": "tut",
+          "name": "truncated tetrahedron",
+          "counts": [
+            12,
+            18,
+            8
+          ],
+          "facePolygons": {
+            "3": 4,
+            "6": 4
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/tut.htm",
+          "count": 600,
+          "key": "truncated-tetrahedron"
+        },
+        {
+          "bowers": "gike",
+          "name": "great icosahedron",
+          "counts": [
+            12,
+            30,
+            20
+          ],
+          "facePolygons": {
+            "3": 20
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/gike.htm",
+          "count": 120,
+          "key": "great-icosahedron"
+        }
+      ],
+      "symmetryGroup": "H4",
+      "symmetryGroups": [
+        "H4",
+        "[3,3,5/2]",
+        "[5,3,3]",
+        "[3,3,5]"
+      ],
+      "convex": false,
+      "uniform": true,
+      "regular": false,
+      "vertexTransitive": true,
+      "chiral": false,
+      "classificationVerified": true,
+      "referenceUrls": [
+        "https://bendwavy.org/klitzing/incmats/taggix.htm",
+        "https://bendwavy.org/klitzing/dimensions/polychora-neu.htm"
+      ],
+      "numericContract": "Native rational-angle reflection orbits; approximate float64, no exact certificate",
+      "cellTypeBasis": "Published incidence-matrix counts and polygon windings; native boundary signatures checked on generation.",
+      "coxeterFamily": "H4"
+    },
+    {
+      "key": "star-uniform4-sirgax",
+      "name": "small rhombated grand hexacosachoron",
+      "dimension": 4,
+      "family": "Star uniform polychora (Wythoffian)",
+      "bowers": "sirgax",
+      "aliases": [
+        "sirgax",
+        "small rhombated grand hexacosachoron",
+        "x3o3x5/2o"
+      ],
+      "symbol": "x3o3x5/2o",
+      "coxeterDiagram": "x3o3x5/2o",
+      "diagram": [
+        "3",
+        "3",
+        "5/2"
+      ],
+      "rings": [
+        1,
+        0,
+        1,
+        0
+      ],
+      "counts": [
+        3600,
+        10800,
+        8640,
+        1440
+      ],
+      "cellTypes": [
+        {
+          "bowers": "co",
+          "name": "cuboctahedron",
+          "counts": [
+            12,
+            24,
+            14
+          ],
+          "facePolygons": {
+            "3": 8,
+            "4": 6
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/co.htm",
+          "count": 600,
+          "key": "cuboctahedron"
+        },
+        {
+          "bowers": "stip",
+          "name": "stellated pentagonal prism",
+          "counts": [
+            10,
+            15,
+            7
+          ],
+          "facePolygons": {
+            "4": 5,
+            "5/2": 2
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/stip.htm",
+          "count": 720
+        },
+        {
+          "bowers": "gid",
+          "name": "great icosidodecahedron",
+          "counts": [
+            30,
+            60,
+            32
+          ],
+          "facePolygons": {
+            "3": 20,
+            "5/2": 12
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/gid.htm",
+          "count": 120,
+          "key": "antiprism-u54"
+        }
+      ],
+      "symmetryGroup": "H4",
+      "symmetryGroups": [
+        "H4",
+        "[3,3,5/2]",
+        "[5,3,3]",
+        "[3,3,5]"
+      ],
+      "convex": false,
+      "uniform": true,
+      "regular": false,
+      "vertexTransitive": true,
+      "chiral": false,
+      "classificationVerified": true,
+      "referenceUrls": [
+        "https://bendwavy.org/klitzing/incmats/sirgax.htm",
+        "https://bendwavy.org/klitzing/dimensions/polychora-neu.htm"
+      ],
+      "numericContract": "Native rational-angle reflection orbits; approximate float64, no exact certificate",
+      "cellTypeBasis": "Published incidence-matrix counts and polygon windings; native boundary signatures checked on generation.",
+      "coxeterFamily": "H4"
+    },
+    {
+      "key": "star-uniform4-gixhi",
+      "name": "great hexacosihecatonicosachoron",
+      "dimension": 4,
+      "family": "Star uniform polychora (Wythoffian)",
+      "bowers": "gixhi",
+      "aliases": [
+        "gixhi",
+        "great hexacosihecatonicosachoron",
+        "o3x3x5/2o"
+      ],
+      "symbol": "o3x3x5/2o",
+      "coxeterDiagram": "o3x3x5/2o",
+      "diagram": [
+        "3",
+        "3",
+        "5/2"
+      ],
+      "rings": [
+        0,
+        1,
+        1,
+        0
+      ],
+      "counts": [
+        3600,
+        7200,
+        4320,
+        720
+      ],
+      "cellTypes": [
+        {
+          "bowers": "tut",
+          "name": "truncated tetrahedron",
+          "counts": [
+            12,
+            18,
+            8
+          ],
+          "facePolygons": {
+            "3": 4,
+            "6": 4
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/tut.htm",
+          "count": 600,
+          "key": "truncated-tetrahedron"
+        },
+        {
+          "bowers": "tiggy",
+          "name": "truncated great icosahedron",
+          "counts": [
+            60,
+            90,
+            32
+          ],
+          "facePolygons": {
+            "5/2": 12,
+            "6": 20
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/tiggy.htm",
+          "count": 120
+        }
+      ],
+      "symmetryGroup": "H4",
+      "symmetryGroups": [
+        "H4",
+        "[3,3,5/2]",
+        "[5,3,3]",
+        "[3,3,5]"
+      ],
+      "convex": false,
+      "uniform": true,
+      "regular": false,
+      "vertexTransitive": true,
+      "chiral": false,
+      "classificationVerified": true,
+      "referenceUrls": [
+        "https://bendwavy.org/klitzing/incmats/gixhi.htm",
+        "https://bendwavy.org/klitzing/dimensions/polychora-neu.htm"
+      ],
+      "numericContract": "Native rational-angle reflection orbits; approximate float64, no exact certificate",
+      "cellTypeBasis": "Published incidence-matrix counts and polygon windings; native boundary signatures checked on generation.",
+      "coxeterFamily": "H4"
+    },
+    {
+      "key": "star-uniform4-graggix",
+      "name": "great rhombated grand hexacosachoron",
+      "dimension": 4,
+      "family": "Star uniform polychora (Wythoffian)",
+      "bowers": "graggix",
+      "aliases": [
+        "graggix",
+        "great rhombated grand hexacosachoron",
+        "x3x3x5/2o"
+      ],
+      "symbol": "x3x3x5/2o",
+      "coxeterDiagram": "x3x3x5/2o",
+      "diagram": [
+        "3",
+        "3",
+        "5/2"
+      ],
+      "rings": [
+        1,
+        1,
+        1,
+        0
+      ],
+      "counts": [
+        7200,
+        14400,
+        8640,
+        1440
+      ],
+      "cellTypes": [
+        {
+          "bowers": "toe",
+          "name": "truncated octahedron",
+          "counts": [
+            24,
+            36,
+            14
+          ],
+          "facePolygons": {
+            "4": 6,
+            "6": 8
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/toe.htm",
+          "count": 600,
+          "key": "truncated-octahedron"
+        },
+        {
+          "bowers": "stip",
+          "name": "stellated pentagonal prism",
+          "counts": [
+            10,
+            15,
+            7
+          ],
+          "facePolygons": {
+            "4": 5,
+            "5/2": 2
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/stip.htm",
+          "count": 720
+        },
+        {
+          "bowers": "tiggy",
+          "name": "truncated great icosahedron",
+          "counts": [
+            60,
+            90,
+            32
+          ],
+          "facePolygons": {
+            "5/2": 12,
+            "6": 20
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/tiggy.htm",
+          "count": 120
+        }
+      ],
+      "symmetryGroup": "H4",
+      "symmetryGroups": [
+        "H4",
+        "[3,3,5/2]",
+        "[5,3,3]",
+        "[3,3,5]"
+      ],
+      "convex": false,
+      "uniform": true,
+      "regular": false,
+      "vertexTransitive": true,
+      "chiral": false,
+      "classificationVerified": true,
+      "referenceUrls": [
+        "https://bendwavy.org/klitzing/incmats/graggix.htm",
+        "https://bendwavy.org/klitzing/dimensions/polychora-neu.htm"
+      ],
+      "numericContract": "Native rational-angle reflection orbits; approximate float64, no exact certificate",
+      "cellTypeBasis": "Published incidence-matrix counts and polygon windings; native boundary signatures checked on generation.",
+      "coxeterFamily": "H4"
+    },
+    {
+      "key": "star-uniform4-quidpixhi",
+      "name": "quasidisprismatohexacosihecatonicosachoron",
+      "dimension": 4,
+      "family": "Star uniform polychora (Wythoffian)",
+      "bowers": "quidpixhi",
+      "aliases": [
+        "quidpixhi",
+        "quasidisprismatohexacosihecatonicosachoron",
+        "x3o3o5/3x"
+      ],
+      "symbol": "x3o3o5/3x",
+      "coxeterDiagram": "x3o3o5/3x",
+      "diagram": [
+        "3",
+        "3",
+        "5/3"
+      ],
+      "rings": [
+        1,
+        0,
+        0,
+        1
+      ],
+      "counts": [
+        2400,
+        7200,
+        7440,
+        2640
+      ],
+      "cellTypes": [
+        {
+          "bowers": "tet",
+          "name": "tetrahedron",
+          "counts": [
+            4,
+            6,
+            4
+          ],
+          "facePolygons": {
+            "3": 4
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/tet.htm",
+          "count": 600,
+          "key": "tetrahedron"
+        },
+        {
+          "bowers": "trip",
+          "name": "triangular prism",
+          "counts": [
+            6,
+            9,
+            5
+          ],
+          "facePolygons": {
+            "3": 2,
+            "4": 3
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/trip.htm",
+          "count": 1200,
+          "key": "uniform-prism-3"
+        },
+        {
+          "bowers": "stip",
+          "name": "stellated pentagonal prism",
+          "counts": [
+            10,
+            15,
+            7
+          ],
+          "facePolygons": {
+            "4": 5,
+            "5/2": 2
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/stip.htm",
+          "count": 720
+        },
+        {
+          "bowers": "gissid",
+          "name": "great stellated dodecahedron",
+          "counts": [
+            20,
+            30,
+            12
+          ],
+          "facePolygons": {
+            "5/2": 12
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/gissid.htm",
+          "count": 120,
+          "key": "great-stellated-dodecahedron"
+        }
+      ],
+      "symmetryGroup": "H4",
+      "symmetryGroups": [
+        "H4",
+        "[3,3,5/3]",
+        "[5,3,3]",
+        "[3,3,5]"
+      ],
+      "convex": false,
+      "uniform": true,
+      "regular": false,
+      "vertexTransitive": true,
+      "chiral": false,
+      "classificationVerified": true,
+      "referenceUrls": [
+        "https://bendwavy.org/klitzing/incmats/quidpixhi.htm",
+        "https://bendwavy.org/klitzing/dimensions/polychora-neu.htm"
+      ],
+      "numericContract": "Native rational-angle reflection orbits; approximate float64, no exact certificate",
+      "cellTypeBasis": "Published incidence-matrix counts and polygon windings; native boundary signatures checked on generation.",
+      "coxeterFamily": "H4"
+    },
+    {
+      "key": "star-uniform4-qrigogishi",
+      "name": "quasirhombated great grand stellated hecatonicosachoron",
+      "dimension": 4,
+      "family": "Star uniform polychora (Wythoffian)",
+      "bowers": "qrigogishi",
+      "aliases": [
+        "qrigogishi",
+        "quasirhombated great grand stellated hecatonicosachoron",
+        "o3x3o5/3x"
+      ],
+      "symbol": "o3x3o5/3x",
+      "coxeterDiagram": "o3x3o5/3x",
+      "diagram": [
+        "3",
+        "3",
+        "5/3"
+      ],
+      "rings": [
+        0,
+        1,
+        0,
+        1
+      ],
+      "counts": [
+        3600,
+        10800,
+        9120,
+        1920
+      ],
+      "cellTypes": [
+        {
+          "bowers": "oct",
+          "name": "octahedron",
+          "counts": [
+            6,
+            12,
+            8
+          ],
+          "facePolygons": {
+            "3": 8
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/oct.htm",
+          "count": 600,
+          "key": "octahedron"
+        },
+        {
+          "bowers": "trip",
+          "name": "triangular prism",
+          "counts": [
+            6,
+            9,
+            5
+          ],
+          "facePolygons": {
+            "3": 2,
+            "4": 3
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/trip.htm",
+          "count": 1200,
+          "key": "uniform-prism-3"
+        },
+        {
+          "bowers": "qrid",
+          "name": "quasi rhombicosidodecahedron",
+          "counts": [
+            60,
+            120,
+            62
+          ],
+          "facePolygons": {
+            "3": 20,
+            "4": 30,
+            "5/2": 12
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/qrid.htm",
+          "count": 120
+        }
+      ],
+      "symmetryGroup": "H4",
+      "symmetryGroups": [
+        "H4",
+        "[3,3,5/3]",
+        "[5,3,3]",
+        "[3,3,5]"
+      ],
+      "convex": false,
+      "uniform": true,
+      "regular": false,
+      "vertexTransitive": true,
+      "chiral": false,
+      "classificationVerified": true,
+      "referenceUrls": [
+        "https://bendwavy.org/klitzing/incmats/qrahi.htm",
+        "https://bendwavy.org/klitzing/dimensions/polychora-neu.htm"
+      ],
+      "numericContract": "Native rational-angle reflection orbits; approximate float64, no exact certificate",
+      "cellTypeBasis": "Published incidence-matrix counts and polygon windings; native boundary signatures checked on generation.",
+      "coxeterFamily": "H4"
+    },
+    {
+      "key": "star-uniform4-paqrigagishi",
+      "name": "prismatoquasirhombated great grand stellated hecatonicosachoron",
+      "dimension": 4,
+      "family": "Star uniform polychora (Wythoffian)",
+      "bowers": "paqrigagishi",
+      "aliases": [
+        "paqrigagishi",
+        "prismatoquasirhombated great grand stellated hecatonicosachoron",
+        "x3x3o5/3x"
+      ],
+      "symbol": "x3x3o5/3x",
+      "coxeterDiagram": "x3x3o5/3x",
+      "diagram": [
+        "3",
+        "3",
+        "5/3"
+      ],
+      "rings": [
+        1,
+        1,
+        0,
+        1
+      ],
+      "counts": [
+        7200,
+        18000,
+        13440,
+        2640
+      ],
+      "cellTypes": [
+        {
+          "bowers": "tut",
+          "name": "truncated tetrahedron",
+          "counts": [
+            12,
+            18,
+            8
+          ],
+          "facePolygons": {
+            "3": 4,
+            "6": 4
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/tut.htm",
+          "count": 600,
+          "key": "truncated-tetrahedron"
+        },
+        {
+          "bowers": "hip",
+          "name": "hexagonal prism",
+          "counts": [
+            12,
+            18,
+            8
+          ],
+          "facePolygons": {
+            "4": 6,
+            "6": 2
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/hip.htm",
+          "count": 1200,
+          "key": "uniform-prism-6"
+        },
+        {
+          "bowers": "stip",
+          "name": "stellated pentagonal prism",
+          "counts": [
+            10,
+            15,
+            7
+          ],
+          "facePolygons": {
+            "4": 5,
+            "5/2": 2
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/stip.htm",
+          "count": 720
+        },
+        {
+          "bowers": "qrid",
+          "name": "quasi rhombicosidodecahedron",
+          "counts": [
+            60,
+            120,
+            62
+          ],
+          "facePolygons": {
+            "3": 20,
+            "4": 30,
+            "5/2": 12
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/qrid.htm",
+          "count": 120
+        }
+      ],
+      "symmetryGroup": "H4",
+      "symmetryGroups": [
+        "H4",
+        "[3,3,5/3]",
+        "[5,3,3]",
+        "[3,3,5]"
+      ],
+      "convex": false,
+      "uniform": true,
+      "regular": false,
+      "vertexTransitive": true,
+      "chiral": false,
+      "classificationVerified": true,
+      "referenceUrls": [
+        "https://bendwavy.org/klitzing/incmats/paqrahi.htm",
+        "https://bendwavy.org/klitzing/dimensions/polychora-neu.htm"
+      ],
+      "numericContract": "Native rational-angle reflection orbits; approximate float64, no exact certificate",
+      "cellTypeBasis": "Published incidence-matrix counts and polygon windings; native boundary signatures checked on generation.",
+      "coxeterFamily": "H4"
+    },
+    {
+      "key": "star-uniform4-quippirgax",
+      "name": "quasiprismatorhombated grand hexacosachoron",
+      "dimension": 4,
+      "family": "Star uniform polychora (Wythoffian)",
+      "bowers": "quippirgax",
+      "aliases": [
+        "quippirgax",
+        "quasiprismatorhombated grand hexacosachoron",
+        "x3o3x5/3x"
+      ],
+      "symbol": "x3o3x5/3x",
+      "coxeterDiagram": "x3o3x5/3x",
+      "diagram": [
+        "3",
+        "3",
+        "5/3"
+      ],
+      "rings": [
+        1,
+        0,
+        1,
+        1
+      ],
+      "counts": [
+        7200,
+        18000,
+        13440,
+        2640
+      ],
+      "cellTypes": [
+        {
+          "bowers": "co",
+          "name": "cuboctahedron",
+          "counts": [
+            12,
+            24,
+            14
+          ],
+          "facePolygons": {
+            "3": 8,
+            "4": 6
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/co.htm",
+          "count": 600,
+          "key": "cuboctahedron"
+        },
+        {
+          "bowers": "trip",
+          "name": "triangular prism",
+          "counts": [
+            6,
+            9,
+            5
+          ],
+          "facePolygons": {
+            "3": 2,
+            "4": 3
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/trip.htm",
+          "count": 1200,
+          "key": "uniform-prism-3"
+        },
+        {
+          "bowers": "stiddip",
+          "name": "(tristrophic) decagrammic prism",
+          "counts": [
+            20,
+            30,
+            12
+          ],
+          "facePolygons": {
+            "10/3": 2,
+            "4": 10
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/stiddip.htm",
+          "count": 720
+        },
+        {
+          "bowers": "quitgissid",
+          "name": "quasitruncated great stellated dodecahedron",
+          "counts": [
+            60,
+            90,
+            32
+          ],
+          "facePolygons": {
+            "10/3": 12,
+            "3": 20
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/quitgissid.htm",
+          "count": 120
+        }
+      ],
+      "symmetryGroup": "H4",
+      "symmetryGroups": [
+        "H4",
+        "[3,3,5/3]",
+        "[5,3,3]",
+        "[3,3,5]"
+      ],
+      "convex": false,
+      "uniform": true,
+      "regular": false,
+      "vertexTransitive": true,
+      "chiral": false,
+      "classificationVerified": true,
+      "referenceUrls": [
+        "https://bendwavy.org/klitzing/incmats/quippirgax.htm",
+        "https://bendwavy.org/klitzing/dimensions/polychora-neu.htm"
+      ],
+      "numericContract": "Native rational-angle reflection orbits; approximate float64, no exact certificate",
+      "cellTypeBasis": "Published incidence-matrix counts and polygon windings; native boundary signatures checked on generation.",
+      "coxeterFamily": "H4"
+    },
+    {
+      "key": "star-uniform4-gaqrigagishi",
+      "name": "great quasirhombated great grand stellated hecatonicosachoron",
+      "dimension": 4,
+      "family": "Star uniform polychora (Wythoffian)",
+      "bowers": "gaqrigagishi",
+      "aliases": [
+        "gaqrigagishi",
+        "great quasirhombated great grand stellated hecatonicosachoron",
+        "o3x3x5/3x"
+      ],
+      "symbol": "o3x3x5/3x",
+      "coxeterDiagram": "o3x3x5/3x",
+      "diagram": [
+        "3",
+        "3",
+        "5/3"
+      ],
+      "rings": [
+        0,
+        1,
+        1,
+        1
+      ],
+      "counts": [
+        7200,
+        14400,
+        9120,
+        1920
+      ],
+      "cellTypes": [
+        {
+          "bowers": "tut",
+          "name": "truncated tetrahedron",
+          "counts": [
+            12,
+            18,
+            8
+          ],
+          "facePolygons": {
+            "3": 4,
+            "6": 4
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/tut.htm",
+          "count": 600,
+          "key": "truncated-tetrahedron"
+        },
+        {
+          "bowers": "trip",
+          "name": "triangular prism",
+          "counts": [
+            6,
+            9,
+            5
+          ],
+          "facePolygons": {
+            "3": 2,
+            "4": 3
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/trip.htm",
+          "count": 1200,
+          "key": "uniform-prism-3"
+        },
+        {
+          "bowers": "gaquatid",
+          "name": "great quasitruncated icosidodecahedron",
+          "counts": [
+            120,
+            180,
+            62
+          ],
+          "facePolygons": {
+            "10/3": 12,
+            "4": 30,
+            "6": 20
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/gaquatid.htm",
+          "count": 120
+        }
+      ],
+      "symmetryGroup": "H4",
+      "symmetryGroups": [
+        "H4",
+        "[3,3,5/3]",
+        "[5,3,3]",
+        "[3,3,5]"
+      ],
+      "convex": false,
+      "uniform": true,
+      "regular": false,
+      "vertexTransitive": true,
+      "chiral": false,
+      "classificationVerified": true,
+      "referenceUrls": [
+        "https://bendwavy.org/klitzing/incmats/gaqrigagishi.htm",
+        "https://bendwavy.org/klitzing/dimensions/polychora-neu.htm"
+      ],
+      "numericContract": "Native rational-angle reflection orbits; approximate float64, no exact certificate",
+      "cellTypeBasis": "Published incidence-matrix counts and polygon windings; native boundary signatures checked on generation.",
+      "coxeterFamily": "H4"
+    },
+    {
+      "key": "star-uniform4-gaquidapixhi",
+      "name": "great quasidisprismatohexacosihecatonicosachoron",
+      "dimension": 4,
+      "family": "Star uniform polychora (Wythoffian)",
+      "bowers": "gaquidapixhi",
+      "aliases": [
+        "gaquidapixhi",
+        "great quasidisprismatohexacosihecatonicosachoron",
+        "x3x3x5/3x"
+      ],
+      "symbol": "x3x3x5/3x",
+      "coxeterDiagram": "x3x3x5/3x",
+      "diagram": [
+        "3",
+        "3",
+        "5/3"
+      ],
+      "rings": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "counts": [
+        14400,
+        28800,
+        17040,
+        2640
+      ],
+      "cellTypes": [
+        {
+          "bowers": "toe",
+          "name": "truncated octahedron",
+          "counts": [
+            24,
+            36,
+            14
+          ],
+          "facePolygons": {
+            "4": 6,
+            "6": 8
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/toe.htm",
+          "count": 600,
+          "key": "truncated-octahedron"
+        },
+        {
+          "bowers": "hip",
+          "name": "hexagonal prism",
+          "counts": [
+            12,
+            18,
+            8
+          ],
+          "facePolygons": {
+            "4": 6,
+            "6": 2
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/hip.htm",
+          "count": 1200,
+          "key": "uniform-prism-6"
+        },
+        {
+          "bowers": "stiddip",
+          "name": "(tristrophic) decagrammic prism",
+          "counts": [
+            20,
+            30,
+            12
+          ],
+          "facePolygons": {
+            "10/3": 2,
+            "4": 10
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/stiddip.htm",
+          "count": 720
+        },
+        {
+          "bowers": "gaquatid",
+          "name": "great quasitruncated icosidodecahedron",
+          "counts": [
+            120,
+            180,
+            62
+          ],
+          "facePolygons": {
+            "10/3": 12,
+            "4": 30,
+            "6": 20
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/gaquatid.htm",
+          "count": 120
+        }
+      ],
+      "symmetryGroup": "H4",
+      "symmetryGroups": [
+        "H4",
+        "[3,3,5/3]",
+        "[5,3,3]",
+        "[3,3,5]"
+      ],
+      "convex": false,
+      "uniform": true,
+      "regular": false,
+      "vertexTransitive": true,
+      "chiral": false,
+      "classificationVerified": true,
+      "referenceUrls": [
+        "https://bendwavy.org/klitzing/incmats/gaquidapixhi.htm",
+        "https://bendwavy.org/klitzing/dimensions/polychora-neu.htm"
+      ],
+      "numericContract": "Native rational-angle reflection orbits; approximate float64, no exact certificate",
+      "cellTypeBasis": "Published incidence-matrix counts and polygon windings; native boundary signatures checked on generation.",
+      "coxeterFamily": "H4"
+    },
+    {
+      "key": "star-uniform4-fix",
+      "name": "icosahedral hecatonicosachoron",
+      "dimension": 4,
+      "family": "Star uniform polychora (Wythoffian)",
+      "bowers": "fix",
+      "aliases": [
+        "fix",
+        "icosahedral hecatonicosachoron",
+        "x3o5o5/2o"
+      ],
+      "symbol": "x3o5o5/2o",
+      "coxeterDiagram": "x3o5o5/2o",
+      "diagram": [
+        "3",
+        "5",
+        "5/2"
+      ],
+      "rings": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "counts": [
+        120,
+        720,
+        1200,
+        120
+      ],
+      "cellTypes": [
+        {
+          "bowers": "ike",
+          "name": "icosahedron",
+          "counts": [
+            12,
+            30,
+            20
+          ],
+          "facePolygons": {
+            "3": 20
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/ike.htm",
+          "count": 120,
+          "key": "icosahedron"
+        }
+      ],
+      "symmetryGroup": "H4",
+      "symmetryGroups": [
+        "H4",
+        "[3,5,5/2]",
+        "[5,3,3]",
+        "[3,3,5]"
+      ],
+      "convex": false,
+      "uniform": true,
+      "regular": true,
+      "vertexTransitive": true,
+      "chiral": false,
+      "classificationVerified": true,
+      "referenceUrls": [
+        "https://bendwavy.org/klitzing/incmats/fix.htm",
+        "https://bendwavy.org/klitzing/dimensions/polychora-neu.htm"
+      ],
+      "numericContract": "Native rational-angle reflection orbits; approximate float64, no exact certificate",
+      "cellTypeBasis": "Published incidence-matrix counts and polygon windings; native boundary signatures checked on generation.",
+      "coxeterFamily": "H4"
+    },
+    {
+      "key": "star-uniform4-rofix",
+      "name": "rectified faceted hexacosichoron",
+      "dimension": 4,
+      "family": "Star uniform polychora (Wythoffian)",
+      "bowers": "rofix",
+      "aliases": [
+        "rofix",
+        "rectified faceted hexacosichoron",
+        "o3x5o5/2o"
+      ],
+      "symbol": "o3x5o5/2o",
+      "coxeterDiagram": "o3x5o5/2o",
+      "diagram": [
+        "3",
+        "5",
+        "5/2"
+      ],
+      "rings": [
+        0,
+        1,
+        0,
+        0
+      ],
+      "counts": [
+        720,
+        3600,
+        2640,
+        240
+      ],
+      "cellTypes": [
+        {
+          "bowers": "id",
+          "name": "icosidodecahedron",
+          "counts": [
+            30,
+            60,
+            32
+          ],
+          "facePolygons": {
+            "3": 20,
+            "5": 12
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/id.htm",
+          "count": 120,
+          "key": "icosidodecahedron"
+        },
+        {
+          "bowers": "gad",
+          "name": "great dodecahedron",
+          "counts": [
+            12,
+            30,
+            12
+          ],
+          "facePolygons": {
+            "5": 12
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/gad.htm",
+          "count": 120,
+          "key": "great-dodecahedron"
+        }
+      ],
+      "symmetryGroup": "H4",
+      "symmetryGroups": [
+        "H4",
+        "[3,5,5/2]",
+        "[5,3,3]",
+        "[3,3,5]"
+      ],
+      "convex": false,
+      "uniform": true,
+      "regular": false,
+      "vertexTransitive": true,
+      "chiral": false,
+      "classificationVerified": true,
+      "referenceUrls": [
+        "https://bendwavy.org/klitzing/incmats/rofix.htm",
+        "https://bendwavy.org/klitzing/dimensions/polychora-neu.htm"
+      ],
+      "numericContract": "Native rational-angle reflection orbits; approximate float64, no exact certificate",
+      "cellTypeBasis": "Published incidence-matrix counts and polygon windings; native boundary signatures checked on generation.",
+      "coxeterFamily": "H4"
+    },
+    {
+      "key": "star-uniform4-rasishi",
+      "name": "rectified small stellated hecatonicosachoron",
+      "dimension": 4,
+      "family": "Star uniform polychora (Wythoffian)",
+      "bowers": "rasishi",
+      "aliases": [
+        "rasishi",
+        "rectified small stellated hecatonicosachoron",
+        "o3o5x5/2o"
+      ],
+      "symbol": "o3o5x5/2o",
+      "coxeterDiagram": "o3o5x5/2o",
+      "diagram": [
+        "3",
+        "5",
+        "5/2"
+      ],
+      "rings": [
+        0,
+        0,
+        1,
+        0
+      ],
+      "counts": [
+        1200,
+        3600,
+        2160,
+        240
+      ],
+      "cellTypes": [
+        {
+          "bowers": "doe",
+          "name": "dodecahedron",
+          "counts": [
+            20,
+            30,
+            12
+          ],
+          "facePolygons": {
+            "5": 12
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/doe.htm",
+          "count": 120,
+          "key": "dodecahedron"
+        },
+        {
+          "bowers": "did",
+          "name": "dodecadodecahedron",
+          "counts": [
+            30,
+            60,
+            24
+          ],
+          "facePolygons": {
+            "5": 12,
+            "5/2": 12
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/did.htm",
+          "count": 120,
+          "key": "antiprism-u36"
+        }
+      ],
+      "symmetryGroup": "H4",
+      "symmetryGroups": [
+        "H4",
+        "[3,5,5/2]",
+        "[5,3,3]",
+        "[3,3,5]"
+      ],
+      "convex": false,
+      "uniform": true,
+      "regular": false,
+      "vertexTransitive": true,
+      "chiral": false,
+      "classificationVerified": true,
+      "referenceUrls": [
+        "https://bendwavy.org/klitzing/incmats/rasishi.htm",
+        "https://bendwavy.org/klitzing/dimensions/polychora-neu.htm"
+      ],
+      "numericContract": "Native rational-angle reflection orbits; approximate float64, no exact certificate",
+      "cellTypeBasis": "Published incidence-matrix counts and polygon windings; native boundary signatures checked on generation.",
+      "coxeterFamily": "H4"
+    },
+    {
+      "key": "star-uniform4-sishi",
+      "name": "small stellated hecatonicosachoron",
+      "dimension": 4,
+      "family": "Star uniform polychora (Wythoffian)",
+      "bowers": "sishi",
+      "aliases": [
+        "sishi",
+        "small stellated hecatonicosachoron",
+        "x5/2o5o3o"
+      ],
+      "symbol": "x5/2o5o3o",
+      "coxeterDiagram": "x5/2o5o3o",
+      "diagram": [
+        "5/2",
+        "5",
+        "3"
+      ],
+      "rings": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "counts": [
+        120,
+        1200,
+        720,
+        120
+      ],
+      "cellTypes": [
+        {
+          "bowers": "sissid",
+          "name": "small stellated dodecahedron",
+          "counts": [
+            12,
+            30,
+            12
+          ],
+          "facePolygons": {
+            "5/2": 12
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/sissid.htm",
+          "count": 120,
+          "key": "small-stellated-dodecahedron"
+        }
+      ],
+      "symmetryGroup": "H4",
+      "symmetryGroups": [
+        "H4",
+        "[5/2,5,3]",
+        "[5,3,3]",
+        "[3,3,5]"
+      ],
+      "convex": false,
+      "uniform": true,
+      "regular": true,
+      "vertexTransitive": true,
+      "chiral": false,
+      "classificationVerified": true,
+      "referenceUrls": [
+        "https://bendwavy.org/klitzing/incmats/sishi.htm",
+        "https://bendwavy.org/klitzing/dimensions/polychora-neu.htm"
+      ],
+      "numericContract": "Native rational-angle reflection orbits; approximate float64, no exact certificate",
+      "cellTypeBasis": "Published incidence-matrix counts and polygon windings; native boundary signatures checked on generation.",
+      "coxeterFamily": "H4"
+    },
+    {
+      "key": "star-uniform4-tiffix",
+      "name": "truncated faceted hexacosichoron",
+      "dimension": 4,
+      "family": "Star uniform polychora (Wythoffian)",
+      "bowers": "tiffix",
+      "aliases": [
+        "tiffix",
+        "truncated faceted hexacosichoron",
+        "x3x5o5/2o"
+      ],
+      "symbol": "x3x5o5/2o",
+      "coxeterDiagram": "x3x5o5/2o",
+      "diagram": [
+        "3",
+        "5",
+        "5/2"
+      ],
+      "rings": [
+        1,
+        1,
+        0,
+        0
+      ],
+      "counts": [
+        1440,
+        4320,
+        2640,
+        240
+      ],
+      "cellTypes": [
+        {
+          "bowers": "ti",
+          "name": "truncated icosahedron",
+          "counts": [
+            60,
+            90,
+            32
+          ],
+          "facePolygons": {
+            "5": 12,
+            "6": 20
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/ti.htm",
+          "count": 120,
+          "key": "truncated-icosahedron"
+        },
+        {
+          "bowers": "gad",
+          "name": "great dodecahedron",
+          "counts": [
+            12,
+            30,
+            12
+          ],
+          "facePolygons": {
+            "5": 12
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/gad.htm",
+          "count": 120,
+          "key": "great-dodecahedron"
+        }
+      ],
+      "symmetryGroup": "H4",
+      "symmetryGroups": [
+        "H4",
+        "[3,5,5/2]",
+        "[5,3,3]",
+        "[3,3,5]"
+      ],
+      "convex": false,
+      "uniform": true,
+      "regular": false,
+      "vertexTransitive": true,
+      "chiral": false,
+      "classificationVerified": true,
+      "referenceUrls": [
+        "https://bendwavy.org/klitzing/incmats/tiffix.htm",
+        "https://bendwavy.org/klitzing/dimensions/polychora-neu.htm"
+      ],
+      "numericContract": "Native rational-angle reflection orbits; approximate float64, no exact certificate",
+      "cellTypeBasis": "Published incidence-matrix counts and polygon windings; native boundary signatures checked on generation.",
+      "coxeterFamily": "H4"
+    },
+    {
+      "key": "star-uniform4-sirfix",
+      "name": "small rhombated faceted hexacosachoron",
+      "dimension": 4,
+      "family": "Star uniform polychora (Wythoffian)",
+      "bowers": "sirfix",
+      "aliases": [
+        "sirfix",
+        "small rhombated faceted hexacosachoron",
+        "x3o5x5/2o"
+      ],
+      "symbol": "x3o5x5/2o",
+      "coxeterDiagram": "x3o5x5/2o",
+      "diagram": [
+        "3",
+        "5",
+        "5/2"
+      ],
+      "rings": [
+        1,
+        0,
+        1,
+        0
+      ],
+      "counts": [
+        3600,
+        10800,
+        7680,
+        960
+      ],
+      "cellTypes": [
+        {
+          "bowers": "srid",
+          "name": "small rhombicosidodecahedron",
+          "counts": [
+            60,
+            120,
+            62
+          ],
+          "facePolygons": {
+            "3": 20,
+            "4": 30,
+            "5": 12
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/srid.htm",
+          "count": 120
+        },
+        {
+          "bowers": "stip",
+          "name": "stellated pentagonal prism",
+          "counts": [
+            10,
+            15,
+            7
+          ],
+          "facePolygons": {
+            "4": 5,
+            "5/2": 2
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/stip.htm",
+          "count": 720
+        },
+        {
+          "bowers": "did",
+          "name": "dodecadodecahedron",
+          "counts": [
+            30,
+            60,
+            24
+          ],
+          "facePolygons": {
+            "5": 12,
+            "5/2": 12
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/did.htm",
+          "count": 120,
+          "key": "antiprism-u36"
+        }
+      ],
+      "symmetryGroup": "H4",
+      "symmetryGroups": [
+        "H4",
+        "[3,5,5/2]",
+        "[5,3,3]",
+        "[3,3,5]"
+      ],
+      "convex": false,
+      "uniform": true,
+      "regular": false,
+      "vertexTransitive": true,
+      "chiral": false,
+      "classificationVerified": true,
+      "referenceUrls": [
+        "https://bendwavy.org/klitzing/incmats/sirfix.htm",
+        "https://bendwavy.org/klitzing/dimensions/polychora-neu.htm"
+      ],
+      "numericContract": "Native rational-angle reflection orbits; approximate float64, no exact certificate",
+      "cellTypeBasis": "Published incidence-matrix counts and polygon windings; native boundary signatures checked on generation.",
+      "coxeterFamily": "H4"
+    },
+    {
+      "key": "star-uniform4-padohi",
+      "name": "prismatodishecatonicosachoron",
+      "dimension": 4,
+      "family": "Star uniform polychora (Wythoffian)",
+      "bowers": "padohi",
+      "aliases": [
+        "padohi",
+        "prismatodishecatonicosachoron",
+        "x3o5o5/2x"
+      ],
+      "symbol": "x3o5o5/2x",
+      "coxeterDiagram": "x3o5o5/2x",
+      "diagram": [
+        "3",
+        "5",
+        "5/2"
+      ],
+      "rings": [
+        1,
+        0,
+        0,
+        1
+      ],
+      "counts": [
+        1440,
+        7200,
+        7440,
+        2160
+      ],
+      "cellTypes": [
+        {
+          "bowers": "ike",
+          "name": "icosahedron",
+          "counts": [
+            12,
+            30,
+            20
+          ],
+          "facePolygons": {
+            "3": 20
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/ike.htm",
+          "count": 120,
+          "key": "icosahedron"
+        },
+        {
+          "bowers": "trip",
+          "name": "triangular prism",
+          "counts": [
+            6,
+            9,
+            5
+          ],
+          "facePolygons": {
+            "3": 2,
+            "4": 3
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/trip.htm",
+          "count": 1200,
+          "key": "uniform-prism-3"
+        },
+        {
+          "bowers": "stip",
+          "name": "stellated pentagonal prism",
+          "counts": [
+            10,
+            15,
+            7
+          ],
+          "facePolygons": {
+            "4": 5,
+            "5/2": 2
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/stip.htm",
+          "count": 720
+        },
+        {
+          "bowers": "sissid",
+          "name": "small stellated dodecahedron",
+          "counts": [
+            12,
+            30,
+            12
+          ],
+          "facePolygons": {
+            "5/2": 12
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/sissid.htm",
+          "count": 120,
+          "key": "small-stellated-dodecahedron"
+        }
+      ],
+      "symmetryGroup": "H4",
+      "symmetryGroups": [
+        "H4",
+        "[3,5,5/2]",
+        "[5,3,3]",
+        "[3,3,5]"
+      ],
+      "convex": false,
+      "uniform": true,
+      "regular": false,
+      "vertexTransitive": true,
+      "chiral": false,
+      "classificationVerified": true,
+      "referenceUrls": [
+        "https://bendwavy.org/klitzing/incmats/padohi.htm",
+        "https://bendwavy.org/klitzing/dimensions/polychora-neu.htm"
+      ],
+      "numericContract": "Native rational-angle reflection orbits; approximate float64, no exact certificate",
+      "cellTypeBasis": "Published incidence-matrix counts and polygon windings; native boundary signatures checked on generation.",
+      "coxeterFamily": "H4"
+    },
+    {
+      "key": "star-uniform4-shihi",
+      "name": "small hecatonicosihecatonicosachoron",
+      "dimension": 4,
+      "family": "Star uniform polychora (Wythoffian)",
+      "bowers": "shihi",
+      "aliases": [
+        "shihi",
+        "small hecatonicosihecatonicosachoron",
+        "o3x5x5/2o"
+      ],
+      "symbol": "o3x5x5/2o",
+      "coxeterDiagram": "o3x5x5/2o",
+      "diagram": [
+        "3",
+        "5",
+        "5/2"
+      ],
+      "rings": [
+        0,
+        1,
+        1,
+        0
+      ],
+      "counts": [
+        3600,
+        7200,
+        3360,
+        240
+      ],
+      "cellTypes": [
+        {
+          "bowers": "tid",
+          "name": "truncated dodecahedron",
+          "counts": [
+            60,
+            90,
+            32
+          ],
+          "facePolygons": {
+            "10": 12,
+            "3": 20
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/tid.htm",
+          "count": 120,
+          "key": "truncated-dodecahedron"
+        },
+        {
+          "bowers": "tigid",
+          "name": "truncated great dodecahedron",
+          "counts": [
+            60,
+            90,
+            24
+          ],
+          "facePolygons": {
+            "10": 12,
+            "5/2": 12
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/tigid.htm",
+          "count": 120,
+          "key": "antiprism-u37"
+        }
+      ],
+      "symmetryGroup": "H4",
+      "symmetryGroups": [
+        "H4",
+        "[3,5,5/2]",
+        "[5,3,3]",
+        "[3,3,5]"
+      ],
+      "convex": false,
+      "uniform": true,
+      "regular": false,
+      "vertexTransitive": true,
+      "chiral": false,
+      "classificationVerified": true,
+      "referenceUrls": [
+        "https://bendwavy.org/klitzing/incmats/shihi.htm",
+        "https://bendwavy.org/klitzing/dimensions/polychora-neu.htm"
+      ],
+      "numericContract": "Native rational-angle reflection orbits; approximate float64, no exact certificate",
+      "cellTypeBasis": "Published incidence-matrix counts and polygon windings; native boundary signatures checked on generation.",
+      "coxeterFamily": "H4"
+    },
+    {
+      "key": "star-uniform4-sirsashi",
+      "name": "small rhombated small stellated hecatonicosachoron",
+      "dimension": 4,
+      "family": "Star uniform polychora (Wythoffian)",
+      "bowers": "sirsashi",
+      "aliases": [
+        "sirsashi",
+        "small rhombated small stellated hecatonicosachoron",
+        "x5/2o5x3o"
+      ],
+      "symbol": "x5/2o5x3o",
+      "coxeterDiagram": "x5/2o5x3o",
+      "diagram": [
+        "5/2",
+        "5",
+        "3"
+      ],
+      "rings": [
+        1,
+        0,
+        1,
+        0
+      ],
+      "counts": [
+        3600,
+        10800,
+        8160,
+        1440
+      ],
+      "cellTypes": [
+        {
+          "bowers": "raded",
+          "name": "rhombidodecadodecahedron",
+          "counts": [
+            60,
+            120,
+            54
+          ],
+          "facePolygons": {
+            "4": 30,
+            "5": 12,
+            "5/2": 12
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/raded.htm",
+          "count": 120,
+          "key": "antiprism-u38"
+        },
+        {
+          "bowers": "trip",
+          "name": "triangular prism",
+          "counts": [
+            6,
+            9,
+            5
+          ],
+          "facePolygons": {
+            "3": 2,
+            "4": 3
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/trip.htm",
+          "count": 1200,
+          "key": "uniform-prism-3"
+        },
+        {
+          "bowers": "id",
+          "name": "icosidodecahedron",
+          "counts": [
+            30,
+            60,
+            32
+          ],
+          "facePolygons": {
+            "3": 20,
+            "5": 12
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/id.htm",
+          "count": 120,
+          "key": "icosidodecahedron"
+        }
+      ],
+      "symmetryGroup": "H4",
+      "symmetryGroups": [
+        "H4",
+        "[5/2,5,3]",
+        "[5,3,3]",
+        "[3,3,5]"
+      ],
+      "convex": false,
+      "uniform": true,
+      "regular": false,
+      "vertexTransitive": true,
+      "chiral": false,
+      "classificationVerified": true,
+      "referenceUrls": [
+        "https://bendwavy.org/klitzing/incmats/sirsashi.htm",
+        "https://bendwavy.org/klitzing/dimensions/polychora-neu.htm"
+      ],
+      "numericContract": "Native rational-angle reflection orbits; approximate float64, no exact certificate",
+      "cellTypeBasis": "Published incidence-matrix counts and polygon windings; native boundary signatures checked on generation.",
+      "coxeterFamily": "H4"
+    },
+    {
+      "key": "star-uniform4-girfix",
+      "name": "great rhombated faceted hexacosachoron",
+      "dimension": 4,
+      "family": "Star uniform polychora (Wythoffian)",
+      "bowers": "girfix",
+      "aliases": [
+        "girfix",
+        "great rhombated faceted hexacosachoron",
+        "x3x5x5/2o"
+      ],
+      "symbol": "x3x5x5/2o",
+      "coxeterDiagram": "x3x5x5/2o",
+      "diagram": [
+        "3",
+        "5",
+        "5/2"
+      ],
+      "rings": [
+        1,
+        1,
+        1,
+        0
+      ],
+      "counts": [
+        7200,
+        14400,
+        7680,
+        960
+      ],
+      "cellTypes": [
+        {
+          "bowers": "grid",
+          "name": "great (convex) rhombicosidodecahedron (i.e. not qrid)",
+          "counts": [
+            120,
+            180,
+            62
+          ],
+          "facePolygons": {
+            "10": 12,
+            "4": 30,
+            "6": 20
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/grid.htm",
+          "count": 120
+        },
+        {
+          "bowers": "stip",
+          "name": "stellated pentagonal prism",
+          "counts": [
+            10,
+            15,
+            7
+          ],
+          "facePolygons": {
+            "4": 5,
+            "5/2": 2
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/stip.htm",
+          "count": 720
+        },
+        {
+          "bowers": "tigid",
+          "name": "truncated great dodecahedron",
+          "counts": [
+            60,
+            90,
+            24
+          ],
+          "facePolygons": {
+            "10": 12,
+            "5/2": 12
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/tigid.htm",
+          "count": 120,
+          "key": "antiprism-u37"
+        }
+      ],
+      "symmetryGroup": "H4",
+      "symmetryGroups": [
+        "H4",
+        "[3,5,5/2]",
+        "[5,3,3]",
+        "[3,3,5]"
+      ],
+      "convex": false,
+      "uniform": true,
+      "regular": false,
+      "vertexTransitive": true,
+      "chiral": false,
+      "classificationVerified": true,
+      "referenceUrls": [
+        "https://bendwavy.org/klitzing/incmats/girfix.htm",
+        "https://bendwavy.org/klitzing/dimensions/polychora-neu.htm"
+      ],
+      "numericContract": "Native rational-angle reflection orbits; approximate float64, no exact certificate",
+      "cellTypeBasis": "Published incidence-matrix counts and polygon windings; native boundary signatures checked on generation.",
+      "coxeterFamily": "H4"
+    },
+    {
+      "key": "star-uniform4-pirshi",
+      "name": "prismatorhombated (small) stellated hecatonicosachoron",
+      "dimension": 4,
+      "family": "Star uniform polychora (Wythoffian)",
+      "bowers": "pirshi",
+      "aliases": [
+        "pirshi",
+        "prismatorhombated (small) stellated hecatonicosachoron",
+        "x3x5o5/2x"
+      ],
+      "symbol": "x3x5o5/2x",
+      "coxeterDiagram": "x3x5o5/2x",
+      "diagram": [
+        "3",
+        "5",
+        "5/2"
+      ],
+      "rings": [
+        1,
+        1,
+        0,
+        1
+      ],
+      "counts": [
+        7200,
+        18000,
+        12480,
+        2160
+      ],
+      "cellTypes": [
+        {
+          "bowers": "ti",
+          "name": "truncated icosahedron",
+          "counts": [
+            60,
+            90,
+            32
+          ],
+          "facePolygons": {
+            "5": 12,
+            "6": 20
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/ti.htm",
+          "count": 120,
+          "key": "truncated-icosahedron"
+        },
+        {
+          "bowers": "hip",
+          "name": "hexagonal prism",
+          "counts": [
+            12,
+            18,
+            8
+          ],
+          "facePolygons": {
+            "4": 6,
+            "6": 2
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/hip.htm",
+          "count": 1200,
+          "key": "uniform-prism-6"
+        },
+        {
+          "bowers": "stip",
+          "name": "stellated pentagonal prism",
+          "counts": [
+            10,
+            15,
+            7
+          ],
+          "facePolygons": {
+            "4": 5,
+            "5/2": 2
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/stip.htm",
+          "count": 720
+        },
+        {
+          "bowers": "raded",
+          "name": "rhombidodecadodecahedron",
+          "counts": [
+            60,
+            120,
+            54
+          ],
+          "facePolygons": {
+            "4": 30,
+            "5": 12,
+            "5/2": 12
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/raded.htm",
+          "count": 120,
+          "key": "antiprism-u38"
+        }
+      ],
+      "symmetryGroup": "H4",
+      "symmetryGroups": [
+        "H4",
+        "[3,5,5/2]",
+        "[5,3,3]",
+        "[3,3,5]"
+      ],
+      "convex": false,
+      "uniform": true,
+      "regular": false,
+      "vertexTransitive": true,
+      "chiral": false,
+      "classificationVerified": true,
+      "referenceUrls": [
+        "https://bendwavy.org/klitzing/incmats/pirshi.htm",
+        "https://bendwavy.org/klitzing/dimensions/polychora-neu.htm"
+      ],
+      "numericContract": "Native rational-angle reflection orbits; approximate float64, no exact certificate",
+      "cellTypeBasis": "Published incidence-matrix counts and polygon windings; native boundary signatures checked on generation.",
+      "coxeterFamily": "H4"
+    },
+    {
+      "key": "star-uniform4-quippirfix",
+      "name": "quasiprismatorhombated faceted hexacosachoron",
+      "dimension": 4,
+      "family": "Star uniform polychora (Wythoffian)",
+      "bowers": "quippirfix",
+      "aliases": [
+        "quippirfix",
+        "quasiprismatorhombated faceted hexacosachoron",
+        "x5/3x5o3x"
+      ],
+      "symbol": "x5/3x5o3x",
+      "coxeterDiagram": "x5/3x5o3x",
+      "diagram": [
+        "5/3",
+        "5",
+        "3"
+      ],
+      "rings": [
+        1,
+        1,
+        0,
+        1
+      ],
+      "counts": [
+        7200,
+        18000,
+        12480,
+        2160
+      ],
+      "cellTypes": [
+        {
+          "bowers": "quitsissid",
+          "name": "quasitruncated small stellated dodecahedron",
+          "counts": [
+            60,
+            90,
+            24
+          ],
+          "facePolygons": {
+            "10/3": 12,
+            "5": 12
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/quitsissid.htm",
+          "count": 120
+        },
+        {
+          "bowers": "stiddip",
+          "name": "(tristrophic) decagrammic prism",
+          "counts": [
+            20,
+            30,
+            12
+          ],
+          "facePolygons": {
+            "10/3": 2,
+            "4": 10
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/stiddip.htm",
+          "count": 720
+        },
+        {
+          "bowers": "trip",
+          "name": "triangular prism",
+          "counts": [
+            6,
+            9,
+            5
+          ],
+          "facePolygons": {
+            "3": 2,
+            "4": 3
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/trip.htm",
+          "count": 1200,
+          "key": "uniform-prism-3"
+        },
+        {
+          "bowers": "srid",
+          "name": "small rhombicosidodecahedron",
+          "counts": [
+            60,
+            120,
+            62
+          ],
+          "facePolygons": {
+            "3": 20,
+            "4": 30,
+            "5": 12
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/srid.htm",
+          "count": 120
+        }
+      ],
+      "symmetryGroup": "H4",
+      "symmetryGroups": [
+        "H4",
+        "[5/3,5,3]",
+        "[5,3,3]",
+        "[3,3,5]"
+      ],
+      "convex": false,
+      "uniform": true,
+      "regular": false,
+      "vertexTransitive": true,
+      "chiral": false,
+      "classificationVerified": true,
+      "referenceUrls": [
+        "https://bendwavy.org/klitzing/incmats/quippirfix.htm",
+        "https://bendwavy.org/klitzing/dimensions/polychora-neu.htm"
+      ],
+      "numericContract": "Native rational-angle reflection orbits; approximate float64, no exact certificate",
+      "cellTypeBasis": "Published incidence-matrix counts and polygon windings; native boundary signatures checked on generation.",
+      "coxeterFamily": "H4"
+    },
+    {
+      "key": "star-uniform4-gaqrisashi",
+      "name": "great quasirhombated small stellated hecatonicosachoron",
+      "dimension": 4,
+      "family": "Star uniform polychora (Wythoffian)",
+      "bowers": "gaqrisashi",
+      "aliases": [
+        "gaqrisashi",
+        "great quasirhombated small stellated hecatonicosachoron",
+        "x5/3x5x3o"
+      ],
+      "symbol": "x5/3x5x3o",
+      "coxeterDiagram": "x5/3x5x3o",
+      "diagram": [
+        "5/3",
+        "5",
+        "3"
+      ],
+      "rings": [
+        1,
+        1,
+        1,
+        0
+      ],
+      "counts": [
+        7200,
+        14400,
+        8160,
+        1440
+      ],
+      "cellTypes": [
+        {
+          "bowers": "quitdid",
+          "name": "quasitruncated dodecadodecahedron",
+          "counts": [
+            120,
+            180,
+            54
+          ],
+          "facePolygons": {
+            "10": 12,
+            "10/3": 12,
+            "4": 30
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/quitdid.htm",
+          "count": 120
+        },
+        {
+          "bowers": "trip",
+          "name": "triangular prism",
+          "counts": [
+            6,
+            9,
+            5
+          ],
+          "facePolygons": {
+            "3": 2,
+            "4": 3
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/trip.htm",
+          "count": 1200,
+          "key": "uniform-prism-3"
+        },
+        {
+          "bowers": "tid",
+          "name": "truncated dodecahedron",
+          "counts": [
+            60,
+            90,
+            32
+          ],
+          "facePolygons": {
+            "10": 12,
+            "3": 20
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/tid.htm",
+          "count": 120,
+          "key": "truncated-dodecahedron"
+        }
+      ],
+      "symmetryGroup": "H4",
+      "symmetryGroups": [
+        "H4",
+        "[5/3,5,3]",
+        "[5,3,3]",
+        "[3,3,5]"
+      ],
+      "convex": false,
+      "uniform": true,
+      "regular": false,
+      "vertexTransitive": true,
+      "chiral": false,
+      "classificationVerified": true,
+      "referenceUrls": [
+        "https://bendwavy.org/klitzing/incmats/gaqrisashi.htm",
+        "https://bendwavy.org/klitzing/dimensions/polychora-neu.htm"
+      ],
+      "numericContract": "Native rational-angle reflection orbits; approximate float64, no exact certificate",
+      "cellTypeBasis": "Published incidence-matrix counts and polygon windings; native boundary signatures checked on generation.",
+      "coxeterFamily": "H4"
+    },
+    {
+      "key": "star-uniform4-goquidipdy",
+      "name": "great quasidisprismatodishecatonicosachoron",
+      "dimension": 4,
+      "family": "Star uniform polychora (Wythoffian)",
+      "bowers": "goquidipdy",
+      "aliases": [
+        "goquidipdy",
+        "great quasidisprismatodishecatonicosachoron",
+        "x3x5x5/3x"
+      ],
+      "symbol": "x3x5x5/3x",
+      "coxeterDiagram": "x3x5x5/3x",
+      "diagram": [
+        "3",
+        "5",
+        "5/3"
+      ],
+      "rings": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "counts": [
+        14400,
+        28800,
+        16080,
+        2160
+      ],
+      "cellTypes": [
+        {
+          "bowers": "grid",
+          "name": "great (convex) rhombicosidodecahedron (i.e. not qrid)",
+          "counts": [
+            120,
+            180,
+            62
+          ],
+          "facePolygons": {
+            "10": 12,
+            "4": 30,
+            "6": 20
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/grid.htm",
+          "count": 120
+        },
+        {
+          "bowers": "hip",
+          "name": "hexagonal prism",
+          "counts": [
+            12,
+            18,
+            8
+          ],
+          "facePolygons": {
+            "4": 6,
+            "6": 2
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/hip.htm",
+          "count": 1200,
+          "key": "uniform-prism-6"
+        },
+        {
+          "bowers": "stiddip",
+          "name": "(tristrophic) decagrammic prism",
+          "counts": [
+            20,
+            30,
+            12
+          ],
+          "facePolygons": {
+            "10/3": 2,
+            "4": 10
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/stiddip.htm",
+          "count": 720
+        },
+        {
+          "bowers": "quitdid",
+          "name": "quasitruncated dodecadodecahedron",
+          "counts": [
+            120,
+            180,
+            54
+          ],
+          "facePolygons": {
+            "10": 12,
+            "10/3": 12,
+            "4": 30
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/quitdid.htm",
+          "count": 120
+        }
+      ],
+      "symmetryGroup": "H4",
+      "symmetryGroups": [
+        "H4",
+        "[3,5,5/3]",
+        "[5,3,3]",
+        "[3,3,5]"
+      ],
+      "convex": false,
+      "uniform": true,
+      "regular": false,
+      "vertexTransitive": true,
+      "chiral": false,
+      "classificationVerified": true,
+      "referenceUrls": [
+        "https://bendwavy.org/klitzing/incmats/goquidipdy.htm",
+        "https://bendwavy.org/klitzing/dimensions/polychora-neu.htm"
+      ],
+      "numericContract": "Native rational-angle reflection orbits; approximate float64, no exact certificate",
+      "cellTypeBasis": "Published incidence-matrix counts and polygon windings; native boundary signatures checked on generation.",
+      "coxeterFamily": "H4"
+    },
+    {
+      "key": "star-uniform4-gofix",
+      "name": "great icosahedral hecatonicosachoron",
+      "dimension": 4,
+      "family": "Star uniform polychora (Wythoffian)",
+      "bowers": "gofix",
+      "aliases": [
+        "gofix",
+        "great icosahedral hecatonicosachoron",
+        "x3o5/2o5o"
+      ],
+      "symbol": "x3o5/2o5o",
+      "coxeterDiagram": "x3o5/2o5o",
+      "diagram": [
+        "3",
+        "5/2",
+        "5"
+      ],
+      "rings": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "counts": [
+        120,
+        720,
+        1200,
+        120
+      ],
+      "cellTypes": [
+        {
+          "bowers": "gike",
+          "name": "great icosahedron",
+          "counts": [
+            12,
+            30,
+            20
+          ],
+          "facePolygons": {
+            "3": 20
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/gike.htm",
+          "count": 120,
+          "key": "great-icosahedron"
+        }
+      ],
+      "symmetryGroup": "H4",
+      "symmetryGroups": [
+        "H4",
+        "[3,5/2,5]",
+        "[5,3,3]",
+        "[3,3,5]"
+      ],
+      "convex": false,
+      "uniform": true,
+      "regular": true,
+      "vertexTransitive": true,
+      "chiral": false,
+      "classificationVerified": true,
+      "referenceUrls": [
+        "https://bendwavy.org/klitzing/incmats/gofix.htm",
+        "https://bendwavy.org/klitzing/dimensions/polychora-neu.htm"
+      ],
+      "numericContract": "Native rational-angle reflection orbits; approximate float64, no exact certificate",
+      "cellTypeBasis": "Published incidence-matrix counts and polygon windings; native boundary signatures checked on generation.",
+      "coxeterFamily": "H4"
+    },
+    {
+      "key": "star-uniform4-rigfix",
+      "name": "rectified great faceted hexacosichoron",
+      "dimension": 4,
+      "family": "Star uniform polychora (Wythoffian)",
+      "bowers": "rigfix",
+      "aliases": [
+        "rigfix",
+        "rectified great faceted hexacosichoron",
+        "o3x5/2o5o"
+      ],
+      "symbol": "o3x5/2o5o",
+      "coxeterDiagram": "o3x5/2o5o",
+      "diagram": [
+        "3",
+        "5/2",
+        "5"
+      ],
+      "rings": [
+        0,
+        1,
+        0,
+        0
+      ],
+      "counts": [
+        720,
+        3600,
+        2640,
+        240
+      ],
+      "cellTypes": [
+        {
+          "bowers": "gid",
+          "name": "great icosidodecahedron",
+          "counts": [
+            30,
+            60,
+            32
+          ],
+          "facePolygons": {
+            "3": 20,
+            "5/2": 12
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/gid.htm",
+          "count": 120,
+          "key": "antiprism-u54"
+        },
+        {
+          "bowers": "sissid",
+          "name": "small stellated dodecahedron",
+          "counts": [
+            12,
+            30,
+            12
+          ],
+          "facePolygons": {
+            "5/2": 12
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/sissid.htm",
+          "count": 120,
+          "key": "small-stellated-dodecahedron"
+        }
+      ],
+      "symmetryGroup": "H4",
+      "symmetryGroups": [
+        "H4",
+        "[3,5/2,5]",
+        "[5,3,3]",
+        "[3,3,5]"
+      ],
+      "convex": false,
+      "uniform": true,
+      "regular": false,
+      "vertexTransitive": true,
+      "chiral": false,
+      "classificationVerified": true,
+      "referenceUrls": [
+        "https://bendwavy.org/klitzing/incmats/rigfix.htm",
+        "https://bendwavy.org/klitzing/dimensions/polychora-neu.htm"
+      ],
+      "numericContract": "Native rational-angle reflection orbits; approximate float64, no exact certificate",
+      "cellTypeBasis": "Published incidence-matrix counts and polygon windings; native boundary signatures checked on generation.",
+      "coxeterFamily": "H4"
+    },
+    {
+      "key": "star-uniform4-ragaghi",
+      "name": "rectified great grand hecatonicosachoron",
+      "dimension": 4,
+      "family": "Star uniform polychora (Wythoffian)",
+      "bowers": "ragaghi",
+      "aliases": [
+        "ragaghi",
+        "rectified great grand hecatonicosachoron",
+        "o3o5/2x5o"
+      ],
+      "symbol": "o3o5/2x5o",
+      "coxeterDiagram": "o3o5/2x5o",
+      "diagram": [
+        "3",
+        "5/2",
+        "5"
+      ],
+      "rings": [
+        0,
+        0,
+        1,
+        0
+      ],
+      "counts": [
+        1200,
+        3600,
+        2160,
+        240
+      ],
+      "cellTypes": [
+        {
+          "bowers": "gissid",
+          "name": "great stellated dodecahedron",
+          "counts": [
+            20,
+            30,
+            12
+          ],
+          "facePolygons": {
+            "5/2": 12
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/gissid.htm",
+          "count": 120,
+          "key": "great-stellated-dodecahedron"
+        },
+        {
+          "bowers": "did",
+          "name": "dodecadodecahedron",
+          "counts": [
+            30,
+            60,
+            24
+          ],
+          "facePolygons": {
+            "5": 12,
+            "5/2": 12
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/did.htm",
+          "count": 120,
+          "key": "antiprism-u36"
+        }
+      ],
+      "symmetryGroup": "H4",
+      "symmetryGroups": [
+        "H4",
+        "[3,5/2,5]",
+        "[5,3,3]",
+        "[3,3,5]"
+      ],
+      "convex": false,
+      "uniform": true,
+      "regular": false,
+      "vertexTransitive": true,
+      "chiral": false,
+      "classificationVerified": true,
+      "referenceUrls": [
+        "https://bendwavy.org/klitzing/incmats/ragaghi.htm",
+        "https://bendwavy.org/klitzing/dimensions/polychora-neu.htm"
+      ],
+      "numericContract": "Native rational-angle reflection orbits; approximate float64, no exact certificate",
+      "cellTypeBasis": "Published incidence-matrix counts and polygon windings; native boundary signatures checked on generation.",
+      "coxeterFamily": "H4"
+    },
+    {
+      "key": "star-uniform4-gaghi",
+      "name": "great grand hecatonicosachoron",
+      "dimension": 4,
+      "family": "Star uniform polychora (Wythoffian)",
+      "bowers": "gaghi",
+      "aliases": [
+        "gaghi",
+        "great grand hecatonicosachoron",
+        "x5o5/2o3o"
+      ],
+      "symbol": "x5o5/2o3o",
+      "coxeterDiagram": "x5o5/2o3o",
+      "diagram": [
+        "5",
+        "5/2",
+        "3"
+      ],
+      "rings": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "counts": [
+        120,
+        1200,
+        720,
+        120
+      ],
+      "cellTypes": [
+        {
+          "bowers": "gad",
+          "name": "great dodecahedron",
+          "counts": [
+            12,
+            30,
+            12
+          ],
+          "facePolygons": {
+            "5": 12
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/gad.htm",
+          "count": 120,
+          "key": "great-dodecahedron"
+        }
+      ],
+      "symmetryGroup": "H4",
+      "symmetryGroups": [
+        "H4",
+        "[5,5/2,3]",
+        "[5,3,3]",
+        "[3,3,5]"
+      ],
+      "convex": false,
+      "uniform": true,
+      "regular": true,
+      "vertexTransitive": true,
+      "chiral": false,
+      "classificationVerified": true,
+      "referenceUrls": [
+        "https://bendwavy.org/klitzing/incmats/gaghi.htm",
+        "https://bendwavy.org/klitzing/dimensions/polychora-neu.htm"
+      ],
+      "numericContract": "Native rational-angle reflection orbits; approximate float64, no exact certificate",
+      "cellTypeBasis": "Published incidence-matrix counts and polygon windings; native boundary signatures checked on generation.",
+      "coxeterFamily": "H4"
+    },
+    {
+      "key": "star-uniform4-tigfix",
+      "name": "truncated great faceted hexacosichoron",
+      "dimension": 4,
+      "family": "Star uniform polychora (Wythoffian)",
+      "bowers": "tigfix",
+      "aliases": [
+        "tigfix",
+        "truncated great faceted hexacosichoron",
+        "x3x5/2o5o"
+      ],
+      "symbol": "x3x5/2o5o",
+      "coxeterDiagram": "x3x5/2o5o",
+      "diagram": [
+        "3",
+        "5/2",
+        "5"
+      ],
+      "rings": [
+        1,
+        1,
+        0,
+        0
+      ],
+      "counts": [
+        1440,
+        4320,
+        2640,
+        240
+      ],
+      "cellTypes": [
+        {
+          "bowers": "tiggy",
+          "name": "truncated great icosahedron",
+          "counts": [
+            60,
+            90,
+            32
+          ],
+          "facePolygons": {
+            "5/2": 12,
+            "6": 20
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/tiggy.htm",
+          "count": 120
+        },
+        {
+          "bowers": "sissid",
+          "name": "small stellated dodecahedron",
+          "counts": [
+            12,
+            30,
+            12
+          ],
+          "facePolygons": {
+            "5/2": 12
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/sissid.htm",
+          "count": 120,
+          "key": "small-stellated-dodecahedron"
+        }
+      ],
+      "symmetryGroup": "H4",
+      "symmetryGroups": [
+        "H4",
+        "[3,5/2,5]",
+        "[5,3,3]",
+        "[3,3,5]"
+      ],
+      "convex": false,
+      "uniform": true,
+      "regular": false,
+      "vertexTransitive": true,
+      "chiral": false,
+      "classificationVerified": true,
+      "referenceUrls": [
+        "https://bendwavy.org/klitzing/incmats/tigfix.htm",
+        "https://bendwavy.org/klitzing/dimensions/polychora-neu.htm"
+      ],
+      "numericContract": "Native rational-angle reflection orbits; approximate float64, no exact certificate",
+      "cellTypeBasis": "Published incidence-matrix counts and polygon windings; native boundary signatures checked on generation.",
+      "coxeterFamily": "H4"
+    },
+    {
+      "key": "star-uniform4-quipdohi",
+      "name": "quasiprismatodishecatonicosachoron",
+      "dimension": 4,
+      "family": "Star uniform polychora (Wythoffian)",
+      "bowers": "quipdohi",
+      "aliases": [
+        "quipdohi",
+        "quasiprismatodishecatonicosachoron",
+        "x3o5/2o5x"
+      ],
+      "symbol": "x3o5/2o5x",
+      "coxeterDiagram": "x3o5/2o5x",
+      "diagram": [
+        "3",
+        "5/2",
+        "5"
+      ],
+      "rings": [
+        1,
+        0,
+        0,
+        1
+      ],
+      "counts": [
+        1440,
+        7200,
+        7440,
+        2160
+      ],
+      "cellTypes": [
+        {
+          "bowers": "gike",
+          "name": "great icosahedron",
+          "counts": [
+            12,
+            30,
+            20
+          ],
+          "facePolygons": {
+            "3": 20
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/gike.htm",
+          "count": 120,
+          "key": "great-icosahedron"
+        },
+        {
+          "bowers": "trip",
+          "name": "triangular prism",
+          "counts": [
+            6,
+            9,
+            5
+          ],
+          "facePolygons": {
+            "3": 2,
+            "4": 3
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/trip.htm",
+          "count": 1200,
+          "key": "uniform-prism-3"
+        },
+        {
+          "bowers": "pip",
+          "name": "pentagonal prism",
+          "counts": [
+            10,
+            15,
+            7
+          ],
+          "facePolygons": {
+            "4": 5,
+            "5": 2
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/pip.htm",
+          "count": 720,
+          "key": "uniform-prism-5"
+        },
+        {
+          "bowers": "gad",
+          "name": "great dodecahedron",
+          "counts": [
+            12,
+            30,
+            12
+          ],
+          "facePolygons": {
+            "5": 12
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/gad.htm",
+          "count": 120,
+          "key": "great-dodecahedron"
+        }
+      ],
+      "symmetryGroup": "H4",
+      "symmetryGroups": [
+        "H4",
+        "[3,5/2,5]",
+        "[5,3,3]",
+        "[3,3,5]"
+      ],
+      "convex": false,
+      "uniform": true,
+      "regular": false,
+      "vertexTransitive": true,
+      "chiral": false,
+      "classificationVerified": true,
+      "referenceUrls": [
+        "https://bendwavy.org/klitzing/incmats/quipdohi.htm",
+        "https://bendwavy.org/klitzing/dimensions/polychora-neu.htm"
+      ],
+      "numericContract": "Native rational-angle reflection orbits; approximate float64, no exact certificate",
+      "cellTypeBasis": "Published incidence-matrix counts and polygon windings; native boundary signatures checked on generation.",
+      "coxeterFamily": "H4"
+    },
+    {
+      "key": "star-uniform4-sirgaghi",
+      "name": "small rhombated great grand hecatonicosachoron",
+      "dimension": 4,
+      "family": "Star uniform polychora (Wythoffian)",
+      "bowers": "sirgaghi",
+      "aliases": [
+        "sirgaghi",
+        "small rhombated great grand hecatonicosachoron",
+        "x5o5/2x3o"
+      ],
+      "symbol": "x5o5/2x3o",
+      "coxeterDiagram": "x5o5/2x3o",
+      "diagram": [
+        "5",
+        "5/2",
+        "3"
+      ],
+      "rings": [
+        1,
+        0,
+        1,
+        0
+      ],
+      "counts": [
+        3600,
+        10800,
+        8160,
+        1440
+      ],
+      "cellTypes": [
+        {
+          "bowers": "raded",
+          "name": "rhombidodecadodecahedron",
+          "counts": [
+            60,
+            120,
+            54
+          ],
+          "facePolygons": {
+            "4": 30,
+            "5": 12,
+            "5/2": 12
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/raded.htm",
+          "count": 120,
+          "key": "antiprism-u38"
+        },
+        {
+          "bowers": "trip",
+          "name": "triangular prism",
+          "counts": [
+            6,
+            9,
+            5
+          ],
+          "facePolygons": {
+            "3": 2,
+            "4": 3
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/trip.htm",
+          "count": 1200,
+          "key": "uniform-prism-3"
+        },
+        {
+          "bowers": "gid",
+          "name": "great icosidodecahedron",
+          "counts": [
+            30,
+            60,
+            32
+          ],
+          "facePolygons": {
+            "3": 20,
+            "5/2": 12
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/gid.htm",
+          "count": 120,
+          "key": "antiprism-u54"
+        }
+      ],
+      "symmetryGroup": "H4",
+      "symmetryGroups": [
+        "H4",
+        "[5,5/2,3]",
+        "[5,3,3]",
+        "[3,3,5]"
+      ],
+      "convex": false,
+      "uniform": true,
+      "regular": false,
+      "vertexTransitive": true,
+      "chiral": false,
+      "classificationVerified": true,
+      "referenceUrls": [
+        "https://bendwavy.org/klitzing/incmats/sirgaghi.htm",
+        "https://bendwavy.org/klitzing/dimensions/polychora-neu.htm"
+      ],
+      "numericContract": "Native rational-angle reflection orbits; approximate float64, no exact certificate",
+      "cellTypeBasis": "Published incidence-matrix counts and polygon windings; native boundary signatures checked on generation.",
+      "coxeterFamily": "H4"
+    },
+    {
+      "key": "star-uniform4-tigaghi",
+      "name": "truncated great grand hecatonicosachoron",
+      "dimension": 4,
+      "family": "Star uniform polychora (Wythoffian)",
+      "bowers": "tigaghi",
+      "aliases": [
+        "tigaghi",
+        "truncated great grand hecatonicosachoron",
+        "x5x5/2o3o"
+      ],
+      "symbol": "x5x5/2o3o",
+      "coxeterDiagram": "x5x5/2o3o",
+      "diagram": [
+        "5",
+        "5/2",
+        "3"
+      ],
+      "rings": [
+        1,
+        1,
+        0,
+        0
+      ],
+      "counts": [
+        2400,
+        4800,
+        2160,
+        240
+      ],
+      "cellTypes": [
+        {
+          "bowers": "tigid",
+          "name": "truncated great dodecahedron",
+          "counts": [
+            60,
+            90,
+            24
+          ],
+          "facePolygons": {
+            "10": 12,
+            "5/2": 12
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/tigid.htm",
+          "count": 120,
+          "key": "antiprism-u37"
+        },
+        {
+          "bowers": "gissid",
+          "name": "great stellated dodecahedron",
+          "counts": [
+            20,
+            30,
+            12
+          ],
+          "facePolygons": {
+            "5/2": 12
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/gissid.htm",
+          "count": 120,
+          "key": "great-stellated-dodecahedron"
+        }
+      ],
+      "symmetryGroup": "H4",
+      "symmetryGroups": [
+        "H4",
+        "[5,5/2,3]",
+        "[5,3,3]",
+        "[3,3,5]"
+      ],
+      "convex": false,
+      "uniform": true,
+      "regular": false,
+      "vertexTransitive": true,
+      "chiral": false,
+      "classificationVerified": true,
+      "referenceUrls": [
+        "https://bendwavy.org/klitzing/incmats/tigaghi.htm",
+        "https://bendwavy.org/klitzing/dimensions/polychora-neu.htm"
+      ],
+      "numericContract": "Native rational-angle reflection orbits; approximate float64, no exact certificate",
+      "cellTypeBasis": "Published incidence-matrix counts and polygon windings; native boundary signatures checked on generation.",
+      "coxeterFamily": "H4"
+    },
+    {
+      "key": "star-uniform4-pirgaghi",
+      "name": "prismatorhombated great grand hecatonicosachoron",
+      "dimension": 4,
+      "family": "Star uniform polychora (Wythoffian)",
+      "bowers": "pirgaghi",
+      "aliases": [
+        "pirgaghi",
+        "prismatorhombated great grand hecatonicosachoron",
+        "x3x5/2o5x"
+      ],
+      "symbol": "x3x5/2o5x",
+      "coxeterDiagram": "x3x5/2o5x",
+      "diagram": [
+        "3",
+        "5/2",
+        "5"
+      ],
+      "rings": [
+        1,
+        1,
+        0,
+        1
+      ],
+      "counts": [
+        7200,
+        18000,
+        12480,
+        2160
+      ],
+      "cellTypes": [
+        {
+          "bowers": "tiggy",
+          "name": "truncated great icosahedron",
+          "counts": [
+            60,
+            90,
+            32
+          ],
+          "facePolygons": {
+            "5/2": 12,
+            "6": 20
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/tiggy.htm",
+          "count": 120
+        },
+        {
+          "bowers": "hip",
+          "name": "hexagonal prism",
+          "counts": [
+            12,
+            18,
+            8
+          ],
+          "facePolygons": {
+            "4": 6,
+            "6": 2
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/hip.htm",
+          "count": 1200,
+          "key": "uniform-prism-6"
+        },
+        {
+          "bowers": "pip",
+          "name": "pentagonal prism",
+          "counts": [
+            10,
+            15,
+            7
+          ],
+          "facePolygons": {
+            "4": 5,
+            "5": 2
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/pip.htm",
+          "count": 720,
+          "key": "uniform-prism-5"
+        },
+        {
+          "bowers": "raded",
+          "name": "rhombidodecadodecahedron",
+          "counts": [
+            60,
+            120,
+            54
+          ],
+          "facePolygons": {
+            "4": 30,
+            "5": 12,
+            "5/2": 12
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/raded.htm",
+          "count": 120,
+          "key": "antiprism-u38"
+        }
+      ],
+      "symmetryGroup": "H4",
+      "symmetryGroups": [
+        "H4",
+        "[3,5/2,5]",
+        "[5,3,3]",
+        "[3,3,5]"
+      ],
+      "convex": false,
+      "uniform": true,
+      "regular": false,
+      "vertexTransitive": true,
+      "chiral": false,
+      "classificationVerified": true,
+      "referenceUrls": [
+        "https://bendwavy.org/klitzing/incmats/pirgaghi.htm",
+        "https://bendwavy.org/klitzing/dimensions/polychora-neu.htm"
+      ],
+      "numericContract": "Native rational-angle reflection orbits; approximate float64, no exact certificate",
+      "cellTypeBasis": "Published incidence-matrix counts and polygon windings; native boundary signatures checked on generation.",
+      "coxeterFamily": "H4"
+    },
+    {
+      "key": "star-uniform4-qrigfix",
+      "name": "quasirhombated great faceted hexacosachoron",
+      "dimension": 4,
+      "family": "Star uniform polychora (Wythoffian)",
+      "bowers": "qrigfix",
+      "aliases": [
+        "qrigfix",
+        "quasirhombated great faceted hexacosachoron",
+        "x3/2o5/2x5o"
+      ],
+      "symbol": "x3/2o5/2x5o",
+      "coxeterDiagram": "x3/2o5/2x5o",
+      "diagram": [
+        "3/2",
+        "5/2",
+        "5"
+      ],
+      "rings": [
+        1,
+        0,
+        1,
+        0
+      ],
+      "counts": [
+        3600,
+        10800,
+        7680,
+        960
+      ],
+      "cellTypes": [
+        {
+          "bowers": "qrid",
+          "name": "quasi rhombicosidodecahedron",
+          "counts": [
+            60,
+            120,
+            62
+          ],
+          "facePolygons": {
+            "3": 20,
+            "4": 30,
+            "5/2": 12
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/qrid.htm",
+          "count": 120
+        },
+        {
+          "bowers": "pip",
+          "name": "pentagonal prism",
+          "counts": [
+            10,
+            15,
+            7
+          ],
+          "facePolygons": {
+            "4": 5,
+            "5": 2
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/pip.htm",
+          "count": 720,
+          "key": "uniform-prism-5"
+        },
+        {
+          "bowers": "did",
+          "name": "dodecadodecahedron",
+          "counts": [
+            30,
+            60,
+            24
+          ],
+          "facePolygons": {
+            "5": 12,
+            "5/2": 12
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/did.htm",
+          "count": 120,
+          "key": "antiprism-u36"
+        }
+      ],
+      "symmetryGroup": "H4",
+      "symmetryGroups": [
+        "H4",
+        "[3/2,5/2,5]",
+        "[5,3,3]",
+        "[3,3,5]"
+      ],
+      "convex": false,
+      "uniform": true,
+      "regular": false,
+      "vertexTransitive": true,
+      "chiral": false,
+      "classificationVerified": true,
+      "referenceUrls": [
+        "https://bendwavy.org/klitzing/incmats/querfix.htm",
+        "https://bendwavy.org/klitzing/dimensions/polychora-neu.htm"
+      ],
+      "numericContract": "Native rational-angle reflection orbits; approximate float64, no exact certificate",
+      "cellTypeBasis": "Published incidence-matrix counts and polygon windings; native boundary signatures checked on generation.",
+      "coxeterFamily": "H4"
+    },
+    {
+      "key": "star-uniform4-paqrigafix",
+      "name": "prismatoquasirhombated great facetted hexacosachoron",
+      "dimension": 4,
+      "family": "Star uniform polychora (Wythoffian)",
+      "bowers": "paqrigafix",
+      "aliases": [
+        "paqrigafix",
+        "prismatoquasirhombated great facetted hexacosachoron",
+        "x5x5/3o3x"
+      ],
+      "symbol": "x5x5/3o3x",
+      "coxeterDiagram": "x5x5/3o3x",
+      "diagram": [
+        "5",
+        "5/3",
+        "3"
+      ],
+      "rings": [
+        1,
+        1,
+        0,
+        1
+      ],
+      "counts": [
+        7200,
+        18000,
+        12480,
+        2160
+      ],
+      "cellTypes": [
+        {
+          "bowers": "tigid",
+          "name": "truncated great dodecahedron",
+          "counts": [
+            60,
+            90,
+            24
+          ],
+          "facePolygons": {
+            "10": 12,
+            "5/2": 12
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/tigid.htm",
+          "count": 120,
+          "key": "antiprism-u37"
+        },
+        {
+          "bowers": "dip",
+          "name": "decagonal prism",
+          "counts": [
+            20,
+            30,
+            12
+          ],
+          "facePolygons": {
+            "10": 2,
+            "4": 10
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/dip.htm",
+          "count": 720,
+          "key": "uniform-prism-10"
+        },
+        {
+          "bowers": "trip",
+          "name": "triangular prism",
+          "counts": [
+            6,
+            9,
+            5
+          ],
+          "facePolygons": {
+            "3": 2,
+            "4": 3
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/trip.htm",
+          "count": 1200,
+          "key": "uniform-prism-3"
+        },
+        {
+          "bowers": "qrid",
+          "name": "quasi rhombicosidodecahedron",
+          "counts": [
+            60,
+            120,
+            62
+          ],
+          "facePolygons": {
+            "3": 20,
+            "4": 30,
+            "5/2": 12
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/qrid.htm",
+          "count": 120
+        }
+      ],
+      "symmetryGroup": "H4",
+      "symmetryGroups": [
+        "H4",
+        "[5,5/3,3]",
+        "[5,3,3]",
+        "[3,3,5]"
+      ],
+      "convex": false,
+      "uniform": true,
+      "regular": false,
+      "vertexTransitive": true,
+      "chiral": false,
+      "classificationVerified": true,
+      "referenceUrls": [
+        "https://bendwavy.org/klitzing/incmats/paquerfix.htm",
+        "https://bendwavy.org/klitzing/dimensions/polychora-neu.htm"
+      ],
+      "numericContract": "Native rational-angle reflection orbits; approximate float64, no exact certificate",
+      "cellTypeBasis": "Published incidence-matrix counts and polygon windings; native boundary signatures checked on generation.",
+      "coxeterFamily": "H4"
+    },
+    {
+      "key": "star-uniform4-ghihi",
+      "name": "great hecatonicosihecatonicosachoron",
+      "dimension": 4,
+      "family": "Star uniform polychora (Wythoffian)",
+      "bowers": "ghihi",
+      "aliases": [
+        "ghihi",
+        "great hecatonicosihecatonicosachoron",
+        "o3x5/3x5o"
+      ],
+      "symbol": "o3x5/3x5o",
+      "coxeterDiagram": "o3x5/3x5o",
+      "diagram": [
+        "3",
+        "5/3",
+        "5"
+      ],
+      "rings": [
+        0,
+        1,
+        1,
+        0
+      ],
+      "counts": [
+        3600,
+        7200,
+        3360,
+        240
+      ],
+      "cellTypes": [
+        {
+          "bowers": "quitgissid",
+          "name": "quasitruncated great stellated dodecahedron",
+          "counts": [
+            60,
+            90,
+            32
+          ],
+          "facePolygons": {
+            "10/3": 12,
+            "3": 20
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/quitgissid.htm",
+          "count": 120
+        },
+        {
+          "bowers": "quitsissid",
+          "name": "quasitruncated small stellated dodecahedron",
+          "counts": [
+            60,
+            90,
+            24
+          ],
+          "facePolygons": {
+            "10/3": 12,
+            "5": 12
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/quitsissid.htm",
+          "count": 120
+        }
+      ],
+      "symmetryGroup": "H4",
+      "symmetryGroups": [
+        "H4",
+        "[3,5/3,5]",
+        "[5,3,3]",
+        "[3,3,5]"
+      ],
+      "convex": false,
+      "uniform": true,
+      "regular": false,
+      "vertexTransitive": true,
+      "chiral": false,
+      "classificationVerified": true,
+      "referenceUrls": [
+        "https://bendwavy.org/klitzing/incmats/ghihi.htm",
+        "https://bendwavy.org/klitzing/dimensions/polychora-neu.htm"
+      ],
+      "numericContract": "Native rational-angle reflection orbits; approximate float64, no exact certificate",
+      "cellTypeBasis": "Published incidence-matrix counts and polygon windings; native boundary signatures checked on generation.",
+      "coxeterFamily": "H4"
+    },
+    {
+      "key": "star-uniform4-gaqrigafix",
+      "name": "great quasirhombated great faceted hexacosachoron",
+      "dimension": 4,
+      "family": "Star uniform polychora (Wythoffian)",
+      "bowers": "gaqrigafix",
+      "aliases": [
+        "gaqrigafix",
+        "great quasirhombated great faceted hexacosachoron",
+        "x3x5/3x5o"
+      ],
+      "symbol": "x3x5/3x5o",
+      "coxeterDiagram": "x3x5/3x5o",
+      "diagram": [
+        "3",
+        "5/3",
+        "5"
+      ],
+      "rings": [
+        1,
+        1,
+        1,
+        0
+      ],
+      "counts": [
+        7200,
+        14400,
+        7680,
+        960
+      ],
+      "cellTypes": [
+        {
+          "bowers": "gaquatid",
+          "name": "great quasitruncated icosidodecahedron",
+          "counts": [
+            120,
+            180,
+            62
+          ],
+          "facePolygons": {
+            "10/3": 12,
+            "4": 30,
+            "6": 20
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/gaquatid.htm",
+          "count": 120
+        },
+        {
+          "bowers": "pip",
+          "name": "pentagonal prism",
+          "counts": [
+            10,
+            15,
+            7
+          ],
+          "facePolygons": {
+            "4": 5,
+            "5": 2
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/pip.htm",
+          "count": 720,
+          "key": "uniform-prism-5"
+        },
+        {
+          "bowers": "quitsissid",
+          "name": "quasitruncated small stellated dodecahedron",
+          "counts": [
+            60,
+            90,
+            24
+          ],
+          "facePolygons": {
+            "10/3": 12,
+            "5": 12
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/quitsissid.htm",
+          "count": 120
+        }
+      ],
+      "symmetryGroup": "H4",
+      "symmetryGroups": [
+        "H4",
+        "[3,5/3,5]",
+        "[5,3,3]",
+        "[3,3,5]"
+      ],
+      "convex": false,
+      "uniform": true,
+      "regular": false,
+      "vertexTransitive": true,
+      "chiral": false,
+      "classificationVerified": true,
+      "referenceUrls": [
+        "https://bendwavy.org/klitzing/incmats/gaqrigafix.htm",
+        "https://bendwavy.org/klitzing/dimensions/polychora-neu.htm"
+      ],
+      "numericContract": "Native rational-angle reflection orbits; approximate float64, no exact certificate",
+      "cellTypeBasis": "Published incidence-matrix counts and polygon windings; native boundary signatures checked on generation.",
+      "coxeterFamily": "H4"
+    },
+    {
+      "key": "star-uniform4-gaqrigaghi",
+      "name": "great quasirhombated great grand hecatonicosachoron",
+      "dimension": 4,
+      "family": "Star uniform polychora (Wythoffian)",
+      "bowers": "gaqrigaghi",
+      "aliases": [
+        "gaqrigaghi",
+        "great quasirhombated great grand hecatonicosachoron",
+        "x5x5/3x3o"
+      ],
+      "symbol": "x5x5/3x3o",
+      "coxeterDiagram": "x5x5/3x3o",
+      "diagram": [
+        "5",
+        "5/3",
+        "3"
+      ],
+      "rings": [
+        1,
+        1,
+        1,
+        0
+      ],
+      "counts": [
+        7200,
+        14400,
+        8160,
+        1440
+      ],
+      "cellTypes": [
+        {
+          "bowers": "quitdid",
+          "name": "quasitruncated dodecadodecahedron",
+          "counts": [
+            120,
+            180,
+            54
+          ],
+          "facePolygons": {
+            "10": 12,
+            "10/3": 12,
+            "4": 30
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/quitdid.htm",
+          "count": 120
+        },
+        {
+          "bowers": "trip",
+          "name": "triangular prism",
+          "counts": [
+            6,
+            9,
+            5
+          ],
+          "facePolygons": {
+            "3": 2,
+            "4": 3
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/trip.htm",
+          "count": 1200,
+          "key": "uniform-prism-3"
+        },
+        {
+          "bowers": "quitgissid",
+          "name": "quasitruncated great stellated dodecahedron",
+          "counts": [
+            60,
+            90,
+            32
+          ],
+          "facePolygons": {
+            "10/3": 12,
+            "3": 20
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/quitgissid.htm",
+          "count": 120
+        }
+      ],
+      "symmetryGroup": "H4",
+      "symmetryGroups": [
+        "H4",
+        "[5,5/3,3]",
+        "[5,3,3]",
+        "[3,3,5]"
+      ],
+      "convex": false,
+      "uniform": true,
+      "regular": false,
+      "vertexTransitive": true,
+      "chiral": false,
+      "classificationVerified": true,
+      "referenceUrls": [
+        "https://bendwavy.org/klitzing/incmats/gaqrigaghi.htm",
+        "https://bendwavy.org/klitzing/dimensions/polychora-neu.htm"
+      ],
+      "numericContract": "Native rational-angle reflection orbits; approximate float64, no exact certificate",
+      "cellTypeBasis": "Published incidence-matrix counts and polygon windings; native boundary signatures checked on generation.",
+      "coxeterFamily": "H4"
+    },
+    {
+      "key": "star-uniform4-gaquidipdy",
+      "name": "grand quasidisprismatodishecatonicosachoron",
+      "dimension": 4,
+      "family": "Star uniform polychora (Wythoffian)",
+      "bowers": "gaquidipdy",
+      "aliases": [
+        "gaquidipdy",
+        "grand quasidisprismatodishecatonicosachoron",
+        "x3x5/3x5x"
+      ],
+      "symbol": "x3x5/3x5x",
+      "coxeterDiagram": "x3x5/3x5x",
+      "diagram": [
+        "3",
+        "5/3",
+        "5"
+      ],
+      "rings": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "counts": [
+        14400,
+        28800,
+        16080,
+        2160
+      ],
+      "cellTypes": [
+        {
+          "bowers": "gaquatid",
+          "name": "great quasitruncated icosidodecahedron",
+          "counts": [
+            120,
+            180,
+            62
+          ],
+          "facePolygons": {
+            "10/3": 12,
+            "4": 30,
+            "6": 20
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/gaquatid.htm",
+          "count": 120
+        },
+        {
+          "bowers": "hip",
+          "name": "hexagonal prism",
+          "counts": [
+            12,
+            18,
+            8
+          ],
+          "facePolygons": {
+            "4": 6,
+            "6": 2
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/hip.htm",
+          "count": 1200,
+          "key": "uniform-prism-6"
+        },
+        {
+          "bowers": "dip",
+          "name": "decagonal prism",
+          "counts": [
+            20,
+            30,
+            12
+          ],
+          "facePolygons": {
+            "10": 2,
+            "4": 10
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/dip.htm",
+          "count": 720,
+          "key": "uniform-prism-10"
+        },
+        {
+          "bowers": "quitdid",
+          "name": "quasitruncated dodecadodecahedron",
+          "counts": [
+            120,
+            180,
+            54
+          ],
+          "facePolygons": {
+            "10": 12,
+            "10/3": 12,
+            "4": 30
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/quitdid.htm",
+          "count": 120
+        }
+      ],
+      "symmetryGroup": "H4",
+      "symmetryGroups": [
+        "H4",
+        "[3,5/3,5]",
+        "[5,3,3]",
+        "[3,3,5]"
+      ],
+      "convex": false,
+      "uniform": true,
+      "regular": false,
+      "vertexTransitive": true,
+      "chiral": false,
+      "classificationVerified": true,
+      "referenceUrls": [
+        "https://bendwavy.org/klitzing/incmats/gaquidipdy.htm",
+        "https://bendwavy.org/klitzing/dimensions/polychora-neu.htm"
+      ],
+      "numericContract": "Native rational-angle reflection orbits; approximate float64, no exact certificate",
+      "cellTypeBasis": "Published incidence-matrix counts and polygon windings; native boundary signatures checked on generation.",
+      "coxeterFamily": "H4"
+    },
+    {
+      "key": "star-uniform4-gahi",
+      "name": "grand hecatonicosachoron",
+      "dimension": 4,
+      "family": "Star uniform polychora (Wythoffian)",
+      "bowers": "gahi",
+      "aliases": [
+        "gahi",
+        "grand hecatonicosachoron",
+        "x5o3o5/2o"
+      ],
+      "symbol": "x5o3o5/2o",
+      "coxeterDiagram": "x5o3o5/2o",
+      "diagram": [
+        "5",
+        "3",
+        "5/2"
+      ],
+      "rings": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "counts": [
+        120,
+        720,
+        720,
+        120
+      ],
+      "cellTypes": [
+        {
+          "bowers": "doe",
+          "name": "dodecahedron",
+          "counts": [
+            20,
+            30,
+            12
+          ],
+          "facePolygons": {
+            "5": 12
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/doe.htm",
+          "count": 120,
+          "key": "dodecahedron"
+        }
+      ],
+      "symmetryGroup": "H4",
+      "symmetryGroups": [
+        "H4",
+        "[5,3,5/2]",
+        "[5,3,3]",
+        "[3,3,5]"
+      ],
+      "convex": false,
+      "uniform": true,
+      "regular": true,
+      "vertexTransitive": true,
+      "chiral": false,
+      "classificationVerified": true,
+      "referenceUrls": [
+        "https://bendwavy.org/klitzing/incmats/gahi.htm",
+        "https://bendwavy.org/klitzing/dimensions/polychora-neu.htm"
+      ],
+      "numericContract": "Native rational-angle reflection orbits; approximate float64, no exact certificate",
+      "cellTypeBasis": "Published incidence-matrix counts and polygon windings; native boundary signatures checked on generation.",
+      "coxeterFamily": "H4"
+    },
+    {
+      "key": "star-uniform4-raghi",
+      "name": "rectified grand hecatonicosachoron",
+      "dimension": 4,
+      "family": "Star uniform polychora (Wythoffian)",
+      "bowers": "raghi",
+      "aliases": [
+        "raghi",
+        "rectified grand hecatonicosachoron",
+        "o5x3o5/2o"
+      ],
+      "symbol": "o5x3o5/2o",
+      "coxeterDiagram": "o5x3o5/2o",
+      "diagram": [
+        "5",
+        "3",
+        "5/2"
+      ],
+      "rings": [
+        0,
+        1,
+        0,
+        0
+      ],
+      "counts": [
+        720,
+        3600,
+        3120,
+        240
+      ],
+      "cellTypes": [
+        {
+          "bowers": "id",
+          "name": "icosidodecahedron",
+          "counts": [
+            30,
+            60,
+            32
+          ],
+          "facePolygons": {
+            "3": 20,
+            "5": 12
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/id.htm",
+          "count": 120,
+          "key": "icosidodecahedron"
+        },
+        {
+          "bowers": "gike",
+          "name": "great icosahedron",
+          "counts": [
+            12,
+            30,
+            20
+          ],
+          "facePolygons": {
+            "3": 20
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/gike.htm",
+          "count": 120,
+          "key": "great-icosahedron"
+        }
+      ],
+      "symmetryGroup": "H4",
+      "symmetryGroups": [
+        "H4",
+        "[5,3,5/2]",
+        "[5,3,3]",
+        "[3,3,5]"
+      ],
+      "convex": false,
+      "uniform": true,
+      "regular": false,
+      "vertexTransitive": true,
+      "chiral": false,
+      "classificationVerified": true,
+      "referenceUrls": [
+        "https://bendwavy.org/klitzing/incmats/raghi.htm",
+        "https://bendwavy.org/klitzing/dimensions/polychora-neu.htm"
+      ],
+      "numericContract": "Native rational-angle reflection orbits; approximate float64, no exact certificate",
+      "cellTypeBasis": "Published incidence-matrix counts and polygon windings; native boundary signatures checked on generation.",
+      "coxeterFamily": "H4"
+    },
+    {
+      "key": "star-uniform4-ragishi",
+      "name": "rectified great stellated hecatonicosachoron",
+      "dimension": 4,
+      "family": "Star uniform polychora (Wythoffian)",
+      "bowers": "ragishi",
+      "aliases": [
+        "ragishi",
+        "rectified great stellated hecatonicosachoron",
+        "o5/2x3o5o"
+      ],
+      "symbol": "o5/2x3o5o",
+      "coxeterDiagram": "o5/2x3o5o",
+      "diagram": [
+        "5/2",
+        "3",
+        "5"
+      ],
+      "rings": [
+        0,
+        1,
+        0,
+        0
+      ],
+      "counts": [
+        720,
+        3600,
+        3120,
+        240
+      ],
+      "cellTypes": [
+        {
+          "bowers": "gid",
+          "name": "great icosidodecahedron",
+          "counts": [
+            30,
+            60,
+            32
+          ],
+          "facePolygons": {
+            "3": 20,
+            "5/2": 12
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/gid.htm",
+          "count": 120,
+          "key": "antiprism-u54"
+        },
+        {
+          "bowers": "ike",
+          "name": "icosahedron",
+          "counts": [
+            12,
+            30,
+            20
+          ],
+          "facePolygons": {
+            "3": 20
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/ike.htm",
+          "count": 120,
+          "key": "icosahedron"
+        }
+      ],
+      "symmetryGroup": "H4",
+      "symmetryGroups": [
+        "H4",
+        "[5/2,3,5]",
+        "[5,3,3]",
+        "[3,3,5]"
+      ],
+      "convex": false,
+      "uniform": true,
+      "regular": false,
+      "vertexTransitive": true,
+      "chiral": false,
+      "classificationVerified": true,
+      "referenceUrls": [
+        "https://bendwavy.org/klitzing/incmats/ragishi.htm",
+        "https://bendwavy.org/klitzing/dimensions/polychora-neu.htm"
+      ],
+      "numericContract": "Native rational-angle reflection orbits; approximate float64, no exact certificate",
+      "cellTypeBasis": "Published incidence-matrix counts and polygon windings; native boundary signatures checked on generation.",
+      "coxeterFamily": "H4"
+    },
+    {
+      "key": "star-uniform4-gishi",
+      "name": "great stellated hecatonicosachoron",
+      "dimension": 4,
+      "family": "Star uniform polychora (Wythoffian)",
+      "bowers": "gishi",
+      "aliases": [
+        "gishi",
+        "great stellated hecatonicosachoron",
+        "o5o3o5/2x"
+      ],
+      "symbol": "o5o3o5/2x",
+      "coxeterDiagram": "o5o3o5/2x",
+      "diagram": [
+        "5",
+        "3",
+        "5/2"
+      ],
+      "rings": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "counts": [
+        120,
+        720,
+        720,
+        120
+      ],
+      "cellTypes": [
+        {
+          "bowers": "gissid",
+          "name": "great stellated dodecahedron",
+          "counts": [
+            20,
+            30,
+            12
+          ],
+          "facePolygons": {
+            "5/2": 12
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/gissid.htm",
+          "count": 120,
+          "key": "great-stellated-dodecahedron"
+        }
+      ],
+      "symmetryGroup": "H4",
+      "symmetryGroups": [
+        "H4",
+        "[5,3,5/2]",
+        "[5,3,3]",
+        "[3,3,5]"
+      ],
+      "convex": false,
+      "uniform": true,
+      "regular": true,
+      "vertexTransitive": true,
+      "chiral": false,
+      "classificationVerified": true,
+      "referenceUrls": [
+        "https://bendwavy.org/klitzing/incmats/gishi.htm",
+        "https://bendwavy.org/klitzing/dimensions/polychora-neu.htm"
+      ],
+      "numericContract": "Native rational-angle reflection orbits; approximate float64, no exact certificate",
+      "cellTypeBasis": "Published incidence-matrix counts and polygon windings; native boundary signatures checked on generation.",
+      "coxeterFamily": "H4"
+    },
+    {
+      "key": "star-uniform4-taghi",
+      "name": "truncated grand hecatonicosachoron",
+      "dimension": 4,
+      "family": "Star uniform polychora (Wythoffian)",
+      "bowers": "taghi",
+      "aliases": [
+        "taghi",
+        "truncated grand hecatonicosachoron",
+        "x5x3o5/2o"
+      ],
+      "symbol": "x5x3o5/2o",
+      "coxeterDiagram": "x5x3o5/2o",
+      "diagram": [
+        "5",
+        "3",
+        "5/2"
+      ],
+      "rings": [
+        1,
+        1,
+        0,
+        0
+      ],
+      "counts": [
+        1440,
+        4320,
+        3120,
+        240
+      ],
+      "cellTypes": [
+        {
+          "bowers": "tid",
+          "name": "truncated dodecahedron",
+          "counts": [
+            60,
+            90,
+            32
+          ],
+          "facePolygons": {
+            "10": 12,
+            "3": 20
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/tid.htm",
+          "count": 120,
+          "key": "truncated-dodecahedron"
+        },
+        {
+          "bowers": "gike",
+          "name": "great icosahedron",
+          "counts": [
+            12,
+            30,
+            20
+          ],
+          "facePolygons": {
+            "3": 20
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/gike.htm",
+          "count": 120,
+          "key": "great-icosahedron"
+        }
+      ],
+      "symmetryGroup": "H4",
+      "symmetryGroups": [
+        "H4",
+        "[5,3,5/2]",
+        "[5,3,3]",
+        "[3,3,5]"
+      ],
+      "convex": false,
+      "uniform": true,
+      "regular": false,
+      "vertexTransitive": true,
+      "chiral": false,
+      "classificationVerified": true,
+      "referenceUrls": [
+        "https://bendwavy.org/klitzing/incmats/taghi.htm",
+        "https://bendwavy.org/klitzing/dimensions/polychora-neu.htm"
+      ],
+      "numericContract": "Native rational-angle reflection orbits; approximate float64, no exact certificate",
+      "cellTypeBasis": "Published incidence-matrix counts and polygon windings; native boundary signatures checked on generation.",
+      "coxeterFamily": "H4"
+    },
+    {
+      "key": "star-uniform4-sraghi",
+      "name": "small rhombated grand hecatonicosachoron",
+      "dimension": 4,
+      "family": "Star uniform polychora (Wythoffian)",
+      "bowers": "sraghi",
+      "aliases": [
+        "sraghi",
+        "small rhombated grand hecatonicosachoron",
+        "x5o3x5/2o"
+      ],
+      "symbol": "x5o3x5/2o",
+      "coxeterDiagram": "x5o3x5/2o",
+      "diagram": [
+        "5",
+        "3",
+        "5/2"
+      ],
+      "rings": [
+        1,
+        0,
+        1,
+        0
+      ],
+      "counts": [
+        3600,
+        10800,
+        8160,
+        960
+      ],
+      "cellTypes": [
+        {
+          "bowers": "srid",
+          "name": "small rhombicosidodecahedron",
+          "counts": [
+            60,
+            120,
+            62
+          ],
+          "facePolygons": {
+            "3": 20,
+            "4": 30,
+            "5": 12
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/srid.htm",
+          "count": 120
+        },
+        {
+          "bowers": "stip",
+          "name": "stellated pentagonal prism",
+          "counts": [
+            10,
+            15,
+            7
+          ],
+          "facePolygons": {
+            "4": 5,
+            "5/2": 2
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/stip.htm",
+          "count": 720
+        },
+        {
+          "bowers": "gid",
+          "name": "great icosidodecahedron",
+          "counts": [
+            30,
+            60,
+            32
+          ],
+          "facePolygons": {
+            "3": 20,
+            "5/2": 12
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/gid.htm",
+          "count": 120,
+          "key": "antiprism-u54"
+        }
+      ],
+      "symmetryGroup": "H4",
+      "symmetryGroups": [
+        "H4",
+        "[5,3,5/2]",
+        "[5,3,3]",
+        "[3,3,5]"
+      ],
+      "convex": false,
+      "uniform": true,
+      "regular": false,
+      "vertexTransitive": true,
+      "chiral": false,
+      "classificationVerified": true,
+      "referenceUrls": [
+        "https://bendwavy.org/klitzing/incmats/sraghi.htm",
+        "https://bendwavy.org/klitzing/dimensions/polychora-neu.htm"
+      ],
+      "numericContract": "Native rational-angle reflection orbits; approximate float64, no exact certificate",
+      "cellTypeBasis": "Published incidence-matrix counts and polygon windings; native boundary signatures checked on generation.",
+      "coxeterFamily": "H4"
+    },
+    {
+      "key": "star-uniform4-siddapady",
+      "name": "small disprismatodishecatonicosachoron",
+      "dimension": 4,
+      "family": "Star uniform polychora (Wythoffian)",
+      "bowers": "siddapady",
+      "aliases": [
+        "siddapady",
+        "small disprismatodishecatonicosachoron",
+        "x5o3o5/2x"
+      ],
+      "symbol": "x5o3o5/2x",
+      "coxeterDiagram": "x5o3o5/2x",
+      "diagram": [
+        "5",
+        "3",
+        "5/2"
+      ],
+      "rings": [
+        1,
+        0,
+        0,
+        1
+      ],
+      "counts": [
+        2400,
+        7200,
+        6480,
+        1680
+      ],
+      "cellTypes": [
+        {
+          "bowers": "doe",
+          "name": "dodecahedron",
+          "counts": [
+            20,
+            30,
+            12
+          ],
+          "facePolygons": {
+            "5": 12
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/doe.htm",
+          "count": 120,
+          "key": "dodecahedron"
+        },
+        {
+          "bowers": "pip",
+          "name": "pentagonal prism",
+          "counts": [
+            10,
+            15,
+            7
+          ],
+          "facePolygons": {
+            "4": 5,
+            "5": 2
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/pip.htm",
+          "count": 720,
+          "key": "uniform-prism-5"
+        },
+        {
+          "bowers": "stip",
+          "name": "stellated pentagonal prism",
+          "counts": [
+            10,
+            15,
+            7
+          ],
+          "facePolygons": {
+            "4": 5,
+            "5/2": 2
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/stip.htm",
+          "count": 720
+        },
+        {
+          "bowers": "gissid",
+          "name": "great stellated dodecahedron",
+          "counts": [
+            20,
+            30,
+            12
+          ],
+          "facePolygons": {
+            "5/2": 12
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/gissid.htm",
+          "count": 120,
+          "key": "great-stellated-dodecahedron"
+        }
+      ],
+      "symmetryGroup": "H4",
+      "symmetryGroups": [
+        "H4",
+        "[5,3,5/2]",
+        "[5,3,3]",
+        "[3,3,5]"
+      ],
+      "convex": false,
+      "uniform": true,
+      "regular": false,
+      "vertexTransitive": true,
+      "chiral": false,
+      "classificationVerified": true,
+      "referenceUrls": [
+        "https://bendwavy.org/klitzing/incmats/siddapady.htm",
+        "https://bendwavy.org/klitzing/dimensions/polychora-neu.htm"
+      ],
+      "numericContract": "Native rational-angle reflection orbits; approximate float64, no exact certificate",
+      "cellTypeBasis": "Published incidence-matrix counts and polygon windings; native boundary signatures checked on generation.",
+      "coxeterFamily": "H4"
+    },
+    {
+      "key": "star-uniform4-dahi",
+      "name": "dishecatonicosachoron",
+      "dimension": 4,
+      "family": "Star uniform polychora (Wythoffian)",
+      "bowers": "dahi",
+      "aliases": [
+        "dahi",
+        "dishecatonicosachoron",
+        "o5x3x5/2o"
+      ],
+      "symbol": "o5x3x5/2o",
+      "coxeterDiagram": "o5x3x5/2o",
+      "diagram": [
+        "5",
+        "3",
+        "5/2"
+      ],
+      "rings": [
+        0,
+        1,
+        1,
+        0
+      ],
+      "counts": [
+        3600,
+        7200,
+        3840,
+        240
+      ],
+      "cellTypes": [
+        {
+          "bowers": "ti",
+          "name": "truncated icosahedron",
+          "counts": [
+            60,
+            90,
+            32
+          ],
+          "facePolygons": {
+            "5": 12,
+            "6": 20
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/ti.htm",
+          "count": 120,
+          "key": "truncated-icosahedron"
+        },
+        {
+          "bowers": "tiggy",
+          "name": "truncated great icosahedron",
+          "counts": [
+            60,
+            90,
+            32
+          ],
+          "facePolygons": {
+            "5/2": 12,
+            "6": 20
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/tiggy.htm",
+          "count": 120
+        }
+      ],
+      "symmetryGroup": "H4",
+      "symmetryGroups": [
+        "H4",
+        "[5,3,5/2]",
+        "[5,3,3]",
+        "[3,3,5]"
+      ],
+      "convex": false,
+      "uniform": true,
+      "regular": false,
+      "vertexTransitive": true,
+      "chiral": false,
+      "classificationVerified": true,
+      "referenceUrls": [
+        "https://bendwavy.org/klitzing/incmats/dahi.htm",
+        "https://bendwavy.org/klitzing/dimensions/polychora-neu.htm"
+      ],
+      "numericContract": "Native rational-angle reflection orbits; approximate float64, no exact certificate",
+      "cellTypeBasis": "Published incidence-matrix counts and polygon windings; native boundary signatures checked on generation.",
+      "coxeterFamily": "H4"
+    },
+    {
+      "key": "star-uniform4-graghi",
+      "name": "great rhombated grand hecatonicosachoron",
+      "dimension": 4,
+      "family": "Star uniform polychora (Wythoffian)",
+      "bowers": "graghi",
+      "aliases": [
+        "graghi",
+        "great rhombated grand hecatonicosachoron",
+        "x5x3x5/2o"
+      ],
+      "symbol": "x5x3x5/2o",
+      "coxeterDiagram": "x5x3x5/2o",
+      "diagram": [
+        "5",
+        "3",
+        "5/2"
+      ],
+      "rings": [
+        1,
+        1,
+        1,
+        0
+      ],
+      "counts": [
+        7200,
+        14400,
+        8160,
+        960
+      ],
+      "cellTypes": [
+        {
+          "bowers": "grid",
+          "name": "great (convex) rhombicosidodecahedron (i.e. not qrid)",
+          "counts": [
+            120,
+            180,
+            62
+          ],
+          "facePolygons": {
+            "10": 12,
+            "4": 30,
+            "6": 20
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/grid.htm",
+          "count": 120
+        },
+        {
+          "bowers": "stip",
+          "name": "stellated pentagonal prism",
+          "counts": [
+            10,
+            15,
+            7
+          ],
+          "facePolygons": {
+            "4": 5,
+            "5/2": 2
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/stip.htm",
+          "count": 720
+        },
+        {
+          "bowers": "tiggy",
+          "name": "truncated great icosahedron",
+          "counts": [
+            60,
+            90,
+            32
+          ],
+          "facePolygons": {
+            "5/2": 12,
+            "6": 20
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/tiggy.htm",
+          "count": 120
+        }
+      ],
+      "symmetryGroup": "H4",
+      "symmetryGroups": [
+        "H4",
+        "[5,3,5/2]",
+        "[5,3,3]",
+        "[3,3,5]"
+      ],
+      "convex": false,
+      "uniform": true,
+      "regular": false,
+      "vertexTransitive": true,
+      "chiral": false,
+      "classificationVerified": true,
+      "referenceUrls": [
+        "https://bendwavy.org/klitzing/incmats/graghi.htm",
+        "https://bendwavy.org/klitzing/dimensions/polychora-neu.htm"
+      ],
+      "numericContract": "Native rational-angle reflection orbits; approximate float64, no exact certificate",
+      "cellTypeBasis": "Published incidence-matrix counts and polygon windings; native boundary signatures checked on generation.",
+      "coxeterFamily": "H4"
+    },
+    {
+      "key": "star-uniform4-qragishi",
+      "name": "quasirhombated grand stellated hecatonicosachoron",
+      "dimension": 4,
+      "family": "Star uniform polychora (Wythoffian)",
+      "bowers": "qragishi",
+      "aliases": [
+        "qragishi",
+        "quasirhombated grand stellated hecatonicosachoron",
+        "x5/2o3/2x5o"
+      ],
+      "symbol": "x5/2o3/2x5o",
+      "coxeterDiagram": "x5/2o3/2x5o",
+      "diagram": [
+        "5/2",
+        "3/2",
+        "5"
+      ],
+      "rings": [
+        1,
+        0,
+        1,
+        0
+      ],
+      "counts": [
+        3600,
+        10800,
+        8160,
+        960
+      ],
+      "cellTypes": [
+        {
+          "bowers": "qrid",
+          "name": "quasi rhombicosidodecahedron",
+          "counts": [
+            60,
+            120,
+            62
+          ],
+          "facePolygons": {
+            "3": 20,
+            "4": 30,
+            "5/2": 12
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/qrid.htm",
+          "count": 120
+        },
+        {
+          "bowers": "pip",
+          "name": "pentagonal prism",
+          "counts": [
+            10,
+            15,
+            7
+          ],
+          "facePolygons": {
+            "4": 5,
+            "5": 2
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/pip.htm",
+          "count": 720,
+          "key": "uniform-prism-5"
+        },
+        {
+          "bowers": "id",
+          "name": "icosidodecahedron",
+          "counts": [
+            30,
+            60,
+            32
+          ],
+          "facePolygons": {
+            "3": 20,
+            "5": 12
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/id.htm",
+          "count": 120,
+          "key": "icosidodecahedron"
+        }
+      ],
+      "symmetryGroup": "H4",
+      "symmetryGroups": [
+        "H4",
+        "[5/2,3/2,5]",
+        "[5,3,3]",
+        "[3,3,5]"
+      ],
+      "convex": false,
+      "uniform": true,
+      "regular": false,
+      "vertexTransitive": true,
+      "chiral": false,
+      "classificationVerified": true,
+      "referenceUrls": [
+        "https://bendwavy.org/klitzing/incmats/qraghi.htm",
+        "https://bendwavy.org/klitzing/dimensions/polychora-neu.htm"
+      ],
+      "numericContract": "Native rational-angle reflection orbits; approximate float64, no exact certificate",
+      "cellTypeBasis": "Published incidence-matrix counts and polygon windings; native boundary signatures checked on generation.",
+      "coxeterFamily": "H4"
+    },
+    {
+      "key": "star-uniform4-paqrigshi",
+      "name": "prismatoquasirhombated great stellated hecatonicosachoron",
+      "dimension": 4,
+      "family": "Star uniform polychora (Wythoffian)",
+      "bowers": "paqrigshi",
+      "aliases": [
+        "paqrigshi",
+        "prismatoquasirhombated great stellated hecatonicosachoron",
+        "x5x3o5/3x"
+      ],
+      "symbol": "x5x3o5/3x",
+      "coxeterDiagram": "x5x3o5/3x",
+      "diagram": [
+        "5",
+        "3",
+        "5/3"
+      ],
+      "rings": [
+        1,
+        1,
+        0,
+        1
+      ],
+      "counts": [
+        7200,
+        18000,
+        12480,
+        1680
+      ],
+      "cellTypes": [
+        {
+          "bowers": "tid",
+          "name": "truncated dodecahedron",
+          "counts": [
+            60,
+            90,
+            32
+          ],
+          "facePolygons": {
+            "10": 12,
+            "3": 20
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/tid.htm",
+          "count": 120,
+          "key": "truncated-dodecahedron"
+        },
+        {
+          "bowers": "dip",
+          "name": "decagonal prism",
+          "counts": [
+            20,
+            30,
+            12
+          ],
+          "facePolygons": {
+            "10": 2,
+            "4": 10
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/dip.htm",
+          "count": 720,
+          "key": "uniform-prism-10"
+        },
+        {
+          "bowers": "stip",
+          "name": "stellated pentagonal prism",
+          "counts": [
+            10,
+            15,
+            7
+          ],
+          "facePolygons": {
+            "4": 5,
+            "5/2": 2
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/stip.htm",
+          "count": 720
+        },
+        {
+          "bowers": "qrid",
+          "name": "quasi rhombicosidodecahedron",
+          "counts": [
+            60,
+            120,
+            62
+          ],
+          "facePolygons": {
+            "3": 20,
+            "4": 30,
+            "5/2": 12
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/qrid.htm",
+          "count": 120
+        }
+      ],
+      "symmetryGroup": "H4",
+      "symmetryGroups": [
+        "H4",
+        "[5,3,5/3]",
+        "[5,3,3]",
+        "[3,3,5]"
+      ],
+      "convex": false,
+      "uniform": true,
+      "regular": false,
+      "vertexTransitive": true,
+      "chiral": false,
+      "classificationVerified": true,
+      "referenceUrls": [
+        "https://bendwavy.org/klitzing/incmats/paqraghi.htm",
+        "https://bendwavy.org/klitzing/dimensions/polychora-neu.htm"
+      ],
+      "numericContract": "Native rational-angle reflection orbits; approximate float64, no exact certificate",
+      "cellTypeBasis": "Published incidence-matrix counts and polygon windings; native boundary signatures checked on generation.",
+      "coxeterFamily": "H4"
+    },
+    {
+      "key": "star-uniform4-quippirghi",
+      "name": "quasiprismatorhombated grand hecatonicosachoron",
+      "dimension": 4,
+      "family": "Star uniform polychora (Wythoffian)",
+      "bowers": "quippirghi",
+      "aliases": [
+        "quippirghi",
+        "quasiprismatorhombated grand hecatonicosachoron",
+        "x5/3x3o5x"
+      ],
+      "symbol": "x5/3x3o5x",
+      "coxeterDiagram": "x5/3x3o5x",
+      "diagram": [
+        "5/3",
+        "3",
+        "5"
+      ],
+      "rings": [
+        1,
+        1,
+        0,
+        1
+      ],
+      "counts": [
+        7200,
+        18000,
+        12480,
+        1680
+      ],
+      "cellTypes": [
+        {
+          "bowers": "quitgissid",
+          "name": "quasitruncated great stellated dodecahedron",
+          "counts": [
+            60,
+            90,
+            32
+          ],
+          "facePolygons": {
+            "10/3": 12,
+            "3": 20
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/quitgissid.htm",
+          "count": 120
+        },
+        {
+          "bowers": "stiddip",
+          "name": "(tristrophic) decagrammic prism",
+          "counts": [
+            20,
+            30,
+            12
+          ],
+          "facePolygons": {
+            "10/3": 2,
+            "4": 10
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/stiddip.htm",
+          "count": 720
+        },
+        {
+          "bowers": "pip",
+          "name": "pentagonal prism",
+          "counts": [
+            10,
+            15,
+            7
+          ],
+          "facePolygons": {
+            "4": 5,
+            "5": 2
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/pip.htm",
+          "count": 720,
+          "key": "uniform-prism-5"
+        },
+        {
+          "bowers": "srid",
+          "name": "small rhombicosidodecahedron",
+          "counts": [
+            60,
+            120,
+            62
+          ],
+          "facePolygons": {
+            "3": 20,
+            "4": 30,
+            "5": 12
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/srid.htm",
+          "count": 120
+        }
+      ],
+      "symmetryGroup": "H4",
+      "symmetryGroups": [
+        "H4",
+        "[5/3,3,5]",
+        "[5,3,3]",
+        "[3,3,5]"
+      ],
+      "convex": false,
+      "uniform": true,
+      "regular": false,
+      "vertexTransitive": true,
+      "chiral": false,
+      "classificationVerified": true,
+      "referenceUrls": [
+        "https://bendwavy.org/klitzing/incmats/quippirghi.htm",
+        "https://bendwavy.org/klitzing/dimensions/polychora-neu.htm"
+      ],
+      "numericContract": "Native rational-angle reflection orbits; approximate float64, no exact certificate",
+      "cellTypeBasis": "Published incidence-matrix counts and polygon windings; native boundary signatures checked on generation.",
+      "coxeterFamily": "H4"
+    },
+    {
+      "key": "star-uniform4-gaqrigashi",
+      "name": "great quasirhombated great stellated hecatonicosachoron",
+      "dimension": 4,
+      "family": "Star uniform polychora (Wythoffian)",
+      "bowers": "gaqrigashi",
+      "aliases": [
+        "gaqrigashi",
+        "great quasirhombated great stellated hecatonicosachoron",
+        "x5/3x3x5o"
+      ],
+      "symbol": "x5/3x3x5o",
+      "coxeterDiagram": "x5/3x3x5o",
+      "diagram": [
+        "5/3",
+        "3",
+        "5"
+      ],
+      "rings": [
+        1,
+        1,
+        1,
+        0
+      ],
+      "counts": [
+        7200,
+        14400,
+        8160,
+        960
+      ],
+      "cellTypes": [
+        {
+          "bowers": "gaquatid",
+          "name": "great quasitruncated icosidodecahedron",
+          "counts": [
+            120,
+            180,
+            62
+          ],
+          "facePolygons": {
+            "10/3": 12,
+            "4": 30,
+            "6": 20
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/gaquatid.htm",
+          "count": 120
+        },
+        {
+          "bowers": "pip",
+          "name": "pentagonal prism",
+          "counts": [
+            10,
+            15,
+            7
+          ],
+          "facePolygons": {
+            "4": 5,
+            "5": 2
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/pip.htm",
+          "count": 720,
+          "key": "uniform-prism-5"
+        },
+        {
+          "bowers": "ti",
+          "name": "truncated icosahedron",
+          "counts": [
+            60,
+            90,
+            32
+          ],
+          "facePolygons": {
+            "5": 12,
+            "6": 20
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/ti.htm",
+          "count": 120,
+          "key": "truncated-icosahedron"
+        }
+      ],
+      "symmetryGroup": "H4",
+      "symmetryGroups": [
+        "H4",
+        "[5/3,3,5]",
+        "[5,3,3]",
+        "[3,3,5]"
+      ],
+      "convex": false,
+      "uniform": true,
+      "regular": false,
+      "vertexTransitive": true,
+      "chiral": false,
+      "classificationVerified": true,
+      "referenceUrls": [
+        "https://bendwavy.org/klitzing/incmats/gaqrigashi.htm",
+        "https://bendwavy.org/klitzing/dimensions/polychora-neu.htm"
+      ],
+      "numericContract": "Native rational-angle reflection orbits; approximate float64, no exact certificate",
+      "cellTypeBasis": "Published incidence-matrix counts and polygon windings; native boundary signatures checked on generation.",
+      "coxeterFamily": "H4"
+    },
+    {
+      "key": "star-uniform4-gaquidphihi",
+      "name": "great quasidisprismatohecatonicosihecatonicosachoron",
+      "dimension": 4,
+      "family": "Star uniform polychora (Wythoffian)",
+      "bowers": "gaquidphihi",
+      "aliases": [
+        "gaquidphihi",
+        "great quasidisprismatohecatonicosihecatonicosachoron",
+        "x5x3x5/3x"
+      ],
+      "symbol": "x5x3x5/3x",
+      "coxeterDiagram": "x5x3x5/3x",
+      "diagram": [
+        "5",
+        "3",
+        "5/3"
+      ],
+      "rings": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "counts": [
+        14400,
+        28800,
+        16080,
+        1680
+      ],
+      "cellTypes": [
+        {
+          "bowers": "grid",
+          "name": "great (convex) rhombicosidodecahedron (i.e. not qrid)",
+          "counts": [
+            120,
+            180,
+            62
+          ],
+          "facePolygons": {
+            "10": 12,
+            "4": 30,
+            "6": 20
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/grid.htm",
+          "count": 120
+        },
+        {
+          "bowers": "dip",
+          "name": "decagonal prism",
+          "counts": [
+            20,
+            30,
+            12
+          ],
+          "facePolygons": {
+            "10": 2,
+            "4": 10
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/dip.htm",
+          "count": 720,
+          "key": "uniform-prism-10"
+        },
+        {
+          "bowers": "stiddip",
+          "name": "(tristrophic) decagrammic prism",
+          "counts": [
+            20,
+            30,
+            12
+          ],
+          "facePolygons": {
+            "10/3": 2,
+            "4": 10
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/stiddip.htm",
+          "count": 720
+        },
+        {
+          "bowers": "gaquatid",
+          "name": "great quasitruncated icosidodecahedron",
+          "counts": [
+            120,
+            180,
+            62
+          ],
+          "facePolygons": {
+            "10/3": 12,
+            "4": 30,
+            "6": 20
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/gaquatid.htm",
+          "count": 120
+        }
+      ],
+      "symmetryGroup": "H4",
+      "symmetryGroups": [
+        "H4",
+        "[5,3,5/3]",
+        "[5,3,3]",
+        "[3,3,5]"
+      ],
+      "convex": false,
+      "uniform": true,
+      "regular": false,
+      "vertexTransitive": true,
+      "chiral": false,
+      "classificationVerified": true,
+      "referenceUrls": [
+        "https://bendwavy.org/klitzing/incmats/gaquidphihi.htm",
+        "https://bendwavy.org/klitzing/dimensions/polychora-neu.htm"
+      ],
+      "numericContract": "Native rational-angle reflection orbits; approximate float64, no exact certificate",
+      "cellTypeBasis": "Published incidence-matrix counts and polygon windings; native boundary signatures checked on generation.",
+      "coxeterFamily": "H4"
+    },
+    {
+      "key": "star-uniform4-gohi",
+      "name": "great hecatonicosachoron",
+      "dimension": 4,
+      "family": "Star uniform polychora (Wythoffian)",
+      "bowers": "gohi",
+      "aliases": [
+        "gohi",
+        "great hecatonicosachoron",
+        "x5o5/2o5o"
+      ],
+      "symbol": "x5o5/2o5o",
+      "coxeterDiagram": "x5o5/2o5o",
+      "diagram": [
+        "5",
+        "5/2",
+        "5"
+      ],
+      "rings": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "counts": [
+        120,
+        720,
+        720,
+        120
+      ],
+      "cellTypes": [
+        {
+          "bowers": "gad",
+          "name": "great dodecahedron",
+          "counts": [
+            12,
+            30,
+            12
+          ],
+          "facePolygons": {
+            "5": 12
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/gad.htm",
+          "count": 120,
+          "key": "great-dodecahedron"
+        }
+      ],
+      "symmetryGroup": "H4",
+      "symmetryGroups": [
+        "H4",
+        "[5,5/2,5]",
+        "[5,3,3]",
+        "[3,3,5]"
+      ],
+      "convex": false,
+      "uniform": true,
+      "regular": true,
+      "vertexTransitive": true,
+      "chiral": false,
+      "classificationVerified": true,
+      "referenceUrls": [
+        "https://bendwavy.org/klitzing/incmats/gohi.htm",
+        "https://bendwavy.org/klitzing/dimensions/polychora-neu.htm"
+      ],
+      "numericContract": "Native rational-angle reflection orbits; approximate float64, no exact certificate",
+      "cellTypeBasis": "Published incidence-matrix counts and polygon windings; native boundary signatures checked on generation.",
+      "coxeterFamily": "H4"
+    },
+    {
+      "key": "star-uniform4-righi",
+      "name": "rectified great hecatonicosachoron",
+      "dimension": 4,
+      "family": "Star uniform polychora (Wythoffian)",
+      "bowers": "righi",
+      "aliases": [
+        "righi",
+        "rectified great hecatonicosachoron",
+        "o5x5/2o5o"
+      ],
+      "symbol": "o5x5/2o5o",
+      "coxeterDiagram": "o5x5/2o5o",
+      "diagram": [
+        "5",
+        "5/2",
+        "5"
+      ],
+      "rings": [
+        0,
+        1,
+        0,
+        0
+      ],
+      "counts": [
+        720,
+        3600,
+        2160,
+        240
+      ],
+      "cellTypes": [
+        {
+          "bowers": "did",
+          "name": "dodecadodecahedron",
+          "counts": [
+            30,
+            60,
+            24
+          ],
+          "facePolygons": {
+            "5": 12,
+            "5/2": 12
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/did.htm",
+          "count": 120,
+          "key": "antiprism-u36"
+        },
+        {
+          "bowers": "sissid",
+          "name": "small stellated dodecahedron",
+          "counts": [
+            12,
+            30,
+            12
+          ],
+          "facePolygons": {
+            "5/2": 12
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/sissid.htm",
+          "count": 120,
+          "key": "small-stellated-dodecahedron"
+        }
+      ],
+      "symmetryGroup": "H4",
+      "symmetryGroups": [
+        "H4",
+        "[5,5/2,5]",
+        "[5,3,3]",
+        "[3,3,5]"
+      ],
+      "convex": false,
+      "uniform": true,
+      "regular": false,
+      "vertexTransitive": true,
+      "chiral": false,
+      "classificationVerified": true,
+      "referenceUrls": [
+        "https://bendwavy.org/klitzing/incmats/righi.htm",
+        "https://bendwavy.org/klitzing/dimensions/polychora-neu.htm"
+      ],
+      "numericContract": "Native rational-angle reflection orbits; approximate float64, no exact certificate",
+      "cellTypeBasis": "Published incidence-matrix counts and polygon windings; native boundary signatures checked on generation.",
+      "coxeterFamily": "H4"
+    },
+    {
+      "key": "star-uniform4-tighi",
+      "name": "truncated great hecatonicosachoron",
+      "dimension": 4,
+      "family": "Star uniform polychora (Wythoffian)",
+      "bowers": "tighi",
+      "aliases": [
+        "tighi",
+        "truncated great hecatonicosachoron",
+        "o5o5/2x5x"
+      ],
+      "symbol": "o5o5/2x5x",
+      "coxeterDiagram": "o5o5/2x5x",
+      "diagram": [
+        "5",
+        "5/2",
+        "5"
+      ],
+      "rings": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "counts": [
+        1440,
+        4320,
+        2160,
+        240
+      ],
+      "cellTypes": [
+        {
+          "bowers": "sissid",
+          "name": "small stellated dodecahedron",
+          "counts": [
+            12,
+            30,
+            12
+          ],
+          "facePolygons": {
+            "5/2": 12
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/sissid.htm",
+          "count": 120,
+          "key": "small-stellated-dodecahedron"
+        },
+        {
+          "bowers": "tigid",
+          "name": "truncated great dodecahedron",
+          "counts": [
+            60,
+            90,
+            24
+          ],
+          "facePolygons": {
+            "10": 12,
+            "5/2": 12
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/tigid.htm",
+          "count": 120,
+          "key": "antiprism-u37"
+        }
+      ],
+      "symmetryGroup": "H4",
+      "symmetryGroups": [
+        "H4",
+        "[5,5/2,5]",
+        "[5,3,3]",
+        "[3,3,5]"
+      ],
+      "convex": false,
+      "uniform": true,
+      "regular": false,
+      "vertexTransitive": true,
+      "chiral": false,
+      "classificationVerified": true,
+      "referenceUrls": [
+        "https://bendwavy.org/klitzing/incmats/tighi.htm",
+        "https://bendwavy.org/klitzing/dimensions/polychora-neu.htm"
+      ],
+      "numericContract": "Native rational-angle reflection orbits; approximate float64, no exact certificate",
+      "cellTypeBasis": "Published incidence-matrix counts and polygon windings; native boundary signatures checked on generation.",
+      "coxeterFamily": "H4"
+    },
+    {
+      "key": "star-uniform4-sirghi",
+      "name": "small rhombated great hecatonicosachoron",
+      "dimension": 4,
+      "family": "Star uniform polychora (Wythoffian)",
+      "bowers": "sirghi",
+      "aliases": [
+        "sirghi",
+        "small rhombated great hecatonicosachoron",
+        "x5o5/2x5o"
+      ],
+      "symbol": "x5o5/2x5o",
+      "coxeterDiagram": "x5o5/2x5o",
+      "diagram": [
+        "5",
+        "5/2",
+        "5"
+      ],
+      "rings": [
+        1,
+        0,
+        1,
+        0
+      ],
+      "counts": [
+        3600,
+        10800,
+        7200,
+        960
+      ],
+      "cellTypes": [
+        {
+          "bowers": "raded",
+          "name": "rhombidodecadodecahedron",
+          "counts": [
+            60,
+            120,
+            54
+          ],
+          "facePolygons": {
+            "4": 30,
+            "5": 12,
+            "5/2": 12
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/raded.htm",
+          "count": 120,
+          "key": "antiprism-u38"
+        },
+        {
+          "bowers": "pip",
+          "name": "pentagonal prism",
+          "counts": [
+            10,
+            15,
+            7
+          ],
+          "facePolygons": {
+            "4": 5,
+            "5": 2
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/pip.htm",
+          "count": 720,
+          "key": "uniform-prism-5"
+        },
+        {
+          "bowers": "did",
+          "name": "dodecadodecahedron",
+          "counts": [
+            30,
+            60,
+            24
+          ],
+          "facePolygons": {
+            "5": 12,
+            "5/2": 12
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/did.htm",
+          "count": 120,
+          "key": "antiprism-u36"
+        }
+      ],
+      "symmetryGroup": "H4",
+      "symmetryGroups": [
+        "H4",
+        "[5,5/2,5]",
+        "[5,3,3]",
+        "[3,3,5]"
+      ],
+      "convex": false,
+      "uniform": true,
+      "regular": false,
+      "vertexTransitive": true,
+      "chiral": false,
+      "classificationVerified": true,
+      "referenceUrls": [
+        "https://bendwavy.org/klitzing/incmats/sirghi.htm",
+        "https://bendwavy.org/klitzing/dimensions/polychora-neu.htm"
+      ],
+      "numericContract": "Native rational-angle reflection orbits; approximate float64, no exact certificate",
+      "cellTypeBasis": "Published incidence-matrix counts and polygon windings; native boundary signatures checked on generation.",
+      "coxeterFamily": "H4"
+    },
+    {
+      "key": "star-uniform4-pirghi",
+      "name": "prismatorhombated great hecatonicosachoron",
+      "dimension": 4,
+      "family": "Star uniform polychora (Wythoffian)",
+      "bowers": "pirghi",
+      "aliases": [
+        "pirghi",
+        "prismatorhombated great hecatonicosachoron",
+        "x5x5/2o5x"
+      ],
+      "symbol": "x5x5/2o5x",
+      "coxeterDiagram": "x5x5/2o5x",
+      "diagram": [
+        "5",
+        "5/2",
+        "5"
+      ],
+      "rings": [
+        1,
+        1,
+        0,
+        1
+      ],
+      "counts": [
+        7200,
+        18000,
+        11520,
+        1680
+      ],
+      "cellTypes": [
+        {
+          "bowers": "tigid",
+          "name": "truncated great dodecahedron",
+          "counts": [
+            60,
+            90,
+            24
+          ],
+          "facePolygons": {
+            "10": 12,
+            "5/2": 12
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/tigid.htm",
+          "count": 120,
+          "key": "antiprism-u37"
+        },
+        {
+          "bowers": "dip",
+          "name": "decagonal prism",
+          "counts": [
+            20,
+            30,
+            12
+          ],
+          "facePolygons": {
+            "10": 2,
+            "4": 10
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/dip.htm",
+          "count": 720,
+          "key": "uniform-prism-10"
+        },
+        {
+          "bowers": "pip",
+          "name": "pentagonal prism",
+          "counts": [
+            10,
+            15,
+            7
+          ],
+          "facePolygons": {
+            "4": 5,
+            "5": 2
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/pip.htm",
+          "count": 720,
+          "key": "uniform-prism-5"
+        },
+        {
+          "bowers": "raded",
+          "name": "rhombidodecadodecahedron",
+          "counts": [
+            60,
+            120,
+            54
+          ],
+          "facePolygons": {
+            "4": 30,
+            "5": 12,
+            "5/2": 12
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/raded.htm",
+          "count": 120,
+          "key": "antiprism-u38"
+        }
+      ],
+      "symmetryGroup": "H4",
+      "symmetryGroups": [
+        "H4",
+        "[5,5/2,5]",
+        "[5,3,3]",
+        "[3,3,5]"
+      ],
+      "convex": false,
+      "uniform": true,
+      "regular": false,
+      "vertexTransitive": true,
+      "chiral": false,
+      "classificationVerified": true,
+      "referenceUrls": [
+        "https://bendwavy.org/klitzing/incmats/pirghi.htm",
+        "https://bendwavy.org/klitzing/dimensions/polychora-neu.htm"
+      ],
+      "numericContract": "Native rational-angle reflection orbits; approximate float64, no exact certificate",
+      "cellTypeBasis": "Published incidence-matrix counts and polygon windings; native boundary signatures checked on generation.",
+      "coxeterFamily": "H4"
+    },
+    {
+      "key": "star-uniform4-gashi",
+      "name": "grand stellated hecatonicosachoron",
+      "dimension": 4,
+      "family": "Star uniform polychora (Wythoffian)",
+      "bowers": "gashi",
+      "aliases": [
+        "gashi",
+        "grand stellated hecatonicosachoron",
+        "x5/2o5o5/2o"
+      ],
+      "symbol": "x5/2o5o5/2o",
+      "coxeterDiagram": "x5/2o5o5/2o",
+      "diagram": [
+        "5/2",
+        "5",
+        "5/2"
+      ],
+      "rings": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "counts": [
+        120,
+        720,
+        720,
+        120
+      ],
+      "cellTypes": [
+        {
+          "bowers": "sissid",
+          "name": "small stellated dodecahedron",
+          "counts": [
+            12,
+            30,
+            12
+          ],
+          "facePolygons": {
+            "5/2": 12
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/sissid.htm",
+          "count": 120,
+          "key": "small-stellated-dodecahedron"
+        }
+      ],
+      "symmetryGroup": "H4",
+      "symmetryGroups": [
+        "H4",
+        "[5/2,5,5/2]",
+        "[5,3,3]",
+        "[3,3,5]"
+      ],
+      "convex": false,
+      "uniform": true,
+      "regular": true,
+      "vertexTransitive": true,
+      "chiral": false,
+      "classificationVerified": true,
+      "referenceUrls": [
+        "https://bendwavy.org/klitzing/incmats/gashi.htm",
+        "https://bendwavy.org/klitzing/dimensions/polychora-neu.htm"
+      ],
+      "numericContract": "Native rational-angle reflection orbits; approximate float64, no exact certificate",
+      "cellTypeBasis": "Published incidence-matrix counts and polygon windings; native boundary signatures checked on generation.",
+      "coxeterFamily": "H4"
+    },
+    {
+      "key": "star-uniform4-ragashi",
+      "name": "rectified grand stellated hecatonicosachoron",
+      "dimension": 4,
+      "family": "Star uniform polychora (Wythoffian)",
+      "bowers": "ragashi",
+      "aliases": [
+        "ragashi",
+        "rectified grand stellated hecatonicosachoron",
+        "o5/2x5o5/2o"
+      ],
+      "symbol": "o5/2x5o5/2o",
+      "coxeterDiagram": "o5/2x5o5/2o",
+      "diagram": [
+        "5/2",
+        "5",
+        "5/2"
+      ],
+      "rings": [
+        0,
+        1,
+        0,
+        0
+      ],
+      "counts": [
+        720,
+        3600,
+        2160,
+        240
+      ],
+      "cellTypes": [
+        {
+          "bowers": "did",
+          "name": "dodecadodecahedron",
+          "counts": [
+            30,
+            60,
+            24
+          ],
+          "facePolygons": {
+            "5": 12,
+            "5/2": 12
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/did.htm",
+          "count": 120,
+          "key": "antiprism-u36"
+        },
+        {
+          "bowers": "gad",
+          "name": "great dodecahedron",
+          "counts": [
+            12,
+            30,
+            12
+          ],
+          "facePolygons": {
+            "5": 12
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/gad.htm",
+          "count": 120,
+          "key": "great-dodecahedron"
+        }
+      ],
+      "symmetryGroup": "H4",
+      "symmetryGroups": [
+        "H4",
+        "[5/2,5,5/2]",
+        "[5,3,3]",
+        "[3,3,5]"
+      ],
+      "convex": false,
+      "uniform": true,
+      "regular": false,
+      "vertexTransitive": true,
+      "chiral": false,
+      "classificationVerified": true,
+      "referenceUrls": [
+        "https://bendwavy.org/klitzing/incmats/ragashi.htm",
+        "https://bendwavy.org/klitzing/dimensions/polychora-neu.htm"
+      ],
+      "numericContract": "Native rational-angle reflection orbits; approximate float64, no exact certificate",
+      "cellTypeBasis": "Published incidence-matrix counts and polygon windings; native boundary signatures checked on generation.",
+      "coxeterFamily": "H4"
+    },
+    {
+      "key": "star-uniform4-sirgashi",
+      "name": "small rhombated grand stellated hecatonicosachoron",
+      "dimension": 4,
+      "family": "Star uniform polychora (Wythoffian)",
+      "bowers": "sirgashi",
+      "aliases": [
+        "sirgashi",
+        "small rhombated grand stellated hecatonicosachoron",
+        "x5/2o5x5/2o"
+      ],
+      "symbol": "x5/2o5x5/2o",
+      "coxeterDiagram": "x5/2o5x5/2o",
+      "diagram": [
+        "5/2",
+        "5",
+        "5/2"
+      ],
+      "rings": [
+        1,
+        0,
+        1,
+        0
+      ],
+      "counts": [
+        3600,
+        10800,
+        7200,
+        960
+      ],
+      "cellTypes": [
+        {
+          "bowers": "raded",
+          "name": "rhombidodecadodecahedron",
+          "counts": [
+            60,
+            120,
+            54
+          ],
+          "facePolygons": {
+            "4": 30,
+            "5": 12,
+            "5/2": 12
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/raded.htm",
+          "count": 120,
+          "key": "antiprism-u38"
+        },
+        {
+          "bowers": "stip",
+          "name": "stellated pentagonal prism",
+          "counts": [
+            10,
+            15,
+            7
+          ],
+          "facePolygons": {
+            "4": 5,
+            "5/2": 2
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/stip.htm",
+          "count": 720
+        },
+        {
+          "bowers": "did",
+          "name": "dodecadodecahedron",
+          "counts": [
+            30,
+            60,
+            24
+          ],
+          "facePolygons": {
+            "5": 12,
+            "5/2": 12
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/did.htm",
+          "count": 120,
+          "key": "antiprism-u36"
+        }
+      ],
+      "symmetryGroup": "H4",
+      "symmetryGroups": [
+        "H4",
+        "[5/2,5,5/2]",
+        "[5,3,3]",
+        "[3,3,5]"
+      ],
+      "convex": false,
+      "uniform": true,
+      "regular": false,
+      "vertexTransitive": true,
+      "chiral": false,
+      "classificationVerified": true,
+      "referenceUrls": [
+        "https://bendwavy.org/klitzing/incmats/sirgashi.htm",
+        "https://bendwavy.org/klitzing/dimensions/polychora-neu.htm"
+      ],
+      "numericContract": "Native rational-angle reflection orbits; approximate float64, no exact certificate",
+      "cellTypeBasis": "Published incidence-matrix counts and polygon windings; native boundary signatures checked on generation.",
+      "coxeterFamily": "H4"
+    },
+    {
+      "key": "star-uniform4-quippirgashi",
+      "name": "quasiprismatorhombated grand stellated hecatonicosachoron",
+      "dimension": 4,
+      "family": "Star uniform polychora (Wythoffian)",
+      "bowers": "quippirgashi",
+      "aliases": [
+        "quippirgashi",
+        "quasiprismatorhombated grand stellated hecatonicosachoron",
+        "x5/3x5o5/2x"
+      ],
+      "symbol": "x5/3x5o5/2x",
+      "coxeterDiagram": "x5/3x5o5/2x",
+      "diagram": [
+        "5/3",
+        "5",
+        "5/2"
+      ],
+      "rings": [
+        1,
+        1,
+        0,
+        1
+      ],
+      "counts": [
+        7200,
+        18000,
+        11520,
+        1680
+      ],
+      "cellTypes": [
+        {
+          "bowers": "quitsissid",
+          "name": "quasitruncated small stellated dodecahedron",
+          "counts": [
+            60,
+            90,
+            24
+          ],
+          "facePolygons": {
+            "10/3": 12,
+            "5": 12
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/quitsissid.htm",
+          "count": 120
+        },
+        {
+          "bowers": "stiddip",
+          "name": "(tristrophic) decagrammic prism",
+          "counts": [
+            20,
+            30,
+            12
+          ],
+          "facePolygons": {
+            "10/3": 2,
+            "4": 10
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/stiddip.htm",
+          "count": 720
+        },
+        {
+          "bowers": "stip",
+          "name": "stellated pentagonal prism",
+          "counts": [
+            10,
+            15,
+            7
+          ],
+          "facePolygons": {
+            "4": 5,
+            "5/2": 2
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/stip.htm",
+          "count": 720
+        },
+        {
+          "bowers": "raded",
+          "name": "rhombidodecadodecahedron",
+          "counts": [
+            60,
+            120,
+            54
+          ],
+          "facePolygons": {
+            "4": 30,
+            "5": 12,
+            "5/2": 12
+          },
+          "referenceUrl": "https://bendwavy.org/klitzing/incmats/raded.htm",
+          "count": 120,
+          "key": "antiprism-u38"
+        }
+      ],
+      "symmetryGroup": "H4",
+      "symmetryGroups": [
+        "H4",
+        "[5/3,5,5/2]",
+        "[5,3,3]",
+        "[3,3,5]"
+      ],
+      "convex": false,
+      "uniform": true,
+      "regular": false,
+      "vertexTransitive": true,
+      "chiral": false,
+      "classificationVerified": true,
+      "referenceUrls": [
+        "https://bendwavy.org/klitzing/incmats/quippirgashi.htm",
+        "https://bendwavy.org/klitzing/dimensions/polychora-neu.htm"
+      ],
+      "numericContract": "Native rational-angle reflection orbits; approximate float64, no exact certificate",
+      "cellTypeBasis": "Published incidence-matrix counts and polygon windings; native boundary signatures checked on generation.",
+      "coxeterFamily": "H4"
+    }
+  ],
+  "excludedCandidates": [],
+  "referenceReviewed": "2026-10-26"
+}

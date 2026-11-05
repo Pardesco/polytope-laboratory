@@ -189,11 +189,28 @@ def test_geometry_equal_attribute_edits_seed_new_source_root_but_view_pose_does_
     assert model(replay_placement_document(result)) == model(result) and current == before
     unchanged = native_run(document(), 'transform', {'scale':1})
     unchanged['states'][-1]['view']['angles'][0] = 27
-    unchanged['states'][-1]['notes'] = 'Edited notes'
     result = run_placement(unchanged, params())
     assert len(result['operationHistory']['nodes']) == 3
     assert result['operationHistory']['nodes'][-1]['parent'] == unchanged['states'][-1]['operationNode']
-    assert result['states'][-1]['notes'] == 'Edited notes' and result['states'][-1]['view']['angles'][0] == 27
+    assert result['states'][-1]['view']['angles'][0] == 27
+
+
+def test_edited_notes_reseed_literal_content_before_placement_and_replay():
+    current = native_run(document(), 'transform', {'scale':1})
+    current['states'][-1]['notes'] = 'Edited notes'
+    current['states'][-1]['view']['angles'][0] = 27
+    before = deepcopy(current)
+    result = run_placement(current, params())
+    nodes = result['operationHistory']['nodes']
+    assert len(nodes) == 4 and nodes[:2] == before['operationHistory']['nodes']
+    source, operation = nodes[-2:]
+    assert source['op'] == 'source' and source['parent'] == current['states'][-1]['operationNode']
+    assert source['inputs'] == [] and source['snapshot']['model'] == model(current)
+    assert source['snapshot']['notes'] == 'Edited notes'
+    assert operation['parent'] == source['id'] and operation['inputs'] == [source['id']]
+    replayed = replay_placement_document(result)['states'][0]
+    assert replayed['model'] == model(result) and replayed['notes'] == 'Edited notes'
+    assert result['states'][-1]['view']['angles'][0] == 27 and current == before
 
 
 @pytest.mark.parametrize('change', [

@@ -47,8 +47,15 @@ export class ProjectiveDualControls{
   }
   select(kind,index){this.verify();const list=kind==='vertex'?this.descriptor.vertices:kind==='edge'?this.descriptor.edges:this.descriptor.faces;if(!Number.isInteger(index)||index<0||index>=list.length)throw Error('Choose a retained reciprocal element ID.');this.view?.select(kind,index);this.context.onSelect?.(kind==='vertex'?'face':kind==='face'?'vertex':'edge',index);return list[index];}
   saveCamera(camera){this.verify();this.context.getState().view.projectiveDualCamera=clone(camera);this.context.markDirty?.();}
-  async export(){this.verify();const image=this.view.image();this.verify();const result=await this.context.saveImage(image,'Projective reciprocal.png');if(result?.path)this.status('Saved '+result.path);return result;}
-  close(){this.view?.destroy();this.view=null;this.dialog?.close();this.dialog?.remove();this.dialog=null;this.owner=null;this.descriptor=null;}
+  async export(){
+    if(this.imageExport)throw Error('Finish or cancel the current projective image export first.');
+    this.verify();const owner=this.owner,view=this.view,controller=new AbortController();this.imageExport=controller;
+    const camera=()=>JSON.stringify([view.cameraState?.(),owner.native.state.view.projectiveDualCamera]);
+    const expected=camera(),check=()=>{this.verify(owner);if(this.owner!==owner||this.view!==view||camera()!==expected)throw Error('Projective view changed. Capture it again.');};
+    try{const image=view.image();check();const result=await this.context.saveImage(image,'Projective reciprocal.png',{verify:check,signal:controller.signal});check();if(result?.path)this.status('Saved '+result.path);return result;}
+    finally{if(this.imageExport===controller)this.imageExport=null;}
+  }
+  close(){this.imageExport?.abort();this.view?.destroy();this.view=null;this.dialog?.close();this.dialog?.remove();this.dialog=null;this.owner=null;this.descriptor=null;}
   cancel(){this.generation++;this.entry?.cancel();this.job?.abort();this.close();}
   sync(){if(this.panel&&!this.busy&&this.context.getState()!==this.formSource){this.formSource=this.context.getState();const settings=this.formSource?.view.projectiveDual?.settings;this.node('center').value=settings?.center?.join(', ')??'';this.node('radius').value=settings?.radius??1;this.node('bound').value=settings?.clipBound??4;}if(this.owner){try{this.verify();}catch{this.close();}}if(!this.panel)return;const state=this.context.getState(),blocked=this.busy||this.context.isExporting?.();for(const n of this.panel.querySelectorAll('input'))n.disabled=blocked;this.node('apply').disabled=blocked||state?.model.dimension!==3;this.node('show').disabled=blocked||!state?.view.projectiveDual;this.node('cancel').hidden=!this.busy;}
 }

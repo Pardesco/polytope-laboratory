@@ -2,12 +2,12 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {TorusControls} from '../ui/torus-controls.mjs';
 import {numericControlFixture,deferred,flush} from './numeric-control-fixture.mjs';
-const fixture=()=>numericControlFixture(TorusControls.prototype,{'torus-ring-segments':'10','torus-arm-segments':'8','torus-arm-ratio':'1/2','torus-ring-radius':'sqrt(4)','generate-torus':''});
+const fixture=()=>numericControlFixture(TorusControls.prototype,{'torus-twist':'0','torus-ring-segments':'10','torus-arm-segments':'8','torus-arm-ratio':'1/2','torus-ring-radius':'sqrt(4)','generate-torus':''});
 test('counts and sizes share one native job and preserve source/units/RGBA while generating',async()=>{
   const f=fixture(),before=structuredClone(f.project);f.nodes['torus-ring-segments'].value='2+3';
   assert.equal(await f.control.generate(),f.result);
   assert.deepEqual(f.calls,[['torus',{ring_segments:5,arm_segments:8,arm_ratio:.5,ring_radius:2}]]);
-  assert.deepEqual(f.expressionCalls.map(c=>c.parts),[['2+3','8','1/2','sqrt(4)']]);assert.deepEqual(f.project,before);
+  assert.deepEqual(f.expressionCalls.map(c=>c.parts),[['2+3','8','0','1/2','sqrt(4)']]);assert.deepEqual(f.project,before);
   assert.equal(f.control.busy,false);assert.equal(typeof f.options[0].verifyPublication,'function');
 });
 test('integer/range/product checks occur after expression evaluation without native geometry publication',async()=>{
@@ -31,13 +31,13 @@ test('export and full source edits during evaluation reject and restore visible 
   for(const change of [f=>f.setExport(true),f=>f.state.model.metadata.offColors.faces[0].values[3]=.1,
     f=>f.state.view.coordinateUnit='cm',f=>f.state.notes='Changed',f=>f.setProject({...f.project})]){
     const f=fixture(),hold=deferred();f.context.evaluateMany=()=>hold.promise;const running=f.control.generate();
-    assert.ok(Object.values(f.nodes).every(n=>n.disabled));change(f);hold.resolve([10,8,.5,2]);
+    assert.ok(Object.values(f.nodes).every(n=>n.disabled));change(f);hold.resolve([10,8,0,.5,2]);
     await assert.rejects(running);assert.equal(f.calls.length,0);assert.equal(f.control.busy,false);
   }
 });
 test('later count/size edits reject instead of silently publishing the captured request',async()=>{
   const f=fixture(),hold=deferred();f.context.evaluateMany=()=>hold.promise;const running=f.control.generate();
-  f.nodes['torus-ring-segments'].value='12';hold.resolve([10,8,.5,2]);await assert.rejects(running,/target fields/);assert.equal(f.calls.length,0);
+  f.nodes['torus-ring-segments'].value='12';hold.resolve([10,8,0,.5,2]);await assert.rejects(running,/target fields/);assert.equal(f.calls.length,0);
 });
 test('native continuation checks the same fence; observer motion is independent',async()=>{
   for(const change of [f=>f.state.notes='Changed',f=>{f.state.view.angles[0]=90;f.state.view.camera={zoom:2};}]){
@@ -52,5 +52,5 @@ test('busy, canceled waits and refusal permit a fresh explicit retry without lat
   const f=fixture(),hold=deferred();f.context.evaluateMany=()=>hold.promise;const running=f.control.generate();
   await assert.rejects(f.control.generate(),/current torus/);f.control.cancel();await assert.rejects(running,{name:'AbortError'});
   assert.equal(f.control.busy,false);assert.ok(Object.values(f.nodes).every(n=>!n.disabled));
-  f.context.evaluateMany=async()=>[10,8,.5,2];await f.control.generate();hold.resolve([12,8,.5,2]);await flush();assert.equal(f.calls.length,1);
+  f.context.evaluateMany=async()=>[10,8,0,.5,2];await f.control.generate();hold.resolve([12,8,0,.5,2]);await flush();assert.equal(f.calls.length,1);
 });

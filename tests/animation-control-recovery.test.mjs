@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {AnimationControls} from '../ui/animation-controls.mjs';
-import {createSequence} from '../ui/animation.mjs';
+import {createSequence,withSequenceTracks} from '../ui/animation.mjs';
 import {transferObservationControls} from '../ui/observation-controls.mjs';
 function fixture(){
   const controls=()=>({enabled:true,enableDamping:true,update(){}}),viewer=()=>({controls:controls(),setDisplay(){},draw(){},image:()=> 'data:image/png;base64,AA=='});
@@ -20,6 +20,29 @@ test('completed frame export restores the replacement camera without changing th
   assert.equal(f.base.controls.enabled,true);assert.equal(f.derived.controls.enabled,true);assert.equal(f.derived.controls.enableDamping,true);assert.equal(f.control.exporting,false);
 });
 
+test('observation is frozen throughout a held export dialog and restored on cancellation or dialog failure',async()=>{
+  for(const fail of [false,true]){
+    const f=fixture();let resolve,reject;
+    f.context.api.animationBegin=()=>new Promise((a,b)=>{resolve=a;reject=b;});
+    const pending=f.control.export('png');await Promise.resolve();
+    assert.equal(f.control.exporting,true);assert.equal(f.base.controls.enabled,false);assert.equal(f.derived.controls.enabled,false);
+    assert.equal(f.base.controls.enableDamping,false);
+    if(fail){reject(Error('Native dialog failed'));await assert.rejects(pending,/Native dialog failed/);}else{resolve(null);await pending;}
+    assert.equal(f.base.controls.enabled,true);assert.equal(f.derived.controls.enabled,true);assert.equal(f.base.controls.enableDamping,true);
+    assert.equal(f.control.exporting,false);assert.deepEqual(f.writes,[]);assert.deepEqual(f.aborted,[]);
+  }
+});
+
+test('native track preparation cannot run before the export camera lock is acquired',async()=>{
+  const f=fixture();let prepared=0;
+  f.state.view.animation=withSequenceTracks(f.state.view.animation,{explosion:{direction:'radial'}},{explosionAmount:0});
+  f.control.trackSessions={prepare:async()=>{
+    assert.equal(f.base.controls.enabled,false);assert.equal(f.derived.controls.enabled,false);prepared++;
+    return {restore:async()=>{},destroy(){}};
+  }};
+  f.context.api.animationBegin=async()=>null;await f.control.export('png');assert.equal(prepared,1);assert.equal(f.base.controls.enabled,true);assert.equal(f.derived.controls.enabled,true);
+});
+
 test('native export failure aborts its session and restores observation after control rebinding',async()=>{
   const f=fixture();f.context.api.animationWrite=async()=>{throw Error('Native frame write failed');};
   await assert.rejects(f.control.export('png'),/Native frame write failed/);assert.deepEqual(f.aborted,['capture']);
@@ -30,4 +53,19 @@ test('restoration errors cannot leave observation or export busy state held',asy
   const f=fixture();f.base.setDisplay=()=>{throw Error('Presentation restoration failed');};
   await assert.rejects(f.control.export('png'),/Presentation restoration failed/);
   assert.equal(f.base.controls.enabled,true);assert.equal(f.derived.controls.enabled,true);assert.equal(f.control.exporting,false);assert.equal(f.control.exportView,null);
+});
+
+test('an export-state callback failure cannot leave the workspace marked as exporting',async()=>{
+  const f=fixture(),states=[];
+  f.context.onExportStateChange=()=>{states.push(f.control.exporting);if(f.control.exporting)throw Error('Failed to lock an input');};
+  await assert.rejects(f.control.export('png'),/Failed to lock an input/);
+  assert.deepEqual(states,[true,false]);assert.equal(f.control.exporting,false);assert.equal(f.control.exportView,null);assert.equal(f.base.controls.enabled,true);
+});
+
+test('a control restoration failure still releases the export busy state and notifies the UI',async()=>{
+  const f=fixture(),states=[];let enabled=true;
+  Object.defineProperty(f.base.controls,'enabled',{get:()=>enabled,set:value=>{if(value&&f.control.exporting)throw Error('Camera restoration failed');enabled=value;}});
+  f.context.onExportStateChange=()=>states.push(f.control.exporting);
+  await assert.rejects(f.control.export('png'),/Camera restoration failed/);
+  assert.deepEqual(states,[true,false]);assert.equal(f.control.exporting,false);assert.equal(f.control.exportView,null);assert.equal(f.derived.controls.enabled,true);
 });

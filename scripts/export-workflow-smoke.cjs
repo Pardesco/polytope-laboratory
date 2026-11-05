@@ -1,4 +1,5 @@
 const {_electron:electron}=require('playwright'),fs=require('node:fs/promises'),path=require('node:path'),assert=require('node:assert/strict');
+const {reveal}=require('./smoke-helpers.cjs');
 const root=path.resolve(__dirname,'..'),visible=process.argv.includes('--visible');
 async function main(){
   const folder=await fs.mkdtemp(path.join(root,'artifacts','export-workflow-')),profile=path.join(folder,'profile');await fs.mkdir(profile);
@@ -16,10 +17,10 @@ async function main(){
         ipcMain.handle(channel,async(event,...args)=>{if(kind!=='begin')h.events.push({kind,id:args[0]});try{const result=await original(event,...args);if(kind==='begin'&&result)h.tickets.push(result.id);return result;}finally{if(kind!=='begin')h.ended.add(args[0]);}});
       }
     });
-    page=await app.firstWindow();page.setDefaultTimeout(30000);page.on('pageerror',error=>errors.push(error.message));
+    page=await app.firstWindow();require('./smoke-helpers.cjs').autoReveal(page);page.setDefaultTimeout(30000);page.on('pageerror',error=>errors.push(error.message));
     const ready=()=>page.waitForFunction(()=>document.getElementById('cancel').hidden);
     const preview=()=>page.waitForFunction(()=>document.getElementById('export-preview').dataset.status==='ready'&&!document.getElementById('confirm-export').disabled);
-    const open=async()=>{await page.locator('#export').click();await preview();};
+    const open=async()=>{await page.locator('#export').click();await reveal(page,'#export-format');await preview();};
     const saveDialog=async file=>app.evaluate(({dialog},file)=>{dialog.showSaveDialog=async(...args)=>{globalThis.lastGeometrySaveOptions=args.at(-1);return {canceled:false,filePath:file};};},file);
     const write=async(format,name,unit='in',source='base',{staleClose=false}={})=>{
       await open();if(source!=='base')await page.locator('#export-source').selectOption(source);
@@ -32,7 +33,8 @@ async function main(){
     await page.waitForFunction(()=>document.getElementById('model-name')?.textContent==='Tesseract'&&document.getElementById('cancel').hidden);
     await open();
     const availability=await page.locator('#export-format').evaluate(select=>Object.fromEntries(Array.from(select.options).map(option=>[option.value,!option.disabled])));
-    assert.deepEqual(availability,{off:true,json:true,obj:false,stl:false,dxf:false,vrml:false,pov:false});
+    // Intrinsic (default) export of a 4D model: only OFF/JSON carry cells; interchange formats (3MF/GLB/X3D, W16/printable) stay listed but disabled.
+    assert.deepEqual(availability,{off:true,json:true,obj:false,stl:false,'3mf':false,dxf:false,vrml:false,pov:false,glb:false,x3d:false});
     assert.equal(await page.locator('#export-net').isDisabled(),true);assert.equal(await page.locator('#export-net-pdf').isDisabled(),true);
     assert.equal(await page.locator('#export-units option[value="mm"]').evaluate(option=>option.disabled),true);
     await page.screenshot({path:path.join(folder,'4d-formats.png')});await page.keyboard.press('Escape');

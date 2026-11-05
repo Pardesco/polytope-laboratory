@@ -39,6 +39,22 @@ changed. Full regression and exhaustive comparison runs are optional during
 feature development; use them when investigating a regression or preparing a
 stable release.
 
+For a source-qualified development check, run these sequentially from the
+workspace root:
+
+```powershell
+node scripts/qualify-frontend-development.cjs
+python -B scripts/qualify-native-development.py
+```
+
+The frontend runner checks that `test:features` includes every shipped-code test
+file. Its receipt lists the named development-only prototype exclusions, executed
+commands and source hashes. Both runners bind their source inputs before and
+after testing, including native and JavaScript helpers used across the boundary.
+Do not edit bound inputs during a run. Preserve existing receipts and raw logs
+under distinct names before rerunning; the runners refuse to overwrite receipts.
+Use the current session handoff for the separate packaged desktop workflows.
+
 ## Reporting bugs
 
 Include the application version, operating system, steps to reproduce, expected

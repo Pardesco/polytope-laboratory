@@ -95,7 +95,9 @@ combinations. Radial transition explosions combine multiplicatively with a
 saved radial track: `(1 + amount) * factor - 1`, bounded to amount 10. A saved
 normal explosion combined with a radial transition, fold combined with entity
 explosion, unsupported generalized entity directions, and excessive amounts
-are diagnosed. Their saved data remain readable. There is no vertex morph.
+are diagnosed. Their saved data remain readable. The separate **morph to dual**
+transition now renders a single native sizing morph when the next event is a
+verified finite reciprocal; see [W29](W29_ANIMATION.md). It is not a crossfade.
 
 `apply(time,{signal})` resolves a complete publication. `current(publication)`
 checks whether that publication still owns the current fine pose, and
@@ -138,10 +140,10 @@ the renderer's complete fine current pose before every PNG or recorder copy.
 PNG uses the existing uniform `i/fps` native manifest grid plus the exact final
 endpoint. It does not insert arbitrary event boundaries that would make that
 manifest false. Current native limits cap capture at 300 seconds and existing
-sequence frame/FPS limits. Longer tours remain readable. WebM uses the existing
-cold-start-safe recorder and encoder-drain path; it is real-time recording, so
-slow rendering can lengthen its encoded duration. It does not promise
-deterministic video timestamps or compression bytes.
+sequence frame/FPS limits. Longer tours remain readable. WebM uses offline
+VP8 WebCodecs encoding with one immutable frame per awaited exact pose and
+explicit microsecond timestamps. Slow rendering increases processing time,
+without changing the video timeline. Compression bytes remain codec-dependent.
 
 Cancellation aborts preparation, recorder work, and native staging. The last
 composite time is restored only while source ownership still matches. Once

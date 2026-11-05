@@ -70,6 +70,16 @@ Persist the graph as `document.operationHistory` and associate each saved state 
 
 `append_operation` accepts an existing source node or an earlier operation result as the parent. If the requested source ID is missing, it records a new source first and returns both records in one new history. If that ID already exists, the current source geometry must match its retained snapshot; current display edits are allowed. Changed geometry requires a new source node ID, so old branches remain intact. Failure in either record leaves the original immutable history unchanged. Native recipes seed associations for prior legacy states before attaching the first operation graph. Project validation checks all associations. Creating an operation after Undo may replace the redo portion of linear history, while the discarded result remains retained in the append-only graph.
 
+Content-aware recipes also compare the current notes, effective display units
+and element-content ownership with the retained parent. If that literal context
+changed, they append a new full source snapshot and make the new operation depend
+on it, preserving the older graph. This lets replay recover edited notes and
+content even when geometry is equal. Camera-angle edits alone do not require
+this source snapshot. The document association check above still permits current
+context edits without rewriting an existing immutable node; association validity
+and the source required for a subsequent reproducible operation are separate
+checks.
+
 ## Bounds and independent verification
 
 Graphs allow at most 1,024 nodes, 16 input references per node, 32 MiB per serialized node and 128 MiB per graph. Traversal is capped at depth 64 and eight million values; finite plain UTF-8 JSON is required. Cyclic Python containers, nonfinite numbers and non-JSON values are rejected before publication.

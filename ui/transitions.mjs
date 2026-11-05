@@ -1,5 +1,5 @@
 /** Presentation-only transition math. No renderer or saved geometry is changed. */
-export const TRANSITION_METHODS=Object.freeze(['instant','sideways','orbit','shrink-grow','explode-grow','shrink-implode','explode-implode','combination']);
+export const TRANSITION_METHODS=Object.freeze(['instant','sideways','orbit','shrink-grow','explode-grow','shrink-implode','explode-implode','morph-to-dual','combination']);
 const trusted=new WeakSet();
 const defaults={version:1,method:'instant',duration:0,easing:'smoothstep',angle:0,distance:2,tilt:0,orbits:1,spin:0,explosionSize:3,direction:1,components:[]};
 const fail=message=>{throw new Error(message);};

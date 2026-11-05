@@ -19,6 +19,15 @@ for key in ('cube','tesseract'):
   p=dispatch_dual_morph({'op':'prepare-dual-morph','model':m,'params':{'settings':s,'sourceContext':c}})
   frames[method]=[dispatch_dual_morph({'op':'evaluate-dual-morph','model':m,'params':{'prepared':p,'ratio':t,'sourceContext':c}}) for t in (0.,.25,.5,.75,1.)]
  out[key]={'source':m,'frames':frames}
+import math
+m=regular('truncated-tetrahedron');c={'notes':'Original notes','unit':'model'}
+s=dict(version=1,enabled=True,method='sizing',center=None,radius=1,ratio=0,duration=4,loop=False)
+request=lambda op,params:dispatch_dual_morph({'op':op,'model':m,'params':dict(params,sourceContext=c)})
+p=request('prepare-dual-morph',{'settings':s});center=p['settings']['center']
+bound=lambda model:max(math.dist(point,center) for point in model['vertices'])
+s['radius']=math.sqrt(bound(m)/bound(p['descriptor']['dual']))
+p=request('prepare-dual-morph',{'settings':s})
+out['truncated-tetrahedron']={'source':m,'frames':{'sizing':[request('evaluate-dual-morph',{'prepared':p,'ratio':t}) for t in (0,.25,.5,.75,1)]}}
 print(json.dumps(out))`],{cwd:stage,windowsHide:true,encoding:'utf8',timeout:30000}));
 
 function viewer(model){
@@ -35,6 +44,20 @@ test('actual Viewer displays native sizing layers in the same group with origina
   assert.strictEqual(v.group,group);assert.strictEqual(v.morphSource,source);assert.strictEqual(v.model,frame.model);assert.deepEqual(v.center,center);assert.equal(v.radius,radius);
   assert.deepEqual(v.normalized[0],source.vertices[0].map(x=>.75*x/radius));assert.notEqual(v.radius,Math.max(...frame.model.vertices.map(x=>Math.hypot(...x))));
   assert.equal(v.surfaceGeometry.attributes.position.count>0,true);assert.deepEqual(source,before);v.clear();
+});
+
+test('truncated-tetrahedron sizing keeps the camera fixed, matches endpoints and retains the defined smaller midpoint',()=>{
+  const {source,frames}=data['truncated-tetrahedron'],v=viewer(source),camera=v.camera,observer=v.cameraState(),center=[...v.center],radius=v.radius;
+  const before=structuredClone(source),expected=[1,.75,.5,.75,1];
+  try{
+    for(const [index,frame] of frames.sizing.entries()){
+      v.setMorphFrame(frame,source,view);assert.strictEqual(v.camera,camera);assert.deepEqual(v.cameraState(),observer);
+      assert.deepEqual(v.center,center);assert.equal(v.radius,radius);
+      assert.ok(Math.abs(Math.max(...v.normalized.map(p=>Math.hypot(...p)))-expected[index])<1e-12);
+      assert.equal(v.pointGeometry.attributes.position.count,frame.model.vertices.length);
+    }
+    assert.deepEqual(source,before);
+  }finally{v.clear();}
 });
 
 test('native changing truncation incidence is rebuilt at each pose; no stale vertex interpolation or buffer count',()=>{

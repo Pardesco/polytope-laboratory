@@ -92,7 +92,7 @@ async function main(){
   const app=await electron.launch({executablePath:runtime.packaged||require('electron'),args:runtime.packaged?[]:[root],cwd:root,env,timeout:30000});
   const checks=[],errors=[],files=[];let page,serial=0;
   try{
-    assert.equal((await app.evaluate(({app})=>app.polytopeQualification))?.mode,runtime.hidden?'hidden-no-focus':undefined);page=await app.firstWindow();page.setDefaultTimeout(30000);page.on('pageerror',e=>errors.push(e.message));
+    assert.equal((await app.evaluate(({app})=>app.polytopeQualification))?.mode,runtime.hidden?'hidden-no-focus':undefined);page=await app.firstWindow();require('./smoke-helpers.cjs').autoReveal(page);page.setDefaultTimeout(30000);page.on('pageerror',e=>errors.push(e.message));
     await page.waitForFunction(()=>document.getElementById('crossed-segmentotope-settings')&&document.getElementById('model-name').textContent==='Tesseract');
     await page.evaluate(()=>{window.crossedStatuses=[];new MutationObserver(()=>window.crossedStatuses.push(document.getElementById('status').textContent)).observe(document.getElementById('status'),{childList:true,subtree:true,characterData:true});});
     const done=()=>page.waitForFunction(()=>document.getElementById('cancel').hidden);

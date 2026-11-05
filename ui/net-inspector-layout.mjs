@@ -23,9 +23,12 @@ export function organizeNetInspector(doc){
   const print=disclosure(doc,'net-paper-settings','Paper and export',[
     field('net-paper'),field('net-paper-orientation'),node('net-custom-size'),printDetails,node('net-pack'),
     node('net-page-prev').parentElement,node('net-paper-status'),node('net-packed-pdf'),node('net-packed-svg'),node('net-export-actions'),
+    node('net-assembly-controls'),
+    node('net-fabrication-settings'),
     hint('Packing keeps the current edge length and connected pieces intact. Review face and tab overlaps before printing at 100%.')]);
   const history=node('net-undo').parentElement;
-  face.replaceChildren(title('3D face net'),field('net-length'),field('net-tabs'),node('net-rebuild'),node('net-summary'),field('net-display'),history,print,edit,glue,fold,generate,checks);
+  const visible=node('net-visible-surface-settings');
+  face.replaceChildren(title('3D face net'),field('net-length'),field('net-tabs'),node('net-rebuild'),node('net-rearrange'),...(visible?[visible]:[]),node('net-summary'),field('net-display'),history,print,edit,glue,fold,generate,checks);
   paper.remove();tabs.remove();
   node('net-summary').className='net-status';node('net-summary').setAttribute('role','status');
   field('net-length').firstChild.textContent='Edge 0 length ';

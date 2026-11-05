@@ -1,0 +1,7 @@
+#workspace-tip[hidden]{display:none}
+#workspace-tip{position:absolute;inset:auto 12px 8px;display:flex;align-items:center;gap:8px;min-width:0;color:#b9cbdc;font-size:11px;line-height:24px;pointer-events:none}
+#workspace-tip strong{color:#a7e0e5;font-weight:600}
+#workspace-tip-text{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+#workspace-tip-dismiss{pointer-events:auto;flex:0 0 24px;width:24px;height:24px;padding:0;border:0;background:#172534;color:#c9dce8;border-radius:4px;font-size:16px;line-height:24px}
+#workspace-tip-dismiss:focus-visible{outline:2px solid #8ce2e8;outline-offset:2px}
+.has-workspace-tip #counts-strip{bottom:40px}

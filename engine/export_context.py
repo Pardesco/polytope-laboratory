@@ -11,8 +11,8 @@ from .operations import transform
 METERS = {'mm':Fraction(1,1000), 'cm':Fraction(1,100), 'm':Fraction(1),
           'in':Fraction(127,5000), 'ft':Fraction(381,1250)}
 UNIT_NAMES = frozenset(METERS) | {'model'}
-FORMATS = frozenset({'off','json','obj','dxf','vrml','stl','pov'})
-FORMAT_ORDER = ('off','json','obj','stl','dxf','vrml','pov')
+FORMATS = frozenset({'off','json','obj','dxf','vrml','stl','pov','x3d'})
+FORMAT_ORDER = ('off','json','obj','stl','dxf','vrml','pov','x3d')
 
 
 def _loose_edges(model):
@@ -68,7 +68,11 @@ def prepare_export(model, format, source_unit='model', target_unit='model', docu
     result.setdefault('metadata',{})['coordinateUnits']=target_unit
     colors=model.get('metadata',{}).get('offColors',{})
     losses=[]
+    if format=='obj':
+        losses.append('OBJ has no standard physical unit declaration; retain the chosen output units with the OBJ and companion MTL.')
     if document_metadata is not None:
+        from .document_metadata import validate_metadata
+        validate_metadata(document_metadata)
         if type(document_metadata) is not dict:
             raise GeometryError('Project metadata must be a JSON object.')
         try:
@@ -82,13 +86,17 @@ def prepare_export(model, format, source_unit='model', target_unit='model', docu
         if type(notes) is not str or len(notes.encode('utf-8'))>1024*1024:
             raise GeometryError('Project notes exceed the export limit or are not text.')
         result['metadata']['documentNotes']=notes
-    if format!='json' and (document_metadata or notes):
+    if format=='off' and (document_metadata or notes):
+        losses.append('Project metadata and notes are stored in OFF comments; other readers may discard them. Use JSON or a native project for portable structured metadata.')
+    elif format!='json' and (document_metadata or notes):
         losses.append('Project metadata and notes require JSON or a native project to retain them.')
-    if any(color is not None for rows in colors.values() for color in rows) and format not in ('off','json'):
+    if any(color is not None for rows in colors.values() for color in rows) and format not in ('off','json','obj','x3d'):
         losses.append('Source boundary colors are not represented by this exporter.')
+    if format in ('obj','x3d') and any(color is not None for color in colors.get('cells',[])):
+        losses.append('Cell colors have no unique face material; only supplied face colors are retained.')
     if format=='dxf' and model.get('faces'):
         losses.append('DXF output contains source edges; faces and cells are omitted.')
-    if format in ('obj','vrml') and _loose_edges(model):
+    if format == 'vrml' and _loose_edges(model):
         losses.append('Edges outside face boundaries are omitted; use JSON or DXF to retain them.')
     if format in ('stl','pov'):
         losses.append('Polygon faces are triangulated; original face boundaries are not retained.')
@@ -103,7 +111,11 @@ def prepare_export(model, format, source_unit='model', target_unit='model', docu
     prepared = {'model': result, 'report': report}
     if include_text:
         from .formats import export_model, MAX_FILE_BYTES
-        text = export_model(result, format)
+        if format == 'obj':
+            from .interchange import colored_obj
+            text, prepared['materials'] = colored_obj(result, '__POLYTOPE_MTL__')
+        else:
+            text = export_model(result, format)
         if len(text.encode('utf-8')) > MAX_FILE_BYTES:
             raise GeometryError('Geometry export exceeds the 128 MiB output limit.')
         prepared['text'] = text

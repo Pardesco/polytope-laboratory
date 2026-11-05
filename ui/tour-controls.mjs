@@ -1,9 +1,11 @@
 import {NumericEntry} from './numeric-entry.mjs';
+import {bindings,matchesShortcut} from './shortcut-bindings.mjs';
 import {createTour,normalizeTour,addTourEvent,replaceTourEvent,setTourDuration,selectTourEvent,deleteTourEvent,moveTourEvent,mergeTours,tourDuration,tourEventStart,evaluateTour} from './tour.mjs';
 import {setTourTransition} from './tour.mjs';
 import {prepareAnimatedTourTimeline,evaluateAnimatedTour} from './animated-tour-timeline.mjs';
 import {TRANSITION_METHODS,normalizeTransition} from './transitions.mjs';
 import {AnimatedTourExporter} from './animated-tour-export.mjs';
+import {mediaControls,mediaControlKeys,readMediaControls} from './media-export-options.mjs';
 
 export class TourControls {
   constructor(context){
@@ -19,9 +21,11 @@ export class TourControls {
       ${[['angle',0],['distance',2],['tilt',0],['orbits',1],['spin',0],['explosionSize',3],['direction',1]].map(([key,value])=>`<label>${key==='explosionSize'?'Explosion factor':key} <input id="tour-transition-${key}" type="text" maxlength="512" value="${value}"></label>`).join('')}
       <label>Combination methods <input id="tour-transition-components" placeholder="sideways, shrink-grow"></label></details>
       <button id="tour-transition-apply">Apply transition</button>
+      <p class="muted">Morph to dual requires a native dual in the next event. WebM renders every frame offline at its exact tour time.</p>
       <div class="tour-edit-row"><button id="tour-add">Add</button><button id="tour-replace">Replace</button><button id="tour-delete">Delete</button><button id="tour-up">Up</button><button id="tour-down">Down</button></div>
       <div class="tour-play-row"><button id="tour-prev">Prev</button><button id="tour-play">Play</button><button id="tour-next">Next</button><label><input id="tour-loop" type="checkbox"> Loop</label></div>
       <input id="tour-scrub" type="range" min="0" max="0" step="0.001" value="0" aria-label="Tour time"><output id="tour-position">0.000 / 0.000 s</output>
+      ${mediaControls('tour')}<button id="tour-export">Export selected format</button>
       <div class="tour-play-row"><label>FPS <input id="tour-fps" type="text" maxlength="512" value="24"></label><button id="tour-png">PNG frames</button><button id="tour-webm">WebM</button><button id="tour-close-preview">Close preview</button><button id="tour-cancel-export" hidden>Cancel export</button></div></div>`;
     if(typeof context.importTour==='function'){const merge=document.createElement('button');merge.id='tour-merge';merge.textContent='Merge';this.details.querySelector('.tour-edit-row').append(merge);}
     if(typeof context.exportTour==='function'){const save=document.createElement('button');save.id='tour-save';save.textContent='Save tour';this.details.querySelector('.tour-edit-row').append(save);}
@@ -34,6 +38,7 @@ export class TourControls {
     for(const key of ['add','replace','delete','up','down','prev','next','play','merge','save'])if(this.nodes[key])this.nodes[key].onclick=()=>this.actions[key]();
     this.nodes['transition-apply'].onclick=wrap(()=>this.applyTransition());
     this.nodes.png.onclick=wrap(()=>this.export('png'));this.nodes.webm.onclick=wrap(()=>this.export('webm'));
+    this.nodes.export.onclick=wrap(()=>this.export(this.nodes.format.value));
     this.nodes['close-preview'].onclick=wrap(()=>this.closePreview());this.nodes['cancel-export'].onclick=()=>this.numericEditing?this.cancel():this.exporter?.cancel();
     this.nodes.event.onchange=wrap(()=>this.seek(tourEventStart(this.bank(),Number(this.nodes.event.value)),true));
     this.nodes.duration.onchange=wrap(()=>this.setDuration());
@@ -66,6 +71,7 @@ export class TourControls {
     if(globalThis.document?.activeElement!==this.nodes['transition-components'])this.nodes['transition-components'].value=transition.components.join(', ');}
     for(const node of this.details.querySelectorAll('[id^="tour-transition"]'))node.disabled=disabled||!events.length;
     for(const key of ['png','webm','fps'])this.nodes[key].disabled=disabled||!events.length||!this.context.createRenderer;
+    for(const key of ['export',...mediaControlKeys])if(this.nodes[key])this.nodes[key].disabled=disabled||!events.length||!this.context.createRenderer;
     this.nodes['close-preview'].disabled=!this.renderer||Boolean(this.exporter?.exporting);
     this.nodes['cancel-export'].hidden=!(this.exporter?.exporting||this.numericEditing);this.nodes['cancel-export'].textContent=this.numericEditing?'Cancel numeric edit':'Cancel export';
     this.time=Math.min(this.time,tour?this.total(tour):0);this.position();this.nodes.play.textContent=this.playing?'Pause':'Play';
@@ -95,11 +101,20 @@ export class TourControls {
     return this.numericAction(keys,inputs=>Object.fromEntries([
       ...(inputs.transition==='instant'?[]:[['duration',{text:inputs['transition-duration'],min:0,exclusiveMin:true,max:60}]]),
       ...[['angle',-360,360],['distance',0,100],['tilt',-180,180],['orbits',0,100],['spin',0,100],['explosionSize',1,100],['direction',-1,1]].map(([key,min,max])=>[key,{text:inputs['transition-'+key],min,max}])
-    ]), (values,{project,tour,index})=>{const updated=setTourTransition(tour,index,this.transitionInput(values));this.publish(project,updated);this.time=tourEventStart(updated,updated.cursor);this.shownId=null;this.position();});
+    ]), async(values,{project,tour,index,check,signal})=>{
+      const updated=setTourTransition(tour,index,this.transitionInput(values));
+      if(updated.events[index].transition.method==='morph-to-dual'){
+        prepareAnimatedTourTimeline(updated,{loop:true});
+        if(typeof this.context.run!=='function')throw Error('Native dual endpoint verification is unavailable.');
+        const isCurrent=()=>{try{check();return true;}catch{return false;}};
+        const result=await this.context.run('verify-dual-tour',{target:updated.events[(index+1)%updated.events.length].state.model},updated.events[index].state.model,'Verify tour dual endpoint',{signal,isCurrent});check();
+        if(result?.verified!==true)throw Error('Native dual endpoint verification failed.');
+      }
+      this.publish(project,updated);this.time=tourEventStart(updated,updated.cursor);this.shownId=null;this.position();});
   }
-  async durationAction(operation){return this.numericAction(['duration'],inputs=>({duration:{text:inputs.duration,min:0,exclusiveMin:true,max:3600}}),
-    (values,{project,tour,index})=>{const updated=operation(tour,index,values.duration);this.publish(project,updated);this.time=updated.events.length?tourEventStart(updated,updated.cursor):0;this.shownId=null;this.position();});}
-  async setDuration(){return this.durationAction((tour,index,duration)=>setTourDuration(tour,index,duration));}
+  async durationAction(operation,{skipUnchanged=false}={}){return this.numericAction(['duration'],inputs=>({duration:{text:inputs.duration,min:0,exclusiveMin:true,max:3600}}),
+    (values,{project,tour,index})=>{if(skipUnchanged&&tour.events[index]?.duration===values.duration)return;const updated=operation(tour,index,values.duration);this.publish(project,updated);this.time=updated.events.length?tourEventStart(updated,updated.cursor):0;this.shownId=null;this.position();});}
+  async setDuration(){return this.durationAction((tour,index,duration)=>setTourDuration(tour,index,duration),{skipUnchanged:true});}
   retireRenderer(){const renderer=this.renderer;if(!renderer)return;this.renderer=null;this.exporter?.cancel();this.exporter=null;renderer.close().catch(error=>this.context.setStatus?.(error.message));}
   invalidatePreview(){if(this.renderer&&!this.renderer.ownerCurrent()){this.pause();this.retireRenderer();}}
   closePreview(){if(this.exporter?.exporting)throw Error('Cancel tour export before closing its preview.');this.pause();this.retireRenderer();this.sync();}
@@ -116,6 +131,7 @@ export class TourControls {
     }finally{this.showing=false;if(this.abort===controller)this.abort=null;this.sync();}
   }
   async export(format){
+    const options=readMediaControls(this.nodes,format);
     const fps=await this.numericAction(['fps'],inputs=>({fps:{text:inputs.fps,min:1,max:60,integer:true}}),values=>values.fps);
     this.assertAvailable();this.pause();this.context.stopOther?.();const renderer=this.ensureRenderer();
     const exporter=new AnimatedTourExporter({renderer,api:this.context.api,onProgress:value=>{
@@ -123,11 +139,11 @@ export class TourControls {
       this.context.setStatus?.(typeof count==='number'?`Tour ${format}: ${count} / ${value.frameCount}`:String(count));
     },onExportStateChange:value=>{this.busy=value;this.context.onExportStateChange?.(value);this.sync();},onDiagnostic:message=>this.context.setStatus?.(message)});
     this.exporter=exporter;
-    try{const result=await exporter.export(format,{fps,name:'Polyhedral tour'});if(result)this.context.setStatus?.('Exported tour '+(result.path||result.directory||''));return result;}
+    try{const result=await exporter.export(format,{...options,fps,name:'Polyhedral tour'});if(result)this.context.setStatus?.('Exported tour '+(result.path||result.directory||''));return result;}
     finally{if(this.exporter===exporter)this.exporter=null;this.busy=false;this.sync();}
   }
   assertAvailable(){if(this.busy||this.showing)throw new Error('A tour action is already running.');if(this.context.isExporting?.())throw new Error('Finish animation export before changing tours.');}
-  publish(project,tour){if(project!==this.context.getProject())throw new Error('Project changed while the tour action ran.');this.retireRenderer();this.animatedIndex=null;project.tour=tour;this.observedTour=tour;this.context.markDirty();this.sync();}
+  publish(project,tour){if(tour.version===2)prepareAnimatedTourTimeline(tour,{loop:true});if(project!==this.context.getProject())throw new Error('Project changed while the tour action ran.');if(this.context.isExporting?.())throw new Error('Finish animation export before changing tours.');this.retireRenderer();this.animatedIndex=null;project.tour=tour;this.observedTour=tour;this.context.markDirty();this.sync();}
   async edit(fn){this.assertAvailable();this.pause();const project=this.context.getProject(),tour=this.bank(project),updated=fn(tour,this.selectedIndex(tour));this.publish(project,updated);this.time=updated.events.length?tourEventStart(updated,updated.cursor):0;this.shownId=null;this.position();}
   async add(){return this.durationAction((tour,index,duration)=>addTourEvent(tour,this.context.getState(),duration));}
   async replace(){return this.durationAction((tour,index,duration)=>replaceTourEvent(tour,index,this.context.getState(),duration));}
@@ -142,8 +158,8 @@ export class TourControls {
     if(!sample.event||(this.shownId===sample.event.id&&!force))return;
     const project=this.context.getProject(),tour=this.bank(project);this.showing=true;this.abort=new AbortController();this.sync();
     try{
-      await this.context.showEvent(JSON.parse(JSON.stringify(sample.event.state)),`Tour ${sample.index+1}: ${sample.event.state.model.name||'Model'}`,{signal:this.abort.signal,isCurrent:()=>generation===this.generation&&project===this.context.getProject()});
-      if(generation!==this.generation||project!==this.context.getProject())return;
+      await this.context.showEvent(JSON.parse(JSON.stringify(sample.event.state)),`Tour ${sample.index+1}: ${sample.event.state.model.name||'Model'}`,{signal:this.abort.signal,isCurrent:()=>generation===this.generation&&project===this.context.getProject(),verifyPublication:()=>{if(project.tour!==tour)throw new Error('Tour changed while its event was loading.');}});
+      if(this.context.isExporting?.()||generation!==this.generation||project!==this.context.getProject())return;
       this.shownId=sample.event.id;this.observedState=this.context.getState();
       if(project.tour!==tour)throw new Error('Tour changed while its event was loading.');
       if(tour.cursor!==sample.index)this.publish(project,selectTourEvent(tour,sample.index));
@@ -176,7 +192,7 @@ export class TourControls {
   onKey(event){
     if(event.defaultPrevented||event.repeat||event.metaKey||!event.ctrlKey||!event.altKey||event.shiftKey||this.busy||this.showing||this.context.isExporting?.()||event.getModifierState?.('AltGraph'))return;
     if(event.target?.isContentEditable||event.target?.closest?.('input,textarea,select,[contenteditable]:not([contenteditable="false"]),[role="textbox"]')||document.querySelector('dialog[open]'))return;
-    const action={ArrowLeft:'prev',ArrowRight:'next',' ':'play',t:'add',T:'add'}[event.key];if(!action)return;event.preventDefault();this.actions[action]();
+    const action=[['tourPrev','prev'],['tourNext','next'],['tourPlay','play'],['tourAdd','add']].find(([id])=>bindings[id].keys.some(key=>matchesShortcut(event,key)))?.[1];if(!action)return;event.preventDefault();this.actions[action]();
   }
   cancelNumeric(){this.numericEntry?.cancel();}
   cancel(){this.cancelNumeric();this.pause();this.exporter?.cancel();}

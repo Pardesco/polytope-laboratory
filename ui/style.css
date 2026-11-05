@@ -42,6 +42,9 @@ textarea { width: 100%; resize: vertical; }
 #document-tabs { display: flex; align-items: stretch; gap: 0; overflow-x: auto; padding-left: 8px; background: #141619; border-bottom: 1px solid var(--border); }
 #document-tabs button { flex: 0 0 auto; max-width: 290px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; border: 0; border-radius: 0; background: transparent; padding: 4px 14px; font-size: 11px; color: #a6abb1; }
 #document-tabs button.active { color: var(--text); background: #1e2227; box-shadow: inset 0 -2px #91a9ba; }
+#document-tabs .tab-close { display: inline-block; margin: 0 -6px 0 8px; padding: 0 4px; border-radius: 3px; color: #7d838a; line-height: 16px; }
+#document-tabs .tab-close:hover { background: #2c3238; color: var(--text); }
+#toast .toast-action { margin-left: 10px; padding: 2px 10px; font-size: 12px; }
 
 main { min-height: 0; display: grid; grid-template-columns: var(--library-width) minmax(0, 1fr) var(--inspector-width); }
 body.library-hidden, body.library-collapsed { --library-width: 0px; }
@@ -86,6 +89,16 @@ h1 { margin: 0; font-size: 16px; font-weight: 500; line-height: 1.25; letter-spa
 .view-toolbar label { display: flex; align-items: center; gap: 5px; white-space: nowrap; color: #a6acb3; }
 .view-toolbar input, .view-toolbar select, .view-toolbar button { font-size: 11px; }
 .view-toolbar button, .view-toolbar select { padding: 4px 6px; }
+.view-toolbar { justify-content:flex-start; gap:4px; flex-wrap:nowrap; }
+.view-toolbar .toolbar-group { gap:3px; flex-shrink:0; }
+.view-toolbar .toolbar-group + .toolbar-group { padding-left:4px; }
+.view-toolbar select { max-width:132px; padding:4px 2px; font-size:10px; }
+.view-toolbar #stereo-mode { max-width:108px; }
+.view-toolbar #pick-kind { max-width:76px; }
+.view-toolbar #camera-projection { max-width:110px; }
+.view-toolbar #view-orientation { max-width:92px; }
+@media (max-width:1400px) { .view-toolbar { flex-wrap:wrap; } }
+.viewport-hover { position:absolute; bottom:40px; left:10px; right:10px; z-index:8; width:fit-content; max-width:calc(100% - 20px); padding:4px 7px; border:1px solid #58616b; border-radius:3px; background:#171b20ed; color:#ffe0a3; font-size:11px; pointer-events:none; }
 .view-actions { margin-left: auto; }
 #views { flex: 1 1 0; min-height: 220px; min-width: 0; height: auto; display: grid; grid-template-columns: minmax(0, 1fr); gap: 10px; overflow: hidden; }
 #views[data-layout='split'], body[data-viewport-layout='split'] #views { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
@@ -275,3 +288,27 @@ dialog select { width: 100%; margin: 10px 0; }
 .catalog-loading-note{color:#c6d9e8}
 .catalog-discovery{margin:6px 10px;font-size:12px;overflow-wrap:anywhere}
 .catalog-discovery output{display:block;margin-bottom:6px}
+.selection-summary { margin: 8px 0 10px; font-size: 12px; line-height: 1.45; color: var(--text); overflow-wrap: anywhere; }
+#element-types { margin-top: 14px; font-size: 11px; }
+#element-types > div:not(.panel-title) { margin: 6px 0; }
+#element-types button { font-size: 10px; padding: 3px 5px; margin: 3px 3px 0 0; }
+#element-types p { color: var(--muted, #9099a4); font-size: 11px; line-height: 1.5; }
+ .faceting-diagram-preview {height:240px;position:relative;min-width:0;}
+
+#style-settings { flex-basis: 100%; }
+#png-settings { position: relative; }
+#png-settings > .settings-body { top: calc(100% + 4px); bottom: auto; z-index: 20; right: 0; left: auto; min-width: 230px; }
+
+#material-lighting-settings, #material-effects-settings { flex-basis: 100%; }
+.element-type-list{display:flex;flex-wrap:wrap;gap:.35rem;margin:.35rem 0}
+details.element-type-list{display:block}
+details.element-type-list button{margin:.2rem .35rem .2rem 0}
+
+.guide-note{white-space:pre-wrap;overflow-wrap:anywhere;font:inherit;line-height:1.5}
+#help-topic{max-height:52vh;overflow:auto;padding-right:8px}
+#help-topic li{margin-bottom:8px}
+#help-topic a{color:#a6d5ff}
+.guide-layout > nav h4{margin:18px 0 8px;color:#a6c5df}
+#section-density-legend { display: flex; flex-wrap: wrap; gap: 4px 10px; padding: 6px 10px; font-size: 11px; }
+#section-density-legend[hidden] { display: none; }
+#section-density-legend small { flex-basis: 100%; color: var(--muted); }

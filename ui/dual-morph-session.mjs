@@ -1,10 +1,11 @@
 import {captureNativeSource,verifyNativeSource} from './native-source-binding.mjs';
+import {pointRadius} from './geometry-bounds.mjs';
 const abort = message => Object.assign(Error(message), {name:'AbortError'});
 const clone = value => structuredClone(value);
 const signature = value => JSON.stringify(value ?? null);
 export const MORPH_INVENTORY=Object.freeze(['sizing','truncation','augmentation','expansion','tilting-quads','tilting-triangles','tilting-to-compound','tilting-to-rectify','via-snub']);
 export const MORPH_SUPPORTED=Object.freeze(['sizing','truncation','augmentation','expansion','tilting-quads','tilting-triangles','tilting-to-compound','tilting-to-rectify']);
-export const morphEligible=(model,method)=>MORPH_SUPPORTED.includes(method)&&(model?.interpretation==='convex-polytope'||model?.interpretation==='generalized-complex'&&(model.dimension===3&&['sizing','expansion'].includes(method)||model.dimension===4&&method==='expansion'))&&(model.embeddingDimension??model.dimension)===model.dimension&&([3,4].includes(model.dimension))&&(model.dimension===3||['expansion','tilting-quads'].includes(method));
+export const morphEligible=(model,method)=>MORPH_SUPPORTED.includes(method)&&(model?.interpretation==='convex-polytope'||model?.interpretation==='generalized-complex'&&(model.dimension===3&&['sizing','expansion'].includes(method)||model.dimension===4&&method==='expansion'))&&(model.embeddingDimension??model.dimension)===model.dimension&&([3,4].includes(model.dimension))&&(model.dimension===3||['sizing','truncation','expansion','tilting-quads'].includes(method));
 
 /** One active native job + one latest pending pose. Exact seeks never resolve
  * with a superseded pose; playback may publish complete earlier poses in order.
@@ -32,7 +33,7 @@ export class DualMorphSession{
       let prepared=await this.context.prepare(source,clone(settings),sourceContext,{signal:controller.signal,isCurrent});verify();
       if(matchSourceRadius){
         const center=prepared.settings.center,dual=prepared.descriptor?.dual;
-        const bound=model=>Math.max(...model.vertices.map(point=>Math.hypot(...point.map((value,i)=>value-center[i]))));
+        const bound=model=>pointRadius(model.vertices,center);
         if(!Array.isArray(center)||!dual?.vertices?.length)throw Error('This morph cannot determine an automatic reciprocal radius. Enter a radius explicitly.');
         const sourceBound=bound(source),dualBound=bound(dual),radius=settings.radius*Math.sqrt(sourceBound/dualBound);
         if(!Number.isFinite(radius)||radius<=0)throw Error('Automatic reciprocal radius is unresolved. Enter a radius explicitly.');

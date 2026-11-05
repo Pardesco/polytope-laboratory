@@ -10,7 +10,7 @@ async function main(){
   const env={...process.env,POLYTOPE_TEST_USER_DATA:profile};if(runtime.packaged)env.POLYTOPE_PYTHON=path.join(folder,'unavailable-python.exe');delete env.ELECTRON_RUN_AS_NODE;delete env.POLYTOPE_TEST_MODE;
   let app,page,cdp;const errors=[],exceptions=[];
   try{
-    app=await electron.launch({executablePath:runtime.executablePath,args:runtime.packaged?[]:[root],cwd:root,env,timeout:30000});page=await app.firstWindow();page.setDefaultTimeout(15000);page.on('pageerror',e=>errors.push(e.message));
+    app=await electron.launch({executablePath:runtime.executablePath,args:runtime.packaged?[]:[root],cwd:root,env,timeout:30000});page=await app.firstWindow();require('./smoke-helpers.cjs').autoReveal(page);page.setDefaultTimeout(15000);page.on('pageerror',e=>errors.push(e.message));
     await app.evaluate(({BrowserWindow,dialog})=>{BrowserWindow.getAllWindows()[0].setContentSize(1500,950);dialog.showMessageBox=async()=>({response:1});});
     await page.waitForFunction(()=>document.getElementById('model-name')?.textContent==='Tesseract'&&document.getElementById('cancel').hidden);
     const model=await page.evaluate(()=>window.polytope.engine({op:'generate',model:null,params:{kind:'regular',key:'cell120'}},crypto.randomUUID()));

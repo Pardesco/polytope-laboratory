@@ -13,6 +13,14 @@ test('empty startup disables net actions without evaluating controllers that are
   const nodes=new Map(),editor=Object.assign(Object.create(NetEditor.prototype),{getState:()=>undefined,context:{isExporting:()=>{throw Error('Not initialized yet');}},$:id=>{if(!nodes.has(id))nodes.set(id,{});return nodes.get(id);}});
   editor.updateActions();assert.equal(nodes.get('net-rebuild').disabled,true);assert.equal(nodes.get('net-pack').disabled,true);
 });
+
+test('fold playback reports actual saved-pose changes and stops changing them during export',()=>{
+  const state={view:{derivedMode:'net',net:{fraction:0}}};let exporting=false,draws=0;
+  const editor=Object.assign(Object.create(NetEditor.prototype),{playing:true,direction:1,getState:()=>state,config:()=>state.view.net,
+    context:{isExporting:()=>exporting},viewer:{net:{},setFold(){draws++;}},foldStatus(){}});
+  assert.equal(editor.tick(.1),true);assert.equal(state.view.net.fraction,.025);assert.equal(draws,1);
+  exporting=true;assert.equal(editor.tick(.1),undefined);assert.equal(state.view.net.fraction,.025);assert.equal(editor.playing,false);
+});
 test('overlap warnings stay in the common summary while numerical errors remain available separately',()=>{
   const net={faces:Array(6),components:[{}],hinges:Array(5),referenceEdgeLengthMm:25,overlapPairs:[],tabOverlapPairs:[]};
   assert.match(faceNetSummary(net),/No face or tab overlaps/);net.tabOverlapPairs.push({});assert.match(faceNetSummary(net),/Check the layout before printing/);

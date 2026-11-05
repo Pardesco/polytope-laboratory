@@ -7,6 +7,7 @@ from .augmentation_workflow import bounded_bytes
 from .faceting_diagram import (VERSION, build_diagram, restore_state, verify_diagram,
     to_svg, save_state, adoption_parameters)
 from .geometry import GeometryError
+from .faceting_diagram_edit import diagram_model
 
 OPERATION='facet-diagram'
 
@@ -35,11 +36,12 @@ def dispatch_diagram(request,*,cancelled=None):
     else:diagram=build_diagram(source,params['catalogue'],params['parameters'],cancelled=cancelled)
     if cancelled is not None and cancelled():
         return {'diagram':{'status':'user-cancelled','diagnostics':['Diagram canceled before publication.'],
-                          'sourceGeometryChanged':False},'svg':None,'state':None,'adoptionParameters':None}
+                          'sourceGeometryChanged':False},'svg':None,'state':None,'adoptionParameters':None,'previewModel':None}
     complete=diagram['status']=='complete'
     if complete:
         verify_diagram(source,diagram)
     result={'diagram':diagram,'svg':to_svg(diagram) if complete else None,
+        'previewModel':diagram_model(diagram) if complete else None,
         'state':save_state(diagram) if complete else None,
         'adoptionParameters':adoption_parameters(source,diagram) if complete and diagram['adoption'] is not None else None}
     # Native normalized numbers and genuine source attributes remain detached.
@@ -48,5 +50,5 @@ def dispatch_diagram(request,*,cancelled=None):
     if _hash(request)!=ownership:raise GeometryError('Diagram request/source ownership changed during evaluation.')
     if cancelled is not None and cancelled():
         return {'diagram':{'status':'user-cancelled','diagnostics':['Diagram canceled before publication.'],
-                          'sourceGeometryChanged':False},'svg':None,'state':None,'adoptionParameters':None}
+                          'sourceGeometryChanged':False},'svg':None,'state':None,'adoptionParameters':None,'previewModel':None}
     return deepcopy(result)

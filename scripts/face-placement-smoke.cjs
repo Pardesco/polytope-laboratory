@@ -1,3 +1,4 @@
+const {openDisclosure}=require('./smoke-helpers.cjs');
 // Actual face-placement qualification. Authoring and self-tests launch no GUI.
 // GUI launches are root-owned and require guardRuntime's explicit runtime opt-in.
 const fs=require('node:fs/promises'),path=require('node:path'),assert=require('node:assert/strict');
@@ -151,11 +152,11 @@ async function main(){
   const checks=[],errors=[],files=[];let page,serial=0;
   try{
     assert.equal((await app.evaluate(({app})=>app.polytopeQualification))?.mode,runtime.hidden?'hidden-no-focus':undefined);
-    page=await app.firstWindow();page.setDefaultTimeout(30000);page.on('pageerror',e=>errors.push(e.message));
+    page=await app.firstWindow();require('./smoke-helpers.cjs').autoReveal(page);page.setDefaultTimeout(30000);page.on('pageerror',e=>errors.push(e.message));
     await page.waitForFunction(()=>document.getElementById('face-placement-settings')&&document.getElementById('model-name').textContent==='Tesseract');
     await page.evaluate(()=>{window.placementStatuses=[];new MutationObserver(()=>window.placementStatuses.push(document.getElementById('status').textContent)).observe(document.getElementById('status'),{childList:true,subtree:true,characterData:true});});
     const done=()=>page.waitForFunction(()=>document.getElementById('cancel').hidden);
-    const disclose=async id=>{if(!await page.locator('#'+id).evaluate(n=>n.open))await page.locator('#'+id+' > summary').click();};
+    const disclose=id=>openDisclosure(page,id);
     const inspector=async()=>{if(await page.locator('#toggle-inspector').getAttribute('aria-pressed')!=='true')await page.locator('#toggle-inspector').click();};
     const construct=async()=>{await inspector();await page.locator('[data-panel="construct"]').click();await disclose('face-placement-settings');};
     const save=async label=>{
