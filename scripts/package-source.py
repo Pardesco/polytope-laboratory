@@ -10,7 +10,7 @@ if output.exists():raise SystemExit('Source archive already exists; preserve it 
 paths=[]
 for directory in ['engine','ui','desktop','scripts','tests','docs','examples','.github','third_party_licenses']:
     paths.extend(p for p in (root/directory).rglob('*') if p.is_file() and '__pycache__' not in p.parts and p.suffix!='.pyc')
-for name in ['README.md','LICENSE','THIRD_PARTY_NOTICES.md','CONTRIBUTING.md','STELLA4D_FEATURE_COMPLETE_BUILD_SPEC.md','package.json','package-lock.json','requirements.txt','vite.config.mjs','.gitignore']:
+for name in ['README.md','LICENSE','THIRD_PARTY_NOTICES.md','CONTRIBUTING.md','package.json','package-lock.json','requirements.txt','vite.config.mjs','.gitignore']:
     paths.append(root/name)
 for name in ['dense-stereographic-packet.mjs','dense-stereographic-budget.mjs','conforming-worker-fixtures.mjs']:
     p=root/'development'/name
