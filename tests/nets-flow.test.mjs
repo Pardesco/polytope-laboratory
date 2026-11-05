@@ -116,3 +116,16 @@ test('app mounts after legacy grouping and loads its scoped stylesheet',()=>{
   const grouping=app.indexOf('organizeNetInspector(document);'),mount=app.indexOf('new NetsFlow(document,');
   assert.ok(grouping>=0&&mount>grouping,'Nets flow mounts after legacy grouping');assert.match(app,/import '\.\/nets-flow.css'/);
 });
+
+test('applicable net action leads above closed alternatives across 3D, 4D and invalid sources',()=>{
+  const f=flowFixture(),get=id=>f.doc.getElementById(id);
+  assert.deepEqual(get('nets-available-types').children.map(n=>n.id),['nets-type-faces']);assert.equal(get('nets-other-types').open,false);
+  assert.equal(get('net-length').title.includes('source edge 0'),true);assert.equal(get('net-length').closest('label').firstChild.textContent,'Edge length ');
+  const four={name:'Tesseract',dimension:4,faces:[[0,1,2]],cells:[[0],[0]]};f.state.model=four;f.flow.sync();
+  assert.deepEqual(get('nets-available-types').children.map(n=>n.id),['nets-type-cells']);assert.equal(get('nets-type-cells-title').textContent,'Unfold Tesseract’s cells');
+  assert.equal(get('cell-net-build').textContent,'Generate cell net');assert.equal(get('nets-other-types').open,false);
+  assert.equal(f.flow.otherLabel.textContent,'Other net types (2)');assert.equal(f.flow.otherSummary.title,'Needs a 3D model');
+  assert.equal(get('nets-type-faces-reason').hidden,false);assert.match(get('nets-type-faces-reason').textContent,/Choose a 3D model/);
+  assert.equal(get('cell-net-generation-settings').parentElement,get('nets-type-cells'));assert.equal(get('net-generation-settings').parentElement,get('nets-type-faces'));
+  f.state.model={...four,validation:{passed:false}};f.flow.sync();assert.equal(get('nets-available-types').children.length,0);assert.equal(get('cell-net-build').disabled,true);
+});

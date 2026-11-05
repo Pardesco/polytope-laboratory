@@ -74,7 +74,7 @@ test('all eight walkthroughs target visible controls after mounted layout, with 
         await page.locator('#redo').click();await page.waitForFunction(()=>document.querySelector('#counts-strip strong')?.textContent==='6');
       }
     }
-    assert.equal(await page.locator('#workspace-tip').isVisible(),true);await page.locator('#workspace-tip-dismiss').click();assert.equal(await page.locator('#workspace-tip').isVisible(),false);
+    assert.equal(await page.locator('#workspace-tip').isVisible(),false);assert.equal(await page.evaluate(()=>JSON.parse(sessionStorage.getItem('polytope.tip.session.v1')).dismissed),true);
     await reopen();await page.locator('#welcome-never').uncheck();await page.locator('#welcome-close').click();await page.reload();await page.waitForFunction(()=>document.getElementById('model-name')?.textContent==='Tesseract');
     assert.equal(await page.locator('#welcome-panel').isVisible(),false);assert.equal(await page.locator('#workspace-tip').isVisible(),false);
     await reopen();await page.locator('#welcome-never').check();await page.locator('#welcome-close').click();assert.equal(await page.evaluate(()=>localStorage.getItem('polytope-welcome-v1')),null);

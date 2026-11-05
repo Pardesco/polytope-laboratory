@@ -5,6 +5,11 @@ export class PresentationControls{
     const panel=document.createElement('div');panel.innerHTML='<label>Vertices <select id="vertex-style"><option value="point">Points</option><option value="sphere">Spheres</option></select></label><label>Edges <select id="edge-style"><option value="line">Lines</option><option value="cylinder">Cylinders</option></select></label><label title="Radius in normalized projected 3D view coordinates">Vertex view radius <input id="vertex-radius" type="text" maxlength="512" value="0.015"></label><label title="Radius in normalized projected 3D view coordinates">Edge view radius <input id="edge-radius" type="text" maxlength="512" value="0.006"></label><label>Cell shrink <input id="cell-shrink" type="range" min="0.02" max="1" step="0.02" value="1"><output id="cell-shrink-output">1</output></label>';
     document.getElementById('surface-colors').closest('label').after(panel);this.panel=panel;
     for(const id of ['vertex-radius','edge-radius'])panel.querySelector('#'+id).onchange=context.guard(()=>this.editRadius(id));
+    for(const id of ['vertex-radius','edge-radius'])panel.querySelector('#'+id).addEventListener('input',context.guard(event=>{
+      if(!event.detail?.appearanceSlider)return;
+      if(this.numericEntry?.busy)throw Error('Finish or cancel the current radius edit first.');
+      this.applyRadius(id,Number(this.value(id)),{preview:true});
+    }));
     for(const [id,field] of [['vertex-style','vertexStyle'],['edge-style','edgeStyle'],['cell-shrink','cellShrink']])
       panel.querySelector('#'+id).addEventListener('input',context.guard(()=>{
         if(context.isExporting())throw Error('Finish animation export before changing presentation.');
@@ -20,10 +25,17 @@ export class PresentationControls{
     const field=id==='vertex-radius'?'vertexRadius':'edgeRadius',fallback=id==='vertex-radius'?.015:.006;
     const entry=new NumericEntry({...this.context,getTarget:()=>({text:this.value(id),radius:this.context.getState()?.view[field]??fallback})});
     this.numericEntry=entry;
+    this.onRadiusEdit?.();
     try{return await entry.run({radius:{text:this.value(id),min:0,max:.5,exclusiveMin:true}},({radius},verify)=>{
-      verify();this.context.getState().view[field]=radius;this.panel.querySelector('#'+id).value=String(radius);
-      this.context.display();this.context.markDirty();
-    });}finally{if(this.numericEntry===entry)this.numericEntry=null;}
+      verify();this.applyRadius(id,radius);
+    });}finally{if(this.numericEntry===entry)this.numericEntry=null;this.onRadiusEdit?.();}
+  }
+  applyRadius(id,radius,{preview=false}={}){
+    if(!['vertex-radius','edge-radius'].includes(id)||!Number.isFinite(radius)||radius<=0||radius>.5)throw Error('Choose a radius greater than 0 and at most 0.5.');
+    if(this.context.isExporting())throw Error('Finish animation export before changing presentation.');
+    this.context.getState().view[id==='vertex-radius'?'vertexRadius':'edgeRadius']=radius;
+    if(preview)this.context.getState().view[id==='vertex-radius'?'vertexStyle':'edgeStyle']=id==='vertex-radius'?'sphere':'cylinder';
+    this.panel.querySelector('#'+id).value=String(radius);this.context.display();this.context.markDirty();
   }
   cancelNumeric(){this.numericEntry?.cancel();}
   value(id){return this.panel.querySelector('#'+id).value;}

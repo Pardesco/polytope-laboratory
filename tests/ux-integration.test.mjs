@@ -44,4 +44,6 @@ test('actual viewport dismissal preserves shelf state under modal help and prese
   modal=false;presentation.hidden=false;escape();outside();assert.equal(drawer.open,true);
   presentation.hidden=true;events.pointerdown({target:{closest:()=>({})}});assert.equal(drawer.open,true);
   escape();assert.equal(drawer.open,false);drawer.open=true;outside();assert.equal(drawer.open,false);
+  drawer.id='surface-settings';drawer.open=true;outside();assert.equal(drawer.open,true);
+  escape();assert.equal(drawer.open,false);
 });

@@ -103,7 +103,7 @@ test('reveal opens the full format list and restores borrowed controls without l
   const f=fixture();f.goals.choose('picture');const format=f.control.format;format.dispatchEvent({type:'app-chrome-reveal',bubbles:true});assert.equal(f.goals.goal,'all');assert.equal(f.goals.legacy.hidden,false);assert.equal(f.goals.legacy.open,true);assert.equal(f.control.format,format);assert.equal(f.picture.parentElement,f.doc.body);
 });
 test('app installs goal actions and the reviewed dialog hooks; styles and smoke compatibility stay additive',()=>{
-  const read=p=>readFileSync(new URL('../'+p,import.meta.url),'utf8');assert.match(read('ui/app.js'),/new ExportGoals/);for(const label of ['Export for 3D printing','Save picture','Export video','Save exact geometry'])assert.ok(read('ui/app.js').includes(label));
+  const read=p=>readFileSync(new URL('../'+p,import.meta.url),'utf8');assert.match(read('ui/app.js'),/new ExportGoals/);for(const label of ['Export for 3D printing','Save picture','Export video','Export model data'])assert.ok(read('ui/app.js').includes(label));
   assert.match(read('ui/export-controls.mjs'),/this.goals\?\.open/);assert.match(read('ui/export-controls.mjs'),/this.goals\?\.sync/);assert.ok(JSON.parse(read('package.json')).scripts['test:features'].includes('tests/export-goals.test.mjs'));
   assert.match(read('ui/export-goals.css'),/focus-visible/);assert.match(read('scripts/export-workflow-smoke.cjs'),/reveal\(page,'#export-format'\)/);assert.equal(EXPORT_GOALS_KEY,'polytope.export-goals.v1');
 });

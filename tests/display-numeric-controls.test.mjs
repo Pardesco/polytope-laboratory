@@ -53,3 +53,13 @@ test('cancelled display edit clears busy state and ignores late native response'
   f.controls.cancelNumeric();await assert.rejects(pending,{name:'AbortError'});hold.resolve([.01]);
   assert.equal(f.controls.numericEntry,null);assert.equal(f.state.view.edgeRadius,.006);assert.deepEqual(f.calls,[]);
 });
+
+test('radius controls notify the sheet while a numeric edit is held and after it settles or fails',async()=>{
+  for(const invalid of [false,true]){
+    const f=fixture(),hold=deferred(),busy=[];f.context.evaluateMany=()=>hold.promise;
+    f.controls.onRadiusEdit=()=>busy.push(Boolean(f.controls.numericEntry));
+    const pending=f.controls.editRadius('vertex-radius');assert.deepEqual(busy,[true]);
+    hold.resolve([invalid?0:.02]);if(invalid)await assert.rejects(pending);else await pending;
+    assert.deepEqual(busy,[true,false]);
+  }
+});

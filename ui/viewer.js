@@ -16,7 +16,7 @@ import {netSourceSurfaces} from './net-source-triangles.mjs';
 import {cellNetSourceSurfaces} from './cell-net-source-triangles.mjs';
 import { cellVisibility } from './cell-visibility.mjs';
 import { resolveSourcePlanes,classifyCellFacing } from './cell-facing.mjs';
-import { fitView } from './view-camera.mjs';
+import { fitView,projectedRotationRadius } from './view-camera.mjs';
 import { presentationOptions,primitiveInstances,cellFaceInstances,PRESENTATION_LIMITS } from './entity-presentation.mjs';
 import {stereoDisplayGeometry} from './viewer-stereographic.mjs';
 import {sourceEntityHits,PickCycle,clipCameraSegment,PICK_LIMIT} from './entity-picking.mjs';
@@ -137,9 +137,11 @@ export class Viewer {
   }
   resize(){
     const r=this.container.getBoundingClientRect();if(!r.width||!r.height)return;
+    const previousSize=this.fitViewportSize;this.fitViewportSize=`${r.width}:${r.height}`;
     this.renderer.setSize(r.width,r.height,false);this.aspect=r.width/r.height;
     this.perspectiveCamera.aspect=this.aspect;this.perspectiveCamera.updateProjectionMatrix();
     this.updateOrthographic();
+    if(previousSize&&previousSize!==this.fitViewportSize&&this.model&&this.controls?.enabled!==false&&this.fitCameraSignature===JSON.stringify(this.cameraState()))this.onAutoFit?.(this.fit());
   }
   updateOrthographic(){
     const camera=this.orthographicCamera,height=this.orthographicHalfHeight,aspect=this.aspect||1;
@@ -640,13 +642,17 @@ export class Viewer {
     const far=Number.isFinite(distance)?Math.max(1000,distance*1.05+1):1000;
     if(this.camera.far!==far){this.camera.far=far;this.camera.updateProjectionMatrix();}
   }
-  fit(padding=1.2,points=this.observationCloud()){
+  fit(padding=this.getFitPadding?.()??1.2,points){
+    const automatic=points===undefined;
+    let sphereRadius=0;
+    if(!points){points=this.observationCloud();if((this.model?.embeddingDimension||this.model?.dimension)===4&&!this.net&&!this.cellNet&&!this.morphFrame&&!this.explosionDisplay)sphereRadius=projectedRotationRadius(pointRadius(this.normalized,[0,0,0,0]),this.view?.projection,this.perspectiveSettings)||0;}
     const direction=this.camera.position.clone().sub(this.controls.target);if(!direction.lengthSq())direction.set(1,1,1);
-    const fit=fitView(points,{aspect:this.aspect||1,direction:direction.toArray(),up:this.camera.up.toArray(),fov:this.perspectiveCamera.fov,padding});
+    const fit=fitView(points,{aspect:this.aspect||1,direction:direction.toArray(),up:this.camera.up.toArray(),fov:this.perspectiveCamera.fov,padding,insets:this.getFitInsets?.()||{},sphereRadius,projection:this.cameraProjection});
     if(!fit)return this.cameraState();
     this.controls.target.fromArray(fit.center);this.camera.up.fromArray(fit.up);
     this.camera.position.fromArray(fit.center).addScaledVector(new THREE.Vector3(...fit.direction),fit.distance);this.camera.zoom=1;
-    this.orthographicHalfHeight=fit.halfHeight;this.updateOrthographic();this.updateObserverFar(points);this.camera.updateProjectionMatrix();this.bindControls();return this.cameraState();
+    this.orthographicHalfHeight=fit.halfHeight;this.updateOrthographic();this.updateObserverFar(points);this.camera.updateProjectionMatrix();this.bindControls();
+    const state=this.cameraState();this.fitCameraSignature=automatic?JSON.stringify(state):null;return state;
   }
   snap(axis='isometric'){
     const directions={x:[1,0,0],y:[0,1,0],z:[0,0,1],isometric:[1,1,1]},direction=directions[axis];
@@ -658,6 +664,7 @@ export class Viewer {
   reset(){return this.snap('isometric');}
   cameraState(){return {position:this.camera.position.toArray(),target:this.controls.target.toArray(),projection:this.cameraProjection,zoom:this.camera.zoom,up:this.camera.up.toArray(),orthographicHalfHeight:this.orthographicHalfHeight};}
   restoreCamera(value){
+    this.fitCameraSignature=null;
     if(value?.position?.length!==3||value?.target?.length!==3||![...value.position,...value.target].every(Number.isFinite))return;
     if(['orthographic','perspective'].includes(value.projection))this.setCameraProjection(value.projection,false);
     if(Number.isFinite(value.orthographicHalfHeight)&&value.orthographicHalfHeight>0)this.orthographicHalfHeight=value.orthographicHalfHeight;

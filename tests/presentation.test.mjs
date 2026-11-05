@@ -102,6 +102,14 @@ test('layout hold restores classes, inline dimensions/priorities, focus and exac
   restore();restore();assert.equal(overlay.hidden,true);assert.deepEqual([...classes],['library-hidden','inspector-collapsed']);assert.equal(a.inert,false);assert.equal(a.getAttribute('aria-hidden'),null);assert.equal(b.inert,true);assert.equal(b.getAttribute('aria-hidden'),'false');assert.deepEqual(styles.get('width'),['88%','important']);assert.equal(styles.has('height'),false);assert.equal(focused,1);
 });
 function canvas(){const log=[],ctx={save(){},restore(){},createLinearGradient:()=>({addColorStop(){}}),fillRect(){},measureText:t=>({width:t.length*10}),fillText:(text,x,y)=>log.push({text,x,y})};return {width:1280,height:720,log,getContext:()=>ctx,toDataURL:()=>JSON.stringify(log)};}
+test('layout hold keeps responsive toolbar and dock heights, then restores their inline styles',()=>{
+  const make=(height,initial=[])=>{const values=new Map(initial);return {getBoundingClientRect:()=>({height}),hasAttribute:()=>initial.length>0,removeAttribute(){this.removed=true;},style:{get length(){return values.size;},getPropertyValue:k=>values.get(k)?.[0]??'',getPropertyPriority:k=>values.get(k)?.[1]??'',setProperty:(k,v,p='')=>values.set(k,[v,p]),removeProperty:k=>values.delete(k)}};};
+  const toolbar=make(48,[['flex',['0 1 auto','important']]]),dock=make(42.296875),body=make(800);
+  body.children=[];body.setAttribute=()=>{};body.getBoundingClientRect=()=>({width:1280,height:800});body.classList={contains:()=>false,add(){},toggle(){}};
+  const restore=holdPresentationLayout({body,querySelectorAll:()=>[toolbar,dock]},{hidden:true});
+  assert.equal(toolbar.style.getPropertyValue('flex'),'0 0 48px');assert.equal(dock.style.getPropertyValue('flex'),'0 0 42.296875px');
+  restore();restore();assert.equal(toolbar.style.getPropertyValue('flex'),'0 1 auto');assert.equal(toolbar.style.getPropertyPriority('flex'),'important');assert.equal(dock.style.getPropertyValue('flex'),'');assert.equal(dock.removed,true);
+});
 test('caption painting writes three bounded lines at output resolution and restores canvas state',()=>{
   const c=canvas();drawPresentationCaption(c,{caption:{title:'A'.repeat(400),description:'Description',facts:'3D · V 8'},opacity:1});assert.equal(c.log.length,3);assert.ok(c.log[0].text.endsWith('…'));assert.ok(c.log.every(l=>l.x>=0&&l.y<c.height));
   const hidden=canvas();drawPresentationCaption(hidden,{caption:presentationCaption(state()),opacity:0});assert.equal(hidden.log.length,0);

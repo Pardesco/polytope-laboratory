@@ -36,7 +36,7 @@ export class PerspectiveControls {
       near:{text:this.near.value,min:0,exclusiveMin:true}},({distance,near},verify)=>{
       verify();Object.assign(this.context.getState().view,{perspectiveDistance4D:distance,perspectiveNear4D:near});
       this.distance.value=String(distance);this.near.value=String(near);
-      this.context.display();this.context.markDirty();
+      this.context.display();this.context.requestProjectionFit?.();this.context.markDirty();
     },{validate:perspective4DSettings});}finally{if(this.numericEntry===entry)this.numericEntry=null;}
   }
   cancelNumeric(){this.numericEntry?.cancel();}

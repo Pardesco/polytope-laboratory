@@ -8,6 +8,19 @@ A free, open-source desktop app for exploring and constructing 3D and 4D polytop
 
 The current preview is **0.27.20**. Run the downloaded executable; a separate Python installation is not required. [Matching source ZIP](https://github.com/Pardesco/polytope-laboratory/releases/download/v0.27.20/Polytope.Laboratory.0.27.20.source.zip).
 
+## What it's for
+
+Polytope Laboratory is for building polytopes you can check and reproduce, and for turning them into pictures, videos, prints and paper models.
+
+- **Checked construction from Coxeter diagrams.** Ring the nodes of a diagram (A3 to H4) and the app builds the uniform polytope. It runs structural checks and reports residuals. Floating-point results are never labelled exact.
+- **Reproducible work.** A native project stores the construction history, so anyone can open it and replay how a model was made. Exports keep full double-precision coordinates.
+- **Made to be learned.** Plain descriptions next to the mathematical names, a six-chapter Learn 4D lesson, and direct 4D turning with the mouse.
+- **Open and free.** GPLv3. You can read and test the geometry code, and fix it.
+
+How it differs from Stella4D: Stella4D is a mature, closed-source, paid program with a much larger feature set, and it remains the reference for scope. This app is free and open source. It puts the Coxeter-diagram builder, checked and reproducible output, and exports for printing and video at the center, and it is still early.
+
+**Why Electron:** the viewer is a WebGL (three.js) renderer and the geometry runs in a Python engine; Electron lets one codebase ship both offline with a bundled engine, at the cost of a larger download.
+
 ## New on main (unreleased)
 
 The `main` branch now carries the 0.27.21 development source with a large usability round. It is not in the 0.27.20 download yet; [run from source](#run-from-source) to try it. Full notes: [UX round, November 2026](docs/UX_ROUND_2026-11-04.md).
@@ -19,9 +32,18 @@ The `main` branch now carries the 0.27.21 development source with a large usabil
 - **Direct 4D turning:** Shift-drag rotates through the fourth dimension; let go while moving and it keeps tumbling until you press Esc. 4D perspective is more dramatic by default, with a **Depth** slider beside the projection picker.
 - **Construct gallery:** "What would you like to make?" with plain-language tool cards and live sliders to preview cut corners, expand, dual size and more before applying.
 - **Plain-language analysis:** an overview with a short description of the model, big counts and facts such as "3 cubes meet at every edge".
-- **Export by goal:** 3D print it, make a paper model, save a picture, make a video or GIF, use in other 3D software, or save the exact geometry.
+- **Export by goal:** 3D print it, make a paper model, save a picture, make a video or GIF, use in other 3D software, or export the model data at full double precision.
 - **Learn 4D:** a six-chapter interactive lesson (square → cube → tesseract, projections, 4D turning, slicing) under **Help**, plus a refreshed Welcome with walkthroughs.
 - Friendlier status and error messages, and faster startup.
+
+November 2026 interface pass (full notes: [UI pass](docs/UI_PASS_2026-11-05.md)):
+
+- **Clearer canvas:** a short first-run hint (turn it, see its parts, build one), and plain labels for the 4D projection and 3D camera.
+- **Tidier header and tools:** icon buttons with labels, a **Find a shape or tool** command search (Ctrl+K), and distinct tool names such as **Star truncation**.
+- **Honest precision:** the Advanced tab gives a plain validation summary, symmetry such as "B4, order 384" and residuals, with the raw report one click away. Only rational-exact results are called exact.
+- **Appearance sheet:** colors, vertex and edge sizes and lighting in one place.
+- **Readable at 1280×800:** 14px text, 36px controls, visible keyboard focus, and no auto-rotation when reduced motion is requested.
+- **Checked catalog:** an automated audit of every bundled model (counts, Euler characteristic, equal edges, flat faces and cells). All 1,594 registered models pass; see the [catalog audit](docs/CATALOG_AUDIT_2026-11-05.md).
 
 ## Try it
 

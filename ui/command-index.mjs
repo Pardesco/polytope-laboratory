@@ -1,10 +1,11 @@
 // SPDX-License-Identifier: GPL-3.0-only
+import {commandSynonyms} from './command-synonyms.mjs';
 // Apostrophes and quotes are ignored so "what's", "what’s" and "whats" all match.
-const normalized=value=>String(value??'').normalize('NFKC').toLocaleLowerCase().replace(/['‘’‛ʼ`"“”]/g,'');
+const normalized=value=>String(value??'').normalize('NFKD').replace(/\p{M}/gu,'').toLocaleLowerCase().replace(/['‘’‛ʼ`"“”]/g,'');
 export function buildCommandIndex({actions=[],controls=[],library=[],topics=[]}={}){
   const seen=new Set();return [...actions,...controls,...library,...topics].filter(item=>{
     if(!item.id||!item.label||seen.has(item.id))return false;seen.add(item.id);return true;
-  }).map(item=>({...item,path:Array.isArray(item.path)?item.path.join(' › '):item.path||'',search:normalized([item.label,...(Array.isArray(item.path)?item.path:[item.path]),item.keywords].filter(Boolean).join(' '))}));
+  }).map(item=>({...item,path:Array.isArray(item.path)?item.path.join(' › '):item.path||'',search:normalized([item.label,...(Array.isArray(item.path)?item.path:[item.path]),item.keywords,commandSynonyms(item)].filter(Boolean).join(' '))}));
 }
 export function fuzzyScore(query,item){
   const words=normalized(query).trim().split(/\s+/).filter(Boolean),label=normalized(item.label),text=item.search??normalized(item.label+' '+item.path);let score=0;

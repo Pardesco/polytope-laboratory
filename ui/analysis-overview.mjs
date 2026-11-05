@@ -2,6 +2,29 @@ import descriptions from './model-descriptions.json' with {type:'json'};
 import {relatedEntries} from './library-navigation.mjs';
 
 const fields=['vertices','edges','faces','cells'];
+const symmetryGroups=[
+  ['A3',24,['Td','[3,3]']],['B3',48,['Oh','[4,3]','[3,4]']],['H3',120,['Ih','[5,3]','[3,5]']],
+  ['A4',120,['[3,3,3]']],['B4',384,['[4,3,3]','[3,3,4]']],['D4',192,[]],
+  ['F4',1152,['[3,4,3]']],['H4',14400,['[5,3,3]','[3,3,5]']],
+  ['O',24,[]],['I',60,[]],['T',12,[]]
+];
+export function symmetryWording(model,types,{construction}={}){
+  const complete=types?.available&&types.complete&&types.closureVerified&&types.orientation==='all'&&Number.isSafeInteger(types.groupOrder)&&types.groupOrder>0;
+  const metadata=model.metadata??{},declared=metadata.symmetryGroup;
+  const group=symmetryGroups.find(([name,,aliases])=>declared===name||aliases.includes(declared));
+  const catalog=!construction&&metadata.key&&(metadata.regular===true||metadata.uniform===true)&&
+    fields.every((field,i)=>metadata.counts?.[i]===(model[field]?.length??0));
+  const numerical=complete?`Detected symmetry order ${types.groupOrder.toLocaleString('en-US')} (numerical check).`:null;
+  if(catalog&&group&&(!complete||group[1]===types.groupOrder))return {
+    text:`Symmetry: ${group[0]}, order ${group[1].toLocaleString('en-US')}.`,
+    method:`The order is known for the catalog model’s ${group[0]} symmetry group (${declared}). This identifies the mathematical family; it does not certify the stored coordinates.`+
+      (complete?` The numerical search also found this order, preserving the metric and recorded incidence and verifying group closure. Tolerance: ${types.tolerance??'see symmetry evidence'}. Maximum normalized vertex residual: ${types.maxNormalizedVertexResidual??'see symmetry evidence'}.`:' A numerical symmetry check of the stored coordinates has not completed.')
+  };
+  if(!complete)return null;
+  return {text:numerical,method:'A complete spanning-frame search found metric symmetries of the stored vertices, preserving edges, ordered face boundaries and cell incidence. Group closure was checked numerically.'+
+    (catalog&&group?' The detected order differs from the catalog family’s order; the detected value is shown.':'')+
+    ` Tolerance: ${types.tolerance??'see symmetry evidence'}. Maximum normalized vertex residual: ${types.maxNormalizedVertexResidual??'see symmetry evidence'}. Floating-point checks do not certify an exact algebraic group.`};
+}
 const plural=name=>({'cube':'cubes','tetrahedron':'tetrahedra','octahedron':'octahedra','dodecahedron':'dodecahedra','icosahedron':'icosahedra'}[name]??null);
 const article=name=>/^[aeiou]/i.test(name)?'an':'a';
 const familyText={
@@ -47,10 +70,11 @@ export function overviewData(model,{entries=[],types,construction,title}={}){
   else if(model.faces?.length){const sides=new Set(model.faces.map(face=>face.length));if(sides.size===1)facts.push(`Every face has ${[...sides][0]} sides.`);}
   const incidence=cellsPerEdge(model);if(incidence)facts.push(`${incidence} ${plural(onlyCell)??'cells'} meet at every edge.`);
   const dual=links.find(link=>link.relation==='Dual');if(dual)facts.push(dual.entry.key===metadata.key?'It is its own dual.':`Its dual is the ${dual.entry.name}.`);
-  if(types?.available&&types.complete&&types.closureVerified&&types.orientation==='all'&&Number.isSafeInteger(types.groupOrder)&&types.groupOrder>0)facts.push(`Symmetry order ${types.groupOrder.toLocaleString('en-US')} (numerical).`);
+  const symmetry=symmetryWording(model,types,{construction});
+  if(symmetry)facts.push(symmetry.text);
   else{const figure=links.find(link=>link.relation==='Vertex figure type');if(figure)facts.push(`Around each vertex: ${figure.entry.name} (vertex figure).`);}
   return {name:title?.trim()||model.name||'Untitled model',family:construction?'Constructed model':metadata.family||model.dimension+'D model',description:describeModel(model,{construction}),
-    counts:fields.filter(field=>field!=='cells'||model.dimension===4).map(field=>({label:field,count:model[field]?.length??0})),facts};
+    counts:fields.filter(field=>field!=='cells'||model.dimension===4).map(field=>({label:field,count:model[field]?.length??0})),facts,symmetry};
 }
 export class AnalysisOverview{
   constructor(context){
@@ -66,6 +90,7 @@ export class AnalysisOverview{
     const construction=prior?{label:state.label||operation||'Construction',sourceName:prior.model.name}:
       !model?.metadata?.key&&operation&&!['hull','import','parse-off'].includes(operation)?{label:state.label||operation.replaceAll('-',' ')}:undefined;
     const data=overviewData(model,{entries:this.context.getEntries?.()??[],types:this.types,construction,title:state?.view?.documentMetadata?.title});
+    const methodOpen=this.context.document.getElementById('analysis-overview-method')?.open??false;
     this.root.replaceChildren();if(!data)return;
     const make=(tag,text,id)=>{const node=this.context.document.createElement(tag);node.textContent=text;if(id)node.id=id;return node;};
     this.root.append(make('h2','Overview','analysis-overview-heading'),make('h3',data.name,'analysis-overview-name'),make('p',data.family,'analysis-overview-family'),make('p',data.description,'analysis-overview-description'));
@@ -73,6 +98,7 @@ export class AnalysisOverview{
     for(const {label,count} of data.counts){const item=make('div','');item.append(make('dt',label),make('dd',count.toLocaleString('en-US'),'analysis-overview-'+label));counts.append(item);}
     this.root.append(counts);
     if(data.facts.length){const list=make('ul','','analysis-overview-facts');list.append(...data.facts.map(text=>make('li',text)));this.root.append(list);}
+    if(data.symmetry){const details=make('details','','analysis-overview-method');details.open=methodOpen;details.append(make('summary','How this was computed'),make('p',data.symmetry.method));this.root.append(details);}
   }
 }
 

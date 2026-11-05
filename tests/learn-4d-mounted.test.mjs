@@ -1,26 +1,32 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {spawn} from 'node:child_process';
-import {createInterface} from 'node:readline';
+import {createRequire} from 'node:module';
 import {mkdir} from 'node:fs/promises';
 import {createServer} from 'vite';
 import {chromium} from 'playwright';
+const {EnginePool}=createRequire(import.meta.url)('../desktop/engine-pool.cjs');
 
 test('mounted Learn 4D drives real geometry, projections, rotation, sections and nets, then restores the user document', {timeout:180000},async()=>{
-  const engine=spawn('python',['engine/server.py'],{stdio:['pipe','pipe','pipe'],windowsHide:true}),pending=new Map(),requests=[];let next=0,stderr='';
-  engine.stderr.on('data',data=>stderr+=data);engine.on('error',error=>{for(const job of pending.values())job.reject(error);pending.clear();});
-  const lines=createInterface({input:engine.stdout});lines.on('line',line=>{const result=JSON.parse(line),job=pending.get(result.id);if(!job)return;pending.delete(result.id);result.ok?job.resolve(result.result):job.reject(Error(result.error));});
-  const compute=request=>new Promise((resolve,reject)=>{const id=++next;requests.push(request);pending.set(id,{resolve,reject});engine.stdin.write(JSON.stringify({...request,id})+'\n');});
+  const jobs=new Map(),queue=[],requests=[];let stderr='',cancellations=0;
+  const pool=new EnginePool({jobs,spawnWorker:()=>{
+    const proc=spawn('python',['-u','engine/server.py'],{stdio:['pipe','pipe','pipe'],windowsHide:true,env:{...process.env,OPENBLAS_NUM_THREADS:'1',OMP_NUM_THREADS:'1'}});
+    proc.stderr.on('data',data=>stderr+=data);return proc;
+  }});
+  const execute=(request,id)=>pool.run(request,id).finally(drain);
+  function drain(){while(queue.length&&jobs.size<3){const job=queue.shift();execute(job.request,job.id).then(job.resolve,job.reject);}}
+  const compute=(request,id)=>{requests.push(request);return jobs.size<3?execute(request,id):new Promise((resolve,reject)=>queue.push({request,id,resolve,reject}));};
+  const cancel=id=>{const at=queue.findIndex(job=>job.id===id);if(at>=0){queue.splice(at,1)[0].reject(Error('Queued job cancelled.'));cancellations++;return true;}const canceled=pool.cancel(id);if(canceled)cancellations++;return canceled;};
   const server=await createServer({configFile:false,root:'ui',optimizeDeps:{noDiscovery:true,include:[]},server:{host:'127.0.0.1',port:0}});let browser;
   try{
     await server.listen();browser=await chromium.launch({headless:true,args:['--use-angle=swiftshader','--enable-unsafe-swiftshader']});
     const page=await browser.newPage({viewport:{width:1280,height:900}}),errors=[];page.setDefaultTimeout(30000);page.on('pageerror',error=>errors.push(error.message));
-    await page.exposeFunction('nativeEngine',compute);
+    await page.exposeFunction('nativeEngine',compute);await page.exposeFunction('nativeCancel',cancel);
     await page.addInitScript(()=>{
       window.savedProjects=[];window.nativePending=0;window.testHidden=true;
       const startupGate=new Promise(resolve=>window.releaseStartup=()=>{window.startupReleased=true;resolve();});
       window.autosaves=[];const interval=window.setInterval;window.setInterval=(fn,ms,...args)=>{if(ms===30000)window.recoveryTick=fn;return interval(fn,ms,...args);};
-      window.polytope={engine:async r=>{window.nativePending++;try{if(r.op==='analyze'&&!window.startupReleased){window.startupHeld=true;await startupGate;}return await window.nativeEngine(r);}finally{window.nativePending--;}},cancel:async()=>{},setDirty:async v=>{window.testDirty=v;},setWorkspaceAvailability:async()=>{},onAction:fn=>window.menuAction=fn,libraries:async()=>({libraries:[],errors:[]}),recoveryInfo:async()=>null,startupInfo:async()=>({hidden:window.testHidden}),autosave:async p=>{window.autosaves.push(p);},recentFiles:async()=>({files:[]}),
+      window.polytope={engine:async(r,id)=>{window.nativePending++;try{if(r.op==='analyze'&&!window.startupReleased){window.startupHeld=true;await startupGate;}return await window.nativeEngine(r,id);}finally{window.nativePending--;}},cancel:id=>window.nativeCancel(id),setDirty:async v=>{window.testDirty=v;},setWorkspaceAvailability:async()=>{},onAction:fn=>window.menuAction=fn,libraries:async()=>({libraries:[],errors:[]}),recoveryInfo:async()=>null,startupInfo:async()=>({hidden:window.testHidden}),autosave:async p=>{window.autosaves.push(p);},recentFiles:async()=>({files:[]}),
         save:async project=>{window.savedProjects.push(structuredClone(project));return {path:'learn-test.polyproj'};}};
     });
     await page.goto('http://127.0.0.1:'+server.httpServer.address().port);await page.waitForFunction(()=>document.getElementById('model-name')?.textContent==='Tesseract'&&window.startupHeld);
@@ -89,7 +95,7 @@ test('mounted Learn 4D drives real geometry, projections, rotation, sections and
     await page.evaluate(()=>window.openLearn4D());await ready();await page.locator('#document-tabs > button').first().locator('.tab-close').click();await page.locator('#learn-4d-close').click();
     assert.equal(await page.locator('#document-tabs > button').count(),0);assert.equal(await page.locator('#model-name').innerText(),'Choose a model');
     await page.waitForFunction(()=>window.nativePending===0);await page.evaluate(()=>window.openLearn4D());await ready();assert.equal(await page.locator('#document-tabs > button').count(),1);await page.keyboard.press('Escape');assert.equal(await page.locator('#document-tabs > button').count(),0);
-    assert.ok(requests.some(r=>r.op==='cell-net'));assert.ok(requests.some(r=>r.op==='section'));assert.deepEqual(errors,[]);assert.equal(stderr,'');
+    assert.ok(requests.some(r=>r.op==='cell-net'));assert.ok(requests.some(r=>r.op==='section'));assert.ok(cancellations>0);assert.equal(queue.length,0);assert.equal(jobs.size,0);assert.deepEqual(errors,[]);assert.equal(stderr,'');
     assert.equal(await page.evaluate(()=>document.querySelector('#toast pre')?.textContent??''),'');
-  }finally{await browser?.close();await server.close();lines.close();engine.kill();}
+  }finally{await browser?.close();await server.close();for(const job of queue.splice(0))job.reject(Error('Test complete.'));pool.dispose();}
 });

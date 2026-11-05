@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
 import {AppChrome,EXPERT_TOOLS_KEY,readExpertTools} from '../ui/app-chrome.mjs';
+import {icon,ICON_NAMES} from '../ui/icons.mjs';
 import vm from 'node:vm';
 import {revealCommand} from '../ui/command-index.mjs';
 import {createRequire} from 'node:module';
@@ -40,10 +41,14 @@ class Node{
 }
 function fixture(){
   const doc=new Node(null,'document');doc.ownerDocument=doc;doc.createElement=tag=>new Node(doc,tag);doc.body=doc.createElement('body');doc.append(doc.body);doc.activeElement=doc.body;
+  doc.createElementNS=(_,tag)=>doc.createElement(tag);
   doc.getElementById=id=>doc.body.all().find(n=>n.id===id);
   const create=(tag,id,parent,cls='',label='')=>{const n=doc.createElement(tag);n.id=id;n.className=cls;n.textContent=label;parent.append(n);return n;};
   const header=create('header','',doc.body,'command-bar'),nav=create('nav','',header),actions=create('div','',header,'workspace-actions');
-  create('button','command-search',nav);for(const id of ['fullscreen','presentation','toggle-library','toggle-inspector'])create('button',id,actions);
+  for(const id of ['new','open','save','undo','redo','export','help'])create('button',id,nav);
+  const clicks=[];for(const id of ['new','open','save','undo','redo','export','help'])doc.getElementById(id).onclick=()=>clicks.push(id);
+  const search=create('button','command-search',nav);search.onclick=()=>clicks.push('command-search');
+  for(const id of ['fullscreen','presentation','toggle-library','toggle-inspector'])create('button',id,actions);
   const workspace=create('section','',doc.body,'workspace'),toolbar=create('div','',workspace,'view-toolbar');
   const first=create('div','',toolbar,'toolbar-group'),layoutLabel=create('label','',first),layout=create('select','viewport-layout',layoutLabel);
   const projection=create('select','projection',first);for(const value of ['orthographic','perspective','stereographic']){const option=create('option','',projection,'','4D '+value);option.value=value;}
@@ -59,8 +64,34 @@ function fixture(){
   const storage=new Map(),help=[];let fullscreen;
   const old=globalThis.MutationObserver;globalThis.MutationObserver=class{observe(){}};
   let chrome;try{chrome=new AppChrome({document:doc,storage:{getItem:k=>storage.get(k),setItem:(k,v)=>storage.set(k,v)},guide:{show:id=>help.push(id)},api:{onFullscreenChanged:fn=>fullscreen=fn}});}finally{globalThis.MutationObserver=old;}
-  return {doc,chrome,storage,help,toolbar,layout,create,fullscreen:value=>fullscreen(value),node:id=>doc.getElementById(id)};
+  return {doc,chrome,storage,help,toolbar,layout,create,clicks,search,fullscreen:value=>fullscreen(value),node:id=>doc.getElementById(id)};
 }
+
+test('header moves existing Help and search controls without replacing their handlers or identities',()=>{
+  const f=fixture(),header=f.doc.querySelector('.command-bar'),actions=f.doc.querySelector('.workspace-actions');
+  assert.equal(f.node('command-search'),f.search);assert.equal(f.search.parentElement,header);
+  assert.equal(f.node('help').parentElement,actions);assert.equal(actions.children[0],f.node('help'));
+  assert.equal(f.node('help').textContent,'Help');assert.match(f.search.textContent,/Find a shape or tool\.\.\.Ctrl\+K/);
+  assert.equal(f.search.getAttribute('aria-controls'),'command-palette');assert.equal(f.search.getAttribute('aria-haspopup'),'dialog');
+  for(const id of ['new','open','save','undo','redo','export','help','command-search'])f.node(id).click();
+  assert.deepEqual(f.clicks,['new','open','save','undo','redo','export','help','command-search']);
+  for(const id of ['undo','redo']){assert.ok(f.node(id).classList.contains('chrome-icon-button'));assert.ok(f.node(id).getAttribute('aria-label'));assert.ok(f.node(id).getAttribute('aria-keyshortcuts'));}
+});
+
+test('shared icons use decorative SVG nodes and reject unsupported names',()=>{
+  const f=fixture();for(const name of ICON_NAMES){
+    const svg=icon(name,{document:f.doc});assert.equal(svg.tagName,'SVG');assert.equal(svg.getAttribute('aria-hidden'),'true');
+    assert.equal(svg.getAttribute('focusable'),'false');assert.equal(svg.getAttribute('stroke'),'currentColor');assert.equal(svg.getAttribute('width'),'18');assert.ok(svg.children.length);
+  }
+  assert.equal(icon('polytope',{document:f.doc,size:24}).getAttribute('width'),'24');
+  for(const name of ['unknown','__proto__','constructor'])assert.throws(()=>icon(name,{document:f.doc}),/Unknown icon/);
+});
+
+test('Presentation retains its settings drawer and labels it separately from the launcher',()=>{
+  const f=fixture();assert.equal(f.node('presentation').textContent,'Presentation');
+  assert.equal(f.node('presentation-settings').querySelector('summary').textContent,'Presentation settings');
+  assert.ok(f.node('presentation-settings-apply').closest('#presentation-settings'));
+});
 
 test('expert defaults are off, saved preferences survive, and hidden test startup overrides a saved off',()=>{
   assert.equal(readExpertTools(null),false);assert.equal(readExpertTools({getItem:()=>{throw Error();}}),false);
@@ -74,6 +105,8 @@ test('toolbar keeps original control identity and callbacks, using plain project
   for(const id of ['camera-projection','stereo-mode','view-orientation','pick-kind','png-settings','reset'])assert.ok(f.node(id).closest('#view-options'),id);
   for(const id of ['projection','render-style','auto-rotate','fit-view','image'])assert.ok(!f.node(id).closest('#view-options'),id);
   assert.deepEqual(projection.options.map(n=>n.textContent),['Orthographic','Perspective','Stereographic']);assert.equal(f.node('image').textContent,'Snapshot (PNG)');
+  assert.equal(f.node('image').title,'Snapshot (PNG)');assert.equal(f.node('image').getAttribute('aria-label'),'Snapshot (PNG)');assert.ok(f.node('image').querySelector('svg'));
+  assert.equal(f.node('view-options-button').title,'View options');assert.equal(f.node('view-options-button').getAttribute('aria-label'),'View options');
 });
 test('drawer overflow retains native disclosures and controls; opening a drawer closes its siblings',()=>{
   const f=fixture();f.node('surface-settings').open=true;f.node('animation-settings').open=true;

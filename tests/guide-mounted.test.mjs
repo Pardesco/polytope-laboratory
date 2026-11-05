@@ -44,10 +44,10 @@ test('mounted Guide, contextual help, Welcome, menu action and live command/shor
     }
     await page.evaluate(()=>window.menuAction('whatsnew'));assert.match(await page.locator('#help-topic h3').innerText(),/What’s new/);await page.keyboard.press('Escape');
     const contexts=await page.evaluate(async()=>{
-      const {GROUP_GUIDE_TOPICS,guideContext}=await import('/user-guide.mjs');
-      return Array.from(document.querySelectorAll('#inspector-region details')).map(node=>({id:node.id,topic:guideContext(node),mapped:!node.id||!!GROUP_GUIDE_TOPICS[node.id],help:!!node.querySelector(':scope > summary .group-help')}));
+      const {GROUP_GUIDE_TOPICS,GUIDE_TOPICS,guideContext}=await import('/user-guide.mjs'),valid=new Set(GUIDE_TOPICS.map(topic=>topic.id));
+      return Array.from(document.querySelectorAll('#inspector-region details')).map(node=>({id:node.id,topic:guideContext(node),mapped:!node.id||valid.has(node.dataset.guideTopic||GROUP_GUIDE_TOPICS[node.id]),help:!!node.querySelector(':scope > summary .group-help')}));
     });
-    assert.ok(contexts.length>60);for(const row of contexts){assert.ok(row.mapped,JSON.stringify(row));assert.ok(row.help,JSON.stringify(row));assert.notEqual(row.topic,'start',JSON.stringify(row));}
+    assert.ok(contexts.length>60);assert.deepEqual(contexts.filter(row=>!row.mapped||!row.help||row.topic==='start'),[]);
     for(const [id,title] of [['information-panel','Read and export a measurement table'],['zone-extension-settings','Build zonohedra from axes or add zones'],['density-section-settings','Fill a section by winding density']]){
       await page.evaluate(id=>document.querySelector('#'+id+' > summary .group-help').click(),id);assert.equal(await page.locator('#help-topic h3').innerText(),title);await page.keyboard.press('Escape');
     }

@@ -159,3 +159,11 @@ test('mounted viewport gesture dispatch retains picking threshold path and uses 
   assert.match(source,/if\(this.direct4D\?\.tick\(dt\)\)return true/);assert.match(app,/import '\.\/direct-4d.css'/);assert.match(app,/viewportControls.direct4D\?\.active/);
   const viewer=readFileSync(new URL('../ui/viewer.js',import.meta.url),'utf8');assert.match(viewer,/this.pickDragged\|\|Math.hypot/);
 });
+
+test('opening demo turns briefly, restores its pose, and yields immediately to Shift-wheel or source replacement',t=>{
+  const f=fixture(t),before=[...f.state.view.angles];f.direct.demoTurn();assert.equal(f.direct.active,true);
+  f.direct.tick(.1);assert.notDeepEqual(f.state.view.angles,before);
+  for(let i=0;i<16;i++)f.direct.tick(.1);assert.deepEqual(f.state.view.angles,before);assert.equal(f.direct.active,false);
+  f.direct.demoTurn();f.direct.tick(.1);f.direct.wheel(f.canvas.emit('test',{shiftKey:true,deltaY:20}));assert.equal(f.direct.demo,null);f.direct.cancel();
+  f.direct.demoTurn();f.replace();assert.equal(f.direct.tick(.1),false);assert.equal(f.direct.active,false);
+});

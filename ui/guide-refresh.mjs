@@ -297,13 +297,14 @@ export const WHATS_NEW_LINKS=[
 ];
 export function refreshGuideTopics(original){
   return [
-    {id:'whats-new',title:'What’s new — October 26, 2026',where:'Help → What’s new; Welcome; Ctrl+K',keywords:'whats new what is new tonight additions release features',paragraphs:['Explore the overnight additions by task. Choose a link below for a location, steps and limits. All help and feature notes are bundled for offline use. Geometry remains numerical except for explicitly scoped exact workflows; available controls and diagnostics define each supported domain.'],links:WHATS_NEW_LINKS},
+    {id:'whats-new',title:'What’s new — November 2026',where:'Help → What’s new; Welcome; Ctrl+K',keywords:'whats new what is new tonight additions release features',paragraphs:['November 2026 UI pass: a clearer canvas and header, mathematical tool names with plain-language descriptions, and a docked appearance sheet. Larger type, clearer selected tabs and keyboard focus make controls easier to use. Reduced-motion preferences keep startup still.', 'October 26, 2026: Explore the overnight additions by task. Choose a link below for a location, steps and limits. All help and feature notes are bundled for offline use. Geometry remains numerical except for explicitly scoped exact workflows; available controls and diagnostics define each supported domain.'],links:WHATS_NEW_LINKS},
     {id:'shortcuts',title:'Keyboard shortcuts and action index',where:'Help → Keyboard shortcuts; ? outside text fields',goal:'Explore the library',keywords:'keyboard commands shortcut sheet ctrl k f1 escape',paragraphs:['Press Ctrl+K or Ctrl+Shift+P to search tools, fields, select choices, library models and Guide topics. Use arrows then Enter; Escape closes. F1 opens help for the focused control. Press ? outside text fields for the generated shortcut sheet and a searchable index of new tasks. Features without dedicated accelerators are reached with Ctrl+K.'],shortcuts:true,related:['discover','whats-new']},
     ...original.map(t=>({...t,...upgrades[t.id]})),...tasks,...LATE_FEATURE_TOPICS
   ];
 }
 
 export const NEW_GROUP_GUIDE_TOPICS={
+  'analysis-overview-method':'numeric','precision-details':'numeric','appearance-expert-settings':'appearance','nets-other-types':'nets',
   ...LATE_GROUP_TOPICS,
   'analysis-measurements':'selection','element-types-vertex':'selection','element-types-edge':'selection','element-types-face':'selection','element-types-cell':'selection',
   'nets-surface-options':'visible-surface','nets-numbering-options':'paper-assembly','advanced-symmetry-checks':'numeric','advanced-exact-arithmetic':'numeric',

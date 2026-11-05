@@ -1,4 +1,5 @@
 import {guideContext} from './user-guide.mjs';
+import {icon} from './icons.mjs';
 
 export const EXPERT_TOOLS_KEY='polytope.expert-tools.v1';
 export function readExpertTools(storage,{hidden=false}={}){
@@ -63,9 +64,10 @@ export class AppChrome{
   viewToolbar(){
     const doc=this.doc,toolbar=doc.querySelector('.view-toolbar');if(!toolbar)return;
     const options=this.popover(toolbar,'view-options','View options');this.viewOptions=options.root;
+    options.summary.textContent='';options.summary.append(make(doc,'span','chrome-toolbar-label','View options'));options.summary.setAttribute('aria-label','View options');options.summary.title='View options';
     const projection=doc.getElementById('projection');
     for(const option of projection?.options??[])option.textContent={orthographic:'Orthographic',perspective:'Perspective',stereographic:'Stereographic'}[option.value]??option.textContent;
-    const snapshot=doc.getElementById('image');if(snapshot)snapshot.textContent='Snapshot (PNG)';
+    const snapshot=doc.getElementById('image');if(snapshot){snapshot.textContent='';snapshot.append(icon('snapshot',{document:doc}),make(doc,'span','chrome-toolbar-label','Snapshot (PNG)'));snapshot.setAttribute('aria-label','Snapshot (PNG)');snapshot.title='Snapshot (PNG)';}
     const move=(id,label,{expert=false}={})=>{
       const node=doc.getElementById(id);if(!node)return;
       const row=make(doc,'label','chrome-option',label);if(expert)row.setAttribute('data-expert','');
@@ -73,7 +75,8 @@ export class AppChrome{
       if(node.parentElement?.tagName==='LABEL')options.panel.append(node.parentElement);else{row.append(node);options.panel.append(row);}
       if(expert)node.setAttribute('data-expert','');
     };
-    move('viewport-layout','Viewports');move('camera-projection','Camera');move('view-orientation','Look from');
+    move('viewport-layout','Viewports');move('camera-projection','3D camera');move('view-orientation','Look from');
+    const camera=doc.getElementById('camera-projection');if(camera)camera.title='3D camera: the on-screen camera observing the projected shape';
     move('stereo-mode','Stereo',{expert:true});move('pick-kind','Select by clicking',{expert:true});
     for(const [id,labels] of [
       ['camera-projection',{orthographic:'Parallel',perspective:'Perspective'}],
@@ -84,7 +87,7 @@ export class AppChrome{
     const reset=doc.getElementById('reset');if(reset)options.panel.append(reset);
     const png=doc.getElementById('png-settings');if(png)options.panel.append(png);
     // Any later toolbar additions go into the same anchored options panel.
-    const essentials=new Set(['projection','render-style','auto-rotate','fit-view','image']);
+    const essentials=new Set(['projection-label','projection','render-style','auto-rotate','fit-view','image']);
     const collect=()=>{
       for(const node of [...toolbar.children]){
         if(node===options.root)continue;
@@ -104,6 +107,9 @@ export class AppChrome{
     more.root.setAttribute('name','viewport-tools');
     for(const drawer of [...shelf.children].filter(n=>n.tagName==='DETAILS'&&n!==more.root)){
       const summary=drawer.querySelector(':scope > summary'),body=drawer.querySelector(':scope > .settings-body');if(!summary||!body)continue;
+      if(drawer.id==='presentation-settings'){
+        const help=summary.querySelector('.group-help');summary.textContent='Presentation settings';if(help)summary.append(help);
+      }
       const title=text(summary);this.drawers.push(drawer);drawer.classList.add('chrome-drawer');drawer.setAttribute('name','viewport-tools');
       if(!body.id)body.id=drawer.id+'-body';summary.setAttribute('aria-controls',body.id);
       const header=make(doc,'div','chrome-drawer-header'),heading=make(doc,'strong','',title);heading.id=drawer.id+'-title';body.setAttribute('aria-labelledby',heading.id);
@@ -128,9 +134,22 @@ export class AppChrome{
   }
   topbar(){
     const doc=this.doc,host=doc.querySelector('.workspace-actions');if(!host)return;
+    const header=doc.querySelector('.command-bar');
+    for(const [id,name,label] of [['new','new','New'],['open','open','Open'],['save','save','Save'],['undo','undo','Undo'],['redo','redo','Redo'],['export','export','Export'],['help','help','Help'],['presentation','presentation','Presentation'],['fullscreen','fullscreen','Full screen'],['toggle-library','library','Library'],['toggle-inspector','inspector','Inspector']]){
+      const button=doc.getElementById(id);if(!button)continue;
+      button.textContent='';button.append(icon(name,{document:doc}),make(doc,'span','chrome-button-label',label));
+      if(!button.getAttribute('aria-label'))button.setAttribute('aria-label',label);
+      if(id==='undo'||id==='redo'){button.classList.add('chrome-icon-button');button.setAttribute('aria-keyshortcuts',id==='undo'?'Control+Z':'Control+Shift+Z');}
+    }
+    const help=doc.getElementById('help');if(help)host.prepend(help);
     const search=doc.getElementById('command-search');
-    if(search){search.textContent='Search';const hint=make(doc,'kbd','','Ctrl+K');search.append(hint);}
+    if(search){
+      search.textContent='';search.append(icon('search',{document:doc}),make(doc,'span','chrome-search-label','Find a shape or tool...'),make(doc,'kbd','','Ctrl+K'));
+      search.setAttribute('aria-label','Find a shape or tool');search.setAttribute('aria-haspopup','dialog');search.setAttribute('aria-controls','command-palette');search.setAttribute('aria-keyshortcuts','Control+K');
+      header.append(search,host);
+    }
     const menu=this.popover(host,'app-options','⋯');menu.summary.setAttribute('aria-label','More app options');menu.summary.title='More app options';
+    menu.summary.textContent='';menu.summary.append(icon('more',{document:doc}));
     const button=this.expertButton=make(doc,'button','','Show expert tools');button.id='expert-tools';button.type='button';button.title='Show or hide advanced controls';
     button.onclick=()=>this.setExpert(!this.expert);menu.panel.append(button);
   }

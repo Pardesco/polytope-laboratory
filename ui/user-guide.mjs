@@ -200,7 +200,7 @@ export class UserGuide{
     this.dialog=dialog;this.current='start';this.previousFocus=null;
     const create=(tag,text,cls)=>{const node=document.createElement(tag);if(text)node.textContent=text;if(cls)node.className=cls;return node;};this.create=create;
     const heading=dialog.querySelector('.dialog-heading');dialog.replaceChildren(heading);
-    const label=create('label','Search the offline guide');this.search=create('input');this.search.id='help-search';this.search.type='search';this.search.maxLength=256;this.search.placeholder='Sphere, net, expressions…';label.append(this.search);
+    const label=create('label','Search the offline guide','guide-search-label');this.search=create('input');this.search.id='help-search';this.search.type='search';this.search.maxLength=256;this.search.placeholder='Sphere, net, expressions…';label.append(this.search);
     this.count=create('p',null,'muted');this.count.id='help-result-count';this.count.setAttribute('aria-live','polite');
     const body=create('div',null,'guide-layout');this.list=create('nav');this.list.setAttribute('aria-label','Guide topics');this.article=create('article');this.article.id='help-topic';
     body.append(this.list,this.article);dialog.append(label,this.count,body);this.search.oninput=()=>this.render();

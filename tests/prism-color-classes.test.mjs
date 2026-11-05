@@ -73,7 +73,7 @@ test('unsupported dimensions/resource bounds refuse the geometric scheme and deg
 
 test('Prism notes go to the Appearance drawer while actual presentation warnings stay in the viewport',()=>{
   const app=readFileSync(new URL('../ui/app.js',import.meta.url),'utf8'),code=app.slice(app.indexOf('function displayDiagnostic('),app.indexOf('function renderWorkspace(')),nodes=new Map(),get=id=>{if(!nodes.has(id))nodes.set(id,{dataset:{},textContent:''});return nodes.get(id);};
-  const sync={sync(){}},scope={$:get,base:{},model:()=>({cells:[]}),cellFacing:sync,presentationControls:sync,appearanceControls:sync,materialEffectsControls:sync,pickingControls:sync};
+  const sync={sync(){}},scope={$:get,base:{},model:()=>({cells:[]}),cellFacing:sync,presentationControls:sync,appearanceControls:sync,appearanceSheet:sync,materialEffectsControls:sync,pickingControls:sync};
   const display=new Function('scope',`with(scope){${code};return displayDiagnostic;}`)(scope);
   display({presentationDiagnostic:'Surface resource warning',prismDiagnostic:'Prism hides vertex markers on dense displays.'});
   assert.equal(get('view-diagnostic').textContent,'Surface resource warning');assert.match(get('prism-density-note').textContent,/Prism hides/);display({});assert.equal(get('prism-density-note').textContent,'');

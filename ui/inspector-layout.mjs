@@ -1,6 +1,7 @@
 // Organize existing controls by task without changing their handlers or IDs.
 import {groupConstructControls} from './construct-groups.mjs';
 import {orderAnalysisGroups} from './analysis-order.mjs';
+import {renderPrecisionValidation} from './precision-evidence.mjs';
 function disclosure(doc,id,label,nodes){
   const root=doc.createElement('details');root.id=id;root.className='inspector-group';
   const summary=doc.createElement('summary');summary.textContent=label;
@@ -65,13 +66,5 @@ export function simplifyAnalysis(doc,{open=false}={}){
   const details=disclosure(doc,'analysis-details','More model information',detailed);details.open=open;root.append(details);
 }
 export function renderValidation(doc,model,validation,options={}){
-  const root=doc.getElementById('evidence'),open=options.open??doc.getElementById('validation-details')?.open??false;
-  const title=doc.createElement('p');title.className='validation-status';
-  title.textContent=validation.passed?'Structural checks passed':'Geometry checks failed';
-  const note=doc.createElement('p');note.className='muted';note.textContent=model.numeric?.certified?'This model includes an exact certificate. Display and measurements are numerical.':'Geometry and measurements use numerical calculations.';
-  const raw=doc.createElement('pre');raw.className='code-box';raw.textContent=JSON.stringify({numeric:model.numeric,certificate:model.certificate,provenance:model.provenance,validation},null,2);
-  const details=disclosure(doc,'validation-details','Checks, calculation method and source',[raw]);details.open=open;
-  details.setAttribute('data-expert','');
-  const warnings=(validation.warnings??[]).filter(w=>w!=='Geometry is approximate. Structural checks are evidence, not an exact certificate.').map(w=>{const p=doc.createElement('p');p.className='validation-warning';p.textContent=w;return p;});
-  root.replaceChildren(title,note,...warnings,details);
+  return renderPrecisionValidation(doc,model,validation,options);
 }

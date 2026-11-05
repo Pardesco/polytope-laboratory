@@ -2,6 +2,7 @@ import {NumericEntry} from './numeric-entry.mjs';
 import {StereoControls} from './stereo-controls.mjs';
 import {holdObservationControls} from './observation-controls.mjs';
 import {Direct4D} from './direct-4d.mjs';
+import {canvasOverlays} from './canvas-overlays.mjs';
 const AXES=[[0,1],[0,2],[0,3],[1,2],[1,3],[2,3]],PLANES=['XY','XZ','XW','YZ','YW','ZW'];
 const $=id=>document.getElementById(id);
 const DISPLAY_FIELDS={projection:'projection','faces-visible':'faces','vertices-visible':'vertices','face-fill-rule':'fillRule','surface-colors':'surfaceColors','surface-opacity':'surfaceOpacity'};
@@ -10,6 +11,8 @@ export class ViewportControls {
   constructor(context){
     this.context=context;this.playing=false;this.source=null;this.drag=null;
     const toolbar=document.querySelector('.view-toolbar');
+    const projection=$('projection');this.projectionLabel=document.createElement('label');this.projectionLabel.id='projection-label';this.projectionLabel.htmlFor='projection';this.projectionLabel.textContent='4D projection';projection.before(this.projectionLabel);
+    projection.setAttribute('aria-label','4D projection to 3D');projection.title='4D projection: maps the fourth dimension into the 3D scene';
     const select=(id,label,options)=>{
       let node=$(id);if(node)return node;
       node=document.createElement('select');node.id=id;node.setAttribute('aria-label',label);node.title=label;
@@ -46,9 +49,9 @@ export class ViewportControls {
     // programmatic opens. Nested details retain their independent state.
     const panels='.workspace-shelf > details';
     document.querySelectorAll(panels).forEach(item=>item.setAttribute('name','viewport-tools'));
-    const closePanels=()=>document.querySelectorAll(panels).forEach(item=>{item.open=false;});
+    const closePanels=(keepAppearance=false)=>document.querySelectorAll(panels).forEach(item=>{if(!keepAppearance||item.id!=='surface-settings')item.open=false;});
     const overlayOpen=()=>!!document.querySelector('dialog[open]')||document.getElementById('presentation-showcase')?.hidden===false;
-    document.addEventListener('pointerdown',event=>{if(!overlayOpen()&&!event.target.closest('.workspace-shelf'))closePanels();});
+    document.addEventListener('pointerdown',event=>{if(!overlayOpen()&&!event.target.closest('.workspace-shelf'))closePanels(true);});
     document.addEventListener('keydown',event=>{if(event.key==='Escape'&&!overlayOpen())closePanels();});
     const canvas=this.context.base.renderer.domElement;
     for(const event of ['pointerdown','wheel'])canvas.addEventListener(event,()=>{if(this.startupRotation)this.stop();},true);
@@ -73,6 +76,13 @@ export class ViewportControls {
     canvas.addEventListener('pointerup',end,true);canvas.addEventListener('pointercancel',end,true);
     canvas.addEventListener('lostpointercapture',()=>{if(this.drag)this.direct4D?.cancel();this.endDrag();});
     this.direct4D=new Direct4D(context,this);
+    this.overlays=canvasOverlays(document,context.base.container.parentElement);
+    this.overlays?.configure({...context,canEdit:()=>this.canEdit(),stop:()=>{this.stop();context.stopTrack?.();},turn:()=>this.direct4D.demoTurn(),build:()=>globalThis.openCoxeterBuilder?.()});
+    this.overlays?.configure({refitOverlay:()=>{const base=context.base;if(this.canEdit()&&base.fitCameraSignature&&base.fitCameraSignature===JSON.stringify(base.cameraState()))this.frameModel();}});
+    context.base.getFitInsets=()=>this.overlays?.safeInsets()||{};
+    context.base.getFitPadding=()=>1.1;
+    context.base.onAutoFit=camera=>{if(this.canEdit()){this.view().camera=camera;(context.markPoseDirty||context.markDirty)();}};
+    toolbar.addEventListener('input',event=>{if(event.target.id==='perspective-strength'&&this.canEdit())this.frameModel();});
     this.syncSidebars();
   }
   async editSpeed(){
@@ -120,7 +130,7 @@ export class ViewportControls {
     view[field]=value;view.presentation=view.faces===false?'wireframe':(view.surfaceOpacity??1)<1?'translucent':'solid';
     this.context.display();this.restoreDisplayInputs();this.sync();this.context.markDirty();
     if(field==='fillRule')return this.context.refreshDerived();
-    if(field==='projection')this.context.requestProjectionFit?.();
+    if(field==='projection'){if(this.playing){if(value==='stereographic')this.stop();else this.frameModel();}this.context.requestProjectionFit?.();}
   }
   setCellVisibility(action,text){
     const view=this.requireDisplayEdit(),count=this.context.getModel()?.cells?.length??0;
@@ -167,10 +177,12 @@ export class ViewportControls {
     finally{if(drag.canvas?.hasPointerCapture?.(drag.pointer))drag.canvas.releasePointerCapture(drag.pointer);}
   }
   persistCamera(){this.view().camera=this.context.base.cameraState();this.context.markDirty();}
+  frameModel(){if(!this.context.base?.fit||!this.canEdit())return;this.context.base.fit();this.view().camera=this.context.base.cameraState();}
+  opened(model){if(this.context.getModel()!==model)return;this.overlays?.freshOpen(model);this.context.base.resize();this.frameModel();}
   syncSidebars(){for(const [id,cls] of [['toggle-library','library-hidden'],['toggle-inspector','inspector-hidden']])$(id).setAttribute('aria-pressed',String(!document.body.classList.contains(cls)));}
   sync(){
     this.stereoControls?.sync();
-    const source=this.context.getState();this.direct4D?.sync();if(!source)return;
+    const source=this.context.getState();this.direct4D?.sync();this.overlays?.sync();if(!source)return;
     if(this.context.isExporting())this.endDrag();
     if(source!==this.source){this.stop();this.endDrag();this.source=source;this.orientation.value='free';}
     const view=source.view,d=this.context.getModel()?.embeddingDimension||this.context.getModel()?.dimension||3;
@@ -182,6 +194,7 @@ export class ViewportControls {
     this.gesture.checked=!!view.drag4D;this.gestureLabel.hidden=d!==4;
     $('rotation-settings').hidden=d<3;
     $('projection').hidden=d!==4;
+    if(this.projectionLabel)this.projectionLabel.hidden=d!==4;
     $('auto-rotate').disabled=d<3||this.context.isExporting();
     for(const id of Object.keys(DISPLAY_FIELDS)){const node=this.displayNode(id);if(node)node.disabled=this.context.isExporting()||id==='projection'&&d!==4;}
     for(const id of ['visible-cell-id','isolate-cell','hide-cell','show-all-cells']){const node=this.displayNode(id);if(node)node.disabled=this.context.isExporting()||!this.context.getModel()?.cells?.length;}
@@ -198,7 +211,7 @@ export class ViewportControls {
     this.syncPlaying();
   }
   syncPlaying(){$('auto-rotate').textContent=this.playing?'Pause rotation':'Rotate';$('auto-rotate').setAttribute('aria-pressed',String(this.playing));}
-  startStartupRotation(){this.startupRotation=true;this.playing=true;this.syncPlaying();}
+  startStartupRotation(){const reduced=globalThis.matchMedia?.('(prefers-reduced-motion: reduce)').matches===true;this.frameModel();this.startupRotation=!reduced;this.playing=!reduced;this.syncPlaying();}
   stop(){this.direct4D?.cancel();this.startupRotation=false;this.playing=false;this.syncPlaying();}
   toggle(){if(!this.canEdit())return;this.direct4D?.cancel();this.context.cancelProjectionFit?.();this.context.stopTrack();this.startupRotation=false;this.playing=!this.playing;this.context.markDirty();this.syncPlaying();}
   setPresentation(presentation){

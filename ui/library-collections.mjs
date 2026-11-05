@@ -1,4 +1,5 @@
 import {catalogThumbnailVersion} from './library-thumbnails.mjs';
+import {libraryProvenance,mountLibrarySearch,symmetryHero} from './library-visual.mjs';
 
 const family=(...names)=>entry=>names.includes(entry.family);
 export const LIBRARY_COLLECTIONS=[
@@ -36,14 +37,21 @@ export class LibraryCollections {
     for(const [button,view] of [[this.list,'list'],[this.grid,'grid']]){button.setAttribute('aria-label',view==='list'?'Show library as a list':'Show library as a thumbnail grid');button.onclick=()=>{this.view=view;change();};}
     actions.append(this.home,this.list,this.grid);document.getElementById('library-family').before(actions);
     this.builder=make('button','library-build-symmetry','Build from symmetry');this.builder.className='wide';this.builder.hidden=typeof getBuilder()!=='function';
-    this.builder.onclick=guard(()=>{const build=getBuilder();this.builder.hidden=typeof build!=='function';if(typeof build==='function')return build();});actions.after(this.builder);
+    this.builder.onclick=guard(()=>{const build=getBuilder();this.builder.hidden=typeof build!=='function';if(typeof build==='function')return build();});symmetryHero(document,this.builder);document.getElementById('search')?.before(this.builder);
+    this.updateCount=document.getElementById('search')?mountLibrarySearch(document):()=>{};
     const more=make('details','library-more-filters'),summary=make('summary',null,'More filters');more.setAttribute('data-expert','');more.append(summary);document.getElementById('library-family').after(more);
     more.append(document.getElementById('library-audit-filter'),document.getElementById('library-properties'));
     this.breadcrumb=make('div','library-breadcrumb');this.breadcrumb.setAttribute('role','status');more.after(this.breadcrumb);
     this.tooltip=make('div','library-item-preview');this.tooltip.className='library-item-preview';this.tooltip.setAttribute('role','tooltip');this.tooltip.hidden=true;document.body.append(this.tooltip);
     document.addEventListener('keydown',event=>{if(event.key==='Escape')this.hidePreview();});
     document.getElementById('catalog').addEventListener('scroll',()=>this.hidePreview());
+    document.getElementById('library-region')?.addEventListener('scroll',()=>this.hidePreview());
     globalThis.window?.addEventListener('resize',()=>this.hidePreview());
+  }
+  mountOverflow(){
+    const button=this.document.getElementById('link-library'),menu=this.document.getElementById('app-options'),panel=this.document.getElementById('app-options-panel');
+    if(!button||!panel)return;
+    button.textContent='+ Link local OFF catalog';panel.append(button);button.addEventListener('click',()=>{menu.open=false;});
   }
   goHome(){this.collection=null;this.showAll=false;this.resetFilters();this.change();this.home.focus();}
   matches(entry){return !this.collection||LIBRARY_COLLECTIONS.find(item=>item.id===this.collection)?.matches(entry);}
@@ -65,7 +73,8 @@ export class LibraryCollections {
       button.append(slot,this.make('strong',null,collection.label),this.make('small',null,collection.count.toLocaleString()+' models'));
       button.onclick=()=>{this.collection=collection.id;this.showAll=false;this.change();this.document.getElementById('library-back')?.focus();};cards.append(button);
     }
-    const all=this.make('button','library-show-all','Show all models');all.className='wide';all.onclick=()=>{this.showAll=true;this.change();};section.append(all,cards);catalog.append(section);
+    const all=this.make('button','library-show-all','Show all models');all.className='wide';all.onclick=()=>{this.showAll=true;this.change();};section.append(all,cards);
+    const link=this.make('button','library-link-local','+ Link local OFF catalog');link.className='library-text-link';link.onclick=()=>this.document.getElementById('link-library')?.click();section.append(link);catalog.append(section);
   }
   decorate(button,entry){
     if(this.view==='grid'){const slot=this.make('span');button.prepend(slot);this.thumbnails.watch(slot,entry);}
@@ -82,7 +91,8 @@ export class LibraryCollections {
     this.hidePreview();if(!button.isConnected)return;
     const tooltip=this.tooltip,slot=this.make('span');this.previewSlot=slot;
     tooltip.replaceChildren(slot,this.make('strong',null,entry.name),this.make('small',null,libraryCounts(entry)));
-    if(entry.catalogStatus||entry.sourceClassification)tooltip.append(this.make('small',null,entry.catalogStatus??entry.sourceClassification));
+    const provenance=libraryProvenance(entry);if(provenance)tooltip.append(this.make('small',null,provenance));
+    if(entry.catalogStatus)tooltip.append(this.make('small',null,entry.catalogStatus));
     this.thumbnails.watch(slot,entry,{immediate:true});tooltip.hidden=false;
     this.previewButton=button;this.previousDescription=button.getAttribute('aria-describedby');button.setAttribute('aria-describedby',[this.previousDescription,tooltip.id].filter(Boolean).join(' '));
     const rect=button.getBoundingClientRect(),width=globalThis.window?.innerWidth??1280,height=globalThis.window?.innerHeight??800;

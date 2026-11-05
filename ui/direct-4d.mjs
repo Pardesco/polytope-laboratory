@@ -1,5 +1,6 @@
 import {PLANES,rotate} from './projection.js';
 import {holdObservationControls} from './observation-controls.mjs';
+import {canvasOverlays} from './canvas-overlays.mjs';
 
 const RAD=Math.PI/180,DEFAULT=[0,0,24,0,18,0],ZERO=()=>[0,0,0];
 const dot=(a,b)=>a.reduce((sum,x,i)=>sum+x*b[i],0);
@@ -53,6 +54,7 @@ export class Direct4D {
     this.context=context;this.owner=owner;this.pending=ZERO();this.velocity=ZERO();this.visible=true;
     try{this.storage=context.storage??globalThis.localStorage;this.visible=this.storage?.getItem('polytope.direct4d.gizmo')!=='0';}catch{}
     const create=tag=>document.createElement(tag),host=context.base.container.parentElement;
+    this.overlays=context.overlays??canvasOverlays(document,host);
     this.gizmo=create('div');this.gizmo.id='direct-4d-gizmo';this.gizmo.className='direct-4d-gizmo';this.gizmo.hidden=true;this.gizmo.setAttribute('role','group');this.gizmo.setAttribute('aria-label','Turn in four dimensions');
     const heading=create('span');heading.className='direct-4d-heading';heading.textContent='4D turn';
     this.pads=[2,4,5].map((index,axis)=>{
@@ -72,7 +74,7 @@ export class Direct4D {
     this.hint=create('div');this.hint.id='direct-4d-hint';this.hint.className='direct-4d-hint';this.hint.hidden=true;
     const message=create('span');message.textContent='Shift-drag to turn in 4D · let go while moving to keep it tumbling';
     const close=create('button');close.type='button';close.id='direct-4d-dismiss-hint';close.textContent='×';close.setAttribute('aria-label','Dismiss 4D gesture hint');
-    close.addEventListener('click',()=>{this.showHint=false;this.hint.hidden=true;try{this.storage?.setItem('polytope.direct4d.hint-dismissed','1');}catch{}});this.hint.append(message,close);host.append(this.hint);
+    close.addEventListener('click',()=>{this.overlays?.dismiss('direct4d');this.showHint=false;this.hint.hidden=true;try{this.storage?.setItem('polytope.direct4d.hint-dismissed','1');}catch{}});this.hint.append(message,close);host.append(this.hint);
     const label=create('label');label.className='direct-4d-visibility';this.checkbox=create('input');this.checkbox.type='checkbox';this.checkbox.id='direct-4d-visible';this.checkbox.checked=this.visible;
     label.append(this.checkbox,' Show 4D turn controls');document.getElementById('rotation-controls').prepend(label);this.visibilityLabel=label;
     this.checkbox.addEventListener('change',()=>this.setVisible(this.checkbox.checked));
@@ -121,22 +123,32 @@ export class Direct4D {
     event.stopImmediatePropagation();event.preventDefault();
     if(!this.active)this.notified=false;
     if(!this.current())this.prepare();else{this.owner.playing=false;this.owner.syncPlaying();this.context.stopTrack?.();this.context.cancelProjectionFit?.();}
-    this.tumbling=false;this.velocity=ZERO();this.returning=null;
+    this.tumbling=false;this.velocity=ZERO();this.returning=null;this.demo=null;this.gizmo.classList?.remove('direct-4d-demo');
     const scale=event.deltaMode===1?16:event.deltaMode===2?this.context.base.renderer.domElement.clientHeight:1;
     this.pending[2]+=Math.max(-120,Math.min(120,(event.deltaY||event.deltaX)*scale))*.12;
   }
   keyTurn(axis,degrees){this.prepare();this.pending[axis]=degrees;}
+  demoTurn(){
+    if(!this.available())return;this.prepare();this.setVisible(true);this.owner.frameModel?.();
+    this.gizmo.classList?.add('direct-4d-demo');
+    if(globalThis.matchMedia?.('(prefers-reduced-motion: reduce)').matches){this.gizmo.focus?.();this.gizmo.classList?.remove('direct-4d-demo');this.pads[0]?.focus?.();return;}
+    this.demo={from:[...this.source.view.angles],time:0};
+  }
   reset(){
     if(!this.available())return;this.prepare();
     this.returning={from:[...this.source.view.angles],time:0};
   }
-  cancel(){this.tumbling=false;this.pending=ZERO();this.velocity=ZERO();this.returning=null;this.owner.endDrag();}
-  get active(){return !!(this.owner.drag||this.returning||this.pending.some(Boolean)||this.velocity.some(Boolean));}
+  cancel(){this.tumbling=false;this.pending=ZERO();this.velocity=ZERO();this.returning=null;this.demo=null;this.gizmo.classList?.remove('direct-4d-demo');this.owner.endDrag();}
+  get active(){return !!(this.owner.drag||this.returning||this.demo||this.pending.some(Boolean)||this.velocity.some(Boolean));}
   tick(dt){
     if(!this.active)return false;
     if(!this.current()){this.cancel();return false;}
     let angles;
-    if(this.returning){
+    if(this.demo){
+      const demo=this.demo;demo.time+=Math.max(0,Math.min(dt,.1));const t=Math.min(1,demo.time/1.4);
+      angles=t===1?[...demo.from]:turn4D(demo.from,[18*Math.sin(Math.PI*t),8*Math.sin(Math.PI*t),0]);
+      if(t===1){this.demo=null;this.gizmo.classList?.remove('direct-4d-demo');}
+    }else if(this.returning){
       const r=this.returning;r.time+=Math.max(0,Math.min(dt,.1));const t=Math.min(1,r.time/.45),ease=t*t*(3-2*t);
       angles=r.from.map((x,i)=>wrap(x+wrap(DEFAULT[i]-x)*ease));if(t===1){angles=[...DEFAULT];this.returning=null;}
     }else{
@@ -151,12 +163,16 @@ export class Direct4D {
     if(!this.notified){this.notified=true;(this.context.markPoseDirty||this.context.markDirty)();}return true;
   }
   refreshPads(){this.pads.forEach((pad,i)=>{const angle=this.owner.view()?.angles[[2,4,5][i]]??0;pad.style.setProperty('--turn',angle+'deg');pad.setAttribute('aria-label',`${pad.textContent}: ${angle.toFixed(1)} degrees. Drag or use arrow keys to turn.`);});}
-  setVisible(visible){this.visible=!!visible;this.checkbox.checked=this.visible;try{this.storage?.setItem('polytope.direct4d.gizmo',this.visible?'1':'0');}catch{}this.sync();}
+  setVisible(visible){this.visible=!!visible;this.checkbox.checked=this.visible;try{this.storage?.setItem('polytope.direct4d.gizmo',this.visible?'1':'0');}catch{}this.sync();this.overlays?.context.refitOverlay?.();}
   sync(){
     const four=this.context.getModel()?.dimension===4;
     if(!four||this.active&&!this.current())this.cancel();
     if(four&&this.showHint===undefined)this.showHint=hintSession(this.storage);
-    this.gizmo.hidden=!four||!this.visible;this.hint.hidden=!four||!this.showHint;
+    this.gizmo.hidden=!four||!this.visible;
+    if(this.overlays){
+      if(four&&this.showHint&&!this.hintQueued){this.hintQueued=true;this.overlays.enqueue('direct4d',this.hint,{priority:5,onDismiss:()=>{this.showHint=false;}});}
+      this.overlays.eligible('direct4d',four&&this.showHint);
+    }else this.hint.hidden=!four||!this.showHint;
     this.visibilityLabel.hidden=!four;this.checkbox.disabled=!this.owner.canEdit();
     for(const node of [...this.pads,this.straighten])node.disabled=!this.available();this.refreshPads();
   }

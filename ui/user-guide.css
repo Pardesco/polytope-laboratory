@@ -1,0 +1,8 @@
+#help-dialog .guide-search-label{display:grid;gap:var(--space-1);margin-bottom:var(--space-2);font-size:var(--font-body)}
+#help-dialog #help-search{display:block;margin:0;width:100%;min-height:var(--control-height)}
+#help-dialog #help-result-count{margin:0 0 var(--space-2);color:var(--muted)}
+#help-dialog .guide-layout{gap:var(--space-3)}
+#help-dialog :is(p,li){font-size:var(--font-body);line-height:1.65}
+#help-dialog :is(h2,h3){font-size:var(--font-title)}
+#help-dialog .guide-layout nav button[aria-current='true']{background:var(--selection-bg);box-shadow:inset 2px 0 var(--accent);color:var(--text)}
+#help-dialog .guide-layout nav button{white-space:normal;overflow-wrap:anywhere}

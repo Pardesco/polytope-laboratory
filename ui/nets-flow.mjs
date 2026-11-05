@@ -1,4 +1,5 @@
 import {currentFaceNet} from './net-presentation.mjs';
+import {organizePrecisionEvidence} from './precision-evidence.mjs';
 
 const edgeKey=(a,b)=>a<b?`${a},${b}`:`${b},${a}`;
 function closedFaces(model){
@@ -41,6 +42,15 @@ export function netTypeAvailability(model){
   const surfaceReason=!three?'Choose a 3D star or compound.':!valid?'Repair the model checks first.':ordinary?'Use Unfold faces for this convex model.':model.metadata?.visibleSurface?'Paper surface is ready. Choose Unfold faces next.':(model.embeddingDimension??3)!==3?'Visible surfaces require three source coordinates.':faces.length<4||faces.length>100||faces.reduce((s,f)=>s+f.length,0)>1200?'Visible surfaces support 4–100 faces and up to 1,200 boundary vertices.':!closedFaces(model)?'A paper surface needs closed two-face source edges.':'';
   return {faces:faceReason,cells:cellReason,surface:surfaceReason};
 }
+export function netTypeGroups(model,availability=netTypeAvailability(model)){
+  const order=model?.dimension===4?['cells','faces','surface']:['faces','surface','cells'];
+  return {available:order.filter(key=>!availability[key]),unavailable:order.filter(key=>availability[key])};
+}
+export function otherNetReason(model,keys,availability){
+  if(!model)return 'Open a model first.';
+  const reasons=keys.map(key=>model.dimension===4&&key!=='cells'?'Needs a 3D model':model.dimension===3&&key==='cells'?'Needs a 4D model':availability[key]);
+  return [...new Set(reasons)].join(' · ');
+}
 function element(doc,tag,id,text,className){
   const node=doc.createElement(tag);if(id)node.id=id;if(text)node.textContent=text;if(className)node.className=className;return node;
 }
@@ -66,6 +76,7 @@ export function organizeAdvanced(doc){
   doc.getElementById('symmetry-result')?.setAttribute('data-expert','');
   panel.replaceChildren(element(doc,'p','advanced-intro','Inspect model checks, calculation limits and exact arithmetic tools.','muted'),checks,arithmetic,information);
   rename(doc,'validate','Check model again');
+  organizePrecisionEvidence(doc);
 }
 
 export class NetsFlow{
@@ -78,17 +89,24 @@ export class NetsFlow{
     const step=(number,title)=>{const section=element(doc,'section',`nets-step-${number}`,null,'nets-step');section.setAttribute('aria-labelledby',`nets-step-${number}-title`);const heading=element(doc,'h2',`nets-step-${number}-title`);heading.append(element(doc,'span',null,String(number),'nets-step-number'),element(doc,'span',null,title));section.append(heading);return section;};
     const choose=step(1,'Choose net type'),arrange=step(2,'Arrange'),output=step(3,'Print or export');
     panel.append(choose,arrange,output);
+    this.availableTypes=element(doc,'div','nets-available-types');
+    this.otherTypes=details(doc,'nets-other-types','Other net types',[]);this.otherTypes.open=false;
+    this.otherSummary=this.otherTypes.querySelector('summary');this.otherLabel=element(doc,'span');this.otherSummary.replaceChildren(this.otherLabel);
+    choose.append(this.availableTypes,this.otherTypes);
     this.cards={};
     for(const [key,id,title,copy] of [
       ['faces','net-rebuild','Unfold faces','Lay the faces of a 3D model flat.'],
       ['cells','cell-net-build','Unfold 4D cells','Arrange intact 3D cells in the preview.'],
       ['surface','net-visible-surface','Paper model of the visible surface','First create the outside of a star or compound.']]){
       const card=element(doc,'div',`nets-type-${key}`,null,'nets-type-card'),button=node(id),reason=element(doc,'p',`nets-type-${key}-reason`,null,'nets-type-reason');
-      button.textContent=title;button.className='wide nets-type-action';button.setAttribute('aria-describedby',reason.id);
-      card.append(button,element(doc,'p',null,copy,'muted'),reason);choose.append(card);this.cards[key]={card,button,reason};
+      const heading=element(doc,'h3',`nets-type-${key}-title`,title);
+      button.textContent=key==='cells'?'Generate cell net':key==='faces'?'Generate face net':'Create paper surface';button.className='wide nets-type-action';button.setAttribute('aria-describedby',reason.id);
+      card.append(heading,button,element(doc,'p',null,copy,'muted'),reason);this.availableTypes.append(card);this.cards[key]={card,button,reason,heading,title};
     }
-    choose.append(field('net-length'));
-    choose.append(node('net-generation-settings'),node('cell-net-generation-settings'),details(doc,'nets-surface-options','Visible surface options',[node('net-visible-surface-settings')]));
+    this.cards.faces.card.append(field('net-length'),node('net-generation-settings'));
+    this.cards.cells.card.append(node('cell-net-generation-settings'));
+    this.cards.surface.card.append(details(doc,'nets-surface-options','Visible surface options',[node('net-visible-surface-settings')]));
+    field('net-length').firstChild.textContent='Edge length ';node('net-length').title='Printed length in millimeters of source edge 0; all other edges scale proportionally.';
     field('net-root').firstChild.textContent='Starting face ';field('cell-net-root').firstChild.textContent='Starting cell ';
     const face=node('face-net-controls'),cell=node('cell-net-controls');
     const paper=node('net-paper-settings');paper.querySelector('summary').textContent='Page and paper options';
@@ -114,11 +132,17 @@ export class NetsFlow{
   }
   sync(){
     const state=this.faceEditor.getState(),model=state?.model;
-    if(this.source!==model||!this.availability){this.source=model;this.availability=netTypeAvailability(model);}
+    if(this.source!==model||!this.availability){this.source=model;this.availability=netTypeAvailability(model);this.otherTypes.open=false;}
+    const groups=netTypeGroups(model,this.availability);
+    for(const key of [...groups.available,...groups.unavailable]){const host=this.availability[key]?this.otherTypes:this.availableTypes,card=this.cards[key].card;if(card.parentElement!==host)host.append(card);}
+    this.otherTypes.hidden=!groups.unavailable.length;this.otherLabel.textContent=`Other net types (${groups.unavailable.length})`;
+    this.otherSummary.title=otherNetReason(model,groups.unavailable,this.availability);
     const blocked=Boolean(model&&(this.faceEditor.context.isExporting?.()||this.faceEditor.exports.busy||this.faceEditor.visibleSurface.busy));
-    for(const [key,{card,button,reason}] of Object.entries(this.cards)){
+    for(const [key,{card,button,reason,heading,title}] of Object.entries(this.cards)){
       const message=this.availability[key]||(blocked?'Finish or cancel the active export or surface construction.':'Ready. The native engine checks the geometry when you start.');
-      button.disabled=Boolean(this.availability[key]||blocked);button.title=message;reason.textContent=message;card.dataset.available=String(!button.disabled);
+      const name=model?.name||'this model';
+      heading.textContent=!this.availability[key]?(key==='cells'?`Unfold ${name}’s cells`:key==='faces'?`Unfold ${name}’s faces`:`Paper model of ${name}’s visible surface`):title;
+      button.disabled=Boolean(this.availability[key]||blocked);button.title=message;reason.textContent=message;reason.hidden=false;card.dataset.available=String(!button.disabled);
     }
     const ready=currentFaceNet(state);this.print.disabled=!ready||blocked;
     for(const id of ['net-length','net-root'])this.doc.getElementById(id).disabled=model?.dimension!==3||blocked;

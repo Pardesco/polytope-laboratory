@@ -5,7 +5,7 @@ export const EXPORT_GOALS=[
   {id:'picture',title:'Save a picture',hint:'PNG · choose a size or transparent background',icon:'M3 3h18v18H3zM3 17l6-6 4 4 3-3 5 5M15 7h2',defaults:{'png-size':'landscape','png-transparent':false,'png-scale':'1'},fields:['png-size','png-transparent']},
   {id:'video',title:'Make a video or GIF',hint:'Animation or tour · Reels, square or landscape',icon:'M3 5h12v14H3zm12 5 6-4v12l-6-4',defaults:{'animation-format':'webm','animation-size':'landscape','tour-format':'webm','tour-size':'landscape'},fields:['animation-format','animation-size','tour-format','tour-size']},
   {id:'software',title:'Use in other 3D software',hint:'Blender, CAD or web · GLB / OBJ / X3D / DXF',icon:'m12 2 9 5v10l-9 5-9-5V7zm0 10 9-5m-9 5L3 7m9 5v10',kind:'displayed',defaults:{'export-format':'glb','interchange-size':'0.1'},fields:['export-format','interchange-size']},
-  {id:'geometry',title:'Save the exact geometry',hint:'Original coordinates and connections · OFF / JSON',icon:'m8 4-6 8 6 8m8-16 6 8-6 8m-3-18-2 20',kind:'intrinsic',defaults:{'export-format':'off'},fields:['export-format']}
+  {id:'geometry',title:'Export model data',hint:'Coordinates and connections. OFF / JSON, full double precision',icon:'m8 4-6 8 6 8m8-16 6 8-6 8m-3-18-2 20',kind:'intrinsic',defaults:{'export-format':'off'},fields:['export-format']}
 ];
 const GEOMETRY=new Set(['print','software','geometry']);
 const CONTROL_IDS=['export-source','export-units','export-format','printable-mode','printable-size','printable-strut','printable-node','printable-thickness','printable-segments','printable-ascii','printable-fill','printable-hollow','printable-wall','interchange-size','png-size','png-transparent','png-scale','png-framing','png-margin','png-supersample',...['animation','tour'].flatMap(p=>['format','size','framing','margin','supersample','bitrate','palette','dither','loop-count'].map(k=>p+'-'+k))];
@@ -123,7 +123,7 @@ export class ExportGoals{
       this.proxy('export-format','Use it in',[['glb','GLB · Blender and web · colors in one file'],['obj','OBJ + MTL · 3D editors · keep both files'],['x3d','X3D · web and scene interchange'],['dxf','DXF · CAD · edge lines only']]);this.proxy('interchange-size','Longest dimension (meters)');
     }else if(this.goal==='geometry'){
       this.proxy('export-format','File format',[['off','OFF / 4OFF · source coordinates and connections'],['json','JSON · model data, metadata and notes']]);
-      this.description.textContent='Keep original source geometry, including 4D connections. Numerical coordinates stay numerical; this does not add an exactness certificate.';
+      this.description.textContent='Coordinates and connections. OFF / JSON, full double precision. Numerical coordinates stay numerical. Without unit conversion, JSON also retains any supplied rational coordinates and scoped certificate; OFF stores numerical coordinates.';
     }else if(this.goal==='picture'){
       this.proxy('png-size','Picture size');this.proxy('png-transparent','Transparent background');this.borrow(this.node('png-settings'));
     }else if(this.goal==='video'){

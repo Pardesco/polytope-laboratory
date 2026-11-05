@@ -23,7 +23,7 @@ class Node {
   get offsetHeight(){return 220;}
 }
 function dom(){
-  const d={createElement:tag=>new Node(tag,d),addEventListener(){},getElementById(id){const visit=n=>n.id===id?n:n.children.map(visit).find(Boolean);return visit(d.body);}};
+  const d={createElement:tag=>new Node(tag,d),createElementNS:(_ns,tag)=>new Node(tag,d),addEventListener(){},getElementById(id){const visit=n=>n.id===id?n:n.children.map(visit).find(Boolean);return visit(d.body);}};
   d.body=d.createElement('body');for(const id of ['library-family','library-audit-filter','library-properties','catalog']){const n=d.createElement('div');n.id=id;d.body.append(n);}return d;
 }
 const entries=[{key:'cube',name:'Cube',family:'Platonic',dimension:3,counts:[8,12,6,0]},

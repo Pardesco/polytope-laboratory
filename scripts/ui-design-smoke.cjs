@@ -36,7 +36,11 @@ async function main(){
     await capture('04-compare');checks.push('compare mode keeps two equally sized geometry viewports');
     await page.locator('#toggle-inspector').click();
     await page.locator('[data-panel="evidence"]').click();
+    assert.equal(await page.locator('#precision-details').evaluate(node=>node.open),false);
+    assert.match(await page.locator('#validation-summary').innerText(),/Checks passed/);
+    await page.locator('#precision-details > summary').click();
     assert.equal(await page.locator('#numeric-badge').isVisible(),true);assert.equal(await page.locator('#dimension-badge').isVisible(),true);
+    await page.locator('#precision-details > summary').click();
     await capture('05-evidence');checks.push('evidence and numeric context remain available in optional inspector');
     await page.locator('[data-key="cube"]').click();await page.waitForFunction(()=>document.getElementById('model-name').textContent==='Cube');
     await page.locator('#viewport-layout').selectOption('single');await page.locator('#toggle-inspector').click();

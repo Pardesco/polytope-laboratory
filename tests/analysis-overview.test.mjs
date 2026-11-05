@@ -30,7 +30,7 @@ function fixture(){
 test('catalog identity supplies curated prose, big counts and only recorded relatives',()=>{
   const data=overviewData(cube(),{entries});assert.match(data.description,/Six squares/);assert.equal(data.family,'Platonic');
   assert.deepEqual(data.counts.map(c=>c.count),[8,12,6]);assert.ok(data.facts.includes('Every face has 4 sides.'));
-  assert.ok(data.facts.includes('Its dual is the Octahedron.'));assert.ok(!data.facts.some(f=>/Symmetry/.test(f)));
+  assert.ok(data.facts.includes('Its dual is the Octahedron.'));assert.ok(!data.facts.some(f=>/symmetry/i.test(f)));
   const unlabelled=cube();unlabelled.metadata={};assert.ok(!overviewData(unlabelled,{entries}).facts.some(f=>/dual/.test(f)));
 });
 test('quadrilateral incidence never becomes a claim of squares or cubes',()=>{
@@ -39,8 +39,8 @@ test('quadrilateral incidence never becomes a claim of squares or cubes',()=>{
 });
 test('only complete full numerical symmetry with closure supplies an order',()=>{
   const result={available:true,complete:true,closureVerified:true,orientation:'all',groupOrder:48};
-  assert.ok(overviewData(cube(),{types:result}).facts.includes('Symmetry order 48 (numerical).'));
-  for(const patch of [{available:false},{complete:false},{closureVerified:false},{orientation:'proper'},{groupOrder:NaN}])assert.ok(!overviewData(cube(),{types:{...result,...patch}}).facts.some(f=>/Symmetry/.test(f)));
+  assert.ok(overviewData(cube(),{types:result}).facts.includes('Detected symmetry order 48 (numerical check).'));
+  for(const patch of [{available:false},{complete:false},{closureVerified:false},{orientation:'proper'},{groupOrder:NaN}])assert.ok(!overviewData(cube(),{types:{...result,...patch}}).facts.some(f=>/symmetry/i.test(f)));
 });
 test('literal 4D cell incidence supports a uniform edge meeting count',()=>{
   const model={...cube(),dimension:4,metadata:{},edges:[[0,1],[1,2],[2,3],[0,3]],faces:[[0,1,2,3]],cells:[[0],[0],[0]]};
@@ -67,9 +67,9 @@ test('unknown models have family, prism, antiprism, surface and generic fallback
 });
 test('mounted overview updates after navigation, history and metadata edits; late types cannot publish',()=>{
   const f=fixture();f.control.sync();assert.equal(f.document.getElementById('analysis-overview-vertices').textContent,'8');
-  f.control.sync(f.state.model,{available:true,complete:true,closureVerified:true,orientation:'all',groupOrder:48});assert.match(f.control.root.textContent,/Symmetry order 48/);
+  f.control.sync(f.state.model,{available:true,complete:true,closureVerified:true,orientation:'all',groupOrder:48});assert.match(f.control.root.textContent,/Detected symmetry order 48/);
   const old=f.state,changed={model:{...cube(),name:'Truncation of Cube',vertices:Array(24).fill([])},view:{},label:'Cut corners'};
-  f.setState(changed,{cursor:1,states:[old,changed]});f.control.sync();assert.match(f.control.root.textContent,/Made with “Cut corners” from Cube/);assert.doesNotMatch(f.control.root.textContent,/Symmetry order 48/);
+  f.setState(changed,{cursor:1,states:[old,changed]});f.control.sync();assert.match(f.control.root.textContent,/Made with “Cut corners” from Cube/);assert.doesNotMatch(f.control.root.textContent,/Detected symmetry order 48/);
   f.control.sync(old.model,{available:true,complete:true,closureVerified:true,orientation:'all',groupOrder:999});assert.doesNotMatch(f.control.root.textContent,/999/);
   changed.view.documentMetadata={title:'My shape'};f.control.sync();assert.equal(f.document.getElementById('analysis-overview-name').textContent,'My shape');
   f.setState(old);f.control.sync();assert.match(f.control.root.textContent,/Six squares/);assert.doesNotMatch(f.control.root.textContent,/Made with/);
@@ -90,7 +90,7 @@ test('real element type render feeds the overview without a second native job',(
     const control=new ElementTypeControls({getState:()=>f.state,guard:f=>f,onTypes:(m,t)=>f.control.sync(m,t)});
     const type={typeId:0,count:6,ids:[0,1,2,3,4,5],description:'quadrilateral'};
     control.render(f.state.model,{available:true,complete:true,closureVerified:true,orientation:'all',groupOrder:48,types:{vertex:[],edge:[],face:[type],cell:[]},componentCount:1,transitivity:[],maxNormalizedVertexResidual:1e-15,tolerance:1e-8});
-    assert.match(f.control.root.textContent,/Symmetry order 48/);assert.equal(f.document.getElementById('element-type-face-0').parentElement.parentElement.tagName,'DETAILS');
+    assert.match(f.control.root.textContent,/Detected symmetry order 48/);assert.equal(f.document.getElementById('element-type-face-0').parentElement.parentElement.tagName,'DETAILS');
     assert.ok(control.panel.all().some(n=>n.getAttribute('data-expert')===''));
   }finally{if(previous===undefined)delete globalThis.document;else globalThis.document=previous;}
 });

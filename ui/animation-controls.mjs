@@ -46,7 +46,7 @@ export class AnimationControls {
       <button id="animation-export" class="wide">Export selected format</button>
       <div class="button-row"><button id="animation-png">Export PNG frames</button><button id="animation-webm">Export WebM video</button></div>
       <button id="animation-cancel" class="wide" hidden>Cancel animation export</button>
-      <p class="muted">All formats render exact saved poses offline at the target resolution, including both endpoints. GIF delays round to centiseconds (minimum 1). MP4 uses constant frame rate.</p>
+      <p class="muted">All formats render saved poses offline at the target resolution, including both endpoints. GIF delays round to centiseconds (minimum 1). MP4 uses constant frame rate.</p>
       <output id="animation-progress"></output>`;
     this.nodes=Object.fromEntries([...this.container.querySelectorAll('[id]')].map(node=>[node.id.replace('animation-',''),node]));
     PLANES.forEach((label,index)=>this.nodes.plane.add(new Option(label,String(index))));

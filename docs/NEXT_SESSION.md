@@ -1,4 +1,39 @@
+> November 5, 2026: round 3 UI pass (8 Codex packages + integration polish, Astra-reviewed plan) and catalog audit pushed to GitHub `main` as unreleased source. README gained "What it's for", the Stella4D difference and why Electron.
+
+## Round 3 - November 5, 2026 (read first)
+
+Plan and results: [UI_PASS_2026-11-05.md](UI_PASS_2026-11-05.md). Packages: canvas first impression (v1), header + command
+search (v3), tool vocabulary + icons (v4), precision wording + validation summary (v5), Appearance sheet (v6), library rail
+(v7), tokens/accessibility (v8), catalog audit (g1, [CATALOG_AUDIT_2026-11-05.md](CATALOG_AUDIT_2026-11-05.md): all 1,594
+registered models pass; 2 raw `data/` compound sources need specialist review), integration polish
+([INTEGRATION_POLISH.md](INTEGRATION_POLISH.md), [R3_SMOKE_COMPATIBILITY.md](R3_SMOKE_COMPATIBILITY.md)).
+Lead fix: stellation generator IDs now update on input; on blur the change handler re-rendered the panel and swallowed the
+Enumerate click (found by the desktop smoke after v8's larger type shifted the layout).
+Verification: Node 3,160/3,160, pytest 5,911, hidden canary + 17 hidden smokes pass. Version still 0.27.21; not packaged.
+Next: community feedback, then release 0.27.21 (steps below), then the deferred Animation timeline redesign.
+
+> November 4, 2026: GitHub main updated to the unreleased 0.27.21 development source + README "New on main" section (commit `959348f`, built with the package-source.py file set, exact bytes; v0.27.20 tag/release unchanged).
+
 > Published October 24, 2026: [0.27.20 community preview](https://github.com/Pardesco/polytope-laboratory/releases/tag/v0.27.20) is now public, with matching executable/source ZIP. GitHub main and tag v0.27.20 use the verified sealed source plus publication documentation updates (commit `62abb4c`). Local 0.27.21 remains unqualified. Older public-0.26.0 statements below are historical.
+
+## NEXT STEPS (start here) - written November 4, 2026
+
+State: local 0.27.21 = UX round + Randall's follow-ups (dramatic 4D perspective eye 1.5 + Depth slider; Shift-drag tumble).
+Node 3,096/3,096, pytest 5,862, canary + 17 hidden smokes pass. Pushed to GitHub `main` (`959348f`) as unreleased source;
+the downloadable release is still v0.27.20. Shared in the polytope Discord 11-04 (Coxeter builder pitch).
+
+1. **Community feedback first:** check GitHub issues and the Discord thread; fix reported problems before new work.
+2. **Release 0.27.21:** bump version if needed, then the release order in memory (package → profiles → packaged suites +
+   portable smoke → freeze → verify-local-preview → docs → package-source → source pair), publish a GitHub release with
+   the .exe + source ZIP, and switch the README download links from 0.27.20 and fold "New on main" into "Try it".
+3. **Visible review, not done yet:** Coxeter builder (H4 dense), Learn 4D, Export goals and Construct live sliders in the
+   unfocused monitor-2 window (`polytope-orchestra/tryvis.cjs` + `steps/*.cjs`); hidden mode can't show thumbnails/Welcome
+   and throttles input to ~1/s.
+4. **Optional:** fresh-user observation pass (Astra computer-use only if Randall asks; it takes the real mouse).
+
+Process notes: the integration repo is `C:\Users\Randall\Documents\polytope-orchestra\main` (commit there, then
+`sync_to_repo.py`). To update GitHub `main`: clone it into a scratch folder, mirror the `scripts/package-source.py` file set
+with `core.autocrlf=false`, commit on top, `git push origin HEAD:main`. The local repo's own git history is NOT GitHub's.
 
 ## UX round - November 4, 2026 (read first)
 

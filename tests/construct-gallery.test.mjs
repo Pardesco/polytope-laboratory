@@ -82,6 +82,7 @@ test('search filters categories and preserves the current search when returning 
 });
 test('dimension and existing action availability refresh without changing action restrictions',()=>{
   const f=fixture(),conway=f.gallery.find('conway-apply');assert.equal(conway.card.disabled,true);assert.match(conway.reason.textContent,/3D/);f.source.dimension=3;f.gallery.sync();assert.equal(conway.card.disabled,false);
+  assert.ok(f.gallery.unavailableGroups.size);for(const group of f.gallery.unavailableGroups.values())assert.equal(group.root.dataset.guideTopic,'construction');
   const action=f.doc.getElementById('make-expansion');action.disabled=true;action.dataset.disabledReason='Finish export first.';f.gallery.sync();assert.equal(f.gallery.find(action).card.disabled,true);assert.equal(action.disabled,true);assert.equal(f.gallery.find(action).reason.textContent,'Finish export first.');
 });
 test('pane help maps to the original Guide and unknown groups retain an expert card',()=>{
@@ -105,4 +106,14 @@ test('palette reveal and shared smoke reveal open the matching pane and nested d
   const f=fixture(),target=f.doc.getElementById('fitting-solver');revealCommand(target);assert.equal(f.gallery.active.id,'fitting-settings');assert.equal(f.doc.activeElement,target);
   f.gallery.back();const previous=globalThis.window;globalThis.window=f.win;
   try{const locator={evaluate:async fn=>fn(target)};assert.equal(await reveal({},locator),locator);assert.equal(f.gallery.active.id,'fitting-settings');assert.equal(f.fitOptions.open,true);}finally{globalThis.window=previous;}
+});
+
+test('unavailable cards share a closed reason group below available categories and recover on source changes',()=>{
+  const f=fixture(),conway=f.gallery.find('conway-apply'),group=conway.card.closest('details');
+  assert.equal(group.open,false);assert.equal(group.querySelector('summary').textContent,'Needs a 3D model (1)');assert.equal(conway.reason.hidden,true);
+  assert.equal(f.gallery.unavailableRoot.children.includes(group),true);assert.equal(f.gallery.overview.children.indexOf(f.gallery.unavailableRoot)>f.gallery.overview.children.indexOf(f.gallery.categoryRoot),true);
+  f.gallery.search.value='Conway';f.gallery.sync();assert.equal(f.gallery.empty.hidden,true);assert.equal(conway.card.hidden,false);
+  f.source.dimension=3;f.gallery.sync();assert.equal(conway.card.parentElement,f.gallery.categoryNodes[0].grid);assert.equal(group.hidden,true);assert.equal(conway.card.disabled,false);
+  f.source.dimension=4;f.gallery.sync();assert.equal(conway.card.closest('details'),group);assert.equal(conway.card.disabled,true);
+  f.gallery.remember(conway.id);assert.equal(f.gallery.recentRoot.hidden,true);
 });

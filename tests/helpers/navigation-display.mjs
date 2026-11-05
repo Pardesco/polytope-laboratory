@@ -4,6 +4,7 @@ import * as THREE from 'three';
 import {Viewer} from '../../ui/viewer.js';
 import {ElementContentControls} from '../../ui/element-content-controls.mjs';
 import {pointRadius} from '../../ui/geometry-bounds.mjs';
+import {syncPrecisionContext} from '../../ui/precision-evidence.mjs';
 import {fakeRenderer} from './fake-renderer.mjs';
 
 const node=()=>({value:'',textContent:'',dataset:{},parentElement:{},options:[],append(){},replaceChildren(){}});
@@ -26,7 +27,7 @@ export function navigationDisplayHarness(source,initialState,{descriptor=null,de
   v.stereographicWorkerClock={now:()=>0,setTimer:()=>1,clearTimer(){}};
   v.setDisplay=function(...args){counts.displays++;return Viewer.prototype.setDisplay.apply(this,args);};
   const scope={project:{active:0,documents:[{id:'navigation-document',cursor:0,states:[initialState]}]},
-    base:v,derived:{model:null},pointRadius,$:get,format:String,
+    base:v,derived:{model:null},pointRadius,syncPrecisionContext,document:{getElementById:id=>id==='precision-details'?null:get(id)},$:get,format:String,
     PLANES:[[0,1],[0,2],[0,3],[1,2],[1,3],[2,3]],regular4dButton:node(),
     safeIndex:(text,count)=>{const index=Number(text);if(!Number.isInteger(index)||index<0||index>=count)throw Error('Invalid entity index');return index;},
     el:(_tag,text)=>({...node(),textContent:text}),markDirty:()=>counts.dirty++,

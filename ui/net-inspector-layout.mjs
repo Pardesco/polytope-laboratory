@@ -40,8 +40,8 @@ export function organizeNetInspector(doc){
     field('cell-net-component'),field('cell-net-translation'),field('cell-net-angles'),node('cell-net-move')]);
   const cellSelection=disclosure(doc,'cell-net-selection-settings','Match source elements',[
     field('cell-net-vertex'),node('cell-net-match-vertex'),node('cell-net-selection'),cellHint]);
-  const cellGenerate=disclosure(doc,'cell-net-generation-settings','Starting cell and separate pieces',[field('cell-net-root'),node('cell-net-separate')]);
-  cell.replaceChildren(title('4D whole-cell net'),hint('Arrange intact 3D cells from a closed 4D shell.'),node('cell-net-build'),node('cell-net-summary'),
+  const cellGenerate=disclosure(doc,'cell-net-generation-settings','Starting cell and pieces',[field('cell-net-root'),node('cell-net-separate')]);
+  cell.replaceChildren(title('4D whole-cell net'),node('cell-net-build'),node('cell-net-summary'),
     node('cell-net-undo').parentElement,field('cell-net-shrink'),node('cell-net-shrink-value'),cellEdit,cellSelection,cellGenerate,cellChecks);
   node('cell-net-summary').className='net-status';node('cell-net-summary').setAttribute('role','status');
   for(const group of [face,cell])for(const details of group.querySelectorAll('.inspector-group'))details.addEventListener('focusin',event=>{if(event.target.tagName!=='SUMMARY')details.open=true;});

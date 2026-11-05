@@ -79,7 +79,7 @@ export class InformationPanel{
   render(){
     const rows=this.rows(),table=document.createElement('table');table.id='information-measurements';
     rows.forEach((row,i)=>{const tr=document.createElement('tr');for(const text of row){const td=document.createElement(i?'td':'th');td.textContent=text;tr.append(td);}table.append(tr);});
-    this.node('table').replaceChildren(table);this.node('status').textContent='Numerical source measurements. '+(this.reply.typesAvailable?'Types verified under the full symmetry group.':this.reply.typeStatus);
+    this.node('table').replaceChildren(table);this.node('status').textContent='Numerical source measurements. '+(this.reply.typesAvailable?'Types grouped by the numerically checked full symmetry group.':this.reply.typeStatus);
   }
   async export(format){
     if(this.context.isExporting?.())throw Error('Finish the active export first.');
