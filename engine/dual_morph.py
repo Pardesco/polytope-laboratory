@@ -14,14 +14,16 @@ from .dual_morph_augmentation import prepare_augmentation
 from .dual_morph_triangles import prepare_tilting_triangles
 from .dual_morph_compound import prepare_tilting_compound
 from .dual_morph_rectify import prepare_tilting_rectify
+from .dual_morph_snub import prepare_snub
 from .dual_morph_cache import PreparedSizingCache
 from .dual_morph_4d import prepare_sizing_4d, prepare_truncation_4d
 
 VERSION='0.1.0-development'
 INVENTORY=('sizing','truncation','augmentation','expansion','tilting-quads','tilting-triangles','tilting-to-compound','tilting-to-rectify','via-snub')
-SUPPORTED=('sizing','truncation','augmentation','expansion','tilting-quads','tilting-triangles','tilting-to-compound','tilting-to-rectify')
+SUPPORTED=('sizing','truncation','augmentation','expansion','tilting-quads','tilting-triangles','tilting-to-compound','tilting-to-rectify','via-snub')
 _SIZING_CACHE=PreparedSizingCache()
 _CONVEX_4D_CACHE=PreparedSizingCache()
+_PRODUCT_4D_CACHE=PreparedSizingCache(max_prepared_bytes=16*1024**2)
 
 
 def require(value,message):
@@ -55,6 +57,7 @@ def prepare(model,settings,context):
     context=source_context(context);state={'model':model,'view':{'coordinateUnit':context['unit']},'notes':context['notes']}
     method=settings['method'];factory=(prepare_generalized_sizing if model.get('interpretation')=='generalized-complex' else prepare_sizing) if method=='sizing' else prepare_truncation if method=='truncation' else prepare_augmentation if method=='augmentation' else prepare_tilting_triangles if method=='tilting-triangles' else prepare_tilting_compound if method=='tilting-to-compound' else prepare_tilting_rectify if method=='tilting-to-rectify' else ((prepare_generalized_expansion_4d if model.get('dimension')==4 else prepare_generalized_expansion) if method=='expansion' and model.get('interpretation')=='generalized-complex' else prepare_dual_morph)
     if model.get('dimension')==4 and method in ('sizing','truncation'):factory=prepare_sizing_4d if method=='sizing' else prepare_truncation_4d
+    if method=='via-snub':factory=prepare_snub
     plan=factory(state,center=settings['center'],radius=settings['radius']);descriptor=plan.descriptor()
     if 'interpolateColors' in settings:descriptor['interpolateColors']=settings['interpolateColors']
     settings['center']=descriptor['center']
@@ -74,11 +77,17 @@ def dispatch_dual_morph(request):
     params=request['params'];model=request['model'];op=request.get('op')
     if op=='prepare-dual-morph':
         require(set(params)=={'settings','sourceContext'},'Dual morph preparation requires settings/sourceContext.')
-        _,prepared=prepare(model,params['settings'],params['sourceContext']);return prepared
+        plan,prepared=prepare(model,params['settings'],params['sourceContext'])
+        if prepared['settings']['method'] in ('expansion','tilting-quads') and model.get('interpretation')=='convex-polytope' and model.get('dimension')==4 and model.get('embeddingDimension',4)==4:
+            _PRODUCT_4D_CACHE.resolve(model,prepared['settings'],source_context(params['sourceContext']),lambda *_:(plan,prepared))
+        return prepared
     require(op=='evaluate-dual-morph' and set(params)=={'prepared','ratio','sourceContext'},'Dual morph evaluation requires prepared/ratio/sourceContext.')
     prepared=params['prepared'];require(type(prepared) is dict,'Dual morph prepared record must be an object.')
     ratio=params['ratio'];require(type(ratio) in (int,float) and math.isfinite(ratio) and 0<=ratio<=1,'Dual morph ratio must lie between zero and one.')
-    if type(prepared.get('settings')) is dict and prepared['settings'].get('method') in ('sizing','truncation') and model.get('interpretation')=='convex-polytope' and model.get('dimension')==4 and model.get('embeddingDimension',4)==4:
+    if type(prepared.get('settings')) is dict and prepared['settings'].get('method') in ('expansion','tilting-quads') and model.get('interpretation')=='convex-polytope' and model.get('dimension')==4 and model.get('embeddingDimension',4)==4:
+        settings=normalize_settings(model,prepared['settings']);context=source_context(params['sourceContext'])
+        plan,rebuilt=_PRODUCT_4D_CACHE.resolve(model,settings,context,prepare)
+    elif type(prepared.get('settings')) is dict and prepared['settings'].get('method') in ('sizing','truncation') and model.get('interpretation')=='convex-polytope' and model.get('dimension')==4 and model.get('embeddingDimension',4)==4:
         settings=normalize_settings(model,prepared['settings']);context=source_context(params['sourceContext'])
         plan,rebuilt=_CONVEX_4D_CACHE.resolve(model,settings,context,prepare)
     elif type(prepared.get('settings')) is dict and prepared['settings'].get('method')=='sizing' and model.get('interpretation')=='convex-polytope' and model.get('dimension')==3 and model.get('embeddingDimension',3)==3:

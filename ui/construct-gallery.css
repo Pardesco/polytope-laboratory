@@ -1,41 +1,217 @@
-.construct-gallery [hidden] { display: none !important; }
-.construct-gallery-intro { color: var(--text); margin: 0 0 8px; font-size: 14px; font-weight: 600; }
-#construct-tool-search { width: 100%; min-height: 36px; margin: 0 0 8px; border-radius: 8px; background: var(--panel2); }
-.construct-category, .construct-recent { margin: 16px 0 0; }
-.construct-category h3, .construct-recent h3 { margin: 0 0 8px; color: var(--muted); font-size: 12px; font-weight: 600; letter-spacing: .04em; }
-.construct-card-grid { display: grid; gap: 8px; }
-.construct-tool-card { display: flex; gap: 8px; width: 100%; padding: 8px; border-radius: 8px; text-align: left; align-items: flex-start; background: var(--panel2); }
-.construct-tool-card:hover:enabled { border-color: var(--accent); background: var(--panel); }
-.construct-tool-card svg { flex: 0 0 24px; width: 24px; height: 24px; margin-top: 2px; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linejoin: round; stroke-linecap: round; color: var(--accent); }
-.construct-card-copy { display: grid; gap: 4px; min-width: 0; }
-.construct-card-copy strong { font-size: 14px; font-weight: 600; color: var(--text); }
-.construct-card-copy > span { font-size: 12px; line-height: 1.4; color: var(--muted); }
-.construct-tool-card:disabled { opacity: 1; }
-.construct-card-reason { font-size: 12px; color: var(--muted); line-height: 1.4; }
-.construct-recent-row { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 8px; }
-.construct-recent-row button { font-size: 12px; padding: 8px; text-align: left; border-radius: 8px; }
-.construct-gallery .construct-source-shell { display: contents; }
-.construct-gallery .construct-source-heading, .construct-tool-summary { display: none !important; }
-.construct-gallery .construct-tool-pane { margin: 0; padding: 0; min-width: 0; }
-.construct-pane-header { display: grid; grid-template-columns: minmax(0,1fr) 32px; gap: 8px; align-items: center; }
-.construct-pane-header h3 { grid-column: 1/-1; margin: 8px 0 0; font-size: 18px; line-height: 1.3; }
-.construct-back { justify-self: start; padding: 8px; white-space: nowrap; border-radius: 8px; }
-.construct-pane-header .construct-pane-help { position: static; margin: 0; width: 32px; height: 32px; border-radius: 50%; justify-self: end; }
-.construct-pane-description { margin: 8px 0 16px; color: var(--muted); }
-.construct-gallery .construct-tool-controls { border: 0; margin: 0; padding: 0; background: transparent; min-width: 0; }
-.construct-tool-controls > label, .construct-tool-controls > button, .construct-tool-controls > select, .construct-tool-controls > textarea { margin-top: 8px; }
-.construct-gallery .construct-primary { background: var(--panel2); color: var(--text); border-color: var(--accent); padding: 8px 12px; width: 100%; margin: 16px 0 8px; font-weight: 600; border-radius: 8px; }
-.construct-gallery .construct-primary:hover:enabled { background: var(--panel); }
-.construct-more-options { margin-top: 16px; border-top: 1px solid var(--border); padding-top: 8px; }
-.construct-more-options > summary { color: var(--muted); }
-.construct-tool-pane label { gap: 8px; }
-.construct-tool-pane input:not([type='checkbox']), .construct-tool-pane textarea, .construct-tool-pane select { max-width: 100%; }
-@media (min-width: 1800px) { .construct-card-grid { grid-template-columns: repeat(auto-fit,minmax(220px,1fr)); } }
+.construct-gallery [hidden] {
+  display: none !important;
+}
+.construct-gallery-intro {
+  color: var(--text);
+  margin: 0 0 8px;
+  font-size: 14px;
+  font-weight: 600;
+}
+#construct-tool-search {
+  width: 100%;
+  min-height: 36px;
+  margin: 0 0 8px;
+  border-radius: 8px;
+  background: var(--panel2);
+}
+.construct-category,
+.construct-recent {
+  margin: 16px 0 0;
+}
+.construct-category h3,
+.construct-recent h3 {
+  margin: 0 0 8px;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+.construct-card-grid {
+  display: grid;
+  gap: 8px;
+}
+.construct-tool-card {
+  display: flex;
+  gap: 8px;
+  width: 100%;
+  padding: 8px;
+  border-radius: 8px;
+  text-align: left;
+  align-items: flex-start;
+  background: var(--panel2);
+}
+.construct-tool-card:hover:enabled {
+  border-color: var(--accent);
+  background: var(--panel);
+}
+.construct-tool-card svg {
+  flex: 0 0 24px;
+  width: 24px;
+  height: 24px;
+  margin-top: 2px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  color: var(--accent);
+}
+.construct-card-copy {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+}
+.construct-card-copy strong {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+}
+.construct-card-copy > span {
+  font-size: 12px;
+  line-height: 1.4;
+  color: var(--muted);
+}
+.construct-tool-card:disabled {
+  opacity: 1;
+}
+.construct-card-reason {
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.4;
+}
+.construct-recent-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+.construct-recent-row button {
+  font-size: 12px;
+  padding: 8px;
+  text-align: left;
+  border-radius: 8px;
+}
+.construct-gallery .construct-source-shell {
+  display: contents;
+}
+.construct-gallery .construct-source-heading,
+.construct-tool-summary {
+  display: none !important;
+}
+.construct-gallery .construct-tool-pane {
+  margin: 0;
+  padding: 0;
+  min-width: 0;
+}
+.construct-pane-header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 32px;
+  gap: 8px;
+  align-items: center;
+}
+.construct-pane-header h3 {
+  grid-column: 1/-1;
+  margin: 8px 0 0;
+  font-size: 18px;
+  line-height: 1.3;
+}
+.construct-back {
+  justify-self: start;
+  padding: 8px;
+  white-space: nowrap;
+  border-radius: 8px;
+}
+.construct-pane-header .construct-pane-help {
+  position: static;
+  margin: 0;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  justify-self: end;
+}
+.construct-pane-description {
+  margin: 8px 0 16px;
+  color: var(--muted);
+}
+.construct-gallery .construct-tool-controls {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  min-width: 0;
+}
+.construct-tool-controls > label,
+.construct-tool-controls > button,
+.construct-tool-controls > select,
+.construct-tool-controls > textarea {
+  margin-top: 8px;
+}
+.construct-gallery .construct-primary {
+  background: var(--panel2);
+  color: var(--text);
+  border-color: var(--accent);
+  padding: 8px 12px;
+  width: 100%;
+  margin: 16px 0 8px;
+  font-weight: 600;
+  border-radius: 8px;
+}
+.construct-gallery .construct-primary:hover:enabled {
+  background: var(--panel);
+}
+.construct-more-options {
+  margin-top: 16px;
+  border-top: 1px solid var(--border);
+  padding-top: 8px;
+}
+.construct-more-options > summary {
+  color: var(--muted);
+}
+.construct-tool-pane label {
+  gap: 8px;
+}
+.construct-tool-pane input:not([type='checkbox']),
+.construct-tool-pane textarea,
+.construct-tool-pane select {
+  max-width: 100%;
+}
+@media (min-width: 1800px) {
+  .construct-card-grid {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  }
+}
 
-.construct-unavailable-group { margin-top: 16px; border-top: 1px solid var(--border); padding-top: 8px; }
-.construct-unavailable-group > summary { min-height: 32px; padding: 8px 40px 8px 0; position: relative; color: var(--muted); font-size: 12px; overflow-wrap: anywhere; }
-.construct-unavailable-group > summary .group-help { position: absolute; right: 0; top: 8px; }
-.construct-unavailable-group > .construct-card-grid { margin-top: 8px; }
-.construct-gallery button, .construct-gallery summary { min-height: 32px; }
-.construct-gallery .construct-tool-card, .construct-gallery .construct-primary { min-height: 36px; }
-.construct-gallery button:focus-visible, .construct-gallery summary:focus-visible, #construct-tool-search:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.construct-unavailable-group {
+  margin-top: 16px;
+  border-top: 1px solid var(--border);
+  padding-top: 8px;
+}
+.construct-unavailable-group > summary {
+  min-height: 32px;
+  padding: 8px 40px 8px 0;
+  position: relative;
+  color: var(--muted);
+  font-size: 12px;
+  overflow-wrap: anywhere;
+}
+.construct-unavailable-group > summary .group-help {
+  position: absolute;
+  right: 0;
+  top: 8px;
+}
+.construct-unavailable-group > .construct-card-grid {
+  margin-top: 8px;
+}
+.construct-gallery button,
+.construct-gallery summary {
+  min-height: 32px;
+}
+.construct-gallery .construct-tool-card,
+.construct-gallery .construct-primary {
+  min-height: 36px;
+}
+.construct-gallery button:focus-visible,
+.construct-gallery summary:focus-visible,
+#construct-tool-search:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}

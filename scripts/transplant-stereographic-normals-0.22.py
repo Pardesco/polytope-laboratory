@@ -1,4 +1,5 @@
 """Mount the reviewed signed-normal patch, retaining qualified 0.21 inputs."""
+
 from datetime import datetime, timezone
 import hashlib
 import json
@@ -36,25 +37,37 @@ def main():
     test = (STAGE / new_test).read_text(encoding='utf-8')
     old_import = "../../../ui/stereographic-worker-geometry.mjs"
     assert test.count(old_import) == 1
-    test = test.replace(old_import, '../artifacts/frozen-0.21.0-release-qualified-source/source/ui/stereographic-worker-geometry.mjs')
+    test = test.replace(
+        old_import, '../artifacts/frozen-0.21.0-release-qualified-source/source/ui/stereographic-worker-geometry.mjs'
+    )
     changes[new_test] = test.encode('utf-8')
     package = (ROOT / 'package.json').read_text(encoding='utf-8')
     marker = 'tests/vp8-webm.test.mjs"'
     assert package.count(marker) == 1
-    changes['package.json'] = package.replace(marker, 'tests/vp8-webm.test.mjs tests/signed-normal-integration.test.mjs"').encode('utf-8')
+    changes['package.json'] = package.replace(
+        marker, 'tests/vp8-webm.test.mjs tests/signed-normal-integration.test.mjs"'
+    ).encode('utf-8')
     before = {name: digest(ROOT / name) if (ROOT / name).exists() else None for name in changes}
     for name, data in changes.items():
         (ROOT / name).write_bytes(data)
     for name in ('engine/__init__.py', 'engine/formats.py', 'engine/geometry.py'):
         assert digest(ROOT / name) == frozen['sourceHashes'][name], name
-    receipt = {'createdUtc': datetime.now(timezone.utc).isoformat(), 'scope':
-        'Mounted source only; runtime/GPU and packaged qualification pending. Full goal remains open.',
+    receipt = {
+        'createdUtc': datetime.now(timezone.utc).isoformat(),
+        'scope': 'Mounted source only; runtime/GPU and packaged qualification pending. Full goal remains open.',
         'stageSnapshotSHA256': digest(STAGE / 'snapshot.json'),
         'frozenManifestSHA256': digest(FROZEN / 'source-hashes.json'),
         'preservedFrozenInputs': len(frozen['sourceHashes']),
-        'changes': [{'file': name, 'beforeSHA256': before[name], 'afterSHA256': digest(ROOT / name)} for name in changes]}
+        'changes': [
+            {'file': name, 'beforeSHA256': before[name], 'afterSHA256': digest(ROOT / name)} for name in changes
+        ],
+    }
     RECEIPT.write_text(json.dumps(receipt, indent=2) + '\n', encoding='utf-8')
-    print(json.dumps({'mounted': len(changes), 'frozenInputsVerified': len(frozen['sourceHashes']), 'receipt': str(RECEIPT)}))
+    print(
+        json.dumps(
+            {'mounted': len(changes), 'frozenInputsVerified': len(frozen['sourceHashes']), 'receipt': str(RECEIPT)}
+        )
+    )
 
 
 if __name__ == '__main__':

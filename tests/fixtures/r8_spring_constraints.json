@@ -1,0 +1,246 @@
+{
+  "tetra": {
+    "id": "r8-tetra",
+    "name": "R8 spring tetrahedron",
+    "dimension": 3,
+    "embeddingDimension": 3,
+    "interpretation": "generalized-complex",
+    "vertices": [
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        -1,
+        -1
+      ],
+      [
+        -1,
+        1,
+        -1
+      ],
+      [
+        -1,
+        -1,
+        1
+      ]
+    ],
+    "edges": [
+      [
+        2,
+        3
+      ],
+      [
+        0,
+        2
+      ],
+      [
+        1,
+        3
+      ],
+      [
+        0,
+        1
+      ],
+      [
+        0,
+        3
+      ],
+      [
+        1,
+        2
+      ]
+    ],
+    "faces": [
+      [
+        2,
+        1,
+        0
+      ],
+      [
+        3,
+        0,
+        1
+      ],
+      [
+        2,
+        3,
+        0
+      ],
+      [
+        3,
+        2,
+        1
+      ]
+    ],
+    "cells": [],
+    "numeric": {
+      "mode": "float64-approximate",
+      "certified": false
+    },
+    "metadata": {
+      "coordinateUnits": "mm",
+      "offColors": {
+        "faces": [
+          {
+            "encoding": "byte",
+            "values": [
+              12,
+              34,
+              56,
+              128
+            ]
+          },
+          null,
+          null,
+          null
+        ],
+        "cells": []
+      }
+    }
+  },
+  "cube": {
+    "id": "r8-cube",
+    "name": "R8 spring cube",
+    "dimension": 3,
+    "embeddingDimension": 3,
+    "interpretation": "generalized-complex",
+    "vertices": [
+      [
+        0,
+        0,
+        0
+      ],
+      [
+        1,
+        0,
+        0
+      ],
+      [
+        1,
+        1,
+        0
+      ],
+      [
+        0,
+        1,
+        0
+      ],
+      [
+        0,
+        0,
+        1
+      ],
+      [
+        1,
+        0,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        0,
+        1,
+        1
+      ]
+    ],
+    "edges": [
+      [
+        0,
+        1
+      ],
+      [
+        1,
+        2
+      ],
+      [
+        2,
+        3
+      ],
+      [
+        3,
+        0
+      ],
+      [
+        4,
+        5
+      ],
+      [
+        5,
+        6
+      ],
+      [
+        6,
+        7
+      ],
+      [
+        7,
+        4
+      ],
+      [
+        0,
+        4
+      ],
+      [
+        1,
+        5
+      ],
+      [
+        2,
+        6
+      ],
+      [
+        3,
+        7
+      ]
+    ],
+    "faces": [
+      [
+        0,
+        3,
+        2,
+        1
+      ],
+      [
+        4,
+        5,
+        6,
+        7
+      ],
+      [
+        0,
+        1,
+        5,
+        4
+      ],
+      [
+        1,
+        2,
+        6,
+        5
+      ],
+      [
+        2,
+        3,
+        7,
+        6
+      ],
+      [
+        3,
+        0,
+        4,
+        7
+      ]
+    ],
+    "cells": [],
+    "numeric": {
+      "mode": "float64-approximate",
+      "certified": false
+    }
+  }
+}

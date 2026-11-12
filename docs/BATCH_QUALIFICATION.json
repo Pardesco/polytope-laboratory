@@ -1,0 +1,77 @@
+{
+  "schemaVersion": 1,
+  "qualified": true,
+  "engineSha256": "33959728653512ead1425a7b8ff10fc107ae359928d881aff7eb0cd042d277ef",
+  "sourceSha256": "6b99e94a59df5cc821c82316010ac2a0b9f4cd9ac2a8b72bf325f19bfbc03316",
+  "appVersion": "0.27.21",
+  "pythonAvailableOnPath": false,
+  "sourceDirectoryUsed": false,
+  "sourceComparison": true,
+  "models": [
+    {
+      "id": "tetrahedron",
+      "sourceModelSha256": "9cc0dcff3e7d0400a7f7a2c5b629f2998dc51547da01e2f9a7b51b55a174387e",
+      "sourceRecordSha256": "9ef16b3ac8f96469cb9ce00e2651682f6089fca83ff41cfc0ed39c021349141f",
+      "counts": {
+        "vertices": 4,
+        "edges": 6,
+        "faces": 4,
+        "cells": 0
+      },
+      "content": 0.3333333333333334,
+      "validationPassed": true
+    },
+    {
+      "id": "cube",
+      "sourceModelSha256": "5e0d2b7b73fb36c5c155a6c5b0c7ada92e79c2e529864520ae041a795044877b",
+      "sourceRecordSha256": "9711b367ca88aa8d2d61a8aaddc3f828817a8e7dd29347ab29eaf7998d47360e",
+      "counts": {
+        "vertices": 8,
+        "edges": 12,
+        "faces": 6,
+        "cells": 0
+      },
+      "content": 8,
+      "validationPassed": true
+    },
+    {
+      "id": "5-cell",
+      "sourceModelSha256": "a68e442f6f39288264d2ac03420ba9b39e159f529470c59ca26292bf44dc079f",
+      "sourceRecordSha256": "50d7dceb95717e8dcba7c744e3f055db7624560313f2d72e79c222a4ff9087c8",
+      "counts": {
+        "vertices": 5,
+        "edges": 10,
+        "faces": 10,
+        "cells": 5
+      },
+      "content": 0.09316949906249122,
+      "validationPassed": true
+    },
+    {
+      "id": "tesseract",
+      "sourceModelSha256": "7184b78112587526fffa727ea91d5fca9a988932202ef3501211fe5076d25fe6",
+      "sourceRecordSha256": "2dbd505958a5349a37fb11f4a4296c43b1248d66e2b38d2d58e9f5bffad846c8",
+      "counts": {
+        "vertices": 16,
+        "edges": 32,
+        "faces": 24,
+        "cells": 8
+      },
+      "content": 15.999999999999995,
+      "validationPassed": true
+    }
+  ],
+  "scenarios": [
+    "BATCH-01",
+    "BATCH-02",
+    "BATCH-03",
+    "BATCH-04",
+    "BATCH-05"
+  ],
+  "platform": "win32",
+  "arch": "x64",
+  "qualificationScope": "Relocated Windows x64 frozen engine component; installer and clean-machine qualification remain release checks.",
+  "executedDate": "2026-11-09",
+  "numericContract": "Float64 numerical analysis; no exact measurement certificate.",
+  "reportDirectory": "artifacts/batch/release-comparison"
+}

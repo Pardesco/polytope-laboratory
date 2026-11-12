@@ -1,4 +1,5 @@
 """Closed intrinsic 3D incidence-product expansion, without a hull builder."""
+
 from collections import Counter
 from copy import deepcopy
 import hashlib
@@ -42,26 +43,26 @@ def expand_runcinate(source, *, ratio=0.5, radius=1.0, center=None, color_policy
     points = np.asarray(result['vertices'], dtype=float)
     origin = np.asarray(descriptor['center'], dtype=float)
     scale = float(np.max(np.ptp(points, axis=0)))
-    local = (points-origin)/scale
+    local = (points - origin) / scale
     equations = []
     area = volume = 0.0
     oriented = Counter()
     for face in result['faces']:
         normal, height = _plane(points, face, origin, scale)
-        vector = sum((np.cross(local[a], local[b]) for a, b in zip(face, face[1:]+face[:1])), np.zeros(3))
+        vector = sum((np.cross(local[a], local[b]) for a, b in zip(face, face[1:] + face[:1])), np.zeros(3))
         if float(vector @ normal) < 0:
             face.reverse()
-        for a, b in zip(face, face[1:]+face[:1]):
+        for a, b in zip(face, face[1:] + face[:1]):
             oriented[(a, b)] += 1
         anchor = local[face[0]]
-        for i in range(1, len(face)-1):
-            b, c = local[face[i]], local[face[i+1]]
-            area += float(np.linalg.norm(np.cross(b-anchor, c-anchor)))/2
-            volume += float(anchor @ np.cross(b, c))/6
-        equations.append([*map(float, normal), -float(height+normal @ origin)])
+        for i in range(1, len(face) - 1):
+            b, c = local[face[i]], local[face[i + 1]]
+            area += float(np.linalg.norm(np.cross(b - anchor, c - anchor))) / 2
+            volume += float(anchor @ np.cross(b, c)) / 6
+        equations.append([*map(float, normal), -float(height + normal @ origin)])
     if any(count != 1 or oriented[(b, a)] != 1 for (a, b), count in oriented.items()):
         raise GeometryError('Expansion does not have a consistently oriented closed boundary.')
-    if len(points)-len(result['edges'])+len(result['faces']) != 2:
+    if len(points) - len(result['edges']) + len(result['faces']) != 2:
         raise GeometryError('Expansion boundary does not have spherical incidence.')
     try:
         area *= scale**2
@@ -70,38 +71,73 @@ def expand_runcinate(source, *, ratio=0.5, radius=1.0, center=None, color_policy
         raise GeometryError('Expansion measures overflowed.') from error
     if not all(math.isfinite(value) and value >= np.finfo(float).tiny for value in (area, volume)):
         raise GeometryError('Expansion measures are unresolved, overflowed, or underflowed.')
-    binding = {'sourceModelId': original.get('id'), 'sourceFingerprint': identity(original),
-               'sourceSnapshotSha256': hashlib.sha256(json.dumps(original, sort_keys=True, separators=(',', ':')).encode()).hexdigest()}
-    parameters = {'ratio': float(ratio), 'radius': descriptor['radius'], 'center': descriptor['center'], 'color_policy': color_policy}
+    binding = {
+        'sourceModelId': original.get('id'),
+        'sourceFingerprint': identity(original),
+        'sourceSnapshotSha256': hashlib.sha256(
+            json.dumps(original, sort_keys=True, separators=(',', ':')).encode()
+        ).hexdigest(),
+    }
+    parameters = {
+        'ratio': float(ratio),
+        'radius': descriptor['radius'],
+        'center': descriptor['center'],
+        'color_policy': color_policy,
+    }
     original_metadata = deepcopy(original.get('metadata', {}))
     derived_metadata = deepcopy(result.get('metadata', {}))
     # Arbitrary assets and original color records remain historical, not assigned
     # fabricated new element identities. Active derived colors come from the plan.
-    result['metadata'] = {'sourceMetadata': original_metadata, **derived_metadata,
-                          'staticExpansion': {'version': VERSION, **binding, 'parameters': parameters,
-                              'sourceMaps': frame['sourceMaps'], 'endpoint': frame['endpoint'],
-                              'definition': 'affine primal/reciprocal incidence product', 'hullRepair': False}}
-    result.update(id=str(uuid.uuid4()), name='Expansion of '+original.get('name', 'source'),
-                  interpretation='convex-polytope', facetVertices=deepcopy(result['faces']), facetEquations=equations,
-                  numeric={'mode': 'float64-approximate', 'certified': False, 'tolerance': EPS},
-                  provenance={'operation': 'expand-runcinate', 'algorithmVersion': VERSION,
-                              **binding, 'parameters': parameters, 'convexified': False},
-                  measure={'content': volume, 'boundaryMeasure': area, 'dimension': 3,
-                           'units': 'model-units', 'method': 'oriented supporting-face triangulation', 'certified': False})
+    result['metadata'] = {
+        'sourceMetadata': original_metadata,
+        **derived_metadata,
+        'staticExpansion': {
+            'version': VERSION,
+            **binding,
+            'parameters': parameters,
+            'sourceMaps': frame['sourceMaps'],
+            'endpoint': frame['endpoint'],
+            'definition': 'affine primal/reciprocal incidence product',
+            'hullRepair': False,
+        },
+    }
+    result.update(
+        id=str(uuid.uuid4()),
+        name='Expansion of ' + original.get('name', 'source'),
+        interpretation='convex-polytope',
+        facetVertices=deepcopy(result['faces']),
+        facetEquations=equations,
+        numeric={'mode': 'float64-approximate', 'certified': False, 'tolerance': EPS},
+        provenance={
+            'operation': 'expand-runcinate',
+            'algorithmVersion': VERSION,
+            **binding,
+            'parameters': parameters,
+            'convexified': False,
+        },
+        measure={
+            'content': volume,
+            'boundaryMeasure': area,
+            'dimension': 3,
+            'units': 'model-units',
+            'method': 'oriented supporting-face triangulation',
+            'certified': False,
+        },
+    )
     result['fingerprint'] = identity(result)
     result['validation'] = validate(result)
     if not result['validation']['passed']:
-        raise GeometryError('Expansion closed convex validation failed: '+'; '.join(result['validation']['errors']))
+        raise GeometryError('Expansion closed convex validation failed: ' + '; '.join(result['validation']['errors']))
     return result
 
 
 def dispatch_static_expansion(request):
-    if type(request) is not dict or set(request)-{'op', 'params', 'model', 'id', 'algorithmVersion'}:
+    if type(request) is not dict or set(request) - {'op', 'params', 'model', 'id', 'algorithmVersion'}:
         raise GeometryError('Expansion needs a plain source request with supported fields.')
     if request.get('op') != 'expand-runcinate' or request.get('algorithmVersion', VERSION) != VERSION:
         raise GeometryError('Unsupported expansion operation or algorithm version.')
     params = request.get('params', {})
-    if type(params) is not dict or set(params)-{'ratio', 'radius', 'center', 'color_policy'}:
+    if type(params) is not dict or set(params) - {'ratio', 'radius', 'center', 'color_policy'}:
         raise GeometryError('Expansion accepts ratio, radius, center, and color_policy only.')
     try:
         return expand_runcinate(request.get('model'), **params)

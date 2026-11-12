@@ -3,6 +3,7 @@
 Source names/categories are labels, not independently certified classifications.
 Full geometry runs use isolated child processes with explicit per-file timeouts.
 """
+
 import argparse
 from collections import Counter, defaultdict
 from concurrent.futures import ThreadPoolExecutor
@@ -56,10 +57,15 @@ def inventory(directory, collection):
         if not path.is_file() or path.suffix.lower() != '.off':
             continue
         relative = path.relative_to(directory).as_posix()
-        record = {'collection': collection, 'file': str(path.resolve()),
-                  'relativePath': relative, 'name': path.stem,
-                  'sourceClassification': Path(relative).parent.as_posix(),
-                  'classificationVerified': False, 'bytes': path.stat().st_size}
+        record = {
+            'collection': collection,
+            'file': str(path.resolve()),
+            'relativePath': relative,
+            'name': path.stem,
+            'sourceClassification': Path(relative).parent.as_posix(),
+            'classificationVerified': False,
+            'bytes': path.stat().st_size,
+        }
         try:
             record.update({'sha256': digest(path), **header(path)})
             record['status'] = 'inventory-only'
@@ -71,13 +77,19 @@ def inventory(directory, collection):
 
 def parse_worker(path):
     from engine.formats import parse_off
+
     start = time.perf_counter()
     try:
         model = parse_off(path.read_text(encoding='utf-8-sig'), path.stem)
-        result = {'status': 'parsed', 'interpretation': model['interpretation'],
-                  'counts': [len(model[key]) for key in ('vertices', 'edges', 'faces', 'cells')],
-                  'fingerprint': model['fingerprint'], 'validation': model['validation'],
-                  'numericMode': model['numeric']['mode'], 'certified': model['numeric'].get('certified', False)}
+        result = {
+            'status': 'parsed',
+            'interpretation': model['interpretation'],
+            'counts': [len(model[key]) for key in ('vertices', 'edges', 'faces', 'cells')],
+            'fingerprint': model['fingerprint'],
+            'validation': model['validation'],
+            'numericMode': model['numeric']['mode'],
+            'certified': model['numeric'].get('certified', False),
+        }
     except Exception as exc:
         result = {'status': 'diagnosed', 'error': str(exc), 'errorType': type(exc).__name__}
     result['seconds'] = time.perf_counter() - start
@@ -88,9 +100,15 @@ def audit_record(record, timeout):
     start = time.perf_counter()
     environment = {**os.environ, 'OPENBLAS_NUM_THREADS': '1', 'OMP_NUM_THREADS': '1', 'MKL_NUM_THREADS': '1'}
     try:
-        child = subprocess.run([sys.executable, str(Path(__file__).resolve()), '--worker', record['file']],
-                               capture_output=True, text=True, encoding='utf-8',
-                               timeout=timeout, env=environment, cwd=ROOT)
+        child = subprocess.run(
+            [sys.executable, str(Path(__file__).resolve()), '--worker', record['file']],
+            capture_output=True,
+            text=True,
+            encoding='utf-8',
+            timeout=timeout,
+            env=environment,
+            cwd=ROOT,
+        )
         if child.returncode:
             record.update(status='worker-error', error=child.stderr.strip(), returnCode=child.returncode)
         else:
@@ -108,10 +126,15 @@ def audit_record(record, timeout):
 
 
 def summarize(records):
-    return {'fileCount': len(records), 'statusCounts': dict(sorted(Counter(r['status'] for r in records).items())),
-            'dimensionCounts': dict(sorted(Counter(str(r.get('dimension')) for r in records).items())),
-            'sourceClassificationCounts': dict(sorted(Counter(r['sourceClassification'] for r in records).items())),
-            'interpretationCounts': dict(sorted(Counter(r['interpretation'] for r in records if 'interpretation' in r).items()))}
+    return {
+        'fileCount': len(records),
+        'statusCounts': dict(sorted(Counter(r['status'] for r in records).items())),
+        'dimensionCounts': dict(sorted(Counter(str(r.get('dimension')) for r in records).items())),
+        'sourceClassificationCounts': dict(sorted(Counter(r['sourceClassification'] for r in records).items())),
+        'interpretationCounts': dict(
+            sorted(Counter(r['interpretation'] for r in records if 'interpretation' in r).items())
+        ),
+    }
 
 
 def engine_hashes():
@@ -146,8 +169,10 @@ def main():
         if record['status'] == 'inventory-error':
             continue
         if record['dimension'] not in (3, 4):
-            record.update(status='skipped-unsupported-dimension',
-                          reason='The current OFF importer supports source dimensions 3 and 4 only.')
+            record.update(
+                status='skipped-unsupported-dimension',
+                reason='The current OFF importer supports source dimensions 3 and 4 only.',
+            )
         elif args.limit and len(supported) >= args.limit:
             record.update(status='not-audited-limit', reason='Explicit --limit prevented importer validation.')
         else:
@@ -165,22 +190,44 @@ def main():
         if 'sha256' in record:
             duplicates[record['sha256']].append(record['file'])
     after = engine_hashes()
-    output = {'schemaVersion': 2, 'createdUtc': datetime.now(timezone.utc).isoformat(),
-              'readOnlySourceAudit': True, 'completeLibraryEnumeration': True,
-              'completeSupportedLibraryAudit': all(r['status'] not in ('not-audited-limit', 'timeout', 'worker-error', 'inventory-error')
-                                                   for r in records if r['collection'] == 'library'),
-              'scope': 'Importer compatibility for local 3D/4D library files; additional collections are header/hash inventories only.',
-              'limits': {'supportedDimensions': [3, 4], 'maxValidatedFiles': args.limit or None,
-                         'perFileTimeoutSeconds': args.timeout, 'parallelWorkers': args.workers,
-                         'maxImporterFileBytes': 128 * 1024 * 1024, 'maxImporterVertices': 20000},
-              'classificationContract': 'Directory labels are retained verbatim; uniformity, regularity, naming and corpus completeness are not certified.',
-              'engineHashesBefore': before, 'engineHashesAfter': after, 'engineUnchangedDuringAudit': before == after,
-              'collections': collections, 'summary': summarize(records),
-              'duplicateContentGroups': [{'sha256': value, 'files': paths} for value, paths in sorted(duplicates.items()) if len(paths) > 1],
-              'seconds': time.perf_counter() - start, 'records': records}
+    output = {
+        'schemaVersion': 2,
+        'createdUtc': datetime.now(timezone.utc).isoformat(),
+        'readOnlySourceAudit': True,
+        'completeLibraryEnumeration': True,
+        'completeSupportedLibraryAudit': all(
+            r['status'] not in ('not-audited-limit', 'timeout', 'worker-error', 'inventory-error')
+            for r in records
+            if r['collection'] == 'library'
+        ),
+        'scope': 'Importer compatibility for local 3D/4D library files; additional collections are header/hash inventories only.',
+        'limits': {
+            'supportedDimensions': [3, 4],
+            'maxValidatedFiles': args.limit or None,
+            'perFileTimeoutSeconds': args.timeout,
+            'parallelWorkers': args.workers,
+            'maxImporterFileBytes': 128 * 1024 * 1024,
+            'maxImporterVertices': 20000,
+        },
+        'classificationContract': 'Directory labels are retained verbatim; uniformity, regularity, naming and corpus completeness are not certified.',
+        'engineHashesBefore': before,
+        'engineHashesAfter': after,
+        'engineUnchangedDuringAudit': before == after,
+        'collections': collections,
+        'summary': summarize(records),
+        'duplicateContentGroups': [
+            {'sha256': value, 'files': paths} for value, paths in sorted(duplicates.items()) if len(paths) > 1
+        ],
+        'seconds': time.perf_counter() - start,
+        'records': records,
+    }
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(output, indent=2, ensure_ascii=False), encoding='utf-8')
-    print(json.dumps({'output': str(args.output), 'summary': output['summary'], 'engineUnchangedDuringAudit': before == after}))
+    print(
+        json.dumps(
+            {'output': str(args.output), 'summary': output['summary'], 'engineUnchangedDuringAudit': before == after}
+        )
+    )
 
 
 if __name__ == '__main__':

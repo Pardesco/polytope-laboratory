@@ -1,0 +1,2324 @@
+{
+  "schema_version": 1,
+  "scenarios": [
+    {
+      "id": "stel-01-facial-arrangement",
+      "requirement_id": "STEL-01",
+      "option": "facial-arrangement",
+      "title": "Facial arrangements of basic seeds",
+      "domain_id": "stellation",
+      "input": {
+        "description": "Tetrahedron, cube, octahedron face planes",
+        "parameters": {
+          "seeds": [
+            "tetrahedron",
+            "cube",
+            "octahedron"
+          ],
+          "box_scale": "default"
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "STEL-01",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "stellation",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "installed54-manual",
+            "locator": "#stellation",
+            "role": "documented-options"
+          },
+          {
+            "source_id": "independent-fixtures",
+            "locator": "test_independent_plane_arrangement_counts_and_volume",
+            "role": "expectation-oracle"
+          }
+        ],
+        "checks": [
+          "Observed region counts 15/27/59, bounded counts 1/1/9",
+          "Partition volume equals box volume within reported error",
+          "Completion concerns declared box only"
+        ],
+        "basis": "independent-invariant"
+      },
+      "implementation": "supported",
+      "fixtures": [
+        {
+          "path": "tests/test_stellation.py",
+          "selector": "test_independent_plane_arrangement_counts_and_volume",
+          "role": "direct",
+          "evidence": "existing-test-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "stellation-evaluate",
+          "stellation-faces",
+          "stellation-scale"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R6-STELLATION",
+        "priority": "P2",
+        "unverified": "Bounded native coverage exists; benchmark option behavior and shipped UI are unverified.",
+        "next_action": "Run the named fixture, then reproduce facial arrangements of basic seeds through the listed UI; retain source, parameters, residuals, incidence and versioned comparison evidence."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3
+        ],
+        "supported_source_dimensions": [
+          3
+        ],
+        "support_note": "Supported only under referenced domain qualifications.",
+        "object_class": "Tetrahedron, cube, octahedron face planes"
+      }
+    },
+    {
+      "id": "stel-01-arbitrary-planes",
+      "requirement_id": "STEL-01",
+      "option": "arbitrary-planes",
+      "title": "Explicit arbitrary-plane input",
+      "domain_id": "stellation",
+      "input": {
+        "description": "Three coordinate planes and repeated/parallel plane variant",
+        "parameters": {
+          "planes": [
+            [
+              1,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              1,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              1,
+              0
+            ]
+          ],
+          "bounds": [
+            [
+              -1,
+              -1,
+              -1
+            ],
+            [
+              1,
+              1,
+              1
+            ]
+          ]
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "STEL-01",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "stellation",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "independent-fixtures",
+            "locator": "test_arbitrary_planes_parallel_degeneracy_and_limits",
+            "role": "expectation-oracle"
+          }
+        ],
+        "checks": [
+          "Eight octants with total volume 8",
+          "LP says each unboxed region unbounded",
+          "Repeated/parallel planes do not invent tiny cells"
+        ],
+        "basis": "independent-invariant"
+      },
+      "implementation": "engine-only",
+      "fixtures": [
+        {
+          "path": "tests/test_stellation.py",
+          "selector": "test_arbitrary_planes_parallel_degeneracy_and_limits",
+          "role": "direct",
+          "evidence": "existing-test-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "ui-domain",
+        "owner": "R6-STELLATION",
+        "priority": "P1",
+        "unverified": "No mounted arbitrary-plane list editor despite existing engine computation.",
+        "next_action": "R6-STELLATION: mount bounded plane-row editor, retain exact entered rows/bounds through save/reopen and compare native arrangement without hull repair."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3
+        ],
+        "supported_source_dimensions": [
+          3
+        ],
+        "support_note": "Supported only under referenced domain qualifications.",
+        "object_class": "Three coordinate planes and repeated/parallel plane variant"
+      }
+    },
+    {
+      "id": "stel-01-box-completion",
+      "requirement_id": "STEL-01",
+      "option": "box-completion",
+      "title": "Observation-box and budget boundaries",
+      "domain_id": "stellation",
+      "input": {
+        "description": "Octahedron with anisotropic bounds and deliberately small region cap",
+        "parameters": {
+          "box_scale": [
+            1.01,
+            100
+          ],
+          "region_cap": "below required count"
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "STEL-01",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "stellation",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "installed54-manual",
+            "locator": "#stellation",
+            "role": "documented-options"
+          }
+        ],
+        "checks": [
+          "Budget exhaustion/refusal differs from complete observed domain",
+          "Clipping does not imply unbounded-plane completeness"
+        ],
+        "basis": "documented-or-local-contract"
+      },
+      "implementation": "restricted",
+      "fixtures": [
+        {
+          "path": "tests/test_stellation.py",
+          "selector": "test_observation_clipping_restricts_the_acting_group_explicitly",
+          "role": "direct",
+          "evidence": "existing-test-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "stellation-evaluate",
+          "stellation-faces",
+          "stellation-scale"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R6-STELLATION",
+        "priority": "P2",
+        "unverified": "Bounded native coverage exists; benchmark option behavior and shipped UI are unverified.",
+        "next_action": "Exercise box scale endpoints, explicit bounds, max_regions and rescaling; retain completeness and LP residual receipts."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3
+        ],
+        "supported_source_dimensions": [
+          3
+        ],
+        "support_note": "Supported only under referenced domain qualifications.",
+        "object_class": "Octahedron with anisotropic bounds and deliberately small region cap"
+      }
+    },
+    {
+      "id": "stel-02-diagram-links",
+      "requirement_id": "STEL-02",
+      "option": "diagram-links",
+      "title": "Region/facial/dependency diagram links",
+      "domain_id": "stellation",
+      "input": {
+        "description": "Octahedron plane and selected region orbit",
+        "parameters": {
+          "diagram": "face and cell",
+          "selection": "orbit"
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "STEL-02",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "stellation",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "installed54-manual",
+            "locator": "#stellation",
+            "role": "documented-options"
+          },
+          {
+            "source_id": "independent-fixtures",
+            "locator": "test_diagram_regions_have_two_incident_cells_and_lie_on_plane",
+            "role": "expectation-oracle"
+          }
+        ],
+        "checks": [
+          "Diagram polygon has two adjacent region IDs",
+          "Points lie on selected plane within 1e-8",
+          "Diagram edit uses same source-bound selection"
+        ],
+        "basis": "independent-invariant"
+      },
+      "implementation": "supported",
+      "fixtures": [
+        {
+          "path": "tests/test_stellation.py",
+          "selector": "test_diagram_regions_have_two_incident_cells_and_lie_on_plane",
+          "role": "direct",
+          "evidence": "existing-test-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "stellation-face-diagram",
+          "stellation-cell-diagram"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R6-STELLATION",
+        "priority": "P2",
+        "unverified": "Bounded native coverage exists; benchmark option behavior and shipped UI are unverified.",
+        "next_action": "Run the named fixture, then reproduce region/facial/dependency diagram links through the listed UI; retain source, parameters, residuals, incidence and versioned comparison evidence."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3
+        ],
+        "supported_source_dimensions": [
+          3
+        ],
+        "support_note": "Supported only under referenced domain qualifications.",
+        "object_class": "Octahedron plane and selected region orbit"
+      }
+    },
+    {
+      "id": "stel-03-custom-criteria",
+      "requirement_id": "STEL-03",
+      "option": "custom-criteria",
+      "title": "Custom seed/connectivity enumeration",
+      "domain_id": "stellation",
+      "input": {
+        "description": "Octahedral arrangement with full group or no symmetry",
+        "parameters": {
+          "symmetry": [
+            "full",
+            "none"
+          ],
+          "include_seed": [
+            true,
+            false
+          ]
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "STEL-03",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "stellation",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "installed54-manual",
+            "locator": "#stellation",
+            "role": "documented-options"
+          },
+          {
+            "source_id": "independent-fixtures",
+            "locator": "test_finite_criteria_enumeration_is_independently_exhaustive",
+            "role": "expectation-oracle"
+          }
+        ],
+        "checks": [
+          "Full group has order 48, region orbits sizes 1/8 and two candidates",
+          "No-symmetry seed-included search examines 512 subsets, returns 256",
+          "Result-limit is not exhaustion"
+        ],
+        "basis": "independent-invariant"
+      },
+      "implementation": "restricted",
+      "fixtures": [
+        {
+          "path": "tests/test_stellation.py",
+          "selector": "test_finite_criteria_enumeration_is_independently_exhaustive",
+          "role": "direct",
+          "evidence": "existing-test-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "stellation-criteria",
+          "stellation-enumerate",
+          "stellation-candidate"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R6-STELLATION",
+        "priority": "P2",
+        "unverified": "Native seed/connectivity definitions do not establish every baseline named criterion.",
+        "next_action": "Map one non-Miller baseline named criterion to an independently enumerated region-ID list; keep custom/native labels until equivalence is supported."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3
+        ],
+        "supported_source_dimensions": [
+          3
+        ],
+        "support_note": "Supported only under referenced domain qualifications.",
+        "object_class": "Octahedral arrangement with full group or no symmetry"
+      }
+    },
+    {
+      "id": "stel-03-miller59",
+      "requirement_id": "STEL-03",
+      "option": "miller59",
+      "title": "Miller 59 qualified icosahedron",
+      "domain_id": "stellation",
+      "input": {
+        "description": "Qualified complete icosahedron facial arrangement",
+        "parameters": {
+          "preset": "Miller 59",
+          "order": "book"
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "STEL-03",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "stellation",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "installed54-manual",
+            "locator": "#fillCells",
+            "role": "documented-options"
+          },
+          {
+            "source_id": "independent-fixtures",
+            "locator": "test_exhausted_59_and_independent_published_cell_code_list",
+            "role": "expectation-oracle"
+          }
+        ],
+        "checks": [
+          "473 bounded cells, 12 orbits, 4095 nonempty subsets yield 59 published codes",
+          "Reject clipped/unsupported seed",
+          "Preserve named source/recipe"
+        ],
+        "basis": "independent-invariant"
+      },
+      "implementation": "supported",
+      "fixtures": [
+        {
+          "path": "tests/test_miller_stellations.py",
+          "selector": "test_exhausted_59_and_independent_published_cell_code_list",
+          "role": "direct",
+          "evidence": "existing-test-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "stellation-criteria",
+          "stellation-enumerate",
+          "stellation-candidate"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R6-STELLATION",
+        "priority": "P2",
+        "unverified": "Bounded native coverage exists; benchmark option behavior and shipped UI are unverified.",
+        "next_action": "Run published code-list/seed-refusal/history fixtures; capture named stepping and clarify that Miller 59 already works."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3
+        ],
+        "supported_source_dimensions": [
+          3
+        ],
+        "support_note": "Supported only under referenced domain qualifications.",
+        "object_class": "Qualified complete icosahedron facial arrangement"
+      }
+    },
+    {
+      "id": "stel-03-other-seed-criteria",
+      "requirement_id": "STEL-03",
+      "option": "other-seed-criteria",
+      "title": "Non-Miller criteria and stepping",
+      "domain_id": "stellation",
+      "input": {
+        "description": "Dodecahedron seed with a named supported/unsupported criterion",
+        "parameters": {
+          "criterion": "versioned baseline choice",
+          "stepping": [
+            "next",
+            "previous"
+          ]
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "STEL-03",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "stellation",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "installed54-manual",
+            "locator": "#stellation",
+            "role": "documented-options"
+          }
+        ],
+        "checks": [
+          "Only claim enumeration under a specified criterion/domain",
+          "Preserve candidate identity when stepping backward"
+        ],
+        "basis": "documented-or-local-contract"
+      },
+      "implementation": "unverified",
+      "fixtures": [
+        {
+          "path": "tests/test_stellation_diagrams.py",
+          "selector": null,
+          "role": "related-not-oracle",
+          "evidence": "existing-suite-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "stellation-criteria",
+          "stellation-enumerate",
+          "stellation-candidate"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R6-STELLATION",
+        "priority": "P1",
+        "unverified": "Other-seed criteria/default order and reverse-stepping equivalence are unqualified.",
+        "next_action": "Recover exact criterion names from authorized metadata/manual; publish small independent expected region sets and next/previous order."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3
+        ],
+        "supported_source_dimensions": [],
+        "support_note": "No supported-domain claim for this requested case; see implementation status and follow-up.",
+        "object_class": "Dodecahedron seed with a named supported/unsupported criterion"
+      }
+    },
+    {
+      "id": "stel-04-group-scope",
+      "requirement_id": "STEL-04",
+      "option": "group-scope",
+      "title": "Full/proper/custom subgroup region actions",
+      "domain_id": "stellation",
+      "input": {
+        "description": "Octahedral arrangement with verified source actions",
+        "parameters": {
+          "groups": [
+            "full",
+            "proper",
+            "signed-axis",
+            "none",
+            "custom-generators"
+          ]
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "STEL-04",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "stellation",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "installed54-manual",
+            "locator": "#symmetries",
+            "role": "documented-options"
+          }
+        ],
+        "checks": [
+          "Verify action/closure and source incidence before orbit unions",
+          "Box-restricted acting group is distinct from full source group"
+        ],
+        "basis": "documented-or-local-contract"
+      },
+      "implementation": "restricted",
+      "fixtures": [
+        {
+          "path": "tests/test_stellation.py",
+          "selector": "test_selected_verified_subgroups_act_on_region_search_without_full_group_claims",
+          "role": "direct",
+          "evidence": "existing-test-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "stellation-symmetry",
+          "stellation-generator-ids",
+          "stellation-face-symmetry"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R6-STELLATION",
+        "priority": "P2",
+        "unverified": "Bounded native coverage exists; benchmark option behavior and shipped UI are unverified.",
+        "next_action": "Freeze one generator-ID subgroup and independent orbit set; compare allowed orbit unions and save/reopen with full/proper variants."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3
+        ],
+        "supported_source_dimensions": [
+          3
+        ],
+        "support_note": "Supported only under referenced domain qualifications.",
+        "object_class": "Octahedral arrangement with verified source actions"
+      }
+    },
+    {
+      "id": "stel-04-reflexibility",
+      "requirement_id": "STEL-04",
+      "option": "reflexibility",
+      "title": "Mirror merge/reflexibility and face replication",
+      "domain_id": "stellation",
+      "input": {
+        "description": "Chiral supported icosahedral pair",
+        "parameters": {
+          "face_replication": [
+            "full",
+            "proper",
+            "individual"
+          ],
+          "merge_mirrors": [
+            true,
+            false
+          ]
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "STEL-04",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "stellation",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "installed54-manual",
+            "locator": "#symmetries",
+            "role": "documented-options"
+          }
+        ],
+        "checks": [
+          "Merge only verified mirror partners",
+          "Reflexibility concerns selected region set under stated action"
+        ],
+        "basis": "documented-or-local-contract"
+      },
+      "implementation": "restricted",
+      "fixtures": [
+        {
+          "path": "tests/test_stellation_diagrams.py",
+          "selector": "test_icosahedron_supported_counts_and_chiral_pairs",
+          "role": "direct",
+          "evidence": "existing-test-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "stellation-symmetry",
+          "stellation-generator-ids",
+          "stellation-face-symmetry"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R6-STELLATION",
+        "priority": "P2",
+        "unverified": "Bounded native coverage exists; benchmark option behavior and shipped UI are unverified.",
+        "next_action": "Capture chiral pair before/after mirror merge, full/proper/individual face edits and independent selected-set symmetry."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3
+        ],
+        "supported_source_dimensions": [
+          3
+        ],
+        "support_note": "Supported only under referenced domain qualifications.",
+        "object_class": "Chiral supported icosahedral pair"
+      }
+    },
+    {
+      "id": "stel-04-editor-subgroups",
+      "requirement_id": "STEL-04",
+      "option": "editor-subgroups",
+      "title": "Arbitrary facial-editor subgroup",
+      "domain_id": "stellation",
+      "input": {
+        "description": "Nontrivial subgroup beyond full/proper/individual editor choices",
+        "parameters": {
+          "editor_group": "custom"
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "STEL-04",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "stellation",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "installed54-manual",
+            "locator": "#symmetries",
+            "role": "documented-options"
+          }
+        ],
+        "checks": [
+          "Do not treat native custom enumeration generators as a mounted subgroup editor"
+        ],
+        "basis": "documented-or-local-contract"
+      },
+      "implementation": "unsupported",
+      "fixtures": [
+        {
+          "path": "tests/stellation-diagram-controls.test.mjs",
+          "selector": null,
+          "role": "related-not-oracle",
+          "evidence": "existing-suite-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "stellation-symmetry",
+          "stellation-generator-ids",
+          "stellation-face-symmetry"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R6-STELLATION",
+        "priority": "P1",
+        "unverified": "Arbitrary subgroup authoring is absent in facial editor.",
+        "next_action": "Define one documented subgroup-edit scenario and expected replicated region IDs; reuse verified native action before adding UI."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3
+        ],
+        "supported_source_dimensions": [],
+        "support_note": "No supported-domain claim for this requested case; see implementation status and follow-up.",
+        "object_class": "Nontrivial subgroup beyond full/proper/individual editor choices"
+      }
+    },
+    {
+      "id": "stel-05-inaccessible-cavity",
+      "requirement_id": "STEL-05",
+      "option": "inaccessible-cavity",
+      "title": "Fill hidden cavity or preserve it",
+      "domain_id": "stellation",
+      "input": {
+        "description": "Selected outer region shell enclosing an unselected bounded region",
+        "parameters": {
+          "preserve_cavity": [
+            true,
+            false
+          ]
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "STEL-05",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "stellation",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "installed54-manual",
+            "locator": "#fillCells",
+            "role": "documented-options"
+          }
+        ],
+        "checks": [
+          "Flood-fill uses declared full-facet connectivity",
+          "Filling changes hidden internal boundary/net pieces without changing outer view",
+          "Clipped/unresolved regions seed exterior"
+        ],
+        "basis": "documented-or-local-contract"
+      },
+      "implementation": "restricted",
+      "fixtures": [
+        {
+          "path": "tests/test_stellation_cells.py",
+          "selector": null,
+          "role": "direct",
+          "evidence": "existing-suite-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "stellation-cell-fill",
+          "stellation-face-fill",
+          "stellation-face-base"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R6-STELLATION",
+        "priority": "P2",
+        "unverified": "Native flood-fill convention is not yet compared with baseline inaccessible-cell semantics.",
+        "next_action": "Create a literal enclosing-shell region fixture; independently enumerate cavity IDs and compare fill/preserve boundary and nets."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3
+        ],
+        "supported_source_dimensions": [
+          3
+        ],
+        "support_note": "Supported only under referenced domain qualifications.",
+        "object_class": "Selected outer region shell enclosing an unselected bounded region"
+      }
+    },
+    {
+      "id": "stel-05-promotion-history",
+      "requirement_id": "STEL-05",
+      "option": "promotion-history",
+      "title": "Stellation selection promoted and replayed",
+      "domain_id": "stellation",
+      "input": {
+        "description": "Octahedron selected regions with diagram state",
+        "parameters": {
+          "action": "make-base"
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "STEL-05",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "stellation",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "installed54-manual",
+            "locator": "#stellation",
+            "role": "documented-options"
+          }
+        ],
+        "checks": [
+          "Promote source-bound region union and retain parameters",
+          "Undo/reopen/replay reconstruct same selection and source owners"
+        ],
+        "basis": "documented-or-local-contract"
+      },
+      "implementation": "supported",
+      "fixtures": [
+        {
+          "path": "tests/test_stellation_diagrams.py",
+          "selector": "test_saved_diagram_state_make_base_history_and_replay",
+          "role": "direct",
+          "evidence": "existing-test-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "stellation-cell-fill",
+          "stellation-face-fill",
+          "stellation-face-base"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R6-STELLATION",
+        "priority": "P2",
+        "unverified": "Bounded native coverage exists; benchmark option behavior and shipped UI are unverified.",
+        "next_action": "Run the named fixture, then reproduce stellation selection promoted and replayed through the listed UI; retain source, parameters, residuals, incidence and versioned comparison evidence."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3
+        ],
+        "supported_source_dimensions": [
+          3
+        ],
+        "support_note": "Supported only under referenced domain qualifications.",
+        "object_class": "Octahedron selected regions with diagram state"
+      }
+    },
+    {
+      "id": "fac-01-ordered-cycles",
+      "requirement_id": "FAC-01",
+      "option": "ordered-cycles",
+      "title": "Manual ordered star facets",
+      "domain_id": "manual-faceting",
+      "input": {
+        "description": "Literal source vertex cycles including crossed traversal",
+        "parameters": {
+          "winding": "explicit supplied cycle"
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "FAC-01",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "manual-faceting",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "installed54-manual",
+            "locator": "#faceting",
+            "role": "documented-options"
+          }
+        ],
+        "checks": [
+          "Retain cyclic order without convexification",
+          "Invalid repeated-vertex/nonplanar cycle refuses"
+        ],
+        "basis": "documented-or-local-contract"
+      },
+      "implementation": "restricted",
+      "fixtures": [
+        {
+          "path": "tests/test_generalized.py",
+          "selector": null,
+          "role": "direct",
+          "evidence": "existing-suite-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "facet-cycles",
+          "copy-facets",
+          "facet"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R6-FACETING",
+        "priority": "P2",
+        "unverified": "Bounded native coverage exists; benchmark option behavior and shipped UI are unverified.",
+        "next_action": "Run the named fixture, then reproduce manual ordered star facets through the listed UI; retain source, parameters, residuals, incidence and versioned comparison evidence."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3
+        ],
+        "supported_source_dimensions": [
+          3
+        ],
+        "support_note": "Supported only under referenced domain qualifications.",
+        "object_class": "Literal source vertex cycles including crossed traversal"
+      }
+    },
+    {
+      "id": "fac-02-tetrahedron-complete",
+      "requirement_id": "FAC-02",
+      "option": "tetrahedron-complete",
+      "title": "Independent complete tetrahedron search",
+      "domain_id": "faceting",
+      "input": {
+        "description": "Literal coordinate tetrahedron",
+        "parameters": {
+          "candidate_domain": "unrestricted under caps"
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "FAC-02",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "faceting",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "installed54-manual",
+            "locator": "#autoFacet",
+            "role": "documented-options"
+          },
+          {
+            "source_id": "independent-fixtures",
+            "locator": "test_tetrahedral_candidates_and_exhausted_unrestricted_search_are_independent",
+            "role": "expectation-oracle"
+          }
+        ],
+        "checks": [
+          "Four planes/four candidate facets",
+          "Exhausted search visits 31 nodes and returns one complete tetrahedron",
+          "No filled-solid exactness claim"
+        ],
+        "basis": "independent-invariant"
+      },
+      "implementation": "supported",
+      "fixtures": [
+        {
+          "path": "tests/test_automatic_faceting.py",
+          "selector": "test_tetrahedral_candidates_and_exhausted_unrestricted_search_are_independent",
+          "role": "direct",
+          "evidence": "existing-test-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "faceting-candidates",
+          "faceting-search",
+          "faceting-preview",
+          "faceting-adopt"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R6-FACETING",
+        "priority": "P2",
+        "unverified": "Bounded native coverage exists; benchmark option behavior and shipped UI are unverified.",
+        "next_action": "Run the named fixture, then reproduce independent complete tetrahedron search through the listed UI; retain source, parameters, residuals, incidence and versioned comparison evidence."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3
+        ],
+        "supported_source_dimensions": [
+          3
+        ],
+        "support_note": "Supported only under referenced domain qualifications.",
+        "object_class": "Literal coordinate tetrahedron"
+      }
+    },
+    {
+      "id": "fac-02-cube-candidates",
+      "requirement_id": "FAC-02",
+      "option": "cube-candidates",
+      "title": "Cube coplanar candidate cycles",
+      "domain_id": "faceting",
+      "input": {
+        "description": "Literal +/-1 cube",
+        "parameters": {
+          "face_corners": 8
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "FAC-02",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "faceting",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "installed54-manual",
+            "locator": "#autoFacet",
+            "role": "documented-options"
+          },
+          {
+            "source_id": "independent-fixtures",
+            "locator": "test_cube_candidate_count_includes_diagonal_planes_and_crossed_square_cycles",
+            "role": "expectation-oracle"
+          }
+        ],
+        "checks": [
+          "20 planes and 92 candidates: 56 triangles/36 quads",
+          "Crossed cycles remain literal",
+          "Coplanarity exact only for supplied binary64"
+        ],
+        "basis": "independent-invariant"
+      },
+      "implementation": "supported",
+      "fixtures": [
+        {
+          "path": "tests/test_automatic_faceting.py",
+          "selector": "test_cube_candidate_count_includes_diagonal_planes_and_crossed_square_cycles",
+          "role": "direct",
+          "evidence": "existing-test-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "faceting-candidates",
+          "faceting-search",
+          "faceting-preview",
+          "faceting-adopt"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R6-FACETING",
+        "priority": "P2",
+        "unverified": "Bounded native coverage exists; benchmark option behavior and shipped UI are unverified.",
+        "next_action": "Run the named fixture, then reproduce cube coplanar candidate cycles through the listed UI; retain source, parameters, residuals, incidence and versioned comparison evidence."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3
+        ],
+        "supported_source_dimensions": [
+          3
+        ],
+        "support_note": "Supported only under referenced domain qualifications.",
+        "object_class": "Literal +/-1 cube"
+      }
+    },
+    {
+      "id": "fac-02-dodecahedron-frontier",
+      "requirement_id": "FAC-02",
+      "option": "dodecahedron-frontier",
+      "title": "20-vertex dodecahedron search frontier",
+      "domain_id": "faceting",
+      "input": {
+        "description": "Ordinary dodecahedron with all 20 vertices",
+        "parameters": {
+          "source_vertices": 20
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "FAC-02",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "faceting",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "installed54-manual",
+            "locator": "#autoFacet",
+            "role": "documented-options"
+          }
+        ],
+        "checks": [
+          "Current 12-vertex cap refuses before search",
+          "No larger-domain completeness claim"
+        ],
+        "basis": "documented-or-local-contract"
+      },
+      "implementation": "unsupported",
+      "fixtures": [
+        {
+          "path": "tests/test_automatic_faceting.py",
+          "selector": "test_large_supported_candidate_table_stops_before_subset_recursion_or_false_completeness",
+          "role": "related-not-oracle",
+          "evidence": "existing-test-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "faceting-candidates",
+          "faceting-search",
+          "faceting-preview",
+          "faceting-adopt"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "domain-extension",
+        "owner": "R6-FACETING",
+        "priority": "P1",
+        "unverified": "Source domain excludes a standard 20-vertex seed.",
+        "next_action": "R6-FACETING: freeze independent candidate/count oracle and profile orbit pruning; extend candidate tranche before claiming exhaustive whole search."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3
+        ],
+        "supported_source_dimensions": [],
+        "support_note": "No supported-domain claim for this requested case; see implementation status and follow-up.",
+        "object_class": "Ordinary dodecahedron with all 20 vertices"
+      }
+    },
+    {
+      "id": "fac-02-limited-search",
+      "requirement_id": "FAC-02",
+      "option": "limited-search",
+      "title": "Candidate/node/result/cancel limits",
+      "domain_id": "faceting",
+      "input": {
+        "description": "Cube selected domain and deliberately small budgets",
+        "parameters": {
+          "limits": [
+            "candidate",
+            "node",
+            "result",
+            "action",
+            "cancel"
+          ]
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "FAC-02",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "faceting",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "installed54-manual",
+            "locator": "#autoFacet",
+            "role": "documented-options"
+          }
+        ],
+        "checks": [
+          "Limited found count is a lower bound, not total",
+          "Separate candidate-table truncation from exhausted available domain"
+        ],
+        "basis": "documented-or-local-contract"
+      },
+      "implementation": "restricted",
+      "fixtures": [
+        {
+          "path": "tests/test_automatic_faceting.py",
+          "selector": "test_phase_accounting_separates_candidate_truncation_from_an_exhausted_available_table",
+          "role": "direct",
+          "evidence": "existing-test-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "faceting-candidates",
+          "faceting-search",
+          "faceting-preview",
+          "faceting-adopt"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R6-FACETING",
+        "priority": "P2",
+        "unverified": "Bounded native coverage exists; benchmark option behavior and shipped UI are unverified.",
+        "next_action": "Run the named fixture, then reproduce candidate/node/result/cancel limits through the listed UI; retain source, parameters, residuals, incidence and versioned comparison evidence."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3
+        ],
+        "supported_source_dimensions": [
+          3
+        ],
+        "support_note": "Supported only under referenced domain qualifications.",
+        "object_class": "Cube selected domain and deliberately small budgets"
+      }
+    },
+    {
+      "id": "fac-03-isohedral",
+      "requirement_id": "FAC-03",
+      "option": "isohedral",
+      "title": "Isohedral criterion",
+      "domain_id": "faceting",
+      "input": {
+        "description": "Literal tetrahedron/cube and center-plane counterexample",
+        "parameters": {
+          "criterion": "isohedral"
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "FAC-03",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "faceting",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "installed54-manual",
+            "locator": "#autoFacet",
+            "role": "documented-options"
+          }
+        ],
+        "checks": [
+          "One face orbit under actual result stabilizer, not merely equal side counts",
+          "Criteria evidence reconstructs from result rather than trust labels"
+        ],
+        "basis": "documented-or-local-contract"
+      },
+      "implementation": "restricted",
+      "fixtures": [
+        {
+          "path": "tests/test_automatic_faceting.py",
+          "selector": null,
+          "role": "direct",
+          "evidence": "existing-suite-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "faceting-criterion",
+          "faceting-partial",
+          "faceting-max_face_types",
+          "faceting-max_faces_per_plane",
+          "faceting-spiky-filter"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R6-FACETING",
+        "priority": "P2",
+        "unverified": "Bounded native coverage exists; benchmark option behavior and shipped UI are unverified.",
+        "next_action": "Compare isohedral predicate on independent positive/counterexample cycles; reconcile baseline semantics before marking criterion equivalent."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3
+        ],
+        "supported_source_dimensions": [
+          3
+        ],
+        "support_note": "Supported only under referenced domain qualifications.",
+        "object_class": "Literal tetrahedron/cube and center-plane counterexample"
+      }
+    },
+    {
+      "id": "fac-03-tidy",
+      "requirement_id": "FAC-03",
+      "option": "tidy",
+      "title": "Tidy criterion",
+      "domain_id": "faceting",
+      "input": {
+        "description": "Literal tetrahedron/cube and center-plane counterexample",
+        "parameters": {
+          "criterion": "tidy"
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "FAC-03",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "faceting",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "installed54-manual",
+            "locator": "#autoFacet",
+            "role": "documented-options"
+          }
+        ],
+        "checks": [
+          "Closed single-link finite incidence and declared coplanar policy",
+          "Criteria evidence reconstructs from result rather than trust labels"
+        ],
+        "basis": "documented-or-local-contract"
+      },
+      "implementation": "restricted",
+      "fixtures": [
+        {
+          "path": "tests/test_automatic_faceting.py",
+          "selector": null,
+          "role": "direct",
+          "evidence": "existing-suite-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "faceting-criterion",
+          "faceting-partial",
+          "faceting-max_face_types",
+          "faceting-max_faces_per_plane",
+          "faceting-spiky-filter"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R6-FACETING",
+        "priority": "P2",
+        "unverified": "Bounded native coverage exists; benchmark option behavior and shipped UI are unverified.",
+        "next_action": "Compare tidy predicate on independent positive/counterexample cycles; reconcile baseline semantics before marking criterion equivalent."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3
+        ],
+        "supported_source_dimensions": [
+          3
+        ],
+        "support_note": "Supported only under referenced domain qualifications.",
+        "object_class": "Literal tetrahedron/cube and center-plane counterexample"
+      }
+    },
+    {
+      "id": "fac-03-tidy-dual",
+      "requirement_id": "FAC-03",
+      "option": "tidy-dual",
+      "title": "Tidy and tidy dual criterion",
+      "domain_id": "faceting",
+      "input": {
+        "description": "Literal tetrahedron/cube and center-plane counterexample",
+        "parameters": {
+          "criterion": "tidy-dual"
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "FAC-03",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "faceting",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "installed54-manual",
+            "locator": "#autoFacet",
+            "role": "documented-options"
+          }
+        ],
+        "checks": [
+          "Both primal and reconstructed finite incidence dual pass declared tidy predicates",
+          "Criteria evidence reconstructs from result rather than trust labels"
+        ],
+        "basis": "documented-or-local-contract"
+      },
+      "implementation": "restricted",
+      "fixtures": [
+        {
+          "path": "tests/test_automatic_faceting_workflow.py",
+          "selector": "test_supported_spiky_and_tidy_dual_filters_preserve_source_and_verify_adoption",
+          "role": "direct",
+          "evidence": "existing-test-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "faceting-criterion",
+          "faceting-partial",
+          "faceting-max_face_types",
+          "faceting-max_faces_per_plane",
+          "faceting-spiky-filter"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R6-FACETING",
+        "priority": "P2",
+        "unverified": "Bounded native coverage exists; benchmark option behavior and shipped UI are unverified.",
+        "next_action": "Compare tidy and tidy dual predicate on independent positive/counterexample cycles; reconcile baseline semantics before marking criterion equivalent."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3
+        ],
+        "supported_source_dimensions": [
+          3
+        ],
+        "support_note": "Supported only under referenced domain qualifications.",
+        "object_class": "Literal tetrahedron/cube and center-plane counterexample"
+      }
+    },
+    {
+      "id": "fac-03-spiky",
+      "requirement_id": "FAC-03",
+      "option": "spiky",
+      "title": "Spiky criterion",
+      "domain_id": "faceting",
+      "input": {
+        "description": "Literal tetrahedron/cube and center-plane counterexample",
+        "parameters": {
+          "criterion": "spiky"
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "FAC-03",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "faceting",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "installed54-manual",
+            "locator": "#autoFacet",
+            "role": "documented-options"
+          }
+        ],
+        "checks": [
+          "No result edge lies on the source convex hull under declared exact predicates",
+          "Criteria evidence reconstructs from result rather than trust labels"
+        ],
+        "basis": "documented-or-local-contract"
+      },
+      "implementation": "restricted",
+      "fixtures": [
+        {
+          "path": "tests/test_automatic_faceting_workflow.py",
+          "selector": "test_supported_spiky_and_tidy_dual_filters_preserve_source_and_verify_adoption",
+          "role": "direct",
+          "evidence": "existing-test-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "faceting-criterion",
+          "faceting-partial",
+          "faceting-max_face_types",
+          "faceting-max_faces_per_plane",
+          "faceting-spiky-filter"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R6-FACETING",
+        "priority": "P2",
+        "unverified": "Bounded native coverage exists; benchmark option behavior and shipped UI are unverified.",
+        "next_action": "Compare spiky predicate on independent positive/counterexample cycles; reconcile baseline semantics before marking criterion equivalent."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3
+        ],
+        "supported_source_dimensions": [
+          3
+        ],
+        "support_note": "Supported only under referenced domain qualifications.",
+        "object_class": "Literal tetrahedron/cube and center-plane counterexample"
+      }
+    },
+    {
+      "id": "fac-03-tidy-spiky",
+      "requirement_id": "FAC-03",
+      "option": "tidy-spiky",
+      "title": "Tidy spiky criterion",
+      "domain_id": "faceting",
+      "input": {
+        "description": "Literal tetrahedron/cube and center-plane counterexample",
+        "parameters": {
+          "criterion": "tidy-spiky"
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "FAC-03",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "faceting",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "installed54-manual",
+            "locator": "#autoFacet",
+            "role": "documented-options"
+          }
+        ],
+        "checks": [
+          "Both bounded tidy and spiky policies hold",
+          "Criteria evidence reconstructs from result rather than trust labels"
+        ],
+        "basis": "documented-or-local-contract"
+      },
+      "implementation": "restricted",
+      "fixtures": [
+        {
+          "path": "tests/test_automatic_faceting_workflow.py",
+          "selector": "test_supported_spiky_and_tidy_dual_filters_preserve_source_and_verify_adoption",
+          "role": "direct",
+          "evidence": "existing-test-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "faceting-criterion",
+          "faceting-partial",
+          "faceting-max_face_types",
+          "faceting-max_faces_per_plane",
+          "faceting-spiky-filter"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R6-FACETING",
+        "priority": "P2",
+        "unverified": "Bounded native coverage exists; benchmark option behavior and shipped UI are unverified.",
+        "next_action": "Compare tidy spiky predicate on independent positive/counterexample cycles; reconcile baseline semantics before marking criterion equivalent."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3
+        ],
+        "supported_source_dimensions": [
+          3
+        ],
+        "support_note": "Supported only under referenced domain qualifications.",
+        "object_class": "Literal tetrahedron/cube and center-plane counterexample"
+      }
+    },
+    {
+      "id": "fac-03-partial-coplanar",
+      "requirement_id": "FAC-03",
+      "option": "partial-coplanar",
+      "title": "Partial vertices and coplanar vertex sharing",
+      "domain_id": "faceting",
+      "input": {
+        "description": "Cube plus two alternating tetrahedra candidate domain",
+        "parameters": {
+          "accept_partial": [
+            true,
+            false
+          ],
+          "allow_coplanar_shared_vertices": [
+            true,
+            false
+          ]
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "FAC-03",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "faceting",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "installed54-manual",
+            "locator": "#autoFacet",
+            "role": "documented-options"
+          },
+          {
+            "source_id": "independent-fixtures",
+            "locator": "test_selected_cube_domain_independently_contains_cube_and_two_tetrahedra_and_partial_choices",
+            "role": "expectation-oracle"
+          }
+        ],
+        "checks": [
+          "Full selected domain yields two results, partial yields four",
+          "Retain all source coordinates and list unused IDs",
+          "Coplanar sharing is a real incidence filter"
+        ],
+        "basis": "independent-invariant"
+      },
+      "implementation": "restricted",
+      "fixtures": [
+        {
+          "path": "tests/test_automatic_faceting.py",
+          "selector": "test_selected_cube_domain_independently_contains_cube_and_two_tetrahedra_and_partial_choices",
+          "role": "direct",
+          "evidence": "existing-test-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "faceting-criterion",
+          "faceting-partial",
+          "faceting-max_face_types",
+          "faceting-max_faces_per_plane",
+          "faceting-spiky-filter"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R6-FACETING",
+        "priority": "P2",
+        "unverified": "Bounded native coverage exists; benchmark option behavior and shipped UI are unverified.",
+        "next_action": "Run the named fixture, then reproduce partial vertices and coplanar vertex sharing through the listed UI; retain source, parameters, residuals, incidence and versioned comparison evidence."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3
+        ],
+        "supported_source_dimensions": [
+          3
+        ],
+        "support_note": "Supported only under referenced domain qualifications.",
+        "object_class": "Cube plus two alternating tetrahedra candidate domain"
+      }
+    },
+    {
+      "id": "fac-03-type-plane-limits",
+      "requirement_id": "FAC-03",
+      "option": "type-plane-limits",
+      "title": "Face-type and plane-count constraints",
+      "domain_id": "faceting",
+      "input": {
+        "description": "Cube candidate table with exact plane-ID filters",
+        "parameters": {
+          "min_face_types": 1,
+          "max_face_types": [
+            0,
+            1,
+            2
+          ],
+          "max_faces_per_plane": [
+            0,
+            1
+          ],
+          "exact_plane_count": [
+            0,
+            1
+          ]
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "FAC-03",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "faceting",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "installed54-manual",
+            "locator": "#autoFacet",
+            "role": "documented-options"
+          }
+        ],
+        "checks": [
+          "Zero maximum means unlimited",
+          "Face types use result stabilizer",
+          "Zero exact count excludes named plane",
+          "Result limits differ from candidate generation limits"
+        ],
+        "basis": "documented-or-local-contract"
+      },
+      "implementation": "restricted",
+      "fixtures": [
+        {
+          "path": "tests/test_automatic_faceting.py",
+          "selector": "test_exact_plane_counts_and_result_plane_maximum_are_not_candidate_generation_limits",
+          "role": "direct",
+          "evidence": "existing-test-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "faceting-criterion",
+          "faceting-partial",
+          "faceting-max_face_types",
+          "faceting-max_faces_per_plane",
+          "faceting-spiky-filter"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R6-FACETING",
+        "priority": "P2",
+        "unverified": "Bounded native coverage exists; benchmark option behavior and shipped UI are unverified.",
+        "next_action": "Compare min/max type and exact/max-per-plane options independently, including zero meanings and subgroup-invariance refusal."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3
+        ],
+        "supported_source_dimensions": [
+          3
+        ],
+        "support_note": "Supported only under referenced domain qualifications.",
+        "object_class": "Cube candidate table with exact plane-ID filters"
+      }
+    },
+    {
+      "id": "fac-04-replication-adoption",
+      "requirement_id": "FAC-04",
+      "option": "replication-adoption",
+      "title": "Diagram reflection edits and adoption",
+      "domain_id": "faceting",
+      "input": {
+        "description": "Cube tetrahedron/stella octangula; icosahedron long-edge facets",
+        "parameters": {
+          "replication": "selected reflections",
+          "adopt": "recipe"
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "FAC-04",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "faceting",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "installed54-manual",
+            "locator": "#facetDiag",
+            "role": "documented-options"
+          },
+          {
+            "source_id": "independent-fixtures",
+            "locator": "test_cube_one_tetrahedron_and_full_stella_octangula_replication",
+            "role": "expectation-oracle"
+          }
+        ],
+        "checks": [
+          "Preserve reflected source cycles and native source receipt",
+          "Save/reopen/replay reconstruct diagram adoption"
+        ],
+        "basis": "independent-invariant"
+      },
+      "implementation": "restricted",
+      "fixtures": [
+        {
+          "path": "tests/test_faceting_diagram_edit.py",
+          "selector": "test_cube_one_tetrahedron_and_full_stella_octangula_replication",
+          "role": "direct",
+          "evidence": "existing-test-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "faceting-diagram-settings",
+          "faceting-diagram-build"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R6-FACETING",
+        "priority": "P2",
+        "unverified": "Bounded native coverage exists; benchmark option behavior and shipped UI are unverified.",
+        "next_action": "Run the named fixture, then reproduce diagram reflection edits and adoption through the listed UI; retain source, parameters, residuals, incidence and versioned comparison evidence."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3
+        ],
+        "supported_source_dimensions": [
+          3
+        ],
+        "support_note": "Supported only under referenced domain qualifications.",
+        "object_class": "Cube tetrahedron/stella octangula; icosahedron long-edge facets"
+      }
+    },
+    {
+      "id": "fac-04-chart-and-stepping",
+      "requirement_id": "FAC-04",
+      "option": "chart-and-stepping",
+      "title": "Diagram chart and edge/plane/facet stepping",
+      "domain_id": "faceting",
+      "input": {
+        "description": "Cube chart near center plane; selected edge/plane/facet",
+        "parameters": {
+          "step_modes": [
+            "faceting",
+            "edges",
+            "planes",
+            "facets"
+          ],
+          "chart": "finite/projective"
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "FAC-04",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "faceting",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "installed54-manual",
+            "locator": "#autoFacet",
+            "role": "documented-options"
+          },
+          {
+            "source_id": "installed54-manual",
+            "locator": "#facetDiag",
+            "role": "documented-options"
+          }
+        ],
+        "checks": [
+          "Keep explicit chart/infinity diagnostics",
+          "Do not assume all baseline step modes exist because search next/previous exists"
+        ],
+        "basis": "documented-or-local-contract"
+      },
+      "implementation": "unverified",
+      "fixtures": [
+        {
+          "path": "tests/test_faceting_diagram_workflow.py",
+          "selector": null,
+          "role": "related-not-oracle",
+          "evidence": "existing-suite-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "faceting-diagram-settings",
+          "faceting-diagram-build"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R6-FACETING",
+        "priority": "P1",
+        "unverified": "Diagram/reflection modes and four distinct stepping workflows are not reconciled.",
+        "next_action": "Map installed edge/plane/facet stepping labels to app actions; define selected source-ID progression and chart-limit oracle."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3
+        ],
+        "supported_source_dimensions": [],
+        "support_note": "No supported-domain claim for this requested case; see implementation status and follow-up.",
+        "object_class": "Cube chart near center plane; selected edge/plane/facet"
+      }
+    }
+  ]
+}

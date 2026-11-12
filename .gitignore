@@ -11,6 +11,11 @@
 !/package-lock.json
 !/requirements.txt
 !/vite.config.mjs
+!/.prettierrc.json
+!/.prettierignore
+!/ruff.toml
+!/.git-blame-ignore-revs
+!/data-external/
 !/desktop/
 !/docs/
 !/examples/

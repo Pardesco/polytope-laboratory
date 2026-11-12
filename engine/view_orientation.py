@@ -3,6 +3,7 @@
 First puts the selected outward/radial direction at +W; Last at -W. These
 are observation frames, not intrinsic model transformations or symmetry claims.
 """
+
 from copy import deepcopy
 import numpy as np
 
@@ -60,7 +61,12 @@ def _reference_roll(matrix, reference, dimension):
         reference = np.asarray(reference, dtype=float)
     except (TypeError, ValueError) as exc:
         raise GeometryError('Reference display matrix must be numeric.') from exc
-    if reference.shape != (4, 4) or not np.isfinite(reference).all() or not np.allclose(reference @ reference.T, np.eye(4), atol=1e-8, rtol=0) or abs(np.linalg.det(reference) - 1) > 1e-8:
+    if (
+        reference.shape != (4, 4)
+        or not np.isfinite(reference).all()
+        or not np.allclose(reference @ reference.T, np.eye(4), atol=1e-8, rtol=0)
+        or abs(np.linalg.det(reference) - 1) > 1e-8
+    ):
         raise GeometryError('Reference display matrix must be a finite SO(4) frame.')
     # Closest reference within proper rotations of the two spatial blocks:
     # selected entity span and its remaining spatial complement. W stays fixed.
@@ -83,12 +89,22 @@ def orient_entity(model, entity, mode='first', direction=None, reference_matrix=
     Centered entities need an explicit perpendicular direction to choose a view.
     """
     if mode not in ('first', 'last'):
-        raise GeometryError('Entity display direction is first or last; automatic symmetry orientation is not inferred.')
+        raise GeometryError(
+            'Entity display direction is first or last; automatic symmetry orientation is not inferred.'
+        )
     if model.get('dimension') != 4 or model.get('embeddingDimension', 4) != 4:
         raise GeometryError('Entity-first/last display frames require an intrinsic 4D source.')
-    if any(not isinstance(model.get(field, []), list) for field in ('vertices', 'edges', 'faces', 'cells')) or any(not isinstance(item, list) for field in ('edges', 'faces', 'cells') for item in model.get(field, [])):
+    if any(not isinstance(model.get(field, []), list) for field in ('vertices', 'edges', 'faces', 'cells')) or any(
+        not isinstance(item, list) for field in ('edges', 'faces', 'cells') for item in model.get(field, [])
+    ):
         raise GeometryError('Source coordinate and incidence tables must be lists.')
-    if len(model.get('vertices', [])) > MAX_SOURCE_VERTICES or sum(len(f) for f in model.get('faces', [])) + sum(len(c) for c in model.get('cells', [])) + 2 * len(model.get('edges', [])) > MAX_SOURCE_INCIDENCES:
+    if (
+        len(model.get('vertices', [])) > MAX_SOURCE_VERTICES
+        or sum(len(f) for f in model.get('faces', []))
+        + sum(len(c) for c in model.get('cells', []))
+        + 2 * len(model.get('edges', []))
+        > MAX_SOURCE_INCIDENCES
+    ):
         raise GeometryError('Entity orientation exceeds the explicit source resource limit.')
     if not validate(model)['passed']:
         raise GeometryError('Cannot orient invalid source incidence.')
@@ -116,12 +132,16 @@ def orient_entity(model, entity, mode='first', direction=None, reference_matrix=
         if not centered:
             facing = normal @ radial
             if abs(facing) <= TOLERANCE * 8:
-                raise GeometryError('Explicit direction does not point toward the selected entity; use its radial direction.')
+                raise GeometryError(
+                    'Explicit direction does not point toward the selected entity; use its radial direction.'
+                )
             if facing < 0:
                 normal = -normal
         policy = 'supplied direction projected perpendicular to entity; oriented toward its centroid when noncentral'
     elif centered:
-        raise GeometryError('Selected entity has no nonzero radial perpendicular direction; supply an explicit intrinsic direction.')
+        raise GeometryError(
+            'Selected entity has no nonzero radial perpendicular direction; supply an explicit intrinsic direction.'
+        )
     else:
         normal = perpendicular / np.linalg.norm(perpendicular)
         policy = 'source vertex-mean to entity centroid, projected perpendicular to entity span'
@@ -133,14 +153,19 @@ def orient_entity(model, entity, mode='first', direction=None, reference_matrix=
         if centered or np.max(residual) > TOLERANCE * 8:
             raise GeometryError('Selected convex cell is not an outward supporting hyperplane of the complete source.')
         policy = 'outward normal of selected convex source cell, checked against every source vertex'
-        support = {'normal': normal.tolist(), 'offset': float(normal @ frame['origin']),
-                   'definition': 'n dot p <= offset in intrinsic source coordinates'}
+        support = {
+            'normal': normal.tolist(),
+            'offset': float(normal @ frame['origin']),
+            'definition': 'n dot p <= offset in intrinsic source coordinates',
+        }
 
     # Choose roll from source ID order, not arbitrary coordinate-axis choices
     # or SVD signs in repeated singular subspaces. All candidates are intrinsic.
     entity_rows = []
     for vertex in sorted(frame['vertices']):
-        _append_vector(entity_rows, frame['basis'] @ (frame['basis'].T @ ((points[vertex] - frame['origin']) / frame['scale'])))
+        _append_vector(
+            entity_rows, frame['basis'] @ (frame['basis'].T @ ((points[vertex] - frame['origin']) / frame['scale']))
+        )
         if len(entity_rows) == dimension:
             break
     if len(entity_rows) != dimension:
@@ -164,18 +189,33 @@ def orient_entity(model, entity, mode='first', direction=None, reference_matrix=
         roll_policy = 'closest reference in proper entity-span/complement spatial block rotations'
     determinant = float(np.linalg.det(matrix))
     orthogonality_error = float(np.max(np.abs(matrix @ matrix.T - np.eye(4))))
-    direction_error = float(np.linalg.norm(matrix @ normal - np.array([0., 0., 0., sign])))
-    span_error = float(np.max(np.abs(matrix[dimension:, :] @ frame['basis']))) if dimension else 0.
+    direction_error = float(np.linalg.norm(matrix @ normal - np.array([0.0, 0.0, 0.0, sign])))
+    span_error = float(np.max(np.abs(matrix[dimension:, :] @ frame['basis']))) if dimension else 0.0
     if orthogonality_error > 1e-8 or abs(determinant - 1) > 1e-8 or direction_error > 1e-8 or span_error > 1e-8:
         raise GeometryError('Observation frame failed its numerical SO(4) or selected-span checks.')
-    return {'matrix': matrix.tolist(), 'center': center.tolist(), 'sourceDirection': normal.tolist(),
-            'targetDirection': [0., 0., 0., float(sign)], 'mode': mode, 'entity': deepcopy(entity),
-            'sourceVertexIds': list(frame['vertices']), 'affineDimension': dimension,
-            'entityCentroid': frame['origin'].tolist(),
-            'displayEntityCentroid': (matrix @ (frame['origin'] - center)).tolist(),
-            'centeredEntity': bool(centered), 'directionPolicy': policy, 'rollPolicy': roll_policy,
-            'supportingPlane': support, 'sourceFingerprint': identity(model),
-            'matrixConvention': 'row-major; display column = matrix @ (source column - center)',
-            'numericMode': 'float64-approximate', 'algorithmVersion': VERSION,
-            'checks': {'determinant': determinant, 'orthogonalityError': orthogonality_error,
-                       'directionResidual': direction_error, 'selectedSpanResidual': span_error}}
+    return {
+        'matrix': matrix.tolist(),
+        'center': center.tolist(),
+        'sourceDirection': normal.tolist(),
+        'targetDirection': [0.0, 0.0, 0.0, float(sign)],
+        'mode': mode,
+        'entity': deepcopy(entity),
+        'sourceVertexIds': list(frame['vertices']),
+        'affineDimension': dimension,
+        'entityCentroid': frame['origin'].tolist(),
+        'displayEntityCentroid': (matrix @ (frame['origin'] - center)).tolist(),
+        'centeredEntity': bool(centered),
+        'directionPolicy': policy,
+        'rollPolicy': roll_policy,
+        'supportingPlane': support,
+        'sourceFingerprint': identity(model),
+        'matrixConvention': 'row-major; display column = matrix @ (source column - center)',
+        'numericMode': 'float64-approximate',
+        'algorithmVersion': VERSION,
+        'checks': {
+            'determinant': determinant,
+            'orthogonalityError': orthogonality_error,
+            'directionResidual': direction_error,
+            'selectedSpanResidual': span_error,
+        },
+    }

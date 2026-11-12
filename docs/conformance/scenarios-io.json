@@ -1,0 +1,2553 @@
+{
+  "schema_version": 1,
+  "scenarios": [
+    {
+      "id": "io-01-edge-count",
+      "requirement_id": "IO-01",
+      "option": "edge-count",
+      "title": "OFF unspecified/mismatched edge count",
+      "domain_id": "interchange",
+      "input": {
+        "description": "Valid cube OFF with E=0 then E=999",
+        "parameters": {
+          "declared_edges": [
+            0,
+            999
+          ]
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "IO-01",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "interchange",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "installed54-manual",
+            "locator": "#import",
+            "role": "documented-options"
+          },
+          {
+            "source_id": "manual-io",
+            "locator": "test_edge_count_copy_corrects_only_header_and_revalidates_everything",
+            "role": "documented-options"
+          }
+        ],
+        "checks": [
+          "E=0 is unspecified and accepted",
+          "Current mismatched nonzero E refuses or repairs a validated copy",
+          "Original file stays unchanged"
+        ],
+        "basis": "documented-or-local-contract"
+      },
+      "implementation": "restricted",
+      "fixtures": [
+        {
+          "path": "tests/test_off_compatibility.py",
+          "selector": "test_edge_count_copy_corrects_only_header_and_revalidates_everything",
+          "role": "direct",
+          "evidence": "existing-test-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "open"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R6-INTERCHANGE",
+        "priority": "P2",
+        "unverified": "Baseline ignores edge header while app uses strict validation plus explicit copy repair.",
+        "next_action": "Record this deliberate policy difference; execute open/repair/cancel with original hash unchanged and compare derived incidence, not literal header equality."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3,
+          4
+        ],
+        "supported_source_dimensions": [
+          3,
+          4
+        ],
+        "support_note": "Supported only under referenced domain qualifications.",
+        "object_class": "Valid cube OFF with E=0 then E=999"
+      }
+    },
+    {
+      "id": "io-01-vertices-only-open",
+      "requirement_id": "IO-01",
+      "option": "vertices-only-open",
+      "title": "OFF vertices-only/open-surface fallback",
+      "domain_id": "interchange",
+      "input": {
+        "description": "Cube/tesseract vertices without faces/cells; open cube shell",
+        "parameters": {
+          "dimensions": [
+            3,
+            4
+          ],
+          "faces": "none or incomplete"
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "IO-01",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "interchange",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "installed54-manual",
+            "locator": "#import",
+            "role": "documented-options"
+          },
+          {
+            "source_id": "manual-io",
+            "locator": "OFF vertices-only/open-surface fallback",
+            "role": "documented-options"
+          }
+        ],
+        "checks": [
+          "Keep literal imported incidence distinct from explicitly requested hull",
+          "Never silently replace source boundary"
+        ],
+        "basis": "documented-or-local-contract"
+      },
+      "implementation": "unverified",
+      "fixtures": [
+        {
+          "path": "tests/test_off_compatibility.py",
+          "selector": null,
+          "role": "related-not-oracle",
+          "evidence": "existing-suite-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "open"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R6-INTERCHANGE",
+        "priority": "P1",
+        "unverified": "Documented baseline offers hull fallback; current novice open/import fallback path is not qualified.",
+        "next_action": "Add exact vertex-only/open 3D/4D import fixtures; record actual result and explicit hull repair availability before deciding if a new path is needed."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3,
+          4
+        ],
+        "supported_source_dimensions": [],
+        "support_note": "No supported-domain claim for this requested case; see implementation status and follow-up.",
+        "object_class": "Cube/tesseract vertices without faces/cells; open cube shell"
+      }
+    },
+    {
+      "id": "io-01-4off-optional-cells",
+      "requirement_id": "IO-01",
+      "option": "4off-optional-cells",
+      "title": "4OFF omitted cells and ambiguous topology",
+      "domain_id": "interchange",
+      "input": {
+        "description": "Same 4D point/face set with full, omitted and conflicting cell tables",
+        "parameters": {
+          "cells": [
+            "complete",
+            "omitted",
+            "ambiguous"
+          ]
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "IO-01",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "interchange",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "manual-io",
+            "locator": "test_cell_dimension_diagnostic_distinguishes_four_dimensional_cell_from_collapse",
+            "role": "documented-options"
+          }
+        ],
+        "checks": [
+          "Preserve supplied cells",
+          "Do not infer unique 4D topology from vertices/faces alone",
+          "Report absent/invalid cells explicitly"
+        ],
+        "basis": "documented-or-local-contract"
+      },
+      "implementation": "restricted",
+      "fixtures": [
+        {
+          "path": "tests/test_off_compatibility.py",
+          "selector": "test_cell_dimension_diagnostic_distinguishes_four_dimensional_cell_from_collapse",
+          "role": "related-not-oracle",
+          "evidence": "existing-test-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "open"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R6-INTERCHANGE",
+        "priority": "P2",
+        "unverified": "Baseline may infer omitted cells; bounded native behavior on ambiguous sources is not fully crosswalked.",
+        "next_action": "Build literal 4OFF fixtures for optional/ambiguous cells and state inference/refusal policy; require full cell-incidence oracle for any inference extension."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3,
+          4
+        ],
+        "supported_source_dimensions": [
+          3,
+          4
+        ],
+        "support_note": "Supported only under referenced domain qualifications.",
+        "object_class": "Same 4D point/face set with full, omitted and conflicting cell tables"
+      }
+    },
+    {
+      "id": "io-01-dxf-face-polyface",
+      "requirement_id": "IO-01",
+      "option": "dxf-face-polyface",
+      "title": "ASCII DXF 3DFACE/polyface",
+      "domain_id": "interchange",
+      "input": {
+        "description": "Literal cube DXF in alternate record orders",
+        "parameters": {
+          "entities": [
+            "3DFACE",
+            "polyface"
+          ],
+          "attributes": [
+            "layer",
+            "units",
+            "truecolor",
+            "hidden-edge"
+          ]
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "IO-01",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "interchange",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "installed54-manual",
+            "locator": "#import",
+            "role": "documented-options"
+          },
+          {
+            "source_id": "manual-io",
+            "locator": "test_polyface_negative_index_hides_starting_edge_without_deleting_it",
+            "role": "documented-options"
+          },
+          {
+            "source_id": "independent-fixtures",
+            "locator": "test_polyface_negative_index_hides_starting_edge_without_deleting_it",
+            "role": "expectation-oracle"
+          }
+        ],
+        "checks": [
+          "Retain independent face/edge incidence and source coordinates",
+          "Negative polyface index hides edge without deleting it"
+        ],
+        "basis": "independent-invariant"
+      },
+      "implementation": "supported",
+      "fixtures": [
+        {
+          "path": "tests/test_dxf.py",
+          "selector": "test_polyface_negative_index_hides_starting_edge_without_deleting_it",
+          "role": "direct",
+          "evidence": "existing-test-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "open"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R6-INTERCHANGE",
+        "priority": "P2",
+        "unverified": "Bounded native coverage exists; benchmark option behavior and shipped UI are unverified.",
+        "next_action": "Run the named fixture, then reproduce ascii dxf 3dface/polyface through the listed UI; retain source, parameters, residuals, incidence and versioned comparison evidence."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3
+        ],
+        "supported_source_dimensions": [
+          3
+        ],
+        "support_note": "Supported only under referenced domain qualifications.",
+        "object_class": "Literal cube DXF in alternate record orders"
+      }
+    },
+    {
+      "id": "io-01-dxf-lines-points-weld",
+      "requirement_id": "IO-01",
+      "option": "dxf-lines-points-weld",
+      "title": "DXF lines/points and explicit welding",
+      "domain_id": "interchange",
+      "input": {
+        "description": "Coincident LINE/POINT sources on distinct layers",
+        "parameters": {
+          "weld": [
+            false,
+            true
+          ],
+          "tolerance": "explicit finite positive"
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "IO-01",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "interchange",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "manual-io",
+            "locator": "test_explicit_welding_retains_first_source_coordinates_and_map",
+            "role": "documented-options"
+          }
+        ],
+        "checks": [
+          "Retain independent source IDs by default",
+          "Explicit welding uses documented map without transitive-chain guessing"
+        ],
+        "basis": "documented-or-local-contract"
+      },
+      "implementation": "restricted",
+      "fixtures": [
+        {
+          "path": "tests/test_dxf.py",
+          "selector": "test_explicit_welding_retains_first_source_coordinates_and_map",
+          "role": "direct",
+          "evidence": "existing-test-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "open"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R6-INTERCHANGE",
+        "priority": "P2",
+        "unverified": "Bounded native coverage exists; benchmark option behavior and shipped UI are unverified.",
+        "next_action": "Run source-layer and weld-map fixtures; check import diagnostics, exact chosen tolerance and saved literal source records."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3
+        ],
+        "supported_source_dimensions": [
+          3
+        ],
+        "support_note": "Supported only under referenced domain qualifications.",
+        "object_class": "Coincident LINE/POINT sources on distinct layers"
+      }
+    },
+    {
+      "id": "io-01-dxf-straight-mesh",
+      "requirement_id": "IO-01",
+      "option": "dxf-straight-mesh",
+      "title": "Straight LWPOLYLINE and rectangular mesh",
+      "domain_id": "interchange",
+      "input": {
+        "description": "Closed planar LWPOLYLINE, open path and M/N polygon mesh",
+        "parameters": {
+          "closed": [
+            true,
+            false
+          ],
+          "ocs": "explicit plane",
+          "mesh_seam": true
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "IO-01",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "interchange",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "manual-io",
+            "locator": "test_lwpolyline_closed_face_and_open_edges",
+            "role": "documented-options"
+          }
+        ],
+        "checks": [
+          "Distinguish closed face from open edges",
+          "Preserve mesh ordering and seam",
+          "Refuse malformed counts/nonplanar cells"
+        ],
+        "basis": "documented-or-local-contract"
+      },
+      "implementation": "restricted",
+      "fixtures": [
+        {
+          "path": "tests/test_interchange.py",
+          "selector": "test_lwpolyline_closed_face_and_open_edges",
+          "role": "direct",
+          "evidence": "existing-test-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "open"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R6-INTERCHANGE",
+        "priority": "P2",
+        "unverified": "Bounded native coverage exists; benchmark option behavior and shipped UI are unverified.",
+        "next_action": "Run OCS/mesh seam fixtures and inspect literal coordinates/units; verify these entities only as local supported breadth, not assumed baseline requirements."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3
+        ],
+        "supported_source_dimensions": [
+          3
+        ],
+        "support_note": "Supported only under referenced domain qualifications.",
+        "object_class": "Closed planar LWPOLYLINE, open path and M/N polygon mesh"
+      }
+    },
+    {
+      "id": "io-01-dxf-unsupported",
+      "requirement_id": "IO-01",
+      "option": "dxf-unsupported",
+      "title": "Binary/curved/ACIS DXF refusal",
+      "domain_id": "interchange",
+      "input": {
+        "description": "Valid entity followed by bulged/widened polyline, ACIS solid or binary DXF",
+        "parameters": {
+          "entities": [
+            "binary",
+            "bulge",
+            "width",
+            "3DSOLID",
+            "BODY",
+            "REGION"
+          ]
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "IO-01",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "interchange",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "manual-io",
+            "locator": "test_acis_refusal_is_actionable",
+            "role": "documented-options"
+          }
+        ],
+        "checks": [
+          "Refuse entire unsupported file with actionable ASCII/face conversion advice",
+          "No silent entity loss"
+        ],
+        "basis": "documented-or-local-contract"
+      },
+      "implementation": "restricted",
+      "fixtures": [
+        {
+          "path": "tests/test_interchange.py",
+          "selector": "test_acis_refusal_is_actionable",
+          "role": "direct",
+          "evidence": "existing-test-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "open"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R6-INTERCHANGE",
+        "priority": "P2",
+        "unverified": "Public manual names DXF without an entity list; unsupported entity is not automatically a missing parity codec.",
+        "next_action": "Freeze documented/authorized baseline entity acceptance matrix first; implement only a required named failed entity with independent parser oracle."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3
+        ],
+        "supported_source_dimensions": [
+          3
+        ],
+        "support_note": "Supported only under referenced domain qualifications.",
+        "object_class": "Valid entity followed by bulged/widened polyline, ACIS solid or binary DXF"
+      }
+    },
+    {
+      "id": "io-02-codec-off",
+      "requirement_id": "IO-02",
+      "option": "codec-off",
+      "title": "OFF model/derived export",
+      "domain_id": "interchange",
+      "input": {
+        "description": "25.4-mm colored cube and central tesseract section",
+        "parameters": {
+          "format": "OFF",
+          "sources": [
+            "base",
+            "section"
+          ],
+          "units": [
+            "mm",
+            "inch"
+          ]
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "IO-02",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "interchange",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "installed54-manual",
+            "locator": "#export",
+            "role": "documented-options"
+          },
+          {
+            "source_id": "manual-export",
+            "locator": "test_model_data_exports_round_trip_double_precision_coordinates",
+            "role": "documented-options"
+          }
+        ],
+        "checks": [
+          "Independent parser measures coordinates, bounds, units and supported incidence/colors",
+          "Triangulation/attribute loss is declared",
+          "No raw 4D projection confusion"
+        ],
+        "basis": "documented-or-local-contract"
+      },
+      "implementation": "supported",
+      "fixtures": [
+        {
+          "path": "tests/test_precision_exports.py",
+          "selector": "test_model_data_exports_round_trip_double_precision_coordinates",
+          "role": "related-not-oracle",
+          "evidence": "existing-test-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "export-source",
+          "export-format",
+          "export-units",
+          "export-preview",
+          "confirm-export"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R6-INTERCHANGE",
+        "priority": "P2",
+        "unverified": "Existing codec fixtures are not a complete per-format derived/attribute/unit round trip.",
+        "next_action": "Add or identify independent OFF parser for the exact base/section and unit pair; record encoded precision, triangle/incidence changes and color loss."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3,
+          4
+        ],
+        "supported_source_dimensions": [
+          3,
+          4
+        ],
+        "support_note": "Supported only under referenced domain qualifications.",
+        "object_class": "25.4-mm colored cube and central tesseract section"
+      }
+    },
+    {
+      "id": "io-02-codec-obj",
+      "requirement_id": "IO-02",
+      "option": "codec-obj",
+      "title": "OBJ model/derived export",
+      "domain_id": "interchange",
+      "input": {
+        "description": "25.4-mm colored cube and central tesseract section",
+        "parameters": {
+          "format": "OBJ",
+          "sources": [
+            "base",
+            "section"
+          ],
+          "units": [
+            "mm",
+            "inch"
+          ]
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "IO-02",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "interchange",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "installed54-manual",
+            "locator": "#export",
+            "role": "documented-options"
+          },
+          {
+            "source_id": "manual-export",
+            "locator": "test_model_data_exports_round_trip_double_precision_coordinates",
+            "role": "documented-options"
+          }
+        ],
+        "checks": [
+          "Independent parser measures coordinates, bounds, units and supported incidence/colors",
+          "Triangulation/attribute loss is declared",
+          "No raw 4D projection confusion"
+        ],
+        "basis": "documented-or-local-contract"
+      },
+      "implementation": "supported",
+      "fixtures": [
+        {
+          "path": "tests/test_precision_exports.py",
+          "selector": "test_model_data_exports_round_trip_double_precision_coordinates",
+          "role": "related-not-oracle",
+          "evidence": "existing-test-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "export-source",
+          "export-format",
+          "export-units",
+          "export-preview",
+          "confirm-export"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R6-INTERCHANGE",
+        "priority": "P2",
+        "unverified": "Existing codec fixtures are not a complete per-format derived/attribute/unit round trip.",
+        "next_action": "Add or identify independent OBJ parser for the exact base/section and unit pair; record encoded precision, triangle/incidence changes and color loss."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3,
+          4
+        ],
+        "supported_source_dimensions": [
+          3,
+          4
+        ],
+        "support_note": "Supported only under referenced domain qualifications.",
+        "object_class": "25.4-mm colored cube and central tesseract section"
+      }
+    },
+    {
+      "id": "io-02-codec-stl",
+      "requirement_id": "IO-02",
+      "option": "codec-stl",
+      "title": "STL model/derived export",
+      "domain_id": "interchange",
+      "input": {
+        "description": "25.4-mm colored cube and central tesseract section",
+        "parameters": {
+          "format": "STL",
+          "sources": [
+            "base",
+            "section"
+          ],
+          "units": [
+            "mm",
+            "inch"
+          ]
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "IO-02",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "interchange",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "installed54-manual",
+            "locator": "#export",
+            "role": "documented-options"
+          },
+          {
+            "source_id": "manual-export",
+            "locator": "test_binary_stl_header_count_float32_and_dispatch",
+            "role": "documented-options"
+          }
+        ],
+        "checks": [
+          "Independent parser measures coordinates, bounds, units and supported incidence/colors",
+          "Triangulation/attribute loss is declared",
+          "No raw 4D projection confusion"
+        ],
+        "basis": "documented-or-local-contract"
+      },
+      "implementation": "supported",
+      "fixtures": [
+        {
+          "path": "tests/test_printable_export.py",
+          "selector": "test_binary_stl_header_count_float32_and_dispatch",
+          "role": "related-not-oracle",
+          "evidence": "existing-test-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "export-source",
+          "export-format",
+          "export-units",
+          "export-preview",
+          "confirm-export"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R6-INTERCHANGE",
+        "priority": "P2",
+        "unverified": "Existing codec fixtures are not a complete per-format derived/attribute/unit round trip.",
+        "next_action": "Add or identify independent STL parser for the exact base/section and unit pair; record encoded precision, triangle/incidence changes and color loss."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3,
+          4
+        ],
+        "supported_source_dimensions": [
+          3,
+          4
+        ],
+        "support_note": "Supported only under referenced domain qualifications.",
+        "object_class": "25.4-mm colored cube and central tesseract section"
+      }
+    },
+    {
+      "id": "io-02-codec-dxf",
+      "requirement_id": "IO-02",
+      "option": "codec-dxf",
+      "title": "DXF model/derived export",
+      "domain_id": "interchange",
+      "input": {
+        "description": "25.4-mm colored cube and central tesseract section",
+        "parameters": {
+          "format": "DXF",
+          "sources": [
+            "base",
+            "section"
+          ],
+          "units": [
+            "mm",
+            "inch"
+          ]
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "IO-02",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "interchange",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "installed54-manual",
+            "locator": "#export",
+            "role": "documented-options"
+          },
+          {
+            "source_id": "manual-export",
+            "locator": "test_model_data_exports_round_trip_double_precision_coordinates",
+            "role": "documented-options"
+          }
+        ],
+        "checks": [
+          "Independent parser measures coordinates, bounds, units and supported incidence/colors",
+          "Triangulation/attribute loss is declared",
+          "No raw 4D projection confusion"
+        ],
+        "basis": "documented-or-local-contract"
+      },
+      "implementation": "supported",
+      "fixtures": [
+        {
+          "path": "tests/test_precision_exports.py",
+          "selector": "test_model_data_exports_round_trip_double_precision_coordinates",
+          "role": "related-not-oracle",
+          "evidence": "existing-test-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "export-source",
+          "export-format",
+          "export-units",
+          "export-preview",
+          "confirm-export"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R6-INTERCHANGE",
+        "priority": "P2",
+        "unverified": "Existing codec fixtures are not a complete per-format derived/attribute/unit round trip.",
+        "next_action": "Add or identify independent DXF parser for the exact base/section and unit pair; record encoded precision, triangle/incidence changes and color loss."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3,
+          4
+        ],
+        "supported_source_dimensions": [
+          3,
+          4
+        ],
+        "support_note": "Supported only under referenced domain qualifications.",
+        "object_class": "25.4-mm colored cube and central tesseract section"
+      }
+    },
+    {
+      "id": "io-02-codec-vrml",
+      "requirement_id": "IO-02",
+      "option": "codec-vrml",
+      "title": "VRML model/derived export",
+      "domain_id": "interchange",
+      "input": {
+        "description": "25.4-mm colored cube and central tesseract section",
+        "parameters": {
+          "format": "VRML",
+          "sources": [
+            "base",
+            "section"
+          ],
+          "units": [
+            "mm",
+            "inch"
+          ]
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "IO-02",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "interchange",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "installed54-manual",
+            "locator": "#export",
+            "role": "documented-options"
+          },
+          {
+            "source_id": "manual-export",
+            "locator": "test_model_data_exports_round_trip_double_precision_coordinates",
+            "role": "documented-options"
+          }
+        ],
+        "checks": [
+          "Independent parser measures coordinates, bounds, units and supported incidence/colors",
+          "Triangulation/attribute loss is declared",
+          "No raw 4D projection confusion"
+        ],
+        "basis": "documented-or-local-contract"
+      },
+      "implementation": "supported",
+      "fixtures": [
+        {
+          "path": "tests/test_precision_exports.py",
+          "selector": "test_model_data_exports_round_trip_double_precision_coordinates",
+          "role": "related-not-oracle",
+          "evidence": "existing-test-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "export-source",
+          "export-format",
+          "export-units",
+          "export-preview",
+          "confirm-export"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R6-INTERCHANGE",
+        "priority": "P2",
+        "unverified": "Existing codec fixtures are not a complete per-format derived/attribute/unit round trip.",
+        "next_action": "Add or identify independent VRML parser for the exact base/section and unit pair; record encoded precision, triangle/incidence changes and color loss."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3,
+          4
+        ],
+        "supported_source_dimensions": [
+          3,
+          4
+        ],
+        "support_note": "Supported only under referenced domain qualifications.",
+        "object_class": "25.4-mm colored cube and central tesseract section"
+      }
+    },
+    {
+      "id": "io-02-codec-pov",
+      "requirement_id": "IO-02",
+      "option": "codec-pov",
+      "title": "POV model/derived export",
+      "domain_id": "interchange",
+      "input": {
+        "description": "25.4-mm colored cube and central tesseract section",
+        "parameters": {
+          "format": "POV",
+          "sources": [
+            "base",
+            "section"
+          ],
+          "units": [
+            "mm",
+            "inch"
+          ]
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "IO-02",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "interchange",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "installed54-manual",
+            "locator": "#export",
+            "role": "documented-options"
+          },
+          {
+            "source_id": "manual-export",
+            "locator": "test_model_data_exports_round_trip_double_precision_coordinates",
+            "role": "documented-options"
+          }
+        ],
+        "checks": [
+          "Independent parser measures coordinates, bounds, units and supported incidence/colors",
+          "Triangulation/attribute loss is declared",
+          "No raw 4D projection confusion"
+        ],
+        "basis": "documented-or-local-contract"
+      },
+      "implementation": "supported",
+      "fixtures": [
+        {
+          "path": "tests/test_precision_exports.py",
+          "selector": "test_model_data_exports_round_trip_double_precision_coordinates",
+          "role": "related-not-oracle",
+          "evidence": "existing-test-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "export-source",
+          "export-format",
+          "export-units",
+          "export-preview",
+          "confirm-export"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R6-INTERCHANGE",
+        "priority": "P2",
+        "unverified": "Existing codec fixtures are not a complete per-format derived/attribute/unit round trip.",
+        "next_action": "Add or identify independent POV parser for the exact base/section and unit pair; record encoded precision, triangle/incidence changes and color loss."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3,
+          4
+        ],
+        "supported_source_dimensions": [
+          3,
+          4
+        ],
+        "support_note": "Supported only under referenced domain qualifications.",
+        "object_class": "25.4-mm colored cube and central tesseract section"
+      }
+    },
+    {
+      "id": "io-02-selected-derived",
+      "requirement_id": "IO-02",
+      "option": "selected-derived",
+      "title": "Selected derived-view source",
+      "domain_id": "interchange",
+      "input": {
+        "description": "Dual, section, stellation, folded net and whole-cell 4D net assembly",
+        "parameters": {
+          "source": [
+            "dual",
+            "section",
+            "stellation",
+            "face-net",
+            "cell-net"
+          ],
+          "space": [
+            "intrinsic",
+            "displayed"
+          ]
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "IO-02",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "interchange",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "manual-export",
+            "locator": "test_derived_sections_export_through_every_display_format",
+            "role": "documented-options"
+          }
+        ],
+        "checks": [
+          "Export chosen view rather than active base accidentally",
+          "Label displayed projected/assembly surface",
+          "Preserve source receipt through async review"
+        ],
+        "basis": "documented-or-local-contract"
+      },
+      "implementation": "restricted",
+      "fixtures": [
+        {
+          "path": "tests/test_interchange.py",
+          "selector": "test_derived_sections_export_through_every_display_format",
+          "role": "related-not-oracle",
+          "evidence": "existing-test-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "export-source",
+          "export-format",
+          "export-units",
+          "export-preview",
+          "confirm-export"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R6-INTERCHANGE",
+        "priority": "P2",
+        "unverified": "Bounded native coverage exists; benchmark option behavior and shipped UI are unverified.",
+        "next_action": "Extend exact section-export fixture to each listed derived/assembly source and stale/canceled review; compare source IDs and independent bounds/incidence."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3,
+          4
+        ],
+        "supported_source_dimensions": [
+          3,
+          4
+        ],
+        "support_note": "Supported only under referenced domain qualifications.",
+        "object_class": "Dual, section, stellation, folded net and whole-cell 4D net assembly"
+      }
+    },
+    {
+      "id": "io-02-orientation-primitives",
+      "requirement_id": "IO-02",
+      "option": "orientation-primitives",
+      "title": "Export orientation and spheres/struts",
+      "domain_id": "interchange",
+      "input": {
+        "description": "Rotated cube/tesseract projection with node spheres and edge cylinders",
+        "parameters": {
+          "orientation": [
+            "current",
+            "default",
+            "selected-entity",
+            "symmetry-axis"
+          ],
+          "geometry": [
+            "mesh",
+            "spheres-cylinders"
+          ],
+          "vrml_native_primitives": "unverified"
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "IO-02",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "interchange",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "manual-export",
+            "locator": "test_tesseract_perspective_32_struts_16_nodes_closed_outward_and_size",
+            "role": "documented-options"
+          },
+          {
+            "source_id": "independent-fixtures",
+            "locator": "test_tesseract_perspective_32_struts_16_nodes_closed_outward_and_size",
+            "role": "expectation-oracle"
+          }
+        ],
+        "checks": [
+          "Measure actual selected orientation and primitive radii",
+          "Source units differ from normalized display sizes",
+          "Do not assume native VRML nodes because triangulated primitives exist"
+        ],
+        "basis": "independent-invariant"
+      },
+      "implementation": "restricted",
+      "fixtures": [
+        {
+          "path": "tests/test_printable_export.py",
+          "selector": "test_tesseract_perspective_32_struts_16_nodes_closed_outward_and_size",
+          "role": "direct",
+          "evidence": "existing-test-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "export-source",
+          "export-format",
+          "export-units",
+          "export-preview",
+          "confirm-export"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R6-INTERCHANGE",
+        "priority": "P2",
+        "unverified": "Bounded native coverage exists; benchmark option behavior and shipped UI are unverified.",
+        "next_action": "Map four orientation choices to controls; independently count 16 nodes/32 struts and qualify mesh/native-VRML primitive option separately."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3,
+          4
+        ],
+        "supported_source_dimensions": [
+          3,
+          4
+        ],
+        "support_note": "Supported only under referenced domain qualifications.",
+        "object_class": "Rotated cube/tesseract projection with node spheres and edge cylinders"
+      }
+    },
+    {
+      "id": "io-02-solid-versus-surface",
+      "requirement_id": "IO-02",
+      "option": "solid-versus-surface",
+      "title": "Solid export versus displayed surfaces",
+      "domain_id": "interchange",
+      "input": {
+        "description": "Intrinsic star source, filled qualified solid and projected 4D surface",
+        "parameters": {
+          "intent": [
+            "intrinsic-solid",
+            "displayed-surface"
+          ]
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "IO-02",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "interchange",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "spec",
+            "locator": "test_convex_solid_and_ascii_stl_keep_the_existing_domain",
+            "role": "requirement-scope"
+          }
+        ],
+        "checks": [
+          "STL/POV solid restrictions remain explicit",
+          "Surface assembly cannot be labeled a certified filled solid",
+          "Residuals/triangulation losses are retained"
+        ],
+        "basis": "documented-or-local-contract"
+      },
+      "implementation": "restricted",
+      "fixtures": [
+        {
+          "path": "tests/test_printable_export.py",
+          "selector": "test_convex_solid_and_ascii_stl_keep_the_existing_domain",
+          "role": "direct",
+          "evidence": "existing-test-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "export-source",
+          "export-format",
+          "export-units",
+          "export-preview",
+          "confirm-export"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R6-INTERCHANGE",
+        "priority": "P2",
+        "unverified": "Bounded native coverage exists; benchmark option behavior and shipped UI are unverified.",
+        "next_action": "Pair unsupported intrinsic source with supported displayed surface; independently test closed manifold/volume only when solid intent is valid."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3,
+          4
+        ],
+        "supported_source_dimensions": [
+          3,
+          4
+        ],
+        "support_note": "Supported only under referenced domain qualifications.",
+        "object_class": "Intrinsic star source, filled qualified solid and projected 4D surface"
+      }
+    },
+    {
+      "id": "io-02-atomic-publication",
+      "requirement_id": "IO-02",
+      "option": "atomic-publication",
+      "title": "Export cancel/stale source/companion atomicity",
+      "domain_id": "interchange",
+      "input": {
+        "description": "Prepared OBJ+MTL and existing destination",
+        "parameters": {
+          "events": [
+            "cancel",
+            "source-change",
+            "write-failure"
+          ]
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "IO-02",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "interchange",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "spec",
+            "locator": "Export cancel/stale source/companion atomicity",
+            "role": "requirement-scope"
+          }
+        ],
+        "checks": [
+          "No stale/partial destination or orphaned companion",
+          "Existing file survives failure",
+          "Review uses captured loss/units/source"
+        ],
+        "basis": "documented-or-local-contract"
+      },
+      "implementation": "supported",
+      "fixtures": [
+        {
+          "path": "tests/interchange-atomic.test.cjs",
+          "selector": null,
+          "role": "direct",
+          "evidence": "existing-suite-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "export-source",
+          "export-format",
+          "export-units",
+          "export-preview",
+          "confirm-export"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R6-INTERCHANGE",
+        "priority": "P2",
+        "unverified": "Bounded native coverage exists; benchmark option behavior and shipped UI are unverified.",
+        "next_action": "Run atomic codec/publication fixtures and shipped save/cancel paths; record file hashes before/after canceled multi-file export."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3,
+          4
+        ],
+        "supported_source_dimensions": [
+          3,
+          4
+        ],
+        "support_note": "Supported only under referenced domain qualifications.",
+        "object_class": "Prepared OBJ+MTL and existing destination"
+      }
+    },
+    {
+      "id": "io-03-png-alpha-size",
+      "requirement_id": "IO-03",
+      "option": "png-alpha-size",
+      "title": "Transparent/scaled/supersampled PNG",
+      "domain_id": "media",
+      "input": {
+        "description": "3D cube with RGBA source and background",
+        "parameters": {
+          "transparent": [
+            true,
+            false
+          ],
+          "scale": [
+            1,
+            2,
+            4
+          ],
+          "framing": [
+            "fit",
+            "viewport"
+          ]
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "IO-03",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "media",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "installed54-manual",
+            "locator": "#exportImage",
+            "role": "documented-options"
+          }
+        ],
+        "checks": [
+          "Independently decode alpha and exact pixel dimensions",
+          "Restore renderer after encode/cancel",
+          "Enforce GPU/32-megapixel bounds and reject unsupported anaglyph capture"
+        ],
+        "basis": "documented-or-local-contract"
+      },
+      "implementation": "restricted",
+      "fixtures": [
+        {
+          "path": "tests/png-capture-options.test.mjs",
+          "selector": null,
+          "role": "direct",
+          "evidence": "existing-suite-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "image",
+          "png-settings",
+          "animation-format",
+          "animation-export"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R7-MEDIA",
+        "priority": "P2",
+        "unverified": "Bounded native coverage exists; benchmark option behavior and shipped UI are unverified.",
+        "next_action": "Decode real desktop PNG alpha/dimensions at each scale/framing on supported GPU; retain rejection diagnostics and restored canvas state."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3,
+          4
+        ],
+        "supported_source_dimensions": [
+          3,
+          4
+        ],
+        "support_note": "Supported only under referenced domain qualifications.",
+        "object_class": "3D cube with RGBA source and background"
+      }
+    },
+    {
+      "id": "io-03-png-sequence",
+      "requirement_id": "IO-03",
+      "option": "png-sequence",
+      "title": "Mathematical-time PNG sequence",
+      "domain_id": "media",
+      "input": {
+        "description": "Animated rotation/section/fold source with supported tracks",
+        "parameters": {
+          "times": "explicit sample manifest",
+          "section": "await native result"
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "IO-03",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "media",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "installed54-manual",
+            "locator": "#exportImage",
+            "role": "documented-options"
+          }
+        ],
+        "checks": [
+          "Frames correspond to exact listed mathematical times",
+          "Cancellation removes incomplete output",
+          "Manifest differs from video wall-clock cadence"
+        ],
+        "basis": "documented-or-local-contract"
+      },
+      "implementation": "supported",
+      "fixtures": [
+        {
+          "path": "tests/animation-export-capture.test.mjs",
+          "selector": null,
+          "role": "direct",
+          "evidence": "existing-suite-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "image",
+          "png-settings",
+          "animation-format",
+          "animation-export"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R7-MEDIA",
+        "priority": "P2",
+        "unverified": "Bounded native coverage exists; benchmark option behavior and shipped UI are unverified.",
+        "next_action": "Export three known endpoint/intermediate sample times; independently compare section/fold geometry and manifest, without changing animation code."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3,
+          4
+        ],
+        "supported_source_dimensions": [
+          3,
+          4
+        ],
+        "support_note": "Supported only under referenced domain qualifications.",
+        "object_class": "Animated rotation/section/fold source with supported tracks"
+      }
+    },
+    {
+      "id": "io-03-webm",
+      "requirement_id": "IO-03",
+      "option": "webm",
+      "title": "WebM frame/container qualification",
+      "domain_id": "media",
+      "input": {
+        "description": "Supported rotating 3D model, section and fold sequences",
+        "parameters": {
+          "format": "WebM",
+          "size": [
+            "viewport",
+            "1080p"
+          ],
+          "frame_rate": "explicit",
+          "material": [
+            "opaque",
+            "glass"
+          ]
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "IO-03",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "media",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "installed54-manual",
+            "locator": "#exportImage",
+            "role": "documented-options"
+          },
+          {
+            "source_id": "history60",
+            "locator": "WebM frame/container qualification",
+            "role": "requirement-scope"
+          }
+        ],
+        "checks": [
+          "Independently decode frame count/duration and endpoints",
+          "Record platform encoder capability",
+          "GIF quantization/centisecond timing and MP4 CFR cadence are explicit"
+        ],
+        "basis": "documented-or-local-contract"
+      },
+      "implementation": "supported",
+      "fixtures": [
+        {
+          "path": "tests/media-export.test.mjs",
+          "selector": null,
+          "role": "direct",
+          "evidence": "existing-suite-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "image",
+          "png-settings",
+          "animation-format",
+          "animation-export"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "desktop-qualification",
+        "owner": "R7-MEDIA",
+        "priority": "P2",
+        "unverified": "Synthetic muxer fixtures are not shipped codec/GPU/material qualification.",
+        "next_action": "R7-MEDIA: export WebM for the specified motions/materials, decode with independent reader and retain timing/endpoint/cancel receipts."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3,
+          4
+        ],
+        "supported_source_dimensions": [
+          3,
+          4
+        ],
+        "support_note": "Supported only under referenced domain qualifications.",
+        "object_class": "Supported rotating 3D model, section and fold sequences"
+      }
+    },
+    {
+      "id": "io-03-mp4",
+      "requirement_id": "IO-03",
+      "option": "mp4",
+      "title": "MP4 frame/container qualification",
+      "domain_id": "media",
+      "input": {
+        "description": "Supported rotating 3D model, section and fold sequences",
+        "parameters": {
+          "format": "MP4",
+          "size": [
+            "viewport",
+            "1080p"
+          ],
+          "frame_rate": "explicit",
+          "material": [
+            "opaque",
+            "glass"
+          ]
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "IO-03",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "media",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "installed54-manual",
+            "locator": "#exportImage",
+            "role": "documented-options"
+          },
+          {
+            "source_id": "history60",
+            "locator": "MP4 frame/container qualification",
+            "role": "requirement-scope"
+          }
+        ],
+        "checks": [
+          "Independently decode frame count/duration and endpoints",
+          "Record platform encoder capability",
+          "GIF quantization/centisecond timing and MP4 CFR cadence are explicit"
+        ],
+        "basis": "documented-or-local-contract"
+      },
+      "implementation": "supported",
+      "fixtures": [
+        {
+          "path": "tests/media-export.test.mjs",
+          "selector": null,
+          "role": "direct",
+          "evidence": "existing-suite-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "image",
+          "png-settings",
+          "animation-format",
+          "animation-export"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "desktop-qualification",
+        "owner": "R7-MEDIA",
+        "priority": "P2",
+        "unverified": "Synthetic muxer fixtures are not shipped codec/GPU/material qualification.",
+        "next_action": "R7-MEDIA: export MP4 for the specified motions/materials, decode with independent reader and retain timing/endpoint/cancel receipts."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3,
+          4
+        ],
+        "supported_source_dimensions": [
+          3,
+          4
+        ],
+        "support_note": "Supported only under referenced domain qualifications.",
+        "object_class": "Supported rotating 3D model, section and fold sequences"
+      }
+    },
+    {
+      "id": "io-03-gif",
+      "requirement_id": "IO-03",
+      "option": "gif",
+      "title": "GIF frame/container qualification",
+      "domain_id": "media",
+      "input": {
+        "description": "Supported rotating 3D model, section and fold sequences",
+        "parameters": {
+          "format": "GIF",
+          "size": [
+            "viewport",
+            "1080p"
+          ],
+          "frame_rate": "explicit",
+          "material": [
+            "opaque",
+            "glass"
+          ]
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "IO-03",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "media",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "installed54-manual",
+            "locator": "#exportImage",
+            "role": "documented-options"
+          },
+          {
+            "source_id": "history60",
+            "locator": "GIF frame/container qualification",
+            "role": "requirement-scope"
+          }
+        ],
+        "checks": [
+          "Independently decode frame count/duration and endpoints",
+          "Record platform encoder capability",
+          "GIF quantization/centisecond timing and MP4 CFR cadence are explicit"
+        ],
+        "basis": "documented-or-local-contract"
+      },
+      "implementation": "supported",
+      "fixtures": [
+        {
+          "path": "tests/media-export.test.mjs",
+          "selector": null,
+          "role": "direct",
+          "evidence": "existing-suite-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "image",
+          "png-settings",
+          "animation-format",
+          "animation-export"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "desktop-qualification",
+        "owner": "R7-MEDIA",
+        "priority": "P2",
+        "unverified": "Synthetic muxer fixtures are not shipped codec/GPU/material qualification.",
+        "next_action": "R7-MEDIA: export GIF for the specified motions/materials, decode with independent reader and retain timing/endpoint/cancel receipts."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3,
+          4
+        ],
+        "supported_source_dimensions": [
+          3,
+          4
+        ],
+        "support_note": "Supported only under referenced domain qualifications.",
+        "object_class": "Supported rotating 3D model, section and fold sequences"
+      }
+    },
+    {
+      "id": "io-03-legacy-containers",
+      "requirement_id": "IO-03",
+      "option": "legacy-containers",
+      "title": "Documented baseline AVI and image containers",
+      "domain_id": "media",
+      "input": {
+        "description": "5.4 manual lists AVI and per-image sequence formats",
+        "parameters": {
+          "baseline_container": "AVI",
+          "other_image_formats": "not fully enumerated"
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "IO-03",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "media",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "installed54-manual",
+            "locator": "#exportImage",
+            "role": "documented-options"
+          }
+        ],
+        "checks": [
+          "Do not count offered WebM/MP4/GIF as AVI support",
+          "Required equivalence must be explicitly decided"
+        ],
+        "basis": "documented-or-local-contract"
+      },
+      "implementation": "unsupported",
+      "fixtures": [
+        {
+          "path": "tests/media-export.test.mjs",
+          "selector": null,
+          "role": "related-not-oracle",
+          "evidence": "existing-suite-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "image",
+          "png-settings",
+          "animation-format",
+          "animation-export"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R7-MEDIA",
+        "priority": "P1",
+        "unverified": "AVI absent from offered formats; frozen 6.0 required container list not reconciled.",
+        "next_action": "Extract exact 5.4 labels and documented 6.0 format list; have lead resolve accepted equivalence or schedule one codec tranche, not speculative legacy codecs."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3,
+          4
+        ],
+        "supported_source_dimensions": [],
+        "support_note": "No supported-domain claim for this requested case; see implementation status and follow-up.",
+        "object_class": "5.4 manual lists AVI and per-image sequence formats"
+      }
+    },
+    {
+      "id": "io-03-combined-motion-scope",
+      "requirement_id": "IO-03",
+      "option": "combined-motion-scope",
+      "title": "Material/media and combined-motion scope",
+      "domain_id": "media",
+      "input": {
+        "description": "Moving dual morph with requested section/fold/explosion",
+        "parameters": {
+          "combinations": [
+            "morph+section",
+            "morph+fold",
+            "morph+explosion"
+          ],
+          "materials": "saved effects"
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "IO-03",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "media",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "spec",
+            "locator": "Material/media and combined-motion scope",
+            "role": "requirement-scope"
+          }
+        ],
+        "checks": [
+          "Unsupported combination refuses before output publication",
+          "Do not infer motion compatibility from individual video support"
+        ],
+        "basis": "documented-or-local-contract"
+      },
+      "implementation": "restricted",
+      "fixtures": [
+        {
+          "path": "tests/dual-morph-combinations.test.mjs",
+          "selector": null,
+          "role": "direct",
+          "evidence": "existing-suite-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "image",
+          "png-settings",
+          "animation-format",
+          "animation-export"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R7-MEDIA",
+        "priority": "P2",
+        "unverified": "Bounded native coverage exists; benchmark option behavior and shipped UI are unverified.",
+        "next_action": "Coordinate with R5-MORPH-SCOPE on eligible modes/combinations; populate exact accepted/refused matrix and export one supported material case."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3,
+          4
+        ],
+        "supported_source_dimensions": [
+          3,
+          4
+        ],
+        "support_note": "Supported only under referenced domain qualifications.",
+        "object_class": "Moving dual morph with requested section/fold/explosion"
+      }
+    },
+    {
+      "id": "io-04-digital-print",
+      "requirement_id": "IO-04",
+      "option": "digital-print",
+      "title": "Digital SVG/PDF physical scale",
+      "domain_id": "nets",
+      "input": {
+        "description": "25.4-mm cube-net edge on packed A4/Letter pages",
+        "parameters": {
+          "edge_mm": 25.4,
+          "paper": [
+            "A4",
+            "Letter"
+          ],
+          "print_scale": 1
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "IO-04",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "nets",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "installed54-manual",
+            "locator": "#nets",
+            "role": "documented-options"
+          },
+          {
+            "source_id": "independent-fixtures",
+            "locator": "Digital SVG/PDF physical scale",
+            "role": "expectation-oracle"
+          }
+        ],
+        "checks": [
+          "Independent vector reader measures 25.4-mm edge and declared page/margins",
+          "Browser paper rounding is recorded",
+          "This is not hardware calibration"
+        ],
+        "basis": "independent-invariant"
+      },
+      "implementation": "supported",
+      "fixtures": [
+        {
+          "path": "tests/test_net_printing.py",
+          "selector": null,
+          "role": "direct",
+          "evidence": "existing-suite-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "net-print",
+          "net-export-pdf",
+          "net-paper-settings"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R7-PRINT",
+        "priority": "P2",
+        "unverified": "Bounded native coverage exists; benchmark option behavior and shipped UI are unverified.",
+        "next_action": "Run scripts/verify-net-pdf.py and scripts/verify-packed-net-pdf.py on fresh reviewed exports; retain paper dimensions and measured edge error."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3
+        ],
+        "supported_source_dimensions": [
+          3
+        ],
+        "support_note": "Supported only under referenced domain qualifications.",
+        "object_class": "25.4-mm cube-net edge on packed A4/Letter pages"
+      }
+    },
+    {
+      "id": "io-04-hardware-calibration",
+      "requirement_id": "IO-04",
+      "option": "hardware-calibration",
+      "title": "Printer scale/margins and fit",
+      "domain_id": "nets",
+      "input": {
+        "description": "100-mm calibration edge plus multi-page model",
+        "parameters": {
+          "printer": "explicit device/driver",
+          "paper": "measured",
+          "scale": "100 percent"
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "IO-04",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "nets",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "spec",
+            "locator": "test_oversize_is_diagnosed_without_scaling_or_cutting",
+            "role": "requirement-scope"
+          }
+        ],
+        "checks": [
+          "Measure physical output and report mm scale/margin error",
+          "Oversized piece must not auto-rescale"
+        ],
+        "basis": "documented-or-local-contract"
+      },
+      "implementation": "unverified",
+      "fixtures": [
+        {
+          "path": "tests/test_net_printing.py",
+          "selector": "test_oversize_is_diagnosed_without_scaling_or_cutting",
+          "role": "related-not-oracle",
+          "evidence": "existing-test-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "net-print",
+          "net-export-pdf",
+          "net-paper-settings"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "hardware-qualification",
+        "owner": "R7-PRINT",
+        "priority": "P1",
+        "unverified": "No printer/device calibration receipt; digital geometry cannot establish physical scale.",
+        "next_action": "R7-PRINT: print reviewed calibration sheet, measure horizontal/vertical 100-mm rulers and margins, retain printer/driver/paper settings and tolerances."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3
+        ],
+        "supported_source_dimensions": [],
+        "support_note": "No supported-domain claim for this requested case; see implementation status and follow-up.",
+        "object_class": "100-mm calibration edge plus multi-page model"
+      }
+    },
+    {
+      "id": "io-04-print-cancel",
+      "requirement_id": "IO-04",
+      "option": "print-cancel",
+      "title": "Reviewed native print cancellation",
+      "domain_id": "nets",
+      "input": {
+        "description": "Prepared pages with active source/paper receipt",
+        "parameters": {
+          "events": [
+            "cancel",
+            "source-change",
+            "paper-change"
+          ]
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "IO-04",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "nets",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "spec",
+            "locator": "Reviewed native print cancellation",
+            "role": "requirement-scope"
+          }
+        ],
+        "checks": [
+          "Cancel/revoked review cannot print stale content",
+          "Native dialog/renderer failures clean owned session"
+        ],
+        "basis": "documented-or-local-contract"
+      },
+      "implementation": "supported",
+      "fixtures": [
+        {
+          "path": "tests/net-print-session.test.mjs",
+          "selector": null,
+          "role": "direct",
+          "evidence": "existing-suite-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "net-print",
+          "net-export-pdf",
+          "net-paper-settings"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R7-PRINT",
+        "priority": "P2",
+        "unverified": "Bounded native coverage exists; benchmark option behavior and shipped UI are unverified.",
+        "next_action": "Run print-session ownership fixtures and shipped native cancel/review path; keep device-scale qualification separate."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3
+        ],
+        "supported_source_dimensions": [
+          3
+        ],
+        "support_note": "Supported only under referenced domain qualifications.",
+        "object_class": "Prepared pages with active source/paper receipt"
+      }
+    }
+  ]
+}

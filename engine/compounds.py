@@ -1,4 +1,5 @@
 """Literal disjoint incidence addition. No welding, blending or solid inference."""
+
 from copy import deepcopy
 import json
 import math
@@ -44,8 +45,13 @@ def _colors(model, kind):
         if not isinstance(channels, list) or len(channels) not in (3, 4):
             raise GeometryError('Compound source colors require RGB or RGBA channels.')
         maximum = 255 if color['encoding'] == 'byte' else 1
-        if any(type(x) not in (int, float) or (color['encoding'] == 'byte' and type(x) is not int)
-               or not 0 <= x <= maximum or not math.isfinite(x) for x in channels):
+        if any(
+            type(x) not in (int, float)
+            or (color['encoding'] == 'byte' and type(x) is not int)
+            or not 0 <= x <= maximum
+            or not math.isfinite(x)
+            for x in channels
+        ):
             raise GeometryError('Compound source color channels are outside their numeric domain.')
     return colors
 
@@ -53,9 +59,16 @@ def _colors(model, kind):
 def _component_records(model):
     records = model.get('components')
     if records is None:
-        return [{'id': None, 'name': model.get('name', 'Source'),
-                 'sourceModelId': model.get('id'), 'sourceFingerprint': identity(model),
-                 'sourcePath': [], 'maps': {kind: list(range(len(model.get(kind, [])))) for kind in KINDS}}]
+        return [
+            {
+                'id': None,
+                'name': model.get('name', 'Source'),
+                'sourceModelId': model.get('id'),
+                'sourceFingerprint': identity(model),
+                'sourcePath': [],
+                'maps': {kind: list(range(len(model.get(kind, [])))) for kind in KINDS},
+            }
+        ]
     if not isinstance(records, list) or not 1 <= len(records) <= MAX_COMPONENTS:
         raise GeometryError('Compound components must be a nonempty bounded list.')
     owners = {kind: {} for kind in KINDS}
@@ -100,7 +113,12 @@ def _check_source(model):
         raise GeometryError('Compound source numeric settings and metadata must be objects.')
     dimension = model.get('dimension')
     embedding = model.get('embeddingDimension', dimension)
-    if type(dimension) is not int or dimension not in (2, 3, 4) or type(embedding) is not int or not dimension <= embedding <= 4:
+    if (
+        type(dimension) is not int
+        or dimension not in (2, 3, 4)
+        or type(embedding) is not int
+        or not dimension <= embedding <= 4
+    ):
         raise GeometryError('Compound sources require dimensions 2, 3 or 4 and a compatible embedding.')
     incidences = 0
     for kind in KINDS:
@@ -116,7 +134,10 @@ def _check_source(model):
             incidences += len(row)
             if incidences > MAX_INCIDENCES:
                 raise GeometryError('Compound source incidence resource limit exceeded.')
-            if kind == 'vertices' and (len(row) != embedding or any(type(x) not in (int, float) or abs(x) > MAX_COORDINATE or not math.isfinite(x) for x in row)):
+            if kind == 'vertices' and (
+                len(row) != embedding
+                or any(type(x) not in (int, float) or abs(x) > MAX_COORDINATE or not math.isfinite(x) for x in row)
+            ):
                 raise GeometryError('Compound coordinates must be finite numeric values bounded to 1e100.')
     if _payload_size(model) > MAX_PAYLOAD_BYTES:
         raise GeometryError('Compound source payload resource limit exceeded.')
@@ -144,31 +165,60 @@ def add_models(base, other):
         cap = MAX_VERTICES if kind == 'vertices' else MAX_ELEMENTS
         if offsets[kind] + len(other.get(kind, [])) > cap:
             raise GeometryError(f'Compound aggregate {kind} resource limit exceeded.')
-    model = {'id': str(uuid.uuid4()), 'name': f"{base.get('name', 'Base')} + {other.get('name', 'Added')}",
-             'dimension': a[0], 'embeddingDimension': a[1], 'interpretation': 'generalized-complex',
-             'vertices': deepcopy(base['vertices']) + deepcopy(other['vertices']),
-             'edges': deepcopy(base['edges']) + [[v + offsets['vertices'] for v in e] for e in other['edges']],
-             'faces': deepcopy(base['faces']) + [[v + offsets['vertices'] for v in f] for f in other['faces']],
-             'cells': deepcopy(base.get('cells', [])) + [[f + offsets['faces'] for f in c] for c in other.get('cells', [])],
-             'components': [], 'metadata': {'compound': {'schemaVersion': 1, 'inputs': [],
-                                                       'sourceModels': [deepcopy(base), deepcopy(other)]}},
-             'numeric': {'mode': 'float64-approximate', 'tolerance': TOLERANCE, 'certified': False,
-                         'inputInterpretation': 'Literal supplied coordinates and incidence; no union interior inferred'},
-             'provenance': {'operation': 'add-models', 'algorithmVersion': VERSION,
-                            'parameters': {'weld': False, 'rescale': False, 'rotate': False,
-                                           'removeCoincidentFaces': False, 'blendCoplanarFaces': False}, 'inputs': []}}
+    model = {
+        'id': str(uuid.uuid4()),
+        'name': f"{base.get('name', 'Base')} + {other.get('name', 'Added')}",
+        'dimension': a[0],
+        'embeddingDimension': a[1],
+        'interpretation': 'generalized-complex',
+        'vertices': deepcopy(base['vertices']) + deepcopy(other['vertices']),
+        'edges': deepcopy(base['edges']) + [[v + offsets['vertices'] for v in e] for e in other['edges']],
+        'faces': deepcopy(base['faces']) + [[v + offsets['vertices'] for v in f] for f in other['faces']],
+        'cells': deepcopy(base.get('cells', [])) + [[f + offsets['faces'] for f in c] for c in other.get('cells', [])],
+        'components': [],
+        'metadata': {'compound': {'schemaVersion': 1, 'inputs': [], 'sourceModels': [deepcopy(base), deepcopy(other)]}},
+        'numeric': {
+            'mode': 'float64-approximate',
+            'tolerance': TOLERANCE,
+            'certified': False,
+            'inputInterpretation': 'Literal supplied coordinates and incidence; no union interior inferred',
+        },
+        'provenance': {
+            'operation': 'add-models',
+            'algorithmVersion': VERSION,
+            'parameters': {
+                'weld': False,
+                'rescale': False,
+                'rotate': False,
+                'removeCoincidentFaces': False,
+                'blendCoplanarFaces': False,
+            },
+            'inputs': [],
+        },
+    }
     for source_index, (source, checked) in enumerate(((base, a), (other, b))):
         shift = {kind: offsets[kind] if source_index else 0 for kind in KINDS}
         fingerprint = identity(source)
-        info = {'sourceIndex': source_index, 'sourceModelId': source.get('id'), 'sourceFingerprint': fingerprint,
-                'maps': {kind: [i + shift[kind] for i in range(len(source.get(kind, [])))] for kind in KINDS}}
+        info = {
+            'sourceIndex': source_index,
+            'sourceModelId': source.get('id'),
+            'sourceFingerprint': fingerprint,
+            'maps': {kind: [i + shift[kind] for i in range(len(source.get(kind, [])))] for kind in KINDS},
+        }
         model['metadata']['compound']['inputs'].append(info)
         model['provenance']['inputs'].append({'sourceModelId': source.get('id'), 'sourceFingerprint': fingerprint})
         for leaf in checked[3]:
-            model['components'].append({'id': str(uuid.uuid4()), 'name': leaf.get('name', source.get('name', 'Source')),
-                                        'sourceModelId': leaf.get('sourceModelId'), 'sourceFingerprint': leaf.get('sourceFingerprint'),
-                                        'sourceComponentId': leaf.get('id'), 'sourcePath': [source_index] + leaf['sourcePath'],
-                                        'maps': {kind: [i + shift[kind] for i in leaf['maps'][kind]] for kind in KINDS}})
+            model['components'].append(
+                {
+                    'id': str(uuid.uuid4()),
+                    'name': leaf.get('name', source.get('name', 'Source')),
+                    'sourceModelId': leaf.get('sourceModelId'),
+                    'sourceFingerprint': leaf.get('sourceFingerprint'),
+                    'sourceComponentId': leaf.get('id'),
+                    'sourcePath': [source_index] + leaf['sourcePath'],
+                    'maps': {kind: [i + shift[kind] for i in leaf['maps'][kind]] for kind in KINDS},
+                }
+            )
     colors = {kind: deepcopy(_colors(base, kind)) + deepcopy(_colors(other, kind)) for kind in ('faces', 'cells')}
     if any(color is not None for values in colors.values() for color in values):
         model['metadata']['offColors'] = colors
@@ -207,17 +257,28 @@ def extract_component(model, component_id):
     maps = component['maps']
     reverse_vertices = {v: i for i, v in enumerate(maps['vertices'])}
     reverse_faces = {f: i for i, f in enumerate(maps['faces'])}
-    result = {'id': str(uuid.uuid4()), 'name': component.get('name', 'Compound component'),
-              'dimension': model['dimension'], 'embeddingDimension': model.get('embeddingDimension', model['dimension']),
-              'interpretation': 'generalized-complex', 'vertices': deepcopy([model['vertices'][v] for v in maps['vertices']]),
-              'edges': [[reverse_vertices[v] for v in model['edges'][e]] for e in maps['edges']],
-              'faces': [[reverse_vertices[v] for v in model['faces'][f]] for f in maps['faces']],
-              'cells': [[reverse_faces[f] for f in model.get('cells', [])[c]] for c in maps['cells']],
-              'metadata': deepcopy(source.get('metadata', {})), 'numeric': deepcopy(model.get('numeric', {})),
-              'provenance': {'operation': 'extract-component', 'algorithmVersion': VERSION,
-                             'sourceModelId': model.get('id'), 'sourceFingerprint': identity(model),
-                             'componentId': component_id, 'originalSourceModelId': component.get('sourceModelId'),
-                             'sourceMaps': deepcopy(maps)}}
+    result = {
+        'id': str(uuid.uuid4()),
+        'name': component.get('name', 'Compound component'),
+        'dimension': model['dimension'],
+        'embeddingDimension': model.get('embeddingDimension', model['dimension']),
+        'interpretation': 'generalized-complex',
+        'vertices': deepcopy([model['vertices'][v] for v in maps['vertices']]),
+        'edges': [[reverse_vertices[v] for v in model['edges'][e]] for e in maps['edges']],
+        'faces': [[reverse_vertices[v] for v in model['faces'][f]] for f in maps['faces']],
+        'cells': [[reverse_faces[f] for f in model.get('cells', [])[c]] for c in maps['cells']],
+        'metadata': deepcopy(source.get('metadata', {})),
+        'numeric': deepcopy(model.get('numeric', {})),
+        'provenance': {
+            'operation': 'extract-component',
+            'algorithmVersion': VERSION,
+            'sourceModelId': model.get('id'),
+            'sourceFingerprint': identity(model),
+            'componentId': component_id,
+            'originalSourceModelId': component.get('sourceModelId'),
+            'sourceMaps': deepcopy(maps),
+        },
+    }
     colors = {}
     for kind in ('faces', 'cells'):
         table = _colors(model, kind)
@@ -227,7 +288,9 @@ def extract_component(model, component_id):
         result['metadata']['offColors'] = colors
     result['validation'] = validate(result)
     if not result['validation']['passed']:
-        raise GeometryError('Extracted component fails incidence validation: ' + '; '.join(result['validation']['errors']))
+        raise GeometryError(
+            'Extracted component fails incidence validation: ' + '; '.join(result['validation']['errors'])
+        )
     result['fingerprint'] = identity(result)
     return result
 
@@ -265,27 +328,46 @@ def remove_component(model, component_id):
                 raise GeometryError('Compound historical input maps are malformed.')
             for kind in KINDS:
                 original_map = original_input['maps'].get(kind)
-                if not isinstance(original_map, list) or any(old is not None and (type(old) is not int or not 0 <= old < len(maps[kind])) for old in original_map):
+                if not isinstance(original_map, list) or any(
+                    old is not None and (type(old) is not int or not 0 <= old < len(maps[kind])) for old in original_map
+                ):
                     raise GeometryError('Compound historical source maps have stale or malformed IDs.')
                 original_input['maps'][kind] = [maps[kind][old] if old is not None else None for old in original_map]
-    metadata['compoundComponentEditing'] = {'schemaVersion': 1, 'sourceModel': deepcopy(model),
-                                           'removedComponentId': component_id, 'sourceMaps': maps,
-                                           'removedSourceModelId': component.get('sourceModelId'),
-                                           'policy': 'remove one explicitly selected current leaf; no weld or geometry inference'}
-    result = {'id': str(uuid.uuid4()), 'name': f"{model.get('name', 'Compound')} · remove {component.get('name', 'component')}",
-              'dimension': model['dimension'], 'embeddingDimension': model.get('embeddingDimension', model['dimension']),
-              'interpretation': 'generalized-complex',
-              'vertices': deepcopy([model['vertices'][i] for i in kept['vertices']]),
-              'edges': [[reverse['vertices'][v] for v in model['edges'][i]] for i in kept['edges']],
-              'faces': [[reverse['vertices'][v] for v in model['faces'][i]] for i in kept['faces']],
-              'cells': [[reverse['faces'][f] for f in model.get('cells', [])[i]] for i in kept['cells']],
-              'components': [], 'metadata': metadata,
-              'numeric': {'mode': 'float64-approximate', 'tolerance': TOLERANCE, 'certified': False,
-                          'inputInterpretation': 'Remaining supplied component geometry; no union volume inferred'},
-              'provenance': {'operation': 'remove-component', 'algorithmVersion': VERSION,
-                             'sourceModelId': model.get('id'), 'sourceFingerprint': identity(model),
-                             'parameters': {'componentId': component_id, 'weld': False},
-                             'sourceMaps': deepcopy(maps)}}
+    metadata['compoundComponentEditing'] = {
+        'schemaVersion': 1,
+        'sourceModel': deepcopy(model),
+        'removedComponentId': component_id,
+        'sourceMaps': maps,
+        'removedSourceModelId': component.get('sourceModelId'),
+        'policy': 'remove one explicitly selected current leaf; no weld or geometry inference',
+    }
+    result = {
+        'id': str(uuid.uuid4()),
+        'name': f"{model.get('name', 'Compound')} · remove {component.get('name', 'component')}",
+        'dimension': model['dimension'],
+        'embeddingDimension': model.get('embeddingDimension', model['dimension']),
+        'interpretation': 'generalized-complex',
+        'vertices': deepcopy([model['vertices'][i] for i in kept['vertices']]),
+        'edges': [[reverse['vertices'][v] for v in model['edges'][i]] for i in kept['edges']],
+        'faces': [[reverse['vertices'][v] for v in model['faces'][i]] for i in kept['faces']],
+        'cells': [[reverse['faces'][f] for f in model.get('cells', [])[i]] for i in kept['cells']],
+        'components': [],
+        'metadata': metadata,
+        'numeric': {
+            'mode': 'float64-approximate',
+            'tolerance': TOLERANCE,
+            'certified': False,
+            'inputInterpretation': 'Remaining supplied component geometry; no union volume inferred',
+        },
+        'provenance': {
+            'operation': 'remove-component',
+            'algorithmVersion': VERSION,
+            'sourceModelId': model.get('id'),
+            'sourceFingerprint': identity(model),
+            'parameters': {'componentId': component_id, 'weld': False},
+            'sourceMaps': deepcopy(maps),
+        },
+    }
     for current in components:
         if current['id'] == component_id:
             continue
@@ -294,7 +376,9 @@ def remove_component(model, component_id):
         result['components'].append(retained)
     result['validation'] = validate(result)
     if not result['validation']['passed']:
-        raise GeometryError('Remaining compound fails incidence validation: ' + '; '.join(result['validation']['errors']))
+        raise GeometryError(
+            'Remaining compound fails incidence validation: ' + '; '.join(result['validation']['errors'])
+        )
     _component_records(result)
     result['fingerprint'] = identity(result)
     if _payload_size(result) > MAX_PAYLOAD_BYTES:

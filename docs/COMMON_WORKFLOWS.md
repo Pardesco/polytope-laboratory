@@ -1,0 +1,22 @@
+# Common workflows with Expert tools off
+
+The ordinary startup profile keeps Expert tools off. These paths move the original controls; IDs, event handlers, native computation, source ownership checks and saved state formats remain in place.
+
+| Task | UI path and IDs |
+| --- | --- |
+| Pick source entities | View toolbar cursor icon, **Select by clicking** (`pick-source`), opens View options and focuses **Select by clicking** (`pick-kind`). Analysis **Kind** (`selection-kind`) stays synchronized. |
+| Inspect 4D cells | **Appearance → 4D cells · hide or isolate** (`appearance-cell-settings`): cell index `visible-cell-id`, **Hide** `hide-cell`, **Isolate** `isolate-cell`, **Show all** `show-all-cells`; direction filter `cell-facing` offers Hide front/back and Front/Back only. |
+| Construct a convex core | **Construct → Change this shape → Convex core** (`construct-card-convex-core-settings`), center `core-x/y/z/w`, **Construct core** `make-convex-core`. W appears for 4D. |
+| Construct a source-direction zonohedron | **Construct → Change this shape → Zonohedron** (`construct-card-source-zonohedron-settings`), seed feature `zonohedron-feature`, literal IDs `zonohedron-ids`, **Construct** `make-source-zonohedron`. |
+| Choose primitives | **Appearance**: vertices `vertex-style` (Points/Spheres), edges `edge-style` (Lines/Cylinders), plus the existing size sliders. |
+| Choose material effects | **Appearance → Bump and environment** (`material-effects-settings`): procedural bump `effects-bump`, built-in studio `effects-reflection`, reflection/environment-only refraction `effects-environmentMode`, **Apply effects** `effects-apply`, **Turn off** `effects-reset`. Numeric adjustments are collapsed under **More effect options** (`appearance-effects-options`). |
+
+Cell filtering changes display visibility, never source incidence or measures. Facing is relative to the 4D projection observer; generalized cell orientation is unsupported and the existing control explains this restriction. Hide/Isolate remain available for sources with cells. The section hides when the source has no cells. Facing counts remain expert evidence (`cell-facing-result`).
+
+Convex cores intersect source supporting half-spaces containing the chosen center. Source zonohedra use explicitly selected directions. Existing bounded numerical domains, validation failures, residual reports and color policies still apply; exposing the cards does not broaden those domains or confer exactness. Both constructions retain native operation history, Undo/Redo, replay and project validation.
+
+Primitive radii are normalized projected display lengths. Bump uses displayed 3D coordinates. The built-in studio supplies environment sampling; refraction does not trace rays through the object. These settings are saved display state, not source geometry changes. Exact arithmetic, symmetry generators and certificate details retain their existing expert disclosures; numeric radius entry and fill-rule settings remain under Expert appearance. Hidden startup still enables Expert tools for legacy smoke reveal.
+
+Verification: `node --test tests/common-workflows-mounted.test.mjs` mounts the full Vite renderer in headless Chromium with real JSON-lines Python computation, fresh storage and `startupInfo.hidden=false`. Five subtests exercise picking/cell filters, 3D/4D core, source-edge zonohedron, presentation/material persistence, and hidden-mode ID compatibility. Construction checks cover Undo/Redo, save/reopen and replay; the picker is also reached at 1280×800. The focused organizer and existing native workflow suites supplement this test. Electron, packaged desktop/DPI qualification, imported optical assets and full competitor domain parity are outside this slice.
+
+Verified November 9, 2026: 246 Python tests passed across `test_cell_facing.py`, `test_convex_core_workflow.py`, `test_convex_core4d_workflow.py`, `test_source_zonohedron_workflow.py` and `test_material_styles.py`, using `python -m pytest ... -q -p no:cacheprovider`. Focused Node runs covered 274 distinct passing checks, including the new mounted workflow, organizer, native-control, visibility/picking, presentation/material, hidden-smoke, export-goal and layout suites. The final layout/unit rerun passed 27 checks and the final mounted/export run passed 21 (overlapping the broader selection). `npx.cmd vite build --configLoader native` and `git diff --check` passed. The build retains its existing chunk-size and mixed static/dynamic-import warnings.

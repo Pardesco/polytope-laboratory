@@ -1,30 +1,144 @@
 [
-  {"title":"One more direction","steps":[
-    {"title":"Start with a square","text":"A square has two independent directions: across and up. Imagine dragging a copy in a new direction, joining each corner to its copy.","hint":"Drag to look around. The square is flat, even when you view it from the side.","button":"Show the square again","action":{"kind":"shape","key":"square"}},
-    {"title":"A square becomes a cube","text":"That new direction gives us a cube. Its boundary has six square faces; the two copies of our square are opposite faces.","hint":"Drag to orbit the cube. Scroll to zoom.","button":"Show the cube again","action":{"kind":"shape","key":"cube"}},
-    {"title":"A cube becomes a tesseract","text":"Drag a cube in a fourth independent direction and you get a tesseract. Its boundary has eight cube-shaped cells. We can only show a projection of it on this screen.","hint":"Count 16 corners and 32 edges in the strip below the model.","button":"Show the tesseract again","action":{"kind":"shape","key":"tesseract"}}
-  ]},
-  {"title":"Shadows of 4D","steps":[
-    {"title":"A cube inside a cube?","text":"This is a perspective projection of a tesseract, looking along the fourth direction. The smaller cube is the farther cube-shaped cell; it is the same size as the nearer one in 4D.","hint":"Compare the two cubes, then go Next to change only the projection.","button":"Use perspective","action":{"kind":"projection","key":"tesseract","projection":"perspective"}},
-    {"title":"A parallel shadow","text":"Orthographic projection uses parallel rays, so distance along the fourth direction does not shrink things. With this straight-on view, opposite cubes overlap. The tesseract still has all eight cells.","hint":"Shift-drag a little to separate the overlapping corners.","button":"Use parallel projection","action":{"kind":"projection","key":"tesseract","projection":"orthographic"}},
-    {"title":"A curved shadow","text":"For stereographic projection, we first map the boundary radially onto a 3-sphere in 4D. Projecting from one point on that sphere makes many edges curve. Geometry near the projection pole is clipped from this finite view.","hint":"Shift-drag slowly. This is a different map, not a change to the tesseract itself.","button":"Use stereographic projection","action":{"kind":"projection","key":"tesseract","projection":"stereographic"}}
-  ]},
-  {"title":"Turning in 4D","steps":[
-    {"title":"Turn toward a new direction","text":"Watch a rotation in the XW plane: one familiar direction turns into the fourth direction. Cells seem to pass through each other or turn inside out in the shadow. The 4D shape stays rigid.","hint":"Ordinary drag moves the 3D camera. Shift-drag turns the shape in 4D.","button":"Restart the 4D turn","action":{"kind":"turn","key":"tesseract","playing":true}},
-    {"title":"Your turn","text":"The automatic turn is paused. Hold Shift and drag on the model to turn it in 4D yourself. Overlaps in the projection do not mean the cells intersect in 4D.","hint":"Try the XW, YW and ZW turn pads too. Reset this step whenever you want.","button":"Pause and reset the pose","action":{"kind":"turn","key":"tesseract","playing":false}}
-  ]},
-  {"title":"A shape passing through our space","steps":[
-    {"title":"Slice a tesseract","text":"The right view is a 3D slice through the tesseract, not its shadow. We sweep an angled cutting space from one side to the other. A 4D shape passing through our space would appear, change shape, and disappear like this.","hint":"After the sweep, move the Depth slider to explore at your own pace.","button":"Sweep the slice again","action":{"kind":"slice","key":"tesseract","normal":[0.5,0.5,0.5,0.5]}},
-    {"title":"Slice the 24-cell","text":"The 24-cell has 24 octahedral cells. Different depths reveal different 3D sections. The left view shows the whole shape; the right view shows only its intersection with our cutting space.","hint":"Replay the sweep, or drag Depth and watch the corners change.","button":"Sweep the 24-cell again","action":{"kind":"slice","key":"cell24","normal":[0,0,0,1]}}
-  ]},
-  {"title":"Unfolding into 3D","steps":[
-    {"title":"Eight cubes make a net","text":"A cube unfolds into six squares. A tesseract unfolds into eight cubes joined at square faces. This 3D cross is often called the Dalí cross; it could fold into a tesseract using the fourth direction.","hint":"Drag in the right view to orbit the real 3D cell arrangement.","button":"Open the tesseract net","action":{"kind":"net","key":"tesseract"}},
-    {"title":"A net is not a shadow","text":"In the net, the cubes have moved apart by hinging around shared square faces. In the left-hand shadow, the cells are still in their original 4D positions. Both views refer to the same eight source cells.","hint":"Look for the central cube, its six neighbors, and the final cube at the end of one arm.","button":"Reset the net views","action":{"kind":"net","key":"tesseract"}}
-  ]},
-  {"title":"Meet the regular 4D family","steps":[
-    {"title":"The 5-cell","text":"There are six convex regular 4D polytopes, including the tesseract. The simplest is the 5-cell: five tetrahedral cells with five vertices. Its dual has the same shape type.","hint":"A dual swaps vertices with cells, and edges with faces.","button":"Show the 5-cell again","action":{"kind":"shape","key":"simplex4"}},
-    {"title":"The 16-cell","text":"The 16-cell has 16 tetrahedral cells and eight vertices. It is the tesseract’s dual: the eight cube centers of a tesseract become its eight vertices, after suitable scaling.","hint":"Compare its eight vertices with the tesseract’s eight cells.","button":"Show the 16-cell again","action":{"kind":"shape","key":"cross4"}},
-    {"title":"The 24-cell","text":"The 24-cell has 24 octahedral cells and 24 vertices. It is self-dual, and has no regular counterpart in 3D.","hint":"Shift-drag to see the symmetry from another direction.","button":"Show the 24-cell again","action":{"kind":"shape","key":"cell24"}},
-    {"title":"The 120-cell and 600-cell","text":"The 120-cell has 120 dodecahedral cells and 600 vertices. Its dual, the 600-cell, has 600 tetrahedral cells and 120 vertices. Use the button to switch between this final dual pair.","hint":"These detailed shapes use an edge-only view so turning stays responsive. Finish returns to your previous document.","button":"Switch 120-cell / 600-cell","action":{"kind":"pair","key":"cell120","other":"cell600"}}
-  ]}
+  {
+    "title": "One more direction",
+    "steps": [
+      {
+        "title": "Start with a square",
+        "text": "A square has two independent directions: across and up. Imagine dragging a copy in a new direction, joining each corner to its copy.",
+        "hint": "Drag to look around. The square is flat, even when you view it from the side.",
+        "button": "Show the square again",
+        "action": { "kind": "shape", "key": "square" }
+      },
+      {
+        "title": "A square becomes a cube",
+        "text": "That new direction gives us a cube. Its boundary has six square faces; the two copies of our square are opposite faces.",
+        "hint": "Drag to orbit the cube. Scroll to zoom.",
+        "button": "Show the cube again",
+        "action": { "kind": "shape", "key": "cube" }
+      },
+      {
+        "title": "A cube becomes a tesseract",
+        "text": "Drag a cube in a fourth independent direction and you get a tesseract. Its boundary has eight cube-shaped cells. We can only show a projection of it on this screen.",
+        "hint": "Count 16 corners and 32 edges in the strip below the model.",
+        "button": "Show the tesseract again",
+        "action": { "kind": "shape", "key": "tesseract" }
+      }
+    ]
+  },
+  {
+    "title": "Shadows of 4D",
+    "steps": [
+      {
+        "title": "A cube inside a cube?",
+        "text": "This is a perspective projection of a tesseract, looking along the fourth direction. The smaller cube is the farther cube-shaped cell; it is the same size as the nearer one in 4D.",
+        "hint": "Compare the two cubes, then go Next to change only the projection.",
+        "button": "Use perspective",
+        "action": { "kind": "projection", "key": "tesseract", "projection": "perspective" }
+      },
+      {
+        "title": "A parallel shadow",
+        "text": "Orthographic projection uses parallel rays, so distance along the fourth direction does not shrink things. With this straight-on view, opposite cubes overlap. The tesseract still has all eight cells.",
+        "hint": "Shift-drag a little to separate the overlapping corners.",
+        "button": "Use parallel projection",
+        "action": { "kind": "projection", "key": "tesseract", "projection": "orthographic" }
+      },
+      {
+        "title": "A curved shadow",
+        "text": "For stereographic projection, we first map the boundary radially onto a 3-sphere in 4D. Projecting from one point on that sphere makes many edges curve. Geometry near the projection pole is clipped from this finite view.",
+        "hint": "Shift-drag slowly. This is a different map, not a change to the tesseract itself.",
+        "button": "Use stereographic projection",
+        "action": { "kind": "projection", "key": "tesseract", "projection": "stereographic" }
+      }
+    ]
+  },
+  {
+    "title": "Turning in 4D",
+    "steps": [
+      {
+        "title": "Turn toward a new direction",
+        "text": "Watch a rotation in the XW plane: one familiar direction turns into the fourth direction. Cells seem to pass through each other or turn inside out in the shadow. The 4D shape stays rigid.",
+        "hint": "Ordinary drag moves the 3D camera. Shift-drag turns the shape in 4D.",
+        "button": "Restart the 4D turn",
+        "action": { "kind": "turn", "key": "tesseract", "playing": true }
+      },
+      {
+        "title": "Your turn",
+        "text": "The automatic turn is paused. Hold Shift and drag on the model to turn it in 4D yourself. Overlaps in the projection do not mean the cells intersect in 4D.",
+        "hint": "Try the XW, YW and ZW turn pads too. Reset this step whenever you want.",
+        "button": "Pause and reset the pose",
+        "action": { "kind": "turn", "key": "tesseract", "playing": false }
+      }
+    ]
+  },
+  {
+    "title": "A shape passing through our space",
+    "steps": [
+      {
+        "title": "Slice a tesseract",
+        "text": "The right view is a 3D slice through the tesseract, not its shadow. We sweep an angled cutting space from one side to the other. A 4D shape passing through our space would appear, change shape, and disappear like this.",
+        "hint": "After the sweep, move the Depth slider to explore at your own pace.",
+        "button": "Sweep the slice again",
+        "action": { "kind": "slice", "key": "tesseract", "normal": [0.5, 0.5, 0.5, 0.5] }
+      },
+      {
+        "title": "Slice the 24-cell",
+        "text": "The 24-cell has 24 octahedral cells. Different depths reveal different 3D sections. The left view shows the whole shape; the right view shows only its intersection with our cutting space.",
+        "hint": "Replay the sweep, or drag Depth and watch the corners change.",
+        "button": "Sweep the 24-cell again",
+        "action": { "kind": "slice", "key": "cell24", "normal": [0, 0, 0, 1] }
+      }
+    ]
+  },
+  {
+    "title": "Unfolding into 3D",
+    "steps": [
+      {
+        "title": "Eight cubes make a net",
+        "text": "A cube unfolds into six squares. A tesseract unfolds into eight cubes joined at square faces. This 3D cross is often called the Dalí cross; it could fold into a tesseract using the fourth direction.",
+        "hint": "Drag in the right view to orbit the real 3D cell arrangement.",
+        "button": "Open the tesseract net",
+        "action": { "kind": "net", "key": "tesseract" }
+      },
+      {
+        "title": "A net is not a shadow",
+        "text": "In the net, the cubes have moved apart by hinging around shared square faces. In the left-hand shadow, the cells are still in their original 4D positions. Both views refer to the same eight source cells.",
+        "hint": "Look for the central cube, its six neighbors, and the final cube at the end of one arm.",
+        "button": "Reset the net views",
+        "action": { "kind": "net", "key": "tesseract" }
+      }
+    ]
+  },
+  {
+    "title": "Meet the regular 4D family",
+    "steps": [
+      {
+        "title": "The 5-cell",
+        "text": "There are six convex regular 4D polytopes, including the tesseract. The simplest is the 5-cell: five tetrahedral cells with five vertices. Its dual has the same shape type.",
+        "hint": "A dual swaps vertices with cells, and edges with faces.",
+        "button": "Show the 5-cell again",
+        "action": { "kind": "shape", "key": "simplex4" }
+      },
+      {
+        "title": "The 16-cell",
+        "text": "The 16-cell has 16 tetrahedral cells and eight vertices. It is the tesseract’s dual: the eight cube centers of a tesseract become its eight vertices, after suitable scaling.",
+        "hint": "Compare its eight vertices with the tesseract’s eight cells.",
+        "button": "Show the 16-cell again",
+        "action": { "kind": "shape", "key": "cross4" }
+      },
+      {
+        "title": "The 24-cell",
+        "text": "The 24-cell has 24 octahedral cells and 24 vertices. It is self-dual, and has no regular counterpart in 3D.",
+        "hint": "Shift-drag to see the symmetry from another direction.",
+        "button": "Show the 24-cell again",
+        "action": { "kind": "shape", "key": "cell24" }
+      },
+      {
+        "title": "The 120-cell and 600-cell",
+        "text": "The 120-cell has 120 dodecahedral cells and 600 vertices. Its dual, the 600-cell, has 600 tetrahedral cells and 120 vertices. Use the button to switch between this final dual pair.",
+        "hint": "These detailed shapes use an edge-only view so turning stays responsive. Finish returns to your previous document.",
+        "button": "Switch 120-cell / 600-cell",
+        "action": { "kind": "pair", "key": "cell120", "other": "cell600" }
+      }
+    ]
+  }
 ]

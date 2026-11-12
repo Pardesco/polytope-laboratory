@@ -4,6 +4,7 @@ Qhull triangulates facets. We merge them by their full support-vertex sets,
 then intersect true facets to recover ridges; display triangles never define
 the mathematical identity. All geometric predicates here are float64, not exact.
 """
+
 from collections import Counter
 from fractions import Fraction
 from itertools import combinations
@@ -68,11 +69,11 @@ def identity(model):
     """
     fields = {k: model.get(k) for k in ('dimension', 'vertices', 'edges', 'faces', 'cells')}
     if fields['vertices'] is not None:
-        fields['vertices']=[[float(x) if x else 0.0 for x in row] for row in fields['vertices']]
+        fields['vertices'] = [[float(x) if x else 0.0 for x in row] for row in fields['vertices']]
     if model.get('rationalCoordinates'):
-        fields['rationalCoordinates']=model['rationalCoordinates']
+        fields['rationalCoordinates'] = model['rationalCoordinates']
     if model.get('convexPieces'):
-        fields['convexPieces']=[identity(piece) for piece in model['convexPieces']]
+        fields['convexPieces'] = [identity(piece) for piece in model['convexPieces']]
     return hashlib.sha256(json.dumps(fields, sort_keys=True, separators=(',', ':')).encode()).hexdigest()
 
 
@@ -94,11 +95,15 @@ def hull(points, name='Convex hull', metadata=None):
     origin = p.mean(axis=0)
     normalized = (p - origin) / scale
     if rank(normalized) != d:
-        raise GeometryError(f'Input has affine dimension {rank(normalized)}, expected {d}. Use a lower-dimensional embedding.')
+        raise GeometryError(
+            f'Input has affine dimension {rank(normalized)}, expected {d}. Use a lower-dimensional embedding.'
+        )
     try:
         q = ConvexHull(normalized)
     except QhullError as exc:
-        raise GeometryError('Hull predicates could not resolve this input. Rescale or remove near-degeneracies.') from exc
+        raise GeometryError(
+            'Hull predicates could not resolve this input. Rescale or remove near-degeneracies.'
+        ) from exc
     used = sorted(int(i) for i in q.vertices)
     # Recompute with only extreme vertices: incidence IDs must be compact.
     p = p[used]
@@ -108,13 +113,15 @@ def hull(points, name='Convex hull', metadata=None):
     # Qt triangles/tetrahedra repeat the original facet equation exactly.
     # Test each distinct equation once, in its original order. No rounded
     # plane key or local simplex replaces full supporting vertex incidence.
-    _,first_equations=np.unique(q.equations,axis=0,return_index=True)
+    _, first_equations = np.unique(q.equations, axis=0, return_index=True)
     for eq in q.equations[np.sort(first_equations)]:
         key = tuple(np.flatnonzero(np.abs(normalized @ eq[:-1] + eq[-1]) <= TOLERANCE).tolist())
         if len(key) >= d:
             supports.setdefault(key, eq)
     facet_vertices = sorted(supports)
-    equations = [[*supports[f][:-1], float(supports[f][-1] * scale - np.dot(supports[f][:-1], origin))] for f in facet_vertices]
+    equations = [
+        [*supports[f][:-1], float(supports[f][-1] * scale - np.dot(supports[f][:-1], origin))] for f in facet_vertices
+    ]
     cells = []
     if d == 2:
         faces = [cycle(p, range(len(p)))]
@@ -137,30 +144,50 @@ def hull(points, name='Convex hull', metadata=None):
         for a, b in sorted(pairs):
             intersection = facets[a] & facets[b]
             if len(intersection) >= 3 and rank(normalized[sorted(intersection)]) == 2:
-                ridges.setdefault(tuple(sorted(intersection)),set()).update((a,b))
+                ridges.setdefault(tuple(sorted(intersection)), set()).update((a, b))
         faces = [cycle(p, f) for f in sorted(ridges)]
         # The facet pair that generated a ridge supplies its complete cell
         # incidence directly, avoiding a face-by-cell Cartesian scan.
-        cells=[[] for _ in facets]
-        for i,key in enumerate(sorted(ridges)):
-            for cell in sorted(ridges[key]):cells[cell].append(i)
+        cells = [[] for _ in facets]
+        for i, key in enumerate(sorted(ridges)):
+            for cell in sorted(ridges[key]):
+                cells[cell].append(i)
     edge_set = {tuple(sorted((f[i], f[(i + 1) % len(f)]))) for f in faces for i in range(len(f))}
     model = {
-        'id': str(uuid.uuid4()), 'name': name, 'dimension': d,
-        'embeddingDimension': d, 'interpretation': 'convex-polytope',
-        'vertices': p.tolist(), 'edges': [list(e) for e in sorted(edge_set)],
-        'faces': faces, 'cells': cells, 'facetVertices': [list(f) for f in facet_vertices],
+        'id': str(uuid.uuid4()),
+        'name': name,
+        'dimension': d,
+        'embeddingDimension': d,
+        'interpretation': 'convex-polytope',
+        'vertices': p.tolist(),
+        'edges': [list(e) for e in sorted(edge_set)],
+        'faces': faces,
+        'cells': cells,
+        'facetVertices': [list(f) for f in facet_vertices],
         'facetEquations': equations,
-        'numeric': {'mode': 'float64-approximate', 'tolerance': TOLERANCE,
-                    'predicateScale': scale, 'algorithm': 'Qhull + support incidence',
-                    'version': VERSION, 'certified': False},
+        'numeric': {
+            'mode': 'float64-approximate',
+            'tolerance': TOLERANCE,
+            'predicateScale': scale,
+            'algorithm': 'Qhull + support incidence',
+            'version': VERSION,
+            'certified': False,
+        },
         'metadata': metadata or {},
-        'provenance': {'operation': 'convex-hull', 'algorithmVersion': VERSION,
-                       'inputVertexCount': len(points), 'extremeInputIndices': used,
-                       'supportEquationsTested':len(first_equations),'triangulatedFacetCount':len(q.equations)},
-        'measure': {'content': float(q.volume * scale ** d),
-                    'boundaryMeasure': float(q.area * scale ** (d - 1)),
-                    'dimension': d, 'units': 'model-units'},
+        'provenance': {
+            'operation': 'convex-hull',
+            'algorithmVersion': VERSION,
+            'inputVertexCount': len(points),
+            'extremeInputIndices': used,
+            'supportEquationsTested': len(first_equations),
+            'triangulatedFacetCount': len(q.equations),
+        },
+        'measure': {
+            'content': float(q.volume * scale**d),
+            'boundaryMeasure': float(q.area * scale ** (d - 1)),
+            'dimension': d,
+            'units': 'model-units',
+        },
     }
     model['fingerprint'] = identity(model)
     model['validation'] = validate(model)
@@ -194,12 +221,22 @@ def validate(model):
                 continue
             if rank(normalized[f]) != 2:
                 errors.append(f'Face {i} is not a planar polygon.')
-            elif convex or model.get('interpretation') in ('polyhedral-region-union','planar-region-union'):
+            elif convex or model.get('interpretation') in ('polyhedral-region-union', 'planar-region-union'):
                 cloud = normalized[f] - normalized[f[0]]
                 _, _, vt = np.linalg.svd(cloud, full_matrices=False)
                 plane = cloud @ vt[:2].T
-                turns = [float(np.cross(plane[(j+1)%len(f)]-plane[j], plane[(j+2)%len(f)]-plane[(j+1)%len(f)])) for j in range(len(f))]
-                if min(turns) < -TOLERANCE and max(turns) > TOLERANCE or polygon_area(plane) <= TOLERANCE**2 or canonical_cycle(f)!=canonical_cycle(cycle(normalized,f)):
+                turns = [
+                    float(
+                        np.cross(plane[(j + 1) % len(f)] - plane[j], plane[(j + 2) % len(f)] - plane[(j + 1) % len(f)])
+                    )
+                    for j in range(len(f))
+                ]
+                if (
+                    min(turns) < -TOLERANCE
+                    and max(turns) > TOLERANCE
+                    or polygon_area(plane) <= TOLERANCE**2
+                    or canonical_cycle(f) != canonical_cycle(cycle(normalized, f))
+                ):
                     errors.append(f'Convex face {i} has an inconsistent or zero-area cycle.')
             for a, b in zip(f, f[1:] + f[:1]):
                 key = tuple(sorted((a, b)))
@@ -208,7 +245,11 @@ def validate(model):
                     errors.append(f'Face {i} references a missing edge {key}.')
         face_counts = Counter()
         for i, cell in enumerate(cells):
-            if not cell or len(set(cell)) != len(cell) or any(type(f) is not int or not 0 <= f < len(faces) for f in cell):
+            if (
+                not cell
+                or len(set(cell)) != len(cell)
+                or any(type(f) is not int or not 0 <= f < len(faces) for f in cell)
+            ):
                 errors.append(f'Cell {i} has invalid face IDs.')
                 continue
             verts = set(v for f in cell for v in faces[f])
@@ -217,12 +258,16 @@ def validate(model):
                 if convex:
                     errors.append(f'Cell {i} has an open or nonmanifold edge link.')
                 else:
-                    warnings.append(f'Generalized cell {i}: edge links do not all have two face incidences; manifold status is not asserted.')
+                    warnings.append(
+                        f'Generalized cell {i}: edge links do not all have two face incidences; manifold status is not asserted.'
+                    )
             if len(verts) - len(ce) + len(cell) != 2:
                 if convex:
                     errors.append(f'Cell {i} fails convex 3-cell Euler check.')
                 else:
-                    warnings.append(f'Generalized cell {i}: Euler characteristic differs from a convex 3-cell boundary.')
+                    warnings.append(
+                        f'Generalized cell {i}: Euler characteristic differs from a convex 3-cell boundary.'
+                    )
             if rank(normalized[sorted(verts)]) != 3:
                 errors.append(f'Cell {i} is not affine dimension 3.')
             face_counts.update(cell)
@@ -240,92 +285,141 @@ def validate(model):
             if model.get('facetEquations') is not None:
                 eq = np.asarray(model['facetEquations'], dtype=float)
                 fv = model.get('facetVertices', [])
-                if eq.shape != (len(fv), p.shape[1]+1) or not np.isfinite(eq).all() or not len(eq):
+                if eq.shape != (len(fv), p.shape[1] + 1) or not np.isfinite(eq).all() or not len(eq):
                     errors.append('Invalid supporting-hyperplane table.')
                 else:
-                    if d==3:
-                        expected_facets={frozenset(f) for f in faces}
-                    elif d==4:
-                        expected_facets={frozenset(v for f in c for v in faces[f]) for c in cells}
+                    if d == 3:
+                        expected_facets = {frozenset(f) for f in faces}
+                    elif d == 4:
+                        expected_facets = {frozenset(v for f in c for v in faces[f]) for c in cells}
                     else:
-                        expected_facets={frozenset(e) for e in edges}
-                    if len(fv)!=len(expected_facets) or {frozenset(f) for f in fv}!=expected_facets:
+                        expected_facets = {frozenset(e) for e in edges}
+                    if len(fv) != len(expected_facets) or {frozenset(f) for f in fv} != expected_facets:
                         errors.append('Supporting-hyperplane table does not cover the complete source facet incidence.')
                     for i, (equation, verts) in enumerate(zip(eq, fv)):
                         norm = np.linalg.norm(equation[:-1])
                         if not norm or any(type(v) is not int or not 0 <= v < len(p) for v in verts):
-                            errors.append(f'Facet {i} has invalid support data.'); continue
+                            errors.append(f'Facet {i} has invalid support data.')
+                            continue
                         residual = (p @ equation[:-1] + equation[-1]) / norm
                         tol = TOLERANCE * max(float(np.max(np.ptp(p, axis=0))), np.finfo(float).tiny) * 4
                         if max(residual) > tol or max(abs(residual[verts])) > tol:
                             errors.append(f'Facet {i} fails supporting-hyperplane checks.')
         else:
             warnings.append('Generalized incidence: convex manifold/Euler assertions were not applied.')
-        if model.get('interpretation')=='polyhedral-region-union':
-            pieces=model.get('convexPieces',[])
-            if not isinstance(pieces,list) or not 1<=len(pieces)<=2048:
+        if model.get('interpretation') == 'polyhedral-region-union':
+            pieces = model.get('convexPieces', [])
+            if not isinstance(pieces, list) or not 1 <= len(pieces) <= 2048:
                 errors.append('Solid union requires 1–2,048 convex pieces.')
             else:
-                for i,piece in enumerate(pieces):
-                    if piece.get('interpretation')!='convex-polytope' or piece.get('dimension')!=3 or not validate(piece)['passed']:
+                for i, piece in enumerate(pieces):
+                    if (
+                        piece.get('interpretation') != 'convex-polytope'
+                        or piece.get('dimension') != 3
+                        or not validate(piece)['passed']
+                    ):
                         errors.append(f'Solid union piece {i} is not a valid convex 3D boundary.')
         if model.get('numeric', {}).get('certified') is not True:
             warnings.append('Geometry is approximate. Structural checks are evidence, not an exact certificate.')
-        elif model.get('numeric',{}).get('mode')=='rational-exact':
-            rp=[[Fraction(str(x)) for x in row] for row in model.get('rationalCoordinates',[])]
-            if len(rp)!=len(p) or any(len(row)!=p.shape[1] for row in rp):
+        elif model.get('numeric', {}).get('mode') == 'rational-exact':
+            rp = [[Fraction(str(x)) for x in row] for row in model.get('rationalCoordinates', [])]
+            if len(rp) != len(p) or any(len(row) != p.shape[1] for row in rp):
                 errors.append('Exact coordinate table does not match display geometry.')
-            elif not np.allclose(np.asarray(rp,dtype=float),p,rtol=1e-14,atol=0):
+            elif not np.allclose(np.asarray(rp, dtype=float), p, rtol=1e-14, atol=0):
                 errors.append('Display geometry disagrees with exact coordinates.')
-            rq=model.get('rationalFacetEquations',[])
-            fv=model.get('facetVertices',[])
-            if len(rq)!=len(fv):
+            rq = model.get('rationalFacetEquations', [])
+            fv = model.get('facetVertices', [])
+            if len(rq) != len(fv):
                 errors.append('Exact supporting-plane table is incomplete.')
-            elif len(rp)==len(p):
-                for plane,verts in zip(rq,fv):
-                    plane=[Fraction(str(x)) for x in plane]
-                    if len(plane)!=p.shape[1]+1 or not any(plane[:-1]):
-                        errors.append('Invalid exact support plane.');continue
-                    values=[sum(a*b for a,b in zip(row,plane[:-1]))+plane[-1] for row in rp]
-                    if max(values)>0 or any(values[v] for v in verts):
+            elif len(rp) == len(p):
+                for plane, verts in zip(rq, fv):
+                    plane = [Fraction(str(x)) for x in plane]
+                    if len(plane) != p.shape[1] + 1 or not any(plane[:-1]):
+                        errors.append('Invalid exact support plane.')
+                        continue
+                    values = [sum(a * b for a, b in zip(row, plane[:-1])) + plane[-1] for row in rp]
+                    if max(values) > 0 or any(values[v] for v in verts):
                         errors.append('Exact supporting-plane certificate fails.')
-            warnings.append('Exact certification applies to supplied rational hull topology; display and measurements remain approximate.')
-        return {'passed': not errors, 'errors': errors[:100], 'warnings': warnings,
-                'eulerCharacteristic': euler, 'checks': ['index bounds', 'face cycles', 'planarity', 'cell links', 'applicable Euler relations', 'supplied supporting hyperplanes'],
-                'algorithmVersion': VERSION}
+            warnings.append(
+                'Exact certification applies to supplied rational hull topology; display and measurements remain approximate.'
+            )
+        return {
+            'passed': not errors,
+            'errors': errors[:100],
+            'warnings': warnings,
+            'eulerCharacteristic': euler,
+            'checks': [
+                'index bounds',
+                'face cycles',
+                'planarity',
+                'cell links',
+                'applicable Euler relations',
+                'supplied supporting hyperplanes',
+            ],
+            'algorithmVersion': VERSION,
+        }
     except (ValueError, KeyError, TypeError, IndexError) as exc:
         return {'passed': False, 'errors': [str(exc)], 'warnings': warnings, 'algorithmVersion': VERSION}
 
 
 def intrinsic_measures(model):
     """Geometry is authoritative; cached content/boundary scalars are ignored."""
-    interpretation=model.get('interpretation');p=points_array(model['vertices']);d=model['dimension']
-    if interpretation=='convex-polytope':
+    interpretation = model.get('interpretation')
+    p = points_array(model['vertices'])
+    d = model['dimension']
+    if interpretation == 'convex-polytope':
         from .native_uniform_validation import native_uniform_measure
-        native=native_uniform_measure(model)
-        if native is not None:return native
-        reference=hull(p)
-        same=len(reference['vertices'])==len(p) and Counter(canonical_cycle(f) for f in reference['faces'])==Counter(canonical_cycle(f) for f in model['faces'])
-        if d==4:
-            source=Counter(tuple(sorted(canonical_cycle(model['faces'][i]) for i in cell)) for cell in model['cells'])
-            target=Counter(tuple(sorted(canonical_cycle(reference['faces'][i]) for i in cell)) for cell in reference['cells'])
-            same= same and source==target
-        if not same:raise GeometryError('Claimed convex incidence differs from the independently reconstructed hull; convex measures are unavailable.')
+
+        native = native_uniform_measure(model)
+        if native is not None:
+            return native
+        from .rational_filter import filtered_measures
+
+        filtered = filtered_measures(model)
+        if filtered is not None:
+            return filtered
+        reference = hull(p)
+        same = len(reference['vertices']) == len(p) and Counter(
+            canonical_cycle(f) for f in reference['faces']
+        ) == Counter(canonical_cycle(f) for f in model['faces'])
+        if d == 4:
+            source = Counter(tuple(sorted(canonical_cycle(model['faces'][i]) for i in cell)) for cell in model['cells'])
+            target = Counter(
+                tuple(sorted(canonical_cycle(reference['faces'][i]) for i in cell)) for cell in reference['cells']
+            )
+            same = same and source == target
+        if not same:
+            raise GeometryError(
+                'Claimed convex incidence differs from the independently reconstructed hull; convex measures are unavailable.'
+            )
         return reference['measure']
-    if interpretation=='polyhedral-region-union':
-        return {'content':sum(intrinsic_measures(piece)['content'] for piece in model['convexPieces']),
-                'boundaryMeasure':sum(polygon_area(p[f]) for f in model['faces']),'dimension':3,'units':'model-units',
-                'definition':'recomputed convex-piece content sum in declared disjoint-interior domain; exposed ordinary-face area'}
-    if interpretation=='planar-region-union':
-        counts=Counter(tuple(sorted((a,b))) for f in model['faces'] for a,b in zip(f,f[1:]+f[:1]))
-        return {'content':sum(polygon_area(p[f]) for f in model['faces']),
-                'boundaryMeasure':sum(float(np.linalg.norm(p[a]-p[b])) for (a,b),count in counts.items() if count==1),
-                'dimension':2,'units':'model-units','definition':'recomputed declared planar-cell area sum; area-cell perimeter excludes isolated strata'}
+    if interpretation == 'polyhedral-region-union':
+        return {
+            'content': sum(intrinsic_measures(piece)['content'] for piece in model['convexPieces']),
+            'boundaryMeasure': sum(polygon_area(p[f]) for f in model['faces']),
+            'dimension': 3,
+            'units': 'model-units',
+            'definition': 'recomputed convex-piece content sum in declared disjoint-interior domain; exposed ordinary-face area',
+        }
+    if interpretation == 'planar-region-union':
+        counts = Counter(tuple(sorted((a, b))) for f in model['faces'] for a, b in zip(f, f[1:] + f[:1]))
+        return {
+            'content': sum(polygon_area(p[f]) for f in model['faces']),
+            'boundaryMeasure': sum(
+                float(np.linalg.norm(p[a] - p[b])) for (a, b), count in counts.items() if count == 1
+            ),
+            'dimension': 2,
+            'units': 'model-units',
+            'definition': 'recomputed declared planar-cell area sum; area-cell perimeter excludes isolated strata',
+        }
     return None
 
 
 def analyze(model):
     report = validate(model)
+    from .precision_report import precision_report
+
+    report['precision'] = precision_report(model, report)
     if not report['passed']:
         raise GeometryError('Cannot measure invalid incidence: ' + '; '.join(report['errors']))
     p = points_array(model['vertices'])
@@ -335,16 +429,40 @@ def analyze(model):
     areas = [polygon_area(p[f]) for f in model['faces']]
     types = Counter(map(len, model['faces']))
     valences = Counter(v for e in model['edges'] for v in e)
-    dihedral=None
-    if model.get('interpretation')=='convex-polytope' and model['dimension'] in (3,4):
+    dihedral = None
+    if model.get('interpretation') == 'convex-polytope' and model['dimension'] in (3, 4):
         from .measurements import dihedrals
-        details=dihedrals(model);dihedral={k:v for k,v in details.items() if k!='records'}
-    return {'counts': {'vertices': len(p), 'edges': len(lengths), 'faces': len(areas), 'cells': len(model.get('cells', []))},
-            'centroid': center.tolist(), 'centroidDefinition': 'vertex arithmetic mean',
-            'edgeLength': {'min': min(lengths, default=0), 'max': max(lengths, default=0), 'mean': float(np.mean(lengths)) if lengths else 0},
-            'vertexRadius': {'min': float(min(radii)), 'max': float(max(radii))},
-            'faceArea': {'min': min(areas, default=0), 'max': max(areas, default=0), 'sum': sum(areas),
-                         'definition':'ordinary convex polygon area' if model.get('interpretation')=='convex-polytope' else 'absolute algebraic area of ordered cycle; no star fill interpretation'},
-            'faceTypes': dict(sorted(types.items())), 'vertexValences': dict(sorted(Counter(valences.values()).items())),
-            'measure': intrinsic_measures(model), 'measureAuthority':'source coordinates and full incidence; cached model.measure ignored',
-            'dihedral':dihedral,'validation': report, 'numeric': model.get('numeric')}
+
+        details = dihedrals(model)
+        dihedral = {k: v for k, v in details.items() if k != 'records'}
+    return {
+        'counts': {
+            'vertices': len(p),
+            'edges': len(lengths),
+            'faces': len(areas),
+            'cells': len(model.get('cells', [])),
+        },
+        'centroid': center.tolist(),
+        'centroidDefinition': 'vertex arithmetic mean',
+        'edgeLength': {
+            'min': min(lengths, default=0),
+            'max': max(lengths, default=0),
+            'mean': float(np.mean(lengths)) if lengths else 0,
+        },
+        'vertexRadius': {'min': float(min(radii)), 'max': float(max(radii))},
+        'faceArea': {
+            'min': min(areas, default=0),
+            'max': max(areas, default=0),
+            'sum': sum(areas),
+            'definition': 'ordinary convex polygon area'
+            if model.get('interpretation') == 'convex-polytope'
+            else 'absolute algebraic area of ordered cycle; no star fill interpretation',
+        },
+        'faceTypes': dict(sorted(types.items())),
+        'vertexValences': dict(sorted(Counter(valences.values()).items())),
+        'measure': intrinsic_measures(model),
+        'measureAuthority': 'source coordinates and full incidence; cached model.measure ignored',
+        'dihedral': dihedral,
+        'validation': report,
+        'numeric': model.get('numeric'),
+    }

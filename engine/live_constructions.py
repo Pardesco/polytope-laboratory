@@ -1,4 +1,5 @@
 """Read-only previews use the same computations as committed recipes."""
+
 from copy import deepcopy
 from .geometry import GeometryError
 from .construction_names import construction_name
@@ -8,7 +9,12 @@ OPERATIONS = {'truncate', 'incidence-truncate', 'expand-runcinate', 'add-dual', 
 
 def preview_construction(request, dispatcher):
     params = request.get('params', {})
-    if type(params) is not dict or set(params) != {'operation', 'parameters'} or type(params['operation']) is not str or params['operation'] not in OPERATIONS:
+    if (
+        type(params) is not dict
+        or set(params) != {'operation', 'parameters'}
+        or type(params['operation']) is not str
+        or params['operation'] not in OPERATIONS
+    ):
         raise GeometryError('Choose a supported live construction and its parameters.')
     operation, controls = params['operation'], params['parameters']
     if type(controls) is not dict:

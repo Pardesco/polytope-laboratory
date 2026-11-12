@@ -62,7 +62,9 @@ uses NumericEntry/source/history/control guards and cancelable native requests.
 The source must have intrinsic convex 3D/4D incidence, 4/5–64 vertices, ≤256 faces,
 ≤128 cells, and ≤32 vertices per face. Warped starting faces/cells are accepted for
 repair; malformed incidence, coincident vertices and degenerate faces/cells are
-refused. Generalized, star and nonconvex sources are unsupported. Imports/projects
+refused. [R6 component fitting](R6_FITTING.md) additionally supports 2–8 disjoint
+convex 3D boundary components; other generalized/star/nonconvex sources remain
+unsupported. Imports/projects
 still use their existing strict validation, so accepting a warped solver input
 does not expand the app's import domain.
 

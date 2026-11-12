@@ -1,0 +1,1247 @@
+{
+  "scenarioIds": [
+    "con-05-cut-transitions",
+    "con-05-normal-quasi",
+    "con-05-expand-3d",
+    "con-05-expand-4d"
+  ],
+  "scope": "Native literal-source qualification; competitor extrapolation semantics and desktop execution unverified",
+  "cuts": [
+    {
+      "source": "cube",
+      "fraction": 0,
+      "status": "passed",
+      "expected": [
+        8,
+        12,
+        6,
+        0
+      ],
+      "actual": [
+        8,
+        12,
+        6,
+        0
+      ],
+      "coordinateResidual": 0.0,
+      "normalizedPlanarityResidual": 1.7554167342883506e-16,
+      "interpretation": "convex-polytope"
+    },
+    {
+      "source": "cube",
+      "fraction": 0.25,
+      "status": "passed",
+      "expected": [
+        24,
+        36,
+        14,
+        0
+      ],
+      "actual": [
+        24,
+        36,
+        14,
+        0
+      ],
+      "coordinateResidual": 0.0,
+      "normalizedPlanarityResidual": 4.2276033262255756e-16,
+      "interpretation": "convex-polytope"
+    },
+    {
+      "source": "cube",
+      "fraction": 0.5,
+      "status": "passed",
+      "expected": [
+        12,
+        24,
+        14,
+        0
+      ],
+      "actual": [
+        12,
+        24,
+        14,
+        0
+      ],
+      "coordinateResidual": 0.0,
+      "normalizedPlanarityResidual": 1.415262216750919e-16,
+      "interpretation": "convex-polytope"
+    },
+    {
+      "source": "cube",
+      "fraction": 0.5001,
+      "status": "passed",
+      "expected": [
+        24,
+        36,
+        14,
+        0
+      ],
+      "actual": [
+        24,
+        36,
+        14,
+        0
+      ],
+      "coordinateResidual": 0.0,
+      "normalizedPlanarityResidual": 1.7772239894833365e-16,
+      "interpretation": "generalized-complex"
+    },
+    {
+      "source": "tesseract",
+      "fraction": 0,
+      "status": "passed",
+      "expected": [
+        16,
+        32,
+        24,
+        8
+      ],
+      "actual": [
+        16,
+        32,
+        24,
+        8
+      ],
+      "coordinateResidual": 0.0,
+      "normalizedPlanarityResidual": 5.523289809442722e-16,
+      "interpretation": "convex-polytope"
+    },
+    {
+      "source": "tesseract",
+      "fraction": 0.25,
+      "status": "passed",
+      "expected": [
+        64,
+        128,
+        88,
+        24
+      ],
+      "actual": [
+        64,
+        128,
+        88,
+        24
+      ],
+      "coordinateResidual": 0.0,
+      "normalizedPlanarityResidual": 4.2276033262255756e-16,
+      "interpretation": "generalized-complex"
+    },
+    {
+      "source": "tesseract",
+      "fraction": 0.5,
+      "status": "passed",
+      "expected": [
+        32,
+        96,
+        88,
+        24
+      ],
+      "actual": [
+        32,
+        96,
+        88,
+        24
+      ],
+      "coordinateResidual": 0.0,
+      "normalizedPlanarityResidual": 6.474023848570502e-16,
+      "interpretation": "generalized-complex"
+    },
+    {
+      "source": "tesseract",
+      "fraction": 0.5001,
+      "status": "refused",
+      "boundary": "4D extrapolation above 1/2"
+    },
+    {
+      "source": "tetrahedron",
+      "fraction": 0,
+      "status": "passed",
+      "expected": [
+        4,
+        6,
+        4,
+        0
+      ],
+      "actual": [
+        4,
+        6,
+        4,
+        0
+      ],
+      "coordinateResidual": 0.0,
+      "normalizedPlanarityResidual": 2.830524433501838e-16,
+      "interpretation": "convex-polytope"
+    },
+    {
+      "source": "tetrahedron",
+      "fraction": 0.25,
+      "status": "passed",
+      "expected": [
+        12,
+        18,
+        8,
+        0
+      ],
+      "actual": [
+        12,
+        18,
+        8,
+        0
+      ],
+      "coordinateResidual": 0.0,
+      "normalizedPlanarityResidual": 1.6653345369377348e-16,
+      "interpretation": "convex-polytope"
+    },
+    {
+      "source": "tetrahedron",
+      "fraction": 0.5,
+      "status": "passed",
+      "expected": [
+        6,
+        12,
+        8,
+        0
+      ],
+      "actual": [
+        6,
+        12,
+        8,
+        0
+      ],
+      "coordinateResidual": 0.0,
+      "normalizedPlanarityResidual": 2.5589376332604516e-16,
+      "interpretation": "convex-polytope"
+    },
+    {
+      "source": "tetrahedron",
+      "fraction": 0.5001,
+      "status": "passed",
+      "expected": [
+        12,
+        18,
+        8,
+        0
+      ],
+      "actual": [
+        12,
+        18,
+        8,
+        0
+      ],
+      "coordinateResidual": 0.0,
+      "normalizedPlanarityResidual": 1.7109685898544713e-16,
+      "interpretation": "generalized-complex"
+    },
+    {
+      "source": "octagram_cube",
+      "fraction": 0,
+      "status": "passed",
+      "expected": [
+        24,
+        36,
+        14,
+        0
+      ],
+      "actual": [
+        24,
+        36,
+        14,
+        0
+      ],
+      "coordinateResidual": 0.0,
+      "normalizedPlanarityResidual": 2.387624894196368e-16,
+      "interpretation": "generalized-complex"
+    },
+    {
+      "source": "octagram_cube",
+      "fraction": 0.25,
+      "status": "passed",
+      "expected": [
+        72,
+        108,
+        38,
+        0
+      ],
+      "actual": [
+        72,
+        108,
+        38,
+        0
+      ],
+      "coordinateResidual": 0.0,
+      "normalizedPlanarityResidual": 1.4220500840710912e-16,
+      "interpretation": "generalized-complex"
+    },
+    {
+      "source": "octagram_cube",
+      "fraction": 0.5,
+      "status": "passed",
+      "expected": [
+        36,
+        72,
+        38,
+        0
+      ],
+      "actual": [
+        36,
+        72,
+        38,
+        0
+      ],
+      "coordinateResidual": 0.0,
+      "normalizedPlanarityResidual": 2.9893669801409083e-16,
+      "interpretation": "generalized-complex"
+    },
+    {
+      "source": "octagram_cube",
+      "fraction": 0.5001,
+      "status": "passed",
+      "expected": [
+        72,
+        108,
+        38,
+        0
+      ],
+      "actual": [
+        72,
+        108,
+        38,
+        0
+      ],
+      "coordinateResidual": 0.0,
+      "normalizedPlanarityResidual": 2.7755575615628914e-16,
+      "interpretation": "generalized-complex"
+    }
+  ],
+  "convexCutAdapter": [
+    {
+      "dimension": 3,
+      "fraction": 0,
+      "operation": "truncate",
+      "status": "passed",
+      "actual": [
+        8,
+        12,
+        6,
+        0
+      ],
+      "expected": [
+        8,
+        12,
+        6,
+        0
+      ],
+      "coordinateResidual": 0.0,
+      "normalizedPlanarityResidual": 1.7554167342883506e-16
+    },
+    {
+      "dimension": 3,
+      "fraction": 0.25,
+      "operation": "truncate",
+      "status": "passed",
+      "actual": [
+        24,
+        36,
+        14,
+        0
+      ],
+      "expected": [
+        24,
+        36,
+        14,
+        0
+      ],
+      "coordinateResidual": 0.0,
+      "normalizedPlanarityResidual": 4.2276033262255756e-16
+    },
+    {
+      "dimension": 3,
+      "fraction": 0.5,
+      "operation": "truncate",
+      "status": "passed",
+      "actual": [
+        12,
+        24,
+        14,
+        0
+      ],
+      "expected": [
+        12,
+        24,
+        14,
+        0
+      ],
+      "coordinateResidual": 0.0,
+      "normalizedPlanarityResidual": 1.415262216750919e-16
+    },
+    {
+      "dimension": 4,
+      "fraction": 0,
+      "operation": "truncate",
+      "status": "passed",
+      "actual": [
+        16,
+        32,
+        24,
+        8
+      ],
+      "expected": [
+        16,
+        32,
+        24,
+        8
+      ],
+      "coordinateResidual": 0.0,
+      "normalizedPlanarityResidual": 5.523289809442722e-16
+    },
+    {
+      "dimension": 4,
+      "fraction": 0.25,
+      "operation": "truncate",
+      "status": "passed",
+      "actual": [
+        64,
+        128,
+        88,
+        24
+      ],
+      "expected": [
+        64,
+        128,
+        88,
+        24
+      ],
+      "coordinateResidual": 0.0,
+      "normalizedPlanarityResidual": 4.2276033262255756e-16
+    },
+    {
+      "dimension": 4,
+      "fraction": 0.5,
+      "operation": "truncate",
+      "status": "passed",
+      "actual": [
+        32,
+        96,
+        88,
+        24
+      ],
+      "expected": [
+        32,
+        96,
+        88,
+        24
+      ],
+      "coordinateResidual": 0.0,
+      "normalizedPlanarityResidual": 6.474023848570502e-16
+    }
+  ],
+  "normalQuasi": [
+    {
+      "preset": "normal",
+      "referenceFace": 2,
+      "capColors": "inherit",
+      "status": "passed",
+      "expected": [
+        24,
+        36,
+        14,
+        0
+      ],
+      "actual": [
+        24,
+        36,
+        14,
+        0
+      ],
+      "fraction": 0.2928932188134525,
+      "fractionResidual": 5.551115123125783e-17,
+      "edgeLengthSpread": 3.3306690738754696e-16,
+      "faceWinding": 1,
+      "windingResidual": 0.0,
+      "normalizedPlanarityResidual": 2.2887833992611187e-16
+    },
+    {
+      "preset": "normal",
+      "referenceFace": 2,
+      "capColors": "none",
+      "status": "passed",
+      "expected": [
+        24,
+        36,
+        14,
+        0
+      ],
+      "actual": [
+        24,
+        36,
+        14,
+        0
+      ],
+      "fraction": 0.2928932188134525,
+      "fractionResidual": 5.551115123125783e-17,
+      "edgeLengthSpread": 3.3306690738754696e-16,
+      "faceWinding": 1,
+      "windingResidual": 0.0,
+      "normalizedPlanarityResidual": 2.2887833992611187e-16
+    },
+    {
+      "preset": "quasi",
+      "referenceFace": 2,
+      "capColors": "inherit",
+      "status": "passed",
+      "expected": [
+        24,
+        36,
+        14,
+        0
+      ],
+      "actual": [
+        24,
+        36,
+        14,
+        0
+      ],
+      "fraction": 1.707106781186548,
+      "fractionResidual": 4.440892098500626e-16,
+      "edgeLengthSpread": 8.881784197001252e-16,
+      "faceWinding": 3,
+      "windingResidual": 0.0,
+      "normalizedPlanarityResidual": 2.451306065445149e-16
+    },
+    {
+      "preset": "quasi",
+      "referenceFace": 2,
+      "capColors": "none",
+      "status": "passed",
+      "expected": [
+        24,
+        36,
+        14,
+        0
+      ],
+      "actual": [
+        24,
+        36,
+        14,
+        0
+      ],
+      "fraction": 1.707106781186548,
+      "fractionResidual": 4.440892098500626e-16,
+      "edgeLengthSpread": 8.881784197001252e-16,
+      "faceWinding": 3,
+      "windingResidual": 0.0,
+      "normalizedPlanarityResidual": 2.451306065445149e-16
+    }
+  ],
+  "expansions": [
+    {
+      "dimension": 3,
+      "ratio": 0,
+      "center": [
+        0,
+        0,
+        0
+      ],
+      "status": "passed",
+      "expected": [
+        8,
+        12,
+        6,
+        0
+      ],
+      "actual": [
+        8,
+        12,
+        6,
+        0
+      ],
+      "coordinateResidual": 0.0,
+      "normalizedPlanarityResidual": 1.7554167342883506e-16,
+      "measureResidual": 0.0
+    },
+    {
+      "dimension": 3,
+      "ratio": 0.25,
+      "center": [
+        0,
+        0,
+        0
+      ],
+      "status": "passed",
+      "expected": [
+        24,
+        48,
+        26,
+        0
+      ],
+      "actual": [
+        24,
+        48,
+        26,
+        0
+      ],
+      "coordinateResidual": 0.0,
+      "normalizedPlanarityResidual": 2.3551386880256624e-16,
+      "measureResidual": 8.881784197001252e-15
+    },
+    {
+      "dimension": 3,
+      "ratio": 0.5,
+      "center": [
+        0,
+        0,
+        0
+      ],
+      "status": "passed",
+      "expected": [
+        24,
+        48,
+        26,
+        0
+      ],
+      "actual": [
+        24,
+        48,
+        26,
+        0
+      ],
+      "coordinateResidual": 2.220446049250313e-16,
+      "normalizedPlanarityResidual": 2.0014830212433605e-16,
+      "measureResidual": 7.105427357601002e-15
+    },
+    {
+      "dimension": 3,
+      "ratio": 0.75,
+      "center": [
+        0,
+        0,
+        0
+      ],
+      "status": "passed",
+      "expected": [
+        24,
+        48,
+        26,
+        0
+      ],
+      "actual": [
+        24,
+        48,
+        26,
+        0
+      ],
+      "coordinateResidual": 4.440892098500626e-16,
+      "normalizedPlanarityResidual": 1.415262216750919e-16,
+      "measureResidual": 5.329070518200751e-15
+    },
+    {
+      "dimension": 3,
+      "ratio": 1,
+      "center": [
+        0,
+        0,
+        0
+      ],
+      "status": "passed",
+      "expected": [
+        6,
+        12,
+        8,
+        0
+      ],
+      "actual": [
+        6,
+        12,
+        8,
+        0
+      ],
+      "coordinateResidual": 4.440892098500626e-16,
+      "normalizedPlanarityResidual": 2.5589376332604516e-16,
+      "measureResidual": 7.105427357601002e-15
+    },
+    {
+      "dimension": 3,
+      "ratio": 0,
+      "center": [
+        0.125,
+        -0.25,
+        0.0625
+      ],
+      "status": "passed",
+      "expected": [
+        8,
+        12,
+        6,
+        0
+      ],
+      "actual": [
+        8,
+        12,
+        6,
+        0
+      ],
+      "coordinateResidual": 0.0,
+      "normalizedPlanarityResidual": 1.7554167342883506e-16,
+      "measureResidual": null
+    },
+    {
+      "dimension": 3,
+      "ratio": 0.25,
+      "center": [
+        0.125,
+        -0.25,
+        0.0625
+      ],
+      "status": "passed",
+      "expected": [
+        24,
+        48,
+        26,
+        0
+      ],
+      "actual": [
+        24,
+        48,
+        26,
+        0
+      ],
+      "coordinateResidual": 4.440892098500626e-16,
+      "normalizedPlanarityResidual": 2.3551386880256624e-16,
+      "measureResidual": null
+    },
+    {
+      "dimension": 3,
+      "ratio": 0.5,
+      "center": [
+        0.125,
+        -0.25,
+        0.0625
+      ],
+      "status": "passed",
+      "expected": [
+        24,
+        48,
+        26,
+        0
+      ],
+      "actual": [
+        24,
+        48,
+        26,
+        0
+      ],
+      "coordinateResidual": 4.440892098500626e-16,
+      "normalizedPlanarityResidual": 1.8094421531119201e-16,
+      "measureResidual": null
+    },
+    {
+      "dimension": 3,
+      "ratio": 0.75,
+      "center": [
+        0.125,
+        -0.25,
+        0.0625
+      ],
+      "status": "passed",
+      "expected": [
+        24,
+        48,
+        26,
+        0
+      ],
+      "actual": [
+        24,
+        48,
+        26,
+        0
+      ],
+      "coordinateResidual": 4.440892098500626e-16,
+      "normalizedPlanarityResidual": 2.7894008272968645e-16,
+      "measureResidual": null
+    },
+    {
+      "dimension": 3,
+      "ratio": 1,
+      "center": [
+        0.125,
+        -0.25,
+        0.0625
+      ],
+      "status": "passed",
+      "expected": [
+        6,
+        12,
+        8,
+        0
+      ],
+      "actual": [
+        6,
+        12,
+        8,
+        0
+      ],
+      "coordinateResidual": 8.881784197001252e-16,
+      "normalizedPlanarityResidual": 2.2887833992611187e-16,
+      "measureResidual": null
+    },
+    {
+      "dimension": 4,
+      "ratio": 0,
+      "center": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "status": "passed",
+      "expected": [
+        16,
+        32,
+        24,
+        8
+      ],
+      "actual": [
+        16,
+        32,
+        24,
+        8
+      ],
+      "coordinateResidual": 0.0,
+      "normalizedPlanarityResidual": 5.523289809442722e-16,
+      "measureResidual": 1.4210854715202004e-14
+    },
+    {
+      "dimension": 4,
+      "ratio": 0.25,
+      "center": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "status": "passed",
+      "expected": [
+        64,
+        192,
+        208,
+        80
+      ],
+      "actual": [
+        64,
+        192,
+        208,
+        80
+      ],
+      "coordinateResidual": 2.220446049250313e-16,
+      "normalizedPlanarityResidual": 4.511796664322909e-16,
+      "measureResidual": 1.4210854715202004e-14
+    },
+    {
+      "dimension": 4,
+      "ratio": 0.5,
+      "center": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "status": "passed",
+      "expected": [
+        64,
+        192,
+        208,
+        80
+      ],
+      "actual": [
+        64,
+        192,
+        208,
+        80
+      ],
+      "coordinateResidual": 4.965068306494546e-16,
+      "normalizedPlanarityResidual": 7.27198435288145e-16,
+      "measureResidual": 8.526512829121202e-14
+    },
+    {
+      "dimension": 4,
+      "ratio": 0.75,
+      "center": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "status": "passed",
+      "expected": [
+        64,
+        192,
+        208,
+        80
+      ],
+      "actual": [
+        64,
+        192,
+        208,
+        80
+      ],
+      "coordinateResidual": 8.005932084973442e-16,
+      "normalizedPlanarityResidual": 3.387999773988765e-16,
+      "measureResidual": 6.394884621840902e-14
+    },
+    {
+      "dimension": 4,
+      "ratio": 1,
+      "center": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "status": "passed",
+      "expected": [
+        8,
+        24,
+        32,
+        16
+      ],
+      "actual": [
+        8,
+        24,
+        32,
+        16
+      ],
+      "coordinateResidual": 9.930136612989094e-16,
+      "normalizedPlanarityResidual": 1.4752290795525882e-16,
+      "measureResidual": 1.4210854715202004e-14
+    },
+    {
+      "dimension": 4,
+      "ratio": 0,
+      "center": [
+        0.125,
+        -0.25,
+        0.0625,
+        0.1875
+      ],
+      "status": "passed",
+      "expected": [
+        16,
+        32,
+        24,
+        8
+      ],
+      "actual": [
+        16,
+        32,
+        24,
+        8
+      ],
+      "coordinateResidual": 0.0,
+      "normalizedPlanarityResidual": 5.523289809442722e-16,
+      "measureResidual": null
+    },
+    {
+      "dimension": 4,
+      "ratio": 0.25,
+      "center": [
+        0.125,
+        -0.25,
+        0.0625,
+        0.1875
+      ],
+      "status": "passed",
+      "expected": [
+        64,
+        192,
+        208,
+        80
+      ],
+      "actual": [
+        64,
+        192,
+        208,
+        80
+      ],
+      "coordinateResidual": 5.551115123125783e-16,
+      "normalizedPlanarityResidual": 1.3325881459679538e-15,
+      "measureResidual": null
+    },
+    {
+      "dimension": 4,
+      "ratio": 0.5,
+      "center": [
+        0.125,
+        -0.25,
+        0.0625,
+        0.1875
+      ],
+      "status": "passed",
+      "expected": [
+        64,
+        192,
+        208,
+        80
+      ],
+      "actual": [
+        64,
+        192,
+        208,
+        80
+      ],
+      "coordinateResidual": 7.550332863779066e-16,
+      "normalizedPlanarityResidual": 5.678760876021647e-16,
+      "measureResidual": null
+    },
+    {
+      "dimension": 4,
+      "ratio": 0.75,
+      "center": [
+        0.125,
+        -0.25,
+        0.0625,
+        0.1875
+      ],
+      "status": "passed",
+      "expected": [
+        64,
+        192,
+        208,
+        80
+      ],
+      "actual": [
+        64,
+        192,
+        208,
+        80
+      ],
+      "coordinateResidual": 9.930136612989092e-16,
+      "normalizedPlanarityResidual": 7.285934461454599e-16,
+      "measureResidual": null
+    },
+    {
+      "dimension": 4,
+      "ratio": 1,
+      "center": [
+        0.125,
+        -0.25,
+        0.0625,
+        0.1875
+      ],
+      "status": "passed",
+      "expected": [
+        8,
+        24,
+        32,
+        16
+      ],
+      "actual": [
+        8,
+        24,
+        32,
+        16
+      ],
+      "coordinateResidual": 1.4821483875836085e-15,
+      "normalizedPlanarityResidual": 1.1857295749385571e-15,
+      "measureResidual": null
+    }
+  ],
+  "refusals": [
+    {
+      "source": "cube",
+      "operation": "truncate",
+      "parameters": {
+        "amount": -0.0001
+      },
+      "status": "refused-atomically",
+      "message": "Convex edge-cut truncation amount must be in [0, 0.5]."
+    },
+    {
+      "source": "cube",
+      "operation": "truncate",
+      "parameters": {
+        "amount": 0.5001
+      },
+      "status": "refused-atomically",
+      "message": "Convex edge-cut truncation amount must be in [0, 0.5]."
+    },
+    {
+      "source": "tesseract",
+      "operation": "truncate",
+      "parameters": {
+        "amount": 0.5001
+      },
+      "status": "refused-atomically",
+      "message": "Convex edge-cut truncation amount must be in [0, 0.5]."
+    },
+    {
+      "source": "cube",
+      "operation": "incidence-truncate",
+      "parameters": {
+        "amount": -0.0001
+      },
+      "status": "refused-atomically",
+      "message": "Edge-cut fraction must be a finite literal number from 0 to 1024."
+    },
+    {
+      "source": "cube",
+      "operation": "incidence-truncate",
+      "parameters": {
+        "amount": 1
+      },
+      "status": "refused-atomically",
+      "message": "Fraction 1 collapses distinct source-owned corners; choose a different depth."
+    },
+    {
+      "source": "tesseract",
+      "operation": "incidence-truncate",
+      "parameters": {
+        "amount": -0.0001
+      },
+      "status": "refused-atomically",
+      "message": "4D edge-cut fraction must lie from 0 to 1/2; extrapolation is unsupported."
+    },
+    {
+      "source": "tesseract",
+      "operation": "incidence-truncate",
+      "parameters": {
+        "amount": 0.5001
+      },
+      "status": "refused-atomically",
+      "message": "4D edge-cut fraction must lie from 0 to 1/2; extrapolation is unsupported."
+    },
+    {
+      "source": "cube",
+      "operation": "incidence-truncate",
+      "parameters": {
+        "amount": 1e-12
+      },
+      "status": "refused-atomically",
+      "message": "Vertex cap 6 is nonplanar or has unresolved affine rank; no hull repair is performed."
+    },
+    {
+      "source": "cube",
+      "operation": "incidence-truncate",
+      "parameters": {
+        "amount": 0.499999999999
+      },
+      "status": "refused-atomically",
+      "message": "An output edge is unresolved near a singular cut depth."
+    },
+    {
+      "source": "cube",
+      "operation": "incidence-truncate",
+      "parameters": {
+        "amount": 0.500000000001
+      },
+      "status": "refused-atomically",
+      "message": "An output edge is unresolved near a singular cut depth."
+    },
+    {
+      "source": "tesseract",
+      "operation": "incidence-truncate",
+      "parameters": {
+        "amount": 1e-12
+      },
+      "status": "refused-atomically",
+      "message": "4D cut contains unresolved edges near a singular depth."
+    },
+    {
+      "source": "tesseract",
+      "operation": "incidence-truncate",
+      "parameters": {
+        "amount": 0.499999999999
+      },
+      "status": "refused-atomically",
+      "message": "4D cut contains unresolved edges near a singular depth."
+    },
+    {
+      "source": "tesseract",
+      "operation": "incidence-truncate",
+      "parameters": {
+        "preset": "normal"
+      },
+      "status": "refused-atomically",
+      "message": "4D incidence cuts support manual fractions or midpoint rectification."
+    },
+    {
+      "source": "tetrahedron",
+      "operation": "incidence-truncate",
+      "parameters": {
+        "preset": "quasi"
+      },
+      "status": "refused-atomically",
+      "message": "The regular-face quasi preset requires an even-sided reference face; manual deep cuts remain available."
+    },
+    {
+      "source": "cube",
+      "operation": "expand-runcinate",
+      "parameters": {
+        "ratio": -0.0001
+      },
+      "status": "refused-atomically",
+      "message": "Expansion ratio must be a finite number from 0 to 1."
+    },
+    {
+      "source": "cube",
+      "operation": "expand-runcinate",
+      "parameters": {
+        "ratio": 1.0001
+      },
+      "status": "refused-atomically",
+      "message": "Expansion ratio must be a finite number from 0 to 1."
+    },
+    {
+      "source": "tesseract",
+      "operation": "expand-runcinate",
+      "parameters": {
+        "ratio": -0.0001
+      },
+      "status": "refused-atomically",
+      "message": "Expansion ratio must be a finite number from 0 to 1."
+    },
+    {
+      "source": "tesseract",
+      "operation": "expand-runcinate",
+      "parameters": {
+        "ratio": 1.0001
+      },
+      "status": "refused-atomically",
+      "message": "Expansion ratio must be a finite number from 0 to 1."
+    },
+    {
+      "source": "octagram_cube",
+      "operation": "expand-runcinate",
+      "parameters": {},
+      "status": "refused-atomically",
+      "message": "This prototype supports closed intrinsic 3D/4D convex sources only; generalized/infinite polars are unsupported."
+    },
+    {
+      "source": "cube",
+      "operation": "expand-runcinate",
+      "parameters": {
+        "center": [
+          1,
+          0,
+          0
+        ]
+      },
+      "status": "refused-atomically",
+      "message": "Polar facet passes through/too near the center, or has an unresolved orientation."
+    },
+    {
+      "source": "tesseract",
+      "operation": "expand-runcinate",
+      "parameters": {
+        "center": [
+          0,
+          0,
+          0,
+          1
+        ]
+      },
+      "status": "refused-atomically",
+      "message": "Polar facet passes through/too near the center, or has an unresolved orientation."
+    }
+  ]
+}

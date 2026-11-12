@@ -1,0 +1,6 @@
+{
+  "description": "Original synthetic 16 by 8 height ramp. R=G=B=12*x+8*y, alpha=255. No external source.",
+  "width": 16,
+  "height": 8,
+  "pngBase64": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAICAYAAADwdn+XAAAAIUlEQVR4nGNkYGD4z8PDw0AuZuLg4GCgBDONGsAw8GEAAHBNDatpaLA1AAAAAElFTkSuQmCC"
+}

@@ -1,0 +1,1600 @@
+{
+  "format": "polytope-laboratory",
+  "version": 1,
+  "active": 0,
+  "documents": [
+    {
+      "id": "retained-prism-v1",
+      "cursor": 1,
+      "states": [
+        {
+          "model": {
+            "id": "legacy-square",
+            "name": "Cartesian square",
+            "dimension": 2,
+            "embeddingDimension": 2,
+            "interpretation": "generalized-complex",
+            "vertices": [
+              [
+                -1,
+                -1
+              ],
+              [
+                1,
+                -1
+              ],
+              [
+                1,
+                1
+              ],
+              [
+                -1,
+                1
+              ]
+            ],
+            "edges": [
+              [
+                0,
+                1
+              ],
+              [
+                1,
+                2
+              ],
+              [
+                2,
+                3
+              ],
+              [
+                3,
+                0
+              ]
+            ],
+            "faces": [
+              [
+                0,
+                1,
+                2,
+                3
+              ]
+            ],
+            "cells": [],
+            "numeric": {
+              "mode": "float64-approximate",
+              "certified": false
+            },
+            "metadata": {
+              "offColors": {
+                "faces": [
+                  {
+                    "encoding": "unit",
+                    "values": [
+                      0.2,
+                      0.5,
+                      1,
+                      0.25
+                    ]
+                  }
+                ],
+                "cells": []
+              }
+            },
+            "fingerprint": "7230af8b94d05b9f7f79a1055ff287090bdd88e4669edb6c219ee0fc03a72664"
+          },
+          "view": {
+            "coordinateUnit": "mm"
+          },
+          "notes": "Retained polygon-prism/0.1.0; caps retain source colors.",
+          "label": "Square",
+          "operationNode": "square"
+        },
+        {
+          "model": {
+            "id": "legacy-prism",
+            "name": "Cartesian square × interval",
+            "dimension": 3,
+            "embeddingDimension": 3,
+            "interpretation": "generalized-complex",
+            "vertices": [
+              [
+                -1,
+                -1,
+                -1.0
+              ],
+              [
+                1,
+                -1,
+                -1.0
+              ],
+              [
+                1,
+                1,
+                -1.0
+              ],
+              [
+                -1,
+                1,
+                -1.0
+              ],
+              [
+                -1,
+                -1,
+                1.0
+              ],
+              [
+                1,
+                -1,
+                1.0
+              ],
+              [
+                1,
+                1,
+                1.0
+              ],
+              [
+                -1,
+                1,
+                1.0
+              ]
+            ],
+            "edges": [
+              [
+                0,
+                1
+              ],
+              [
+                1,
+                2
+              ],
+              [
+                2,
+                3
+              ],
+              [
+                3,
+                0
+              ],
+              [
+                4,
+                5
+              ],
+              [
+                5,
+                6
+              ],
+              [
+                6,
+                7
+              ],
+              [
+                7,
+                4
+              ],
+              [
+                0,
+                4
+              ],
+              [
+                1,
+                5
+              ],
+              [
+                2,
+                6
+              ],
+              [
+                3,
+                7
+              ]
+            ],
+            "faces": [
+              [
+                3,
+                2,
+                1,
+                0
+              ],
+              [
+                4,
+                5,
+                6,
+                7
+              ],
+              [
+                0,
+                1,
+                5,
+                4
+              ],
+              [
+                1,
+                2,
+                6,
+                5
+              ],
+              [
+                2,
+                3,
+                7,
+                6
+              ],
+              [
+                3,
+                0,
+                4,
+                7
+              ]
+            ],
+            "cells": [],
+            "metadata": {
+              "orderedProduct": {
+                "schemaVersion": 1,
+                "algorithmVersion": "0.1.0",
+                "operation": "ordered-polygon-prism",
+                "inputs": [
+                  {
+                    "sourceModelId": "legacy-square",
+                    "sourceFingerprint": "7230af8b94d05b9f7f79a1055ff287090bdd88e4669edb6c219ee0fc03a72664",
+                    "sourceSnapshotSha256": "04b371e4a6c79d1617b6d31e847d38f31ab38c63d6d45955991ebd949d2617b0"
+                  }
+                ],
+                "sourceModels": [
+                  {
+                    "id": "legacy-square",
+                    "name": "Cartesian square",
+                    "dimension": 2,
+                    "embeddingDimension": 2,
+                    "interpretation": "generalized-complex",
+                    "vertices": [
+                      [
+                        -1,
+                        -1
+                      ],
+                      [
+                        1,
+                        -1
+                      ],
+                      [
+                        1,
+                        1
+                      ],
+                      [
+                        -1,
+                        1
+                      ]
+                    ],
+                    "edges": [
+                      [
+                        0,
+                        1
+                      ],
+                      [
+                        1,
+                        2
+                      ],
+                      [
+                        2,
+                        3
+                      ],
+                      [
+                        3,
+                        0
+                      ]
+                    ],
+                    "faces": [
+                      [
+                        0,
+                        1,
+                        2,
+                        3
+                      ]
+                    ],
+                    "cells": [],
+                    "numeric": {
+                      "mode": "float64-approximate",
+                      "certified": false
+                    },
+                    "metadata": {
+                      "offColors": {
+                        "faces": [
+                          {
+                            "encoding": "unit",
+                            "values": [
+                              0.2,
+                              0.5,
+                              1,
+                              0.25
+                            ]
+                          }
+                        ],
+                        "cells": []
+                      }
+                    },
+                    "fingerprint": "7230af8b94d05b9f7f79a1055ff287090bdd88e4669edb6c219ee0fc03a72664"
+                  }
+                ],
+                "maps": {
+                  "vertices": [
+                    {
+                      "role": "vertex×interval-end",
+                      "factors": [
+                        [
+                          0,
+                          "vertices",
+                          0
+                        ]
+                      ],
+                      "intervalEndpoint": 0
+                    },
+                    {
+                      "role": "vertex×interval-end",
+                      "factors": [
+                        [
+                          0,
+                          "vertices",
+                          1
+                        ]
+                      ],
+                      "intervalEndpoint": 0
+                    },
+                    {
+                      "role": "vertex×interval-end",
+                      "factors": [
+                        [
+                          0,
+                          "vertices",
+                          2
+                        ]
+                      ],
+                      "intervalEndpoint": 0
+                    },
+                    {
+                      "role": "vertex×interval-end",
+                      "factors": [
+                        [
+                          0,
+                          "vertices",
+                          3
+                        ]
+                      ],
+                      "intervalEndpoint": 0
+                    },
+                    {
+                      "role": "vertex×interval-end",
+                      "factors": [
+                        [
+                          0,
+                          "vertices",
+                          0
+                        ]
+                      ],
+                      "intervalEndpoint": 1
+                    },
+                    {
+                      "role": "vertex×interval-end",
+                      "factors": [
+                        [
+                          0,
+                          "vertices",
+                          1
+                        ]
+                      ],
+                      "intervalEndpoint": 1
+                    },
+                    {
+                      "role": "vertex×interval-end",
+                      "factors": [
+                        [
+                          0,
+                          "vertices",
+                          2
+                        ]
+                      ],
+                      "intervalEndpoint": 1
+                    },
+                    {
+                      "role": "vertex×interval-end",
+                      "factors": [
+                        [
+                          0,
+                          "vertices",
+                          3
+                        ]
+                      ],
+                      "intervalEndpoint": 1
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "role": "edge×interval-end",
+                      "factors": [
+                        [
+                          0,
+                          "edges",
+                          0
+                        ]
+                      ],
+                      "intervalEndpoint": 0
+                    },
+                    {
+                      "role": "edge×interval-end",
+                      "factors": [
+                        [
+                          0,
+                          "edges",
+                          1
+                        ]
+                      ],
+                      "intervalEndpoint": 0
+                    },
+                    {
+                      "role": "edge×interval-end",
+                      "factors": [
+                        [
+                          0,
+                          "edges",
+                          2
+                        ]
+                      ],
+                      "intervalEndpoint": 0
+                    },
+                    {
+                      "role": "edge×interval-end",
+                      "factors": [
+                        [
+                          0,
+                          "edges",
+                          3
+                        ]
+                      ],
+                      "intervalEndpoint": 0
+                    },
+                    {
+                      "role": "edge×interval-end",
+                      "factors": [
+                        [
+                          0,
+                          "edges",
+                          0
+                        ]
+                      ],
+                      "intervalEndpoint": 1
+                    },
+                    {
+                      "role": "edge×interval-end",
+                      "factors": [
+                        [
+                          0,
+                          "edges",
+                          1
+                        ]
+                      ],
+                      "intervalEndpoint": 1
+                    },
+                    {
+                      "role": "edge×interval-end",
+                      "factors": [
+                        [
+                          0,
+                          "edges",
+                          2
+                        ]
+                      ],
+                      "intervalEndpoint": 1
+                    },
+                    {
+                      "role": "edge×interval-end",
+                      "factors": [
+                        [
+                          0,
+                          "edges",
+                          3
+                        ]
+                      ],
+                      "intervalEndpoint": 1
+                    },
+                    {
+                      "role": "vertex×interval",
+                      "factors": [
+                        [
+                          0,
+                          "vertices",
+                          0
+                        ]
+                      ]
+                    },
+                    {
+                      "role": "vertex×interval",
+                      "factors": [
+                        [
+                          0,
+                          "vertices",
+                          1
+                        ]
+                      ]
+                    },
+                    {
+                      "role": "vertex×interval",
+                      "factors": [
+                        [
+                          0,
+                          "vertices",
+                          2
+                        ]
+                      ]
+                    },
+                    {
+                      "role": "vertex×interval",
+                      "factors": [
+                        [
+                          0,
+                          "vertices",
+                          3
+                        ]
+                      ]
+                    }
+                  ],
+                  "faces": [
+                    {
+                      "role": "face×interval-end",
+                      "factors": [
+                        [
+                          0,
+                          "faces",
+                          0
+                        ]
+                      ],
+                      "intervalEndpoint": 0
+                    },
+                    {
+                      "role": "face×interval-end",
+                      "factors": [
+                        [
+                          0,
+                          "faces",
+                          0
+                        ]
+                      ],
+                      "intervalEndpoint": 1
+                    },
+                    {
+                      "role": "edge×interval",
+                      "factors": [
+                        [
+                          0,
+                          "edges",
+                          0
+                        ]
+                      ]
+                    },
+                    {
+                      "role": "edge×interval",
+                      "factors": [
+                        [
+                          0,
+                          "edges",
+                          1
+                        ]
+                      ]
+                    },
+                    {
+                      "role": "edge×interval",
+                      "factors": [
+                        [
+                          0,
+                          "edges",
+                          2
+                        ]
+                      ]
+                    },
+                    {
+                      "role": "edge×interval",
+                      "factors": [
+                        [
+                          0,
+                          "edges",
+                          3
+                        ]
+                      ]
+                    }
+                  ],
+                  "cells": []
+                },
+                "sourceMaps": [
+                  {
+                    "vertices": [
+                      [
+                        0,
+                        4
+                      ],
+                      [
+                        1,
+                        5
+                      ],
+                      [
+                        2,
+                        6
+                      ],
+                      [
+                        3,
+                        7
+                      ]
+                    ],
+                    "edges": [
+                      [
+                        0,
+                        4
+                      ],
+                      [
+                        1,
+                        5
+                      ],
+                      [
+                        2,
+                        6
+                      ],
+                      [
+                        3,
+                        7
+                      ]
+                    ],
+                    "faces": [
+                      [
+                        0,
+                        1
+                      ]
+                    ],
+                    "cells": []
+                  }
+                ],
+                "componentPartitions": [
+                  {
+                    "id": "partition-0",
+                    "sourceFaceIds": [
+                      0
+                    ],
+                    "sourceComponentIds": [
+                      null
+                    ],
+                    "maps": {
+                      "vertices": [
+                        0,
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6,
+                        7
+                      ],
+                      "edges": [
+                        0,
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11
+                      ],
+                      "faces": [
+                        0,
+                        1,
+                        2,
+                        3,
+                        4,
+                        5
+                      ],
+                      "cells": []
+                    }
+                  }
+                ],
+                "recoverableCompoundComponents": false,
+                "componentDefinition": "metadata-only disjoint current-incidence partition; IDs are not compound Keep/Delete IDs",
+                "colorPolicy": "Source polygon colors are copied to corresponding caps; product walls and cells are uncolored.",
+                "interpretation": "Literal boundary incidence product; crossings create no vertices; no filled region, hull, weld or union volume inferred.",
+                "interval": {
+                  "height": 2.0,
+                  "endCoordinates": [
+                    -1.0,
+                    1.0
+                  ]
+                },
+                "resultSourceModelId": "legacy-prism",
+                "resultSourceFingerprint": "32e006389230c3eddcff071d5b9638a5b38755e0c97735865111e99ad0aba908",
+                "evidenceScope": "generated source only; output IDs and partitions apply while current geometry matches resultSourceFingerprint"
+              },
+              "offColors": {
+                "faces": [
+                  {
+                    "encoding": "unit",
+                    "values": [
+                      0.2,
+                      0.5,
+                      1,
+                      0.25
+                    ]
+                  },
+                  {
+                    "encoding": "unit",
+                    "values": [
+                      0.2,
+                      0.5,
+                      1,
+                      0.25
+                    ]
+                  },
+                  null,
+                  null,
+                  null,
+                  null
+                ],
+                "cells": []
+              }
+            },
+            "numeric": {
+              "mode": "float64-approximate",
+              "certified": false,
+              "tolerance": 1e-08,
+              "algorithm": "direct ordered cycle and interval incidence product"
+            },
+            "provenance": {
+              "operation": "ordered-polygon-prism",
+              "algorithmVersion": "0.1.0",
+              "parameters": {
+                "height": 2.0
+              },
+              "inputs": [
+                {
+                  "sourceModelId": "legacy-square",
+                  "sourceFingerprint": "7230af8b94d05b9f7f79a1055ff287090bdd88e4669edb6c219ee0fc03a72664",
+                  "sourceSnapshotSha256": "04b371e4a6c79d1617b6d31e847d38f31ab38c63d6d45955991ebd949d2617b0"
+                }
+              ]
+            },
+            "validation": {
+              "passed": true,
+              "errors": [],
+              "warnings": [
+                "Generalized incidence: convex manifold/Euler assertions were not applied.",
+                "Geometry is approximate. Structural checks are evidence, not an exact certificate."
+              ],
+              "eulerCharacteristic": 2,
+              "checks": [
+                "index bounds",
+                "face cycles",
+                "planarity",
+                "cell links",
+                "applicable Euler relations",
+                "supplied supporting hyperplanes"
+              ],
+              "algorithmVersion": "0.1.0"
+            },
+            "fingerprint": "32e006389230c3eddcff071d5b9638a5b38755e0c97735865111e99ad0aba908"
+          },
+          "view": {
+            "coordinateUnit": "mm"
+          },
+          "notes": "Retained polygon-prism/0.1.0; caps retain source colors.",
+          "label": "Legacy square prism",
+          "operationNode": "legacy-prism"
+        }
+      ],
+      "operationHistory": {
+        "nodes": [
+          {
+            "algorithmVersion": "0.1.0",
+            "id": "square",
+            "inputs": [],
+            "numericPolicy": {
+              "mode": "float64-approximate",
+              "tolerance": 1e-08
+            },
+            "op": "source",
+            "params": {},
+            "parent": null,
+            "resultFingerprint": "7230af8b94d05b9f7f79a1055ff287090bdd88e4669edb6c219ee0fc03a72664",
+            "snapshot": {
+              "label": "Square",
+              "model": {
+                "cells": [],
+                "dimension": 2,
+                "edges": [
+                  [
+                    0,
+                    1
+                  ],
+                  [
+                    1,
+                    2
+                  ],
+                  [
+                    2,
+                    3
+                  ],
+                  [
+                    3,
+                    0
+                  ]
+                ],
+                "embeddingDimension": 2,
+                "faces": [
+                  [
+                    0,
+                    1,
+                    2,
+                    3
+                  ]
+                ],
+                "fingerprint": "7230af8b94d05b9f7f79a1055ff287090bdd88e4669edb6c219ee0fc03a72664",
+                "id": "legacy-square",
+                "interpretation": "generalized-complex",
+                "metadata": {
+                  "offColors": {
+                    "cells": [],
+                    "faces": [
+                      {
+                        "encoding": "unit",
+                        "values": [
+                          0.2,
+                          0.5,
+                          1,
+                          0.25
+                        ]
+                      }
+                    ]
+                  }
+                },
+                "name": "Cartesian square",
+                "numeric": {
+                  "certified": false,
+                  "mode": "float64-approximate"
+                },
+                "vertices": [
+                  [
+                    -1,
+                    -1
+                  ],
+                  [
+                    1,
+                    -1
+                  ],
+                  [
+                    1,
+                    1
+                  ],
+                  [
+                    -1,
+                    1
+                  ]
+                ]
+              },
+              "notes": "Retained polygon-prism/0.1.0; caps retain source colors.",
+              "view": {
+                "coordinateUnit": "mm"
+              }
+            },
+            "sourceSnapshotHash": "890cc018c1b3a9e5962b1f0a3af3bbd7e99516234160f97a0992b31b0f2e94e4"
+          },
+          {
+            "algorithmVersion": "0.1.0",
+            "id": "legacy-prism",
+            "inputs": [
+              "square"
+            ],
+            "numericPolicy": {
+              "mode": "float64-approximate",
+              "tolerance": 1e-08
+            },
+            "op": "polygon-prism",
+            "params": {
+              "height": 2
+            },
+            "parent": "square",
+            "resultFingerprint": "32e006389230c3eddcff071d5b9638a5b38755e0c97735865111e99ad0aba908",
+            "snapshot": {
+              "label": "Legacy square prism",
+              "model": {
+                "cells": [],
+                "dimension": 3,
+                "edges": [
+                  [
+                    0,
+                    1
+                  ],
+                  [
+                    1,
+                    2
+                  ],
+                  [
+                    2,
+                    3
+                  ],
+                  [
+                    3,
+                    0
+                  ],
+                  [
+                    4,
+                    5
+                  ],
+                  [
+                    5,
+                    6
+                  ],
+                  [
+                    6,
+                    7
+                  ],
+                  [
+                    7,
+                    4
+                  ],
+                  [
+                    0,
+                    4
+                  ],
+                  [
+                    1,
+                    5
+                  ],
+                  [
+                    2,
+                    6
+                  ],
+                  [
+                    3,
+                    7
+                  ]
+                ],
+                "embeddingDimension": 3,
+                "faces": [
+                  [
+                    3,
+                    2,
+                    1,
+                    0
+                  ],
+                  [
+                    4,
+                    5,
+                    6,
+                    7
+                  ],
+                  [
+                    0,
+                    1,
+                    5,
+                    4
+                  ],
+                  [
+                    1,
+                    2,
+                    6,
+                    5
+                  ],
+                  [
+                    2,
+                    3,
+                    7,
+                    6
+                  ],
+                  [
+                    3,
+                    0,
+                    4,
+                    7
+                  ]
+                ],
+                "fingerprint": "32e006389230c3eddcff071d5b9638a5b38755e0c97735865111e99ad0aba908",
+                "id": "legacy-prism",
+                "interpretation": "generalized-complex",
+                "metadata": {
+                  "offColors": {
+                    "cells": [],
+                    "faces": [
+                      {
+                        "encoding": "unit",
+                        "values": [
+                          0.2,
+                          0.5,
+                          1,
+                          0.25
+                        ]
+                      },
+                      {
+                        "encoding": "unit",
+                        "values": [
+                          0.2,
+                          0.5,
+                          1,
+                          0.25
+                        ]
+                      },
+                      null,
+                      null,
+                      null,
+                      null
+                    ]
+                  },
+                  "orderedProduct": {
+                    "algorithmVersion": "0.1.0",
+                    "colorPolicy": "Source polygon colors are copied to corresponding caps; product walls and cells are uncolored.",
+                    "componentDefinition": "metadata-only disjoint current-incidence partition; IDs are not compound Keep/Delete IDs",
+                    "componentPartitions": [
+                      {
+                        "id": "partition-0",
+                        "maps": {
+                          "cells": [],
+                          "edges": [
+                            0,
+                            1,
+                            2,
+                            3,
+                            4,
+                            5,
+                            6,
+                            7,
+                            8,
+                            9,
+                            10,
+                            11
+                          ],
+                          "faces": [
+                            0,
+                            1,
+                            2,
+                            3,
+                            4,
+                            5
+                          ],
+                          "vertices": [
+                            0,
+                            1,
+                            2,
+                            3,
+                            4,
+                            5,
+                            6,
+                            7
+                          ]
+                        },
+                        "sourceComponentIds": [
+                          null
+                        ],
+                        "sourceFaceIds": [
+                          0
+                        ]
+                      }
+                    ],
+                    "evidenceScope": "generated source only; output IDs and partitions apply while current geometry matches resultSourceFingerprint",
+                    "inputs": [
+                      {
+                        "sourceFingerprint": "7230af8b94d05b9f7f79a1055ff287090bdd88e4669edb6c219ee0fc03a72664",
+                        "sourceModelId": "legacy-square",
+                        "sourceSnapshotSha256": "04b371e4a6c79d1617b6d31e847d38f31ab38c63d6d45955991ebd949d2617b0"
+                      }
+                    ],
+                    "interpretation": "Literal boundary incidence product; crossings create no vertices; no filled region, hull, weld or union volume inferred.",
+                    "interval": {
+                      "endCoordinates": [
+                        -1.0,
+                        1.0
+                      ],
+                      "height": 2.0
+                    },
+                    "maps": {
+                      "cells": [],
+                      "edges": [
+                        {
+                          "factors": [
+                            [
+                              0,
+                              "edges",
+                              0
+                            ]
+                          ],
+                          "intervalEndpoint": 0,
+                          "role": "edge×interval-end"
+                        },
+                        {
+                          "factors": [
+                            [
+                              0,
+                              "edges",
+                              1
+                            ]
+                          ],
+                          "intervalEndpoint": 0,
+                          "role": "edge×interval-end"
+                        },
+                        {
+                          "factors": [
+                            [
+                              0,
+                              "edges",
+                              2
+                            ]
+                          ],
+                          "intervalEndpoint": 0,
+                          "role": "edge×interval-end"
+                        },
+                        {
+                          "factors": [
+                            [
+                              0,
+                              "edges",
+                              3
+                            ]
+                          ],
+                          "intervalEndpoint": 0,
+                          "role": "edge×interval-end"
+                        },
+                        {
+                          "factors": [
+                            [
+                              0,
+                              "edges",
+                              0
+                            ]
+                          ],
+                          "intervalEndpoint": 1,
+                          "role": "edge×interval-end"
+                        },
+                        {
+                          "factors": [
+                            [
+                              0,
+                              "edges",
+                              1
+                            ]
+                          ],
+                          "intervalEndpoint": 1,
+                          "role": "edge×interval-end"
+                        },
+                        {
+                          "factors": [
+                            [
+                              0,
+                              "edges",
+                              2
+                            ]
+                          ],
+                          "intervalEndpoint": 1,
+                          "role": "edge×interval-end"
+                        },
+                        {
+                          "factors": [
+                            [
+                              0,
+                              "edges",
+                              3
+                            ]
+                          ],
+                          "intervalEndpoint": 1,
+                          "role": "edge×interval-end"
+                        },
+                        {
+                          "factors": [
+                            [
+                              0,
+                              "vertices",
+                              0
+                            ]
+                          ],
+                          "role": "vertex×interval"
+                        },
+                        {
+                          "factors": [
+                            [
+                              0,
+                              "vertices",
+                              1
+                            ]
+                          ],
+                          "role": "vertex×interval"
+                        },
+                        {
+                          "factors": [
+                            [
+                              0,
+                              "vertices",
+                              2
+                            ]
+                          ],
+                          "role": "vertex×interval"
+                        },
+                        {
+                          "factors": [
+                            [
+                              0,
+                              "vertices",
+                              3
+                            ]
+                          ],
+                          "role": "vertex×interval"
+                        }
+                      ],
+                      "faces": [
+                        {
+                          "factors": [
+                            [
+                              0,
+                              "faces",
+                              0
+                            ]
+                          ],
+                          "intervalEndpoint": 0,
+                          "role": "face×interval-end"
+                        },
+                        {
+                          "factors": [
+                            [
+                              0,
+                              "faces",
+                              0
+                            ]
+                          ],
+                          "intervalEndpoint": 1,
+                          "role": "face×interval-end"
+                        },
+                        {
+                          "factors": [
+                            [
+                              0,
+                              "edges",
+                              0
+                            ]
+                          ],
+                          "role": "edge×interval"
+                        },
+                        {
+                          "factors": [
+                            [
+                              0,
+                              "edges",
+                              1
+                            ]
+                          ],
+                          "role": "edge×interval"
+                        },
+                        {
+                          "factors": [
+                            [
+                              0,
+                              "edges",
+                              2
+                            ]
+                          ],
+                          "role": "edge×interval"
+                        },
+                        {
+                          "factors": [
+                            [
+                              0,
+                              "edges",
+                              3
+                            ]
+                          ],
+                          "role": "edge×interval"
+                        }
+                      ],
+                      "vertices": [
+                        {
+                          "factors": [
+                            [
+                              0,
+                              "vertices",
+                              0
+                            ]
+                          ],
+                          "intervalEndpoint": 0,
+                          "role": "vertex×interval-end"
+                        },
+                        {
+                          "factors": [
+                            [
+                              0,
+                              "vertices",
+                              1
+                            ]
+                          ],
+                          "intervalEndpoint": 0,
+                          "role": "vertex×interval-end"
+                        },
+                        {
+                          "factors": [
+                            [
+                              0,
+                              "vertices",
+                              2
+                            ]
+                          ],
+                          "intervalEndpoint": 0,
+                          "role": "vertex×interval-end"
+                        },
+                        {
+                          "factors": [
+                            [
+                              0,
+                              "vertices",
+                              3
+                            ]
+                          ],
+                          "intervalEndpoint": 0,
+                          "role": "vertex×interval-end"
+                        },
+                        {
+                          "factors": [
+                            [
+                              0,
+                              "vertices",
+                              0
+                            ]
+                          ],
+                          "intervalEndpoint": 1,
+                          "role": "vertex×interval-end"
+                        },
+                        {
+                          "factors": [
+                            [
+                              0,
+                              "vertices",
+                              1
+                            ]
+                          ],
+                          "intervalEndpoint": 1,
+                          "role": "vertex×interval-end"
+                        },
+                        {
+                          "factors": [
+                            [
+                              0,
+                              "vertices",
+                              2
+                            ]
+                          ],
+                          "intervalEndpoint": 1,
+                          "role": "vertex×interval-end"
+                        },
+                        {
+                          "factors": [
+                            [
+                              0,
+                              "vertices",
+                              3
+                            ]
+                          ],
+                          "intervalEndpoint": 1,
+                          "role": "vertex×interval-end"
+                        }
+                      ]
+                    },
+                    "operation": "ordered-polygon-prism",
+                    "recoverableCompoundComponents": false,
+                    "resultSourceFingerprint": "32e006389230c3eddcff071d5b9638a5b38755e0c97735865111e99ad0aba908",
+                    "resultSourceModelId": "legacy-prism",
+                    "schemaVersion": 1,
+                    "sourceMaps": [
+                      {
+                        "cells": [],
+                        "edges": [
+                          [
+                            0,
+                            4
+                          ],
+                          [
+                            1,
+                            5
+                          ],
+                          [
+                            2,
+                            6
+                          ],
+                          [
+                            3,
+                            7
+                          ]
+                        ],
+                        "faces": [
+                          [
+                            0,
+                            1
+                          ]
+                        ],
+                        "vertices": [
+                          [
+                            0,
+                            4
+                          ],
+                          [
+                            1,
+                            5
+                          ],
+                          [
+                            2,
+                            6
+                          ],
+                          [
+                            3,
+                            7
+                          ]
+                        ]
+                      }
+                    ],
+                    "sourceModels": [
+                      {
+                        "cells": [],
+                        "dimension": 2,
+                        "edges": [
+                          [
+                            0,
+                            1
+                          ],
+                          [
+                            1,
+                            2
+                          ],
+                          [
+                            2,
+                            3
+                          ],
+                          [
+                            3,
+                            0
+                          ]
+                        ],
+                        "embeddingDimension": 2,
+                        "faces": [
+                          [
+                            0,
+                            1,
+                            2,
+                            3
+                          ]
+                        ],
+                        "fingerprint": "7230af8b94d05b9f7f79a1055ff287090bdd88e4669edb6c219ee0fc03a72664",
+                        "id": "legacy-square",
+                        "interpretation": "generalized-complex",
+                        "metadata": {
+                          "offColors": {
+                            "cells": [],
+                            "faces": [
+                              {
+                                "encoding": "unit",
+                                "values": [
+                                  0.2,
+                                  0.5,
+                                  1,
+                                  0.25
+                                ]
+                              }
+                            ]
+                          }
+                        },
+                        "name": "Cartesian square",
+                        "numeric": {
+                          "certified": false,
+                          "mode": "float64-approximate"
+                        },
+                        "vertices": [
+                          [
+                            -1,
+                            -1
+                          ],
+                          [
+                            1,
+                            -1
+                          ],
+                          [
+                            1,
+                            1
+                          ],
+                          [
+                            -1,
+                            1
+                          ]
+                        ]
+                      }
+                    ]
+                  }
+                },
+                "name": "Cartesian square × interval",
+                "numeric": {
+                  "algorithm": "direct ordered cycle and interval incidence product",
+                  "certified": false,
+                  "mode": "float64-approximate",
+                  "tolerance": 1e-08
+                },
+                "provenance": {
+                  "algorithmVersion": "0.1.0",
+                  "inputs": [
+                    {
+                      "sourceFingerprint": "7230af8b94d05b9f7f79a1055ff287090bdd88e4669edb6c219ee0fc03a72664",
+                      "sourceModelId": "legacy-square",
+                      "sourceSnapshotSha256": "04b371e4a6c79d1617b6d31e847d38f31ab38c63d6d45955991ebd949d2617b0"
+                    }
+                  ],
+                  "operation": "ordered-polygon-prism",
+                  "parameters": {
+                    "height": 2.0
+                  }
+                },
+                "validation": {
+                  "algorithmVersion": "0.1.0",
+                  "checks": [
+                    "index bounds",
+                    "face cycles",
+                    "planarity",
+                    "cell links",
+                    "applicable Euler relations",
+                    "supplied supporting hyperplanes"
+                  ],
+                  "errors": [],
+                  "eulerCharacteristic": 2,
+                  "passed": true,
+                  "warnings": [
+                    "Generalized incidence: convex manifold/Euler assertions were not applied.",
+                    "Geometry is approximate. Structural checks are evidence, not an exact certificate."
+                  ]
+                },
+                "vertices": [
+                  [
+                    -1,
+                    -1,
+                    -1.0
+                  ],
+                  [
+                    1,
+                    -1,
+                    -1.0
+                  ],
+                  [
+                    1,
+                    1,
+                    -1.0
+                  ],
+                  [
+                    -1,
+                    1,
+                    -1.0
+                  ],
+                  [
+                    -1,
+                    -1,
+                    1.0
+                  ],
+                  [
+                    1,
+                    -1,
+                    1.0
+                  ],
+                  [
+                    1,
+                    1,
+                    1.0
+                  ],
+                  [
+                    -1,
+                    1,
+                    1.0
+                  ]
+                ]
+              },
+              "notes": "Retained polygon-prism/0.1.0; caps retain source colors.",
+              "view": {
+                "coordinateUnit": "mm"
+              }
+            },
+            "sourceSnapshotHash": "890cc018c1b3a9e5962b1f0a3af3bbd7e99516234160f97a0992b31b0f2e94e4"
+          }
+        ],
+        "version": 1
+      }
+    }
+  ]
+}

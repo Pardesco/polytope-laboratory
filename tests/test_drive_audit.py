@@ -1,4 +1,5 @@
 """Durable resume, actual subprocess timeout/cancellation, and CLI coverage."""
+
 from concurrent.futures import ThreadPoolExecutor
 from copy import deepcopy
 import importlib.util
@@ -28,17 +29,28 @@ def collection(tmp_path, shapes=('simplex4', 'tesseract')):
         path = directory / relative
         path.parent.mkdir(exist_ok=True)
         path.write_text(export_off(regular(shape)), encoding='utf-8')
-        entries.append({'id': f'source_{index}', 'relativePath': relative, 'status': 'downloaded',
-                        'sha256': audit.local.digest(path)})
+        entries.append(
+            {
+                'id': f'source_{index}',
+                'relativePath': relative,
+                'status': 'downloaded',
+                'sha256': audit.local.digest(path),
+            }
+        )
     manifest = {'sourceUrl': 'fixture://local', 'downloadComplete': True, 'files': entries}
     (directory / 'download-manifest.json').write_text(json.dumps(manifest), encoding='utf-8')
     return directory, manifest
 
 
 def cli(directory, output, *flags):
-    return subprocess.run([sys.executable, str(ROOT / 'scripts/audit-drive-corpus.py'), str(directory),
-                           '--output', str(output), *flags], capture_output=True, text=True,
-                          encoding='utf-8', timeout=30, cwd=ROOT)
+    return subprocess.run(
+        [sys.executable, str(ROOT / 'scripts/audit-drive-corpus.py'), str(directory), '--output', str(output), *flags],
+        capture_output=True,
+        text=True,
+        encoding='utf-8',
+        timeout=30,
+        cwd=ROOT,
+    )
 
 
 def read_report(output):
@@ -82,7 +94,10 @@ def test_cli_corrupt_source_is_reported_and_never_reuses_pass(tmp_path):
     report = read_report(output)
     assert report['progress']['resumed'] == 0 and not report['completeImporterAudit']
     assert report['summary']['statusCounts'] == {'source-hash-mismatch': 1}
-    assert read_report(output.with_suffix('.failures.json'))['failures'][0]['relativePath'] == manifest['files'][0]['relativePath']
+    assert (
+        read_report(output.with_suffix('.failures.json'))['failures'][0]['relativePath']
+        == manifest['files'][0]['relativePath']
+    )
 
 
 def test_cli_changed_manifest_invalidates_cached_results(tmp_path):
@@ -110,10 +125,12 @@ def test_inventory_only_mode_preserves_explicit_unsampled_status(tmp_path):
 
 def test_unavailable_entries_are_accounted_for_and_prevent_complete_coverage(tmp_path):
     directory, manifest = collection(tmp_path, ('simplex4',))
-    manifest['files'].extend([
-        {'id': 'pending', 'relativePath': 'pending.off', 'status': 'pending'},
-        {'id': 'missing', 'relativePath': 'missing.off', 'status': 'downloaded', 'sha256': 'absent'},
-    ])
+    manifest['files'].extend(
+        [
+            {'id': 'pending', 'relativePath': 'pending.off', 'status': 'pending'},
+            {'id': 'missing', 'relativePath': 'missing.off', 'status': 'downloaded', 'sha256': 'absent'},
+        ]
+    )
     (directory / 'download-manifest.json').write_text(json.dumps(manifest), encoding='utf-8')
     output = tmp_path / 'report.json'
     assert cli(directory, output, '--all').returncode == 1
@@ -141,8 +158,15 @@ def test_cli_diagnostic_completes_coverage_but_is_a_failure(tmp_path):
 
 
 def saved_result(status='parsed'):
-    return {'relativePath': 'Cat1/a.off', 'sha256': 'hash', 'status': status, 'sourceUnchanged': True,
-            'timeoutSeconds': 1, 'validation': {'passed': True}, 'counts': [5, 10, 10, 5]}
+    return {
+        'relativePath': 'Cat1/a.off',
+        'sha256': 'hash',
+        'status': status,
+        'sourceUnchanged': True,
+        'timeoutSeconds': 1,
+        'validation': {'passed': True},
+        'counts': [5, 10, 10, 5],
+    }
 
 
 def test_checkpoint_partial_tail_is_repaired_and_new_results_survive(tmp_path):
@@ -205,7 +229,9 @@ def test_cancellation_stops_active_worker_and_discards_incomplete_result(tmp_pat
     record = audit.inventory_manifest(directory, manifest)[0]
     script = tmp_path / 'slow.py'
     marker = tmp_path / 'started'
-    script.write_text(f'import pathlib, time\npathlib.Path({str(marker)!r}).touch()\ntime.sleep(30)\n', encoding='utf-8')
+    script.write_text(
+        f'import pathlib, time\npathlib.Path({str(marker)!r}).touch()\ntime.sleep(30)\n', encoding='utf-8'
+    )
     importer = audit.ImportWorkers(script)
     with ThreadPoolExecutor(max_workers=1) as executor:
         future = executor.submit(importer.audit, record, 30)
@@ -222,8 +248,11 @@ def test_source_mutation_during_worker_is_not_accepted(tmp_path):
     directory, manifest = collection(tmp_path, ('simplex4',))
     record = audit.inventory_manifest(directory, manifest)[0]
     script = tmp_path / 'mutating.py'
-    script.write_text('import json, pathlib, sys\npathlib.Path(sys.argv[2]).write_text("changed")\n'
-                      'print(json.dumps({"status":"diagnosed","error":"fixture rejection"}))\n', encoding='utf-8')
+    script.write_text(
+        'import json, pathlib, sys\npathlib.Path(sys.argv[2]).write_text("changed")\n'
+        'print(json.dumps({"status":"diagnosed","error":"fixture rejection"}))\n',
+        encoding='utf-8',
+    )
     result = audit.ImportWorkers(script).audit(record, 10)
     assert result['status'] == 'source-changed' and not result['sourceUnchanged']
     assert 'changed' in result['error']
@@ -232,12 +261,15 @@ def test_source_mutation_during_worker_is_not_accepted(tmp_path):
 def test_interruption_retains_only_completed_results(tmp_path):
     class InterruptedImporter:
         stopped = False
+
         def audit(self, record, timeout):
             if record['relativePath'] == 'b':
                 raise KeyboardInterrupt
             return {**record, 'status': 'parsed', 'validation': {'passed': True}}
+
         def stop(self):
             self.stopped = True
+
     records = [{'relativePath': name, 'status': 'inventory-only-pending'} for name in ('a', 'b', 'c')]
     path = tmp_path / 'journal'
     importer = InterruptedImporter()
@@ -262,8 +294,10 @@ def test_count_mismatch_and_unspecified_edge_count(tmp_path):
 def test_atomic_report_failure_preserves_previous_report(tmp_path, monkeypatch):
     path = tmp_path / 'report.json'
     path.write_text('{"previous":true}', encoding='utf-8')
+
     def failed_write(*args, **kwargs):
         raise OSError('Interrupted write')
+
     monkeypatch.setattr(audit.json, 'dump', failed_write)
     with pytest.raises(OSError):
         audit.atomic_json(path, {'new': True})
@@ -277,8 +311,9 @@ def test_duplicate_manifest_paths_are_rejected(tmp_path):
         audit.inventory_manifest(directory, manifest)
 
 
-@pytest.mark.parametrize('flags', [('--timeout', 'nan'), ('--retry-failures',), ('--limit', '-1'),
-                                  ('--all', '--sample-size', '3')])
+@pytest.mark.parametrize(
+    'flags', [('--timeout', 'nan'), ('--retry-failures',), ('--limit', '-1'), ('--all', '--sample-size', '3')]
+)
 def test_cli_rejects_invalid_controls(tmp_path, flags):
     directory, _ = collection(tmp_path, ('simplex4',))
     assert cli(directory, tmp_path / 'report.json', *flags).returncode == 2

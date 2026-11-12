@@ -1,95 +1,475 @@
-body:not(.expert-mode) [data-expert] { display:none !important; }
-.app-chrome .command-bar { gap:16px; padding:0 16px; position:relative; z-index:12; flex-wrap:nowrap; min-width:0; }
-.app-chrome .command-bar nav,.app-chrome .workspace-actions { gap:8px; flex-wrap:nowrap; min-width:0; flex:0 0 auto; }
-.app-chrome .command-bar button,.chrome-menu-trigger { white-space:nowrap; }
-.app-chrome .command-bar button { display:inline-flex; align-items:center; justify-content:center; gap:8px; height:36px; padding:0 8px; font-size:14px; }
-.app-chrome .command-divider { height:24px; margin:0; flex:0 0 1px; }
-.chrome-brand { display:inline-flex; align-items:center; gap:8px; margin-right:8px; color:var(--text); white-space:nowrap; font-size:14px; font-weight:600; }
-.chrome-brand > svg { flex:none; color:var(--accent); }
-.chrome-file-actions,.chrome-edit-actions { display:flex; align-items:center; gap:4px; }
-.app-icon { display:block; flex:0 0 auto; pointer-events:none; }
-.app-chrome .command-bar :is(#undo,#redo) { width:32px; min-width:32px; height:32px; padding:0; }
-.chrome-icon-button > .chrome-button-label { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap; }
-.app-chrome .command-bar #export { background:var(--accent); color:var(--bg); border-color:var(--accent); font-weight:600; }
-.app-chrome .command-bar #export:hover { background:var(--text); border-color:var(--text); }
-.app-chrome .command-bar #command-search { flex:1 1 320px; min-width:192px; max-width:440px; justify-content:flex-start; color:var(--muted); background:var(--bg); border-color:var(--border); }
-.chrome-search-label { overflow:hidden; text-overflow:ellipsis; }
-#command-search kbd { flex:none; margin-left:auto; color:var(--text); font:12px 'Segoe UI',sans-serif; padding:0 4px; border:1px solid var(--border); border-radius:3px; }
-.app-chrome .command-bar #command-search:hover { color:var(--text); border-color:var(--accent); }
-.chrome-panel-toggles { display:flex; flex:0 0 auto; gap:0; border:1px solid var(--border); border-radius:6px; padding:2px; background:var(--bg); }
-.app-chrome .chrome-panel-toggles > button { height:32px; border-radius:4px; }
-.app-chrome .chrome-panel-toggles > button[aria-pressed='true'] { color:var(--text); background:var(--selection-bg); border-color:var(--border); box-shadow:inset 0 -2px var(--accent); }
-.app-chrome .command-bar :is(button,summary):focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
-.chrome-popover { position:relative; flex:0 0 auto; }
-.chrome-menu-trigger { display:flex; align-items:center; gap:8px; list-style:none; cursor:pointer; padding:6px 8px; border:1px solid var(--border); border-radius:4px; color:var(--text); background:#1a1d21; user-select:none; }
-.chrome-menu-trigger::-webkit-details-marker { display:none; }
-.chrome-menu-trigger:hover { background:#272b30; border-color:#51575f; }
-.chrome-popover[open] > .chrome-menu-trigger { border-color:#64869f; background:#26323b; }
-.chrome-menu-panel { position:absolute; right:0; z-index:30; width:280px; max-width:calc(100vw - 32px); max-height:calc(100dvh - 160px); overflow:auto; display:grid; gap:8px; padding:16px; border:1px solid #48535f; border-radius:8px; background:#191d22; box-shadow:0 12px 32px #0008; }
-.chrome-menu-panel > button { text-align:left; padding:8px; }
-#app-options-panel { top:calc(100% + 8px); width:208px; }
-#app-options-button { border-color:transparent; background:transparent; min-width:32px; justify-content:center; font-size:18px; padding:0 8px; }
-.app-chrome #app-options-button { width:32px; height:32px; padding:0; }
-.app-chrome .view-toolbar { position:relative; flex-wrap:nowrap; justify-content:flex-start; gap:8px; padding:0 0 8px; min-width:0; }
-.app-chrome .view-toolbar .toolbar-group { gap:8px; flex:0 1 auto; min-width:0; }
-.app-chrome .view-toolbar .toolbar-group + .toolbar-group { border:0; padding:0; }
-.app-chrome .view-toolbar .view-actions { margin-left:auto; }
-.app-chrome .view-toolbar button,.app-chrome .view-toolbar select { font-size:11px; padding:6px 8px; white-space:nowrap; }
-.app-chrome .view-toolbar select { max-width:132px; }
-.app-chrome .view-toolbar #image { display:inline-flex; align-items:center; justify-content:center; gap:8px; }
-#view-options { position:static; }
-#view-options-button { font-size:11px; }
-#view-options-button::before { content:''; width:16px; height:16px; background:center/16px no-repeat url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23b7c9d7' stroke-width='1.5'%3E%3Cpath d='M1 4h14M1 12h14'/%3E%3Cpath d='M5 1v6M11 9v6' stroke-width='3'/%3E%3C/svg%3E"); }
-#view-options-panel { top:calc(100% - 1px); width:336px; }
-.app-chrome #view-options-panel label { display:flex; justify-content:space-between; align-items:center; gap:16px; white-space:normal; color:var(--text); }
-.app-chrome #view-options-panel select { width:176px; max-width:176px; font-size:12px; }
-.app-chrome #png-settings { position:static; border-top:1px solid var(--border); padding-top:8px; }
-.app-chrome #png-settings > summary { padding:4px 0; }
-.app-chrome #png-settings > .settings-body { position:static; width:auto; min-width:0; padding:8px 0 0; border:0; box-shadow:none; background:transparent; max-height:none; display:grid; gap:8px; }
-.app-chrome .workspace-shelf { flex:0 0 40px; flex-wrap:nowrap; gap:4px; padding:4px 0; z-index:10; }
-.app-chrome .workspace-shelf > details { flex:0 0 auto; }
-.app-chrome .chrome-drawer > summary { white-space:nowrap; padding:6px 8px; gap:0; }
-.app-chrome .chrome-drawer > summary::after { content:none; }
-.app-chrome .chrome-drawer > summary > .group-help { display:none; }
-.app-chrome .chrome-dock-more > summary > .group-help { display:none; }
-.app-chrome .chrome-drawer > .settings-body { width:min(620px,100%); max-height:min(520px,calc(100dvh - 220px)); bottom:calc(100% + 8px); padding:0 16px 16px; border-radius:8px; overscroll-behavior:contain; }
-.chrome-drawer-header { grid-column:1 / -1; position:sticky; top:0; z-index:2; display:flex !important; align-items:center; gap:8px; padding:12px 0; margin-bottom:8px; border-bottom:1px solid var(--border); background:#191d22; }
-.chrome-drawer-header strong { flex:1; color:var(--text); font-size:12px; }
-.chrome-drawer-header button { flex:0 0 28px !important; width:28px; height:28px; padding:0; font-size:15px; }
-.app-chrome .chrome-overflow-drawer > summary { display:none; }
-.app-chrome .chrome-dock-more { position:static; margin-left:auto; }
-.app-chrome #dock-more-button { padding:6px 8px; border-color:transparent; font-size:11px; color:#b9c5d0; background:transparent; }
-#dock-more-panel { bottom:calc(100% + 8px); width:208px; }
-@media(max-width:1350px){
-  .app-chrome .view-toolbar,.app-chrome .view-toolbar .toolbar-group { gap:4px; }
-  .app-chrome .view-toolbar button,.app-chrome .view-toolbar select { padding:6px; }
+body:not(.expert-mode) [data-expert] {
+  display: none !important;
 }
-@media(max-width:1400px){
-  body.app-chrome .view-toolbar #perspective-strength-label { margin-left:4px; gap:4px; }
-  body.app-chrome .view-toolbar #perspective-strength { width:48px; flex:none; }
-  body.app-chrome .view-toolbar :is(#image,#view-options-button) { width:36px; min-width:36px; padding:0; justify-content:center; gap:0; }
-  body.app-chrome .view-toolbar :is(#image,#view-options-button) > .chrome-toolbar-label { position:absolute; width:1px; height:1px; margin:-1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap; }
-  #view-options-button::before { flex:none; }
+.app-chrome .command-bar {
+  gap: 16px;
+  padding: 0 16px;
+  position: relative;
+  z-index: 12;
+  flex-wrap: nowrap;
+  min-width: 0;
 }
-@media(min-width:1280px) and (max-width:1400px){
-  body.app-chrome .view-toolbar,body.app-chrome .view-toolbar .toolbar-group { flex-wrap:nowrap; }
+.app-chrome .command-bar nav,
+.app-chrome .workspace-actions {
+  gap: 8px;
+  flex-wrap: nowrap;
+  min-width: 0;
+  flex: 0 0 auto;
 }
-@media(max-width:1500px){
-  .app-chrome .command-bar #fullscreen { width:32px; min-width:32px; height:32px; padding:0; }
-  .app-chrome #fullscreen > .chrome-button-label { position:absolute; width:1px; height:1px; margin:-1px; overflow:hidden; clip-path:inset(50%); }
+.app-chrome .command-bar button,
+.chrome-menu-trigger {
+  white-space: nowrap;
 }
-@media(max-width:1359px){
-  .app-chrome .command-bar { padding:0 8px; }
-  .chrome-brand-name { display:none; }
-  .app-chrome .command-bar button { padding:0 8px; }
-  .app-chrome .command-bar .chrome-icon-button { padding:0; }
-  .app-chrome .command-bar #command-search { padding:0 8px; }
+.app-chrome .command-bar button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 36px;
+  padding: 0 8px;
+  font-size: 14px;
 }
-@media(max-width:1199px){
-  .app-chrome .command-bar { gap:8px; }
-  .app-chrome .command-bar nav,.app-chrome .workspace-actions { gap:4px; }
-  .chrome-brand { margin-right:0; }
-  .app-chrome .command-bar #command-search { min-width:160px; }
-  .chrome-file-actions .app-icon,.chrome-panel-toggles .app-icon,.app-chrome #help .app-icon { display:none; }
+.app-chrome .command-divider {
+  height: 24px;
+  margin: 0;
+  flex: 0 0 1px;
 }
-@media print { .chrome-popover { display:none !important; } }
+.chrome-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-right: 8px;
+  color: var(--text);
+  white-space: nowrap;
+  font-size: 14px;
+  font-weight: 600;
+}
+.chrome-brand > svg {
+  flex: none;
+  color: var(--accent);
+}
+.chrome-file-actions,
+.chrome-edit-actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.app-icon {
+  display: block;
+  flex: 0 0 auto;
+  pointer-events: none;
+}
+.app-chrome .command-bar :is(#undo, #redo) {
+  width: 32px;
+  min-width: 32px;
+  height: 32px;
+  padding: 0;
+}
+.chrome-icon-button > .chrome-button-label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+.app-chrome .command-bar #export {
+  background: var(--accent);
+  color: var(--bg);
+  border-color: var(--accent);
+  font-weight: 600;
+}
+.app-chrome .command-bar #export:hover {
+  background: var(--text);
+  border-color: var(--text);
+}
+.app-chrome .command-bar #command-search {
+  flex: 1 1 320px;
+  min-width: 192px;
+  max-width: 440px;
+  justify-content: flex-start;
+  color: var(--muted);
+  background: var(--bg);
+  border-color: var(--border);
+}
+.chrome-search-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+#command-search kbd {
+  flex: none;
+  margin-left: auto;
+  color: var(--text);
+  font:
+    12px 'Segoe UI',
+    sans-serif;
+  padding: 0 4px;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+}
+.app-chrome .command-bar #command-search:hover {
+  color: var(--text);
+  border-color: var(--accent);
+}
+.chrome-panel-toggles {
+  display: flex;
+  flex: 0 0 auto;
+  gap: 0;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 2px;
+  background: var(--bg);
+}
+.app-chrome .chrome-panel-toggles > button {
+  height: 32px;
+  border-radius: 4px;
+}
+.app-chrome .chrome-panel-toggles > button[aria-pressed='true'] {
+  color: var(--text);
+  background: var(--selection-bg);
+  border-color: var(--border);
+  box-shadow: inset 0 -2px var(--accent);
+}
+.app-chrome .command-bar :is(button, summary):focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+.chrome-popover {
+  position: relative;
+  flex: 0 0 auto;
+}
+.chrome-menu-trigger {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  list-style: none;
+  cursor: pointer;
+  padding: 6px 8px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  color: var(--text);
+  background: #1a1d21;
+  user-select: none;
+}
+.chrome-menu-trigger::-webkit-details-marker {
+  display: none;
+}
+.chrome-menu-trigger:hover {
+  background: #272b30;
+  border-color: #51575f;
+}
+.chrome-popover[open] > .chrome-menu-trigger {
+  border-color: #64869f;
+  background: #26323b;
+}
+.chrome-menu-panel {
+  position: absolute;
+  right: 0;
+  z-index: 30;
+  width: 280px;
+  max-width: calc(100vw - 32px);
+  max-height: calc(100dvh - 160px);
+  overflow: auto;
+  display: grid;
+  gap: 8px;
+  padding: 16px;
+  border: 1px solid #48535f;
+  border-radius: 8px;
+  background: #191d22;
+  box-shadow: 0 12px 32px #0008;
+}
+.chrome-menu-panel > button {
+  text-align: left;
+  padding: 8px;
+}
+#app-options-panel {
+  top: calc(100% + 8px);
+  width: 208px;
+}
+#app-options-button {
+  border-color: transparent;
+  background: transparent;
+  min-width: 32px;
+  justify-content: center;
+  font-size: 18px;
+  padding: 0 8px;
+}
+.app-chrome #app-options-button {
+  width: 32px;
+  height: 32px;
+  padding: 0;
+}
+.app-chrome .view-toolbar {
+  position: relative;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  gap: 8px;
+  padding: 0 0 8px;
+  min-width: 0;
+}
+.app-chrome .view-toolbar .toolbar-group {
+  gap: 8px;
+  flex: 0 1 auto;
+  min-width: 0;
+}
+.app-chrome .view-toolbar .toolbar-group + .toolbar-group {
+  border: 0;
+  padding: 0;
+}
+.app-chrome .view-toolbar .view-actions {
+  margin-left: auto;
+}
+.app-chrome .view-toolbar button,
+.app-chrome .view-toolbar select {
+  font-size: 11px;
+  padding: 6px 8px;
+  white-space: nowrap;
+}
+.app-chrome .view-toolbar select {
+  max-width: 132px;
+}
+.app-chrome .view-toolbar #image {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.app-chrome .view-toolbar #pick-source {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 var(--control-height);
+  width: var(--control-height);
+  height: var(--control-height);
+  padding: 0;
+}
+#view-options {
+  position: static;
+}
+#view-options-button {
+  font-size: 11px;
+}
+#view-options-button::before {
+  content: '';
+  width: 16px;
+  height: 16px;
+  background: center/16px no-repeat
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23b7c9d7' stroke-width='1.5'%3E%3Cpath d='M1 4h14M1 12h14'/%3E%3Cpath d='M5 1v6M11 9v6' stroke-width='3'/%3E%3C/svg%3E");
+}
+#view-options-panel {
+  top: calc(100% - 1px);
+  width: 336px;
+}
+.app-chrome #view-options-panel label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  white-space: normal;
+  color: var(--text);
+}
+.app-chrome #view-options-panel select {
+  width: 176px;
+  max-width: 176px;
+  font-size: 12px;
+}
+.app-chrome #png-settings {
+  position: static;
+  border-top: 1px solid var(--border);
+  padding-top: 8px;
+}
+.app-chrome #png-settings > summary {
+  padding: 4px 0;
+}
+.app-chrome #png-settings > .settings-body {
+  position: static;
+  width: auto;
+  min-width: 0;
+  padding: 8px 0 0;
+  border: 0;
+  box-shadow: none;
+  background: transparent;
+  max-height: none;
+  display: grid;
+  gap: 8px;
+}
+.app-chrome .workspace-shelf {
+  flex: 0 0 40px;
+  flex-wrap: nowrap;
+  gap: 4px;
+  padding: 4px 0;
+  z-index: 10;
+}
+.app-chrome .workspace-shelf > details {
+  flex: 0 0 auto;
+}
+.app-chrome .chrome-drawer > summary {
+  white-space: nowrap;
+  padding: 6px 8px;
+  gap: 0;
+}
+.app-chrome .chrome-drawer > summary::after {
+  content: none;
+}
+.app-chrome .chrome-drawer > summary > .group-help {
+  display: none;
+}
+.app-chrome .chrome-dock-more > summary > .group-help {
+  display: none;
+}
+.app-chrome .chrome-drawer > .settings-body {
+  width: min(620px, 100%);
+  max-height: min(520px, calc(100dvh - 220px));
+  bottom: calc(100% + 8px);
+  padding: 0 16px 16px;
+  border-radius: 8px;
+  overscroll-behavior: contain;
+}
+.chrome-drawer-header {
+  grid-column: 1 / -1;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  display: flex !important;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 0;
+  margin-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+  background: #191d22;
+}
+.chrome-drawer-header strong {
+  flex: 1;
+  color: var(--text);
+  font-size: 12px;
+}
+.chrome-drawer-header button {
+  flex: 0 0 28px !important;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  font-size: 15px;
+}
+.app-chrome .chrome-overflow-drawer > summary {
+  display: none;
+}
+.app-chrome .chrome-dock-more {
+  position: static;
+  margin-left: auto;
+}
+.app-chrome #dock-more-button {
+  padding: 6px 8px;
+  border-color: transparent;
+  font-size: 11px;
+  color: #b9c5d0;
+  background: transparent;
+}
+#dock-more-panel {
+  bottom: calc(100% + 8px);
+  width: 208px;
+}
+@media (max-width: 1350px) {
+  .app-chrome .view-toolbar,
+  .app-chrome .view-toolbar .toolbar-group {
+    gap: 4px;
+  }
+  .app-chrome .view-toolbar button,
+  .app-chrome .view-toolbar select {
+    padding: 6px;
+  }
+}
+@media (max-width: 1400px) {
+  body.app-chrome .view-toolbar #perspective-strength-label {
+    margin-left: 4px;
+    gap: 4px;
+  }
+  body.app-chrome .view-toolbar #perspective-strength {
+    width: 48px;
+    flex: none;
+  }
+  body.app-chrome .view-toolbar :is(#image, #view-options-button) {
+    width: 36px;
+    min-width: 36px;
+    padding: 0;
+    justify-content: center;
+    gap: 0;
+  }
+  body.app-chrome .view-toolbar :is(#image, #view-options-button) > .chrome-toolbar-label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+  #view-options-button::before {
+    flex: none;
+  }
+}
+@media (min-width: 1280px) and (max-width: 1400px) {
+  body.app-chrome .view-toolbar,
+  body.app-chrome .view-toolbar .toolbar-group {
+    flex-wrap: nowrap;
+  }
+}
+@media (max-width: 1500px) {
+  .app-chrome .command-bar #fullscreen {
+    width: 32px;
+    min-width: 32px;
+    height: 32px;
+    padding: 0;
+  }
+  .app-chrome #fullscreen > .chrome-button-label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+}
+@media (max-width: 1359px) {
+  .app-chrome .command-bar {
+    padding: 0 8px;
+  }
+  .chrome-brand-name {
+    display: none;
+  }
+  .app-chrome .command-bar button {
+    padding: 0 8px;
+  }
+  .app-chrome .command-bar .chrome-icon-button {
+    padding: 0;
+  }
+  .app-chrome .command-bar #command-search {
+    padding: 0 8px;
+  }
+}
+@media (max-width: 1199px) {
+  .app-chrome .command-bar {
+    gap: 8px;
+  }
+  .app-chrome .command-bar nav,
+  .app-chrome .workspace-actions {
+    gap: 4px;
+  }
+  .chrome-brand {
+    margin-right: 0;
+  }
+  .app-chrome .command-bar #command-search {
+    min-width: 160px;
+  }
+  .chrome-file-actions .app-icon,
+  .chrome-panel-toggles .app-icon,
+  .app-chrome #help .app-icon {
+    display: none;
+  }
+}
+@media print {
+  .chrome-popover {
+    display: none !important;
+  }
+}

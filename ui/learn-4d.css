@@ -1,36 +1,223 @@
 /* SPDX-License-Identifier: GPL-3.0-only */
-body.learn-4d-active main{grid-template-columns:minmax(0,1fr) 336px}
-body.learn-4d-active main>.workspace{grid-column:1;grid-row:1}
-body.learn-4d-active main>.library,body.learn-4d-active main>.inspector{display:none}
-#learn-4d-panel[hidden]{display:none}
-#learn-4d-panel{grid-column:2;grid-row:1;display:flex;flex-direction:column;min-height:0;overflow:hidden;padding:24px;background:linear-gradient(155deg,#19303a,#14212d 50%);color:#e0ebef;border-left:1px solid #3d5966;font-size:13px;line-height:1.65}
-#learn-4d-panel .learn-content{flex:1;min-height:0;overflow:auto;padding:0 4px 8px 0}
-#learn-4d-panel header,#learn-4d-panel footer,#learn-4d-panel>.learn-copy{flex-shrink:0}
-#learn-4d-panel header{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:16px}
-#learn-4d-panel h2{margin:0;font-size:28px;letter-spacing:-.5px;font-weight:600}
-#learn-4d-panel h3{margin:8px 0 16px;font-size:23px;line-height:1.25;letter-spacing:-.3px}
-#learn-4d-panel p{margin:8px 0 16px}
-#learn-4d-panel .learn-eyebrow{margin:0;color:#8fe0ce;font-size:10px;font-weight:700;letter-spacing:1.3px}
-#learn-4d-panel .learn-copy{font-size:11px;line-height:1.5;color:#acc3cd}
-#learn-4d-panel label{display:block;margin-bottom:8px;color:#c1d4dc}
-#learn-4d-panel select{width:100%;max-width:100%;padding:8px;border-radius:8px;background:#10212d;color:#e0ebef;border:1px solid #436070}
-.learn-progress{display:grid;gap:8px;margin:24px 0;color:#acc3cd;font-size:11px;font-variant-numeric:tabular-nums}
-.learn-progress progress{width:100%;height:5px;border:0;accent-color:#8fe0ce;border-radius:8px;overflow:hidden}
-.learn-progress progress::-webkit-progress-bar{background:#304757}.learn-progress progress::-webkit-progress-value{background:#8fe0ce}
-#learn-4d-panel article{min-height:184px}
-#learn-4d-panel button{border-radius:8px;min-height:40px;padding:8px 16px;white-space:nowrap}
-#learn-4d-panel .accent{background:#8fe0ce;border-color:#8fe0ce;color:#102b27;font-weight:600}
-#learn-4d-panel button:focus-visible,#learn-4d-panel select:focus-visible{outline:2px solid #fff;outline-offset:3px}
-#learn-4d-action{width:100%}
-.learn-try{margin:24px 0 16px;padding:16px;border:1px solid #365365;border-radius:12px;background:#10212d}
-.learn-try strong{color:#9de5d6;font-size:12px}.learn-try p{font-size:12px;color:#bfd2dc}
-#learn-4d-pause{font-size:11px;min-height:32px!important;padding:4px 12px!important}
-#learn-4d-status{display:block;min-height:48px;max-width:100%;font:inherit;font-size:12px;line-height:1.6;white-space:normal;overflow:visible;overflow-wrap:anywhere;color:#b5cfdb}
-body.learn-4d-active .primary .direct-4d-gizmo{right:8px;max-width:calc(100% - 16px);grid-template-columns:repeat(3,minmax(0,40px))}
-#learn-4d-panel footer{display:flex;justify-content:space-between;gap:16px;margin:16px 0}
-button.learn-welcome-card{display:flex;flex-direction:column;align-items:flex-start;gap:4px;padding:16px!important;border:1px solid #71b9ae!important;background:#183b3c!important;color:#e2fff5!important;white-space:normal;text-align:left;border-radius:12px}
-.learn-welcome-card strong{font-size:16px}.learn-welcome-card span{font-size:12px;color:#b4dcd5}
-@media(max-width:1280px){body.learn-4d-active main{grid-template-columns:minmax(0,1fr) 304px}#learn-4d-panel{padding:16px}#learn-4d-panel article{min-height:176px}}
-@media(max-width:900px){body.learn-4d-active #views[data-layout=split]{grid-template-columns:1fr;grid-template-rows:1fr 1fr}body.learn-4d-active .view-toolbar{overflow-x:auto}body.learn-4d-active .workspace-shelf{overflow-x:auto}}
+body.learn-4d-active main {
+  grid-template-columns: minmax(0, 1fr) 336px;
+}
+body.learn-4d-active main > .workspace {
+  grid-column: 1;
+  grid-row: 1;
+}
+body.learn-4d-active main > .library,
+body.learn-4d-active main > .inspector {
+  display: none;
+}
+#learn-4d-panel[hidden] {
+  display: none;
+}
+#learn-4d-panel {
+  grid-column: 2;
+  grid-row: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+  padding: 24px;
+  background: linear-gradient(155deg, #19303a, #14212d 50%);
+  color: #e0ebef;
+  border-left: 1px solid #3d5966;
+  font-size: 13px;
+  line-height: 1.65;
+}
+#learn-4d-panel .learn-content {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  padding: 0 4px 8px 0;
+}
+#learn-4d-panel header,
+#learn-4d-panel footer,
+#learn-4d-panel > .learn-copy {
+  flex-shrink: 0;
+}
+#learn-4d-panel header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+#learn-4d-panel h2 {
+  margin: 0;
+  font-size: 28px;
+  letter-spacing: -0.5px;
+  font-weight: 600;
+}
+#learn-4d-panel h3 {
+  margin: 8px 0 16px;
+  font-size: 23px;
+  line-height: 1.25;
+  letter-spacing: -0.3px;
+}
+#learn-4d-panel p {
+  margin: 8px 0 16px;
+}
+#learn-4d-panel .learn-eyebrow {
+  margin: 0;
+  color: #8fe0ce;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.3px;
+}
+#learn-4d-panel .learn-copy {
+  font-size: 11px;
+  line-height: 1.5;
+  color: #acc3cd;
+}
+#learn-4d-panel label {
+  display: block;
+  margin-bottom: 8px;
+  color: #c1d4dc;
+}
+#learn-4d-panel select {
+  width: 100%;
+  max-width: 100%;
+  padding: 8px;
+  border-radius: 8px;
+  background: #10212d;
+  color: #e0ebef;
+  border: 1px solid #436070;
+}
+.learn-progress {
+  display: grid;
+  gap: 8px;
+  margin: 24px 0;
+  color: #acc3cd;
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+}
+.learn-progress progress {
+  width: 100%;
+  height: 5px;
+  border: 0;
+  accent-color: #8fe0ce;
+  border-radius: 8px;
+  overflow: hidden;
+}
+.learn-progress progress::-webkit-progress-bar {
+  background: #304757;
+}
+.learn-progress progress::-webkit-progress-value {
+  background: #8fe0ce;
+}
+#learn-4d-panel article {
+  min-height: 184px;
+}
+#learn-4d-panel button {
+  border-radius: 8px;
+  min-height: 40px;
+  padding: 8px 16px;
+  white-space: nowrap;
+}
+#learn-4d-panel .accent {
+  background: #8fe0ce;
+  border-color: #8fe0ce;
+  color: #102b27;
+  font-weight: 600;
+}
+#learn-4d-panel button:focus-visible,
+#learn-4d-panel select:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 3px;
+}
+#learn-4d-action {
+  width: 100%;
+}
+.learn-try {
+  margin: 24px 0 16px;
+  padding: 16px;
+  border: 1px solid #365365;
+  border-radius: 12px;
+  background: #10212d;
+}
+.learn-try strong {
+  color: #9de5d6;
+  font-size: 12px;
+}
+.learn-try p {
+  font-size: 12px;
+  color: #bfd2dc;
+}
+#learn-4d-pause {
+  font-size: 11px;
+  min-height: 32px !important;
+  padding: 4px 12px !important;
+}
+#learn-4d-status {
+  display: block;
+  min-height: 48px;
+  max-width: 100%;
+  font: inherit;
+  font-size: 12px;
+  line-height: 1.6;
+  white-space: normal;
+  overflow: visible;
+  overflow-wrap: anywhere;
+  color: #b5cfdb;
+}
+body.learn-4d-active .primary .direct-4d-gizmo {
+  right: 8px;
+  max-width: calc(100% - 16px);
+  grid-template-columns: repeat(3, minmax(0, 40px));
+}
+#learn-4d-panel footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin: 16px 0;
+}
+button.learn-welcome-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  padding: 16px !important;
+  border: 1px solid #71b9ae !important;
+  background: #183b3c !important;
+  color: #e2fff5 !important;
+  white-space: normal;
+  text-align: left;
+  border-radius: 12px;
+}
+.learn-welcome-card strong {
+  font-size: 16px;
+}
+.learn-welcome-card span {
+  font-size: 12px;
+  color: #b4dcd5;
+}
+@media (max-width: 1280px) {
+  body.learn-4d-active main {
+    grid-template-columns: minmax(0, 1fr) 304px;
+  }
+  #learn-4d-panel {
+    padding: 16px;
+  }
+  #learn-4d-panel article {
+    min-height: 176px;
+  }
+}
+@media (max-width: 900px) {
+  body.learn-4d-active #views[data-layout='split'] {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr;
+  }
+  body.learn-4d-active .view-toolbar {
+    overflow-x: auto;
+  }
+  body.learn-4d-active .workspace-shelf {
+    overflow-x: auto;
+  }
+}
 
-#learn-4d-panel [tabindex="-1"]:focus{outline:none}
+#learn-4d-panel [tabindex='-1']:focus {
+  outline: none;
+}

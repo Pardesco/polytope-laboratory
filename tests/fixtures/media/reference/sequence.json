@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "fps": 8,
+  "frameCount": 4,
+  "endpointIncluded": true,
+  "frameTimes": [
+    0,
+    0.125,
+    0.25,
+    0.375
+  ]
+}

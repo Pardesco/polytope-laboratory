@@ -1,0 +1,30 @@
+{
+  "scenario_id": "stel-05-inaccessible-cavity",
+  "baseline": {
+    "version": "Stella4D 5.4 manual, May 4 2014",
+    "sha256": "9cda8b03212946417655ce2d95a5ffece4904b83e4c9f8b936434dbf0050e49c",
+    "anchor": "fillCells",
+    "interpretation": "Select hidden unselected cells to remove internal boundary/net parts without changing the external surface.",
+    "geometry_comparison_executed": false
+  },
+  "planes": [[1,0,0,2],[1,0,0,1],[1,0,0,-1],[1,0,0,-2],[0,1,0,2],[0,1,0,1],[0,1,0,-1],[0,1,0,-2],[0,0,1,2],[0,0,1,1],[0,0,1,-1],[0,0,1,-2]],
+  "bounds": [[-3,-3,-3],[3,3,3]],
+  "interval_endpoints": [-3,-2,-1,1,2,3],
+  "selected_rule": "Cartesian interval indices in {1,2,3}^3 except (2,2,2); interval indices start at zero.",
+  "expected": {
+    "observed_region_count": 125,
+    "bounded_region_count": 27,
+    "selected_region_count": 26,
+    "cavity_interval_indices": [[2,2,2]],
+    "preserve_volume": 56,
+    "fill_volume": 64,
+    "added_volume": 8,
+    "preserve_boundary_faces": 60,
+    "fill_boundary_faces": 54,
+    "preserve_boundary_area": 120,
+    "fill_boundary_area": 96,
+    "preserve_net_components": 2,
+    "fill_net_components": 1,
+    "removed_inner_square_faces": 6
+  }
+}

@@ -1,4 +1,5 @@
 """Isolated bounded equal-edge 3D zonotope; no source-feature UI or zone addition."""
+
 from copy import deepcopy
 from fractions import Fraction
 from itertools import product
@@ -78,7 +79,7 @@ def zonohedron(directions, *, edge_length=1.0, max_zones=None):
                 raise GeometryError('Zonohedron distinct zones are numerically too close to parallel.')
     generators = units * length
     signs = np.array(list(product((-1, 1), repeat=len(units))), dtype=float)
-    sums = signs @ generators * .5
+    sums = signs @ generators * 0.5
     if len(sums) > MAX_SUMS:
         raise GeometryError('Zonohedron sign-sum resource bound exceeded.')
     result = hull(sums.tolist(), name='Equal-edge zonohedron')
@@ -93,8 +94,7 @@ def zonohedron(directions, *, edge_length=1.0, max_zones=None):
         distance = float(np.linalg.norm(delta))
         if abs(distance / length - 1) > TOLERANCE:
             raise GeometryError('Zonohedron reconstruction failed the equal-edge check.')
-        matches = [i for i, u in enumerate(units)
-                   if np.linalg.norm(np.cross(delta / distance, u)) <= TOLERANCE]
+        matches = [i for i, u in enumerate(units) if np.linalg.norm(np.cross(delta / distance, u)) <= TOLERANCE]
         if len(matches) != 1:
             raise GeometryError('Zonohedron edge has no unique generator owner.')
         edge_zones.append(matches[0])
@@ -113,29 +113,42 @@ def zonohedron(directions, *, edge_length=1.0, max_zones=None):
         if offset < 0:
             normal = -normal
             offset = -offset
-        expected = float(np.abs(generators @ normal).sum() * .5)
+        expected = float(np.abs(generators @ normal).sum() * 0.5)
         if abs(offset - expected) > TOLERANCE * length:
             raise GeometryError('Zonohedron support differs from its segment sum.')
-        supports.append({'vertexIds': ids, 'normal': normal.tolist(),
-                         'offset': offset, 'segmentSupport': expected})
+        supports.append({'vertexIds': ids, 'normal': normal.tolist(), 'offset': offset, 'segmentSupport': expected})
     result['metadata']['zonohedron'] = {
-        'algorithmVersion': VERSION, 'sourceDirections': deepcopy(directions),
-        'edgeLength': length, 'maxZones': max_zones, 'distinctZoneCount': len(groups),
-        'selectedZones': deepcopy(selected), 'edgeZoneIds': edge_zones,
+        'algorithmVersion': VERSION,
+        'sourceDirections': deepcopy(directions),
+        'edgeLength': length,
+        'maxZones': max_zones,
+        'distinctZoneCount': len(groups),
+        'selectedZones': deepcopy(selected),
+        'edgeZoneIds': edge_zones,
         'vertexSignVectors': vertex_signs,
-        'signSumsEnumerated': len(sums), 'supports': supports,
+        'signSumsEnumerated': len(sums),
+        'supports': supports,
         'antipodalPolicy': 'exact supplied binary64 proportionality; first occurrence',
-        'numeric': {'mode': 'float64-approximate', 'certified': False,
-                    'exactScope': 'supplied generator collinearity only',
-                    'reconstructionTolerance': TOLERANCE,
-                    'minimumNormalizedSeparation': MIN_SEPARATION},
-        'resourceBounds': {'inputDirections': MAX_INPUT_DIRECTIONS,
-                           'selectedZones': MAX_ZONES, 'signSums': MAX_SUMS},
+        'numeric': {
+            'mode': 'float64-approximate',
+            'certified': False,
+            'exactScope': 'supplied generator collinearity only',
+            'reconstructionTolerance': TOLERANCE,
+            'minimumNormalizedSeparation': MIN_SEPARATION,
+        },
+        'resourceBounds': {'inputDirections': MAX_INPUT_DIRECTIONS, 'selectedZones': MAX_ZONES, 'signSums': MAX_SUMS},
         'classification': classification,
-        'resultModelId': result['id'], 'resultFingerprint': result['fingerprint']}
-    validate_project({'format': 'polytope-laboratory', 'version': 1, 'active': 0,
-                      'documents': [{'id': 'zonohedron-check', 'cursor': 0,
-                                     'states': [{'model': result, 'view': {}}]}]})
+        'resultModelId': result['id'],
+        'resultFingerprint': result['fingerprint'],
+    }
+    validate_project(
+        {
+            'format': 'polytope-laboratory',
+            'version': 1,
+            'active': 0,
+            'documents': [{'id': 'zonohedron-check', 'cursor': 0, 'states': [{'model': result, 'view': {}}]}],
+        }
+    )
     return result
 
 
@@ -146,16 +159,17 @@ def verify_zonohedron_evidence(model):
         evidence = model['metadata']['zonohedron']
         if evidence['algorithmVersion'] != VERSION:
             raise GeometryError('Unknown zonohedron evidence version.')
-        reconstructed = zonohedron(evidence['sourceDirections'],
-                                   edge_length=evidence['edgeLength'],
-                                   max_zones=evidence['maxZones'])
+        reconstructed = zonohedron(
+            evidence['sourceDirections'], edge_length=evidence['edgeLength'], max_zones=evidence['maxZones']
+        )
+
         def encoded(value):
             return json.dumps(value, sort_keys=True, separators=(',', ':'), allow_nan=False)
+
         if encoded(reconstructed) != encoded(model):
             raise GeometryError('Zonohedron full attributes or evidence changed.')
     except (KeyError, TypeError, ValueError, OverflowError, RecursionError) as exc:
         if isinstance(exc, GeometryError):
             raise
         raise GeometryError('Malformed zonohedron evidence.') from exc
-    return {'passed': True, 'certified': False,
-            'modelId': model['id'], 'fingerprint': identity(model)}
+    return {'passed': True, 'certified': False, 'modelId': model['id'], 'fingerprint': identity(model)}

@@ -75,12 +75,15 @@ def test_identity_survives_changed_file_content_and_separates_roots(tmp_path):
     assert changed['id'] != index_library(other)[0]['id']
 
 
-@pytest.mark.parametrize('text,dimension,counts,header', [
-    ('0OFF\n', 0, [1, 0, 0, 0], []),
-    ('1OFF\n# vertices\n2\n-.5\n.5\n', 1, [2, 0, 0, 0], [2]),
-    ('2OFF\n5 5\n', 2, [5, 5, 0, 0], [5, 5]),
-    ('5OFF\n90 420 360 180 32\n', 5, [90, 360, 420, 180], [90, 420, 360, 180, 32]),
-])
+@pytest.mark.parametrize(
+    'text,dimension,counts,header',
+    [
+        ('0OFF\n', 0, [1, 0, 0, 0], []),
+        ('1OFF\n# vertices\n2\n-.5\n.5\n', 1, [2, 0, 0, 0], [2]),
+        ('2OFF\n5 5\n', 2, [5, 5, 0, 0], [5, 5]),
+        ('5OFF\n90 420 360 180 32\n', 5, [90, 360, 420, 180], [90, 420, 360, 180, 32]),
+    ],
+)
 def test_unsupported_dimensions_remain_searchable_and_explicit(tmp_path, text, dimension, counts, header):
     write(tmp_path, 'unsupported.off', text)
     row = index_library(tmp_path)[0]
@@ -89,10 +92,20 @@ def test_unsupported_dimensions_remain_searchable_and_explicit(tmp_path, text, d
     assert 'supports 3D and 4D' in row['diagnostic']
 
 
-@pytest.mark.parametrize('text', ['garbage\n4 4 6\n', 'OFF\n', 'OFF\na 4 6\n',
-                                        '4OFF\n8 32 24\n', 'OFF\n4 -1 6\n', 'OFF\n0 0 0\n',
-                                        'OFF\n4 1000001 6\n', '#' + 'x' * 70000 + '\nOFF\n4 4 6\n'],
-                         ids=['marker', 'missing', 'integer', 'length', 'negative', 'zero', 'count-limit', 'header-limit'])
+@pytest.mark.parametrize(
+    'text',
+    [
+        'garbage\n4 4 6\n',
+        'OFF\n',
+        'OFF\na 4 6\n',
+        '4OFF\n8 32 24\n',
+        'OFF\n4 -1 6\n',
+        'OFF\n0 0 0\n',
+        'OFF\n4 1000001 6\n',
+        '#' + 'x' * 70000 + '\nOFF\n4 4 6\n',
+    ],
+    ids=['marker', 'missing', 'integer', 'length', 'negative', 'zero', 'count-limit', 'header-limit'],
+)
 def test_invalid_headers_have_diagnostics_without_aborting_other_entries(tmp_path, text):
     write(tmp_path, 'bad.off', text)
     write(tmp_path, 'good.off', 'OFF\n4 4 6\n')

@@ -1,0 +1,305 @@
+.timeline-panel {
+  height: 260px;
+  max-height: 65%;
+  min-height: 180px;
+  flex: 0 0 auto;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--panel);
+  margin-top: 8px;
+  overflow: hidden;
+}
+.timeline-panel[hidden],
+.timeline-panel [hidden] {
+  display: none !important;
+}
+#timeline-resize {
+  height: 8px;
+  flex: none;
+  cursor: ns-resize;
+  touch-action: none;
+  background: var(--panel2);
+  border-bottom: 1px solid var(--border);
+}
+#timeline-resize:focus-visible {
+  outline: 2px solid var(--focus-color);
+  outline-offset: -2px;
+}
+.timeline-transport {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-bottom: 1px solid var(--border);
+  flex: 0 0 auto;
+  overflow-x: auto;
+}
+.timeline-transport > strong {
+  font-size: var(--font-title);
+}
+.timeline-transport :is(label, div) {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+.timeline-transport label {
+  margin: 0;
+  white-space: nowrap;
+  font-size: var(--font-secondary);
+}
+.timeline-transport input[type='text'] {
+  width: 64px;
+  min-width: 48px;
+}
+.timeline-transport input[type='checkbox'] {
+  width: auto;
+}
+.timeline-transport button {
+  white-space: nowrap;
+  min-height: var(--control-height);
+}
+.timeline-transport :is(#animation-position, #tour-position) {
+  display: none;
+}
+#timeline-readout {
+  font-family: var(--font-mono);
+  font-size: var(--font-secondary);
+  white-space: nowrap;
+  padding: 0;
+}
+#timeline-close {
+  margin-left: auto;
+  min-width: var(--utility-size);
+}
+.timeline-modes button[aria-pressed='true'] {
+  background: var(--selection-bg);
+  border-color: var(--accent);
+}
+.timeline-content {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  padding: 8px 16px 16px;
+}
+#timeline-keyframes {
+  display: grid;
+  grid-template-columns: 192px minmax(280px, 1fr);
+  gap: 16px;
+}
+#timeline-motions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+#timeline-turn-options {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+#timeline-turn-options label {
+  font-size: var(--font-secondary);
+  margin: 0;
+  gap: 8px;
+}
+#timeline-turn-options input {
+  width: 52px;
+}
+.timeline-recipe {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.timeline-recipe button {
+  width: 100%;
+  min-height: var(--control-height);
+  text-align: left;
+}
+.timeline-recipe small {
+  color: var(--muted);
+  font-size: var(--font-secondary);
+  line-height: 1.4;
+}
+.timeline-editor {
+  min-width: 0;
+}
+#timeline-ruler {
+  height: 32px;
+  margin: 0 16px 0 112px;
+  position: relative;
+  cursor: crosshair;
+  border-bottom: 1px solid var(--border);
+}
+#timeline-ruler span {
+  position: absolute;
+  bottom: 0;
+  transform: translateX(-50%);
+  font-size: var(--font-secondary);
+  color: var(--muted);
+  padding-bottom: 8px;
+  pointer-events: none;
+}
+#timeline-ruler span:after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  height: 6px;
+  border-left: 1px solid var(--muted);
+}
+#timeline-lanes {
+  position: relative;
+}
+.timeline-lane-track:after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: var(--playhead, 0%);
+  border-left: 1px solid var(--accent);
+  pointer-events: none;
+}
+.timeline-lane {
+  display: grid;
+  grid-template-columns: 104px minmax(0, 1fr);
+  gap: 8px;
+  align-items: center;
+  min-height: 36px;
+  margin-right: 16px;
+}
+.timeline-lane-label {
+  font-size: var(--font-secondary);
+  color: var(--text);
+}
+.timeline-lane-track {
+  position: relative;
+  border-bottom: 1px solid var(--border);
+  height: 32px;
+}
+.timeline-lane.constant {
+  opacity: 0.6;
+  min-height: 24px;
+}
+.timeline-lane.constant .timeline-lane-track {
+  height: 24px;
+  font-size: var(--font-secondary);
+  color: var(--muted);
+}
+.timeline-diamond {
+  position: absolute;
+  top: 0;
+  transform: translateX(-50%);
+  width: 32px !important;
+  min-width: 32px;
+  min-height: 32px !important;
+  height: 32px;
+  padding: 0 !important;
+  border: 0;
+  background: transparent;
+  color: var(--accent);
+  touch-action: none;
+  cursor: ew-resize;
+  font-size: 20px;
+}
+.timeline-diamond[aria-pressed='true'] {
+  color: var(--text);
+  background: var(--selection-bg);
+}
+#timeline-record-row {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+.timeline-editor p {
+  margin: 8px 0;
+  font-size: var(--font-secondary);
+}
+#timeline-numeric {
+  margin-top: 8px;
+  overflow: auto;
+}
+#timeline-keyframe-table {
+  overflow: auto;
+}
+#timeline-keyframe-table input {
+  min-width: 100px;
+  width: 100%;
+  font-size: var(--font-secondary);
+}
+#timeline-keyframe-table :is(td, th) {
+  padding: 4px;
+  text-align: left;
+}
+#timeline-export-settings {
+  margin-top: 16px;
+  border-top: 1px solid var(--border);
+  padding-top: 8px;
+}
+#timeline-export-settings > div {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  padding-top: 8px;
+}
+#timeline-export-settings label {
+  gap: 8px;
+  margin: 0;
+}
+#timeline-export-settings details {
+  flex-basis: 100%;
+}
+#timeline-export-settings output {
+  flex-basis: 100%;
+}
+.timeline-panel #animation-controls.timeline-legacy:empty {
+  display: block;
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+#timeline-legacy-scrub {
+  grid-column: 1/-1;
+}
+#timeline-tour > #tour-controls {
+  position: static;
+  width: 100% !important;
+  max-width: none;
+  max-height: none;
+  overflow: visible;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+#timeline-tour .chrome-drawer-header {
+  display: none !important;
+}
+#timeline-tour #tour-export-settings {
+  display: none;
+}
+.workspace:has(#timeline-panel[data-mode='keyframes']) #animated-tour-preview {
+  visibility: hidden;
+}
+.timeline-shelf-tab > .settings-body {
+  display: none !important;
+}
+.workspace:has(.timeline-panel:not([hidden])) #views {
+  min-height: 100px;
+}
+.workspace:has(.timeline-panel:not([hidden])) .appearance-stage {
+  min-height: 100px;
+}
+@media (max-width: 900px) {
+  #timeline-keyframes {
+    grid-template-columns: 160px minmax(280px, 1fr);
+  }
+  .timeline-transport > strong {
+    display: none;
+  }
+}

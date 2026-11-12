@@ -1,18 +1,142 @@
-footer #status { min-width: 0; flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: #b8c4d2; }
-footer #cancel { flex: none; white-space: nowrap; min-height: 24px; }
-footer #autosave-status { flex: none; white-space: nowrap; }
-#job-progress { flex: none; width: 64px; height: 3px; overflow: hidden; background: #35414f; border-radius: 8px; }
-#job-progress::after { content: ''; display: block; width: 40%; height: 100%; background: #8fc6ff; border-radius: inherit; animation: friendly-progress 1.3s ease-in-out infinite alternate; }
-@keyframes friendly-progress { from { transform: translateX(0); } to { transform: translateX(150%); } }
-#friendly-notifications { position: fixed; inset: auto 16px 40px auto; display: flex; flex-direction: column; gap: 8px; width: min(400px, calc(100vw - 32px)); max-height: min(60vh, 560px); overflow-y: auto; z-index: 30; pointer-events: none; }
-#toast, #success-toasts { position: static; display: flex; flex-direction: column; gap: 8px; max-width: none; padding: 0; border: 0; border-radius: 0; background: transparent; box-shadow: none; }
-#toast[hidden], #success-toasts[hidden], #job-progress[hidden] { display: none; }
-.friendly-toast { position: relative; pointer-events: auto; padding: 16px 40px 16px 16px; border: 1px solid #51677e; border-left: 3px solid #91c6ad; border-radius: 8px; background: #202b36; color: #e2edf7; box-shadow: 0 8px 24px #0005; font-size: 12px; line-height: 1.5; overflow-wrap: anywhere; }
-.friendly-toast[data-kind=error] { border-left-color: #efb39e; }
-.friendly-toast p { margin: 0; }
-.friendly-toast .toast-close { position: absolute; top: 8px; right: 8px; padding: 0; width: 24px; height: 24px; font-size: 18px; line-height: 1; }
-.friendly-toast details { margin-top: 8px; }
-.friendly-toast summary { cursor: pointer; color: #c1d9f2; }
-.friendly-toast pre { margin: 8px 0; padding: 8px; max-height: 160px; overflow: auto; white-space: pre-wrap; user-select: text; background: #111c26; border-radius: 4px; color: #d8e5f1; font-size: 11px; }
-.friendly-toast button:focus-visible, .friendly-toast summary:focus-visible { outline: 2px solid #9bceff; outline-offset: 2px; }
-@media (prefers-reduced-motion: reduce) { #job-progress::after { animation: none; width: 100%; } }
+footer #status {
+  min-width: 0;
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: #b8c4d2;
+}
+footer #cancel {
+  flex: none;
+  white-space: nowrap;
+  min-height: 24px;
+}
+footer #autosave-status {
+  flex: none;
+  white-space: nowrap;
+}
+#job-progress {
+  flex: none;
+  width: 64px;
+  height: 3px;
+  overflow: hidden;
+  background: #35414f;
+  border-radius: 8px;
+}
+#job-progress::after {
+  content: '';
+  display: block;
+  width: 40%;
+  height: 100%;
+  background: #8fc6ff;
+  border-radius: inherit;
+  animation: friendly-progress 1.3s ease-in-out infinite alternate;
+}
+@keyframes friendly-progress {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(150%);
+  }
+}
+#friendly-notifications {
+  position: static;
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-height: 0;
+  max-height: min(25vh, 240px);
+  overflow-y: auto;
+  pointer-events: none;
+}
+#views .viewport.primary > #friendly-notifications {
+  position: absolute;
+  top: var(--space-2);
+  right: var(--space-2);
+  width: min(400px, calc(100% - 32px));
+  max-height: calc(100% - 120px);
+  z-index: 9;
+}
+#toast,
+#success-toasts {
+  position: static;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-width: none;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+#toast[hidden],
+#success-toasts[hidden],
+#job-progress[hidden] {
+  display: none;
+}
+.friendly-toast {
+  position: relative;
+  pointer-events: none;
+  padding: 16px 40px 16px 16px;
+  border: 1px solid #51677e;
+  border-left: 3px solid #91c6ad;
+  border-radius: 8px;
+  background: #202b36;
+  color: #e2edf7;
+  box-shadow: 0 8px 24px #0005;
+  font-size: 12px;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+.friendly-toast :is(button, summary, pre) {
+  pointer-events: auto;
+}
+.friendly-toast[data-kind='error'] {
+  border-left-color: #efb39e;
+}
+.friendly-toast p {
+  margin: 0;
+}
+.friendly-toast .toast-close {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  padding: 0;
+  width: 24px;
+  height: 24px;
+  font-size: 18px;
+  line-height: 1;
+}
+.friendly-toast details {
+  margin-top: 8px;
+}
+.friendly-toast summary {
+  cursor: pointer;
+  color: #c1d9f2;
+}
+.friendly-toast pre {
+  margin: 8px 0;
+  padding: 8px;
+  max-height: 160px;
+  overflow: auto;
+  white-space: pre-wrap;
+  user-select: text;
+  background: #111c26;
+  border-radius: 4px;
+  color: #d8e5f1;
+  font-size: 11px;
+}
+.friendly-toast button:focus-visible,
+.friendly-toast summary:focus-visible {
+  outline: 2px solid #9bceff;
+  outline-offset: 2px;
+}
+@media (prefers-reduced-motion: reduce) {
+  #job-progress::after {
+    animation: none;
+    width: 100%;
+  }
+}

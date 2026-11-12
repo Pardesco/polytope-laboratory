@@ -342,14 +342,8 @@ def validate_project(project, *, require_views=False):
                 from .cell_nets import reconstruct_cell_net
                 state['cellNetLayout']=reconstruct_cell_net(state['model'],state['cellNetLayout'])
             exact=state['model']
-            if exact.get('numeric',{}).get('mode')=='rational-exact':
-                from .rational import rational_hull
-                source=exact.get('certificate',{}).get('sourceCoordinates')
-                if not source:
-                    raise GeometryError('Exact model is missing its original certificate inputs.')
-                rechecked=rational_hull(source)
-                if identity(rechecked)!=identity(exact):
-                    raise GeometryError('Exact model differs from its independently recomputed input certificate.')
+            from .precision_report import validate_exact_evidence
+            validate_exact_evidence(exact)
         if any(doc is original for original in documents):
             from .history import validate_document_history
             validate_document_history(doc)

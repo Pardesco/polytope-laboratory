@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<testsuites>
+	<testcase name="actual constructor mounts beside manual faceting, expression fields and guarded event handlers" time="0.021045" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\automatic-faceting-controls.test.mjs"/>
+	<testcase name="one expression batch preserves all count domains, options and literal source action/plane IDs" time="0.006019" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\automatic-faceting-controls.test.mjs"/>
+	<testcase name="candidate generation ignores irrelevant search expression fields" time="0.003271" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\automatic-faceting-controls.test.mjs"/>
+	<testcase name="empty search and resource-limited search never automatically adopt or assert unbounded completeness" time="0.006051" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\automatic-faceting-controls.test.mjs"/>
+	<testcase name="preview is detached and explicit adoption alone commits the identical verified receipt and result" time="0.004735" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\automatic-faceting-controls.test.mjs"/>
+	<testcase name="successful app workspace invalidation during commit does not turn published adoption into cancellation" time="0.002969" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\automatic-faceting-controls.test.mjs"/>
+	<testcase name="invalid counts, pools, JSON, unsupported criteria and source dimensions refuse atomically" time="0.006632" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\automatic-faceting-controls.test.mjs"/>
+	<testcase name="held expressions reject coordinates ownership changes with no native search/publication" time="0.001222" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\automatic-faceting-controls.test.mjs"/>
+	<testcase name="held native preview rejects coordinates ownership changes before viewer/publication" time="0.008064" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\automatic-faceting-controls.test.mjs"/>
+	<testcase name="held expressions reject rgba ownership changes with no native search/publication" time="0.001050" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\automatic-faceting-controls.test.mjs"/>
+	<testcase name="held native preview rejects rgba ownership changes before viewer/publication" time="0.004388" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\automatic-faceting-controls.test.mjs"/>
+	<testcase name="held expressions reject modelUnit ownership changes with no native search/publication" time="0.001048" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\automatic-faceting-controls.test.mjs"/>
+	<testcase name="held native preview rejects modelUnit ownership changes before viewer/publication" time="0.003809" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\automatic-faceting-controls.test.mjs"/>
+	<testcase name="held expressions reject viewUnit ownership changes with no native search/publication" time="0.000920" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\automatic-faceting-controls.test.mjs"/>
+	<testcase name="held native preview rejects viewUnit ownership changes before viewer/publication" time="0.004020" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\automatic-faceting-controls.test.mjs"/>
+	<testcase name="held expressions reject notes ownership changes with no native search/publication" time="0.001159" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\automatic-faceting-controls.test.mjs"/>
+	<testcase name="held native preview rejects notes ownership changes before viewer/publication" time="0.004927" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\automatic-faceting-controls.test.mjs"/>
+	<testcase name="held expressions reject document ownership changes with no native search/publication" time="0.001064" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\automatic-faceting-controls.test.mjs"/>
+	<testcase name="held native preview rejects document ownership changes before viewer/publication" time="0.004671" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\automatic-faceting-controls.test.mjs"/>
+	<testcase name="held expressions reject project ownership changes with no native search/publication" time="0.001194" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\automatic-faceting-controls.test.mjs"/>
+	<testcase name="held native preview rejects project ownership changes before viewer/publication" time="0.003418" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\automatic-faceting-controls.test.mjs"/>
+	<testcase name="held expressions reject form ownership changes with no native search/publication" time="0.001677" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\automatic-faceting-controls.test.mjs"/>
+	<testcase name="held native preview rejects form ownership changes before viewer/publication" time="0.004305" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\automatic-faceting-controls.test.mjs"/>
+	<testcase name="held expressions reject export ownership changes with no native search/publication" time="0.000896" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\automatic-faceting-controls.test.mjs"/>
+	<testcase name="held native preview rejects export ownership changes before viewer/publication" time="0.002735" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\automatic-faceting-controls.test.mjs"/>
+	<testcase name="selected result ownership is fenced during native preview even when other form fields are unchanged" time="0.003405" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\automatic-faceting-controls.test.mjs"/>
+	<testcase name="held native commit applies option guards before any history mutation" time="0.028734" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\automatic-faceting-controls.test.mjs"/>
+	<testcase name="camera/rotation movement preserves search and held native adoption eligibility" time="0.004557" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\automatic-faceting-controls.test.mjs"/>
+	<testcase name="cancel and busy guards release a held native job and reject its eventual stale publisher" time="0.002219" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\automatic-faceting-controls.test.mjs"/>
+	<testcase name="source/form changes after a completed search require a fresh receipt; observer changes are allowed" time="0.003919" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\automatic-faceting-controls.test.mjs"/>
+	<testcase name="actual copied native JSONL expression/candidate/search/preview/adoption/replay verifies literal math and RGBA" time="52.489459" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\automatic-faceting-controls.test.mjs"/>
+	<testcase name="copied app wires a distinct preview viewer, job signals, export/cancel and required history operation" time="0.013309" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\automatic-faceting-controls.test.mjs"/>
+	<testcase name="actual native expression await refuses a changed RGBA source before any geometry job is submitted" time="15.770110" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\automatic-faceting-controls.test.mjs"/>
+	<testcase name="actual warmed native process cancellation terminates a bounded long search before any geometry publication" time="5.564851" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\automatic-faceting-controls.test.mjs" failure="Native cancellation proof timed out.">
+		<failure type="testCodeFailure" message="Native cancellation proof timed out.">
+[Error [ERR_TEST_FAILURE]: Native cancellation proof timed out.] {
+  code: 'ERR_TEST_FAILURE',
+  failureType: 'testCodeFailure',
+  cause: Error: Native cancellation proof timed out.
+      at Timeout._onTimeout (file:///C:/Users/Randall/Documents/polytope-orchestra/r8-conformance/tests/automatic-faceting-controls.test.mjs:238:81)
+      at listOnTimeout (node:internal/timers:685:17)
+      at process.processTimers (node:internal/timers:618:7)
+}
+		</failure>
+	</testcase>
+	<testcase name="tidy dual and independent spiky option combine with existing type/plane/partial filters" time="0.003047" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\automatic-faceting-controls.test.mjs"/>
+	<testcase name="previous/next result traversal previews retained results without wrapping or committing" time="0.018274" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\automatic-faceting-controls.test.mjs"/>
+	<testcase name="larger-domain status keeps finite exhaustion, work budgets and pruning visible" time="0.000617" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\automatic-faceting-controls.test.mjs"/>
+	<testcase name="mounted twenty-vertex fixture searches and previews the complete invariant isohedral slice" time="58.229022" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\automatic-faceting-controls.test.mjs"/>
+	<testcase name="frozen build pins source/version manifest and retains CLI entry" time="0.002024" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\batch-experiment.test.cjs"/>
+	<testcase name="qualification rejects incomplete or mathematically incorrect sample report" time="0.002487" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\batch-experiment.test.cjs"/>
+	<testcase name="process harness retains failure exit and framed output" time="0.227953" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\batch-experiment.test.cjs"/>
+	<testcase name="comparison retains geometry and analysis equality while accepting per-run UUID record hashes" time="0.001630" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\batch-experiment.test.cjs"/>
+	<testcase name="expert-off Library opens a generated dual, rechecks both tranches and reopens source-owned evidence" time="49.576048" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\classification-qualification-mounted.test.mjs"/>
+	<testsuite name="ordinary startup reaches common inspection, construction and appearance paths with Expert off" time="86.275399" disabled="0" errors="0" tests="5" failures="0" skipped="0" timestamp="2026-11-09T16:26:20.169Z" hostname="rm1">
+		<testcase name="Select opens the common picker and source cell Hide/Isolate/Front/Back retain topology" time="5.472267" classname="ordinary startup reaches common inspection, construction and appearance paths with Expert off" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\common-workflows-mounted.test.mjs"/>
+		<testcase name="Convex core is a common 4D/3D card and commits through undo, redo and validated save/reopen" time="35.805937" classname="ordinary startup reaches common inspection, construction and appearance paths with Expert off" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\common-workflows-mounted.test.mjs"/>
+		<testcase name="source-direction Zonohedron is common and its original controls commit undoable source-edge construction" time="13.422293" classname="ordinary startup reaches common inspection, construction and appearance paths with Expert off" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\common-workflows-mounted.test.mjs"/>
+		<testcase name="common presentation and bump/environment choices persist, with advanced fields collapsed" time="5.587721" classname="ordinary startup reaches common inspection, construction and appearance paths with Expert off" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\common-workflows-mounted.test.mjs"/>
+		<testcase name="hidden startup and smoke reveal keep unchanged basic and expert IDs reachable" time="6.922056" classname="ordinary startup reaches common inspection, construction and appearance paths with Expert off" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\common-workflows-mounted.test.mjs"/>
+	</testsuite>
+	<testcase name="qualification requires explicit unpacked candidate pins and valid matrix arguments" time="0.004364" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\common-workflows-qualification.test.cjs"/>
+	<testcase name="plan is executable without candidate or Electron and covers the requested feature matrix" time="0.225396" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\common-workflows-qualification.test.cjs"/>
+	<testcase name="frozen manifests detect edits, additions and deletions and output receipts bind actual bytes" time="0.028024" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\common-workflows-qualification.test.cjs"/>
+	<testcase name="history comparison retains literal order, dimension and interpretation but permits a replay ID" time="0.001691" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\common-workflows-qualification.test.cjs"/>
+	<testcase name="OFF and JSON output checks reject changed coordinates and ordered incidence" time="0.001620" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\common-workflows-qualification.test.cjs"/>
+	<testcase name="binary export checks reject malformed lengths and empty geometry" time="0.005990" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\common-workflows-qualification.test.cjs"/>
+	<testcase name="SVG, DXF and WebM checks require their advertised structure" time="0.000588" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\common-workflows-qualification.test.cjs"/>
+	<testcase name="strict reveal opens ordinary ancestors, preserves IDs and refuses Expert controls without enabling them" time="1.333537" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\common-workflows-qualification.test.cjs"/>
+	<testcase name="coverage labels use qualified named identities and unknown denominators honestly" time="0.019380" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\corpus-reconciliation-controls.test.mjs"/>
+	<testcase name="coverage is mounted in the ordinary Library, collapsed and lazy" time="0.002949" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\corpus-reconciliation-controls.test.mjs"/>
+	<testcase name="named identity view retains separate realization, coordinate, topology and review evidence" time="0.000539" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\corpus-reconciliation-controls.test.mjs"/>
+	<testcase name="numerical audit uses the selected identity and realization without replacing a document" time="0.000553" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\corpus-reconciliation-controls.test.mjs"/>
+	<testcase name="unmatched duals and stale realizations cannot be opened or numerically audited" time="0.000510" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\corpus-reconciliation-controls.test.mjs"/>
+	<testcase name="4D groups display every candidate name without increasing coverage" time="0.000354" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\corpus-reconciliation-controls.test.mjs"/>
+	<testcase name="superseded group loads abort and discard late results" time="0.000387" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\corpus-reconciliation-controls.test.mjs"/>
+	<testcase name="identity changes cancel a pending audit before publication" time="0.000573" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\corpus-reconciliation-controls.test.mjs"/>
+	<testcase name="failed requests show retryable local status and restore controls" time="0.000754" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\corpus-reconciliation-controls.test.mjs"/>
+	<testcase name="native JSON-lines dispatch is allowed, reusable and mounted without history mutations" time="8.530243" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\corpus-reconciliation-controls.test.mjs"/>
+	<testcase name="mounted H3 dodecahedron: Expert off, reopen, ratio sweep and real VP8 video" time="32.163136" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\dual-morph-snub-h3-mounted.test.mjs" failure="page.waitForFunction: Timeout 15000ms exceeded.">
+		<failure type="testCodeFailure" message="page.waitForFunction: Timeout 15000ms exceeded.">
+[Error [ERR_TEST_FAILURE]: page.waitForFunction: Timeout 15000ms exceeded.] {
+  code: 'ERR_TEST_FAILURE',
+  failureType: 'testCodeFailure',
+  cause: page.waitForFunction: Timeout 15000ms exceeded.
+      at TestContext.&lt;anonymous> (C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\dual-morph-snub-h3-mounted.test.mjs:30:16) {
+    name: 'TimeoutError',
+    log: []
+  }
+}
+		</failure>
+	</testcase>
+	<testcase name="mounted H3 icosahedron: Expert off, reopen, ratio sweep and real VP8 video" time="46.966862" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\dual-morph-snub-h3-mounted.test.mjs"/>
+	<testcase name="mounted via-snub works with Expert off, literal source save/reopen and unsupported-domain UI" time="10.140922" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\dual-morph-snub-mounted.test.mjs"/>
+	<testcase name="mounted DXF profile reviews base/derived units, RGB loss and publishes the reviewed payload" time="120.212770" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\dxf-boundary.test.mjs"/>
+	<testcase name="DXF profile during destination review leaves the previous file intact" time="17.777107" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\dxf-boundary.test.mjs"/>
+	<testcase name="DXF source during destination review leaves the previous file intact" time="11.198062" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\dxf-boundary.test.mjs"/>
+	<testcase name="DXF cancel during destination review leaves the previous file intact" time="9.738669" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\dxf-boundary.test.mjs"/>
+	<testcase name="DXF chooser-cancel during destination review leaves the previous file intact" time="5.277558" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\dxf-boundary.test.mjs"/>
+	<testcase name="DXF reviewed boundary uses native atomic publication and reopens with declared units and face colors" time="4.447467" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\dxf-boundary.test.mjs"/>
+	<testcase name="DXF cancellation during fsync removes the temporary and preserves the previous complete file" time="7.167180" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\dxf-boundary.test.mjs"/>
+	<testsuite name="Expert-off face surgery previews and adopts colored generated/memory pieces through undo, reopen and replay" time="28.254954" disabled="0" errors="0" tests="4" failures="0" skipped="0" timestamp="2026-11-09T16:32:34.523Z" hostname="rm1">
+		<testcase name="pyramid augment with base side colors" time="3.454884" classname="Expert-off face surgery previews and adopts colored generated/memory pieces through undo, reopen and replay" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\face-surgery-mounted.test.mjs"/>
+		<testcase name="memory:1 excavate with piece side colors" time="4.491202" classname="Expert-off face surgery previews and adopts colored generated/memory pieces through undo, reopen and replay" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\face-surgery-mounted.test.mjs"/>
+		<testcase name="memory:1 augment with none side colors" time="3.362485" classname="Expert-off face surgery previews and adopts colored generated/memory pieces through undo, reopen and replay" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\face-surgery-mounted.test.mjs"/>
+		<testcase name="the mounted publication gate refuses an altered native color result without changing history" time="0.726433" classname="Expert-off face surgery previews and adopts colored generated/memory pieces through undo, reopen and replay" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\face-surgery-mounted.test.mjs"/>
+	</testsuite>
+	<testcase name="bounded generalized eligibility admits disjoint components and refuses connected/4D sources" time="0.001158" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\fitting-components.test.mjs"/>
+	<testcase name="generalized report names separation, selected IDs and limited numerical scope" time="0.000459" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\fitting-components.test.mjs"/>
+	<testcase name="mounted common Fit faces preview/adopt/undo/save/reopen/replay keeps native generalized gates" time="21.385800" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\fitting-components.test.mjs"/>
+	<testcase name="the ordinary gallery exposes the bounded Goursat tranche with retained rational symbols" time="0.010497" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\goursat-wythoff-controls.test.mjs"/>
+	<testcase name="mounted controls keep common actions visible and advanced evidence collapsed" time="0.000733" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\goursat-wythoff-controls.test.mjs"/>
+	<testcase name="generation uses existing document construction and renders bound native evidence" time="0.003899" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\goursat-wythoff-controls.test.mjs"/>
+	<testcase name="unsupported choices, export and duplicate requests refuse without publication" time="0.000927" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\goursat-wythoff-controls.test.mjs"/>
+	<testcase name="held generation rejects cancellation and changes to source, workspace, units, notes or choice" time="0.021212" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\goursat-wythoff-controls.test.mjs"/>
+	<testcase name="failure unlocks controls and allows a successful retry" time="0.001460" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\goursat-wythoff-controls.test.mjs"/>
+	<testcase name="corpus supplement shows symbols, definition hashes and queue without promoting baseline counts" time="0.000720" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\goursat-wythoff-controls.test.mjs"/>
+	<testcase name="native renderer-to-engine path publishes the validated source as an ordinary history document" time="2.419100" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\goursat-wythoff-controls.test.mjs"/>
+	<testcase name="Schwarz generation uses the same guarded document path and displays its own evidence" time="0.979085" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\goursat-wythoff-controls.test.mjs"/>
+	<testcase name="preview and all three exports use native mm strips and keep source/history unchanged" time="5.273016" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\hinge-strip-controls.test.mjs"/>
+	<testcase name="held preview rejects changed source before publication" time="0.006665" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\hinge-strip-controls.test.mjs"/>
+	<testcase name="held preview rejects changed placement before publication" time="0.002309" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\hinge-strip-controls.test.mjs"/>
+	<testcase name="held preview rejects changed paper before publication" time="0.002147" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\hinge-strip-controls.test.mjs"/>
+	<testcase name="held preview rejects changed fields before publication" time="0.002112" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\hinge-strip-controls.test.mjs"/>
+	<testcase name="held preview rejects changed cancel before publication" time="0.002041" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\hinge-strip-controls.test.mjs"/>
+	<testcase name="held csv rejects changed source before publication" time="0.001860" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\hinge-strip-controls.test.mjs"/>
+	<testcase name="held csv rejects changed placement before publication" time="0.001968" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\hinge-strip-controls.test.mjs"/>
+	<testcase name="held csv rejects changed paper before publication" time="0.001950" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\hinge-strip-controls.test.mjs"/>
+	<testcase name="held csv rejects changed fields before publication" time="0.002182" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\hinge-strip-controls.test.mjs"/>
+	<testcase name="held csv rejects changed cancel before publication" time="0.001568" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\hinge-strip-controls.test.mjs"/>
+	<testcase name="held pdf rejects changed source before publication" time="0.001805" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\hinge-strip-controls.test.mjs"/>
+	<testcase name="held pdf rejects changed placement before publication" time="0.002607" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\hinge-strip-controls.test.mjs"/>
+	<testcase name="held pdf rejects changed paper before publication" time="0.005175" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\hinge-strip-controls.test.mjs"/>
+	<testcase name="held pdf rejects changed fields before publication" time="0.001872" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\hinge-strip-controls.test.mjs"/>
+	<testcase name="held pdf rejects changed cancel before publication" time="0.001990" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\hinge-strip-controls.test.mjs"/>
+	<testcase name="live fields and native attributes are fenced independently of detached form" time="0.002035" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\hinge-strip-controls.test.mjs"/>
+	<testcase name="destination callback rechecks source and dismissed dialogs cancel cleanly" time="2.307584" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\hinge-strip-controls.test.mjs"/>
+	<testcase name="receipt validation refuses substituted IDs, allowances, scale, page dimensions and residuals" time="1.196494" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\hinge-strip-controls.test.mjs"/>
+	<testcase name="mounted controls expose collapsed allowance, paged preview and original export sessions" time="2.880838" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\hinge-strip-controls.test.mjs"/>
+	<testcase name="mounted preview clears on changed source" time="1.934408" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\hinge-strip-controls.test.mjs"/>
+	<testcase name="mounted preview clears on changed placement" time="3.131810" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\hinge-strip-controls.test.mjs"/>
+	<testcase name="mounted preview clears on changed paper" time="3.080078" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\hinge-strip-controls.test.mjs"/>
+	<testcase name="mounted preview clears on changed fields" time="1.854731" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\hinge-strip-controls.test.mjs"/>
+	<testcase name="mounted preview clears on changed cancel" time="2.340134" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\hinge-strip-controls.test.mjs"/>
+	<testcase name="empty startup and unsupported sources disable actions without reading a missing net" time="0.000300" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\hinge-strip-controls.test.mjs"/>
+	<testcase name="native unsupported assembly and collapsed allowance publish no output" time="5.406983" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\hinge-strip-controls.test.mjs"/>
+	<testcase name="app mounts in existing common reinforcement group with sync/cancel and warm allowlist registrations" time="0.002264" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\hinge-strip-controls.test.mjs"/>
+	<testcase name="mounted History opens a legacy fixture, checks support, replays, branches and reports snapshot fallback without Expert mode" time="11.667360" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\history-support-mounted.test.mjs"/>
+	<testcase name="independent native sheets render through the production Viewer and retain source-owned promotion" time="0.025216" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\independent-cell-section-controls.test.mjs"/>
+	<testcase name="orientation, fill, source edits, held replies and canceled work cannot promote an old cell section" time="0.021886" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\independent-cell-section-controls.test.mjs"/>
+	<testcase name="common Winding cells choice and NumericEntry settings preserve the independent orientation policy" time="0.008952" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\independent-cell-section-controls.test.mjs"/>
+	<testcase name="saved independent cell sections reuse tour routing and reject settings changed during a held native reply" time="0.006224" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\independent-cell-section-controls.test.mjs"/>
+	<testcase name="expert-off mounted app evaluates winding cells, applies an expression, promotes and reopens the native history" time="41.057188" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\independent-cell-section-controls.test.mjs"/>
+	<testcase name="every Bowers and published U/C/W alias resolves without numeric prefix collisions" time="0.066723" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\library-navigation.test.mjs"/>
+	<testcase name="property/count filters combine with text, symbols and unknown metadata honestly" time="0.000619" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\library-navigation.test.mjs"/>
+	<testcase name="related links resolve explicit keys, cell types and vertex figures while skipping absent/unsupported entries" time="0.000359" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\library-navigation.test.mjs"/>
+	<testcase name="mounted geometry filters retain symmetry selection and searchable syntax tooltip" time="0.000658" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\library-navigation.test.mjs"/>
+	<testcase name="mounted Related buttons open catalog entries and follow export and model changes" time="0.000328" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\library-navigation.test.mjs"/>
+	<testcase name="uniform family NumericEntry evaluates counts atomically and generates a guarded document" time="0.006187" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\library-navigation.test.mjs"/>
+	<testcase name="uniform family cancellation and edited inputs prevent late publication" time="0.001298" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\library-navigation.test.mjs"/>
+	<testcase name="property queries cover 3,500 entries without building unused text or caching mutable labels" time="0.002354" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\library-navigation.test.mjs"/>
+	<testcase name="3D imported environment UI, native project reopen and PNG pixels agree with Expert off" time="27.479560" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\material-environment-mounted.test.mjs"/>
+	<testcase name="qualification self-test covers ten cases without importing Electron" time="0.013566" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\media-qualification.test.cjs"/>
+	<testcase name="all deterministic case projects pass the real native save/reopen validator" time="4.049188" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\media-qualification.test.cjs"/>
+	<testcase name="section fixture avoids identical parallel cube slices and uses a unit oblique normal" time="0.000471" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\media-qualification.test.cjs"/>
+	<testcase name="expert-off Store, scaled Add/Blend, Undo/Redo, replay, Swap and reopen use mounted native workflows" time="13.823330" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\memory-addition-mounted.test.mjs"/>
+	<testcase name="subgroup generator IDs are bounded literal IDs, with explicit identity" time="0.005071" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\stellation-plane-input.test.mjs"/>
+	<testcase name="plane expressions refuse invalid normals, extents and row counts without changing saved parameters" time="0.007416" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\stellation-plane-input.test.mjs"/>
+	<testcase name="pending plane expressions reject source edits, input edits and cancellation atomically" time="0.004493" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\stellation-plane-input.test.mjs"/>
+	<testcase name="bounded plane edit remains available with a populated saved selection history" time="0.011816" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\stellation-plane-input.test.mjs"/>
+	<testsuite name="mounted arbitrary planes and reflection subgroup survive selection undo, project reopen and base promotion" time="16.935880" disabled="0" errors="0" tests="2" failures="0" skipped="0" timestamp="2026-11-09T16:35:49.761Z" hostname="rm1">
+		<testcase name="custom facial replication toggles the independent reflection pair" time="8.001036" classname="mounted arbitrary planes and reflection subgroup survive selection undo, project reopen and base promotion" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\stellation-plane-input.test.mjs"/>
+		<testcase name="arbitrary plane expressions and explicit bounds round-trip and promote with undo/redo" time="4.239003" classname="mounted arbitrary planes and reflection subgroup survive selection undo, project reopen and base promotion" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\stellation-plane-input.test.mjs"/>
+	</testsuite>
+	<testcase name="ordinary library evidence is mounted collapsed, lazy and read only" time="0.001618" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\symmetry-evidence-controls.test.mjs"/>
+	<testcase name="limited results and changed fixture/code bindings are explicit" time="0.000240" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\symmetry-evidence-controls.test.mjs"/>
+	<testcase name="current-model matching sends captured source, remains transient and clears after navigation" time="0.000296" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\symmetry-evidence-controls.test.mjs"/>
+	<testcase name="changed or unknown geometry cannot inherit a catalog completeness label" time="0.000176" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\symmetry-evidence-controls.test.mjs"/>
+	<testcase name="late comparison and selection responses are discarded" time="0.000268" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\symmetry-evidence-controls.test.mjs"/>
+	<testcase name="failed evidence reads restore controls for retry" time="0.000525" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\symmetry-evidence-controls.test.mjs"/>
+	<testcase name="corpus source links expose hashes without promoting identity qualification" time="0.000314" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\symmetry-evidence-controls.test.mjs"/>
+	<testcase name="corpus links discard responses after source navigation, including away and back" time="0.000821" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\symmetry-evidence-controls.test.mjs"/>
+	<testcase name="report op is reusable, registered in features, mounted and does not write document state" time="0.001213" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\symmetry-evidence-controls.test.mjs"/>
+	<testcase name="mounted app reads native evidence, matches source hashes and links corpus receipts with Expert off" time="23.898255" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\symmetry-evidence-controls.test.mjs" failure="page.waitForFunction: Timeout 20000ms exceeded.">
+		<failure type="testCodeFailure" message="page.waitForFunction: Timeout 20000ms exceeded.">
+[Error [ERR_TEST_FAILURE]: page.waitForFunction: Timeout 20000ms exceeded.] {
+  code: 'ERR_TEST_FAILURE',
+  failureType: 'testCodeFailure',
+  cause: page.waitForFunction: Timeout 20000ms exceeded.
+      at TestContext.&lt;anonymous> (C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\symmetry-evidence-controls.test.mjs:118:16) {
+    name: 'TimeoutError',
+    log: []
+  }
+}
+		</failure>
+	</testcase>
+	<testcase name="mounted Tuta figure completion: expert-off search, metric evidence, undo/reopen/replay and branch" time="31.786099" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\vertex-figure-scaliform-mounted.test.mjs"/>
+	<testcase name="mounted 4D Waterman: common controls, exact sequence, native reopen and undo/replay" time="17.399645" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r8-conformance\tests\waterman4-mounted.test.mjs"/>
+	<!-- tests 160 -->
+	<!-- suites 0 -->
+	<!-- pass 157 -->
+	<!-- fail 3 -->
+	<!-- cancelled 0 -->
+	<!-- skipped 0 -->
+	<!-- todo 0 -->
+	<!-- duration_ms 848537.3953 -->
+</testsuites>

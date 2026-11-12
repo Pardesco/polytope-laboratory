@@ -1,18 +1,30 @@
 """Atomic document recipes and replay, with no filesystem dispatch."""
+
 import copy
 import uuid
 
 from .geometry import GeometryError
-from .history import (REPLAY_OPERATIONS, create_history, record_source,
-                      append_operation, validate_document_history, replay_history)
+from .history import (
+    REPLAY_OPERATIONS,
+    create_history,
+    record_source,
+    append_operation,
+    validate_document_history,
+    replay_history,
+)
 from .formats import validate_project
+from .history_migrations import require_replay_support, supported_versions
 from .augmentation_workflow import run_attachment, replay_attachment_document, branch_attachment
 from .triangular_geodesic_workflow import run_geodesic, replay_geodesic_document, branch_geodesic
 from .convex_core_workflow import run_convex_core, replay_convex_core_document, branch_convex_core
 from .face_placement_workflow import run_placement, replay_placement_document, branch_placement
 from .convex_core4d_workflow import run_convex_core4d, replay_convex_core4d_document, branch_convex_core4d
 
-from .source_zonohedron_workflow import run_source_zonohedron, replay_source_zonohedron_document, branch_source_zonohedron
+from .source_zonohedron_workflow import (
+    run_source_zonohedron,
+    replay_source_zonohedron_document,
+    branch_source_zonohedron,
+)
 from .cell_attributes import run_cell, replay_cell_document, branch_cell
 from .spring_workflow import run_spring, replay_spring_document, branch_spring
 from .automatic_faceting_workflow import run_faceting, replay_faceting_document, branch_faceting
@@ -22,21 +34,26 @@ RECORD_OPERATIONS = REPLAY_OPERATIONS | {'rational-dual'}
 
 def checked_document(document):
     detached = copy.deepcopy(document)
-    validate_project({'format':'polytope-laboratory', 'version':1,
-                      'active':0, 'documents':[detached]})
+    validate_project({'format': 'polytope-laboratory', 'version': 1, 'active': 0, 'documents': [detached]})
     return detached
 
 
-def run_recipe(document, operation, parameters, dispatcher, label=None):
+def run_recipe(document, operation, parameters, dispatcher, label=None, *, algorithm_version=None):
     if operation not in RECORD_OPERATIONS:
         raise GeometryError('Operation is unavailable for document recipes.')
     if type(parameters) is not dict:
         raise GeometryError('Recipe parameters require a JSON object.')
+    if algorithm_version is not None and (
+        operation != 'polygon-prism' or algorithm_version not in supported_versions(operation)
+    ):
+        raise GeometryError('Unsupported explicit recipe algorithm version; retained snapshots stay readable.')
     if operation == 'projective-incidence-dual':
         from .projective_dual_workflow import run_projective
+
         return run_projective(document, parameters, label or 'Projective reciprocal view')
     if operation == 'element-content':
         from .element_content_workflow import run_content
+
         return run_content(document, parameters, label or 'Edit element content')
     if operation == 'facet-adopt':
         return run_faceting(document, parameters, label or 'Adopt faceting')
@@ -65,80 +82,140 @@ def run_recipe(document, operation, parameters, dispatcher, label=None):
             graph = record_source(graph, node_id, state)
             state['operationNode'] = node_id
     source = result['states'][result['cursor']]
-    if operation in ('coincidic-record','coincidic-compound'):
+    if operation in ('coincidic-record', 'coincidic-compound'):
         from .coincidic_regiments import clean_state
         from .history import _source_hash
-        parent_node=next(n for n in graph.to_dict()['nodes'] if n['id']==source['operationNode'])
-        if _source_hash(clean_state(source))!=_source_hash(clean_state(parent_node['snapshot'])):
-            source_id=str(uuid.uuid4())
-            graph=record_source(graph,source_id,source,parent=source['operationNode'])
-            source['operationNode']=source_id
-    response = dispatcher({'op':operation, 'params':copy.deepcopy(parameters),
-                           'model':copy.deepcopy(source['model'])})
+
+        parent_node = next(n for n in graph.to_dict()['nodes'] if n['id'] == source['operationNode'])
+        if _source_hash(clean_state(source)) != _source_hash(clean_state(parent_node['snapshot'])):
+            source_id = str(uuid.uuid4())
+            graph = record_source(graph, source_id, source, parent=source['operationNode'])
+            source['operationNode'] = source_id
+    request = {'op': operation, 'params': copy.deepcopy(parameters), 'model': copy.deepcopy(source['model'])}
+    if algorithm_version is not None:
+        request['algorithmVersion'] = algorithm_version
+    response = dispatcher(request)
     model = response.get('model') if operation == 'section' else response
     if type(model) is not dict:
         raise GeometryError('This operation produced no model to commit.')
     view = copy.deepcopy(source['view'])
+    if operation == 'construct-from-vertex-figure':
+        view.pop('dualMorph', None)
     if operation == 'coxeter-build' or operation == 'generate' and parameters.get('kind') == 'coxeter-builder':
-        for field in ('net','cellNet','netPrint','foldFraction','explosionAmount','animation','dualMorph','camera','derivedCamera'):
-            view.pop(field,None)
-        view.update(derivedMode='section',sectionNormal=[int(i==model['dimension']-1) for i in range(model['dimension'])],sectionOffset=0,entity=0)
-    if operation in ('blend-regions','merge-compound','pseudo-uniform'):
-        for field in ('net','cellNet','netPrint','dualMorph','animation'):view.pop(field,None)
-        view.update(derivedMode='section',fillRule='nonzero')
+        for field in (
+            'net',
+            'cellNet',
+            'netPrint',
+            'foldFraction',
+            'explosionAmount',
+            'animation',
+            'dualMorph',
+            'camera',
+            'derivedCamera',
+        ):
+            view.pop(field, None)
+        view.update(
+            derivedMode='section',
+            sectionNormal=[int(i == model['dimension'] - 1) for i in range(model['dimension'])],
+            sectionOffset=0,
+            entity=0,
+        )
+    if operation in ('blend-regions', 'merge-compound', 'pseudo-uniform', 'rebuild-coplanar-cells'):
+        for field in ('net', 'cellNet', 'netPrint', 'dualMorph', 'animation'):
+            view.pop(field, None)
+        view.update(derivedMode='section', fillRule='nonzero')
     if operation == 'visible-surface':
-        for field in ('net','cellNet','netPrint','dualMorph','animation'):view.pop(field,None)
-        view.update(derivedMode='net',fillRule='nonzero')
+        for field in ('net', 'cellNet', 'netPrint', 'dualMorph', 'animation'):
+            view.pop(field, None)
+        view.update(derivedMode='net', fillRule='nonzero')
     if operation == 'facet-diagram-adopt':
-        for field in ('net','cellNet','foldFraction','explosionAmount','animation','dualMorph'):
-            view.pop(field,None)
-    for field in ('entitySelection','sectionAlignment','orientationFrame','cellFacingCache','elementVisibility'):
+        for field in ('net', 'cellNet', 'foldFraction', 'explosionAmount', 'animation', 'dualMorph'):
+            view.pop(field, None)
+    for field in ('entitySelection', 'sectionAlignment', 'orientationFrame', 'cellFacingCache', 'elementVisibility'):
         view.pop(field, None)
     view.pop('coincidicComparison', None)
     view.update(cellFacing='all', hiddenCells=[], isolatedCell=None)
-    if (model['dimension'], model.get('embeddingDimension', model['dimension'])) != (source['model']['dimension'], source['model'].get('embeddingDimension', source['model']['dimension'])):
+    if (model['dimension'], model.get('embeddingDimension', model['dimension'])) != (
+        source['model']['dimension'],
+        source['model'].get('embeddingDimension', source['model']['dimension']),
+    ):
         dimension = model['dimension']
-        view.update(sectionNormal=[int(i == dimension-1) for i in range(dimension)],
-                    sectionOffset=0, entity=0,
-                    derivedMode='dual' if dimension < 3 else 'section')
+        view.update(
+            sectionNormal=[int(i == dimension - 1) for i in range(dimension)],
+            sectionOffset=0,
+            entity=0,
+            derivedMode='dual' if dimension < 3 else 'section',
+        )
         # These presentations reference the old dimensional source and layouts.
-        for field in ('net', 'cellNet', 'foldFraction', 'explosionAmount', 'animation',
-                      'camera', 'derivedCamera'):
+        for field in ('net', 'cellNet', 'foldFraction', 'explosionAmount', 'animation', 'camera', 'derivedCamera'):
             view.pop(field, None)
-    if view.get('symmetry'): view['symmetry']['generatorIds'] = ''
-    if view.get('stellation'): view['stellation']['searchGeneratorIds'] = ''
-    if operation == 'section' and parameters.get('section_domain')=='ordinary-cells':
+    if view.get('symmetry'):
+        view['symmetry']['generatorIds'] = ''
+    if view.get('stellation'):
+        view['stellation']['searchGeneratorIds'] = ''
+    if operation == 'section' and parameters.get('section_domain') == 'ordinary-cells':
         view.update(derivedMode='face' if model['faces'] else 'section')
         view.pop('dualMorph', None)
-    if operation == 'section' and parameters.get('section_domain')=='density':
-        view.pop('densitySection',None);view.pop('dualMorph',None)
-        view.update(derivedMode='face',fillRule='nonzero',surfaceColors='source',surfaceOpacity=1)
-        boundary=model.get('metadata',{}).get('densitySection',{}).get('boundaryEdges')
-        if boundary is not None:
-            visible={tuple(sorted(e)) for e in boundary}
-            view['elementVisibility']={'version':1,'sourceFingerprint':model['fingerprint'],'hidden':{'vertices':[],'edges':[i for i,e in enumerate(model['edges']) if tuple(sorted(e)) not in visible],'faces':[],'cells':[]}}
-    if operation == 'exact-surface-section':
-        view.update(derivedMode='face' if model['faces'] else 'section-evidence', sectionNormal=[0,0,1])
+    if operation == 'section' and parameters.get('section_domain') == 'density':
+        view.pop('densitySection', None)
         view.pop('dualMorph', None)
-    if operation in ('incidence-truncate','sphere-project','incidence-dual','reflect-source'): view.pop('dualMorph', None)
-    if operation == 'incidence-dual': view['derivedMode'] = 'incidence-dual'
+        view.update(derivedMode='face', fillRule='nonzero', surfaceColors='source', surfaceOpacity=1)
+        boundary = model.get('metadata', {}).get('densitySection', {}).get('boundaryEdges')
+        if boundary is not None:
+            visible = {tuple(sorted(e)) for e in boundary}
+            view['elementVisibility'] = {
+                'version': 1,
+                'sourceFingerprint': model['fingerprint'],
+                'hidden': {
+                    'vertices': [],
+                    'edges': [i for i, e in enumerate(model['edges']) if tuple(sorted(e)) not in visible],
+                    'faces': [],
+                    'cells': [],
+                },
+            }
+    if operation == 'exact-surface-section':
+        view.update(derivedMode='face' if model['faces'] else 'section-evidence', sectionNormal=[0, 0, 1])
+        view.pop('dualMorph', None)
+    if operation in ('incidence-truncate', 'sphere-project', 'incidence-dual', 'reflect-source'):
+        view.pop('dualMorph', None)
+    if operation == 'incidence-dual':
+        view['derivedMode'] = 'incidence-dual'
     if operation == 'stellation-make-base':
-        view.pop('stellation',None)
-        view['derivedMode']='section'
+        view.pop('stellation', None)
+        view['derivedMode'] = 'section'
     node_id = str(uuid.uuid4())
-    state = {'model':model, 'view':view, 'label':label or operation,
-             'notes':source.get('notes',''), 'operationNode':node_id}
-    if operation in ('coincidic-record','coincidic-compound'):
+    state = {
+        'model': model,
+        'view': view,
+        'label': label or operation,
+        'notes': source.get('notes', ''),
+        'operationNode': node_id,
+    }
+    if operation in ('coincidic-record', 'coincidic-compound'):
         from .coincidic_regiments import compose_state
-        state = {**compose_state(source, parameters, model, operation=='coincidic-compound'), 'label':label or operation, 'operationNode':node_id}
+
+        state = {
+            **compose_state(source, parameters, model, operation == 'coincidic-compound'),
+            'label': label or operation,
+            'operationNode': node_id,
+        }
     elif 'elementAnnotations' in source['view'] or 'elementContentDetached' in source['view']:
         from .element_content_ownership import transfer_content_state
+
         state = transfer_content_state(source, state, operation)
-    graph = append_operation(graph, source['operationNode'], source,
-                             operation, parameters, state, node_id)
+    graph = append_operation(
+        graph,
+        source['operationNode'],
+        source,
+        operation,
+        parameters,
+        state,
+        node_id,
+        algorithm_version=algorithm_version,
+    )
     # Retain graph branches even when the linear undo cursor starts a new branch.
-    result['states'] = (result['states'][:result['cursor']+1] + [state])[-200:]
-    result['cursor'] = len(result['states'])-1
+    result['states'] = (result['states'][: result['cursor'] + 1] + [state])[-200:]
+    result['cursor'] = len(result['states']) - 1
     result['operationHistory'] = graph.to_dict()
     return checked_document(result)
 
@@ -150,6 +227,8 @@ def replay_document(document, dispatcher, target=None):
     graph = validate_document_history(source)
     if graph is None:
         raise GeometryError('Legacy snapshots have no recorded operations to replay.')
+    target = target or source['states'][source['cursor']]['operationNode']
+    require_replay_support(graph.to_dict(), target)
     if any(node['op'] == 'facet-adopt' for node in graph.to_dict()['nodes']):
         return replay_faceting_document(source, target=target, dispatcher=dispatcher)
     if any(node['op'] == 'source-zonohedron' for node in graph.to_dict()['nodes']):
@@ -173,8 +252,7 @@ def replay_document(document, dispatcher, target=None):
     # Project validation regenerates measures, certificates and layout caches.
     state = states[target]
     state['operationNode'] = target
-    result = {'id':str(uuid.uuid4()), 'cursor':0, 'states':[state],
-              'operationHistory':graph.to_dict()}
+    result = {'id': str(uuid.uuid4()), 'cursor': 0, 'states': [state], 'operationHistory': graph.to_dict()}
     return checked_document(result)
 
 
@@ -186,9 +264,10 @@ def branch_recipe(document, parameters, dispatcher, target=None):
     if graph is None:
         raise GeometryError('Legacy snapshots have no recorded parameters to branch.')
     target = target or source['states'][source['cursor']]['operationNode']
-    node = next((n for n in graph.to_dict()['nodes'] if n['id']==target), None)
+    node = next((n for n in graph.to_dict()['nodes'] if n['id'] == target), None)
     if node is None or node['op'] not in REPLAY_OPERATIONS:
         raise GeometryError('Select a replayable operation to branch its parameters.')
+    require_replay_support(graph.to_dict(), target)
     if node['op'] == 'facet-adopt':
         return branch_faceting(source, parameters, target=target, dispatcher=dispatcher)
     if node['op'] == 'source-zonohedron':
@@ -208,5 +287,11 @@ def branch_recipe(document, parameters, dispatcher, target=None):
     if node['op'] == 'convex-core':
         return branch_convex_core(source, parameters, target=target, dispatcher=dispatcher)
     parent = replay_document(source, dispatcher, node['parent'])
-    return run_recipe(parent, node['op'], parameters, dispatcher,
-                      'Parameter branch: '+node['op'])
+    return run_recipe(
+        parent,
+        node['op'],
+        parameters,
+        dispatcher,
+        'Parameter branch: ' + node['op'],
+        algorithm_version=node['algorithmVersion'] if node['op'] == 'polygon-prism' else None,
+    )

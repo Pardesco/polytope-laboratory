@@ -4,6 +4,7 @@ A point-cloud edit uses one isolated desktop job rather than thousands of cold
 processes. Validation of the complete input precedes evaluation; no partial
 values leave this operation after a later syntax/domain/resource refusal.
 """
+
 import json
 
 from .expressions import evaluate
@@ -42,7 +43,9 @@ def expression_batch(parameters):
             if mode == 'rational':
                 value = result['exactRational']
                 if value is None:
-                    raise GeometryError('An exact rational result is required; irrational/approximate results are not accepted.')
+                    raise GeometryError(
+                        'An exact rational result is required; irrational/approximate results are not accepted.'
+                    )
             else:
                 value = result['value']
             output_bytes += len(json.dumps(value, ensure_ascii=False, allow_nan=False).encode('utf-8')) + 1

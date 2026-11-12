@@ -5,21 +5,38 @@ import math
 import uuid
 import numpy as np
 from scipy.spatial import cKDTree
-from .geometry import hull, GeometryError, points_array, rank, TOLERANCE, identity, validate, polygon_area, canonical_cycle
+from .geometry import (
+    hull,
+    GeometryError,
+    points_array,
+    rank,
+    TOLERANCE,
+    identity,
+    validate,
+    polygon_area,
+    canonical_cycle,
+)
 from .section_validation import section_validation
 
 
 def require_convex(model, *, reuse_section_validation=False):
     if model.get('interpretation') != 'convex-polytope':
-        raise GeometryError('This operation supports convex polytopes only. Generalized/star incidence is preserved without convex substitution.')
+        raise GeometryError(
+            'This operation supports convex polytopes only. Generalized/star incidence is preserved without convex substitution.'
+        )
     passed = section_validation.passed(model, validate) if reuse_section_validation else validate(model)['passed']
     if not passed:
         raise GeometryError('Source incidence failed validation.')
 
 
 def record(result, source, operation, parameters):
-    result['provenance'] = {'operation': operation, 'sourceId': source['id'], 'sourceFingerprint': source.get('fingerprint', identity(source)),
-                            'parameters': parameters, 'algorithmVersion': '0.1.0'}
+    result['provenance'] = {
+        'operation': operation,
+        'sourceId': source['id'],
+        'sourceFingerprint': source.get('fingerprint', identity(source)),
+        'parameters': parameters,
+        'algorithmVersion': '0.1.0',
+    }
     return result
 
 
@@ -27,7 +44,12 @@ def dual(model, center=None, radius=1):
     require_convex(model)
     p = points_array(model['vertices'])
     center = np.mean(p, axis=0) if center is None else np.asarray(center, dtype=float)
-    if center.shape != (model['dimension'],) or not np.isfinite(center).all() or not math.isfinite(radius) or radius <= 0:
+    if (
+        center.shape != (model['dimension'],)
+        or not np.isfinite(center).all()
+        or not math.isfinite(radius)
+        or radius <= 0
+    ):
         raise GeometryError('Dual requires a finite center of the correct dimension and a positive radius.')
     eq = model.get('facetEquations')
     if not eq:
@@ -35,38 +57,67 @@ def dual(model, center=None, radius=1):
     eq = np.asarray(eq)
     offsets = -(eq[:, :-1] @ center + eq[:, -1])
     if np.min(offsets) <= TOLERANCE * max(float(np.max(np.ptp(p, axis=0))), np.finfo(float).tiny):
-        raise GeometryError('Reciprocation center must lie strictly inside every supporting half-space; this choice gives an unbounded or singular polar.')
-    result = hull(center + eq[:, :-1] * (radius ** 2 / offsets[:, None]), 'Dual of ' + model['name'])
+        raise GeometryError(
+            'Reciprocation center must lie strictly inside every supporting half-space; this choice gives an unbounded or singular polar.'
+        )
+    result = hull(center + eq[:, :-1] * (radius**2 / offsets[:, None]), 'Dual of ' + model['name'])
     from .view_links import attach_dual_links
-    attach_dual_links(model,result,eq)
+
+    attach_dual_links(model, result, eq)
     return record(result, model, 'dual', {'center': center.tolist(), 'radius': radius})
 
 
-def truncate(model, amount=1/3):
+def truncate(model, amount=1 / 3):
     require_convex(model)
     if not math.isfinite(amount) or not 0 <= amount <= 0.5:
         raise GeometryError('Convex edge-cut truncation amount must be in [0, 0.5].')
     p = points_array(model['vertices'])
     points = [p[a] * (1 - amount) + p[b] * amount for edge in model['edges'] for a, b in (edge, edge[::-1])]
     label = 'Rectification of ' if amount == 0.5 else 'Truncation of '
-    return record(hull(points, label + model['name']), model, 'truncate', {'amount': amount, 'definition': 'hull of directed edge-cut points'})
+    return record(
+        hull(points, label + model['name']),
+        model,
+        'truncate',
+        {'amount': amount, 'definition': 'hull of directed edge-cut points'},
+    )
 
 
-def section(model, normal=None, offset=0, fill_rule='nonzero', section_domain='surface', density_threshold=1):
-    if section_domain=='density':
+def section(
+    model,
+    normal=None,
+    offset=0,
+    fill_rule='nonzero',
+    section_domain='surface',
+    density_threshold=1,
+    cell_orientation='coherent',
+):
+    if section_domain == 'density' and cell_orientation == 'independent':
+        from .independent_cell_sections import independent_cell_section
+
+        return independent_cell_section(model, normal, offset, fill_rule, density_threshold)
+    if cell_orientation != 'coherent':
+        raise GeometryError(
+            'Independent cell orientation requires the density section domain; other orientation policies are unsupported.'
+        )
+    if section_domain == 'density':
         from .filled_sections import filled_section
-        return filled_section(model,normal,offset,fill_rule,density_threshold)
-    if section_domain not in ('surface','ordinary-cells'): raise GeometryError('Choose surface, ordinary-cells, or density section domain.')
-    if section_domain=='ordinary-cells':
+
+        return filled_section(model, normal, offset, fill_rule, density_threshold)
+    if section_domain not in ('surface', 'ordinary-cells'):
+        raise GeometryError('Choose surface, ordinary-cells, or density section domain.')
+    if section_domain == 'ordinary-cells':
         from .ordinary_cell_sections import ordinary_cell_section
-        return ordinary_cell_section(model,normal,offset,fill_rule)
-    if model.get('interpretation')=='polyhedral-region-union':
+
+        return ordinary_cell_section(model, normal, offset, fill_rule)
+    if model.get('interpretation') == 'polyhedral-region-union':
         from .stellation import section_union
-        return section_union(model,normal,offset)
+
+        return section_union(model, normal, offset)
     if model.get('interpretation') == 'generalized-complex':
         from .generalized_sections import generalized_section
-        return generalized_section(model,normal,offset,fill_rule)
-    return convex_section(model,normal,offset)
+
+        return generalized_section(model, normal, offset, fill_rule)
+    return convex_section(model, normal, offset)
 
 
 def convex_section(model, normal=None, offset=0):
@@ -86,16 +137,25 @@ def convex_section(model, normal=None, offset=0):
     for i, (a, b) in enumerate(model['edges']):
         da, db = distances[a], distances[b]
         if abs(da) <= tol:
-            hits.append(p[a]); refs.append({'vertex': a, 'edge': i})
+            hits.append(p[a])
+            refs.append({'vertex': a, 'edge': i})
         if abs(db) <= tol:
-            hits.append(p[b]); refs.append({'vertex': b, 'edge': i})
+            hits.append(p[b])
+            refs.append({'vertex': b, 'edge': i})
         if (da < -tol and db > tol) or (db < -tol and da > tol):
             t = da / (da - db)
-            hits.append(p[a] + t * (p[b] - p[a])); refs.append({'edge': i, 'parameter': float(t)})
+            hits.append(p[a] + t * (p[b] - p[a]))
+            refs.append({'edge': i, 'parameter': float(t)})
     _, _, vt = np.linalg.svd(n[None, :], full_matrices=True)
     basis = vt[1:].T
     origin = n * offset
-    common = {'normal': n.tolist(), 'offset': offset, 'origin': origin.tolist(), 'basis': basis.tolist(), 'sourceId': model['id']}
+    common = {
+        'normal': n.tolist(),
+        'offset': offset,
+        'origin': origin.tolist(),
+        'basis': basis.tolist(),
+        'sourceId': model['id'],
+    }
     if not hits:
         return {'status': 'empty', 'model': None, 'intersection': [], **common}
     hits = np.asarray(hits)
@@ -104,25 +164,41 @@ def convex_section(model, normal=None, offset=0):
     for h, ref in zip(hits, refs):
         index = next((i for i, q in enumerate(unique) if np.linalg.norm(h - q) <= tol), None)
         if index is None:
-            unique.append(h); source_refs.append([ref])
+            unique.append(h)
+            source_refs.append([ref])
         else:
             source_refs[index].append(ref)
     local = (np.asarray(unique) - origin) @ basis
     actual_rank = rank(local / scale)
     if actual_rank < d - 1:
-        return {'status': 'degenerate', 'model': None, 'intersection': local.tolist(), 'affineDimension': actual_rank, 'sourceReferences': source_refs, **common}
+        return {
+            'status': 'degenerate',
+            'model': None,
+            'intersection': local.tolist(),
+            'affineDimension': actual_rank,
+            'sourceReferences': source_refs,
+            **common,
+        }
     result = hull(local, f'Section of {model["name"]}')
     used = result['provenance']['extremeInputIndices']
     record(result, model, 'section', {'normal': n.tolist(), 'offset': offset})
     result['metadata']['sectionEmbedding'] = common
-    return {'status': 'full-dimensional', 'model': result, 'intersection': local.tolist(), 'sourceReferences': [source_refs[i] for i in used], **common}
+    return {
+        'status': 'full-dimensional',
+        'model': result,
+        'intersection': local.tolist(),
+        'sourceReferences': [source_refs[i] for i in used],
+        **common,
+    }
 
 
 def vertex_figure(model, vertex=0, fraction=0.15, mode='slicing', placement='midpoint'):
-    if mode=='combinatorial':
+    if mode == 'combinatorial':
         from .combinatorial_vertex_figures import combinatorial_vertex_figure
-        return combinatorial_vertex_figure(model,vertex,placement)
-    if mode!='slicing':raise GeometryError('Choose slicing or combinatorial vertex-figure mode.')
+
+        return combinatorial_vertex_figure(model, vertex, placement)
+    if mode != 'slicing':
+        raise GeometryError('Choose slicing or combinatorial vertex-figure mode.')
     require_convex(model)
     p = points_array(model['vertices'])
     if not 0 <= vertex < len(p) or not 0 < fraction < 1:
@@ -137,7 +213,12 @@ def vertex_figure(model, vertex=0, fraction=0.15, mode='slicing', placement='mid
     result = section(model, direction, offset)
     if result['model']:
         result['model']['name'] = f'Vertex figure {vertex} of {model["name"]}'
-        record(result['model'], model, 'vertex-figure', {'vertex': vertex, 'fraction': fraction, 'definition': 'local convex slicing realization'})
+        record(
+            result['model'],
+            model,
+            'vertex-figure',
+            {'vertex': vertex, 'fraction': fraction, 'definition': 'local convex slicing realization'},
+        )
     return result
 
 
@@ -153,34 +234,71 @@ def transform(model, matrix=None, translation=None, scale=1):
     d = model['embeddingDimension']
     a = np.eye(d) if matrix is None else np.asarray(matrix, dtype=float)
     t = np.zeros(d) if translation is None else np.asarray(translation, dtype=float)
-    if a.shape != (d, d) or t.shape != (d,) or not np.isfinite(a).all() or not np.isfinite(t).all() or not math.isfinite(scale) or scale == 0 or abs(np.linalg.det(a)) < 1e-12:
+    if (
+        a.shape != (d, d)
+        or t.shape != (d,)
+        or not np.isfinite(a).all()
+        or not np.isfinite(t).all()
+        or not math.isfinite(scale)
+        or scale == 0
+        or abs(np.linalg.det(a)) < 1e-12
+    ):
         raise GeometryError('Transform requires a nonsingular finite matrix, finite translation, and nonzero scale.')
     result = deepcopy(model)
+    from .precision_report import drop_exact_guarantees
+
+    drop_exact_guarantees(result, 'transform')
     result.pop('rationalCoordinates', None)
     result.pop('rationalFacetEquations', None)
     result.pop('certificate', None)
-    result['numeric'] = {**model['numeric'], 'mode':'float64-approximate', 'certified':False,
-                         'inputInterpretation':'Float affine transform; any source rational guarantee is retained only in provenance.'}
-    result.update({'id': str(uuid.uuid4()), 'name': 'Transform of ' + model['name'], 'vertices': ((np.asarray(model['vertices']) @ a.T) * scale + t).tolist()})
-    if d==3 and np.linalg.det(a)*scale**3<0:
-        result['faces']=[list(reversed(face)) for face in result['faces']]
+    result['numeric'] = {
+        **result['numeric'],
+        'mode': 'float64-approximate',
+        'certified': False,
+        'inputInterpretation': 'Float affine transform; any source rational guarantee is retained only in provenance.',
+    }
+    result.update(
+        {
+            'id': str(uuid.uuid4()),
+            'name': 'Transform of ' + model['name'],
+            'vertices': ((np.asarray(model['vertices']) @ a.T) * scale + t).tolist(),
+        }
+    )
+    if d == 3 and np.linalg.det(a) * scale**3 < 0:
+        result['faces'] = [list(reversed(face)) for face in result['faces']]
     result.pop('facetEquations', None)
     result.pop('measure', None)
-    if model.get('interpretation')=='polyhedral-region-union':
-        result['convexPieces']=[transform(piece,matrix=a,translation=t,scale=scale) for piece in model['convexPieces']]
-        result['measure']={'content':sum(piece['measure']['content'] for piece in result['convexPieces']),
-                           'boundaryMeasure':sum(polygon_area(np.asarray(result['vertices'])[face]) for face in result['faces']),
-                           'dimension':3,'units':'model-units','definition':'disjoint-interior convex-region volume sum and exposed facet area'}
-    elif model.get('interpretation')=='planar-region-union':
-        points=np.asarray(result['vertices']);counts=Counter(tuple(sorted((u,v))) for f in result['faces'] for u,v in zip(f,f[1:]+f[:1]))
-        result['measure']={'content':sum(polygon_area(points[f]) for f in result['faces']),
-                           'boundaryMeasure':sum(float(np.linalg.norm(points[u]-points[v])) for (u,v),count in counts.items() if count==1),
-                           'dimension':2,'units':'model-units'}
+    if model.get('interpretation') == 'polyhedral-region-union':
+        result['convexPieces'] = [
+            transform(piece, matrix=a, translation=t, scale=scale) for piece in model['convexPieces']
+        ]
+        result['measure'] = {
+            'content': sum(piece['measure']['content'] for piece in result['convexPieces']),
+            'boundaryMeasure': sum(polygon_area(np.asarray(result['vertices'])[face]) for face in result['faces']),
+            'dimension': 3,
+            'units': 'model-units',
+            'definition': 'disjoint-interior convex-region volume sum and exposed facet area',
+        }
+    elif model.get('interpretation') == 'planar-region-union':
+        points = np.asarray(result['vertices'])
+        counts = Counter(tuple(sorted((u, v))) for f in result['faces'] for u, v in zip(f, f[1:] + f[:1]))
+        result['measure'] = {
+            'content': sum(polygon_area(points[f]) for f in result['faces']),
+            'boundaryMeasure': sum(
+                float(np.linalg.norm(points[u] - points[v])) for (u, v), count in counts.items() if count == 1
+            ),
+            'dimension': 2,
+            'units': 'model-units',
+        }
     if result['interpretation'] == 'convex-polytope':
         computed = hull(result['vertices'])
         result['measure'] = computed['measure']
         # Equations follow existing facet order by matching vertex sets.
         fmap = {tuple(sorted(f)): eq for f, eq in zip(computed['facetVertices'], computed['facetEquations'])}
+        if any(tuple(sorted(f)) not in fmap for f in result['facetVertices']):
+            raise GeometryError(
+                'Float transform cannot preserve source facet incidence: its numerical hull merges or changes supporting facets. The source is unchanged; exact transform guarantees are unavailable.'
+            )
         result['facetEquations'] = [fmap[tuple(sorted(f))] for f in result['facetVertices']]
     result['fingerprint'] = identity(result)
     result['validation'] = validate(result)
@@ -201,10 +319,10 @@ def signed_symmetry(model):
     p = p - center
     tree = cKDTree(p)
     scale = max(float(np.max(np.ptp(p, axis=0))), np.finfo(float).tiny)
-    face_cycles=[canonical_cycle(f) for f in model['faces']]
-    faces=Counter(face_cycles)
-    cells=Counter(tuple(sorted(face_cycles[f] for f in c)) for c in model.get('cells',[]))
-    edges=Counter(tuple(sorted(e)) for e in model['edges'])
+    face_cycles = [canonical_cycle(f) for f in model['faces']]
+    faces = Counter(face_cycles)
+    cells = Counter(tuple(sorted(face_cycles[f] for f in c)) for c in model.get('cells', []))
+    edges = Counter(tuple(sorted(e)) for e in model['edges'])
     actions = []
     for perm in permutations(range(d)):
         for signs in product((-1, 1), repeat=d):
@@ -212,25 +330,47 @@ def signed_symmetry(model):
             dist, mapping = tree.query(transformed)
             if max(dist) > TOLERANCE * scale or len(set(mapping)) != len(p):
                 continue
-            if Counter(tuple(sorted(mapping[e])) for e in model['edges'])!=edges:
+            if Counter(tuple(sorted(mapping[e])) for e in model['edges']) != edges:
                 continue
-            mapped_cycles=[canonical_cycle(mapping[f].tolist()) for f in model['faces']]
-            if Counter(mapped_cycles)!=faces:
+            mapped_cycles = [canonical_cycle(mapping[f].tolist()) for f in model['faces']]
+            if Counter(mapped_cycles) != faces:
                 continue
-            if Counter(tuple(sorted(mapped_cycles[f] for f in c)) for c in model.get('cells',[]))!=cells:
+            if Counter(tuple(sorted(mapped_cycles[f] for f in c)) for c in model.get('cells', [])) != cells:
                 continue
             matrix = np.eye(d)[list(perm)] * np.asarray(signs)[:, None]
-            actions.append({'permutation': mapping.tolist(), 'matrix': matrix.tolist(), 'determinant': round(float(np.linalg.det(matrix)))})
+            actions.append(
+                {
+                    'permutation': mapping.tolist(),
+                    'matrix': matrix.tolist(),
+                    'determinant': round(float(np.linalg.det(matrix))),
+                }
+            )
     # Completeness depends on the supplied metric vertex set, never a mutable
     # catalog label. The cube/cross metric group is exactly the signed group.
-    tol=TOLERANCE*scale
-    cube=len(p)==2**d and np.max(np.abs(np.abs(p)-np.max(np.abs(p))))<=tol
-    cross=len(p)==2*d and np.all(np.sum(np.abs(p)>tol,axis=1)==1) and np.ptp(np.linalg.norm(p,axis=1))<=tol
-    complete=(cube or cross) and len(actions)==math.factorial(d)*2**d
-    return {'order': len(actions), 'properOrder': sum(a['determinant'] == 1 for a in actions), 'complete': complete,
-            'status': 'complete for supplied cube/cross metric vertex set' if complete else 'verified signed-coordinate subgroup; full group not enumerated',
-            'numericMode': 'float64-approximate', 'center': center.tolist(), 'actions': actions,
-            'checks': ['vertex bijection', 'metric action', 'edge multiplicity', 'ordered face cycles', 'cell face incidence']}
+    tol = TOLERANCE * scale
+    cube = len(p) == 2**d and np.max(np.abs(np.abs(p) - np.max(np.abs(p)))) <= tol
+    cross = (
+        len(p) == 2 * d and np.all(np.sum(np.abs(p) > tol, axis=1) == 1) and np.ptp(np.linalg.norm(p, axis=1)) <= tol
+    )
+    complete = (cube or cross) and len(actions) == math.factorial(d) * 2**d
+    return {
+        'order': len(actions),
+        'properOrder': sum(a['determinant'] == 1 for a in actions),
+        'complete': complete,
+        'status': 'complete for supplied cube/cross metric vertex set'
+        if complete
+        else 'verified signed-coordinate subgroup; full group not enumerated',
+        'numericMode': 'float64-approximate',
+        'center': center.tolist(),
+        'actions': actions,
+        'checks': [
+            'vertex bijection',
+            'metric action',
+            'edge multiplicity',
+            'ordered face cycles',
+            'cell face incidence',
+        ],
+    }
 
 
 def measure(model, kind, indices):
@@ -239,12 +379,23 @@ def measure(model, kind, indices):
         raise GeometryError('Measurement vertex IDs are outside this model.')
     if kind == 'distance' and len(indices) == 2:
         value = float(np.linalg.norm(p[indices[1]] - p[indices[0]]))
-        return {'value': value, 'units': 'model-units', 'definition': 'intrinsic Euclidean vertex distance', 'indices': indices}
+        return {
+            'value': value,
+            'units': 'model-units',
+            'definition': 'intrinsic Euclidean vertex distance',
+            'indices': indices,
+        }
     if kind == 'angle' and len(indices) == 3:
         a, b, c = p[indices]
-        u, v = a-b, c-b
+        u, v = a - b, c - b
         if np.linalg.norm(u) == 0 or np.linalg.norm(v) == 0:
             raise GeometryError('Angle is undefined for a zero-length ray.')
-        return {'value': math.degrees(math.acos(float(np.clip(np.dot(u, v) / np.linalg.norm(u) / np.linalg.norm(v), -1, 1)))),
-                'units': 'degrees', 'definition': 'unsigned intrinsic angle, middle vertex is apex', 'indices': indices}
+        return {
+            'value': math.degrees(
+                math.acos(float(np.clip(np.dot(u, v) / np.linalg.norm(u) / np.linalg.norm(v), -1, 1)))
+            ),
+            'units': 'degrees',
+            'definition': 'unsigned intrinsic angle, middle vertex is apex',
+            'indices': indices,
+        }
     raise GeometryError('Distance needs two vertex IDs; angle needs three.')

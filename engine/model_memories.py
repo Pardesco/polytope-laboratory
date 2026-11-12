@@ -3,6 +3,7 @@
 Stored geometry goes through the same authoritative validation and cache
 reconstruction as document history. This module only validates the envelope.
 """
+
 import json
 from .geometry import GeometryError
 
@@ -13,17 +14,25 @@ TOTAL_BYTES = 128 * 1024 * 1024
 def memory_documents(bank):
     if bank is None:
         return []
-    if (not isinstance(bank, dict) or set(bank) != {'version', 'slots'}
-            or type(bank['version']) is not int or bank['version'] != 1
-            or not isinstance(bank['slots'], list) or len(bank['slots']) != 9):
+    if (
+        not isinstance(bank, dict)
+        or set(bank) != {'version', 'slots'}
+        or type(bank['version']) is not int
+        or bank['version'] != 1
+        or not isinstance(bank['slots'], list)
+        or len(bank['slots']) != 9
+    ):
         raise GeometryError('Model memories require version 1 and nine slots.')
     documents, total_bytes, total_nodes = [], 0, 0
     for number, entry in enumerate(bank['slots'], 1):
         if entry is None:
             continue
-        if (not isinstance(entry, dict) or not isinstance(entry.get('state'), dict)
-                or not isinstance(entry['state'].get('view'), dict)
-                or not isinstance(entry.get('source'), dict)):
+        if (
+            not isinstance(entry, dict)
+            or not isinstance(entry.get('state'), dict)
+            or not isinstance(entry['state'].get('view'), dict)
+            or not isinstance(entry.get('source'), dict)
+        ):
             raise GeometryError(f'Memory {number} requires a saved state, view and source record.')
         stack, nodes = [(entry, 0)], 0
         while stack:
@@ -36,8 +45,7 @@ def memory_documents(bank):
             elif isinstance(value, list):
                 stack.extend((item, depth + 1) for item in value)
         try:
-            size = len(json.dumps(entry, ensure_ascii=False, allow_nan=False,
-                                  separators=(',', ':')).encode('utf-8'))
+            size = len(json.dumps(entry, ensure_ascii=False, allow_nan=False, separators=(',', ':')).encode('utf-8'))
         except (ValueError, TypeError, RecursionError) as exc:
             raise GeometryError(f'Memory {number} must contain finite JSON data.') from exc
         if size > SLOT_BYTES:

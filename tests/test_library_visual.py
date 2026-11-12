@@ -1,12 +1,16 @@
 """Collection representatives use existing native generation, without opening documents."""
-import re
+
+import json
+import subprocess
 from pathlib import Path
 import pytest
 from engine.catalog import get_catalog
 from engine.server import dispatch
 
-SOURCE = (Path(__file__).resolve().parents[1] / 'ui' / 'library-collections.mjs').read_text(encoding='utf-8')
-KEYS = re.findall(r"representative:'([^']+)'", SOURCE)
+ROOT = Path(__file__).resolve().parents[1]
+PROGRAM = "import {LIBRARY_COLLECTIONS} from './ui/library-collections.mjs';console.log(JSON.stringify(LIBRARY_COLLECTIONS.map(c=>c.representative).filter(Boolean)))"
+KEYS = json.loads(subprocess.check_output(['node', '--input-type=module', '-e', PROGRAM], cwd=ROOT, text=True))
+assert len(KEYS) == 12, "Find all shipped collection representatives"
 
 
 @pytest.mark.parametrize('key', KEYS)

@@ -3,13 +3,13 @@
 Never trust caller-supplied fingerprints or validation reports. Each cache key
 includes the entire model and its value types as represented on the JSON wire.
 """
+
 from collections import OrderedDict
 import json
 
 
 class SectionValidationCache:
-    def __init__(self, max_entries=8, max_entry_bytes=2 * 1024 * 1024,
-                 max_total_bytes=8 * 1024 * 1024):
+    def __init__(self, max_entries=8, max_entry_bytes=2 * 1024 * 1024, max_total_bytes=8 * 1024 * 1024):
         self.max_entries = max_entries
         self.max_entry_bytes = max_entry_bytes
         self.max_total_bytes = max_total_bytes
@@ -21,9 +21,12 @@ class SectionValidationCache:
         # Tuple/list or numeric/string object-key coercion must not create hits
         # for a different direct-Python input. The walk also bounds cycles and
         # oversized individual strings before JSON allocates their wire form.
-        pending = [model]; nodes = 0; upper_bytes = 0
+        pending = [model]
+        nodes = 0
+        upper_bytes = 0
         while pending:
-            value = pending.pop(); nodes += 1
+            value = pending.pop()
+            nodes += 1
             if nodes > 65536:
                 return None
             kind = type(value)
@@ -62,15 +65,14 @@ class SectionValidationCache:
         # streaming, preserving exact byte-limit eligibility and canonical keys.
         if upper_bytes <= min(self.max_entry_bytes, self.max_total_bytes):
             try:
-                return json.dumps(model, ensure_ascii=True, allow_nan=False,
-                                  sort_keys=True, separators=(',', ':'))
+                return json.dumps(model, ensure_ascii=True, allow_nan=False, sort_keys=True, separators=(',', ':'))
             except (TypeError, ValueError, RecursionError):
                 return None
         # Streaming stops collecting oversized inputs without retaining a large
         # encoded model. Non-JSON direct Python callers simply use validation.
-        parts = []; size = 0
-        encoder = json.JSONEncoder(ensure_ascii=True, allow_nan=False,
-                                   sort_keys=True, separators=(',', ':'))
+        parts = []
+        size = 0
+        encoder = json.JSONEncoder(ensure_ascii=True, allow_nan=False, sort_keys=True, separators=(',', ':'))
         try:
             for part in encoder.iterencode(model):
                 size += len(part)

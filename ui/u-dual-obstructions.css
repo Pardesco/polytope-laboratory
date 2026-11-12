@@ -1,0 +1,36 @@
+#library-u-dual-obstructions {
+  margin-block: var(--space-1);
+  padding: var(--space-1);
+  border: 1px solid var(--border);
+  font-size: var(--font-secondary);
+}
+#library-u-dual-obstructions > summary {
+  min-height: var(--control-height);
+  align-content: center;
+  cursor: pointer;
+  font-size: var(--font-body);
+}
+#library-u-dual-obstructions p {
+  margin-block: var(--space-1);
+  overflow-wrap: anywhere;
+}
+#library-u-dual-obstructions label {
+  display: block;
+}
+#library-u-dual-obstructions select,
+#library-u-dual-obstructions button:not(.group-help) {
+  width: 100%;
+  min-height: var(--control-height);
+  margin-block: var(--space-1);
+}
+#library-u-dual-obstructions pre {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font-size: var(--font-secondary);
+  max-height: 320px;
+  overflow: auto;
+}
+#library-u-dual-obstructions output {
+  display: block;
+  margin-block: var(--space-1);
+}

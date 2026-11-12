@@ -4,6 +4,7 @@ Generator normalization, output coordinates, Hull and native measurements remain
 approximate. Exact rational predicates apply ONLY to the supplied raw directions.
 The previous twelve-zone sign-sum prototype remains unchanged.
 """
+
 from copy import deepcopy
 from fractions import Fraction
 from functools import cmp_to_key
@@ -27,11 +28,11 @@ MAX_VERTICES = 1024
 
 
 def _dot(a, b):
-    return sum(x*y for x, y in zip(a, b))
+    return sum(x * y for x, y in zip(a, b))
 
 
 def _cross(a, b):
-    return (a[1]*b[2]-a[2]*b[1], a[2]*b[0]-a[0]*b[2], a[0]*b[1]-a[1]*b[0])
+    return (a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0])
 
 
 def _checked(vector):
@@ -49,12 +50,13 @@ def _facet_codes(raw, normal):
     zeros = [i for i, side in enumerate(sides) if not side]
     u = raw[zeros[0]]
     v = _checked(_cross(normal, u))
-    rays = [(i, sign, tuple(sign*x for x in raw[i])) for i in zeros for sign in (-1, 1)]
+    rays = [(i, sign, tuple(sign * x for x in raw[i])) for i in zeros for sign in (-1, 1)]
 
     def compare(a, b):
         def half(ray):
             x, y = _dot(ray[2], u), _dot(ray[2], v)
             return 0 if y > 0 or y == 0 and x >= 0 else 1
+
         ha, hb = half(a), half(b)
         if ha != hb:
             return ha - hb
@@ -64,7 +66,7 @@ def _facet_codes(raw, normal):
         return -turn
 
     rays.sort(key=cmp_to_key(compare))
-    first = rays[:len(zeros)]
+    first = rays[: len(zeros)]
     if len({i for i, _, _ in first}) != len(zeros):
         raise GeometryError('Zonogon half-circle does not own every zone once.')
     code = sides[:]
@@ -86,7 +88,7 @@ def zonohedron_support(directions, *, edge_length=1.0, max_zones=None):
     """At most32 equal-length zones; enumerate facets instead of2**n sums."""
     if type(directions) is not list or not 1 <= len(directions) <= MAX_INPUT:
         raise GeometryError('Support zonohedron requires1..64 literal directions.')
-    _json_bytes(directions, 1024*1024)
+    _json_bytes(directions, 1024 * 1024)
     length = _number(edge_length, 'edge length', 1e6)
     if length < 1e-6:
         raise GeometryError('Zonohedron edge length must be from1e-6 to1e6.')
@@ -107,8 +109,9 @@ def zonohedron_support(directions, *, edge_length=1.0, max_zones=None):
     units = np.array([g['unitDirection'] for g in selected])
     if np.linalg.svd(units, compute_uv=False)[-1] < MIN_SEPARATION:
         raise GeometryError('Zonohedron lacks a well-separated full3D span.')
-    if any(np.linalg.norm(np.cross(units[a], units[b])) < MIN_SEPARATION
-           for a, b in combinations(range(len(units)), 2)):
+    if any(
+        np.linalg.norm(np.cross(units[a], units[b])) < MIN_SEPARATION for a, b in combinations(range(len(units)), 2)
+    ):
         raise GeometryError('Distinct zones are numerically too close to parallel.')
     raw = [g['raw'] for g in selected]
     normals = {}
@@ -117,12 +120,12 @@ def zonohedron_support(directions, *, edge_length=1.0, max_zones=None):
         anchor = next((x for x in normal if x), None)
         if anchor is None:
             raise GeometryError('Distinct exact generator zones are parallel.')
-        key = _checked(tuple(x/anchor for x in normal))
+        key = _checked(tuple(x / anchor for x in normal))
         normals.setdefault(key, (a, b))
     vertices, vertex_lookup, facets = [], {}, []
     for normal, pair in normals.items():
         for orientation in (1, -1):
-            oriented = tuple(orientation*x for x in normal)
+            oriented = tuple(orientation * x for x in normal)
             codes, zeros, sides = _facet_codes(raw, oriented)
             cycle = []
             for code in codes:
@@ -132,14 +135,23 @@ def zonohedron_support(directions, *, edge_length=1.0, max_zones=None):
                     vertex_lookup[code] = len(vertices)
                     vertices.append(code)
                 cycle.append(vertex_lookup[code])
-            facets.append({'cycle': cycle, 'zeroZoneIds': zeros,
-                           'fixedZoneSigns': sides, 'seedZonePair': list(pair),
-                           'exactRawNormal': [str(x) for x in oriented]})
-    generators = units*length
-    points = np.array(vertices, dtype=float) @ generators * .5
+            facets.append(
+                {
+                    'cycle': cycle,
+                    'zeroZoneIds': zeros,
+                    'fixedZoneSigns': sides,
+                    'seedZonePair': list(pair),
+                    'exactRawNormal': [str(x) for x in oriented],
+                }
+            )
+    generators = units * length
+    points = np.array(vertices, dtype=float) @ generators * 0.5
     model = hull(points.tolist(), name='Equal-edge support zonohedron')
     parameters = {'version': VERSION, 'directions': directions, 'edgeLength': length, 'maxZones': max_zones}
-    model['id'] = 'support-zonohedron-' + hashlib.sha256(json.dumps(parameters, sort_keys=True, allow_nan=False).encode()).hexdigest()
+    model['id'] = (
+        'support-zonohedron-'
+        + hashlib.sha256(json.dumps(parameters, sort_keys=True, allow_nan=False).encode()).hexdigest()
+    )
     if model['provenance']['extremeInputIndices'] != list(range(len(points))):
         raise GeometryError('Numerical Hull omitted an exact sign-code vertex.')
     expected = {canonical_cycle(f['cycle']): f for f in facets}
@@ -153,27 +165,39 @@ def zonohedron_support(directions, *, edge_length=1.0, max_zones=None):
     edge_zones = []
     for a, b in model['edges']:
         changed = [i for i, (x, y) in enumerate(zip(vertices[a], vertices[b])) if x != y]
-        if len(changed) != 1 or abs(np.linalg.norm(points[b]-points[a])/length-1) > TOLERANCE:
+        if len(changed) != 1 or abs(np.linalg.norm(points[b] - points[a]) / length - 1) > TOLERANCE:
             raise GeometryError('Zonohedron edge lacks one equal-length sign-code zone.')
         edge_zones.append(changed[0])
     for equation in model['facetEquations']:
         n = np.array(equation[:3])
-        support = np.abs(generators @ n).sum()*.5
-        if abs(float(equation[3])+support) > TOLERANCE*length:
+        support = np.abs(generators @ n).sum() * 0.5
+        if abs(float(equation[3]) + support) > TOLERANCE * length:
             raise GeometryError('Support plane differs from analytic segment support.')
     evidence = {
-        'algorithmVersion': VERSION, 'sourceDirections': deepcopy(directions),
-        'edgeLength': length, 'maxZones': max_zones,
+        'algorithmVersion': VERSION,
+        'sourceDirections': deepcopy(directions),
+        'edgeLength': length,
+        'maxZones': max_zones,
         'distinctZoneCount': len(groups),
         'selectedZones': [{k: deepcopy(v) for k, v in g.items() if k != 'raw'} for g in selected],
-        'vertexSignVectors': [list(code) for code in vertices], 'edgeZoneIds': edge_zones,
+        'vertexSignVectors': [list(code) for code in vertices],
+        'edgeZoneIds': edge_zones,
         'facets': [expected[key] for key in actual],
-        'sourcePairCount': len(raw)*(len(raw)-1)//2,
-        'antipodalNormalCount': len(normals), 'endpointSignSumsEnumerated': 0,
-        'numeric': {'certified': False, 'exactScope': 'raw direction proportionality, support signs and zonogon order only',
-                    'reconstructionTolerance': TOLERANCE, 'minimumNormalizedSeparation': MIN_SEPARATION},
-        'resourceBounds': {'inputDirections': MAX_INPUT, 'selectedZones': MAX_ZONES,
-                           'outputVertices': MAX_VERTICES, 'rationalBits': MAX_BITS},
+        'sourcePairCount': len(raw) * (len(raw) - 1) // 2,
+        'antipodalNormalCount': len(normals),
+        'endpointSignSumsEnumerated': 0,
+        'numeric': {
+            'certified': False,
+            'exactScope': 'raw direction proportionality, support signs and zonogon order only',
+            'reconstructionTolerance': TOLERANCE,
+            'minimumNormalizedSeparation': MIN_SEPARATION,
+        },
+        'resourceBounds': {
+            'inputDirections': MAX_INPUT,
+            'selectedZones': MAX_ZONES,
+            'outputVertices': MAX_VERTICES,
+            'rationalBits': MAX_BITS,
+        },
         'classification': classification,
     }
     model['provenance'] = {'operation': 'support-zonohedron', 'algorithmVersion': VERSION}
@@ -181,15 +205,20 @@ def zonohedron_support(directions, *, edge_length=1.0, max_zones=None):
     model['metadata']['supportZonohedron'] = evidence
     evidence['resultModelId'] = model['id']
     evidence['resultFingerprint'] = identity(model)
-    validate_project({'format': 'polytope-laboratory', 'version': 1, 'active': 0,
-                      'documents': [{'id': 'support-zonohedron-check', 'cursor': 0,
-                                     'states': [{'model': model, 'view': {}}]}]})
+    validate_project(
+        {
+            'format': 'polytope-laboratory',
+            'version': 1,
+            'active': 0,
+            'documents': [{'id': 'support-zonohedron-check', 'cursor': 0, 'states': [{'model': model, 'view': {}}]}],
+        }
+    )
     return model
 
 
 def verify_support_zonohedron(model):
     try:
-        _json_bytes(model, 16*1024*1024)
+        _json_bytes(model, 16 * 1024 * 1024)
         e = model['metadata']['supportZonohedron']
         if e['algorithmVersion'] != VERSION:
             raise GeometryError('Unknown support zonohedron evidence version.')

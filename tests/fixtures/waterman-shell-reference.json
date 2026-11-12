@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "convention": "waterman-occupied-shell-v1",
+  "scenarioId": "con-02-waterman-sequence",
+  "definition": "At a fixed rational origin in SC, FCC or BCC integer coordinates, choose the least occupied squared distance strictly above the anchor or greatest strictly below it. Build the closed-ball hull. Do not skip rank-deficient shells or recurring combinatorial types.",
+  "oracle": "Independent integer-coordinate facet sets: octahedron sign planes, cube coordinate planes, cuboctahedron coordinate and sign planes, rhombic dodecahedron signed coordinate-pair planes; no kernel-generated mesh.",
+  "sequences": {"SC": [0, 1, 2, 3, 4, 5, 6, 8], "FCC": [0, 2, 4, 6, 8, 10, 12], "BCC": [0, 3, 4, 8, 11, 12, 16]},
+  "cases": [
+    {"lattice": "SC", "center": ["0", "0", "0"], "anchor": "0", "direction": 1, "radiusSquared": "1", "shape": "octahedron", "scale": 1, "counts": [6, 12, 8, 0]},
+    {"lattice": "FCC", "center": ["0", "0", "0"], "anchor": "0", "direction": 1, "radiusSquared": "2", "shape": "cuboctahedron", "scale": 1, "counts": [12, 24, 14, 0]},
+    {"lattice": "BCC", "center": ["0", "0", "0"], "anchor": "0", "direction": 1, "radiusSquared": "3", "shape": "cube", "scale": 1, "counts": [8, 12, 6, 0]},
+    {"lattice": "SC", "center": ["0", "0", "0"], "anchor": "3", "direction": -1, "radiusSquared": "2", "shape": "cuboctahedron", "scale": 1, "counts": [12, 24, 14, 0]},
+    {"lattice": "BCC", "center": ["0", "0", "0"], "anchor": "3", "direction": 1, "radiusSquared": "4", "shape": "rhombic-dodecahedron", "scale": 1, "counts": [14, 24, 12, 0]},
+    {"lattice": "BCC", "center": ["0", "0", "0"], "anchor": "4", "direction": -1, "radiusSquared": "3", "shape": "cube", "scale": 1, "counts": [8, 12, 6, 0]},
+    {"lattice": "SC", "center": ["1/2", "1/2", "1/2"], "anchor": "0", "direction": 1, "radiusSquared": "3/4", "shape": "cube", "scale": 0.5, "counts": [8, 12, 6, 0]}
+  ],
+  "refusals": [
+    {"parameters": {"lattice": "SC", "radius_squared": "1", "direction": -1}, "message": "squared radius 0"},
+    {"parameters": {"lattice": "SC", "radius_squared": "0", "direction": -1}, "message": "No previous occupied"},
+    {"parameters": {"lattice": "SC", "radius_squared": "0", "center": ["1/2", "0", "0"]}, "message": "fewer than four"},
+    {"parameters": {"lattice": "D4", "radius_squared": "2"}, "message": "3D only"},
+    {"parameters": {"convention": "stella-numbered-roots"}, "message": "Unsupported Waterman occupied-shell convention"}
+  ]
+}

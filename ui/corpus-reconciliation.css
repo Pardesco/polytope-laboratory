@@ -1,0 +1,36 @@
+#library-corpus {
+  margin-block: var(--space-1);
+  padding: var(--space-1);
+  border: 1px solid var(--border);
+  font-size: var(--font-secondary);
+}
+#library-corpus > summary {
+  min-height: var(--control-height);
+  align-content: center;
+  cursor: pointer;
+  font-size: var(--font-body);
+}
+#library-corpus p {
+  margin-block: var(--space-1);
+  overflow-wrap: anywhere;
+}
+#library-corpus select {
+  width: 100%;
+  min-height: var(--control-height);
+  margin-block: var(--space-1);
+}
+#library-corpus pre {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font-size: var(--font-secondary);
+  max-height: 320px;
+  overflow: auto;
+}
+#library-corpus output {
+  display: block;
+  margin-block: var(--space-1);
+}
+#library-corpus .corpus-candidates {
+  max-height: 240px;
+  overflow: auto;
+}

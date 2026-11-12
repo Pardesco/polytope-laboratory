@@ -1,53 +1,357 @@
 // Observe actual saved-tour section rendering, without replacing native math.
-const {_electron:electron}=require('playwright'),fs=require('node:fs/promises'),path=require('node:path'),os=require('node:os'),assert=require('node:assert/strict');
-const root=path.resolve(__dirname,'..');
-async function main(){
-  const folder=await fs.mkdtemp(path.join(root,'artifacts','tour-section-profile-')),profile=path.join(folder,'profile');
-  await fs.mkdir(profile);await fs.writeFile(path.join(profile,'linked-libraries.json'),JSON.stringify({version:1,paths:[]}));
-  const runtime=await require('../scripts/hidden-runtime.cjs').hiddenRuntime();
-  if(!runtime.packaged&&!process.argv.includes('--development'))throw Error('Use the qualified actual bundled desktop or explicit --development.');
-  const runtimeSourceHashes=Object.fromEntries(await Promise.all(['ui/viewer.js','ui/animated-tour-layer.mjs','ui/animated-tour-renderer.mjs'].map(async file=>[file,await require('../scripts/hidden-runtime.cjs').hashFile(path.join(root,file))])));
-  const env={...process.env,POLYTOPE_TEST_USER_DATA:profile};if(runtime.packaged)env.POLYTOPE_PYTHON=path.join(folder,'unavailable-python.exe');delete env.ELECTRON_RUN_AS_NODE;delete env.POLYTOPE_TEST_MODE;
-  let app,page,cdp;const errors=[],exceptions=[];
-  try{
-    app=await electron.launch({executablePath:runtime.executablePath,args:runtime.packaged?[]:[root],cwd:root,env,timeout:30000});page=await app.firstWindow();require('./smoke-helpers.cjs').autoReveal(page);page.setDefaultTimeout(15000);page.on('pageerror',e=>errors.push(e.message));
-    await app.evaluate(({BrowserWindow,dialog})=>{BrowserWindow.getAllWindows()[0].setContentSize(1500,950);dialog.showMessageBox=async()=>({response:1});});
-    await page.waitForFunction(()=>document.getElementById('model-name')?.textContent==='Tesseract'&&document.getElementById('cancel').hidden);
-    const model=await page.evaluate(()=>window.polytope.engine({op:'generate',model:null,params:{kind:'regular',key:'cell120'}},crypto.randomUUID()));
-    assert.equal(model.name,'120-cell');
-    const state={model,notes:'Saved tour section profiling; preserve source',view:{angles:Array(6).fill(0),sectionNormal:[.2,.3,.4,1],sectionOffset:-.3,derivedMode:'section',viewportLayout:'split',cameraProjection:'orthographic',projection:'orthographic',coordinateUnit:'mm',surfaceColors:'source',surfaceOpacity:.75,faces:true,edges:true,vertices:false,
-      animation:{version:1,duration:1,fps:8,loop:false,keyframes:[{time:0,angles:Array(6).fill(0),sectionOffset:-.3},{time:1,angles:Array(6).fill(0),sectionOffset:.3}]}}};
-    const fixture={format:'polytope-laboratory',version:1,active:0,documents:[{id:'tour-section-source',cursor:0,states:[structuredClone(state)]}],tour:{version:2,cursor:0,events:[{id:'section-event',state:structuredClone(state),duration:1,transition:{method:'instant'}}]}};
-    const file=path.join(folder,'source.polyproj');await fs.writeFile(file,JSON.stringify(fixture));
-    await page.evaluate(()=>{window.tourStatuses=[];new MutationObserver(()=>window.tourStatuses.push(document.getElementById('status').textContent)).observe(document.getElementById('status'),{childList:true,subtree:true,characterData:true});});
-    await app.evaluate(({dialog},file)=>{dialog.showOpenDialog=async()=>({canceled:false,filePaths:[file]});},file);await page.locator('#open').click();
-    await page.waitForFunction(file=>{const toast=document.getElementById('toast');if(toast&&!toast.hidden&&toast.textContent.trim())throw Error('Open failed: '+toast.textContent);return window.tourStatuses.includes('Opened '+file)&&document.getElementById('cancel').hidden;},file);
-    const ready=()=>page.waitForFunction(()=>document.getElementById('cancel').hidden&&!document.getElementById('tour-png').disabled);
-    const panel=async()=>{if(!await page.locator('#tour-settings').evaluate(e=>e.open))await page.locator('#tour-settings > summary').click();};
-    const save=async name=>{await ready();const target=path.join(folder,name+'.polyproj');await app.evaluate(({dialog},file)=>{dialog.showSaveDialog=async()=>({canceled:false,filePath:file});},target);await page.locator('#save').click();await page.waitForFunction(file=>window.tourStatuses.includes('Saved '+file),target);return JSON.parse(await fs.readFile(target));};
-    const baseline=await save('before');assert.deepEqual(baseline.documents[0].states[0].model.vertices,model.vertices);await page.waitForFunction(()=>!document.getElementById('promote').disabled&&document.getElementById('cancel').hidden);await page.evaluate(async()=>{for(let i=0;i<8;i++)await new Promise(requestAnimationFrame);window.tourPublications=0;const draw=CanvasRenderingContext2D.prototype.drawImage;CanvasRenderingContext2D.prototype.drawImage=function(...args){const result=draw.apply(this,args);if(this.canvas.closest('#animated-tour-preview'))window.tourPublications++;return result;};});
-    await panel();cdp=await page.context().newCDPSession(page);await cdp.send('Debugger.enable');cdp.on('Debugger.paused',async event=>{exceptions.push({reason:event.reason,description:event.data?.description,frames:event.callFrames.slice(0,5).map(f=>({name:f.functionName,line:f.location.lineNumber,url:f.url}))});await cdp.send('Debugger.resume');});await cdp.send('Debugger.setPauseOnExceptions',{state:'all'});
-    const seek=async time=>{await ready();const published=await page.evaluate(()=>window.tourPublications);const start=await page.evaluate(()=>performance.now());await page.locator('#tour-scrub').evaluate((input,time)=>{input.value=String(time);input.dispatchEvent(new Event('input',{bubbles:true}));},time);await page.waitForFunction(([time,published])=>{const toast=document.getElementById('toast');if(toast&&!toast.hidden&&toast.textContent.trim())throw Error('Seek failed: '+toast.textContent);return window.tourPublications>published&&document.getElementById('tour-position').textContent.startsWith(time.toFixed(3)+' /')&&document.querySelector('#animated-tour-preview canvas');},[time,published]);await ready();return (await page.evaluate(()=>performance.now()))-start;};
-    let initialBlankPreview=false;try{await seek(0);}catch(error){if(!process.argv.includes('--baseline')||!exceptions.some(e=>e.description?.includes('Tour layer publication is stale')))throw error;initialBlankPreview=true;}await seek(.125);await cdp.send('Debugger.setPauseOnExceptions',{state:'none'});
-    const startImage=await page.locator('#animated-tour-preview canvas').evaluate(c=>c.toDataURL('image/png'));await fs.writeFile(path.join(folder,'start.png'),Buffer.from(startImage.split(',')[1],'base64'));
-    await page.evaluate(()=>{
-      window.tourSectionProfile={contexts:[],runs:[]};const p=window.tourSectionProfile;for(const owner of document.querySelectorAll('[data-tour-slot]'))[...owner.children].forEach((container,index)=>{if(container.querySelector('canvas'))p.contexts.push({key:owner.dataset.tourSlot+':'+(index===1?'derived':'source'),createProgram:0,deleteProgram:0,linkProgram:0,getProgramInfoLog:0});});
-      for(const type of [window.WebGLRenderingContext,window.WebGL2RenderingContext])if(type)for(const name of ['createProgram','deleteProgram','linkProgram','getProgramInfoLog']){
-        const original=type.prototype[name];type.prototype[name]=function(...args){
-          const owner=this.canvas.closest('[data-tour-slot]');if(owner){const index=[...owner.children].findIndex(c=>c.contains(this.canvas)),key=owner.dataset.tourSlot+':'+(index===1?'derived':'source');let row=p.contexts.find(c=>c.key===key);if(!row)p.contexts.push(row={key,createProgram:0,deleteProgram:0,linkProgram:0,getProgramInfoLog:0});row[name]++;}
-          return original.apply(this,args);
-        };
-      }
+const { _electron: electron } = require('playwright'),
+  fs = require('node:fs/promises'),
+  path = require('node:path'),
+  os = require('node:os'),
+  assert = require('node:assert/strict');
+const root = path.resolve(__dirname, '..');
+async function main() {
+  const folder = await fs.mkdtemp(path.join(root, 'artifacts', 'tour-section-profile-')),
+    profile = path.join(folder, 'profile');
+  await fs.mkdir(profile);
+  await fs.writeFile(path.join(profile, 'linked-libraries.json'), JSON.stringify({ version: 1, paths: [] }));
+  const runtime = await require('../scripts/hidden-runtime.cjs').hiddenRuntime();
+  if (!runtime.packaged && !process.argv.includes('--development'))
+    throw Error('Use the qualified actual bundled desktop or explicit --development.');
+  const runtimeSourceHashes = Object.fromEntries(
+    await Promise.all(
+      ['ui/viewer.js', 'ui/animated-tour-layer.mjs', 'ui/animated-tour-renderer.mjs'].map(async (file) => [
+        file,
+        await require('../scripts/hidden-runtime.cjs').hashFile(path.join(root, file)),
+      ])
+    )
+  );
+  const env = { ...process.env, POLYTOPE_TEST_USER_DATA: profile };
+  if (runtime.packaged) env.POLYTOPE_PYTHON = path.join(folder, 'unavailable-python.exe');
+  delete env.ELECTRON_RUN_AS_NODE;
+  delete env.POLYTOPE_TEST_MODE;
+  let app, page, cdp;
+  const errors = [],
+    exceptions = [];
+  try {
+    app = await electron.launch({
+      executablePath: runtime.executablePath,
+      args: runtime.packaged ? [] : [root],
+      cwd: root,
+      env,
+      timeout: 30000,
     });
-    const runs=[],blankPreviewPoses=[];
-    for(const time of [.25,.375,.5,.75,.875]){const before=await page.evaluate(()=>structuredClone(window.tourSectionProfile.contexts));let observedMs;try{observedMs=await seek(time);}catch(error){if(!process.argv.includes('--baseline'))throw error;blankPreviewPoses.push(time);observedMs=null;await seek(time);}const after=await page.evaluate(()=>structuredClone(window.tourSectionProfile.contexts));runs.push({time,observedMs,before,after});}
-    const counters=await page.evaluate(()=>window.tourSectionProfile.contexts);assert.equal(counters.length,2);assert.ok(counters.some(c=>c.key==='0:derived'));const endImage=await page.locator('#animated-tour-preview canvas').evaluate(c=>c.toDataURL('image/png'));
-    assert.notEqual(endImage,startImage,'The saved section sweep must change actual output pixels');await fs.writeFile(path.join(folder,'end.png'),Buffer.from(endImage.split(',')[1],'base64'));
-    const during=await save('during');assert.deepEqual(during.documents,baseline.documents);assert.deepEqual(during.tour,baseline.tour);
-    await panel();await page.locator('#tour-close-preview').click();await page.waitForFunction(()=>!document.querySelector('[data-tour-slot]'));const closed=await save('closed');assert.deepEqual(closed.documents,baseline.documents);assert.deepEqual(closed.tour,baseline.tour);assert.deepEqual(errors,[]);
-    if(!process.argv.includes('--baseline')){assert.equal(initialBlankPreview,false);for(const row of counters.filter(c=>c.key.endsWith(':derived'))){assert.equal(row.createProgram,0);assert.equal(row.deleteProgram,0);assert.equal(row.linkProgram,0);}}
-    const result={passed:true,purpose:'actual warmed saved-tour section GPU program lifetime observation; not FPS or isolated GPU timing',baseline:process.argv.includes('--baseline'),runtimeSourceHashes,version:await app.evaluate(({app})=>app.getVersion()),packaged:runtime.packaged,developmentPythonDisabled:runtime.packaged,model:model.name,sourceCounts:{vertices:model.vertices.length,faces:model.faces.length,cells:model.cells.length},runs,counters,changedOutputPixels:true,initialBlankPreview,blankPreviewPoses,sourceAndSavedTourPreserved:true,previewDisposed:true,hardware:{cpu:os.cpus()[0]?.model,logicalCpus:os.cpus().length,memoryGiB:os.totalmem()/2**30,platform:os.platform(),release:os.release()},errors};
-    await fs.writeFile(path.join(folder,'result.json'),JSON.stringify(result,null,2));console.log(JSON.stringify({folder,passed:result.passed,version:result.version,packaged:result.packaged,baseline:result.baseline,initialBlankPreview,blankPreviewPoses,counters},null,2));
-  }catch(error){await page?.screenshot({path:path.join(folder,'failure.png')}).catch(()=>{});await fs.writeFile(path.join(folder,'failure.json'),JSON.stringify({error:error.stack,errors,exceptions,ui:await page?.evaluate(()=>({status:document.getElementById('status')?.textContent,toast:document.getElementById('toast')?.textContent,position:document.getElementById('tour-position')?.textContent,preview:Boolean(document.getElementById('animated-tour-preview')),slots:document.querySelectorAll('[data-tour-slot]').length,publications:window.tourPublications,counters:window.tourSectionProfile?.contexts,statuses:window.tourStatuses,drawSnapshots:window.tourDrawSnapshots})).catch(()=>null)},null,2));console.error('Artifacts:',folder);throw error;}finally{await cdp?.detach().catch(()=>{});await app?.close();}
+    page = await app.firstWindow();
+    require('./smoke-helpers.cjs').autoReveal(page);
+    page.setDefaultTimeout(15000);
+    page.on('pageerror', (e) => errors.push(e.message));
+    await app.evaluate(({ BrowserWindow, dialog }) => {
+      BrowserWindow.getAllWindows()[0].setContentSize(1500, 950);
+      dialog.showMessageBox = async () => ({ response: 1 });
+    });
+    await page.waitForFunction(
+      () =>
+        document.getElementById('model-name')?.textContent === 'Tesseract' && document.getElementById('cancel').hidden
+    );
+    const model = await page.evaluate(() =>
+      window.polytope.engine(
+        { op: 'generate', model: null, params: { kind: 'regular', key: 'cell120' } },
+        crypto.randomUUID()
+      )
+    );
+    assert.equal(model.name, '120-cell');
+    const state = {
+      model,
+      notes: 'Saved tour section profiling; preserve source',
+      view: {
+        angles: Array(6).fill(0),
+        sectionNormal: [0.2, 0.3, 0.4, 1],
+        sectionOffset: -0.3,
+        derivedMode: 'section',
+        viewportLayout: 'split',
+        cameraProjection: 'orthographic',
+        projection: 'orthographic',
+        coordinateUnit: 'mm',
+        surfaceColors: 'source',
+        surfaceOpacity: 0.75,
+        faces: true,
+        edges: true,
+        vertices: false,
+        animation: {
+          version: 1,
+          duration: 1,
+          fps: 8,
+          loop: false,
+          keyframes: [
+            { time: 0, angles: Array(6).fill(0), sectionOffset: -0.3 },
+            { time: 1, angles: Array(6).fill(0), sectionOffset: 0.3 },
+          ],
+        },
+      },
+    };
+    const fixture = {
+      format: 'polytope-laboratory',
+      version: 1,
+      active: 0,
+      documents: [{ id: 'tour-section-source', cursor: 0, states: [structuredClone(state)] }],
+      tour: {
+        version: 2,
+        cursor: 0,
+        events: [
+          { id: 'section-event', state: structuredClone(state), duration: 1, transition: { method: 'instant' } },
+        ],
+      },
+    };
+    const file = path.join(folder, 'source.polyproj');
+    await fs.writeFile(file, JSON.stringify(fixture));
+    await page.evaluate(() => {
+      window.tourStatuses = [];
+      new MutationObserver(() => window.tourStatuses.push(document.getElementById('status').textContent)).observe(
+        document.getElementById('status'),
+        { childList: true, subtree: true, characterData: true }
+      );
+    });
+    await app.evaluate(({ dialog }, file) => {
+      dialog.showOpenDialog = async () => ({ canceled: false, filePaths: [file] });
+    }, file);
+    await page.locator('#open').click();
+    await page.waitForFunction((file) => {
+      const toast = document.getElementById('toast');
+      if (toast && !toast.hidden && toast.textContent.trim()) throw Error('Open failed: ' + toast.textContent);
+      return window.tourStatuses.includes('Opened ' + file) && document.getElementById('cancel').hidden;
+    }, file);
+    const ready = () =>
+      page.waitForFunction(
+        () => document.getElementById('cancel').hidden && !document.getElementById('tour-png').disabled
+      );
+    const panel = async () => {
+      if (!(await page.locator('#tour-settings').evaluate((e) => e.open)))
+        await page.locator('#tour-settings > summary').click();
+    };
+    const save = async (name) => {
+      await ready();
+      const target = path.join(folder, name + '.polyproj');
+      await app.evaluate(({ dialog }, file) => {
+        dialog.showSaveDialog = async () => ({ canceled: false, filePath: file });
+      }, target);
+      await page.locator('#save').click();
+      await page.waitForFunction((file) => window.tourStatuses.includes('Saved ' + file), target);
+      return JSON.parse(await fs.readFile(target));
+    };
+    const baseline = await save('before');
+    assert.deepEqual(baseline.documents[0].states[0].model.vertices, model.vertices);
+    await page.waitForFunction(
+      () => !document.getElementById('promote').disabled && document.getElementById('cancel').hidden
+    );
+    await page.evaluate(async () => {
+      for (let i = 0; i < 8; i++) await new Promise(requestAnimationFrame);
+      window.tourPublications = 0;
+      const draw = CanvasRenderingContext2D.prototype.drawImage;
+      CanvasRenderingContext2D.prototype.drawImage = function (...args) {
+        const result = draw.apply(this, args);
+        if (this.canvas.closest('#animated-tour-preview')) window.tourPublications++;
+        return result;
+      };
+    });
+    await panel();
+    cdp = await page.context().newCDPSession(page);
+    await cdp.send('Debugger.enable');
+    cdp.on('Debugger.paused', async (event) => {
+      exceptions.push({
+        reason: event.reason,
+        description: event.data?.description,
+        frames: event.callFrames
+          .slice(0, 5)
+          .map((f) => ({ name: f.functionName, line: f.location.lineNumber, url: f.url })),
+      });
+      await cdp.send('Debugger.resume');
+    });
+    await cdp.send('Debugger.setPauseOnExceptions', { state: 'all' });
+    const seek = async (time) => {
+      await ready();
+      const published = await page.evaluate(() => window.tourPublications);
+      const start = await page.evaluate(() => performance.now());
+      await page.locator('#tour-scrub').evaluate((input, time) => {
+        input.value = String(time);
+        input.dispatchEvent(new Event('input', { bubbles: true }));
+      }, time);
+      await page.waitForFunction(
+        ([time, published]) => {
+          const toast = document.getElementById('toast');
+          if (toast && !toast.hidden && toast.textContent.trim()) throw Error('Seek failed: ' + toast.textContent);
+          return (
+            window.tourPublications > published &&
+            document.getElementById('tour-position').textContent.startsWith(time.toFixed(3) + ' /') &&
+            document.querySelector('#animated-tour-preview canvas')
+          );
+        },
+        [time, published]
+      );
+      await ready();
+      return (await page.evaluate(() => performance.now())) - start;
+    };
+    let initialBlankPreview = false;
+    try {
+      await seek(0);
+    } catch (error) {
+      if (
+        !process.argv.includes('--baseline') ||
+        !exceptions.some((e) => e.description?.includes('Tour layer publication is stale'))
+      )
+        throw error;
+      initialBlankPreview = true;
+    }
+    await seek(0.125);
+    await cdp.send('Debugger.setPauseOnExceptions', { state: 'none' });
+    const startImage = await page.locator('#animated-tour-preview canvas').evaluate((c) => c.toDataURL('image/png'));
+    await fs.writeFile(path.join(folder, 'start.png'), Buffer.from(startImage.split(',')[1], 'base64'));
+    await page.evaluate(() => {
+      window.tourSectionProfile = { contexts: [], runs: [] };
+      const p = window.tourSectionProfile;
+      for (const owner of document.querySelectorAll('[data-tour-slot]'))
+        [...owner.children].forEach((container, index) => {
+          if (container.querySelector('canvas'))
+            p.contexts.push({
+              key: owner.dataset.tourSlot + ':' + (index === 1 ? 'derived' : 'source'),
+              createProgram: 0,
+              deleteProgram: 0,
+              linkProgram: 0,
+              getProgramInfoLog: 0,
+            });
+        });
+      for (const type of [window.WebGLRenderingContext, window.WebGL2RenderingContext])
+        if (type)
+          for (const name of ['createProgram', 'deleteProgram', 'linkProgram', 'getProgramInfoLog']) {
+            const original = type.prototype[name];
+            type.prototype[name] = function (...args) {
+              const owner = this.canvas.closest('[data-tour-slot]');
+              if (owner) {
+                const index = [...owner.children].findIndex((c) => c.contains(this.canvas)),
+                  key = owner.dataset.tourSlot + ':' + (index === 1 ? 'derived' : 'source');
+                let row = p.contexts.find((c) => c.key === key);
+                if (!row)
+                  p.contexts.push(
+                    (row = { key, createProgram: 0, deleteProgram: 0, linkProgram: 0, getProgramInfoLog: 0 })
+                  );
+                row[name]++;
+              }
+              return original.apply(this, args);
+            };
+          }
+    });
+    const runs = [],
+      blankPreviewPoses = [];
+    for (const time of [0.25, 0.375, 0.5, 0.75, 0.875]) {
+      const before = await page.evaluate(() => structuredClone(window.tourSectionProfile.contexts));
+      let observedMs;
+      try {
+        observedMs = await seek(time);
+      } catch (error) {
+        if (!process.argv.includes('--baseline')) throw error;
+        blankPreviewPoses.push(time);
+        observedMs = null;
+        await seek(time);
+      }
+      const after = await page.evaluate(() => structuredClone(window.tourSectionProfile.contexts));
+      runs.push({ time, observedMs, before, after });
+    }
+    const counters = await page.evaluate(() => window.tourSectionProfile.contexts);
+    assert.equal(counters.length, 2);
+    assert.ok(counters.some((c) => c.key === '0:derived'));
+    const endImage = await page.locator('#animated-tour-preview canvas').evaluate((c) => c.toDataURL('image/png'));
+    assert.notEqual(endImage, startImage, 'The saved section sweep must change actual output pixels');
+    await fs.writeFile(path.join(folder, 'end.png'), Buffer.from(endImage.split(',')[1], 'base64'));
+    const during = await save('during');
+    assert.deepEqual(during.documents, baseline.documents);
+    assert.deepEqual(during.tour, baseline.tour);
+    await panel();
+    await page.locator('#tour-close-preview').click();
+    await page.waitForFunction(() => !document.querySelector('[data-tour-slot]'));
+    const closed = await save('closed');
+    assert.deepEqual(closed.documents, baseline.documents);
+    assert.deepEqual(closed.tour, baseline.tour);
+    assert.deepEqual(errors, []);
+    if (!process.argv.includes('--baseline')) {
+      assert.equal(initialBlankPreview, false);
+      for (const row of counters.filter((c) => c.key.endsWith(':derived'))) {
+        assert.equal(row.createProgram, 0);
+        assert.equal(row.deleteProgram, 0);
+        assert.equal(row.linkProgram, 0);
+      }
+    }
+    const result = {
+      passed: true,
+      purpose: 'actual warmed saved-tour section GPU program lifetime observation; not FPS or isolated GPU timing',
+      baseline: process.argv.includes('--baseline'),
+      runtimeSourceHashes,
+      version: await app.evaluate(({ app }) => app.getVersion()),
+      packaged: runtime.packaged,
+      developmentPythonDisabled: runtime.packaged,
+      model: model.name,
+      sourceCounts: { vertices: model.vertices.length, faces: model.faces.length, cells: model.cells.length },
+      runs,
+      counters,
+      changedOutputPixels: true,
+      initialBlankPreview,
+      blankPreviewPoses,
+      sourceAndSavedTourPreserved: true,
+      previewDisposed: true,
+      hardware: {
+        cpu: os.cpus()[0]?.model,
+        logicalCpus: os.cpus().length,
+        memoryGiB: os.totalmem() / 2 ** 30,
+        platform: os.platform(),
+        release: os.release(),
+      },
+      errors,
+    };
+    await fs.writeFile(path.join(folder, 'result.json'), JSON.stringify(result, null, 2));
+    console.log(
+      JSON.stringify(
+        {
+          folder,
+          passed: result.passed,
+          version: result.version,
+          packaged: result.packaged,
+          baseline: result.baseline,
+          initialBlankPreview,
+          blankPreviewPoses,
+          counters,
+        },
+        null,
+        2
+      )
+    );
+  } catch (error) {
+    await page?.screenshot({ path: path.join(folder, 'failure.png') }).catch(() => {});
+    await fs.writeFile(
+      path.join(folder, 'failure.json'),
+      JSON.stringify(
+        {
+          error: error.stack,
+          errors,
+          exceptions,
+          ui: await page
+            ?.evaluate(() => ({
+              status: document.getElementById('status')?.textContent,
+              toast: document.getElementById('toast')?.textContent,
+              position: document.getElementById('tour-position')?.textContent,
+              preview: Boolean(document.getElementById('animated-tour-preview')),
+              slots: document.querySelectorAll('[data-tour-slot]').length,
+              publications: window.tourPublications,
+              counters: window.tourSectionProfile?.contexts,
+              statuses: window.tourStatuses,
+              drawSnapshots: window.tourDrawSnapshots,
+            }))
+            .catch(() => null),
+        },
+        null,
+        2
+      )
+    );
+    console.error('Artifacts:', folder);
+    throw error;
+  } finally {
+    await cdp?.detach().catch(() => {});
+    await app?.close();
+  }
 }
-main().catch(e=>{console.error(e);process.exitCode=1;});
+main().catch((e) => {
+  console.error(e);
+  process.exitCode = 1;
+});

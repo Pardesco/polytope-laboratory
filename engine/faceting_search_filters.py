@@ -1,4 +1,5 @@
 """Exact optional FAC03 leaf filters; bounded recorded domains, no full parity claim."""
+
 from copy import deepcopy
 
 from engine.faceting_policy_predicates import analyze_tidy, analyze_spiky
@@ -38,18 +39,38 @@ def policy_evidence(source, cycles, criteria, *, budget=None, cancelled=None):
             raise PolicyStop('resource-limited', 'exact faceting policy work cap')
         params = {'allow_coplanar_sharing': criteria['coplanar_vertices'] == 'allow'} if name == 'tidy' else {}
         if name == 'tidy_dual':
-            params = {'center':criteria['dual_center'],'radius':criteria['dual_radius']}
+            params = {'center': criteria['dual_center'], 'radius': criteria['dual_radius']}
         receipt = function(source, cycles, max_work=remaining, cancelled=cancelled, **params)
         budget.used += receipt['workUsed']
         if receipt['status'] != 'complete' or type(receipt['passed']) is not bool:
-            reason = 'exact faceting policy canceled' if receipt['status'] == 'user-cancelled' else 'exact faceting policy verdict unknown'
+            reason = (
+                'exact faceting policy canceled'
+                if receipt['status'] == 'user-cancelled'
+                else 'exact faceting policy verdict unknown'
+            )
             if name == 'tidy_dual':
                 reason += ': ' + '; '.join(receipt['diagnostics'])
             raise PolicyStop(receipt['status'], reason)
-        evidence[name] = {key: deepcopy(receipt[key]) for key in (
-            'version', 'policy', 'sourceId', 'sourceFingerprint', 'sourceSnapshotHash',
-            'parameters', 'numericPredicate', 'numericCertifiedModel', 'status', 'passed',
-            'diagnostics', 'witnesses', 'workUsed', 'sourceGeometryChanged', 'implicitWeld')}
+        evidence[name] = {
+            key: deepcopy(receipt[key])
+            for key in (
+                'version',
+                'policy',
+                'sourceId',
+                'sourceFingerprint',
+                'sourceSnapshotHash',
+                'parameters',
+                'numericPredicate',
+                'numericCertifiedModel',
+                'status',
+                'passed',
+                'diagnostics',
+                'witnesses',
+                'workUsed',
+                'sourceGeometryChanged',
+                'implicitWeld',
+            )
+        }
     return evidence
 
 

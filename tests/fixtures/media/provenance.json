@@ -1,0 +1,38 @@
+{
+  "generator": "scripts/media-qualification-fixtures.cjs",
+  "appEncodersUsed": false,
+  "ffmpeg": "ffmpeg version 8.0-essentials_build-www.gyan.dev Copyright (c) 2000-2025 the FFmpeg developers",
+  "dimensions": [
+    16,
+    12
+  ],
+  "cfrTimes": [
+    0,
+    0.125,
+    0.25,
+    0.375
+  ],
+  "gifMathTimes": [
+    0,
+    0.125,
+    0.25,
+    0.26
+  ],
+  "gifDelaysCentiseconds": [
+    13,
+    13,
+    1,
+    13
+  ],
+  "files": {
+    "alpha.png": "a15d67db94628bbece52d82fbbe4b6e29ca5ac0e2fe149d7e1550329aceb2536",
+    "timing.gif": "850e121583b7a740d5254e2349672ca7715762ef0227b4d5f4385c30a7668966",
+    "cadence.mp4": "608b69f37073d2303a101979759c059036ac046d796018d829cefdee75dff01b",
+    "cadence.webm": "7e3e2ecfeba880736dba80dd08ac1c1253478d8f6dcff50d1b12ef7274434a8a",
+    "reference/frame-000000.png": "98f8d079ab64f67e0a71303b01433c732d05271200186d2904307cc46f0e416d",
+    "reference/frame-000001.png": "43d45eaa7254133a3ab49fd9559afdc67d72eccd0b994de42ebe9345881a6a85",
+    "reference/frame-000002.png": "f6c160678b47ae21accfd33cccae09135a705abd2ac18405185182d52a7d3bd1",
+    "reference/frame-000003.png": "1175cc5056ddb47ee63479b5115a7b62da479162af3f115455b7c76da2012ff0",
+    "reference/sequence.json": "8abb5b9cf81a46e06c40d618e1239985cc720d67e011c389547fc2e97435f12c"
+  }
+}

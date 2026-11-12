@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "id": "regular-3d-4d-analysis",
+  "models": [
+    {"id": "tetrahedron", "key": "tetrahedron"},
+    {"id": "cube", "key": "cube"},
+    {"id": "5-cell", "key": "simplex4"},
+    {"id": "tesseract", "key": "tesseract"}
+  ]
+}

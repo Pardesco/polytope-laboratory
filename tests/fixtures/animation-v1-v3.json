@@ -1,0 +1,5 @@
+[
+  {"version":1,"duration":2,"fps":24,"loop":false,"keyframes":[{"time":0,"angles":[10,20,30,40,50,60],"sectionOffset":-2},{"time":2,"angles":[370,20,30,40,50,60],"sectionOffset":2}]},
+  {"version":2,"duration":2,"fps":24,"loop":false,"tracks":{"explosion":{"direction":"normal"},"fold":{"kind":"face-net"}},"keyframes":[{"time":0,"angles":[10,20,30,40,50,60],"sectionOffset":-2,"explosionAmount":0,"foldFraction":0},{"time":2,"angles":[370,20,30,40,50,60],"sectionOffset":2,"explosionAmount":1,"foldFraction":1}]},
+  {"version":3,"duration":2,"fps":24,"loop":false,"tracks":{"morphRatio":{"kind":"dual-morph","version":1}},"keyframes":[{"time":0,"angles":[10,20,30,40,50,60],"sectionOffset":-2,"morphRatio":0},{"time":2,"angles":[370,20,30,40,50,60],"sectionOffset":2,"morphRatio":1}]}
+]

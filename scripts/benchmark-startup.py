@@ -1,4 +1,5 @@
 """Fresh-process CPU/index timings without Electron. Optional baseline git ref."""
+
 import argparse
 import json
 import os
@@ -39,17 +40,40 @@ def main():
     parser.add_argument('--samples', type=int, default=5)
     parser.add_argument('--baseline-ref')
     args = parser.parse_args()
-    if not 1 <= args.samples <= 20: parser.error('Use 1..20 samples.')
-    groups = {'baseline':[]} if args.baseline_ref else {}
-    groups.update({'cold index':[], 'cached index':[]})
+    if not 1 <= args.samples <= 20:
+        parser.error('Use 1..20 samples.')
+    groups = {'baseline': []} if args.baseline_ref else {}
+    groups.update({'cold index': [], 'cached index': []})
     with tempfile.TemporaryDirectory(prefix='polytope-startup-') as folder:
         for sample in range(args.samples):
-            env = {**os.environ, 'OPENBLAS_NUM_THREADS':'1', 'OMP_NUM_THREADS':'1', 'POLYTOPE_CATALOG_CACHE':str(Path(folder)/f'{sample}.json')}
+            env = {
+                **os.environ,
+                'OPENBLAS_NUM_THREADS': '1',
+                'OMP_NUM_THREADS': '1',
+                'POLYTOPE_CATALOG_CACHE': str(Path(folder) / f'{sample}.json'),
+            }
             for group, rows in groups.items():
                 command = [sys.executable, '-c', CODE] + ([args.baseline_ref] if group == 'baseline' else [])
-                output = subprocess.run(command, cwd=ROOT, env=env, text=True, encoding='utf-8', capture_output=True, check=True)
+                output = subprocess.run(
+                    command, cwd=ROOT, env=env, text=True, encoding='utf-8', capture_output=True, check=True
+                )
                 rows.append(json.loads(output.stdout))
-    print(json.dumps({'samples':groups,'medianMs':{group:{key:round(statistics.median(row[key] for row in rows),2) for key in ('importMs','catalogFirstMs','catalogRepeatMs')} for group,rows in groups.items()}}, indent=2))
+    print(
+        json.dumps(
+            {
+                'samples': groups,
+                'medianMs': {
+                    group: {
+                        key: round(statistics.median(row[key] for row in rows), 2)
+                        for key in ('importMs', 'catalogFirstMs', 'catalogRepeatMs')
+                    }
+                    for group, rows in groups.items()
+                },
+            },
+            indent=2,
+        )
+    )
 
 
-if __name__ == '__main__': main()
+if __name__ == '__main__':
+    main()

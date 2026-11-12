@@ -1,19 +1,91 @@
-#command-palette{width:min(760px,90vw);max-height:85vh}
-#command-query{width:100%;box-sizing:border-box}
-#command-results{max-height:55vh;overflow:auto;margin-top:12px}
-.command-result{padding:10px 12px;border:1px solid transparent;border-radius:6px;cursor:pointer}
-.command-result strong,.command-result small{display:block}
-.command-result small{opacity:.75;margin-top:4px}
-.command-result[aria-selected="true"]{border-color:#58b9ef;background:#58b9ef20}
-.command-result[aria-disabled="true"]{opacity:.48;cursor:default}
-.command-highlight{outline:3px solid #58b9ef!important;outline-offset:3px}
-.group-help{float:right;margin:0 0 0 8px!important;padding:0 6px!important;min-width:22px;border-radius:50%;font-size:12px}
-#shortcut-sheet{width:min(700px,90vw);max-height:85vh}
-#shortcut-list{display:grid;grid-template-columns:minmax(150px,1fr) 2fr;gap:10px 16px}
-#shortcut-list dt{font-family:monospace}#shortcut-list dd{margin:0}
-#shortcut-action-index{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;list-style:none;padding:0}
-#shortcut-action-index button{width:100%;text-align:left}
-@media(max-width:640px){#shortcut-action-index{grid-template-columns:1fr}}
-#model-information-summary dd{white-space:pre-wrap;overflow-wrap:anywhere;margin:0 0 10px}
-#model-information-summary dt{font-weight:600}
-#project-metadata-settings input,#project-metadata-settings textarea{width:100%;box-sizing:border-box}
+#command-palette {
+  width: min(760px, 90vw);
+  max-height: 85vh;
+}
+#command-query {
+  width: 100%;
+  box-sizing: border-box;
+}
+#command-results {
+  max-height: 55vh;
+  overflow: auto;
+  margin-top: 12px;
+}
+.command-result {
+  padding: 10px 12px;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.command-result strong,
+.command-result small {
+  display: block;
+}
+.command-result small {
+  opacity: 0.75;
+  margin-top: 4px;
+}
+.command-result[aria-selected='true'] {
+  border-color: #58b9ef;
+  background: #58b9ef20;
+}
+.command-result[aria-disabled='true'] {
+  opacity: 0.48;
+  cursor: default;
+}
+.command-highlight {
+  outline: 3px solid #58b9ef !important;
+  outline-offset: 3px;
+}
+.group-help {
+  float: right;
+  margin: 0 0 0 8px !important;
+  padding: 0 6px !important;
+  min-width: 22px;
+  border-radius: 50%;
+  font-size: 12px;
+}
+#shortcut-sheet {
+  width: min(700px, 90vw);
+  max-height: 85vh;
+}
+#shortcut-list {
+  display: grid;
+  grid-template-columns: minmax(150px, 1fr) 2fr;
+  gap: 10px 16px;
+}
+#shortcut-list dt {
+  font-family: monospace;
+}
+#shortcut-list dd {
+  margin: 0;
+}
+#shortcut-action-index {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  list-style: none;
+  padding: 0;
+}
+#shortcut-action-index button {
+  width: 100%;
+  text-align: left;
+}
+@media (max-width: 640px) {
+  #shortcut-action-index {
+    grid-template-columns: 1fr;
+  }
+}
+#model-information-summary dd {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  margin: 0 0 10px;
+}
+#model-information-summary dt {
+  font-weight: 600;
+}
+#project-metadata-settings input,
+#project-metadata-settings textarea {
+  width: 100%;
+  box-sizing: border-box;
+}

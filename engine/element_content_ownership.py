@@ -4,6 +4,7 @@ Only proven element correspondence transfers content. Unmapped entries remain
 as source-bound detached content, including original units/notes, and can be
 recovered from the retained history. No proximity matching or hull inference.
 """
+
 from copy import deepcopy
 
 from .geometry import GeometryError, canonical_cycle
@@ -12,6 +13,7 @@ from . import element_annotations as content
 INDEX_OPERATIONS = {'transform', 'scale-reference', 'spring-relaxation', 'sphere-project', 'reflect-source'}
 RETAINED_OPERATIONS = {'facet', 'facet-adopt'}
 RETAINED_OPERATIONS.add('facet-diagram-adopt')
+RETAINED_OPERATIONS.add('rebuild-coplanar-cells')
 MAX_DETACHED = 8
 FIELDS = {'vertex': 'vertices', 'edge': 'edges', 'face': 'faces', 'cell': 'cells'}
 
@@ -29,10 +31,13 @@ def correspondence(source, result, operation):
     if (source['dimension'], source['embeddingDimension']) != (result['dimension'], result['embeddingDimension']):
         return maps
     if operation in INDEX_OPERATIONS:
-        if (len(source['vertices']) != len(result['vertices']) or source['edges'] != result['edges']
+        if (
+            len(source['vertices']) != len(result['vertices'])
+            or source['edges'] != result['edges']
             or len(source['faces']) != len(result['faces'])
             or any(canonical_cycle(a) != canonical_cycle(b) for a, b in zip(source['faces'], result['faces']))
-            or source['cells'] != result['cells']):
+            or source['cells'] != result['cells']
+        ):
             raise GeometryError('Index-preserving content operation changed ordered element incidence.')
         return {kind: {i: i for i in range(len(source[field]))} for kind, field in FIELDS.items()}
     if operation not in RETAINED_OPERATIONS:
@@ -88,7 +93,9 @@ def transfer_content_state(source, state, operation):
         if target is None:
             unmapped.append(entry)
         else:
-            moved = deepcopy(entry); moved['index'] = target; entries.append(moved)
+            moved = deepcopy(entry)
+            moved['index'] = target
+            entries.append(moved)
             mapped.append({'kind': entry['kind'], 'sourceIndex': entry['index'], 'resultIndex': target})
     current = content.new_document(state['model'])
     current.update(entries=entries, assets=_prune(original, entries)['assets'])
@@ -98,18 +105,31 @@ def transfer_content_state(source, state, operation):
     archives = deepcopy(source['view'].get('elementContentDetached', []))
     if unmapped:
         if len(archives) >= MAX_DETACHED:
-            raise GeometryError('Detached content limit reached; retain the source document or remove explicitly before this operation.')
-        archives.append({'operation': operation, 'reason': 'No verified element correspondence for these entries.',
-            'document': _prune(original, unmapped), 'sourceNotes': source.get('notes', ''),
-            'sourceCoordinateUnit': source['view'].get('coordinateUnit', 'model')})
+            raise GeometryError(
+                'Detached content limit reached; retain the source document or remove explicitly before this operation.'
+            )
+        archives.append(
+            {
+                'operation': operation,
+                'reason': 'No verified element correspondence for these entries.',
+                'document': _prune(original, unmapped),
+                'sourceNotes': source.get('notes', ''),
+                'sourceCoordinateUnit': source['view'].get('coordinateUnit', 'model'),
+            }
+        )
     if archives:
         view['elementContentDetached'] = archives
     else:
         view.pop('elementContentDetached', None)
-    view['elementContentTransfer'] = {'version': 1, 'operation': operation,
-        'sourceDocument': deepcopy(original), 'sourceNotes': source.get('notes', ''),
+    view['elementContentTransfer'] = {
+        'version': 1,
+        'operation': operation,
+        'sourceDocument': deepcopy(original),
+        'sourceNotes': source.get('notes', ''),
         'sourceCoordinateUnit': source['view'].get('coordinateUnit', 'model'),
-        'mapped': mapped, 'unmapped': [{'kind': e['kind'], 'sourceIndex': e['index']} for e in unmapped]}
+        'mapped': mapped,
+        'unmapped': [{'kind': e['kind'], 'sourceIndex': e['index']} for e in unmapped],
+    }
     for field in ('netLayout', 'netPages'):
         result.pop(field, None)
     validate_content_ownership(state['model'], view)
@@ -123,7 +143,12 @@ def validate_content_ownership(model, view):
     content._json(archives, content.MAX_DOCUMENT)
     keys = {'operation', 'reason', 'document', 'sourceNotes', 'sourceCoordinateUnit'}
     for archive in archives:
-        if type(archive) is not dict or set(archive) != keys or type(archive['operation']) is not str or type(archive['reason']) is not str:
+        if (
+            type(archive) is not dict
+            or set(archive) != keys
+            or type(archive['operation']) is not str
+            or type(archive['reason']) is not str
+        ):
             raise GeometryError('Malformed detached content record.')
         content._string(archive['sourceNotes'], 128 * 1024)
         if archive['sourceCoordinateUnit'] not in ('model', 'mm', 'cm', 'm', 'in', 'ft'):
@@ -136,11 +161,24 @@ def validate_content_ownership(model, view):
     if receipt is None:
         return
     required = {'version', 'operation', 'sourceDocument', 'sourceNotes', 'sourceCoordinateUnit', 'mapped', 'unmapped'}
-    if type(receipt) is not dict or set(receipt) != required or type(receipt['version']) is not int or receipt['version'] != 1 or type(receipt['operation']) is not str:
+    if (
+        type(receipt) is not dict
+        or set(receipt) != required
+        or type(receipt['version']) is not int
+        or receipt['version'] != 1
+        or type(receipt['operation']) is not str
+    ):
         raise GeometryError('Malformed element correspondence receipt.')
     content._json(receipt, content.MAX_DOCUMENT)
     content._string(receipt['sourceNotes'], 128 * 1024)
-    if type(receipt['sourceCoordinateUnit']) is not str or receipt['sourceCoordinateUnit'] not in ('model', 'mm', 'cm', 'm', 'in', 'ft'):
+    if type(receipt['sourceCoordinateUnit']) is not str or receipt['sourceCoordinateUnit'] not in (
+        'model',
+        'mm',
+        'cm',
+        'm',
+        'in',
+        'ft',
+    ):
         raise GeometryError('Content correspondence source units are unsupported.')
     document = receipt['sourceDocument']
     if type(document) is not dict or type(document.get('source')) is not dict:
@@ -161,18 +199,28 @@ def validate_content_ownership(model, view):
 def verify_replayed_content(source, computed, node):
     """Bind recomputed ownership to actual parent, rather than cached maps."""
     from .element_content_workflow import semantic
+
     expected = transfer_content_state(source, computed, node['op'])
     for field in ('elementAnnotations', 'elementContentDetached', 'elementContentTransfer'):
         if semantic(expected['view'].get(field)) != semantic(node['snapshot']['view'].get(field)):
-            raise GeometryError('Geometry replay element content ownership does not reconstruct from its actual parent.')
+            raise GeometryError(
+                'Geometry replay element content ownership does not reconstruct from its actual parent.'
+            )
 
 
 def content_source_changed(current, recorded):
     """Reseed literal content, notes and units changed since history recording."""
     from .element_content_workflow import semantic
+
     def owned(state):
         view = state['view']
-        return {'notes': state.get('notes', ''), 'unit': view.get('coordinateUnit', 'model'),
-            **{field: view.get(field) for field in
-               ('elementAnnotations', 'elementContentDetached', 'elementContentTransfer')}}
+        return {
+            'notes': state.get('notes', ''),
+            'unit': view.get('coordinateUnit', 'model'),
+            **{
+                field: view.get(field)
+                for field in ('elementAnnotations', 'elementContentDetached', 'elementContentTransfer')
+            },
+        }
+
     return semantic(owned(current)) != semantic(owned(recorded))

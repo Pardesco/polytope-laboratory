@@ -1,0 +1,272 @@
+{
+  "schema_version": 1,
+  "scenarios": [
+    {
+      "id": "con-09-selected-combined",
+      "requirement_id": "CON-09",
+      "option": "selected-combined",
+      "title": "Selected-face and combined condition fitting",
+      "domain_id": "fitting",
+      "input": {
+        "description": "Johnson J1 with unequal face areas and perturbed selected faces",
+        "parameters": {
+          "face_ids": "explicit subset",
+          "objectives": [
+            "regular-faces",
+            "equal-edges",
+            "equal-areas"
+          ]
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "CON-09",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "fitting",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "manual-fitting",
+            "locator": "test_combined_conditions_and_keep_source_symmetry",
+            "role": "documented-options"
+          }
+        ],
+        "checks": [
+          "Only chosen faces have regular-face objective",
+          "Global edge/area conditions remain distinct",
+          "Before/after residuals name each requested condition"
+        ],
+        "basis": "documented-or-local-contract"
+      },
+      "implementation": "supported",
+      "fixtures": [
+        {
+          "path": "tests/test_condition_fitting.py",
+          "selector": "test_combined_conditions_and_keep_source_symmetry",
+          "role": "direct",
+          "evidence": "existing-test-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "preview-fitting",
+          "adopt-fitting",
+          "accept-fitting-near-miss"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R6-FITTING",
+        "priority": "P2",
+        "unverified": "Selected faces/combined objectives are implemented but option cross-product not qualified.",
+        "next_action": "Add selected-face residual oracle and incompatible combined-objective case; verify no accidental equal-area claim for regular-faced J1."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3
+        ],
+        "supported_source_dimensions": [
+          3
+        ],
+        "support_note": "Supported only under referenced domain qualifications.",
+        "object_class": "Johnson J1 with unequal face areas and perturbed selected faces"
+      }
+    },
+    {
+      "id": "con-09-scale-symmetry-target",
+      "requirement_id": "CON-09",
+      "option": "scale-symmetry-target",
+      "title": "Fitting scale, symmetry and targets",
+      "domain_id": "fitting",
+      "input": {
+        "description": "Perturbed cube with explicit edge/area target",
+        "parameters": {
+          "fix_scale": [
+            true,
+            false
+          ],
+          "keep_symmetry": [
+            true,
+            false
+          ],
+          "target": "single-objective explicit"
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "CON-09",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "fitting",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "manual-fitting",
+            "locator": "test_explicit_target_and_cancellation_and_source_change",
+            "role": "documented-options"
+          }
+        ],
+        "checks": [
+          "Fixed scale preserves mean edge",
+          "Symmetry preserves verified source action rather than inferred intended group",
+          "Incompatible target/scale/multiobjective options refuse"
+        ],
+        "basis": "documented-or-local-contract"
+      },
+      "implementation": "supported",
+      "fixtures": [
+        {
+          "path": "tests/test_condition_fitting.py",
+          "selector": "test_explicit_target_and_cancellation_and_source_change",
+          "role": "direct",
+          "evidence": "existing-test-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "preview-fitting",
+          "adopt-fitting",
+          "accept-fitting-near-miss"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R6-FITTING",
+        "priority": "P2",
+        "unverified": "Bounded native coverage exists; benchmark option behavior and shipped UI are unverified.",
+        "next_action": "Tabulate valid/invalid target-scale-symmetry combinations, literal target dimensions and source action; compare saved parameters after replay."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3
+        ],
+        "supported_source_dimensions": [
+          3
+        ],
+        "support_note": "Supported only under referenced domain qualifications.",
+        "object_class": "Perturbed cube with explicit edge/area target"
+      }
+    },
+    {
+      "id": "con-09-invalid-adoption",
+      "requirement_id": "CON-09",
+      "option": "invalid-adoption",
+      "title": "Collapsed/flipped fitting candidate",
+      "domain_id": "fitting",
+      "input": {
+        "description": "Mock optimizer success with coincident vertices or reversed source orientation",
+        "parameters": {
+          "adoption": [
+            "strict",
+            "valid-near-miss"
+          ]
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "CON-09",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "fitting",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "independent-fixtures",
+            "locator": "test_degenerate_solver_solution_never_adopts_even_with_residual_acceptance",
+            "role": "expectation-oracle"
+          }
+        ],
+        "checks": [
+          "Invalid geometric realization cannot be adopted even with tiny residual or near-miss consent",
+          "Source/history unchanged"
+        ],
+        "basis": "independent-invariant"
+      },
+      "implementation": "supported",
+      "fixtures": [
+        {
+          "path": "tests/test_condition_fitting.py",
+          "selector": "test_degenerate_solver_solution_never_adopts_even_with_residual_acceptance",
+          "role": "direct",
+          "evidence": "existing-test-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "preview-fitting",
+          "adopt-fitting",
+          "accept-fitting-near-miss"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R6-FITTING",
+        "priority": "P2",
+        "unverified": "Bounded native coverage exists; benchmark option behavior and shipped UI are unverified.",
+        "next_action": "Run collapse and orientation-flip fixtures plus mounted adoption rejection; keep convergence, residual acceptance and geometry validity separate."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3
+        ],
+        "supported_source_dimensions": [
+          3
+        ],
+        "support_note": "Supported only under referenced domain qualifications.",
+        "object_class": "Mock optimizer success with coincident vertices or reversed source orientation"
+      }
+    }
+  ]
+}

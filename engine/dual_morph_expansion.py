@@ -77,6 +77,9 @@ def _cycle(adjacency, label):
 def _dual_topology(model, lattice):
     """Reverse actual source incidence; use links rather than angular sorting."""
     d = model['dimension'];facets = lattice[d-1]
+    if d == 4 and sum(len(rank)*len(facets) for rank in lattice[:-1]) > MAX_PAIRS:
+        from .dual_morph_sparse4d import dual_topology
+        return dual_topology(model, lattice)
     _require(sum(len(rank)*len(facets) for rank in lattice[:-1]) <= MAX_PAIRS,
              'Dual correspondence exceeds the bounded incidence-pair budget.')
     supers = [[tuple(i for i, facet in enumerate(facets) if element <= facet) for element in rank] for rank in lattice]
@@ -102,7 +105,7 @@ def _plane(points, ids, center, scale):
     normal = vt[-1];height = float(normal @ cloud.mean(axis=0))
     if height < 0:normal = -normal;height = -height
     _require(height > EPS*4, 'Polar facet passes through/too near the center, or has an unresolved orientation.')
-    residual = (points-center)/scale @ normal-height
+    residual = np.einsum('ij,j->i',(points-center)/scale,normal)-height
     _require(float(np.max(residual)) <= EPS*8, 'Center is outside, or the supplied facet is not a supporting plane.')
     _require(set(ids) == set(np.flatnonzero(np.abs(residual) <= EPS*8)),
              'Facet omits/duplicates coplanar source vertices; no identity merge is performed.')
@@ -197,7 +200,12 @@ class DualMorphPlan:
     def _build_product(self, p, q, source, complement):
         d=source['dimension'];lattice=self._lattice;supers=self._supers
         products=[];lookups=[];visits=0
+        sparse = d==4 and sum(len(lattice[r])*len(lattice[d-1-(k-r)]) for k in range(d) for r in range(k+1))>MAX_PAIRS
+        if sparse:
+            from .dual_morph_sparse4d import product_records
+            products,lookups=product_records(lattice)
         for k in range(d):
+            if sparse:continue
             records=[];lookup={}
             for r in range(k+1):
                 s=k-r;origin_rank=d-1-s
@@ -234,14 +242,17 @@ class DualMorphPlan:
         self._product_topology={'edges':edges,'faces':faces,'cells':cells}
         self._start=np.asarray([p[v]-self._center for v,c in flags]);self._end=np.asarray([q[c]-self._center for v,c in flags])
         colors=[];tiltcolors=[];owners=[]
+        if sparse:
+            from .dual_morph_sparse4d import SparseIncidence, vertex_incidence, edge_face_incidence
+            incidence=SparseIncidence(lattice)
         for r,a,s,b in products[2]:
             A=lattice[r][a];D=lattice[d-1-s][b]
-            incident=[f for f,F in enumerate(lattice[2]) if A<=F and (F<=D or D<=F)]
+            incident=list(incidence.upper(1,b,2)) if sparse and r==0 else [b] if sparse and r==1 else [a] if sparse else [f for f,F in enumerate(lattice[2]) if A<=F and (F<=D or D<=F)]
             if d==3 and r==2:basecolor=_color_record(source,'faces',a)
             else:basecolor=_mix([_color_record(source,'faces',f) for f in incident])
             color=_mix([_color_record(source,'faces',f) for f in incident],True) if complement and r==s==1 else basecolor
             tiltcolors.append(basecolor)
-            colors.append(color);owners.append({'sourceRank':r,'sourceElement':a,'dualRank':s,'dualOriginElement':b,'sourceFaceIds':incident})
+            colors.append(color);owners.append({'sourceRank':r,'sourceElement':a,'dualRank':s,'dualOriginElement':b,'sourceFaceIds':incident,**({'sourceSheetFace':a if r==2 else None} if d==4 else {})})
         cellcolors=[]
         if d==4:
             for r,a,s,b in products[3]:
@@ -255,6 +266,7 @@ class DualMorphPlan:
         product=_geometry(source,middle,self._product_topology,'Expansion preflight',self._product_metadata)
         dual_topology,_=_dual_topology(product,_lattice(product))
         facets=_lattice(product)[d-1];scale=float(np.max(np.ptp(middle,axis=0)));normals=[];hp=[];hq=[]
+        planarity=0.;violation=0.
         for facet in facets:
             ids=sorted(facet);normal,_=_plane(middle,ids,self._center,scale)
             a=float(normal@self._start[ids[0]]);b=float(normal@self._end[ids[0]])
@@ -263,17 +275,21 @@ class DualMorphPlan:
                      'Expansion support plane is not constant on both source factors.')
             _require(np.max((p-self._center)@normal-a)<=EPS*scale*16 and np.max((q-self._center)@normal-b)<=EPS*scale*16,
                      'This source/radius pair does not support the incidence-product expansion; no Hull repair is substituted.')
+            planarity=max(planarity,float(np.max(np.abs(self._start[ids]@normal-a)))/scale,float(np.max(np.abs(self._end[ids]@normal-b)))/scale)
+            violation=max(violation,float(np.max((p-self._center)@normal-a))/scale,float(np.max((q-self._center)@normal-b))/scale)
             normals.append(normal);hp.append(a);hq.append(b)
         self._tilt_normals=np.asarray(normals);self._tilt_start=np.asarray(hp);self._tilt_end=np.asarray(hq)
+        self._support_evidence={'certified':False,'normalization':'Expansion midpoint maximum coordinate span','maximumFactorPlanarityResidual':planarity,'maximumFactorSupportViolation':violation,'minimumFactorSupportOffset':float(min(hp+hq))/scale,'tolerance':EPS*16}
         self._tilt_topology=dual_topology
         # A reciprocal cell belongs to an expanded vertex flag. Preserve its
         # incident source-cell colors rather than silently dropping alpha.
         tilt_cellcolors=[]
         if d==4:
             cell_vertices=[set(v for f in cell for v in faces[f]) for cell in cells]
-            tilt_cellcolors=[_mix([cellcolors[c] for c,C in enumerate(cell_vertices) if v in C]) for v in range(len(flags))]
+            tilt_cellcolors=[_mix([cellcolors[c] for c in ids]) for ids in vertex_incidence(cell_vertices,len(flags))] if sparse else [_mix([cellcolors[c] for c,C in enumerate(cell_vertices) if v in C]) for v in range(len(flags))]
+        sparse_tilt_faces=[_mix([tiltcolors[f] for f in ids]) for ids in edge_face_incidence(faces,edges,len(flags))] if sparse else None
         self._tilt_metadata={'coordinateUnits':self._product_metadata['coordinateUnits'],
-                             'offColors':{'faces':[_mix([tiltcolors[f] for f,F in enumerate(faces) if e[0] in F and e[1] in F]) for e in edges] if d==4 else
+                             'offColors':{'faces':sparse_tilt_faces if sparse else [_mix([tiltcolors[f] for f,F in enumerate(faces) if e[0] in F and e[1] in F]) for e in edges] if d==4 else
                                          [_mix([tiltcolors[f] for f,F in enumerate(faces) if v in F]) for v in range(len(flags))], 'cells':tilt_cellcolors}}
         self._tilt_maps={'vertices':[deepcopy(self._product_maps['faces' if d==3 else 'cells'][i]) for i in range(len(facets))],
                          'edges':deepcopy(self._product_maps['edges' if d==3 else 'faces']),
@@ -294,6 +310,7 @@ class DualMorphPlan:
                 'sourceModelId':self._source_id,'sourceFingerprint':self._source_fingerprint,
                 'sourceSnapshotSha256':hashlib.sha256(json.dumps(self._state,sort_keys=True,separators=(',', ':')).encode()).hexdigest(),
                 'center':self._center.tolist(),'radius':self._radius,'certified':False,
+                'supportEvidence':deepcopy(self._support_evidence),
                 'expansion':{'start':self._start.tolist(),'end':self._end.tolist(),'topology':deepcopy(self._product_topology),'sourceMaps':deepcopy(self._product_maps),'metadata':deepcopy(self._product_metadata)},
                 'tiltingQuads':{'normals':self._tilt_normals.tolist(),'primalOffsets':self._tilt_start.tolist(),'dualOffsets':self._tilt_end.tolist(),'topology':deepcopy(self._tilt_topology),'sourceMaps':deepcopy(self._tilt_maps),'metadata':deepcopy(self._tilt_metadata)},
                 'original':deepcopy(self._state['model']),'dual':self.dual,
@@ -325,7 +342,7 @@ class DualMorphPlan:
                 'diagnostics':(['Literal endpoint topology snap; collapsed interior elements are not welded.'] if endpoint else
                                ['Display/ordered incidence only; no filled volume or convexity certificate.'])+
                               ([] if 0<=t<=1 else ['Extrapolation may invert/intersect elements; topology is retained.']),
-                'maximumPolarityResidual':self._maximum_polarity_residual,'algorithmVersion':VERSION}
+                'maximumPolarityResidual':self._maximum_polarity_residual,'supportEvidence':deepcopy(self._support_evidence),'algorithmVersion':VERSION}
 
 
 def prepare_dual_morph(state, center=None, radius=1.0, *, complement=False):

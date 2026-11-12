@@ -1,4 +1,5 @@
 """Bundled gallery and sample projects must resolve through native computation."""
+
 import json
 from pathlib import Path
 

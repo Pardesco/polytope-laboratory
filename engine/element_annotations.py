@@ -4,6 +4,7 @@ All source fields, ordered incidence and RGBA/null are retained. Only verified
 embedded PNG is accepted. Net placement uses source-face coordinates in mm,
 so moving/rotating a net part carries its content without resizing it.
 """
+
 import base64
 from copy import deepcopy
 import hashlib
@@ -52,7 +53,10 @@ def _number(value, low, high, name):
 def _string(value, limit=MAX_CHARS):
     if type(value) is not str or len(value) > limit:
         raise AnnotationError('Text exceeds its supported character limit.')
-    if any((ord(c) < 32 and c not in '\t\n\r') or 0xD800 <= ord(c) <= 0xDFFF or ord(c) & 0xFFFF in (0xFFFE, 0xFFFF) for c in value):
+    if any(
+        (ord(c) < 32 and c not in '\t\n\r') or 0xD800 <= ord(c) <= 0xDFFF or ord(c) & 0xFFFF in (0xFFFE, 0xFFFF)
+        for c in value
+    ):
         raise AnnotationError('Text contains a character that cannot be represented in XML.')
     return value
 
@@ -61,6 +65,7 @@ def _json(value, limit):
     ancestors = set()
     visited = 0
     lower_bytes = 0
+
     def walk(item, depth=0):
         nonlocal visited, lower_bytes
         visited += 1
@@ -87,9 +92,12 @@ def _json(value, limit):
             _string(item, MAX_DOCUMENT)
         elif item is not None and type(item) not in (bool, int, float, np.float64):
             raise AnnotationError('Document requires ordinary JSON values.')
+
     walk(value)
     try:
-        raw = json.dumps(value, ensure_ascii=False, allow_nan=False, sort_keys=True, separators=(',', ':')).encode('utf-8')
+        raw = json.dumps(value, ensure_ascii=False, allow_nan=False, sort_keys=True, separators=(',', ':')).encode(
+            'utf-8'
+        )
     except (ValueError, UnicodeError, TypeError) as exc:
         raise AnnotationError('Document is not finite valid JSON.') from exc
     if len(raw) > limit:
@@ -99,7 +107,9 @@ def _json(value, limit):
 
 def _source(source):
     _json(source, MAX_SOURCE)
-    if type(source) is not dict or any(type(source.get(rank)) is not list for rank in ('vertices', 'edges', 'faces', 'cells')):
+    if type(source) is not dict or any(
+        type(source.get(rank)) is not list for rank in ('vertices', 'edges', 'faces', 'cells')
+    ):
         raise AnnotationError('Annotations require an explicit source incidence model.')
     if any(len(source[rank]) > 8192 for rank in ('vertices', 'edges', 'faces', 'cells')):
         raise AnnotationError('Source element count exceeds the supported limit.')
@@ -114,6 +124,7 @@ def _source(source):
             raise AnnotationError('Annotations require a validated source model.')
     except (ValueError, TypeError, KeyError, OverflowError) as exc:
         raise AnnotationError('Annotations require a validated source model.') from exc
+
     def portable(value):
         if type(value) is dict:
             return ['object', [[key, portable(child)] for key, child in sorted(value.items())]]
@@ -128,6 +139,7 @@ def _source(source):
                 raise AnnotationError('Source number exceeds finite binary64.') from exc
             return ['number', (number if number else 0.0).hex()]
         return ['scalar', value]
+
     raw = json.dumps(portable(source), ensure_ascii=False, allow_nan=False, separators=(',', ':')).encode('utf-8')
     if len(raw) > MAX_SOURCE * 8:
         raise AnnotationError('Portable source encoding exceeds its supported byte limit.')
@@ -248,14 +260,24 @@ def compile_text(markup):
 
 def new_document(source):
     raw = _source(source)
-    return {'schema': 'polytope-element-annotations', 'version': 1,
-            'source': deepcopy(source), 'sourceSha256': hashlib.sha256(raw).hexdigest(),
-            'entries': [], 'assets': {}}
+    return {
+        'schema': 'polytope-element-annotations',
+        'version': 1,
+        'source': deepcopy(source),
+        'sourceSha256': hashlib.sha256(raw).hexdigest(),
+        'entries': [],
+        'assets': {},
+    }
 
 
 def _anchor(source, kind, index):
     names = {'vertex': 'vertices', 'edge': 'edges', 'face': 'faces', 'cell': 'cells'}
-    if type(kind) is not str or kind not in names or type(index) is not int or not 0 <= index < len(source.get(names[kind], [])):
+    if (
+        type(kind) is not str
+        or kind not in names
+        or type(index) is not int
+        or not 0 <= index < len(source.get(names[kind], []))
+    ):
         raise AnnotationError('Choose an existing source element with an integer ID.')
 
 
@@ -265,16 +287,20 @@ def _placement(value):
     offset = value['offsetMm']
     if type(offset) is not list or len(offset) != 2:
         raise AnnotationError('Offset needs two physical millimeter coordinates.')
-    return {'offsetMm': [_number(x, -1000, 1000, 'Offset') for x in offset],
-            'rotationDeg': _number(value['rotationDeg'], -360, 360, 'Rotation'),
-            'lineHeightMm': _number(value['lineHeightMm'], 0.1, 100, 'Line height')}
+    return {
+        'offsetMm': [_number(x, -1000, 1000, 'Offset') for x in offset],
+        'rotationDeg': _number(value['rotationDeg'], -360, 360, 'Rotation'),
+        'lineHeightMm': _number(value['lineHeightMm'], 0.1, 100, 'Line height'),
+    }
 
 
 def set_text(document, source, kind, index, markup, placement=None):
     validate_document(document, source)
     _anchor(source, kind, index)
     compile_text(markup)
-    placement = _placement({'offsetMm': [0, 0], 'rotationDeg': 0, 'lineHeightMm': 4} if placement is None else placement)
+    placement = _placement(
+        {'offsetMm': [0, 0], 'rotationDeg': 0, 'lineHeightMm': 4} if placement is None else placement
+    )
     result = deepcopy(document)
     entry = next((x for x in result['entries'] if x['kind'] == kind and x['index'] == index), None)
     if entry is None:
@@ -293,8 +319,8 @@ def _png(raw):
         chunks += 1
         if chunks > 2048 or offset + 12 > len(raw):
             raise AnnotationError('PNG chunk structure is incomplete or exceeds the work limit.')
-        length = struct.unpack('>I', raw[offset:offset + 4])[0]
-        tag = raw[offset + 4:offset + 8]
+        length = struct.unpack('>I', raw[offset : offset + 4])[0]
+        tag = raw[offset + 4 : offset + 8]
         end = offset + 12 + length
         if end > len(raw) or not re.fullmatch(b'[A-Za-z]{4}', tag):
             raise AnnotationError('Invalid PNG chunk length/type.')
@@ -302,8 +328,8 @@ def _png(raw):
             raise AnnotationError('PNG requires a single leading image header.')
         if tag[0] < 97 and tag not in (b'IHDR', b'PLTE', b'IDAT', b'IEND'):
             raise AnnotationError('Unsupported critical PNG chunk.')
-        expected_crc = struct.unpack('>I', raw[end - 4:end])[0]
-        if zlib.crc32(raw[offset + 4:end - 4]) != expected_crc:
+        expected_crc = struct.unpack('>I', raw[end - 4 : end])[0]
+        if zlib.crc32(raw[offset + 4 : end - 4]) != expected_crc:
             raise AnnotationError('PNG chunk checksum does not match its bytes.')
         has_data |= tag == b'IDAT'
         if tag == b'IEND':
@@ -316,7 +342,13 @@ def _png(raw):
     try:
         with Image.open(io.BytesIO(raw)) as image:
             width, height = image.size
-            if image.format != 'PNG' or getattr(image, 'n_frames', 1) != 1 or not 1 <= width <= 4096 or not 1 <= height <= 4096 or width * height > MAX_PIXELS:
+            if (
+                image.format != 'PNG'
+                or getattr(image, 'n_frames', 1) != 1
+                or not 1 <= width <= 4096
+                or not 1 <= height <= 4096
+                or width * height > MAX_PIXELS
+            ):
                 raise AnnotationError('PNG dimensions or animation exceed the supported domain.')
             image.load()
             output = io.BytesIO()
@@ -339,8 +371,12 @@ def set_texture(document, source, face_index, png_bytes):
     clean, width, height = _png(png_bytes)
     key = hashlib.sha256(clean).hexdigest()
     result = deepcopy(document)
-    result['assets'][key] = {'mime': 'image/png', 'width': width, 'height': height,
-                             'base64': base64.b64encode(clean).decode('ascii')}
+    result['assets'][key] = {
+        'mime': 'image/png',
+        'width': width,
+        'height': height,
+        'base64': base64.b64encode(clean).decode('ascii'),
+    }
     entry = next((x for x in result['entries'] if x['kind'] == 'face' and x['index'] == face_index), None)
     if entry is None:
         entry = {'kind': 'face', 'index': face_index, 'text': None, 'texture': None}
@@ -355,7 +391,13 @@ def set_texture(document, source, face_index, png_bytes):
 def validate_document(document, source):
     raw = _source(source)
     _json(document, MAX_DOCUMENT)
-    if type(document) is not dict or set(document) != {'schema', 'version', 'source', 'sourceSha256', 'entries', 'assets'} or document['schema'] != 'polytope-element-annotations' or type(document['version']) is not int or document['version'] != 1:
+    if (
+        type(document) is not dict
+        or set(document) != {'schema', 'version', 'source', 'sourceSha256', 'entries', 'assets'}
+        or document['schema'] != 'polytope-element-annotations'
+        or type(document['version']) is not int
+        or document['version'] != 1
+    ):
         raise AnnotationError('Unsupported annotation document schema.')
     if document['sourceSha256'] != hashlib.sha256(raw).hexdigest() or _source(document['source']) != raw:
         raise AnnotationError('Annotation source changed; explicit correspondence/remapping is required.')
@@ -379,7 +421,14 @@ def validate_document(document, source):
             _placement(value['placement'])
         if entry['texture'] is not None:
             texture = entry['texture']
-            if entry['kind'] != 'face' or type(texture) is not dict or set(texture) != {'asset', 'mapping'} or texture['mapping'] != 'face-frame-bounds' or type(texture['asset']) is not str or texture['asset'] not in assets:
+            if (
+                entry['kind'] != 'face'
+                or type(texture) is not dict
+                or set(texture) != {'asset', 'mapping'}
+                or texture['mapping'] != 'face-frame-bounds'
+                or type(texture['asset']) is not str
+                or texture['asset'] not in assets
+            ):
                 raise AnnotationError('Texture needs a verified existing face asset.')
             used.add(texture['asset'])
         if entry['texture'] is None and entry['text'] is None:
@@ -388,7 +437,12 @@ def validate_document(document, source):
         raise AnnotationError('Assets must have exactly the used content identities.')
     total_pixels = 0
     for key, asset in assets.items():
-        if type(asset) is not dict or set(asset) != {'mime', 'width', 'height', 'base64'} or asset['mime'] != 'image/png' or type(asset['base64']) is not str:
+        if (
+            type(asset) is not dict
+            or set(asset) != {'mime', 'width', 'height', 'base64'}
+            or asset['mime'] != 'image/png'
+            or type(asset['base64']) is not str
+        ):
             raise AnnotationError('Unsupported image asset.')
         try:
             decoded = base64.b64decode(asset['base64'], validate=True)
@@ -398,7 +452,13 @@ def validate_document(document, source):
         total_pixels += width * height
         if total_pixels > MAX_TOTAL_PIXELS:
             raise AnnotationError('Total decoded image pixels exceed the document work limit.')
-        if decoded != clean or hashlib.sha256(clean).hexdigest() != key or type(asset['width']) is not int or type(asset['height']) is not int or (width, height) != (asset['width'], asset['height']):
+        if (
+            decoded != clean
+            or hashlib.sha256(clean).hexdigest() != key
+            or type(asset['width']) is not int
+            or type(asset['height']) is not int
+            or (width, height) != (asset['width'], asset['height'])
+        ):
             raise AnnotationError('Image bytes, dimensions or content identity changed.')
     return True
 
@@ -411,6 +471,7 @@ def serialize(document, source):
 def load(raw, source):
     if type(raw) is not bytes or len(raw) > MAX_DOCUMENT:
         raise AnnotationError('Use bounded serialized annotation bytes.')
+
     def pairs(items):
         result = {}
         for key, value in items:
@@ -418,9 +479,13 @@ def load(raw, source):
                 raise AnnotationError('Repeated JSON keys are ambiguous.')
             result[key] = value
         return result
+
     try:
-        result = json.loads(raw.decode('utf-8'), object_pairs_hook=pairs,
-                            parse_constant=lambda x: (_ for _ in ()).throw(AnnotationError('Nonfinite JSON constant.')))
+        result = json.loads(
+            raw.decode('utf-8'),
+            object_pairs_hook=pairs,
+            parse_constant=lambda x: (_ for _ in ()).throw(AnnotationError('Nonfinite JSON constant.')),
+        )
     except (UnicodeError, ValueError, RecursionError) as exc:
         raise AnnotationError('Invalid annotation JSON.') from exc
     validate_document(result, source)
@@ -454,14 +519,23 @@ def _net_frame(source, net, face):
     frame = face_frame(source, face['id'])
     xy = np.asarray(frame['xy'])
     raw_points = face.get('points')
-    if type(raw_points) is not list or any(type(row) is not list or len(row) != 2 or any(type(value) not in (int, float) for value in row) for row in raw_points):
+    if type(raw_points) is not list or any(
+        type(row) is not list or len(row) != 2 or any(type(value) not in (int, float) for value in row)
+        for row in raw_points
+    ):
         raise AnnotationError('Net points require ordinary numeric coordinate pairs.')
     for row in raw_points:
         for coordinate in row:
             _number(coordinate, -1000000, 1000000, 'Net coordinate')
     points = np.asarray(raw_points, dtype=float)
     cycle = face.get('sourceVertices')
-    if points.shape != xy.shape or not np.all(np.isfinite(points)) or type(cycle) is not list or any(type(index) is not int for index in cycle) or cycle != source['faces'][face['id']]:
+    if (
+        points.shape != xy.shape
+        or not np.all(np.isfinite(points))
+        or type(cycle) is not list
+        or any(type(index) is not int for index in cycle)
+        or cycle != source['faces'][face['id']]
+    ):
         raise AnnotationError('Net face source cycle or coordinates changed.')
     edge = np.asarray(source['vertices'][source['edges'][0][1]]) - source['vertices'][source['edges'][0][0]]
     edge_length = float(np.linalg.norm(edge))
@@ -477,7 +551,9 @@ def _net_frame(source, net, face):
         raise AnnotationError('Net face has no independent tangent direction.')
     v /= v_length
     predicted = points[0] + np.outer(xy[:, 0] * scale, u) + np.outer(xy[:, 1] * scale, v)
-    if not np.allclose(predicted, points, rtol=0, atol=max(1, float(np.max(np.linalg.norm(xy * scale, axis=1)))) * 1e-8):
+    if not np.allclose(
+        predicted, points, rtol=0, atol=max(1, float(np.max(np.linalg.norm(xy * scale, axis=1)))) * 1e-8
+    ):
         raise AnnotationError('Net changed source-face shape or physical scale.')
     low = np.asarray(net['bounds'][0], dtype=float)
     origin = points[0] - low + 8
@@ -487,13 +563,30 @@ def _net_frame(source, net, face):
 def annotated_net_svg(document, source, net, *, expected_face_ids=None):
     validate_document(document, source)
     _json(net, MAX_DOCUMENT)
-    if type(net) is not dict or net.get('sourceFingerprint') != identity(source) or net.get('sourceId') != source.get('id') or net.get('units') != 'mm' or type(net.get('referenceEdge')) is not int or net['referenceEdge'] != 0:
+    if (
+        type(net) is not dict
+        or net.get('sourceFingerprint') != identity(source)
+        or net.get('sourceId') != source.get('id')
+        or net.get('units') != 'mm'
+        or type(net.get('referenceEdge')) is not int
+        or net['referenceEdge'] != 0
+    ):
         raise AnnotationError('Net does not belong to the current source/physical scale.')
     ids = list(range(len(source['faces']))) if expected_face_ids is None else expected_face_ids
-    if type(ids) is not list or not ids or any(type(i) is not int or not 0 <= i < len(source['faces']) for i in ids) or len(ids) != len(set(ids)):
+    if (
+        type(ids) is not list
+        or not ids
+        or any(type(i) is not int or not 0 <= i < len(source['faces']) for i in ids)
+        or len(ids) != len(set(ids))
+    ):
         raise AnnotationError('Export requires distinct explicit expected source face IDs.')
     records = net.get('faces', [])
-    if type(records) is not list or len(records) != len(ids) or any(type(f) is not dict or type(f.get('id')) is not int for f in records) or sorted(f['id'] for f in records) != sorted(ids):
+    if (
+        type(records) is not list
+        or len(records) != len(ids)
+        or any(type(f) is not dict or type(f.get('id')) is not int for f in records)
+        or sorted(f['id'] for f in records) != sorted(ids)
+    ):
         raise AnnotationError('This export requires every source face exactly once.')
     bounds = net.get('bounds')
     if type(bounds) is not list or len(bounds) != 2 or any(type(row) is not list or len(row) != 2 for row in bounds):
@@ -511,29 +604,52 @@ def annotated_net_svg(document, source, net, *, expected_face_ids=None):
         if type(face.get('edges')) is not list or len(face['edges']) != len(cycle):
             raise AnnotationError('Net edge labels must match the complete source face cycle.')
         for record, a, b in zip(face['edges'], cycle, cycle[1:] + cycle[:1]):
-            if type(record) is not dict or set(record) != {'id', 'hinge'} or type(record['id']) is not int or record['id'] != edge_ids.get(tuple(sorted((a, b)))) or type(record['hinge']) is not bool:
+            if (
+                type(record) is not dict
+                or set(record) != {'id', 'hinge'}
+                or type(record['id']) is not int
+                or record['id'] != edge_ids.get(tuple(sorted((a, b))))
+                or type(record['hinge']) is not bool
+            ):
                 raise AnnotationError('Net edge identity/hinge does not match its source cycle.')
     pairs = net.get('tabOverlapPairs', [])
-    if type(pairs) is not list or any(type(p) is not dict or set(p) not in ({'edge', 'face'}, {'edge', 'otherTabEdge'}) or any(type(v) is not int or not 0 <= v < (len(source['faces']) if k == 'face' else len(source['edges'])) for k, v in p.items()) for p in pairs):
+    if type(pairs) is not list or any(
+        type(p) is not dict
+        or set(p) not in ({'edge', 'face'}, {'edge', 'otherTabEdge'})
+        or any(
+            type(v) is not int or not 0 <= v < (len(source['faces']) if k == 'face' else len(source['edges']))
+            for k, v in p.items()
+        )
+        for p in pairs
+    ):
         raise AnnotationError('Tab diagnostics require explicit bounded source IDs.')
     frames = {face['id']: _net_frame(source, net, face) for face in records}
     cloud = np.concatenate([np.asarray(face['points'], dtype=float) for face in records])
     padding = 8 if expected_face_ids is not None else 0
-    if np.any(cloud.min(axis=0) < np.asarray(bounds[0]) - padding - 1e-8) or np.any(cloud.max(axis=0) > np.asarray(bounds[1]) + padding + 1e-8):
+    if np.any(cloud.min(axis=0) < np.asarray(bounds[0]) - padding - 1e-8) or np.any(
+        cloud.max(axis=0) > np.asarray(bounds[1]) + padding + 1e-8
+    ):
         raise AnnotationError('Net bounds omit source face geometry.')
     safe_net = {key: deepcopy(net[key]) for key in ('bounds', 'tabs', 'referenceEdgeLengthMm')}
-    safe_net['faces'] = [{key: deepcopy(face[key]) for key in ('id', 'component', 'sourceVertices', 'points', 'edges')} for face in records]
+    safe_net['faces'] = [
+        {key: deepcopy(face[key]) for key in ('id', 'component', 'sourceVertices', 'points', 'edges')}
+        for face in records
+    ]
     safe_net['tabOverlapPairs'] = deepcopy(pairs)
     if net.get('tabOptions') is not None:
         from .net_tabs import tab_records_for_faces
+
         safe_net['tabRecords'] = tab_records_for_faces(source, safe_net, net['tabOptions'])
     elif net.get('tabRecords') is not None:
         from .net_color_printing import legacy_tab_records
+
         safe_net['tabRecords'] = legacy_tab_records(source, safe_net)
     from .net_paper_ux import fold_types
-    safe_net['foldTypes']=fold_types(source['vertices'],source['faces'],source['edges'])
-    safe_net['components']=[{'root':c['root']} for c in net.get('components',[])]
-    if net.get('pieceNumbers'):safe_net['pieceNumbers']=deepcopy(net['pieceNumbers'])
+
+    safe_net['foldTypes'] = fold_types(source['vertices'], source['faces'], source['edges'])
+    safe_net['components'] = [{'root': c['root']} for c in net.get('components', [])]
+    if net.get('pieceNumbers'):
+        safe_net['pieceNumbers'] = deepcopy(net['pieceNumbers'])
     safe_net['status'] = 'Source-bound face annotations; physical millimeter placement'
     root = ET.fromstring(net_svg(safe_net))
     defs = ET.SubElement(root, '{' + SVG + '}defs')
@@ -555,13 +671,27 @@ def annotated_net_svg(document, source, net, *, expected_face_ids=None):
         if entry['texture'] is not None:
             asset = document['assets'][entry['texture']['asset']]
             low, high = xy.min(axis=0), xy.max(axis=0)
-            ET.SubElement(local, '{' + SVG + '}image', {'x': format(low[0], '.12g'), 'y': format(low[1], '.12g'),
-                'width': format(high[0] - low[0], '.12g'), 'height': format(high[1] - low[1], '.12g'),
-                'preserveAspectRatio': 'none', 'href': 'data:image/png;base64,' + asset['base64']})
+            ET.SubElement(
+                local,
+                '{' + SVG + '}image',
+                {
+                    'x': format(low[0], '.12g'),
+                    'y': format(low[1], '.12g'),
+                    'width': format(high[0] - low[0], '.12g'),
+                    'height': format(high[1] - low[1], '.12g'),
+                    'preserveAspectRatio': 'none',
+                    'href': 'data:image/png;base64,' + asset['base64'],
+                },
+            )
         if entry['text'] is not None:
-            value = entry['text']; placement = value['placement']
+            value = entry['text']
+            placement = value['placement']
             center = xy.mean(axis=0) + placement['offsetMm']
-            text_group = ET.SubElement(local, '{' + SVG + '}g', {'transform': f'translate({center[0]:.12g} {center[1]:.12g}) rotate({placement["rotationDeg"]:.12g})'})
+            text_group = ET.SubElement(
+                local,
+                '{' + SVG + '}g',
+                {'transform': f'translate({center[0]:.12g} {center[1]:.12g}) rotate({placement["rotationDeg"]:.12g})'},
+            )
             line = 0
             node = ET.SubElement(text_group, '{' + SVG + '}text', {'x': '0', 'y': '0', 'text-anchor': 'middle'})
             for run in compile_text(value['markup']):
@@ -569,16 +699,33 @@ def annotated_net_svg(document, source, net, *, expected_face_ids=None):
                 for part, chunk in enumerate(chunks):
                     if part:
                         line += 1
-                        node = ET.SubElement(text_group, '{' + SVG + '}text', {'x': '0', 'y': format(line * placement['lineHeightMm'], '.12g'), 'text-anchor': 'middle'})
+                        node = ET.SubElement(
+                            text_group,
+                            '{' + SVG + '}text',
+                            {'x': '0', 'y': format(line * placement['lineHeightMm'], '.12g'), 'text-anchor': 'middle'},
+                        )
                     if chunk:
                         style = run['style']
-                        attributes = {'font-size': str(style['sizeMm']), 'font-family': style['font'], 'fill': style['color'],
-                            'font-weight': 'bold' if style['bold'] else 'normal', 'font-style': 'italic' if style['italic'] else 'normal'}
+                        attributes = {
+                            'font-size': str(style['sizeMm']),
+                            'font-family': style['font'],
+                            'fill': style['color'],
+                            'font-weight': 'bold' if style['bold'] else 'normal',
+                            'font-style': 'italic' if style['italic'] else 'normal',
+                        }
                         if style['baseline'] != 'normal':
                             attributes['baseline-shift'] = 'sub' if style['baseline'] == 'sub' else 'super'
                         ET.SubElement(node, '{' + SVG + '}tspan', attributes).text = chunk
-    return ET.tostring(root, encoding='unicode'), {'sourceSha256': document['sourceSha256'],
-        'allSourceFacesRepresented': sorted(ids) == list(range(len(source['faces']))), 'allExpectedSourceFacesRepresented': True, 'sourceFaceIds': sorted(ids), 'units': 'mm', 'contentScale': 1,
+    return ET.tostring(root, encoding='unicode'), {
+        'sourceSha256': document['sourceSha256'],
+        'allSourceFacesRepresented': sorted(ids) == list(range(len(source['faces']))),
+        'allExpectedSourceFacesRepresented': True,
+        'sourceFaceIds': sorted(ids),
+        'units': 'mm',
+        'contentScale': 1,
         'annotationFaceIds': [e['index'] for e in document['entries'] if e['kind'] == 'face' and e['index'] in groups],
         'unrenderedElementKinds': sorted({e['kind'] for e in document['entries'] if e['kind'] != 'face'}),
-        'wholeStellaTextMarkupSupported': False, 'hardwarePrintQualified': False, 'mounted': False}
+        'wholeStellaTextMarkupSupported': False,
+        'hardwarePrintQualified': False,
+        'mounted': False,
+    }

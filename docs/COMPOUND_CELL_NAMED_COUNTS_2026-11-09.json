@@ -1,0 +1,6101 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-09",
+  "identityCount": 149,
+  "tableEntryCount": 150,
+  "matchedRegistrationCount": 270,
+  "nameMismatchCount": 0,
+  "numericContract": "Integer parabolic cosets for convex Wythoff models; float64 rational triangle orbits for generalized U models. Count equality alone does not prove identity.",
+  "identities": {
+    "simplex4": {
+      "counts": [
+        5,
+        10,
+        10,
+        5
+      ],
+      "basis": "A4 parabolic cosets; rings=[1, 0, 0, 0]"
+    },
+    "uniform4-rap": {
+      "counts": [
+        10,
+        30,
+        30,
+        10
+      ],
+      "basis": "A4 parabolic cosets; rings=[0, 1, 0, 0]"
+    },
+    "uniform4-tip": {
+      "counts": [
+        20,
+        40,
+        30,
+        10
+      ],
+      "basis": "A4 parabolic cosets; rings=[1, 1, 0, 0]"
+    },
+    "uniform4-srip": {
+      "counts": [
+        30,
+        90,
+        80,
+        20
+      ],
+      "basis": "A4 parabolic cosets; rings=[1, 0, 1, 0]"
+    },
+    "uniform4-spid": {
+      "counts": [
+        20,
+        60,
+        70,
+        30
+      ],
+      "basis": "A4 parabolic cosets; rings=[1, 0, 0, 1]"
+    },
+    "uniform4-deca": {
+      "counts": [
+        30,
+        60,
+        40,
+        10
+      ],
+      "basis": "A4 parabolic cosets; rings=[0, 1, 1, 0]"
+    },
+    "uniform4-grip": {
+      "counts": [
+        60,
+        120,
+        80,
+        20
+      ],
+      "basis": "A4 parabolic cosets; rings=[1, 1, 1, 0]"
+    },
+    "uniform4-prip": {
+      "counts": [
+        60,
+        150,
+        120,
+        30
+      ],
+      "basis": "A4 parabolic cosets; rings=[1, 1, 0, 1]"
+    },
+    "uniform4-gippid": {
+      "counts": [
+        120,
+        240,
+        150,
+        30
+      ],
+      "basis": "A4 parabolic cosets; rings=[1, 1, 1, 1]"
+    },
+    "tesseract": {
+      "counts": [
+        16,
+        32,
+        24,
+        8
+      ],
+      "basis": "B4 parabolic cosets; rings=[1, 0, 0, 0]"
+    },
+    "uniform4-rit": {
+      "counts": [
+        32,
+        96,
+        88,
+        24
+      ],
+      "basis": "B4 parabolic cosets; rings=[0, 1, 0, 0]"
+    },
+    "cross4": {
+      "counts": [
+        8,
+        24,
+        32,
+        16
+      ],
+      "basis": "B4 parabolic cosets; rings=[0, 0, 0, 1]"
+    },
+    "uniform4-tat": {
+      "counts": [
+        64,
+        128,
+        88,
+        24
+      ],
+      "basis": "B4 parabolic cosets; rings=[1, 1, 0, 0]"
+    },
+    "uniform4-srit": {
+      "counts": [
+        96,
+        288,
+        248,
+        56
+      ],
+      "basis": "B4 parabolic cosets; rings=[1, 0, 1, 0]"
+    },
+    "uniform4-sidpith": {
+      "counts": [
+        64,
+        192,
+        208,
+        80
+      ],
+      "basis": "B4 parabolic cosets; rings=[1, 0, 0, 1]"
+    },
+    "uniform4-tah": {
+      "counts": [
+        96,
+        192,
+        120,
+        24
+      ],
+      "basis": "B4 parabolic cosets; rings=[0, 1, 1, 0]"
+    },
+    "uniform4-thex": {
+      "counts": [
+        48,
+        120,
+        96,
+        24
+      ],
+      "basis": "B4 parabolic cosets; rings=[0, 0, 1, 1]"
+    },
+    "uniform4-grit": {
+      "counts": [
+        192,
+        384,
+        248,
+        56
+      ],
+      "basis": "B4 parabolic cosets; rings=[1, 1, 1, 0]"
+    },
+    "uniform4-proh": {
+      "counts": [
+        192,
+        480,
+        368,
+        80
+      ],
+      "basis": "B4 parabolic cosets; rings=[1, 1, 0, 1]"
+    },
+    "uniform4-prit": {
+      "counts": [
+        192,
+        480,
+        368,
+        80
+      ],
+      "basis": "B4 parabolic cosets; rings=[1, 0, 1, 1]"
+    },
+    "uniform4-gidpith": {
+      "counts": [
+        384,
+        768,
+        464,
+        80
+      ],
+      "basis": "B4 parabolic cosets; rings=[1, 1, 1, 1]"
+    },
+    "cell24": {
+      "counts": [
+        24,
+        96,
+        96,
+        24
+      ],
+      "basis": "F4 parabolic cosets; rings=[1, 0, 0, 0]"
+    },
+    "uniform4-rico": {
+      "counts": [
+        96,
+        288,
+        240,
+        48
+      ],
+      "basis": "F4 parabolic cosets; rings=[0, 1, 0, 0]"
+    },
+    "uniform4-tico": {
+      "counts": [
+        192,
+        384,
+        240,
+        48
+      ],
+      "basis": "F4 parabolic cosets; rings=[1, 1, 0, 0]"
+    },
+    "uniform4-srico": {
+      "counts": [
+        288,
+        864,
+        720,
+        144
+      ],
+      "basis": "F4 parabolic cosets; rings=[1, 0, 1, 0]"
+    },
+    "uniform4-spic": {
+      "counts": [
+        144,
+        576,
+        672,
+        240
+      ],
+      "basis": "F4 parabolic cosets; rings=[1, 0, 0, 1]"
+    },
+    "uniform4-cont": {
+      "counts": [
+        288,
+        576,
+        336,
+        48
+      ],
+      "basis": "F4 parabolic cosets; rings=[0, 1, 1, 0]"
+    },
+    "uniform4-grico": {
+      "counts": [
+        576,
+        1152,
+        720,
+        144
+      ],
+      "basis": "F4 parabolic cosets; rings=[1, 1, 1, 0]"
+    },
+    "uniform4-prico": {
+      "counts": [
+        576,
+        1440,
+        1104,
+        240
+      ],
+      "basis": "F4 parabolic cosets; rings=[1, 1, 0, 1]"
+    },
+    "uniform4-gippic": {
+      "counts": [
+        1152,
+        2304,
+        1392,
+        240
+      ],
+      "basis": "F4 parabolic cosets; rings=[1, 1, 1, 1]"
+    },
+    "uniform4-sadi": {
+      "counts": [
+        96,
+        432,
+        480,
+        144
+      ],
+      "basis": "Snub 24-cell: free D4 rotation orbit / stabilizer 1; degree 9; 24 icosahedra + 120 tetrahedra"
+    },
+    "cell120": {
+      "counts": [
+        600,
+        1200,
+        720,
+        120
+      ],
+      "basis": "H4 parabolic cosets; rings=[1, 0, 0, 0]"
+    },
+    "uniform4-rahi": {
+      "counts": [
+        1200,
+        3600,
+        3120,
+        720
+      ],
+      "basis": "H4 parabolic cosets; rings=[0, 1, 0, 0]"
+    },
+    "uniform4-rox": {
+      "counts": [
+        720,
+        3600,
+        3600,
+        720
+      ],
+      "basis": "H4 parabolic cosets; rings=[0, 0, 1, 0]"
+    },
+    "cell600": {
+      "counts": [
+        120,
+        720,
+        1200,
+        600
+      ],
+      "basis": "H4 parabolic cosets; rings=[0, 0, 0, 1]"
+    },
+    "uniform4-thi": {
+      "counts": [
+        2400,
+        4800,
+        3120,
+        720
+      ],
+      "basis": "H4 parabolic cosets; rings=[1, 1, 0, 0]"
+    },
+    "uniform4-srahi": {
+      "counts": [
+        3600,
+        10800,
+        9120,
+        1920
+      ],
+      "basis": "H4 parabolic cosets; rings=[1, 0, 1, 0]"
+    },
+    "uniform4-sidpixhi": {
+      "counts": [
+        2400,
+        7200,
+        7440,
+        2640
+      ],
+      "basis": "H4 parabolic cosets; rings=[1, 0, 0, 1]"
+    },
+    "uniform4-xhi": {
+      "counts": [
+        3600,
+        7200,
+        4320,
+        720
+      ],
+      "basis": "H4 parabolic cosets; rings=[0, 1, 1, 0]"
+    },
+    "uniform4-srix": {
+      "counts": [
+        3600,
+        10800,
+        8640,
+        1440
+      ],
+      "basis": "H4 parabolic cosets; rings=[0, 1, 0, 1]"
+    },
+    "uniform4-tex": {
+      "counts": [
+        1440,
+        4320,
+        3600,
+        720
+      ],
+      "basis": "H4 parabolic cosets; rings=[0, 0, 1, 1]"
+    },
+    "uniform4-grahi": {
+      "counts": [
+        7200,
+        14400,
+        9120,
+        1920
+      ],
+      "basis": "H4 parabolic cosets; rings=[1, 1, 1, 0]"
+    },
+    "uniform4-prix": {
+      "counts": [
+        7200,
+        18000,
+        13440,
+        2640
+      ],
+      "basis": "H4 parabolic cosets; rings=[1, 1, 0, 1]"
+    },
+    "uniform4-prahi": {
+      "counts": [
+        7200,
+        18000,
+        13440,
+        2640
+      ],
+      "basis": "H4 parabolic cosets; rings=[1, 0, 1, 1]"
+    },
+    "uniform4-grix": {
+      "counts": [
+        7200,
+        14400,
+        8640,
+        1440
+      ],
+      "basis": "H4 parabolic cosets; rings=[0, 1, 1, 1]"
+    },
+    "uniform4-gidpixhi": {
+      "counts": [
+        14400,
+        28800,
+        17040,
+        2640
+      ],
+      "basis": "H4 parabolic cosets; rings=[1, 1, 1, 1]"
+    },
+    "uniform4-gap": {
+      "counts": [
+        100,
+        500,
+        720,
+        320
+      ],
+      "basis": "600-cell minus two disjoint decagons; degree 10; 300 tetrahedra + 20 pentagonal antiprisms"
+    },
+    "uniform4-prism-tetrahedron": {
+      "counts": [
+        8,
+        16,
+        14,
+        6
+      ],
+      "basis": "Cartesian product with interval: tetrahedron"
+    },
+    "uniform4-prism-truncated-tetrahedron": {
+      "counts": [
+        24,
+        48,
+        34,
+        10
+      ],
+      "basis": "Cartesian product with interval: truncated-tetrahedron"
+    },
+    "uniform4-prism-cuboctahedron": {
+      "counts": [
+        24,
+        60,
+        52,
+        16
+      ],
+      "basis": "Cartesian product with interval: cuboctahedron"
+    },
+    "uniform4-prism-octahedron": {
+      "counts": [
+        12,
+        30,
+        28,
+        10
+      ],
+      "basis": "Cartesian product with interval: octahedron"
+    },
+    "uniform4-prism-rhombicuboctahedron": {
+      "counts": [
+        48,
+        120,
+        100,
+        28
+      ],
+      "basis": "Cartesian product with interval: rhombicuboctahedron"
+    },
+    "uniform4-prism-truncated-cube": {
+      "counts": [
+        48,
+        96,
+        64,
+        16
+      ],
+      "basis": "Cartesian product with interval: truncated-cube"
+    },
+    "uniform4-prism-truncated-octahedron": {
+      "counts": [
+        48,
+        96,
+        64,
+        16
+      ],
+      "basis": "Cartesian product with interval: truncated-octahedron"
+    },
+    "uniform4-prism-truncated-cuboctahedron": {
+      "counts": [
+        96,
+        192,
+        124,
+        28
+      ],
+      "basis": "Cartesian product with interval: truncated-cuboctahedron"
+    },
+    "uniform4-prism-snub-cube": {
+      "counts": [
+        48,
+        144,
+        136,
+        40
+      ],
+      "basis": "Cartesian product with interval: snub-cube"
+    },
+    "uniform4-prism-dodecahedron": {
+      "counts": [
+        40,
+        80,
+        54,
+        14
+      ],
+      "basis": "Cartesian product with interval: dodecahedron"
+    },
+    "uniform4-prism-icosidodecahedron": {
+      "counts": [
+        60,
+        150,
+        124,
+        34
+      ],
+      "basis": "Cartesian product with interval: icosidodecahedron"
+    },
+    "uniform4-prism-icosahedron": {
+      "counts": [
+        24,
+        72,
+        70,
+        22
+      ],
+      "basis": "Cartesian product with interval: icosahedron"
+    },
+    "uniform4-prism-truncated-dodecahedron": {
+      "counts": [
+        120,
+        240,
+        154,
+        34
+      ],
+      "basis": "Cartesian product with interval: truncated-dodecahedron"
+    },
+    "uniform4-prism-rhombicosidodecahedron": {
+      "counts": [
+        120,
+        300,
+        244,
+        64
+      ],
+      "basis": "Cartesian product with interval: rhombicosidodecahedron"
+    },
+    "uniform4-prism-truncated-icosahedron": {
+      "counts": [
+        120,
+        240,
+        154,
+        34
+      ],
+      "basis": "Cartesian product with interval: truncated-icosahedron"
+    },
+    "uniform4-prism-truncated-icosidodecahedron": {
+      "counts": [
+        240,
+        480,
+        304,
+        64
+      ],
+      "basis": "Cartesian product with interval: truncated-icosidodecahedron"
+    },
+    "uniform4-prism-snub-dodecahedron": {
+      "counts": [
+        120,
+        360,
+        334,
+        94
+      ],
+      "basis": "Cartesian product with interval: snub-dodecahedron"
+    },
+    "uniform4-prism-cube": {
+      "counts": [
+        16,
+        32,
+        24,
+        8
+      ],
+      "basis": "Cartesian product with interval: cube"
+    },
+    "antiprism-u1": {
+      "counts": [
+        4,
+        6,
+        4,
+        0
+      ],
+      "basis": "Rational Wythoff triangle 3|2 3; finite vertex/edge/polygon cosets; collapsed alternating faces excluded",
+      "constructionResidual": 1.830237676443341e-15,
+      "numericContract": "Numerical finite triangle-group orbit; not an exact algebraic certificate."
+    },
+    "antiprism-u2": {
+      "counts": [
+        12,
+        18,
+        8,
+        0
+      ],
+      "basis": "Rational Wythoff triangle 2 3|3; finite vertex/edge/polygon cosets; collapsed alternating faces excluded",
+      "constructionResidual": 1.919153049041725e-15,
+      "numericContract": "Numerical finite triangle-group orbit; not an exact algebraic certificate."
+    },
+    "antiprism-u3": {
+      "counts": [
+        12,
+        24,
+        12,
+        0
+      ],
+      "basis": "Rational Wythoff triangle 3/2 3|3; finite vertex/edge/polygon cosets; collapsed alternating faces excluded",
+      "constructionResidual": 1.830295008206039e-15,
+      "numericContract": "Numerical finite triangle-group orbit; not an exact algebraic certificate."
+    },
+    "antiprism-u4": {
+      "counts": [
+        6,
+        12,
+        7,
+        0
+      ],
+      "basis": "Rational Wythoff triangle 3/2 3|2; finite vertex/edge/polygon cosets; collapsed alternating faces excluded",
+      "constructionResidual": 1.7528673753471212e-15,
+      "numericContract": "Numerical finite triangle-group orbit; not an exact algebraic certificate."
+    },
+    "antiprism-u5": {
+      "counts": [
+        6,
+        12,
+        8,
+        0
+      ],
+      "basis": "Rational Wythoff triangle 4|2 3; finite vertex/edge/polygon cosets; collapsed alternating faces excluded",
+      "constructionResidual": 2.9247581850454488e-15,
+      "numericContract": "Numerical finite triangle-group orbit; not an exact algebraic certificate."
+    },
+    "antiprism-u6": {
+      "counts": [
+        8,
+        12,
+        6,
+        0
+      ],
+      "basis": "Rational Wythoff triangle 3|2 4; finite vertex/edge/polygon cosets; collapsed alternating faces excluded",
+      "constructionResidual": 2.3707876222259364e-15,
+      "numericContract": "Numerical finite triangle-group orbit; not an exact algebraic certificate."
+    },
+    "antiprism-u7": {
+      "counts": [
+        12,
+        24,
+        14,
+        0
+      ],
+      "basis": "Rational Wythoff triangle 2|3 4; finite vertex/edge/polygon cosets; collapsed alternating faces excluded",
+      "constructionResidual": 3.2223052201563137e-15,
+      "numericContract": "Numerical finite triangle-group orbit; not an exact algebraic certificate."
+    },
+    "antiprism-u8": {
+      "counts": [
+        24,
+        36,
+        14,
+        0
+      ],
+      "basis": "Rational Wythoff triangle 2 4|3; finite vertex/edge/polygon cosets; collapsed alternating faces excluded",
+      "constructionResidual": 3.503474949470701e-15,
+      "numericContract": "Numerical finite triangle-group orbit; not an exact algebraic certificate."
+    },
+    "antiprism-u9": {
+      "counts": [
+        24,
+        36,
+        14,
+        0
+      ],
+      "basis": "Rational Wythoff triangle 2 3|4; finite vertex/edge/polygon cosets; collapsed alternating faces excluded",
+      "constructionResidual": 3.152427400121712e-15,
+      "numericContract": "Numerical finite triangle-group orbit; not an exact algebraic certificate."
+    },
+    "antiprism-u10": {
+      "counts": [
+        24,
+        48,
+        26,
+        0
+      ],
+      "basis": "Rational Wythoff triangle 3 4|2; finite vertex/edge/polygon cosets; collapsed alternating faces excluded",
+      "constructionResidual": 3.166569383806031e-15,
+      "numericContract": "Numerical finite triangle-group orbit; not an exact algebraic certificate."
+    },
+    "antiprism-u11": {
+      "counts": [
+        48,
+        72,
+        26,
+        0
+      ],
+      "basis": "Rational Wythoff triangle 2 3 4|; finite vertex/edge/polygon cosets; collapsed alternating faces excluded",
+      "constructionResidual": 3.22012528026176e-15,
+      "numericContract": "Numerical finite triangle-group orbit; not an exact algebraic certificate."
+    },
+    "antiprism-u12": {
+      "counts": [
+        24,
+        60,
+        38,
+        0
+      ],
+      "basis": "Rational Wythoff triangle |2 3 4; finite vertex/edge/polygon cosets; collapsed alternating faces excluded",
+      "constructionResidual": 0.0,
+      "numericContract": "Numerical finite triangle-group orbit; not an exact algebraic certificate."
+    },
+    "antiprism-u13": {
+      "counts": [
+        24,
+        48,
+        20,
+        0
+      ],
+      "basis": "Rational Wythoff triangle 3/2 4|4; finite vertex/edge/polygon cosets; collapsed alternating faces excluded",
+      "constructionResidual": 3.0616802944333612e-15,
+      "numericContract": "Numerical finite triangle-group orbit; not an exact algebraic certificate."
+    },
+    "antiprism-u14": {
+      "counts": [
+        24,
+        48,
+        20,
+        0
+      ],
+      "basis": "Rational Wythoff triangle 3 4|4/3; finite vertex/edge/polygon cosets; collapsed alternating faces excluded",
+      "constructionResidual": 1.5463617361248926e-15,
+      "numericContract": "Numerical finite triangle-group orbit; not an exact algebraic certificate."
+    },
+    "antiprism-u15": {
+      "counts": [
+        12,
+        24,
+        10,
+        0
+      ],
+      "basis": "Rational Wythoff triangle 4/3 4|3; finite vertex/edge/polygon cosets; collapsed alternating faces excluded",
+      "constructionResidual": 1.076401158743041e-15,
+      "numericContract": "Numerical finite triangle-group orbit; not an exact algebraic certificate."
+    },
+    "antiprism-u16": {
+      "counts": [
+        48,
+        72,
+        20,
+        0
+      ],
+      "basis": "Rational Wythoff triangle 4/3 3 4|; finite vertex/edge/polygon cosets; collapsed alternating faces excluded",
+      "constructionResidual": 1.355199909595506e-15,
+      "numericContract": "Numerical finite triangle-group orbit; not an exact algebraic certificate."
+    },
+    "antiprism-u17": {
+      "counts": [
+        24,
+        48,
+        26,
+        0
+      ],
+      "basis": "Rational Wythoff triangle 3/2 4|2; finite vertex/edge/polygon cosets; collapsed alternating faces excluded",
+      "constructionResidual": 2.767218361258043e-15,
+      "numericContract": "Numerical finite triangle-group orbit; not an exact algebraic certificate."
+    },
+    "antiprism-u18": {
+      "counts": [
+        24,
+        48,
+        18,
+        0
+      ],
+      "basis": "Rational Wythoff triangle 3/2 2 4|; finite vertex/edge/polygon cosets; collapsed alternating faces excluded",
+      "constructionResidual": 3.837101671685485e-15,
+      "numericContract": "Numerical finite triangle-group orbit; not an exact algebraic certificate."
+    },
+    "antiprism-u19": {
+      "counts": [
+        24,
+        36,
+        14,
+        0
+      ],
+      "basis": "Rational Wythoff triangle 2 3|4/3; finite vertex/edge/polygon cosets; collapsed alternating faces excluded",
+      "constructionResidual": 1.4400838045461713e-15,
+      "numericContract": "Numerical finite triangle-group orbit; not an exact algebraic certificate."
+    },
+    "antiprism-u20": {
+      "counts": [
+        48,
+        72,
+        26,
+        0
+      ],
+      "basis": "Rational Wythoff triangle 4/3 2 3|; finite vertex/edge/polygon cosets; collapsed alternating faces excluded",
+      "constructionResidual": 1.1802648553503945e-15,
+      "numericContract": "Numerical finite triangle-group orbit; not an exact algebraic certificate."
+    },
+    "antiprism-u21": {
+      "counts": [
+        24,
+        48,
+        18,
+        0
+      ],
+      "basis": "Rational Wythoff triangle 4/3 3/2 2|; finite vertex/edge/polygon cosets; collapsed alternating faces excluded",
+      "constructionResidual": 4.271473975239334e-15,
+      "numericContract": "Numerical finite triangle-group orbit; not an exact algebraic certificate."
+    },
+    "antiprism-u22": {
+      "counts": [
+        12,
+        30,
+        20,
+        0
+      ],
+      "basis": "Rational Wythoff triangle 5|2 3; finite vertex/edge/polygon cosets; collapsed alternating faces excluded",
+      "constructionResidual": 1.0320447163005666e-14,
+      "numericContract": "Numerical finite triangle-group orbit; not an exact algebraic certificate."
+    },
+    "antiprism-u23": {
+      "counts": [
+        20,
+        30,
+        12,
+        0
+      ],
+      "basis": "Rational Wythoff triangle 3|2 5; finite vertex/edge/polygon cosets; collapsed alternating faces excluded",
+      "constructionResidual": 3.402521136113713e-15,
+      "numericContract": "Numerical finite triangle-group orbit; not an exact algebraic certificate."
+    },
+    "antiprism-u24": {
+      "counts": [
+        30,
+        60,
+        32,
+        0
+      ],
+      "basis": "Rational Wythoff triangle 2|3 5; finite vertex/edge/polygon cosets; collapsed alternating faces excluded",
+      "constructionResidual": 4.875193971289143e-15,
+      "numericContract": "Numerical finite triangle-group orbit; not an exact algebraic certificate."
+    },
+    "antiprism-u25": {
+      "counts": [
+        60,
+        90,
+        32,
+        0
+      ],
+      "basis": "Rational Wythoff triangle 2 5|3; finite vertex/edge/polygon cosets; collapsed alternating faces excluded",
+      "constructionResidual": 7.632530966712492e-15,
+      "numericContract": "Numerical finite triangle-group orbit; not an exact algebraic certificate."
+    },
+    "antiprism-u26": {
+      "counts": [
+        60,
+        90,
+        32,
+        0
+      ],
+      "basis": "Rational Wythoff triangle 2 3|5; finite vertex/edge/polygon cosets; collapsed alternating faces excluded",
+      "constructionResidual": 4.9657664701389666e-15,
+      "numericContract": "Numerical finite triangle-group orbit; not an exact algebraic certificate."
+    },
+    "antiprism-u27": {
+      "counts": [
+        60,
+        120,
+        62,
+        0
+      ],
+      "basis": "Rational Wythoff triangle 3 5|2; finite vertex/edge/polygon cosets; collapsed alternating faces excluded",
+      "constructionResidual": 4.399411957195412e-15,
+      "numericContract": "Numerical finite triangle-group orbit; not an exact algebraic certificate."
+    },
+    "antiprism-u28": {
+      "counts": [
+        120,
+        180,
+        62,
+        0
+      ],
+      "basis": "Rational Wythoff triangle 2 3 5|; finite vertex/edge/polygon cosets; collapsed alternating faces excluded",
+      "constructionResidual": 5.090103177328787e-15,
+      "numericContract": "Numerical finite triangle-group orbit; not an exact algebraic certificate."
+    },
+    "antiprism-u29": {
+      "counts": [
+        60,
+        150,
+        92,
+        0
+      ],
+      "basis": "Rational Wythoff triangle |2 3 5; finite vertex/edge/polygon cosets; collapsed alternating faces excluded",
+      "constructionResidual": 0.0,
+      "numericContract": "Numerical finite triangle-group orbit; not an exact algebraic certificate."
+    },
+    "antiprism-u30": {
+      "counts": [
+        20,
+        60,
+        32,
+        0
+      ],
+      "basis": "Rational Wythoff triangle 3|5/2 3; finite vertex/edge/polygon cosets; collapsed alternating faces excluded",
+      "constructionResidual": 4.834585751036534e-15,
+      "numericContract": "Numerical finite triangle-group orbit; not an exact algebraic certificate."
+    },
+    "antiprism-u31": {
+      "counts": [
+        60,
+        120,
+        52,
+        0
+      ],
+      "basis": "Rational Wythoff triangle 5/2 3|3; finite vertex/edge/polygon cosets; collapsed alternating faces excluded",
+      "constructionResidual": 3.8766501701910735e-15,
+      "numericContract": "Numerical finite triangle-group orbit; not an exact algebraic certificate."
+    },
+    "antiprism-u32": {
+      "counts": [
+        60,
+        180,
+        112,
+        0
+      ],
+      "basis": "Rational Wythoff triangle |5/2 3 3; finite vertex/edge/polygon cosets; collapsed alternating faces excluded",
+      "constructionResidual": 0.0,
+      "numericContract": "Numerical finite triangle-group orbit; not an exact algebraic certificate."
+    },
+    "antiprism-u33": {
+      "counts": [
+        60,
+        120,
+        44,
+        0
+      ],
+      "basis": "Rational Wythoff triangle 3/2 5|5; finite vertex/edge/polygon cosets; collapsed alternating faces excluded",
+      "constructionResidual": 3.468558659817963e-15,
+      "numericContract": "Numerical finite triangle-group orbit; not an exact algebraic certificate."
+    },
+    "antiprism-u34": {
+      "counts": [
+        12,
+        30,
+        12,
+        0
+      ],
+      "basis": "Rational Wythoff triangle 5|2 5/2; finite vertex/edge/polygon cosets; collapsed alternating faces excluded",
+      "constructionResidual": 1.7498510507057546e-15,
+      "numericContract": "Numerical finite triangle-group orbit; not an exact algebraic certificate."
+    },
+    "antiprism-u35": {
+      "counts": [
+        12,
+        30,
+        12,
+        0
+      ],
+      "basis": "Rational Wythoff triangle 5/2|2 5; finite vertex/edge/polygon cosets; collapsed alternating faces excluded",
+      "constructionResidual": 9.222205069512407e-16,
+      "numericContract": "Numerical finite triangle-group orbit; not an exact algebraic certificate."
+    },
+    "antiprism-u36": {
+      "counts": [
+        30,
+        60,
+        24,
+        0
+      ],
+      "basis": "Rational Wythoff triangle 2|5/2 5; finite vertex/edge/polygon cosets; collapsed alternating faces excluded",
+      "constructionResidual": 1.2818749660365435e-15,
+      "numericContract": "Numerical finite triangle-group orbit; not an exact algebraic certificate."
+    },
+    "antiprism-u37": {
+      "counts": [
+        60,
+        90,
+        24,
+        0
+      ],
+      "basis": "Rational Wythoff triangle 2 5/2|5; finite vertex/edge/polygon cosets; collapsed alternating faces excluded",
+      "constructionResidual": 1.216505063395608e-15,
+      "numericContract": "Numerical finite triangle-group orbit; not an exact algebraic certificate."
+    },
+    "antiprism-u38": {
+      "counts": [
+        60,
+        120,
+        54,
+        0
+      ],
+      "basis": "Rational Wythoff triangle 5/2 5|2; finite vertex/edge/polygon cosets; collapsed alternating faces excluded",
+      "constructionResidual": 1.868508978620435e-15,
+      "numericContract": "Numerical finite triangle-group orbit; not an exact algebraic certificate."
+    },
+    "antiprism-u39": {
+      "counts": [
+        60,
+        120,
+        42,
+        0
+      ],
+      "basis": "Rational Wythoff triangle 2 5/2 5|; finite vertex/edge/polygon cosets; collapsed alternating faces excluded",
+      "constructionResidual": 1.3125335558584331e-15,
+      "numericContract": "Numerical finite triangle-group orbit; not an exact algebraic certificate."
+    },
+    "antiprism-u40": {
+      "counts": [
+        60,
+        150,
+        84,
+        0
+      ],
+      "basis": "Rational Wythoff triangle |2 5/2 5; finite vertex/edge/polygon cosets; collapsed alternating faces excluded",
+      "constructionResidual": 0.0,
+      "numericContract": "Numerical finite triangle-group orbit; not an exact algebraic certificate."
+    },
+    "antiprism-u41": {
+      "counts": [
+        20,
+        60,
+        24,
+        0
+      ],
+      "basis": "Rational Wythoff triangle 3|5/3 5; finite vertex/edge/polygon cosets; collapsed alternating faces excluded",
+      "constructionResidual": 1.5585194403218657e-15,
+      "numericContract": "Numerical finite triangle-group orbit; not an exact algebraic certificate."
+    },
+    "antiprism-u42": {
+      "counts": [
+        60,
+        120,
+        44,
+        0
+      ],
+      "basis": "Rational Wythoff triangle 3 5|5/3; finite vertex/edge/polygon cosets; collapsed alternating faces excluded",
+      "constructionResidual": 2.3655828132643237e-15,
+      "numericContract": "Numerical finite triangle-group orbit; not an exact algebraic certificate."
+    },
+    "antiprism-u43": {
+      "counts": [
+        60,
+        120,
+        44,
+        0
+      ],
+      "basis": "Rational Wythoff triangle 5/3 3|5; finite vertex/edge/polygon cosets; collapsed alternating faces excluded",
+      "constructionResidual": 2.3082228224659872e-15,
+      "numericContract": "Numerical finite triangle-group orbit; not an exact algebraic certificate."
+    },
+    "antiprism-u44": {
+      "counts": [
+        60,
+        120,
+        44,
+        0
+      ],
+      "basis": "Rational Wythoff triangle 5/3 5|3; finite vertex/edge/polygon cosets; collapsed alternating faces excluded",
+      "constructionResidual": 2.2909701622771292e-15,
+      "numericContract": "Numerical finite triangle-group orbit; not an exact algebraic certificate."
+    },
+    "antiprism-u45": {
+      "counts": [
+        120,
+        180,
+        44,
+        0
+      ],
+      "basis": "Rational Wythoff triangle 5/3 3 5|; finite vertex/edge/polygon cosets; collapsed alternating faces excluded",
+      "constructionResidual": 2.336749147496729e-15,
+      "numericContract": "Numerical finite triangle-group orbit; not an exact algebraic certificate."
+    },
+    "antiprism-u46": {
+      "counts": [
+        60,
+        180,
+        104,
+        0
+      ],
+      "basis": "Rational Wythoff triangle |5/3 3 5; finite vertex/edge/polygon cosets; collapsed alternating faces excluded",
+      "constructionResidual": 0.0,
+      "numericContract": "Numerical finite triangle-group orbit; not an exact algebraic certificate."
+    },
+    "antiprism-u47": {
+      "counts": [
+        20,
+        60,
+        32,
+        0
+      ],
+      "basis": "Rational Wythoff triangle 3/2|3 5; finite vertex/edge/polygon cosets; collapsed alternating faces excluded",
+      "constructionResidual": 3.615050515640691e-15,
+      "numericContract": "Numerical finite triangle-group orbit; not an exact algebraic certificate."
+    },
+    "antiprism-u48": {
+      "counts": [
+        60,
+        120,
+        52,
+        0
+      ],
+      "basis": "Rational Wythoff triangle 3/2 5|3; finite vertex/edge/polygon cosets; collapsed alternating faces excluded",
+      "constructionResidual": 4.356437421360406e-15,
+      "numericContract": "Numerical finite triangle-group orbit; not an exact algebraic certificate."
+    },
+    "antiprism-u49": {
+      "counts": [
+        30,
+        60,
+        26,
+        0
+      ],
+      "basis": "Rational Wythoff triangle 3/2 3|5; finite vertex/edge/polygon cosets; collapsed alternating faces excluded",
+      "constructionResidual": 3.881118818207122e-15,
+      "numericContract": "Numerical finite triangle-group orbit; not an exact algebraic certificate."
+    },
+    "antiprism-u50": {
+      "counts": [
+        60,
+        120,
+        32,
+        0
+      ],
+      "basis": "Rational Wythoff triangle 3/2 3 5|; finite vertex/edge/polygon cosets; collapsed alternating faces excluded",
+      "constructionResidual": 4.071091098147866e-15,
+      "numericContract": "Numerical finite triangle-group orbit; not an exact algebraic certificate."
+    },
+    "antiprism-u51": {
+      "counts": [
+        30,
+        60,
+        18,
+        0
+      ],
+      "basis": "Rational Wythoff triangle 5/4 5|5; finite vertex/edge/polygon cosets; collapsed alternating faces excluded",
+      "constructionResidual": 1.7306664177452076e-15,
+      "numericContract": "Numerical finite triangle-group orbit; not an exact algebraic certificate."
+    },
+    "antiprism-u52": {
+      "counts": [
+        20,
+        30,
+        12,
+        0
+      ],
+      "basis": "Rational Wythoff triangle 3|2 5/2; finite vertex/edge/polygon cosets; collapsed alternating faces excluded",
+      "constructionResidual": 1.415262216750919e-15,
+      "numericContract": "Numerical finite triangle-group orbit; not an exact algebraic certificate."
+    },
+    "antiprism-u53": {
+      "counts": [
+        12,
+        30,
+        20,
+        0
+      ],
+      "basis": "Rational Wythoff triangle 5/2|2 3; finite vertex/edge/polygon cosets; collapsed alternating faces excluded",
+      "constructionResidual": 2.353600983459134e-15,
+      "numericContract": "Numerical finite triangle-group orbit; not an exact algebraic certificate."
+    },
+    "antiprism-u54": {
+      "counts": [
+        30,
+        60,
+        32,
+        0
+      ],
+      "basis": "Rational Wythoff triangle 2|5/2 3; finite vertex/edge/polygon cosets; collapsed alternating faces excluded",
+      "constructionResidual": 3.4653366920464297e-15,
+      "numericContract": "Numerical finite triangle-group orbit; not an exact algebraic certificate."
+    },
+    "antiprism-u55": {
+      "counts": [
+        60,
+        90,
+        32,
+        0
+      ],
+      "basis": "Rational Wythoff triangle 2 5/2|3; finite vertex/edge/polygon cosets; collapsed alternating faces excluded",
+      "constructionResidual": 3.3807157026244624e-15,
+      "numericContract": "Numerical finite triangle-group orbit; not an exact algebraic certificate."
+    },
+    "antiprism-u56": {
+      "counts": [
+        60,
+        120,
+        50,
+        0
+      ],
+      "basis": "Rational Wythoff triangle 2 5/2 3|; finite vertex/edge/polygon cosets; collapsed alternating faces excluded",
+      "constructionResidual": 2.867971688578708e-15,
+      "numericContract": "Numerical finite triangle-group orbit; not an exact algebraic certificate."
+    },
+    "antiprism-u57": {
+      "counts": [
+        60,
+        150,
+        92,
+        0
+      ],
+      "basis": "Rational Wythoff triangle |2 5/2 3; finite vertex/edge/polygon cosets; collapsed alternating faces excluded",
+      "constructionResidual": 0.0,
+      "numericContract": "Numerical finite triangle-group orbit; not an exact algebraic certificate."
+    },
+    "antiprism-u58": {
+      "counts": [
+        60,
+        90,
+        24,
+        0
+      ],
+      "basis": "Rational Wythoff triangle 2 5|5/3; finite vertex/edge/polygon cosets; collapsed alternating faces excluded",
+      "constructionResidual": 2.0636415127218816e-15,
+      "numericContract": "Numerical finite triangle-group orbit; not an exact algebraic certificate."
+    },
+    "antiprism-u59": {
+      "counts": [
+        120,
+        180,
+        54,
+        0
+      ],
+      "basis": "Rational Wythoff triangle 5/3 2 5|; finite vertex/edge/polygon cosets; collapsed alternating faces excluded",
+      "constructionResidual": 2.0541001246685995e-15,
+      "numericContract": "Numerical finite triangle-group orbit; not an exact algebraic certificate."
+    },
+    "antiprism-u60": {
+      "counts": [
+        60,
+        150,
+        84,
+        0
+      ],
+      "basis": "Rational Wythoff triangle |5/3 2 5; finite vertex/edge/polygon cosets; collapsed alternating faces excluded",
+      "constructionResidual": 0.0,
+      "numericContract": "Numerical finite triangle-group orbit; not an exact algebraic certificate."
+    },
+    "antiprism-u61": {
+      "counts": [
+        60,
+        120,
+        44,
+        0
+      ],
+      "basis": "Rational Wythoff triangle 5/2 3|5/3; finite vertex/edge/polygon cosets; collapsed alternating faces excluded",
+      "constructionResidual": 2.1556631856153973e-15,
+      "numericContract": "Numerical finite triangle-group orbit; not an exact algebraic certificate."
+    },
+    "antiprism-u62": {
+      "counts": [
+        30,
+        60,
+        22,
+        0
+      ],
+      "basis": "Rational Wythoff triangle 5/3 5/2|3; finite vertex/edge/polygon cosets; collapsed alternating faces excluded",
+      "constructionResidual": 1.5039389564934085e-15,
+      "numericContract": "Numerical finite triangle-group orbit; not an exact algebraic certificate."
+    },
+    "antiprism-u63": {
+      "counts": [
+        60,
+        120,
+        32,
+        0
+      ],
+      "basis": "Rational Wythoff triangle 5/3 5/2 3|; finite vertex/edge/polygon cosets; collapsed alternating faces excluded",
+      "constructionResidual": 1.942097114741681e-15,
+      "numericContract": "Numerical finite triangle-group orbit; not an exact algebraic certificate."
+    },
+    "antiprism-u64": {
+      "counts": [
+        60,
+        180,
+        104,
+        0
+      ],
+      "basis": "Rational Wythoff triangle |5/3 5/2 3; finite vertex/edge/polygon cosets; collapsed alternating faces excluded",
+      "constructionResidual": 0.0,
+      "numericContract": "Numerical finite triangle-group orbit; not an exact algebraic certificate."
+    },
+    "antiprism-u65": {
+      "counts": [
+        30,
+        60,
+        22,
+        0
+      ],
+      "basis": "Rational Wythoff triangle 5/4 5|3; finite vertex/edge/polygon cosets; collapsed alternating faces excluded",
+      "constructionResidual": 3.2105415528163605e-15,
+      "numericContract": "Numerical finite triangle-group orbit; not an exact algebraic certificate."
+    },
+    "antiprism-u66": {
+      "counts": [
+        60,
+        90,
+        32,
+        0
+      ],
+      "basis": "Rational Wythoff triangle 2 3|5/3; finite vertex/edge/polygon cosets; collapsed alternating faces excluded",
+      "constructionResidual": 2.7240086067659812e-15,
+      "numericContract": "Numerical finite triangle-group orbit; not an exact algebraic certificate."
+    },
+    "antiprism-u67": {
+      "counts": [
+        60,
+        120,
+        62,
+        0
+      ],
+      "basis": "Rational Wythoff triangle 5/3 3|2; finite vertex/edge/polygon cosets; collapsed alternating faces excluded",
+      "constructionResidual": 2.237209587739501e-15,
+      "numericContract": "Numerical finite triangle-group orbit; not an exact algebraic certificate."
+    },
+    "antiprism-u68": {
+      "counts": [
+        120,
+        180,
+        62,
+        0
+      ],
+      "basis": "Rational Wythoff triangle 5/3 2 3|; finite vertex/edge/polygon cosets; collapsed alternating faces excluded",
+      "constructionResidual": 1.9649693006526923e-15,
+      "numericContract": "Numerical finite triangle-group orbit; not an exact algebraic certificate."
+    },
+    "antiprism-u69": {
+      "counts": [
+        60,
+        150,
+        92,
+        0
+      ],
+      "basis": "Rational Wythoff triangle |5/3 2 3; finite vertex/edge/polygon cosets; collapsed alternating faces excluded",
+      "constructionResidual": 0.0,
+      "numericContract": "Numerical finite triangle-group orbit; not an exact algebraic certificate."
+    },
+    "antiprism-u70": {
+      "counts": [
+        30,
+        60,
+        18,
+        0
+      ],
+      "basis": "Rational Wythoff triangle 5/3 5/2|5/3; finite vertex/edge/polygon cosets; collapsed alternating faces excluded",
+      "constructionResidual": 1.43340450059631e-15,
+      "numericContract": "Numerical finite triangle-group orbit; not an exact algebraic certificate."
+    },
+    "antiprism-u71": {
+      "counts": [
+        30,
+        60,
+        26,
+        0
+      ],
+      "basis": "Rational Wythoff triangle 3/2 3|5/3; finite vertex/edge/polygon cosets; collapsed alternating faces excluded",
+      "constructionResidual": 2.5170496906211946e-15,
+      "numericContract": "Numerical finite triangle-group orbit; not an exact algebraic certificate."
+    },
+    "antiprism-u72": {
+      "counts": [
+        60,
+        180,
+        112,
+        0
+      ],
+      "basis": "Rational Wythoff triangle |3/2 3/2 5/2; finite vertex/edge/polygon cosets; collapsed alternating faces excluded",
+      "constructionResidual": 0.0,
+      "numericContract": "Numerical finite triangle-group orbit; not an exact algebraic certificate."
+    },
+    "antiprism-u73": {
+      "counts": [
+        60,
+        120,
+        42,
+        0
+      ],
+      "basis": "Rational Wythoff triangle 3/2 5/3 2|; finite vertex/edge/polygon cosets; collapsed alternating faces excluded",
+      "constructionResidual": 5.175652075873454e-15,
+      "numericContract": "Numerical finite triangle-group orbit; not an exact algebraic certificate."
+    },
+    "antiprism-u74": {
+      "counts": [
+        60,
+        150,
+        92,
+        0
+      ],
+      "basis": "Rational Wythoff triangle |3/2 5/3 2; finite vertex/edge/polygon cosets; collapsed alternating faces excluded",
+      "constructionResidual": 0.0,
+      "numericContract": "Numerical finite triangle-group orbit; not an exact algebraic certificate."
+    },
+    "antiprism-u75": {
+      "counts": [
+        60,
+        240,
+        124,
+        0
+      ],
+      "basis": "Exceptional non-Wythoff U75: free icosahedral rotation orbit; vertex configuration 3.4.5/2.4.3.4.5/3.4"
+    },
+    "miratope-icosahedral-hecatonicosachoron": {
+      "counts": [
+        120,
+        720,
+        1200,
+        120
+      ],
+      "basis": "Regular H4 vertex orbit; V*vertex-figure incidence / vertices per element"
+    },
+    "miratope-great-hecatonicosachoron": {
+      "counts": [
+        120,
+        720,
+        720,
+        120
+      ],
+      "basis": "Regular H4 vertex orbit; V*vertex-figure incidence / vertices per element"
+    },
+    "miratope-grand-hecatonicosachoron": {
+      "counts": [
+        120,
+        720,
+        720,
+        120
+      ],
+      "basis": "Regular H4 vertex orbit; V*vertex-figure incidence / vertices per element"
+    },
+    "miratope-stellated-hecatonicosachoron": {
+      "counts": [
+        120,
+        1200,
+        720,
+        120
+      ],
+      "basis": "Regular H4 vertex orbit; V*vertex-figure incidence / vertices per element"
+    },
+    "miratope-great-grand-hecatonicosachoron": {
+      "counts": [
+        120,
+        1200,
+        720,
+        120
+      ],
+      "basis": "Regular H4 vertex orbit; V*vertex-figure incidence / vertices per element"
+    },
+    "miratope-great-stellated-hecatonicosachoron": {
+      "counts": [
+        120,
+        720,
+        720,
+        120
+      ],
+      "basis": "Regular H4 vertex orbit; V*vertex-figure incidence / vertices per element"
+    },
+    "miratope-grand-stellated-hecatonicosachoron": {
+      "counts": [
+        120,
+        720,
+        720,
+        120
+      ],
+      "basis": "Regular H4 vertex orbit; V*vertex-figure incidence / vertices per element"
+    },
+    "miratope-great-icosahedral-hecatonicosachoron": {
+      "counts": [
+        120,
+        720,
+        1200,
+        120
+      ],
+      "basis": "Regular H4 vertex orbit; V*vertex-figure incidence / vertices per element"
+    },
+    "miratope-grand-hexacosichoron": {
+      "counts": [
+        120,
+        720,
+        1200,
+        600
+      ],
+      "basis": "Regular H4 vertex orbit; V*vertex-figure incidence / vertices per element"
+    },
+    "miratope-great-grand-stellated-hecatonicosachoron": {
+      "counts": [
+        600,
+        1200,
+        720,
+        120
+      ],
+      "basis": "Regular H4 vertex orbit; V*vertex-figure incidence / vertices per element"
+    }
+  },
+  "registrations": [
+    {
+      "key": "tetrahedron",
+      "name": "Tetrahedron",
+      "identityKey": "antiprism-u1",
+      "actualCounts": [
+        4,
+        6,
+        4,
+        0
+      ],
+      "computedCounts": [
+        4,
+        6,
+        4,
+        0
+      ]
+    },
+    {
+      "key": "cube",
+      "name": "Cube",
+      "identityKey": "antiprism-u6",
+      "actualCounts": [
+        8,
+        12,
+        6,
+        0
+      ],
+      "computedCounts": [
+        8,
+        12,
+        6,
+        0
+      ]
+    },
+    {
+      "key": "octahedron",
+      "name": "Octahedron",
+      "identityKey": "antiprism-u5",
+      "actualCounts": [
+        6,
+        12,
+        8,
+        0
+      ],
+      "computedCounts": [
+        6,
+        12,
+        8,
+        0
+      ]
+    },
+    {
+      "key": "dodecahedron",
+      "name": "Dodecahedron",
+      "identityKey": "antiprism-u23",
+      "actualCounts": [
+        20,
+        30,
+        12,
+        0
+      ],
+      "computedCounts": [
+        20,
+        30,
+        12,
+        0
+      ]
+    },
+    {
+      "key": "icosahedron",
+      "name": "Icosahedron",
+      "identityKey": "antiprism-u22",
+      "actualCounts": [
+        12,
+        30,
+        20,
+        0
+      ],
+      "computedCounts": [
+        12,
+        30,
+        20,
+        0
+      ]
+    },
+    {
+      "key": "simplex4",
+      "name": "5-cell",
+      "identityKey": "simplex4",
+      "actualCounts": [
+        5,
+        10,
+        10,
+        5
+      ],
+      "computedCounts": [
+        5,
+        10,
+        10,
+        5
+      ]
+    },
+    {
+      "key": "tesseract",
+      "name": "Tesseract",
+      "identityKey": "tesseract",
+      "actualCounts": [
+        16,
+        32,
+        24,
+        8
+      ],
+      "computedCounts": [
+        16,
+        32,
+        24,
+        8
+      ]
+    },
+    {
+      "key": "cross4",
+      "name": "16-cell",
+      "identityKey": "cross4",
+      "actualCounts": [
+        8,
+        24,
+        32,
+        16
+      ],
+      "computedCounts": [
+        8,
+        24,
+        32,
+        16
+      ]
+    },
+    {
+      "key": "cell24",
+      "name": "24-cell",
+      "identityKey": "cell24",
+      "actualCounts": [
+        24,
+        96,
+        96,
+        24
+      ],
+      "computedCounts": [
+        24,
+        96,
+        96,
+        24
+      ]
+    },
+    {
+      "key": "cell120",
+      "name": "120-cell",
+      "identityKey": "cell120",
+      "actualCounts": [
+        600,
+        1200,
+        720,
+        120
+      ],
+      "computedCounts": [
+        600,
+        1200,
+        720,
+        120
+      ]
+    },
+    {
+      "key": "cell600",
+      "name": "600-cell",
+      "identityKey": "cell600",
+      "actualCounts": [
+        120,
+        720,
+        1200,
+        600
+      ],
+      "computedCounts": [
+        120,
+        720,
+        1200,
+        600
+      ]
+    },
+    {
+      "key": "cuboctahedron",
+      "name": "Cuboctahedron",
+      "identityKey": "antiprism-u7",
+      "actualCounts": [
+        12,
+        24,
+        14,
+        0
+      ],
+      "computedCounts": [
+        12,
+        24,
+        14,
+        0
+      ]
+    },
+    {
+      "key": "icosidodecahedron",
+      "name": "Icosidodecahedron",
+      "identityKey": "antiprism-u24",
+      "actualCounts": [
+        30,
+        60,
+        32,
+        0
+      ],
+      "computedCounts": [
+        30,
+        60,
+        32,
+        0
+      ]
+    },
+    {
+      "key": "truncated-tetrahedron",
+      "name": "Truncated tetrahedron",
+      "identityKey": "antiprism-u2",
+      "actualCounts": [
+        12,
+        18,
+        8,
+        0
+      ],
+      "computedCounts": [
+        12,
+        18,
+        8,
+        0
+      ]
+    },
+    {
+      "key": "truncated-cube",
+      "name": "Truncated cube",
+      "identityKey": "antiprism-u9",
+      "actualCounts": [
+        24,
+        36,
+        14,
+        0
+      ],
+      "computedCounts": [
+        24,
+        36,
+        14,
+        0
+      ]
+    },
+    {
+      "key": "truncated-octahedron",
+      "name": "Truncated octahedron",
+      "identityKey": "antiprism-u8",
+      "actualCounts": [
+        24,
+        36,
+        14,
+        0
+      ],
+      "computedCounts": [
+        24,
+        36,
+        14,
+        0
+      ]
+    },
+    {
+      "key": "truncated-dodecahedron",
+      "name": "Truncated dodecahedron",
+      "identityKey": "antiprism-u26",
+      "actualCounts": [
+        60,
+        90,
+        32,
+        0
+      ],
+      "computedCounts": [
+        60,
+        90,
+        32,
+        0
+      ]
+    },
+    {
+      "key": "truncated-icosahedron",
+      "name": "Truncated icosahedron",
+      "identityKey": "antiprism-u25",
+      "actualCounts": [
+        60,
+        90,
+        32,
+        0
+      ],
+      "computedCounts": [
+        60,
+        90,
+        32,
+        0
+      ]
+    },
+    {
+      "key": "rhombicuboctahedron",
+      "name": "Rhombicuboctahedron",
+      "identityKey": "antiprism-u10",
+      "actualCounts": [
+        24,
+        48,
+        26,
+        0
+      ],
+      "computedCounts": [
+        24,
+        48,
+        26,
+        0
+      ]
+    },
+    {
+      "key": "truncated-cuboctahedron",
+      "name": "Truncated cuboctahedron",
+      "identityKey": "antiprism-u11",
+      "actualCounts": [
+        48,
+        72,
+        26,
+        0
+      ],
+      "computedCounts": [
+        48,
+        72,
+        26,
+        0
+      ]
+    },
+    {
+      "key": "rhombicosidodecahedron",
+      "name": "Rhombicosidodecahedron",
+      "identityKey": "antiprism-u27",
+      "actualCounts": [
+        60,
+        120,
+        62,
+        0
+      ],
+      "computedCounts": [
+        60,
+        120,
+        62,
+        0
+      ]
+    },
+    {
+      "key": "truncated-icosidodecahedron",
+      "name": "Truncated icosidodecahedron",
+      "identityKey": "antiprism-u28",
+      "actualCounts": [
+        120,
+        180,
+        62,
+        0
+      ],
+      "computedCounts": [
+        120,
+        180,
+        62,
+        0
+      ]
+    },
+    {
+      "key": "snub-cube",
+      "name": "Snub cube (A)",
+      "identityKey": "snub-cube",
+      "actualCounts": [
+        24,
+        60,
+        38,
+        0
+      ],
+      "computedCounts": [
+        24,
+        60,
+        38,
+        0
+      ]
+    },
+    {
+      "key": "snub-cube-mirror",
+      "name": "Snub cube (B)",
+      "identityKey": "snub-cube-mirror",
+      "actualCounts": [
+        24,
+        60,
+        38,
+        0
+      ],
+      "computedCounts": [
+        24,
+        60,
+        38,
+        0
+      ]
+    },
+    {
+      "key": "snub-dodecahedron",
+      "name": "Snub dodecahedron (A)",
+      "identityKey": "snub-dodecahedron",
+      "actualCounts": [
+        60,
+        150,
+        92,
+        0
+      ],
+      "computedCounts": [
+        60,
+        150,
+        92,
+        0
+      ]
+    },
+    {
+      "key": "snub-dodecahedron-mirror",
+      "name": "Snub dodecahedron (B)",
+      "identityKey": "snub-dodecahedron-mirror",
+      "actualCounts": [
+        60,
+        150,
+        92,
+        0
+      ],
+      "computedCounts": [
+        60,
+        150,
+        92,
+        0
+      ]
+    },
+    {
+      "key": "triakis-tetrahedron",
+      "name": "Triakis tetrahedron",
+      "identityKey": "triakis-tetrahedron",
+      "actualCounts": [
+        8,
+        18,
+        12,
+        0
+      ],
+      "computedCounts": [
+        8,
+        18,
+        12,
+        0
+      ]
+    },
+    {
+      "key": "rhombic-dodecahedron",
+      "name": "Rhombic dodecahedron",
+      "identityKey": "rhombic-dodecahedron",
+      "actualCounts": [
+        14,
+        24,
+        12,
+        0
+      ],
+      "computedCounts": [
+        14,
+        24,
+        12,
+        0
+      ]
+    },
+    {
+      "key": "triakis-octahedron",
+      "name": "Triakis octahedron",
+      "identityKey": "triakis-octahedron",
+      "actualCounts": [
+        14,
+        36,
+        24,
+        0
+      ],
+      "computedCounts": [
+        14,
+        36,
+        24,
+        0
+      ]
+    },
+    {
+      "key": "tetrakis-hexahedron",
+      "name": "Tetrakis hexahedron",
+      "identityKey": "tetrakis-hexahedron",
+      "actualCounts": [
+        14,
+        36,
+        24,
+        0
+      ],
+      "computedCounts": [
+        14,
+        36,
+        24,
+        0
+      ]
+    },
+    {
+      "key": "pentakis-dodecahedron",
+      "name": "Pentakis dodecahedron",
+      "identityKey": "pentakis-dodecahedron",
+      "actualCounts": [
+        32,
+        90,
+        60,
+        0
+      ],
+      "computedCounts": [
+        32,
+        90,
+        60,
+        0
+      ]
+    },
+    {
+      "key": "triakis-icosahedron",
+      "name": "Triakis icosahedron",
+      "identityKey": "triakis-icosahedron",
+      "actualCounts": [
+        32,
+        90,
+        60,
+        0
+      ],
+      "computedCounts": [
+        32,
+        90,
+        60,
+        0
+      ]
+    },
+    {
+      "key": "rhombic-triacontahedron",
+      "name": "Rhombic triacontahedron",
+      "identityKey": "rhombic-triacontahedron",
+      "actualCounts": [
+        32,
+        60,
+        30,
+        0
+      ],
+      "computedCounts": [
+        32,
+        60,
+        30,
+        0
+      ]
+    },
+    {
+      "key": "deltoidal-icositetrahedron",
+      "name": "Deltoidal icositetrahedron",
+      "identityKey": "deltoidal-icositetrahedron",
+      "actualCounts": [
+        26,
+        48,
+        24,
+        0
+      ],
+      "computedCounts": [
+        26,
+        48,
+        24,
+        0
+      ]
+    },
+    {
+      "key": "disdyakis-dodecahedron",
+      "name": "Disdyakis dodecahedron",
+      "identityKey": "disdyakis-dodecahedron",
+      "actualCounts": [
+        26,
+        72,
+        48,
+        0
+      ],
+      "computedCounts": [
+        26,
+        72,
+        48,
+        0
+      ]
+    },
+    {
+      "key": "pentagonal-icositetrahedron",
+      "name": "Pentagonal icositetrahedron (A)",
+      "identityKey": "pentagonal-icositetrahedron",
+      "actualCounts": [
+        38,
+        60,
+        24,
+        0
+      ],
+      "computedCounts": [
+        38,
+        60,
+        24,
+        0
+      ]
+    },
+    {
+      "key": "deltoidal-hexecontahedron",
+      "name": "Deltoidal hexecontahedron",
+      "identityKey": "deltoidal-hexecontahedron",
+      "actualCounts": [
+        62,
+        120,
+        60,
+        0
+      ],
+      "computedCounts": [
+        62,
+        120,
+        60,
+        0
+      ]
+    },
+    {
+      "key": "disdyakis-triacontahedron",
+      "name": "Disdyakis triacontahedron",
+      "identityKey": "disdyakis-triacontahedron",
+      "actualCounts": [
+        62,
+        180,
+        120,
+        0
+      ],
+      "computedCounts": [
+        62,
+        180,
+        120,
+        0
+      ]
+    },
+    {
+      "key": "pentagonal-hexecontahedron",
+      "name": "Pentagonal hexecontahedron (A)",
+      "identityKey": "pentagonal-hexecontahedron",
+      "actualCounts": [
+        92,
+        150,
+        60,
+        0
+      ],
+      "computedCounts": [
+        92,
+        150,
+        60,
+        0
+      ]
+    },
+    {
+      "key": "pentagonal-icositetrahedron-mirror",
+      "name": "Pentagonal icositetrahedron (B)",
+      "identityKey": "pentagonal-icositetrahedron-mirror",
+      "actualCounts": [
+        38,
+        60,
+        24,
+        0
+      ],
+      "computedCounts": [
+        38,
+        60,
+        24,
+        0
+      ]
+    },
+    {
+      "key": "pentagonal-hexecontahedron-mirror",
+      "name": "Pentagonal hexecontahedron (B)",
+      "identityKey": "pentagonal-hexecontahedron-mirror",
+      "actualCounts": [
+        92,
+        150,
+        60,
+        0
+      ],
+      "computedCounts": [
+        92,
+        150,
+        60,
+        0
+      ]
+    },
+    {
+      "key": "small-stellated-dodecahedron",
+      "name": "Small stellated dodecahedron",
+      "identityKey": "antiprism-u34",
+      "actualCounts": [
+        12,
+        30,
+        12,
+        0
+      ],
+      "computedCounts": [
+        12,
+        30,
+        12,
+        0
+      ]
+    },
+    {
+      "key": "great-dodecahedron",
+      "name": "Great dodecahedron",
+      "identityKey": "antiprism-u35",
+      "actualCounts": [
+        12,
+        30,
+        12,
+        0
+      ],
+      "computedCounts": [
+        12,
+        30,
+        12,
+        0
+      ]
+    },
+    {
+      "key": "great-stellated-dodecahedron",
+      "name": "Great stellated dodecahedron",
+      "identityKey": "antiprism-u52",
+      "actualCounts": [
+        20,
+        30,
+        12,
+        0
+      ],
+      "computedCounts": [
+        20,
+        30,
+        12,
+        0
+      ]
+    },
+    {
+      "key": "great-icosahedron",
+      "name": "Great icosahedron",
+      "identityKey": "antiprism-u53",
+      "actualCounts": [
+        12,
+        30,
+        20,
+        0
+      ],
+      "computedCounts": [
+        12,
+        30,
+        20,
+        0
+      ]
+    },
+    {
+      "key": "antiprism-u1",
+      "name": "tetrahedron",
+      "identityKey": "antiprism-u1",
+      "actualCounts": [
+        4,
+        6,
+        4,
+        0
+      ],
+      "computedCounts": [
+        4,
+        6,
+        4,
+        0
+      ]
+    },
+    {
+      "key": "antiprism-u2",
+      "name": "truncated tetrahedron",
+      "identityKey": "antiprism-u2",
+      "actualCounts": [
+        12,
+        18,
+        8,
+        0
+      ],
+      "computedCounts": [
+        12,
+        18,
+        8,
+        0
+      ]
+    },
+    {
+      "key": "antiprism-u3",
+      "name": "octahemioctahedron",
+      "identityKey": "antiprism-u3",
+      "actualCounts": [
+        12,
+        24,
+        12,
+        0
+      ],
+      "computedCounts": [
+        12,
+        24,
+        12,
+        0
+      ]
+    },
+    {
+      "key": "antiprism-u4",
+      "name": "tetrahemihexahedron",
+      "identityKey": "antiprism-u4",
+      "actualCounts": [
+        6,
+        12,
+        7,
+        0
+      ],
+      "computedCounts": [
+        6,
+        12,
+        7,
+        0
+      ]
+    },
+    {
+      "key": "antiprism-u5",
+      "name": "octahedron",
+      "identityKey": "antiprism-u5",
+      "actualCounts": [
+        6,
+        12,
+        8,
+        0
+      ],
+      "computedCounts": [
+        6,
+        12,
+        8,
+        0
+      ]
+    },
+    {
+      "key": "antiprism-u6",
+      "name": "cube",
+      "identityKey": "antiprism-u6",
+      "actualCounts": [
+        8,
+        12,
+        6,
+        0
+      ],
+      "computedCounts": [
+        8,
+        12,
+        6,
+        0
+      ]
+    },
+    {
+      "key": "antiprism-u7",
+      "name": "cuboctahedron",
+      "identityKey": "antiprism-u7",
+      "actualCounts": [
+        12,
+        24,
+        14,
+        0
+      ],
+      "computedCounts": [
+        12,
+        24,
+        14,
+        0
+      ]
+    },
+    {
+      "key": "antiprism-u8",
+      "name": "truncated octahedron",
+      "identityKey": "antiprism-u8",
+      "actualCounts": [
+        24,
+        36,
+        14,
+        0
+      ],
+      "computedCounts": [
+        24,
+        36,
+        14,
+        0
+      ]
+    },
+    {
+      "key": "antiprism-u9",
+      "name": "truncated cube",
+      "identityKey": "antiprism-u9",
+      "actualCounts": [
+        24,
+        36,
+        14,
+        0
+      ],
+      "computedCounts": [
+        24,
+        36,
+        14,
+        0
+      ]
+    },
+    {
+      "key": "antiprism-u10",
+      "name": "rhombicuboctahedron",
+      "identityKey": "antiprism-u10",
+      "actualCounts": [
+        24,
+        48,
+        26,
+        0
+      ],
+      "computedCounts": [
+        24,
+        48,
+        26,
+        0
+      ]
+    },
+    {
+      "key": "antiprism-u11",
+      "name": "truncated cuboctahedron",
+      "identityKey": "antiprism-u11",
+      "actualCounts": [
+        48,
+        72,
+        26,
+        0
+      ],
+      "computedCounts": [
+        48,
+        72,
+        26,
+        0
+      ]
+    },
+    {
+      "key": "antiprism-u12",
+      "name": "snub cube",
+      "identityKey": "antiprism-u12",
+      "actualCounts": [
+        24,
+        60,
+        38,
+        0
+      ],
+      "computedCounts": [
+        24,
+        60,
+        38,
+        0
+      ]
+    },
+    {
+      "key": "antiprism-u13",
+      "name": "small cubicuboctahedron",
+      "identityKey": "antiprism-u13",
+      "actualCounts": [
+        24,
+        48,
+        20,
+        0
+      ],
+      "computedCounts": [
+        24,
+        48,
+        20,
+        0
+      ]
+    },
+    {
+      "key": "antiprism-u14",
+      "name": "great cubicuboctahedron",
+      "identityKey": "antiprism-u14",
+      "actualCounts": [
+        24,
+        48,
+        20,
+        0
+      ],
+      "computedCounts": [
+        24,
+        48,
+        20,
+        0
+      ]
+    },
+    {
+      "key": "antiprism-u15",
+      "name": "cubohemioctahedron",
+      "identityKey": "antiprism-u15",
+      "actualCounts": [
+        12,
+        24,
+        10,
+        0
+      ],
+      "computedCounts": [
+        12,
+        24,
+        10,
+        0
+      ]
+    },
+    {
+      "key": "antiprism-u16",
+      "name": "cubitruncated cuboctahedron",
+      "identityKey": "antiprism-u16",
+      "actualCounts": [
+        48,
+        72,
+        20,
+        0
+      ],
+      "computedCounts": [
+        48,
+        72,
+        20,
+        0
+      ]
+    },
+    {
+      "key": "antiprism-u17",
+      "name": "great rhombicuboctahedron",
+      "identityKey": "antiprism-u17",
+      "actualCounts": [
+        24,
+        48,
+        26,
+        0
+      ],
+      "computedCounts": [
+        24,
+        48,
+        26,
+        0
+      ]
+    },
+    {
+      "key": "antiprism-u18",
+      "name": "small rhombihexahedron",
+      "identityKey": "antiprism-u18",
+      "actualCounts": [
+        24,
+        48,
+        18,
+        0
+      ],
+      "computedCounts": [
+        24,
+        48,
+        18,
+        0
+      ]
+    },
+    {
+      "key": "antiprism-u19",
+      "name": "stellated truncated hexahedron",
+      "identityKey": "antiprism-u19",
+      "actualCounts": [
+        24,
+        36,
+        14,
+        0
+      ],
+      "computedCounts": [
+        24,
+        36,
+        14,
+        0
+      ]
+    },
+    {
+      "key": "antiprism-u20",
+      "name": "great truncated cuboctahedron",
+      "identityKey": "antiprism-u20",
+      "actualCounts": [
+        48,
+        72,
+        26,
+        0
+      ],
+      "computedCounts": [
+        48,
+        72,
+        26,
+        0
+      ]
+    },
+    {
+      "key": "antiprism-u21",
+      "name": "great rhombihexahedron",
+      "identityKey": "antiprism-u21",
+      "actualCounts": [
+        24,
+        48,
+        18,
+        0
+      ],
+      "computedCounts": [
+        24,
+        48,
+        18,
+        0
+      ]
+    },
+    {
+      "key": "antiprism-u22",
+      "name": "icosahedron",
+      "identityKey": "antiprism-u22",
+      "actualCounts": [
+        12,
+        30,
+        20,
+        0
+      ],
+      "computedCounts": [
+        12,
+        30,
+        20,
+        0
+      ]
+    },
+    {
+      "key": "antiprism-u23",
+      "name": "dodecahedron",
+      "identityKey": "antiprism-u23",
+      "actualCounts": [
+        20,
+        30,
+        12,
+        0
+      ],
+      "computedCounts": [
+        20,
+        30,
+        12,
+        0
+      ]
+    },
+    {
+      "key": "antiprism-u24",
+      "name": "icosidodecahedron",
+      "identityKey": "antiprism-u24",
+      "actualCounts": [
+        30,
+        60,
+        32,
+        0
+      ],
+      "computedCounts": [
+        30,
+        60,
+        32,
+        0
+      ]
+    },
+    {
+      "key": "antiprism-u25",
+      "name": "truncated icosahedron",
+      "identityKey": "antiprism-u25",
+      "actualCounts": [
+        60,
+        90,
+        32,
+        0
+      ],
+      "computedCounts": [
+        60,
+        90,
+        32,
+        0
+      ]
+    },
+    {
+      "key": "antiprism-u26",
+      "name": "truncated dodecahedron",
+      "identityKey": "antiprism-u26",
+      "actualCounts": [
+        60,
+        90,
+        32,
+        0
+      ],
+      "computedCounts": [
+        60,
+        90,
+        32,
+        0
+      ]
+    },
+    {
+      "key": "antiprism-u27",
+      "name": "rhombicosidodecahedron",
+      "identityKey": "antiprism-u27",
+      "actualCounts": [
+        60,
+        120,
+        62,
+        0
+      ],
+      "computedCounts": [
+        60,
+        120,
+        62,
+        0
+      ]
+    },
+    {
+      "key": "antiprism-u28",
+      "name": "truncated icosidodecahedron",
+      "identityKey": "antiprism-u28",
+      "actualCounts": [
+        120,
+        180,
+        62,
+        0
+      ],
+      "computedCounts": [
+        120,
+        180,
+        62,
+        0
+      ]
+    },
+    {
+      "key": "antiprism-u29",
+      "name": "snub dodecahedron",
+      "identityKey": "antiprism-u29",
+      "actualCounts": [
+        60,
+        150,
+        92,
+        0
+      ],
+      "computedCounts": [
+        60,
+        150,
+        92,
+        0
+      ]
+    },
+    {
+      "key": "antiprism-u30",
+      "name": "small ditrigonal icosidodecahedron",
+      "identityKey": "antiprism-u30",
+      "actualCounts": [
+        20,
+        60,
+        32,
+        0
+      ],
+      "computedCounts": [
+        20,
+        60,
+        32,
+        0
+      ]
+    },
+    {
+      "key": "antiprism-u31",
+      "name": "small icosicosidodecahedron",
+      "identityKey": "antiprism-u31",
+      "actualCounts": [
+        60,
+        120,
+        52,
+        0
+      ],
+      "computedCounts": [
+        60,
+        120,
+        52,
+        0
+      ]
+    },
+    {
+      "key": "antiprism-u32",
+      "name": "small snub icosicosidodecahedron",
+      "identityKey": "antiprism-u32",
+      "actualCounts": [
+        60,
+        180,
+        112,
+        0
+      ],
+      "computedCounts": [
+        60,
+        180,
+        112,
+        0
+      ]
+    },
+    {
+      "key": "antiprism-u33",
+      "name": "small dodecicosidodecahedron",
+      "identityKey": "antiprism-u33",
+      "actualCounts": [
+        60,
+        120,
+        44,
+        0
+      ],
+      "computedCounts": [
+        60,
+        120,
+        44,
+        0
+      ]
+    },
+    {
+      "key": "antiprism-u34",
+      "name": "small stellated dodecahedron",
+      "identityKey": "antiprism-u34",
+      "actualCounts": [
+        12,
+        30,
+        12,
+        0
+      ],
+      "computedCounts": [
+        12,
+        30,
+        12,
+        0
+      ]
+    },
+    {
+      "key": "antiprism-u35",
+      "name": "great dodecahedron",
+      "identityKey": "antiprism-u35",
+      "actualCounts": [
+        12,
+        30,
+        12,
+        0
+      ],
+      "computedCounts": [
+        12,
+        30,
+        12,
+        0
+      ]
+    },
+    {
+      "key": "antiprism-u36",
+      "name": "dodecadodecahedron",
+      "identityKey": "antiprism-u36",
+      "actualCounts": [
+        30,
+        60,
+        24,
+        0
+      ],
+      "computedCounts": [
+        30,
+        60,
+        24,
+        0
+      ]
+    },
+    {
+      "key": "antiprism-u37",
+      "name": "truncated great dodecahedron",
+      "identityKey": "antiprism-u37",
+      "actualCounts": [
+        60,
+        90,
+        24,
+        0
+      ],
+      "computedCounts": [
+        60,
+        90,
+        24,
+        0
+      ]
+    },
+    {
+      "key": "antiprism-u38",
+      "name": "rhombidodecadodecahedron",
+      "identityKey": "antiprism-u38",
+      "actualCounts": [
+        60,
+        120,
+        54,
+        0
+      ],
+      "computedCounts": [
+        60,
+        120,
+        54,
+        0
+      ]
+    },
+    {
+      "key": "antiprism-u39",
+      "name": "small rhombidodecahedron",
+      "identityKey": "antiprism-u39",
+      "actualCounts": [
+        60,
+        120,
+        42,
+        0
+      ],
+      "computedCounts": [
+        60,
+        120,
+        42,
+        0
+      ]
+    },
+    {
+      "key": "antiprism-u40",
+      "name": "snub dodecadodecahedron",
+      "identityKey": "antiprism-u40",
+      "actualCounts": [
+        60,
+        150,
+        84,
+        0
+      ],
+      "computedCounts": [
+        60,
+        150,
+        84,
+        0
+      ]
+    },
+    {
+      "key": "antiprism-u41",
+      "name": "ditrigonal dodecadodecahedron",
+      "identityKey": "antiprism-u41",
+      "actualCounts": [
+        20,
+        60,
+        24,
+        0
+      ],
+      "computedCounts": [
+        20,
+        60,
+        24,
+        0
+      ]
+    },
+    {
+      "key": "antiprism-u42",
+      "name": "great ditrigonal dodecicosidodecahedron",
+      "identityKey": "antiprism-u42",
+      "actualCounts": [
+        60,
+        120,
+        44,
+        0
+      ],
+      "computedCounts": [
+        60,
+        120,
+        44,
+        0
+      ]
+    },
+    {
+      "key": "antiprism-u43",
+      "name": "small ditrigonal dodecicosidodecahedron",
+      "identityKey": "antiprism-u43",
+      "actualCounts": [
+        60,
+        120,
+        44,
+        0
+      ],
+      "computedCounts": [
+        60,
+        120,
+        44,
+        0
+      ]
+    },
+    {
+      "key": "antiprism-u44",
+      "name": "icosidodecadodecahedron",
+      "identityKey": "antiprism-u44",
+      "actualCounts": [
+        60,
+        120,
+        44,
+        0
+      ],
+      "computedCounts": [
+        60,
+        120,
+        44,
+        0
+      ]
+    },
+    {
+      "key": "antiprism-u45",
+      "name": "icositruncated dodecadodecahedron",
+      "identityKey": "antiprism-u45",
+      "actualCounts": [
+        120,
+        180,
+        44,
+        0
+      ],
+      "computedCounts": [
+        120,
+        180,
+        44,
+        0
+      ]
+    },
+    {
+      "key": "antiprism-u46",
+      "name": "snub icosidodecadodecahedron",
+      "identityKey": "antiprism-u46",
+      "actualCounts": [
+        60,
+        180,
+        104,
+        0
+      ],
+      "computedCounts": [
+        60,
+        180,
+        104,
+        0
+      ]
+    },
+    {
+      "key": "antiprism-u47",
+      "name": "great ditrigonal icosidodecahedron",
+      "identityKey": "antiprism-u47",
+      "actualCounts": [
+        20,
+        60,
+        32,
+        0
+      ],
+      "computedCounts": [
+        20,
+        60,
+        32,
+        0
+      ]
+    },
+    {
+      "key": "antiprism-u48",
+      "name": "great icosicosidodecahedron",
+      "identityKey": "antiprism-u48",
+      "actualCounts": [
+        60,
+        120,
+        52,
+        0
+      ],
+      "computedCounts": [
+        60,
+        120,
+        52,
+        0
+      ]
+    },
+    {
+      "key": "antiprism-u49",
+      "name": "small icosihemidodecahedron",
+      "identityKey": "antiprism-u49",
+      "actualCounts": [
+        30,
+        60,
+        26,
+        0
+      ],
+      "computedCounts": [
+        30,
+        60,
+        26,
+        0
+      ]
+    },
+    {
+      "key": "antiprism-u50",
+      "name": "small dodecicosahedron",
+      "identityKey": "antiprism-u50",
+      "actualCounts": [
+        60,
+        120,
+        32,
+        0
+      ],
+      "computedCounts": [
+        60,
+        120,
+        32,
+        0
+      ]
+    },
+    {
+      "key": "antiprism-u51",
+      "name": "small dodecahemidodecahedron",
+      "identityKey": "antiprism-u51",
+      "actualCounts": [
+        30,
+        60,
+        18,
+        0
+      ],
+      "computedCounts": [
+        30,
+        60,
+        18,
+        0
+      ]
+    },
+    {
+      "key": "antiprism-u52",
+      "name": "great stellated dodecahedron",
+      "identityKey": "antiprism-u52",
+      "actualCounts": [
+        20,
+        30,
+        12,
+        0
+      ],
+      "computedCounts": [
+        20,
+        30,
+        12,
+        0
+      ]
+    },
+    {
+      "key": "antiprism-u53",
+      "name": "great icosahedron",
+      "identityKey": "antiprism-u53",
+      "actualCounts": [
+        12,
+        30,
+        20,
+        0
+      ],
+      "computedCounts": [
+        12,
+        30,
+        20,
+        0
+      ]
+    },
+    {
+      "key": "antiprism-u54",
+      "name": "great icosidodecahedron",
+      "identityKey": "antiprism-u54",
+      "actualCounts": [
+        30,
+        60,
+        32,
+        0
+      ],
+      "computedCounts": [
+        30,
+        60,
+        32,
+        0
+      ]
+    },
+    {
+      "key": "antiprism-u55",
+      "name": "great truncated icosahedron",
+      "identityKey": "antiprism-u55",
+      "actualCounts": [
+        60,
+        90,
+        32,
+        0
+      ],
+      "computedCounts": [
+        60,
+        90,
+        32,
+        0
+      ]
+    },
+    {
+      "key": "antiprism-u56",
+      "name": "rhombicosahedron",
+      "identityKey": "antiprism-u56",
+      "actualCounts": [
+        60,
+        120,
+        50,
+        0
+      ],
+      "computedCounts": [
+        60,
+        120,
+        50,
+        0
+      ]
+    },
+    {
+      "key": "antiprism-u57",
+      "name": "great snub icosidodecahedron",
+      "identityKey": "antiprism-u57",
+      "actualCounts": [
+        60,
+        150,
+        92,
+        0
+      ],
+      "computedCounts": [
+        60,
+        150,
+        92,
+        0
+      ]
+    },
+    {
+      "key": "antiprism-u58",
+      "name": "small stellated truncated dodecahedron",
+      "identityKey": "antiprism-u58",
+      "actualCounts": [
+        60,
+        90,
+        24,
+        0
+      ],
+      "computedCounts": [
+        60,
+        90,
+        24,
+        0
+      ]
+    },
+    {
+      "key": "antiprism-u59",
+      "name": "truncated dodecadodecahedron",
+      "identityKey": "antiprism-u59",
+      "actualCounts": [
+        120,
+        180,
+        54,
+        0
+      ],
+      "computedCounts": [
+        120,
+        180,
+        54,
+        0
+      ]
+    },
+    {
+      "key": "antiprism-u60",
+      "name": "inverted snub dodecadodecahedron",
+      "identityKey": "antiprism-u60",
+      "actualCounts": [
+        60,
+        150,
+        84,
+        0
+      ],
+      "computedCounts": [
+        60,
+        150,
+        84,
+        0
+      ]
+    },
+    {
+      "key": "antiprism-u61",
+      "name": "great dodecicosidodecahedron",
+      "identityKey": "antiprism-u61",
+      "actualCounts": [
+        60,
+        120,
+        44,
+        0
+      ],
+      "computedCounts": [
+        60,
+        120,
+        44,
+        0
+      ]
+    },
+    {
+      "key": "antiprism-u62",
+      "name": "small dodecahemicosahedron",
+      "identityKey": "antiprism-u62",
+      "actualCounts": [
+        30,
+        60,
+        22,
+        0
+      ],
+      "computedCounts": [
+        30,
+        60,
+        22,
+        0
+      ]
+    },
+    {
+      "key": "antiprism-u63",
+      "name": "great dodecicosahedron",
+      "identityKey": "antiprism-u63",
+      "actualCounts": [
+        60,
+        120,
+        32,
+        0
+      ],
+      "computedCounts": [
+        60,
+        120,
+        32,
+        0
+      ]
+    },
+    {
+      "key": "antiprism-u64",
+      "name": "great snub dodecicosidodecahedron",
+      "identityKey": "antiprism-u64",
+      "actualCounts": [
+        60,
+        180,
+        104,
+        0
+      ],
+      "computedCounts": [
+        60,
+        180,
+        104,
+        0
+      ]
+    },
+    {
+      "key": "antiprism-u65",
+      "name": "great dodecahemicosahedron",
+      "identityKey": "antiprism-u65",
+      "actualCounts": [
+        30,
+        60,
+        22,
+        0
+      ],
+      "computedCounts": [
+        30,
+        60,
+        22,
+        0
+      ]
+    },
+    {
+      "key": "antiprism-u66",
+      "name": "great stellated truncated dodecahedron",
+      "identityKey": "antiprism-u66",
+      "actualCounts": [
+        60,
+        90,
+        32,
+        0
+      ],
+      "computedCounts": [
+        60,
+        90,
+        32,
+        0
+      ]
+    },
+    {
+      "key": "antiprism-u67",
+      "name": "great rhombicosidodecahedron",
+      "identityKey": "antiprism-u67",
+      "actualCounts": [
+        60,
+        120,
+        62,
+        0
+      ],
+      "computedCounts": [
+        60,
+        120,
+        62,
+        0
+      ]
+    },
+    {
+      "key": "antiprism-u68",
+      "name": "great truncated icosidodecahedron",
+      "identityKey": "antiprism-u68",
+      "actualCounts": [
+        120,
+        180,
+        62,
+        0
+      ],
+      "computedCounts": [
+        120,
+        180,
+        62,
+        0
+      ]
+    },
+    {
+      "key": "antiprism-u69",
+      "name": "great inverted snub icosidodecahedron",
+      "identityKey": "antiprism-u69",
+      "actualCounts": [
+        60,
+        150,
+        92,
+        0
+      ],
+      "computedCounts": [
+        60,
+        150,
+        92,
+        0
+      ]
+    },
+    {
+      "key": "antiprism-u70",
+      "name": "great dodecahemidodecahedron",
+      "identityKey": "antiprism-u70",
+      "actualCounts": [
+        30,
+        60,
+        18,
+        0
+      ],
+      "computedCounts": [
+        30,
+        60,
+        18,
+        0
+      ]
+    },
+    {
+      "key": "antiprism-u71",
+      "name": "great icosihemidodecahedron",
+      "identityKey": "antiprism-u71",
+      "actualCounts": [
+        30,
+        60,
+        26,
+        0
+      ],
+      "computedCounts": [
+        30,
+        60,
+        26,
+        0
+      ]
+    },
+    {
+      "key": "antiprism-u72",
+      "name": "small retrosnub icosicosidodecahedron",
+      "identityKey": "antiprism-u72",
+      "actualCounts": [
+        60,
+        180,
+        112,
+        0
+      ],
+      "computedCounts": [
+        60,
+        180,
+        112,
+        0
+      ]
+    },
+    {
+      "key": "antiprism-u73",
+      "name": "great rhombidodecahedron",
+      "identityKey": "antiprism-u73",
+      "actualCounts": [
+        60,
+        120,
+        42,
+        0
+      ],
+      "computedCounts": [
+        60,
+        120,
+        42,
+        0
+      ]
+    },
+    {
+      "key": "antiprism-u74",
+      "name": "great retrosnub icosidodecahedron",
+      "identityKey": "antiprism-u74",
+      "actualCounts": [
+        60,
+        150,
+        92,
+        0
+      ],
+      "computedCounts": [
+        60,
+        150,
+        92,
+        0
+      ]
+    },
+    {
+      "key": "antiprism-u75",
+      "name": "great dirhombicosidodecahedron",
+      "identityKey": "antiprism-u75",
+      "actualCounts": [
+        60,
+        240,
+        124,
+        0
+      ],
+      "computedCounts": [
+        60,
+        240,
+        124,
+        0
+      ]
+    },
+    {
+      "key": "miratope-grand-hecatonicosachoron",
+      "name": "Grand hecatonicosachoron",
+      "identityKey": "miratope-grand-hecatonicosachoron",
+      "actualCounts": [
+        120,
+        720,
+        720,
+        120
+      ],
+      "computedCounts": [
+        120,
+        720,
+        720,
+        120
+      ]
+    },
+    {
+      "key": "miratope-grand-hexacosichoron",
+      "name": "Grand hexacosichoron",
+      "identityKey": "miratope-grand-hexacosichoron",
+      "actualCounts": [
+        120,
+        720,
+        1200,
+        600
+      ],
+      "computedCounts": [
+        120,
+        720,
+        1200,
+        600
+      ]
+    },
+    {
+      "key": "miratope-grand-stellated-hecatonicosachoron",
+      "name": "Grand stellated hecatonicosachoron",
+      "identityKey": "miratope-grand-stellated-hecatonicosachoron",
+      "actualCounts": [
+        120,
+        720,
+        720,
+        120
+      ],
+      "computedCounts": [
+        120,
+        720,
+        720,
+        120
+      ]
+    },
+    {
+      "key": "miratope-great-grand-hecatonicosachoron",
+      "name": "Great grand hecatonicosachoron",
+      "identityKey": "miratope-great-grand-hecatonicosachoron",
+      "actualCounts": [
+        120,
+        1200,
+        720,
+        120
+      ],
+      "computedCounts": [
+        120,
+        1200,
+        720,
+        120
+      ]
+    },
+    {
+      "key": "miratope-great-grand-stellated-hecatonicosachoron",
+      "name": "Great grand stellated hecatonicosachoron",
+      "identityKey": "miratope-great-grand-stellated-hecatonicosachoron",
+      "actualCounts": [
+        600,
+        1200,
+        720,
+        120
+      ],
+      "computedCounts": [
+        600,
+        1200,
+        720,
+        120
+      ]
+    },
+    {
+      "key": "miratope-great-hecatonicosachoron",
+      "name": "Great hecatonicosachoron",
+      "identityKey": "miratope-great-hecatonicosachoron",
+      "actualCounts": [
+        120,
+        720,
+        720,
+        120
+      ],
+      "computedCounts": [
+        120,
+        720,
+        720,
+        120
+      ]
+    },
+    {
+      "key": "miratope-great-icosahedral-hecatonicosachoron",
+      "name": "Great icosahedral hecatonicosachoron",
+      "identityKey": "miratope-great-icosahedral-hecatonicosachoron",
+      "actualCounts": [
+        120,
+        720,
+        1200,
+        120
+      ],
+      "computedCounts": [
+        120,
+        720,
+        1200,
+        120
+      ]
+    },
+    {
+      "key": "miratope-great-stellated-hecatonicosachoron",
+      "name": "Great stellated hecatonicosachoron",
+      "identityKey": "miratope-great-stellated-hecatonicosachoron",
+      "actualCounts": [
+        120,
+        720,
+        720,
+        120
+      ],
+      "computedCounts": [
+        120,
+        720,
+        720,
+        120
+      ]
+    },
+    {
+      "key": "miratope-icosahedral-hecatonicosachoron",
+      "name": "Icosahedral hecatonicosachoron",
+      "identityKey": "miratope-icosahedral-hecatonicosachoron",
+      "actualCounts": [
+        120,
+        720,
+        1200,
+        120
+      ],
+      "computedCounts": [
+        120,
+        720,
+        1200,
+        120
+      ]
+    },
+    {
+      "key": "miratope-stellated-hecatonicosachoron",
+      "name": "Stellated hecatonicosachoron",
+      "identityKey": "miratope-stellated-hecatonicosachoron",
+      "actualCounts": [
+        120,
+        1200,
+        720,
+        120
+      ],
+      "computedCounts": [
+        120,
+        1200,
+        720,
+        120
+      ]
+    },
+    {
+      "key": "antiprism-u12-mirror",
+      "name": "snub cube (reflected)",
+      "identityKey": "antiprism-u12",
+      "actualCounts": [
+        24,
+        60,
+        38,
+        0
+      ],
+      "computedCounts": [
+        24,
+        60,
+        38,
+        0
+      ]
+    },
+    {
+      "key": "antiprism-u29-mirror",
+      "name": "snub dodecahedron (reflected)",
+      "identityKey": "antiprism-u29",
+      "actualCounts": [
+        60,
+        150,
+        92,
+        0
+      ],
+      "computedCounts": [
+        60,
+        150,
+        92,
+        0
+      ]
+    },
+    {
+      "key": "antiprism-u32-mirror",
+      "name": "small snub icosicosidodecahedron (reflected)",
+      "identityKey": "antiprism-u32",
+      "actualCounts": [
+        60,
+        180,
+        112,
+        0
+      ],
+      "computedCounts": [
+        60,
+        180,
+        112,
+        0
+      ]
+    },
+    {
+      "key": "antiprism-u40-mirror",
+      "name": "snub dodecadodecahedron (reflected)",
+      "identityKey": "antiprism-u40",
+      "actualCounts": [
+        60,
+        150,
+        84,
+        0
+      ],
+      "computedCounts": [
+        60,
+        150,
+        84,
+        0
+      ]
+    },
+    {
+      "key": "antiprism-u46-mirror",
+      "name": "snub icosidodecadodecahedron (reflected)",
+      "identityKey": "antiprism-u46",
+      "actualCounts": [
+        60,
+        180,
+        104,
+        0
+      ],
+      "computedCounts": [
+        60,
+        180,
+        104,
+        0
+      ]
+    },
+    {
+      "key": "antiprism-u57-mirror",
+      "name": "great snub icosidodecahedron (reflected)",
+      "identityKey": "antiprism-u57",
+      "actualCounts": [
+        60,
+        150,
+        92,
+        0
+      ],
+      "computedCounts": [
+        60,
+        150,
+        92,
+        0
+      ]
+    },
+    {
+      "key": "antiprism-u60-mirror",
+      "name": "inverted snub dodecadodecahedron (reflected)",
+      "identityKey": "antiprism-u60",
+      "actualCounts": [
+        60,
+        150,
+        84,
+        0
+      ],
+      "computedCounts": [
+        60,
+        150,
+        84,
+        0
+      ]
+    },
+    {
+      "key": "antiprism-u64-mirror",
+      "name": "great snub dodecicosidodecahedron (reflected)",
+      "identityKey": "antiprism-u64",
+      "actualCounts": [
+        60,
+        180,
+        104,
+        0
+      ],
+      "computedCounts": [
+        60,
+        180,
+        104,
+        0
+      ]
+    },
+    {
+      "key": "antiprism-u69-mirror",
+      "name": "great inverted snub icosidodecahedron (reflected)",
+      "identityKey": "antiprism-u69",
+      "actualCounts": [
+        60,
+        150,
+        92,
+        0
+      ],
+      "computedCounts": [
+        60,
+        150,
+        92,
+        0
+      ]
+    },
+    {
+      "key": "antiprism-u72-mirror",
+      "name": "small retrosnub icosicosidodecahedron (reflected)",
+      "identityKey": "antiprism-u72",
+      "actualCounts": [
+        60,
+        180,
+        112,
+        0
+      ],
+      "computedCounts": [
+        60,
+        180,
+        112,
+        0
+      ]
+    },
+    {
+      "key": "antiprism-u74-mirror",
+      "name": "great retrosnub icosidodecahedron (reflected)",
+      "identityKey": "antiprism-u74",
+      "actualCounts": [
+        60,
+        150,
+        92,
+        0
+      ],
+      "computedCounts": [
+        60,
+        150,
+        92,
+        0
+      ]
+    },
+    {
+      "key": "antiprism-u75-mirror",
+      "name": "great dirhombicosidodecahedron (reflected)",
+      "identityKey": "antiprism-u75",
+      "actualCounts": [
+        60,
+        240,
+        124,
+        0
+      ],
+      "computedCounts": [
+        60,
+        240,
+        124,
+        0
+      ]
+    },
+    {
+      "key": "miratope-expanded-73eadd0b2c7f7575a3ed",
+      "name": "Bitruncated hecatonicosachoron",
+      "identityKey": "uniform4-xhi",
+      "actualCounts": [
+        3600,
+        7200,
+        4320,
+        720
+      ],
+      "computedCounts": [
+        3600,
+        7200,
+        4320,
+        720
+      ]
+    },
+    {
+      "key": "miratope-expanded-98cd8a44cb5ebf5d5725",
+      "name": "Bitruncated icositetrachoron",
+      "identityKey": "uniform4-cont",
+      "actualCounts": [
+        288,
+        576,
+        336,
+        48
+      ],
+      "computedCounts": [
+        288,
+        576,
+        336,
+        48
+      ]
+    },
+    {
+      "key": "miratope-expanded-6c471182769cdd9d6272",
+      "name": "Bitruncated pentachoron",
+      "identityKey": "uniform4-deca",
+      "actualCounts": [
+        30,
+        60,
+        40,
+        10
+      ],
+      "computedCounts": [
+        30,
+        60,
+        40,
+        10
+      ]
+    },
+    {
+      "key": "miratope-expanded-1006c27481a8112edae6",
+      "name": "Bitruncated tesseract",
+      "identityKey": "uniform4-tah",
+      "actualCounts": [
+        96,
+        192,
+        120,
+        24
+      ],
+      "computedCounts": [
+        96,
+        192,
+        120,
+        24
+      ]
+    },
+    {
+      "key": "miratope-expanded-2ff15a625edb46b3b69a",
+      "name": "Cantellated hecatonicosachoron",
+      "identityKey": "uniform4-srahi",
+      "actualCounts": [
+        3600,
+        10800,
+        9120,
+        1920
+      ],
+      "computedCounts": [
+        3600,
+        10800,
+        9120,
+        1920
+      ]
+    },
+    {
+      "key": "miratope-expanded-817b6d19c47e30e0c184",
+      "name": "Cantellated hexacosichoron",
+      "identityKey": "uniform4-srix",
+      "actualCounts": [
+        3600,
+        10800,
+        8640,
+        1440
+      ],
+      "computedCounts": [
+        3600,
+        10800,
+        8640,
+        1440
+      ]
+    },
+    {
+      "key": "miratope-expanded-ab7b899bb377323932b3",
+      "name": "Cantellated icositetrachoron",
+      "identityKey": "uniform4-srico",
+      "actualCounts": [
+        288,
+        864,
+        720,
+        144
+      ],
+      "computedCounts": [
+        288,
+        864,
+        720,
+        144
+      ]
+    },
+    {
+      "key": "miratope-expanded-ff276d55caccc0777f95",
+      "name": "Cantellated pentachoron",
+      "identityKey": "uniform4-srip",
+      "actualCounts": [
+        30,
+        90,
+        80,
+        20
+      ],
+      "computedCounts": [
+        30,
+        90,
+        80,
+        20
+      ]
+    },
+    {
+      "key": "miratope-expanded-738d63cff8e362bc5929",
+      "name": "Cantellated tesseract",
+      "identityKey": "uniform4-srit",
+      "actualCounts": [
+        96,
+        288,
+        248,
+        56
+      ],
+      "computedCounts": [
+        96,
+        288,
+        248,
+        56
+      ]
+    },
+    {
+      "key": "miratope-expanded-7bb1150cf3bc6335279b",
+      "name": "Cantitruncated hecatonicosachoron",
+      "identityKey": "uniform4-grahi",
+      "actualCounts": [
+        7200,
+        14400,
+        9120,
+        1920
+      ],
+      "computedCounts": [
+        7200,
+        14400,
+        9120,
+        1920
+      ]
+    },
+    {
+      "key": "miratope-expanded-9363e592668ed364a9cc",
+      "name": "Cantitruncated hexacosichoron",
+      "identityKey": "uniform4-grix",
+      "actualCounts": [
+        7200,
+        14400,
+        8640,
+        1440
+      ],
+      "computedCounts": [
+        7200,
+        14400,
+        8640,
+        1440
+      ]
+    },
+    {
+      "key": "miratope-expanded-63607b02feacaa39c126",
+      "name": "Cantitruncated icositetrachoron",
+      "identityKey": "uniform4-grico",
+      "actualCounts": [
+        576,
+        1152,
+        720,
+        144
+      ],
+      "computedCounts": [
+        576,
+        1152,
+        720,
+        144
+      ]
+    },
+    {
+      "key": "miratope-expanded-56ec6b3d1dac2479671b",
+      "name": "Cantitruncated pentachoron",
+      "identityKey": "uniform4-grip",
+      "actualCounts": [
+        60,
+        120,
+        80,
+        20
+      ],
+      "computedCounts": [
+        60,
+        120,
+        80,
+        20
+      ]
+    },
+    {
+      "key": "miratope-expanded-e7a2d829161c20465e15",
+      "name": "Cantitruncated tesseract",
+      "identityKey": "uniform4-grit",
+      "actualCounts": [
+        192,
+        384,
+        248,
+        56
+      ],
+      "computedCounts": [
+        192,
+        384,
+        248,
+        56
+      ]
+    },
+    {
+      "key": "miratope-expanded-ad48b048fc69db3a1a53",
+      "name": "Grand antiprism",
+      "identityKey": "uniform4-gap",
+      "actualCounts": [
+        100,
+        500,
+        720,
+        320
+      ],
+      "computedCounts": [
+        100,
+        500,
+        720,
+        320
+      ]
+    },
+    {
+      "key": "miratope-expanded-898a96ede3ed7e9fc16c",
+      "name": "Omnitruncated hecatonicosachoron",
+      "identityKey": "uniform4-gidpixhi",
+      "actualCounts": [
+        14400,
+        28800,
+        17040,
+        2640
+      ],
+      "computedCounts": [
+        14400,
+        28800,
+        17040,
+        2640
+      ]
+    },
+    {
+      "key": "miratope-expanded-66af3cf54b4dde7ca034",
+      "name": "Omnitruncated icositetrachoron",
+      "identityKey": "uniform4-gippic",
+      "actualCounts": [
+        1152,
+        2304,
+        1392,
+        240
+      ],
+      "computedCounts": [
+        1152,
+        2304,
+        1392,
+        240
+      ]
+    },
+    {
+      "key": "miratope-expanded-5c1d6b7e54f475c87fe6",
+      "name": "Omnitruncated pentachoron",
+      "identityKey": "uniform4-gippid",
+      "actualCounts": [
+        120,
+        240,
+        150,
+        30
+      ],
+      "computedCounts": [
+        120,
+        240,
+        150,
+        30
+      ]
+    },
+    {
+      "key": "miratope-expanded-bff3d2210bd7463fb4b3",
+      "name": "Omnitruncated tesseract",
+      "identityKey": "uniform4-gidpith",
+      "actualCounts": [
+        384,
+        768,
+        464,
+        80
+      ],
+      "computedCounts": [
+        384,
+        768,
+        464,
+        80
+      ]
+    },
+    {
+      "key": "miratope-expanded-cdfb8385ba10a9ffea6c",
+      "name": "Rectified hecatonicosachoron",
+      "identityKey": "uniform4-rahi",
+      "actualCounts": [
+        1200,
+        3600,
+        3120,
+        720
+      ],
+      "computedCounts": [
+        1200,
+        3600,
+        3120,
+        720
+      ]
+    },
+    {
+      "key": "miratope-expanded-49768beeb3f12675c1bd",
+      "name": "Rectified hexacosichoron",
+      "identityKey": "uniform4-rox",
+      "actualCounts": [
+        720,
+        3600,
+        3600,
+        720
+      ],
+      "computedCounts": [
+        720,
+        3600,
+        3600,
+        720
+      ]
+    },
+    {
+      "key": "miratope-expanded-99734591de22199bac82",
+      "name": "Rectified icositetrachoron",
+      "identityKey": "uniform4-rico",
+      "actualCounts": [
+        96,
+        288,
+        240,
+        48
+      ],
+      "computedCounts": [
+        96,
+        288,
+        240,
+        48
+      ]
+    },
+    {
+      "key": "miratope-expanded-69690fc15c4e5749348f",
+      "name": "Rectified pentachoron",
+      "identityKey": "uniform4-rap",
+      "actualCounts": [
+        10,
+        30,
+        30,
+        10
+      ],
+      "computedCounts": [
+        10,
+        30,
+        30,
+        10
+      ]
+    },
+    {
+      "key": "miratope-expanded-beb4f1d977421bca7ee0",
+      "name": "Rectified tesseract",
+      "identityKey": "uniform4-rit",
+      "actualCounts": [
+        32,
+        96,
+        88,
+        24
+      ],
+      "computedCounts": [
+        32,
+        96,
+        88,
+        24
+      ]
+    },
+    {
+      "key": "miratope-expanded-54c125383782d418c758",
+      "name": "Runcinated hecatonicosachoron",
+      "identityKey": "uniform4-sidpixhi",
+      "actualCounts": [
+        2400,
+        7200,
+        7440,
+        2640
+      ],
+      "computedCounts": [
+        2400,
+        7200,
+        7440,
+        2640
+      ]
+    },
+    {
+      "key": "miratope-expanded-a8471c42d96257bd8de4",
+      "name": "Runcinated icositetrachoron",
+      "identityKey": "uniform4-spic",
+      "actualCounts": [
+        144,
+        576,
+        672,
+        240
+      ],
+      "computedCounts": [
+        144,
+        576,
+        672,
+        240
+      ]
+    },
+    {
+      "key": "miratope-expanded-5e9164d469a2a8f483a9",
+      "name": "Runcinated pentachoron",
+      "identityKey": "uniform4-spid",
+      "actualCounts": [
+        20,
+        60,
+        70,
+        30
+      ],
+      "computedCounts": [
+        20,
+        60,
+        70,
+        30
+      ]
+    },
+    {
+      "key": "miratope-expanded-fb71bdcaacd7e42570db",
+      "name": "Runcinated tesseract",
+      "identityKey": "uniform4-sidpith",
+      "actualCounts": [
+        64,
+        192,
+        208,
+        80
+      ],
+      "computedCounts": [
+        64,
+        192,
+        208,
+        80
+      ]
+    },
+    {
+      "key": "miratope-expanded-442e90c900f594014452",
+      "name": "Runcitruncated hecatonicosachoron",
+      "identityKey": "uniform4-prix",
+      "actualCounts": [
+        7200,
+        18000,
+        13440,
+        2640
+      ],
+      "computedCounts": [
+        7200,
+        18000,
+        13440,
+        2640
+      ]
+    },
+    {
+      "key": "miratope-expanded-d722a8ae63709bf9b493",
+      "name": "Runcitruncated hexacosichoron",
+      "identityKey": "uniform4-prahi",
+      "actualCounts": [
+        7200,
+        18000,
+        13440,
+        2640
+      ],
+      "computedCounts": [
+        7200,
+        18000,
+        13440,
+        2640
+      ]
+    },
+    {
+      "key": "miratope-expanded-4c03e572d3acf45e882f",
+      "name": "Runcitruncated hexadecachoron",
+      "identityKey": "uniform4-prit",
+      "actualCounts": [
+        192,
+        480,
+        368,
+        80
+      ],
+      "computedCounts": [
+        192,
+        480,
+        368,
+        80
+      ]
+    },
+    {
+      "key": "miratope-expanded-49a6523490f0b2b1841d",
+      "name": "Runcitruncated icositetrachoron",
+      "identityKey": "uniform4-prico",
+      "actualCounts": [
+        576,
+        1440,
+        1104,
+        240
+      ],
+      "computedCounts": [
+        576,
+        1440,
+        1104,
+        240
+      ]
+    },
+    {
+      "key": "miratope-expanded-af179860914d9b621e40",
+      "name": "Runcitruncated pentachoron",
+      "identityKey": "uniform4-prip",
+      "actualCounts": [
+        60,
+        150,
+        120,
+        30
+      ],
+      "computedCounts": [
+        60,
+        150,
+        120,
+        30
+      ]
+    },
+    {
+      "key": "miratope-expanded-f21ba40d5a9ce80edcbb",
+      "name": "Runcitruncated tesseract",
+      "identityKey": "uniform4-proh",
+      "actualCounts": [
+        192,
+        480,
+        368,
+        80
+      ],
+      "computedCounts": [
+        192,
+        480,
+        368,
+        80
+      ]
+    },
+    {
+      "key": "miratope-expanded-dacb7c436ade3cf583e5",
+      "name": "Semisnub icositetrachoron",
+      "identityKey": "uniform4-sadi",
+      "actualCounts": [
+        96,
+        432,
+        480,
+        144
+      ],
+      "computedCounts": [
+        96,
+        432,
+        480,
+        144
+      ]
+    },
+    {
+      "key": "miratope-expanded-86ecaf4d4c2b02ff6f07",
+      "name": "Truncated hecatonicosachoron",
+      "identityKey": "uniform4-thi",
+      "actualCounts": [
+        2400,
+        4800,
+        3120,
+        720
+      ],
+      "computedCounts": [
+        2400,
+        4800,
+        3120,
+        720
+      ]
+    },
+    {
+      "key": "miratope-expanded-43e4a2efecc5142e27fe",
+      "name": "Truncated hexacosichoron",
+      "identityKey": "uniform4-tex",
+      "actualCounts": [
+        1440,
+        4320,
+        3600,
+        720
+      ],
+      "computedCounts": [
+        1440,
+        4320,
+        3600,
+        720
+      ]
+    },
+    {
+      "key": "miratope-expanded-b3f1eb4fdb37486e9bbb",
+      "name": "Truncated hexadecachoron",
+      "identityKey": "uniform4-thex",
+      "actualCounts": [
+        48,
+        120,
+        96,
+        24
+      ],
+      "computedCounts": [
+        48,
+        120,
+        96,
+        24
+      ]
+    },
+    {
+      "key": "miratope-expanded-5c4a8fa0bab9a13cce85",
+      "name": "Truncated icositetrachoron",
+      "identityKey": "uniform4-tico",
+      "actualCounts": [
+        192,
+        384,
+        240,
+        48
+      ],
+      "computedCounts": [
+        192,
+        384,
+        240,
+        48
+      ]
+    },
+    {
+      "key": "miratope-expanded-15f8d80cbd9742be0502",
+      "name": "Truncated pentachoron",
+      "identityKey": "uniform4-tip",
+      "actualCounts": [
+        20,
+        40,
+        30,
+        10
+      ],
+      "computedCounts": [
+        20,
+        40,
+        30,
+        10
+      ]
+    },
+    {
+      "key": "miratope-expanded-c35127acfe714a0e53e3",
+      "name": "Truncated tesseract",
+      "identityKey": "uniform4-tat",
+      "actualCounts": [
+        64,
+        128,
+        88,
+        24
+      ],
+      "computedCounts": [
+        64,
+        128,
+        88,
+        24
+      ]
+    },
+    {
+      "key": "uniform4-rap",
+      "name": "Rectified 5-cell",
+      "identityKey": "uniform4-rap",
+      "actualCounts": [
+        10,
+        30,
+        30,
+        10
+      ],
+      "computedCounts": [
+        10,
+        30,
+        30,
+        10
+      ]
+    },
+    {
+      "key": "uniform4-tip",
+      "name": "Truncated 5-cell",
+      "identityKey": "uniform4-tip",
+      "actualCounts": [
+        20,
+        40,
+        30,
+        10
+      ],
+      "computedCounts": [
+        20,
+        40,
+        30,
+        10
+      ]
+    },
+    {
+      "key": "uniform4-srip",
+      "name": "Cantellated 5-cell",
+      "identityKey": "uniform4-srip",
+      "actualCounts": [
+        30,
+        90,
+        80,
+        20
+      ],
+      "computedCounts": [
+        30,
+        90,
+        80,
+        20
+      ]
+    },
+    {
+      "key": "uniform4-spid",
+      "name": "Runcinated 5-cell",
+      "identityKey": "uniform4-spid",
+      "actualCounts": [
+        20,
+        60,
+        70,
+        30
+      ],
+      "computedCounts": [
+        20,
+        60,
+        70,
+        30
+      ]
+    },
+    {
+      "key": "uniform4-deca",
+      "name": "Bitruncated 5-cell",
+      "identityKey": "uniform4-deca",
+      "actualCounts": [
+        30,
+        60,
+        40,
+        10
+      ],
+      "computedCounts": [
+        30,
+        60,
+        40,
+        10
+      ]
+    },
+    {
+      "key": "uniform4-grip",
+      "name": "Cantitruncated 5-cell",
+      "identityKey": "uniform4-grip",
+      "actualCounts": [
+        60,
+        120,
+        80,
+        20
+      ],
+      "computedCounts": [
+        60,
+        120,
+        80,
+        20
+      ]
+    },
+    {
+      "key": "uniform4-prip",
+      "name": "Runcitruncated 5-cell",
+      "identityKey": "uniform4-prip",
+      "actualCounts": [
+        60,
+        150,
+        120,
+        30
+      ],
+      "computedCounts": [
+        60,
+        150,
+        120,
+        30
+      ]
+    },
+    {
+      "key": "uniform4-gippid",
+      "name": "Omnitruncated 5-cell",
+      "identityKey": "uniform4-gippid",
+      "actualCounts": [
+        120,
+        240,
+        150,
+        30
+      ],
+      "computedCounts": [
+        120,
+        240,
+        150,
+        30
+      ]
+    },
+    {
+      "key": "uniform4-rit",
+      "name": "Rectified tesseract",
+      "identityKey": "uniform4-rit",
+      "actualCounts": [
+        32,
+        96,
+        88,
+        24
+      ],
+      "computedCounts": [
+        32,
+        96,
+        88,
+        24
+      ]
+    },
+    {
+      "key": "uniform4-tat",
+      "name": "Truncated tesseract",
+      "identityKey": "uniform4-tat",
+      "actualCounts": [
+        64,
+        128,
+        88,
+        24
+      ],
+      "computedCounts": [
+        64,
+        128,
+        88,
+        24
+      ]
+    },
+    {
+      "key": "uniform4-srit",
+      "name": "Cantellated tesseract",
+      "identityKey": "uniform4-srit",
+      "actualCounts": [
+        96,
+        288,
+        248,
+        56
+      ],
+      "computedCounts": [
+        96,
+        288,
+        248,
+        56
+      ]
+    },
+    {
+      "key": "uniform4-sidpith",
+      "name": "Runcinated tesseract",
+      "identityKey": "uniform4-sidpith",
+      "actualCounts": [
+        64,
+        192,
+        208,
+        80
+      ],
+      "computedCounts": [
+        64,
+        192,
+        208,
+        80
+      ]
+    },
+    {
+      "key": "uniform4-tah",
+      "name": "Bitruncated tesseract",
+      "identityKey": "uniform4-tah",
+      "actualCounts": [
+        96,
+        192,
+        120,
+        24
+      ],
+      "computedCounts": [
+        96,
+        192,
+        120,
+        24
+      ]
+    },
+    {
+      "key": "uniform4-thex",
+      "name": "Truncated 16-cell",
+      "identityKey": "uniform4-thex",
+      "actualCounts": [
+        48,
+        120,
+        96,
+        24
+      ],
+      "computedCounts": [
+        48,
+        120,
+        96,
+        24
+      ]
+    },
+    {
+      "key": "uniform4-grit",
+      "name": "Cantitruncated tesseract",
+      "identityKey": "uniform4-grit",
+      "actualCounts": [
+        192,
+        384,
+        248,
+        56
+      ],
+      "computedCounts": [
+        192,
+        384,
+        248,
+        56
+      ]
+    },
+    {
+      "key": "uniform4-proh",
+      "name": "Runcitruncated tesseract",
+      "identityKey": "uniform4-proh",
+      "actualCounts": [
+        192,
+        480,
+        368,
+        80
+      ],
+      "computedCounts": [
+        192,
+        480,
+        368,
+        80
+      ]
+    },
+    {
+      "key": "uniform4-prit",
+      "name": "Runcitruncated 16-cell",
+      "identityKey": "uniform4-prit",
+      "actualCounts": [
+        192,
+        480,
+        368,
+        80
+      ],
+      "computedCounts": [
+        192,
+        480,
+        368,
+        80
+      ]
+    },
+    {
+      "key": "uniform4-gidpith",
+      "name": "Omnitruncated tesseract",
+      "identityKey": "uniform4-gidpith",
+      "actualCounts": [
+        384,
+        768,
+        464,
+        80
+      ],
+      "computedCounts": [
+        384,
+        768,
+        464,
+        80
+      ]
+    },
+    {
+      "key": "uniform4-rico",
+      "name": "Rectified 24-cell",
+      "identityKey": "uniform4-rico",
+      "actualCounts": [
+        96,
+        288,
+        240,
+        48
+      ],
+      "computedCounts": [
+        96,
+        288,
+        240,
+        48
+      ]
+    },
+    {
+      "key": "uniform4-tico",
+      "name": "Truncated 24-cell",
+      "identityKey": "uniform4-tico",
+      "actualCounts": [
+        192,
+        384,
+        240,
+        48
+      ],
+      "computedCounts": [
+        192,
+        384,
+        240,
+        48
+      ]
+    },
+    {
+      "key": "uniform4-srico",
+      "name": "Cantellated 24-cell",
+      "identityKey": "uniform4-srico",
+      "actualCounts": [
+        288,
+        864,
+        720,
+        144
+      ],
+      "computedCounts": [
+        288,
+        864,
+        720,
+        144
+      ]
+    },
+    {
+      "key": "uniform4-spic",
+      "name": "Runcinated 24-cell",
+      "identityKey": "uniform4-spic",
+      "actualCounts": [
+        144,
+        576,
+        672,
+        240
+      ],
+      "computedCounts": [
+        144,
+        576,
+        672,
+        240
+      ]
+    },
+    {
+      "key": "uniform4-cont",
+      "name": "Bitruncated 24-cell",
+      "identityKey": "uniform4-cont",
+      "actualCounts": [
+        288,
+        576,
+        336,
+        48
+      ],
+      "computedCounts": [
+        288,
+        576,
+        336,
+        48
+      ]
+    },
+    {
+      "key": "uniform4-grico",
+      "name": "Cantitruncated 24-cell",
+      "identityKey": "uniform4-grico",
+      "actualCounts": [
+        576,
+        1152,
+        720,
+        144
+      ],
+      "computedCounts": [
+        576,
+        1152,
+        720,
+        144
+      ]
+    },
+    {
+      "key": "uniform4-prico",
+      "name": "Runcitruncated 24-cell",
+      "identityKey": "uniform4-prico",
+      "actualCounts": [
+        576,
+        1440,
+        1104,
+        240
+      ],
+      "computedCounts": [
+        576,
+        1440,
+        1104,
+        240
+      ]
+    },
+    {
+      "key": "uniform4-gippic",
+      "name": "Omnitruncated 24-cell",
+      "identityKey": "uniform4-gippic",
+      "actualCounts": [
+        1152,
+        2304,
+        1392,
+        240
+      ],
+      "computedCounts": [
+        1152,
+        2304,
+        1392,
+        240
+      ]
+    },
+    {
+      "key": "uniform4-sadi",
+      "name": "Snub 24-cell",
+      "identityKey": "uniform4-sadi",
+      "actualCounts": [
+        96,
+        432,
+        480,
+        144
+      ],
+      "computedCounts": [
+        96,
+        432,
+        480,
+        144
+      ]
+    },
+    {
+      "key": "uniform4-rahi",
+      "name": "Rectified 120-cell",
+      "identityKey": "uniform4-rahi",
+      "actualCounts": [
+        1200,
+        3600,
+        3120,
+        720
+      ],
+      "computedCounts": [
+        1200,
+        3600,
+        3120,
+        720
+      ]
+    },
+    {
+      "key": "uniform4-rox",
+      "name": "Rectified 600-cell",
+      "identityKey": "uniform4-rox",
+      "actualCounts": [
+        720,
+        3600,
+        3600,
+        720
+      ],
+      "computedCounts": [
+        720,
+        3600,
+        3600,
+        720
+      ]
+    },
+    {
+      "key": "uniform4-thi",
+      "name": "Truncated 120-cell",
+      "identityKey": "uniform4-thi",
+      "actualCounts": [
+        2400,
+        4800,
+        3120,
+        720
+      ],
+      "computedCounts": [
+        2400,
+        4800,
+        3120,
+        720
+      ]
+    },
+    {
+      "key": "uniform4-srahi",
+      "name": "Cantellated 120-cell",
+      "identityKey": "uniform4-srahi",
+      "actualCounts": [
+        3600,
+        10800,
+        9120,
+        1920
+      ],
+      "computedCounts": [
+        3600,
+        10800,
+        9120,
+        1920
+      ]
+    },
+    {
+      "key": "uniform4-sidpixhi",
+      "name": "Runcinated 120-cell",
+      "identityKey": "uniform4-sidpixhi",
+      "actualCounts": [
+        2400,
+        7200,
+        7440,
+        2640
+      ],
+      "computedCounts": [
+        2400,
+        7200,
+        7440,
+        2640
+      ]
+    },
+    {
+      "key": "uniform4-xhi",
+      "name": "Bitruncated 120-cell",
+      "identityKey": "uniform4-xhi",
+      "actualCounts": [
+        3600,
+        7200,
+        4320,
+        720
+      ],
+      "computedCounts": [
+        3600,
+        7200,
+        4320,
+        720
+      ]
+    },
+    {
+      "key": "uniform4-srix",
+      "name": "Cantellated 600-cell",
+      "identityKey": "uniform4-srix",
+      "actualCounts": [
+        3600,
+        10800,
+        8640,
+        1440
+      ],
+      "computedCounts": [
+        3600,
+        10800,
+        8640,
+        1440
+      ]
+    },
+    {
+      "key": "uniform4-tex",
+      "name": "Truncated 600-cell",
+      "identityKey": "uniform4-tex",
+      "actualCounts": [
+        1440,
+        4320,
+        3600,
+        720
+      ],
+      "computedCounts": [
+        1440,
+        4320,
+        3600,
+        720
+      ]
+    },
+    {
+      "key": "uniform4-grahi",
+      "name": "Cantitruncated 120-cell",
+      "identityKey": "uniform4-grahi",
+      "actualCounts": [
+        7200,
+        14400,
+        9120,
+        1920
+      ],
+      "computedCounts": [
+        7200,
+        14400,
+        9120,
+        1920
+      ]
+    },
+    {
+      "key": "uniform4-prix",
+      "name": "Runcitruncated 120-cell",
+      "identityKey": "uniform4-prix",
+      "actualCounts": [
+        7200,
+        18000,
+        13440,
+        2640
+      ],
+      "computedCounts": [
+        7200,
+        18000,
+        13440,
+        2640
+      ]
+    },
+    {
+      "key": "uniform4-prahi",
+      "name": "Runcitruncated 600-cell",
+      "identityKey": "uniform4-prahi",
+      "actualCounts": [
+        7200,
+        18000,
+        13440,
+        2640
+      ],
+      "computedCounts": [
+        7200,
+        18000,
+        13440,
+        2640
+      ]
+    },
+    {
+      "key": "uniform4-grix",
+      "name": "Cantitruncated 600-cell",
+      "identityKey": "uniform4-grix",
+      "actualCounts": [
+        7200,
+        14400,
+        8640,
+        1440
+      ],
+      "computedCounts": [
+        7200,
+        14400,
+        8640,
+        1440
+      ]
+    },
+    {
+      "key": "uniform4-gidpixhi",
+      "name": "Omnitruncated 120-cell",
+      "identityKey": "uniform4-gidpixhi",
+      "actualCounts": [
+        14400,
+        28800,
+        17040,
+        2640
+      ],
+      "computedCounts": [
+        14400,
+        28800,
+        17040,
+        2640
+      ]
+    },
+    {
+      "key": "uniform4-gap",
+      "name": "Grand antiprism",
+      "identityKey": "uniform4-gap",
+      "actualCounts": [
+        100,
+        500,
+        720,
+        320
+      ],
+      "computedCounts": [
+        100,
+        500,
+        720,
+        320
+      ]
+    },
+    {
+      "key": "uniform4-prism-tetrahedron",
+      "name": "Tetrahedron prism",
+      "identityKey": "uniform4-prism-tetrahedron",
+      "actualCounts": [
+        8,
+        16,
+        14,
+        6
+      ],
+      "computedCounts": [
+        8,
+        16,
+        14,
+        6
+      ]
+    },
+    {
+      "key": "uniform4-prism-truncated-tetrahedron",
+      "name": "Truncated tetrahedron prism",
+      "identityKey": "uniform4-prism-truncated-tetrahedron",
+      "actualCounts": [
+        24,
+        48,
+        34,
+        10
+      ],
+      "computedCounts": [
+        24,
+        48,
+        34,
+        10
+      ]
+    },
+    {
+      "key": "uniform4-prism-cuboctahedron",
+      "name": "Cuboctahedron prism",
+      "identityKey": "uniform4-prism-cuboctahedron",
+      "actualCounts": [
+        24,
+        60,
+        52,
+        16
+      ],
+      "computedCounts": [
+        24,
+        60,
+        52,
+        16
+      ]
+    },
+    {
+      "key": "uniform4-prism-octahedron",
+      "name": "Octahedron prism",
+      "identityKey": "uniform4-prism-octahedron",
+      "actualCounts": [
+        12,
+        30,
+        28,
+        10
+      ],
+      "computedCounts": [
+        12,
+        30,
+        28,
+        10
+      ]
+    },
+    {
+      "key": "uniform4-prism-rhombicuboctahedron",
+      "name": "Rhombicuboctahedron prism",
+      "identityKey": "uniform4-prism-rhombicuboctahedron",
+      "actualCounts": [
+        48,
+        120,
+        100,
+        28
+      ],
+      "computedCounts": [
+        48,
+        120,
+        100,
+        28
+      ]
+    },
+    {
+      "key": "uniform4-prism-truncated-cube",
+      "name": "Truncated cube prism",
+      "identityKey": "uniform4-prism-truncated-cube",
+      "actualCounts": [
+        48,
+        96,
+        64,
+        16
+      ],
+      "computedCounts": [
+        48,
+        96,
+        64,
+        16
+      ]
+    },
+    {
+      "key": "uniform4-prism-truncated-octahedron",
+      "name": "Truncated octahedron prism",
+      "identityKey": "uniform4-prism-truncated-octahedron",
+      "actualCounts": [
+        48,
+        96,
+        64,
+        16
+      ],
+      "computedCounts": [
+        48,
+        96,
+        64,
+        16
+      ]
+    },
+    {
+      "key": "uniform4-prism-truncated-cuboctahedron",
+      "name": "Truncated cuboctahedron prism",
+      "identityKey": "uniform4-prism-truncated-cuboctahedron",
+      "actualCounts": [
+        96,
+        192,
+        124,
+        28
+      ],
+      "computedCounts": [
+        96,
+        192,
+        124,
+        28
+      ]
+    },
+    {
+      "key": "uniform4-prism-snub-cube",
+      "name": "Snub cube prism",
+      "identityKey": "uniform4-prism-snub-cube",
+      "actualCounts": [
+        48,
+        144,
+        136,
+        40
+      ],
+      "computedCounts": [
+        48,
+        144,
+        136,
+        40
+      ]
+    },
+    {
+      "key": "uniform4-prism-dodecahedron",
+      "name": "Dodecahedron prism",
+      "identityKey": "uniform4-prism-dodecahedron",
+      "actualCounts": [
+        40,
+        80,
+        54,
+        14
+      ],
+      "computedCounts": [
+        40,
+        80,
+        54,
+        14
+      ]
+    },
+    {
+      "key": "uniform4-prism-icosidodecahedron",
+      "name": "Icosidodecahedron prism",
+      "identityKey": "uniform4-prism-icosidodecahedron",
+      "actualCounts": [
+        60,
+        150,
+        124,
+        34
+      ],
+      "computedCounts": [
+        60,
+        150,
+        124,
+        34
+      ]
+    },
+    {
+      "key": "uniform4-prism-icosahedron",
+      "name": "Icosahedron prism",
+      "identityKey": "uniform4-prism-icosahedron",
+      "actualCounts": [
+        24,
+        72,
+        70,
+        22
+      ],
+      "computedCounts": [
+        24,
+        72,
+        70,
+        22
+      ]
+    },
+    {
+      "key": "uniform4-prism-truncated-dodecahedron",
+      "name": "Truncated dodecahedron prism",
+      "identityKey": "uniform4-prism-truncated-dodecahedron",
+      "actualCounts": [
+        120,
+        240,
+        154,
+        34
+      ],
+      "computedCounts": [
+        120,
+        240,
+        154,
+        34
+      ]
+    },
+    {
+      "key": "uniform4-prism-rhombicosidodecahedron",
+      "name": "Rhombicosidodecahedron prism",
+      "identityKey": "uniform4-prism-rhombicosidodecahedron",
+      "actualCounts": [
+        120,
+        300,
+        244,
+        64
+      ],
+      "computedCounts": [
+        120,
+        300,
+        244,
+        64
+      ]
+    },
+    {
+      "key": "uniform4-prism-truncated-icosahedron",
+      "name": "Truncated icosahedron prism",
+      "identityKey": "uniform4-prism-truncated-icosahedron",
+      "actualCounts": [
+        120,
+        240,
+        154,
+        34
+      ],
+      "computedCounts": [
+        120,
+        240,
+        154,
+        34
+      ]
+    },
+    {
+      "key": "uniform4-prism-truncated-icosidodecahedron",
+      "name": "Truncated icosidodecahedron prism",
+      "identityKey": "uniform4-prism-truncated-icosidodecahedron",
+      "actualCounts": [
+        240,
+        480,
+        304,
+        64
+      ],
+      "computedCounts": [
+        240,
+        480,
+        304,
+        64
+      ]
+    },
+    {
+      "key": "uniform4-prism-snub-dodecahedron",
+      "name": "Snub dodecahedron prism",
+      "identityKey": "uniform4-prism-snub-dodecahedron",
+      "actualCounts": [
+        120,
+        360,
+        334,
+        94
+      ],
+      "computedCounts": [
+        120,
+        360,
+        334,
+        94
+      ]
+    },
+    {
+      "key": "uniform4-prism-cube",
+      "name": "Cube prism",
+      "identityKey": "uniform4-prism-cube",
+      "actualCounts": [
+        16,
+        32,
+        24,
+        8
+      ],
+      "computedCounts": [
+        16,
+        32,
+        24,
+        8
+      ]
+    },
+    {
+      "key": "uniform-prism-3",
+      "name": "3-gonal uniform prism",
+      "identityKey": "uniform-prism-3",
+      "actualCounts": [
+        6,
+        9,
+        5,
+        0
+      ],
+      "computedCounts": [
+        6,
+        9,
+        5,
+        0
+      ]
+    },
+    {
+      "key": "uniform-prism-4",
+      "name": "4-gonal uniform prism",
+      "identityKey": "uniform-prism-4",
+      "actualCounts": [
+        8,
+        12,
+        6,
+        0
+      ],
+      "computedCounts": [
+        8,
+        12,
+        6,
+        0
+      ]
+    },
+    {
+      "key": "uniform-prism-5",
+      "name": "5-gonal uniform prism",
+      "identityKey": "uniform-prism-5",
+      "actualCounts": [
+        10,
+        15,
+        7,
+        0
+      ],
+      "computedCounts": [
+        10,
+        15,
+        7,
+        0
+      ]
+    },
+    {
+      "key": "uniform-prism-6",
+      "name": "6-gonal uniform prism",
+      "identityKey": "uniform-prism-6",
+      "actualCounts": [
+        12,
+        18,
+        8,
+        0
+      ],
+      "computedCounts": [
+        12,
+        18,
+        8,
+        0
+      ]
+    },
+    {
+      "key": "uniform-prism-7",
+      "name": "7-gonal uniform prism",
+      "identityKey": "uniform-prism-7",
+      "actualCounts": [
+        14,
+        21,
+        9,
+        0
+      ],
+      "computedCounts": [
+        14,
+        21,
+        9,
+        0
+      ]
+    },
+    {
+      "key": "uniform-prism-8",
+      "name": "8-gonal uniform prism",
+      "identityKey": "uniform-prism-8",
+      "actualCounts": [
+        16,
+        24,
+        10,
+        0
+      ],
+      "computedCounts": [
+        16,
+        24,
+        10,
+        0
+      ]
+    },
+    {
+      "key": "uniform-prism-9",
+      "name": "9-gonal uniform prism",
+      "identityKey": "uniform-prism-9",
+      "actualCounts": [
+        18,
+        27,
+        11,
+        0
+      ],
+      "computedCounts": [
+        18,
+        27,
+        11,
+        0
+      ]
+    },
+    {
+      "key": "uniform-prism-10",
+      "name": "10-gonal uniform prism",
+      "identityKey": "uniform-prism-10",
+      "actualCounts": [
+        20,
+        30,
+        12,
+        0
+      ],
+      "computedCounts": [
+        20,
+        30,
+        12,
+        0
+      ]
+    },
+    {
+      "key": "uniform-prism-11",
+      "name": "11-gonal uniform prism",
+      "identityKey": "uniform-prism-11",
+      "actualCounts": [
+        22,
+        33,
+        13,
+        0
+      ],
+      "computedCounts": [
+        22,
+        33,
+        13,
+        0
+      ]
+    },
+    {
+      "key": "uniform-prism-12",
+      "name": "12-gonal uniform prism",
+      "identityKey": "uniform-prism-12",
+      "actualCounts": [
+        24,
+        36,
+        14,
+        0
+      ],
+      "computedCounts": [
+        24,
+        36,
+        14,
+        0
+      ]
+    },
+    {
+      "key": "uniform-antiprism-3",
+      "name": "3-gonal uniform antiprism",
+      "identityKey": "uniform-antiprism-3",
+      "actualCounts": [
+        6,
+        12,
+        8,
+        0
+      ],
+      "computedCounts": [
+        6,
+        12,
+        8,
+        0
+      ]
+    },
+    {
+      "key": "uniform-antiprism-4",
+      "name": "4-gonal uniform antiprism",
+      "identityKey": "uniform-antiprism-4",
+      "actualCounts": [
+        8,
+        16,
+        10,
+        0
+      ],
+      "computedCounts": [
+        8,
+        16,
+        10,
+        0
+      ]
+    },
+    {
+      "key": "uniform-antiprism-5",
+      "name": "5-gonal uniform antiprism",
+      "identityKey": "uniform-antiprism-5",
+      "actualCounts": [
+        10,
+        20,
+        12,
+        0
+      ],
+      "computedCounts": [
+        10,
+        20,
+        12,
+        0
+      ]
+    },
+    {
+      "key": "uniform-antiprism-6",
+      "name": "6-gonal uniform antiprism",
+      "identityKey": "uniform-antiprism-6",
+      "actualCounts": [
+        12,
+        24,
+        14,
+        0
+      ],
+      "computedCounts": [
+        12,
+        24,
+        14,
+        0
+      ]
+    },
+    {
+      "key": "uniform-antiprism-7",
+      "name": "7-gonal uniform antiprism",
+      "identityKey": "uniform-antiprism-7",
+      "actualCounts": [
+        14,
+        28,
+        16,
+        0
+      ],
+      "computedCounts": [
+        14,
+        28,
+        16,
+        0
+      ]
+    },
+    {
+      "key": "uniform-antiprism-8",
+      "name": "8-gonal uniform antiprism",
+      "identityKey": "uniform-antiprism-8",
+      "actualCounts": [
+        16,
+        32,
+        18,
+        0
+      ],
+      "computedCounts": [
+        16,
+        32,
+        18,
+        0
+      ]
+    },
+    {
+      "key": "uniform-antiprism-9",
+      "name": "9-gonal uniform antiprism",
+      "identityKey": "uniform-antiprism-9",
+      "actualCounts": [
+        18,
+        36,
+        20,
+        0
+      ],
+      "computedCounts": [
+        18,
+        36,
+        20,
+        0
+      ]
+    },
+    {
+      "key": "uniform-antiprism-10",
+      "name": "10-gonal uniform antiprism",
+      "identityKey": "uniform-antiprism-10",
+      "actualCounts": [
+        20,
+        40,
+        22,
+        0
+      ],
+      "computedCounts": [
+        20,
+        40,
+        22,
+        0
+      ]
+    },
+    {
+      "key": "uniform-antiprism-11",
+      "name": "11-gonal uniform antiprism",
+      "identityKey": "uniform-antiprism-11",
+      "actualCounts": [
+        22,
+        44,
+        24,
+        0
+      ],
+      "computedCounts": [
+        22,
+        44,
+        24,
+        0
+      ]
+    },
+    {
+      "key": "uniform-antiprism-12",
+      "name": "12-gonal uniform antiprism",
+      "identityKey": "uniform-antiprism-12",
+      "actualCounts": [
+        24,
+        48,
+        26,
+        0
+      ],
+      "computedCounts": [
+        24,
+        48,
+        26,
+        0
+      ]
+    },
+    {
+      "key": "star-uniform4-gogishi",
+      "name": "great grand stellated hecatonicosachoron",
+      "identityKey": "miratope-great-grand-stellated-hecatonicosachoron",
+      "actualCounts": [
+        600,
+        1200,
+        720,
+        120
+      ],
+      "computedCounts": [
+        600,
+        1200,
+        720,
+        120
+      ]
+    },
+    {
+      "key": "star-uniform4-fix",
+      "name": "icosahedral hecatonicosachoron",
+      "identityKey": "miratope-icosahedral-hecatonicosachoron",
+      "actualCounts": [
+        120,
+        720,
+        1200,
+        120
+      ],
+      "computedCounts": [
+        120,
+        720,
+        1200,
+        120
+      ]
+    },
+    {
+      "key": "star-uniform4-gofix",
+      "name": "great icosahedral hecatonicosachoron",
+      "identityKey": "miratope-great-icosahedral-hecatonicosachoron",
+      "actualCounts": [
+        120,
+        720,
+        1200,
+        120
+      ],
+      "computedCounts": [
+        120,
+        720,
+        1200,
+        120
+      ]
+    },
+    {
+      "key": "star-uniform4-gaghi",
+      "name": "great grand hecatonicosachoron",
+      "identityKey": "miratope-great-grand-hecatonicosachoron",
+      "actualCounts": [
+        120,
+        1200,
+        720,
+        120
+      ],
+      "computedCounts": [
+        120,
+        1200,
+        720,
+        120
+      ]
+    },
+    {
+      "key": "star-uniform4-gahi",
+      "name": "grand hecatonicosachoron",
+      "identityKey": "miratope-grand-hecatonicosachoron",
+      "actualCounts": [
+        120,
+        720,
+        720,
+        120
+      ],
+      "computedCounts": [
+        120,
+        720,
+        720,
+        120
+      ]
+    },
+    {
+      "key": "star-uniform4-gishi",
+      "name": "great stellated hecatonicosachoron",
+      "identityKey": "miratope-great-stellated-hecatonicosachoron",
+      "actualCounts": [
+        120,
+        720,
+        720,
+        120
+      ],
+      "computedCounts": [
+        120,
+        720,
+        720,
+        120
+      ]
+    },
+    {
+      "key": "star-uniform4-gohi",
+      "name": "great hecatonicosachoron",
+      "identityKey": "miratope-great-hecatonicosachoron",
+      "actualCounts": [
+        120,
+        720,
+        720,
+        120
+      ],
+      "computedCounts": [
+        120,
+        720,
+        720,
+        120
+      ]
+    },
+    {
+      "key": "star-uniform4-gashi",
+      "name": "grand stellated hecatonicosachoron",
+      "identityKey": "miratope-grand-stellated-hecatonicosachoron",
+      "actualCounts": [
+        120,
+        720,
+        720,
+        120
+      ],
+      "computedCounts": [
+        120,
+        720,
+        720,
+        120
+      ]
+    }
+  ]
+}

@@ -1,12 +1,14 @@
 """Rebuild the native convex manifest from retained published count facts."""
+
 import json
 from pathlib import Path
 import sys
-sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from engine.generators import CATALOG
 
 # Olshevsky ordering; V/E/F/C transcribed independently of the native generator.
-ROWS='''
+ROWS = '''
 1 A4 1000 pen 5-cell 5 10 10 5
 2 A4 0100 rap Rectified_5-cell 10 30 30 10
 3 A4 1100 tip Truncated_5-cell 20 40 30 10
@@ -56,23 +58,49 @@ ROWS='''
 47 - - gap Grand_antiprism 100 500 720 320
 '''
 
+
 def build():
-    old={1:'simplex4',10:'tesseract',12:'cross4',22:'cell24',32:'cell120',35:'cell600'}
-    entries=[]
+    old = {1: 'simplex4', 10: 'tesseract', 12: 'cross4', 22: 'cell24', 32: 'cell120', 35: 'cell600'}
+    entries = []
     for row in ROWS.strip().splitlines():
-        index,family,mask,acronym,name,*counts=row.split();index=int(index);rings=list(map(int,mask)) if mask!='-' else None
-        diagram={'A4':'3,3,3','B4':'4,3,3','F4':'3,4,3','H4':'5,3,3'}.get(family)
-        notation=''.join(('x' if ring else 'o')+(diagram.split(',')[i] if i<3 else '') for i,ring in enumerate(rings)) if rings else 's{3,4,3}' if index==31 else 'Non-Wythoffian (no ring diagram)'
-        entry={'key':old.get(index,'uniform4-'+acronym),'name':name.replace('_',' '),'dimension':4,
-            'family':'Convex uniform 4D','uniformIndex':index,'bowers':acronym,'counts':list(map(int,counts)),
-            'aliases':[acronym,'O'+str(index)],'symbol':notation,'coxeterDiagram':notation,
-            'convex':True,'uniform':True,'vertexTransitive':True,'regular':index in old,'chiral':False,
-            'classificationVerified':True,'numericContract':'Native float64 construction; no exact certificate'}
-        if rings:entry.update(coxeterFamily=family,rings=rings,symmetryGroup='['+diagram+']')
-        elif index==31:entry['symmetryGroup']='[3+,4,3]'
-        else:entry['symmetryGroup']='[[10,2+,10]]'
+        index, family, mask, acronym, name, *counts = row.split()
+        index = int(index)
+        rings = list(map(int, mask)) if mask != '-' else None
+        diagram = {'A4': '3,3,3', 'B4': '4,3,3', 'F4': '3,4,3', 'H4': '5,3,3'}.get(family)
+        notation = (
+            ''.join(('x' if ring else 'o') + (diagram.split(',')[i] if i < 3 else '') for i, ring in enumerate(rings))
+            if rings
+            else 's{3,4,3}'
+            if index == 31
+            else 'Non-Wythoffian (no ring diagram)'
+        )
+        entry = {
+            'key': old.get(index, 'uniform4-' + acronym),
+            'name': name.replace('_', ' '),
+            'dimension': 4,
+            'family': 'Convex uniform 4D',
+            'uniformIndex': index,
+            'bowers': acronym,
+            'counts': list(map(int, counts)),
+            'aliases': [acronym, 'O' + str(index)],
+            'symbol': notation,
+            'coxeterDiagram': notation,
+            'convex': True,
+            'uniform': True,
+            'vertexTransitive': True,
+            'regular': index in old,
+            'chiral': False,
+            'classificationVerified': True,
+            'numericContract': 'Native float64 construction; no exact certificate',
+        }
+        if rings:
+            entry.update(coxeterFamily=family, rings=rings, symmetryGroup='[' + diagram + ']')
+        elif index == 31:
+            entry['symmetryGroup'] = '[3+,4,3]'
+        else:
+            entry['symmetryGroup'] = '[[10,2+,10]]'
         entries.append(entry)
-    prisms='''
+    prisms = '''
 48 tepe tetrahedron 8 16 14 6
 49 tuttip truncated-tetrahedron 24 48 34 10
 50 cope cuboctahedron 24 60 52 16
@@ -93,40 +121,87 @@ def build():
 10 tes cube 16 32 24 8
 '''
     for row in prisms.strip().splitlines():
-        index,acronym,base,*counts=row.split();source=next(r for r in CATALOG if r['key']==base)
-        group='[3,3,2]' if 'tetrahedron' in base else '[5,3,2]' if any(s in base for s in ('dodeca','icosa')) else '[4,3,2]'
-        mask={'tetrahedron':'100','truncated-tetrahedron':'110','cube':'100','octahedron':'001',
-            'cuboctahedron':'010','truncated-cube':'110','truncated-octahedron':'011',
-            'rhombicuboctahedron':'101','truncated-cuboctahedron':'111','dodecahedron':'100',
-            'icosahedron':'001','icosidodecahedron':'010','truncated-dodecahedron':'110',
-            'truncated-icosahedron':'011','rhombicosidodecahedron':'101','truncated-icosidodecahedron':'111'}.get(base)
-        diagram=group[1:-1].split(',')
-        notation=''.join(('x' if ring=='1' else 'o')+(diagram[i] if i<3 else '') for i,ring in enumerate(mask+'1')) if mask else ('s{4,3}' if base=='snub-cube' else 's{5,3}')+' × { }'
-        entries.append({'key':'uniform4-prism-'+base,'name':base.replace('-',' ').capitalize()+' prism',
-            'dimension':4,'family':'Convex uniform polyhedral prisms','baseKey':base,'uniformIndex':int(index),
-            'bowers':acronym,'aliases':[acronym,'O'+index,source['name']+' × interval'],
-            'counts':list(map(int,counts)),'symbol':(source.get('symbol') or base)+' × { }',
-            'coxeterDiagram':notation,
-            'symmetryGroup':group,'convex':True,'uniform':True,'regular':base=='cube',
-            'vertexTransitive':True,'chiral':False,'classificationVerified':True,
-            'numericContract':'Native equal-edge polyhedron × interval; float64, no exact certificate'})
-        if source.get('chiral'):entries[-1]['symmetryGroup']=('O' if base=='snub-cube' else 'I')+' × A1'
+        index, acronym, base, *counts = row.split()
+        source = next(r for r in CATALOG if r['key'] == base)
+        group = (
+            '[3,3,2]'
+            if 'tetrahedron' in base
+            else '[5,3,2]'
+            if any(s in base for s in ('dodeca', 'icosa'))
+            else '[4,3,2]'
+        )
+        mask = {
+            'tetrahedron': '100',
+            'truncated-tetrahedron': '110',
+            'cube': '100',
+            'octahedron': '001',
+            'cuboctahedron': '010',
+            'truncated-cube': '110',
+            'truncated-octahedron': '011',
+            'rhombicuboctahedron': '101',
+            'truncated-cuboctahedron': '111',
+            'dodecahedron': '100',
+            'icosahedron': '001',
+            'icosidodecahedron': '010',
+            'truncated-dodecahedron': '110',
+            'truncated-icosahedron': '011',
+            'rhombicosidodecahedron': '101',
+            'truncated-icosidodecahedron': '111',
+        }.get(base)
+        diagram = group[1:-1].split(',')
+        notation = (
+            ''.join(('x' if ring == '1' else 'o') + (diagram[i] if i < 3 else '') for i, ring in enumerate(mask + '1'))
+            if mask
+            else ('s{4,3}' if base == 'snub-cube' else 's{5,3}') + ' × { }'
+        )
+        entries.append(
+            {
+                'key': 'uniform4-prism-' + base,
+                'name': base.replace('-', ' ').capitalize() + ' prism',
+                'dimension': 4,
+                'family': 'Convex uniform polyhedral prisms',
+                'baseKey': base,
+                'uniformIndex': int(index),
+                'bowers': acronym,
+                'aliases': [acronym, 'O' + index, source['name'] + ' × interval'],
+                'counts': list(map(int, counts)),
+                'symbol': (source.get('symbol') or base) + ' × { }',
+                'coxeterDiagram': notation,
+                'symmetryGroup': group,
+                'convex': True,
+                'uniform': True,
+                'regular': base == 'cube',
+                'vertexTransitive': True,
+                'chiral': False,
+                'classificationVerified': True,
+                'numericContract': 'Native equal-edge polyhedron × interval; float64, no exact certificate',
+            }
+        )
+        if source.get('chiral'):
+            entries[-1]['symmetryGroup'] = ('O' if base == 'snub-cube' else 'I') + ' × A1'
     return entries
 
-if __name__=='__main__':
-    path=Path('engine/catalog_data/convex_uniform4.json')
-    data={'schemaVersion':1,'countSource':'https://en.wikipedia.org/wiki/Uniform_4-polytope',
-        'indexConvention':'Olshevsky convex uniform indices O1–O64; U numbers are reserved for polyhedra.',
-        'entries':build()}
-    path.write_text(json.dumps(data,indent=2)+'\n',encoding='utf-8')
-    from engine.uniform4 import load_uniform4,manifest
+
+if __name__ == '__main__':
+    path = Path('engine/catalog_data/convex_uniform4.json')
+    data = {
+        'schemaVersion': 1,
+        'countSource': 'https://en.wikipedia.org/wiki/Uniform_4-polytope',
+        'indexConvention': 'Olshevsky convex uniform indices O1–O64; U numbers are reserved for polyhedra.',
+        'entries': build(),
+    }
+    path.write_text(json.dumps(data, indent=2) + '\n', encoding='utf-8')
+    from engine.uniform4 import load_uniform4, manifest
     from engine.generators import regular
     from engine.library_navigation import cell_inventory
+
     manifest.cache_clear()
     for entry in data['entries']:
-        model=load_uniform4(entry['key']) if entry['key'].startswith('uniform4-') else regular(entry['key'])
-        assert [len(model[k]) for k in ('vertices','edges','faces','cells')]==entry['counts'],entry['key']
-        entry['cellTypes']=cell_inventory(model)
-        assert all(c['key']!='unresolved' for c in entry['cellTypes']),entry
-        entry['cellTypeBasis']='Native cell boundary signature (V/E/F and polygon multiplicities), convex uniform cell domain.'
-    path.write_text(json.dumps(data,indent=2)+'\n',encoding='utf-8')
+        model = load_uniform4(entry['key']) if entry['key'].startswith('uniform4-') else regular(entry['key'])
+        assert [len(model[k]) for k in ('vertices', 'edges', 'faces', 'cells')] == entry['counts'], entry['key']
+        entry['cellTypes'] = cell_inventory(model)
+        assert all(c['key'] != 'unresolved' for c in entry['cellTypes']), entry
+        entry['cellTypeBasis'] = (
+            'Native cell boundary signature (V/E/F and polygon multiplicities), convex uniform cell domain.'
+        )
+    path.write_text(json.dumps(data, indent=2) + '\n', encoding='utf-8')

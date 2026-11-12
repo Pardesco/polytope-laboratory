@@ -1,0 +1,1803 @@
+{
+  "schema_version": 1,
+  "scenarios": [
+    {
+      "id": "con-05-cut-transitions",
+      "requirement_id": "CON-05",
+      "option": "cut-transitions",
+      "title": "Truncate/rectify transitions",
+      "domain_id": "modifications",
+      "input": {
+        "description": "Cube/tesseract and qualified star boundary",
+        "parameters": {
+          "presets": [
+            "manual",
+            "rectify"
+          ],
+          "amounts": "zero, interior, critical endpoint, attempted extrapolation"
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "CON-05",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "modifications",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "installed54-manual",
+            "locator": "#menu4D",
+            "role": "documented-options"
+          }
+        ],
+        "checks": [
+          "Retain endpoint topology and recipe inputs",
+          "Unsupported extrapolation refuses atomically"
+        ],
+        "basis": "documented-or-local-contract"
+      },
+      "implementation": "restricted",
+      "fixtures": [
+        {
+          "path": "tests/test_incidence_truncation.py",
+          "selector": null,
+          "role": "direct",
+          "evidence": "existing-suite-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "truncate",
+          "preview-incidence-cut",
+          "make-expansion"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R6-CONSTRUCTIONS",
+        "priority": "P2",
+        "unverified": "Bounded native coverage exists; benchmark option behavior and shipped UI are unverified.",
+        "next_action": "Tabulate independent incidence per adapter at zero/interior/rectify and just outside its supported range; compare preview/adopt/replay."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3,
+          4
+        ],
+        "supported_source_dimensions": [
+          3,
+          4
+        ],
+        "support_note": "Supported only under referenced domain qualifications.",
+        "object_class": "Cube/tesseract and qualified star boundary"
+      }
+    },
+    {
+      "id": "con-05-expand-3d",
+      "requirement_id": "CON-05",
+      "option": "expand-3d",
+      "title": "3D expansion/runcination",
+      "domain_id": "modifications",
+      "input": {
+        "description": "Cube",
+        "parameters": {
+          "ratio": [
+            0,
+            0.5,
+            1
+          ],
+          "center": "origin",
+          "color_policy": "source"
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "CON-05",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "modifications",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "spec",
+            "locator": "3D expansion/runcination",
+            "role": "requirement-scope"
+          }
+        ],
+        "checks": [
+          "Original/dual strata follow declared flag/endpoint construction",
+          "Preserve source owners and report degeneracy"
+        ],
+        "basis": "documented-or-local-contract"
+      },
+      "implementation": "restricted",
+      "fixtures": [
+        {
+          "path": "tests/test_static_expansion.py",
+          "selector": null,
+          "role": "direct",
+          "evidence": "existing-suite-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "truncate",
+          "preview-incidence-cut",
+          "make-expansion"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R6-CONSTRUCTIONS",
+        "priority": "P2",
+        "unverified": "Bounded native coverage exists; benchmark option behavior and shipped UI are unverified.",
+        "next_action": "Build independent face/cell tables at endpoints/middle, shifted center and colored source; isolate truly failing domain before extending."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3
+        ],
+        "supported_source_dimensions": [
+          3
+        ],
+        "support_note": "Supported only under referenced domain qualifications.",
+        "object_class": "Cube"
+      }
+    },
+    {
+      "id": "con-05-expand-4d",
+      "requirement_id": "CON-05",
+      "option": "expand-4d",
+      "title": "4D expansion/runcination",
+      "domain_id": "modifications",
+      "input": {
+        "description": "Tesseract",
+        "parameters": {
+          "ratio": [
+            0,
+            0.5,
+            1
+          ],
+          "center": "origin",
+          "color_policy": "source"
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "CON-05",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "modifications",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "installed54-manual",
+            "locator": "#menu4D",
+            "role": "documented-options"
+          }
+        ],
+        "checks": [
+          "Original/dual strata follow declared flag/endpoint construction",
+          "Preserve source owners and report degeneracy"
+        ],
+        "basis": "documented-or-local-contract"
+      },
+      "implementation": "restricted",
+      "fixtures": [
+        {
+          "path": "tests/test_static_expansion4d.py",
+          "selector": null,
+          "role": "direct",
+          "evidence": "existing-suite-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "truncate",
+          "preview-incidence-cut",
+          "make-expansion"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R6-CONSTRUCTIONS",
+        "priority": "P2",
+        "unverified": "Bounded native coverage exists; benchmark option behavior and shipped UI are unverified.",
+        "next_action": "Build independent face/cell tables at endpoints/middle, shifted center and colored source; isolate truly failing domain before extending."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          4
+        ],
+        "supported_source_dimensions": [
+          4
+        ],
+        "support_note": "Supported only under referenced domain qualifications.",
+        "object_class": "Tesseract"
+      }
+    },
+    {
+      "id": "con-06-reflection-chirality",
+      "requirement_id": "CON-06",
+      "option": "reflection-chirality",
+      "title": "Source mirror and chirality",
+      "domain_id": "modifications",
+      "input": {
+        "description": "Snub cube and its reflected variant",
+        "parameters": {
+          "reflection_axis": "X"
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "CON-06",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "modifications",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "installed54-manual",
+            "locator": "#features4D",
+            "role": "documented-options"
+          },
+          {
+            "source_id": "independent-fixtures",
+            "locator": "Source mirror and chirality",
+            "role": "expectation-oracle"
+          }
+        ],
+        "checks": [
+          "Change chirality while preserving cycles/components",
+          "Keep source attributes through history"
+        ],
+        "basis": "independent-invariant"
+      },
+      "implementation": "supported",
+      "fixtures": [
+        {
+          "path": "tests/test_uniform_snub_variants.py",
+          "selector": null,
+          "role": "direct",
+          "evidence": "existing-suite-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "add-dual",
+          "blending-controls",
+          "compound-extract"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R6-CONSTRUCTIONS",
+        "priority": "P2",
+        "unverified": "Bounded native coverage exists; benchmark option behavior and shipped UI are unverified.",
+        "next_action": "Run the named fixture, then reproduce source mirror and chirality through the listed UI; retain source, parameters, residuals, incidence and versioned comparison evidence."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3
+        ],
+        "supported_source_dimensions": [
+          3
+        ],
+        "support_note": "Supported only under referenced domain qualifications.",
+        "object_class": "Snub cube and its reflected variant"
+      }
+    },
+    {
+      "id": "con-06-pseudo-uniform",
+      "requirement_id": "CON-06",
+      "option": "pseudo-uniform",
+      "title": "Pseudo-uniform mode contracts",
+      "domain_id": "modifications",
+      "input": {
+        "description": "Eligible compound and unequal-edge counterexample",
+        "parameters": {
+          "mode": "native candidate search"
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "CON-06",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "modifications",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "installed54-manual",
+            "locator": "#memories",
+            "role": "documented-options"
+          }
+        ],
+        "checks": [
+          "Separate numerical candidate/residual from verified uniformity",
+          "Preserve component identity"
+        ],
+        "basis": "documented-or-local-contract"
+      },
+      "implementation": "unverified",
+      "fixtures": [
+        {
+          "path": "tests/blending-controls.test.mjs",
+          "selector": null,
+          "role": "related-not-oracle",
+          "evidence": "existing-suite-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "add-dual",
+          "blending-controls",
+          "compound-extract"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R6-CONSTRUCTIONS",
+        "priority": "P1",
+        "unverified": "Baseline mode names, defaults and eligible composition breadth are unqualified.",
+        "next_action": "Freeze one mode definition and literal component fixture; attach independent native metric/topology evidence."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3
+        ],
+        "supported_source_dimensions": [],
+        "support_note": "No supported-domain claim for this requested case; see implementation status and follow-up.",
+        "object_class": "Eligible compound and unequal-edge counterexample"
+      }
+    },
+    {
+      "id": "con-06-add-dual-scale",
+      "requirement_id": "CON-06",
+      "option": "add-dual-scale",
+      "title": "Add dual at chosen relative size",
+      "domain_id": "modifications",
+      "input": {
+        "description": "Cube plus octahedral dual",
+        "parameters": {
+          "radius": "explicit",
+          "blend": false
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "CON-06",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "modifications",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "installed54-manual",
+            "locator": "#dual",
+            "role": "documented-options"
+          },
+          {
+            "source_id": "installed54-manual",
+            "locator": "#addMem",
+            "role": "documented-options"
+          }
+        ],
+        "checks": [
+          "Retain two literal components and chosen size",
+          "Overlay differs from merged outer shell"
+        ],
+        "basis": "documented-or-local-contract"
+      },
+      "implementation": "supported",
+      "fixtures": [
+        {
+          "path": "tests/add-dual-controls.test.mjs",
+          "selector": null,
+          "role": "direct",
+          "evidence": "existing-suite-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "add-dual",
+          "blending-controls",
+          "compound-extract"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R6-CONSTRUCTIONS",
+        "priority": "P2",
+        "unverified": "Bounded native coverage exists; benchmark option behavior and shipped UI are unverified.",
+        "next_action": "Add independent radius/component-ID checks for equal-edge/user size; coordinate memory relative scale with R6-MEMORIES."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3
+        ],
+        "supported_source_dimensions": [
+          3
+        ],
+        "support_note": "Supported only under referenced domain qualifications.",
+        "object_class": "Cube plus octahedral dual"
+      }
+    },
+    {
+      "id": "con-06-compound-parts",
+      "requirement_id": "CON-06",
+      "option": "compound-parts",
+      "title": "Keep/delete nested compound leaf",
+      "domain_id": "modifications",
+      "input": {
+        "description": "Three nested 3D/4D components, including coincident copies",
+        "parameters": {
+          "actions": [
+            "keep",
+            "delete"
+          ],
+          "owner": "current leaf ID"
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "CON-06",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "modifications",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "installed54-manual",
+            "locator": "#features4D",
+            "role": "documented-options"
+          },
+          {
+            "source_id": "independent-fixtures",
+            "locator": "test_nested_middle_leaf_removal_retains_both_other_current_leaf_maps",
+            "role": "expectation-oracle"
+          }
+        ],
+        "checks": [
+          "Remove only selected leaf",
+          "Keep remaining source maps",
+          "Do not weld coincident components"
+        ],
+        "basis": "independent-invariant"
+      },
+      "implementation": "supported",
+      "fixtures": [
+        {
+          "path": "tests/test_remove_component.py",
+          "selector": "test_nested_middle_leaf_removal_retains_both_other_current_leaf_maps",
+          "role": "direct",
+          "evidence": "existing-test-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "add-dual",
+          "blending-controls",
+          "compound-extract"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R6-CONSTRUCTIONS",
+        "priority": "P2",
+        "unverified": "Bounded native coverage exists; benchmark option behavior and shipped UI are unverified.",
+        "next_action": "Run the named fixture, then reproduce keep/delete nested compound leaf through the listed UI; retain source, parameters, residuals, incidence and versioned comparison evidence."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3,
+          4
+        ],
+        "supported_source_dimensions": [
+          3,
+          4
+        ],
+        "support_note": "Supported only under referenced domain qualifications.",
+        "object_class": "Three nested 3D/4D components, including coincident copies"
+      }
+    },
+    {
+      "id": "con-07-matching-orientation",
+      "requirement_id": "CON-07",
+      "option": "matching-orientation",
+      "title": "Congruent attachment and excavation",
+      "domain_id": "attachment",
+      "input": {
+        "description": "Cube target, generated pyramid and memory piece",
+        "parameters": {
+          "direction": [
+            "outward",
+            "inward"
+          ],
+          "orientation": "attachment-face cycling"
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "CON-07",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "attachment",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "installed54-manual",
+            "locator": "#augmentation",
+            "role": "documented-options"
+          }
+        ],
+        "checks": [
+          "Preview/commit agree on boundary/volume",
+          "Pentagon-to-triangle mismatch refuses"
+        ],
+        "basis": "documented-or-local-contract"
+      },
+      "implementation": "restricted",
+      "fixtures": [
+        {
+          "path": "tests/test_face_surgery.py",
+          "selector": "test_pentagonal_pyramid_on_icosahedron_is_not_a_matching_face",
+          "role": "direct",
+          "evidence": "existing-test-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "apply-face-surgery",
+          "drill-face-surgery",
+          "place-at-faces"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R6-CONSTRUCTIONS",
+        "priority": "P2",
+        "unverified": "Bounded native coverage exists; benchmark option behavior and shipped UI are unverified.",
+        "next_action": "Run positive attachment/excavation and mismatch fixtures; enumerate attachment-face cycling with literal transforms and replay."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3
+        ],
+        "supported_source_dimensions": [
+          3
+        ],
+        "support_note": "Supported only under referenced domain qualifications.",
+        "object_class": "Cube target, generated pyramid and memory piece"
+      }
+    },
+    {
+      "id": "con-07-target-filters",
+      "requirement_id": "CON-07",
+      "option": "target-filters",
+      "title": "Attachment target policies",
+      "domain_id": "attachment",
+      "input": {
+        "description": "Cube with congruent faces and two RGBA colors",
+        "parameters": {
+          "targets": [
+            "selected",
+            "same-type",
+            "same-shape-size",
+            "same-shape",
+            "same-color"
+          ]
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "CON-07",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "attachment",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "installed54-report",
+            "locator": "Attachment target policies",
+            "role": "historical-metadata"
+          },
+          {
+            "source_id": "installed54-manual",
+            "locator": "#augmentation",
+            "role": "documented-options"
+          }
+        ],
+        "checks": [
+          "Record actual targeted face IDs",
+          "Unsupported filter must not silently broaden selection"
+        ],
+        "basis": "documented-or-local-contract"
+      },
+      "implementation": "unverified",
+      "fixtures": [
+        {
+          "path": "tests/test_augmentation_workflow.py",
+          "selector": null,
+          "role": "related-not-oracle",
+          "evidence": "existing-suite-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "apply-face-surgery",
+          "drill-face-surgery",
+          "place-at-faces"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R6-CONSTRUCTIONS",
+        "priority": "P1",
+        "unverified": "Dialog 191 target-policy crosswalk/color filtering not established.",
+        "next_action": "Map five static policies to mounted controls and independently expected face-ID sets."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3
+        ],
+        "supported_source_dimensions": [],
+        "support_note": "No supported-domain claim for this requested case; see implementation status and follow-up.",
+        "object_class": "Cube with congruent faces and two RGBA colors"
+      }
+    },
+    {
+      "id": "con-07-height-policies",
+      "requirement_id": "CON-07",
+      "option": "height-policies",
+      "title": "Attachment height/scale conventions",
+      "domain_id": "attachment",
+      "input": {
+        "description": "Square face and nonsymmetric polygon",
+        "parameters": {
+          "pyramid": [
+            "automatic",
+            "equal-edge",
+            "face-radius",
+            "face-diameter",
+            "circumsphere",
+            "unit-edge",
+            "unit-height"
+          ],
+          "prism": [
+            "average-edge",
+            "shortest-edge",
+            "longest-edge",
+            "unit-height"
+          ]
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "CON-07",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "attachment",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "installed54-report",
+            "locator": "Attachment height/scale conventions",
+            "role": "historical-metadata"
+          },
+          {
+            "source_id": "installed54-manual",
+            "locator": "#augmentation",
+            "role": "documented-options"
+          }
+        ],
+        "checks": [
+          "Distinguish scale of edge/radius from scale of height",
+          "Unattainable dimensions refuse"
+        ],
+        "basis": "documented-or-local-contract"
+      },
+      "implementation": "unverified",
+      "fixtures": [
+        {
+          "path": "tests/test_augmentation_workflow.py",
+          "selector": null,
+          "role": "related-not-oracle",
+          "evidence": "existing-suite-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "apply-face-surgery",
+          "drill-face-surgery",
+          "place-at-faces"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R6-CONSTRUCTIONS",
+        "priority": "P1",
+        "unverified": "Seven pyramid/four prism manual presets are unmapped to current metric inputs.",
+        "next_action": "Map equivalent explicit metric inputs first; derive square-face dimensions and list genuinely missing preset semantics."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3
+        ],
+        "supported_source_dimensions": [],
+        "support_note": "No supported-domain claim for this requested case; see implementation status and follow-up.",
+        "object_class": "Square face and nonsymmetric polygon"
+      }
+    },
+    {
+      "id": "con-07-color-coincidence",
+      "requirement_id": "CON-07",
+      "option": "color-coincidence",
+      "title": "Attachment colors and coincidence",
+      "domain_id": "attachment",
+      "input": {
+        "description": "Colored cube and colored memory pyramid",
+        "parameters": {
+          "colors": [
+            "scheme",
+            "source",
+            "target",
+            "single"
+          ],
+          "coincidence": [
+            "remove",
+            "retain"
+          ]
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "CON-07",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "attachment",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "installed54-report",
+            "locator": "test_memory_piece_twist_and_rgba_preserved",
+            "role": "historical-metadata"
+          },
+          {
+            "source_id": "installed54-manual",
+            "locator": "#augmentation",
+            "role": "documented-options"
+          }
+        ],
+        "checks": [
+          "Record surviving face owners/RGBA",
+          "Coincidence policy must agree in preview/commit"
+        ],
+        "basis": "documented-or-local-contract"
+      },
+      "implementation": "unverified",
+      "fixtures": [
+        {
+          "path": "tests/test_face_surgery.py",
+          "selector": "test_memory_piece_twist_and_rgba_preserved",
+          "role": "related-not-oracle",
+          "evidence": "existing-test-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "apply-face-surgery",
+          "drill-face-surgery",
+          "place-at-faces"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R6-CONSTRUCTIONS",
+        "priority": "P1",
+        "unverified": "Bounded native coverage exists; benchmark option behavior and shipped UI are unverified.",
+        "next_action": "Create per-policy owner/color tables for generated/memory pieces; test removal versus retention and replay."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3
+        ],
+        "supported_source_dimensions": [],
+        "support_note": "No supported-domain claim for this requested case; see implementation status and follow-up.",
+        "object_class": "Colored cube and colored memory pyramid"
+      }
+    },
+    {
+      "id": "con-07-drill",
+      "requirement_id": "CON-07",
+      "option": "drill",
+      "title": "Opposite-face prism tunnel",
+      "domain_id": "attachment",
+      "input": {
+        "description": "Cube opposite squares and hexagonal prism caps",
+        "parameters": {
+          "tunnel": "opposite-face prism"
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "CON-07",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "attachment",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "spec",
+            "locator": "test_drilling_cube_genus_one_counts_and_volume",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "independent-fixtures",
+            "locator": "test_drilling_cube_genus_one_counts_and_volume",
+            "role": "expectation-oracle"
+          }
+        ],
+        "checks": [
+          "Drilled cube has genus one and analytic volume",
+          "Missing parallel opposite face refuses"
+        ],
+        "basis": "independent-invariant"
+      },
+      "implementation": "restricted",
+      "fixtures": [
+        {
+          "path": "tests/test_face_surgery.py",
+          "selector": "test_drilling_cube_genus_one_counts_and_volume",
+          "role": "direct",
+          "evidence": "existing-test-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "apply-face-surgery",
+          "drill-face-surgery",
+          "place-at-faces"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R6-CONSTRUCTIONS",
+        "priority": "P2",
+        "unverified": "Bounded native coverage exists; benchmark option behavior and shipped UI are unverified.",
+        "next_action": "Run the named fixture, then reproduce opposite-face prism tunnel through the listed UI; retain source, parameters, residuals, incidence and versioned comparison evidence."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3
+        ],
+        "supported_source_dimensions": [
+          3
+        ],
+        "support_note": "Supported only under referenced domain qualifications.",
+        "object_class": "Cube opposite squares and hexagonal prism caps"
+      }
+    },
+    {
+      "id": "con-07-placement-sizes",
+      "requirement_id": "CON-07",
+      "option": "placement-sizes",
+      "title": "Face/vertex placement sizing",
+      "domain_id": "attachment",
+      "input": {
+        "description": "Unequal-face convex target and memory piece",
+        "parameters": {
+          "sizing": [
+            "current-face",
+            "smallest-face",
+            "base-part"
+          ],
+          "height": [
+            "box",
+            "sphere"
+          ],
+          "keep_center": true
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "CON-07",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "attachment",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "installed54-report",
+            "locator": "Face/vertex placement sizing",
+            "role": "historical-metadata"
+          },
+          {
+            "source_id": "installed54-manual",
+            "locator": "#modelsOnFaces",
+            "role": "documented-options"
+          }
+        ],
+        "checks": [
+          "Keep copy transforms/components/source ownership",
+          "Placement fit is distinct from regularization"
+        ],
+        "basis": "documented-or-local-contract"
+      },
+      "implementation": "unverified",
+      "fixtures": [
+        {
+          "path": "tests/test_face_placement_workflow.py",
+          "selector": null,
+          "role": "related-not-oracle",
+          "evidence": "existing-suite-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "apply-face-surgery",
+          "drill-face-surgery",
+          "place-at-faces"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R6-CONSTRUCTIONS",
+        "priority": "P1",
+        "unverified": "Bounded native coverage exists; benchmark option behavior and shipped UI are unverified.",
+        "next_action": "Crosswalk dialog 221 sizing/height/center flags; derive expected transforms for one unequal-face target."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3
+        ],
+        "supported_source_dimensions": [],
+        "support_note": "No supported-domain claim for this requested case; see implementation status and follow-up.",
+        "object_class": "Unequal-face convex target and memory piece"
+      }
+    },
+    {
+      "id": "con-08-zonohedron-directions",
+      "requirement_id": "CON-08",
+      "option": "zonohedron-directions",
+      "title": "Source-direction zonohedron and zones",
+      "domain_id": "refinement",
+      "input": {
+        "description": "Literal cube vertex/edge/face directions",
+        "parameters": {
+          "sources": [
+            "vertices",
+            "edges",
+            "faces",
+            "symmetry-axis"
+          ],
+          "zones": "explicit generator subset"
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "CON-08",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "refinement",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "installed54-manual",
+            "locator": "#zonohedra",
+            "role": "documented-options"
+          },
+          {
+            "source_id": "independent-fixtures",
+            "locator": "test_independent_literal_source_feature_counts_supports_volume_rgba_units",
+            "role": "expectation-oracle"
+          }
+        ],
+        "checks": [
+          "Check support/volume and source-zone maps",
+          "Adding zones preserves existing lengths/position"
+        ],
+        "basis": "independent-invariant"
+      },
+      "implementation": "restricted",
+      "fixtures": [
+        {
+          "path": "tests/test_source_zonohedron_workflow.py",
+          "selector": "test_independent_literal_source_feature_counts_supports_volume_rgba_units",
+          "role": "direct",
+          "evidence": "existing-test-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "make-source-zonohedron"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R6-CONSTRUCTIONS",
+        "priority": "P2",
+        "unverified": "Bounded native coverage exists; benchmark option behavior and shipped UI are unverified.",
+        "next_action": "Run the named fixture, then reproduce source-direction zonohedron and zones through the listed UI; retain source, parameters, residuals, incidence and versioned comparison evidence."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3
+        ],
+        "supported_source_dimensions": [
+          3
+        ],
+        "support_note": "Supported only under referenced domain qualifications.",
+        "object_class": "Literal cube vertex/edge/face directions"
+      }
+    },
+    {
+      "id": "con-08-subdivision-inheritance",
+      "requirement_id": "CON-08",
+      "option": "subdivision-inheritance",
+      "title": "Subdivision and inherited data",
+      "domain_id": "refinement",
+      "input": {
+        "description": "Colored cube with text on one face",
+        "parameters": {
+          "methods": [
+            "centroid",
+            "midpoint",
+            "kis",
+            "Conway"
+          ],
+          "frequency": [
+            1,
+            2
+          ]
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "CON-08",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "refinement",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "installed54-manual",
+            "locator": "#subdivide",
+            "role": "documented-options"
+          }
+        ],
+        "checks": [
+          "Retain or explicitly detach mapped face/color/content owners",
+          "No false regularity of new faces"
+        ],
+        "basis": "documented-or-local-contract"
+      },
+      "implementation": "supported",
+      "fixtures": [
+        {
+          "path": "tests/test_w12_constructions.py",
+          "selector": "test_rgba_units_and_source_face_mapping",
+          "role": "direct",
+          "evidence": "existing-test-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "make-source-zonohedron"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R6-CONSTRUCTIONS",
+        "priority": "P2",
+        "unverified": "Bounded native coverage exists; benchmark option behavior and shipped UI are unverified.",
+        "next_action": "Build annotation/RGBA owner table per method at frequencies 1/2; compare preview/adopt/history."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3
+        ],
+        "supported_source_dimensions": [
+          3
+        ],
+        "support_note": "Supported only under referenced domain qualifications.",
+        "object_class": "Colored cube with text on one face"
+      }
+    },
+    {
+      "id": "con-08-geodesic-sphere",
+      "requirement_id": "CON-08",
+      "option": "geodesic-sphere",
+      "title": "Triangular geodesic/sphere projection",
+      "domain_id": "refinement",
+      "input": {
+        "description": "Icosahedron frequency two; nontriangular/off-sphere inputs",
+        "parameters": {
+          "frequency": 2,
+          "sphere": "qualified common sphere"
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "CON-08",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "refinement",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "installed54-manual",
+            "locator": "#geodesic",
+            "role": "documented-options"
+          },
+          {
+            "source_id": "installed54-manual",
+            "locator": "#spherise",
+            "role": "documented-options"
+          },
+          {
+            "source_id": "independent-fixtures",
+            "locator": "test_frequency_two_icosahedron_projection_and_geodesic_equivalence",
+            "role": "expectation-oracle"
+          }
+        ],
+        "checks": [
+          "Check independent chord/sphere geometry",
+          "Radial projection does not imply regular faces"
+        ],
+        "basis": "independent-invariant"
+      },
+      "implementation": "restricted",
+      "fixtures": [
+        {
+          "path": "tests/test_w12_constructions.py",
+          "selector": "test_frequency_two_icosahedron_projection_and_geodesic_equivalence",
+          "role": "direct",
+          "evidence": "existing-test-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "make-source-zonohedron"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R6-CONSTRUCTIONS",
+        "priority": "P2",
+        "unverified": "Bounded native coverage exists; benchmark option behavior and shipped UI are unverified.",
+        "next_action": "Run the named fixture, then reproduce triangular geodesic/sphere projection through the listed UI; retain source, parameters, residuals, incidence and versioned comparison evidence."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3
+        ],
+        "supported_source_dimensions": [
+          3
+        ],
+        "support_note": "Supported only under referenced domain qualifications.",
+        "object_class": "Icosahedron frequency two; nontriangular/off-sphere inputs"
+      }
+    },
+    {
+      "id": "con-10-coincident-pairs",
+      "requirement_id": "CON-10",
+      "option": "coincident-pairs",
+      "title": "Coincident cycle removal/colors",
+      "domain_id": "modifications",
+      "input": {
+        "description": "Coincident cycles with traversal reversal and unequal colors",
+        "parameters": {
+          "actions": [
+            "audit",
+            "remove-pairs"
+          ],
+          "color_policy": "explicit"
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "CON-10",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "modifications",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "installed54-manual",
+            "locator": "#faceting",
+            "role": "documented-options"
+          }
+        ],
+        "checks": [
+          "Keep semantic cycles/owners",
+          "Color ambiguity cannot choose arbitrary winner"
+        ],
+        "basis": "documented-or-local-contract"
+      },
+      "implementation": "supported",
+      "fixtures": [
+        {
+          "path": "tests/test_face_blending.py",
+          "selector": null,
+          "role": "direct",
+          "evidence": "existing-suite-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "coincidence-analyze",
+          "face-editing-settings"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R6-CONSTRUCTIONS",
+        "priority": "P2",
+        "unverified": "Bounded native coverage exists; benchmark option behavior and shipped UI are unverified.",
+        "next_action": "Add surviving-cycle/owner tables for traversal/color combinations; save/reopen/replay each policy."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3
+        ],
+        "supported_source_dimensions": [
+          3
+        ],
+        "support_note": "Supported only under referenced domain qualifications.",
+        "object_class": "Coincident cycles with traversal reversal and unequal colors"
+      }
+    },
+    {
+      "id": "con-10-coplanar-hole",
+      "requirement_id": "CON-10",
+      "option": "coplanar-hole",
+      "title": "Coplanar unions with holes",
+      "domain_id": "modifications",
+      "input": {
+        "description": "Overlapping planar polygons and hole",
+        "parameters": {
+          "fill": [
+            "nonzero",
+            "even-odd"
+          ]
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "CON-10",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "modifications",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "spec",
+            "locator": "Coplanar unions with holes",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "independent-fixtures",
+            "locator": "Coplanar unions with holes",
+            "role": "expectation-oracle"
+          }
+        ],
+        "checks": [
+          "Compare independently measured union area/boundary loops",
+          "Do not silently bridge/fill hole"
+        ],
+        "basis": "independent-invariant"
+      },
+      "implementation": "restricted",
+      "fixtures": [
+        {
+          "path": "tests/test_coplanar_regions.py",
+          "selector": null,
+          "role": "direct",
+          "evidence": "existing-suite-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "coincidence-analyze",
+          "face-editing-settings"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R6-CONSTRUCTIONS",
+        "priority": "P2",
+        "unverified": "Bounded native coverage exists; benchmark option behavior and shipped UI are unverified.",
+        "next_action": "Run the named fixture, then reproduce coplanar unions with holes through the listed UI; retain source, parameters, residuals, incidence and versioned comparison evidence."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3
+        ],
+        "supported_source_dimensions": [
+          3
+        ],
+        "support_note": "Supported only under referenced domain qualifications.",
+        "object_class": "Overlapping planar polygons and hole"
+      }
+    },
+    {
+      "id": "con-10-4d-cell-rebuild",
+      "requirement_id": "CON-10",
+      "option": "4d-cell-rebuild",
+      "title": "4D blend requiring cell reconstruction",
+      "domain_id": "modifications",
+      "input": {
+        "description": "Separately owned coplanar faces across distinct cells",
+        "parameters": {
+          "action": "merge with new cell shell"
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "CON-10",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "modifications",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "spec",
+            "locator": "4D blend requiring cell reconstruction",
+            "role": "requirement-scope"
+          }
+        ],
+        "checks": [
+          "Unsupported cell rebuilding refuses without mutation"
+        ],
+        "basis": "documented-or-local-contract"
+      },
+      "implementation": "unsupported",
+      "fixtures": [
+        {
+          "path": "tests/test_face_blending.py",
+          "selector": null,
+          "role": "related-not-oracle",
+          "evidence": "existing-suite-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "coincidence-analyze",
+          "face-editing-settings"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R6-CONSTRUCTIONS",
+        "priority": "P1",
+        "unverified": "Arbitrary distinct-cell shell rebuilding remains outside face-blend contract.",
+        "next_action": "Choose one required documented baseline case needing cell rebuilding before scheduling bounded extension."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          4
+        ],
+        "supported_source_dimensions": [],
+        "support_note": "No supported-domain claim for this requested case; see implementation status and follow-up.",
+        "object_class": "Separately owned coplanar faces across distinct cells"
+      }
+    },
+    {
+      "id": "con-05-normal-quasi",
+      "requirement_id": "CON-05",
+      "option": "normal-quasi",
+      "title": "Normal/quasi regular-face edge cuts",
+      "domain_id": "modifications",
+      "input": {
+        "description": "Literal regular cube and odd-sided reference face counterexample",
+        "parameters": {
+          "presets": [
+            "normal",
+            "quasi"
+          ],
+          "cap_colors": [
+            "inherit",
+            "none"
+          ],
+          "reference_face": "explicit regular source face"
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "CON-05",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "modifications",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "independent-fixtures",
+            "locator": "IncidenceTruncationSanity::test_analytic_regular_cube_normal_quasi_and_midpoint_incidence_without_hull",
+            "role": "expectation-oracle"
+          }
+        ],
+        "checks": [
+          "Cube normal t=1-sqrt(2)/2 and quasi t=1+sqrt(2)/2",
+          "Both have V/E/F=24/36/14 and equal edges",
+          "Odd-sided quasi reference and t=1 singularity refuse"
+        ],
+        "basis": "independent-invariant"
+      },
+      "implementation": "restricted",
+      "fixtures": [
+        {
+          "path": "tests/test_incidence_truncation.py",
+          "selector": "IncidenceTruncationSanity::test_analytic_regular_cube_normal_quasi_and_midpoint_incidence_without_hull",
+          "role": "direct",
+          "evidence": "existing-test-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "truncate",
+          "preview-incidence-cut",
+          "make-expansion"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R6-CONSTRUCTIONS",
+        "priority": "P2",
+        "unverified": "Bounded native coverage exists; benchmark option behavior and shipped UI are unverified.",
+        "next_action": "Run independent cube preset fixture and odd-sided/refused reference cases; retain chosen face, cap colors and exact raw depth in preview/adopt/replay."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3
+        ],
+        "supported_source_dimensions": [
+          3
+        ],
+        "support_note": "Qualified ordered regular reference face and native link checks required.",
+        "object_class": "Literal regular cube and odd-sided reference face counterexample"
+      }
+    }
+  ]
+}

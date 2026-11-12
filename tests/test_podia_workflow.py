@@ -1,4 +1,5 @@
 """Actual unequal-ring dispatch, persistence and 4D history boundaries."""
+
 from copy import deepcopy
 import json
 import pytest
@@ -13,18 +14,32 @@ def generate(kind, **parameters):
 
 
 def project(model):
-    return {'format': 'polytope-laboratory', 'version': 1, 'active': 0,
-            'documents': [{'id': 'unequal-ring-source', 'cursor': 0, 'states': [
-                {'model': model, 'view': {'coordinateUnit': 'mm', 'sectionNormal': [0, 0, 1]},
-                 'notes': 'Retained unequal-ring source'}]}]}
+    return {
+        'format': 'polytope-laboratory',
+        'version': 1,
+        'active': 0,
+        'documents': [
+            {
+                'id': 'unequal-ring-source',
+                'cursor': 0,
+                'states': [
+                    {
+                        'model': model,
+                        'view': {'coordinateUnit': 'mm', 'sectionNormal': [0, 0, 1]},
+                        'notes': 'Retained unequal-ring source',
+                    }
+                ],
+            }
+        ],
+    }
 
 
 @pytest.mark.parametrize('kind', ['rational-podium', 'rational-antipodium'])
 @pytest.mark.parametrize('sizing', ['radius', 'edge'])
 @pytest.mark.parametrize('elevation', ['height', 'side_edge'])
 def test_four_modes_actual_generate_save_and_reopen(kind, sizing, elevation, tmp_path):
-    params = {'symbol': '6/-2', 'base_'+sizing: 2, 'top_'+sizing: 1, elevation: 5}
-    rgba = {'encoding': 'unit', 'values': [.2, .4, .8, .25]}
+    params = {'symbol': '6/-2', 'base_' + sizing: 2, 'top_' + sizing: 1, elevation: 5}
+    rgba = {'encoding': 'unit', 'values': [0.2, 0.4, 0.8, 0.25]}
     params['cap_colors'] = [rgba, {'encoding': 'byte', 'values': [9, 64, 255, 128]}]
     request = {'op': 'generate', 'params': {'kind': kind, **params}}
     before = deepcopy(request)
@@ -36,7 +51,7 @@ def test_four_modes_actual_generate_save_and_reopen(kind, sizing, elevation, tmp
     assert model['provenance']['generator'] == {'kind': kind, 'parameters': params}
     assert model['numeric']['certified'] is False
     snapshot = deepcopy(model)
-    file = str(tmp_path/'unequal-rings.polyproj')
+    file = str(tmp_path / 'unequal-rings.polyproj')
     dispatch({'op': 'save', 'params': {'path': file, 'project': project(model)}})
     restored = dispatch({'op': 'load', 'params': {'path': file}})['project']['documents'][0]['states'][0]['model']
     assert canonical_model(restored) == canonical_model(snapshot)
@@ -49,14 +64,26 @@ def test_literal_unequal_rings_survive_real_prism_history_replay_branch(kind):
     model = generate(kind, symbol='5/2', base_radius=2, top_radius=1, height=3)
     doc = project(model)['documents'][0]
     original = deepcopy(doc)
-    lifted = dispatch({'op': 'recipe-run', 'params': {'document': doc,
-        'operation': 'polyhedron-prism', 'parameters': {'height': 2}}})
+    lifted = dispatch(
+        {'op': 'recipe-run', 'params': {'document': doc, 'operation': 'polyhedron-prism', 'parameters': {'height': 2}}}
+    )
     result = lifted['states'][-1]['model']
     assert result['interpretation'] == 'generalized-complex'
-    assert result['vertices'] == [p+[w] for w in [-1, 1] for p in model['vertices']]
+    assert result['vertices'] == [p + [w] for w in [-1, 1] for p in model['vertices']]
     assert result['metadata']['polyhedronPrism']['sourceModel'] == model
-    checked = dispatch({'op': 'validate-project', 'params': {'project': json.loads(json.dumps(
-        {'format': 'polytope-laboratory', 'version': 1, 'active': 0, 'documents': [lifted]}, allow_nan=False))}})['documents'][0]
+    checked = dispatch(
+        {
+            'op': 'validate-project',
+            'params': {
+                'project': json.loads(
+                    json.dumps(
+                        {'format': 'polytope-laboratory', 'version': 1, 'active': 0, 'documents': [lifted]},
+                        allow_nan=False,
+                    )
+                )
+            },
+        }
+    )['documents'][0]
     replayed = dispatch({'op': 'recipe-replay', 'params': {'document': checked}})
     assert canonical_model(replayed['states'][0]['model']) == canonical_model(result)
     branched = dispatch({'op': 'recipe-branch', 'params': {'document': checked, 'parameters': {'height': 4}}})
@@ -65,11 +92,17 @@ def test_literal_unequal_rings_survive_real_prism_history_replay_branch(kind):
     assert doc == original
 
 
-@pytest.mark.parametrize('params', [{'unknown': 1}, {'base_radius': 2},
-    {'base_radius': 2, 'top_radius': 1, 'base_edge': 1, 'height': 1},
-    {'base_radius': 2, 'top_radius': 1, 'side_edge': .5},
-    {'base_radius': 2, 'top_radius': 1, 'height': True},
-    {'base_radius': 10**500, 'top_radius': 1, 'height': 1}])
+@pytest.mark.parametrize(
+    'params',
+    [
+        {'unknown': 1},
+        {'base_radius': 2},
+        {'base_radius': 2, 'top_radius': 1, 'base_edge': 1, 'height': 1},
+        {'base_radius': 2, 'top_radius': 1, 'side_edge': 0.5},
+        {'base_radius': 2, 'top_radius': 1, 'height': True},
+        {'base_radius': 10**500, 'top_radius': 1, 'height': 1},
+    ],
+)
 def test_invalid_native_requests_are_atomic_and_next_valid_request_succeeds(params):
     request = {'op': 'generate', 'params': {'kind': 'rational-podium', **params}}
     before = deepcopy(request)

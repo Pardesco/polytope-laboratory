@@ -1,0 +1,3775 @@
+{
+  "format": "polytope-symmetry-qualification",
+  "version": 1,
+  "numericMode": "float64-approximate",
+  "certified": false,
+  "scope": "All 39 native classical 3D realizations (five Platonic, thirteen Archimedean and thirteen Catalan identities with four additional mirror realizations, four Kepler-Poinsot); all sixteen classical regular 4D sources; selected convex A4/B4/F4 and Goursat H4 Wythoff representatives. No claim for all U75, Johnson, compounds, scaliforms, arbitrary imports or 2191 uniform 4D identities.",
+  "references": [
+    {
+      "title": "Heckman, Coxeter Groups, finite Coxeter group orders",
+      "url": "https://www.math.ru.nl/~heckman/CoxeterGroups.pdf",
+      "basis": "A3 24, B3 48, H3 120; A4 120, B4 384, F4 1152, H4 14400. Chiral snubs and their duals have the rotation group only. Polar duals preserve the group."
+    },
+    {
+      "title": "Schulte, Regular Polytopes, tables 18.1.1 and 18.2.1",
+      "url": "https://www.csun.edu/~ctoth/Handbook/chap18.pdf",
+      "basis": "Six convex and ten Schlaefli-Hess regular 4D types; independent flag action crosscheck uses regular4d_validation."
+    },
+    {
+      "title": "Incidence controls",
+      "basis": "Removing one icosahedral face leaves its setwise triangle stabilizer of order 6; adding one open five-face tesseract cell leaves order 8. Similarities preserve action permutations; a one-frame cube run cannot exhaust 48 actions."
+    }
+  ],
+  "fixturesSha256": "d04979cfbf7799b231cfb001732d6721e5d261488317267ffa46e6617a05e53c",
+  "implementationSha256": {
+    "symmetry_qualification.py": "e4baefdc855c955a54f13895fbdb89c22fe0e1adee66675a68a6f7520b8793e1",
+    "symmetry.py": "a8f5d1bee6c765c37deae50193679ccb8b340511df7fee6080b7891e07e7095e",
+    "geometry.py": "eed7e56280f22fc1cd397b584990af08c457d7990b0f6f308552814208036319",
+    "generators.py": "5db11749af2df146b57c0bb2c17889e64ff308129cee5e51ffcb1cdd1db71b5f",
+    "operations.py": "06b9f4dd14c52b13524279278f8b78c61557f5e3c1c92902ded6011886ca6daf",
+    "chiral.py": "cc15684cb0f9a1f20ab7e4c24c522a54d98659886543560dd97199847a94d942",
+    "star_polyhedra.py": "d9c6c05b1d4d31051e2503e85782364e2bdcc13123a437b49ef7a4783fc350e0",
+    "regular4d_validation.py": "04121f59cbdd1da4250cc0b4e0ce57ed53baf53095713e43c958fac160ef5250",
+    "wythoff.py": "581feab536d61626c913968f77af052a6c5099d3cdb6d420a728441f0a454f14",
+    "uniform4.py": "39732e3212c259ef6532a306727138c32886f7a4615fd33a90e0d035ecdfe149",
+    "star_uniform4.py": "adeac6de0fa2f00670c7674f325eec54f21427e87a019e598ebb7864067f4456",
+    "goursat_wythoff.py": "2c99e44c496a01e101d0286996989a628de1acfa2502a1de7872a3e0dfe2e7dc",
+    "catalog.py": "ac80a3639aa7db8cf932b233febed1a5a784eeba052a2b58f24d423d39616567",
+    "formats.py": "c2ab6e54c809482d31dc7690dce2e06dd26c2253d51d25992ad8714213e99ae5"
+  },
+  "environment": {
+    "python": "3.10.11",
+    "numpy": "1.26.4",
+    "scipy": "1.11.4"
+  },
+  "policy": "Recorded numerical evidence for literal supplied geometry; no exact algebraic certificate, baseline parity or classification promotion.",
+  "receipts": [
+    {
+      "id": "r7-symmetry-tetrahedron",
+      "key": "tetrahedron",
+      "family": "Platonic",
+      "variant": "source",
+      "expected": {
+        "order": 24,
+        "properOrder": 12,
+        "flagOrbitCount": 1
+      },
+      "source": {
+        "fingerprint": "9cc0dcff3e7d0400a7f7a2c5b629f2998dc51547da01e2f9a7b51b55a174387e",
+        "coordinateSha256": "28cb1ab000378ae4166c1e1543784c73a25348f238121ec65d889716e2525fc1",
+        "incidenceSha256": "3b6347a71fd17c125a8a47c34f1f81eb944926a58fd4506ffceea1b861f293c0"
+      },
+      "counts": [
+        4,
+        6,
+        4,
+        0
+      ],
+      "numericMode": "float64-approximate",
+      "certified": false,
+      "maxFrames": 100000,
+      "search": {
+        "order": 24,
+        "properOrder": 12,
+        "complete": true,
+        "closureVerified": true,
+        "termination": "exhausted",
+        "candidateFramesEvaluated": 24,
+        "searchNodesEvaluated": 41,
+        "searchNodeLimit": 1000003,
+        "frameConditionNumber": 2.0000000000000004,
+        "tolerance": 8e-08,
+        "algorithmVersion": "0.7.0"
+      },
+      "independent": {
+        "normalizedCoordinateResidual": 2.2409230999296133e-16,
+        "orthogonalityResidual": 6.661338147750939e-16,
+        "actionsMetricChecked": 24,
+        "generatorsIncidenceChecked": 3,
+        "flagCount": 24,
+        "flagOrbitSizes": [
+          24
+        ],
+        "flagOrbitCount": 1
+      },
+      "actionPermutationSha256": "4fed00e35314fb2c574097f98c62526f937b1147b18273eeb66247b164391884",
+      "status": "passed"
+    },
+    {
+      "id": "r7-symmetry-cube",
+      "key": "cube",
+      "family": "Platonic",
+      "variant": "source",
+      "expected": {
+        "order": 48,
+        "properOrder": 24,
+        "flagOrbitCount": 1
+      },
+      "source": {
+        "fingerprint": "5e0d2b7b73fb36c5c155a6c5b0c7ada92e79c2e529864520ae041a795044877b",
+        "coordinateSha256": "899206f4312cc11403bc68cb26e8425168301e463899db43debe5c1e2033b36d",
+        "incidenceSha256": "144db04ce904e2c2db2fc92069ca9b7bfab9b0765980dbb09980459762e91c88"
+      },
+      "counts": [
+        8,
+        12,
+        6,
+        0
+      ],
+      "numericMode": "float64-approximate",
+      "certified": false,
+      "maxFrames": 100000,
+      "search": {
+        "order": 48,
+        "properOrder": 24,
+        "complete": true,
+        "closureVerified": true,
+        "termination": "exhausted",
+        "candidateFramesEvaluated": 48,
+        "searchNodesEvaluated": 81,
+        "searchNodeLimit": 1000003,
+        "frameConditionNumber": 2.0000000000000004,
+        "tolerance": 8e-08,
+        "algorithmVersion": "0.7.0"
+      },
+      "independent": {
+        "normalizedCoordinateResidual": 0.0,
+        "orthogonalityResidual": 0.0,
+        "actionsMetricChecked": 48,
+        "generatorsIncidenceChecked": 3,
+        "flagCount": 48,
+        "flagOrbitSizes": [
+          48
+        ],
+        "flagOrbitCount": 1
+      },
+      "actionPermutationSha256": "df79476682377f33fc5e6883a6fb85ce4f9da181a2adc5792bcdbac21ccac103",
+      "status": "passed"
+    },
+    {
+      "id": "r7-symmetry-octahedron",
+      "key": "octahedron",
+      "family": "Platonic",
+      "variant": "source",
+      "expected": {
+        "order": 48,
+        "properOrder": 24,
+        "flagOrbitCount": 1
+      },
+      "source": {
+        "fingerprint": "f93d0caccbcea15c79fc40d300b9190c5bb74b6eb565470672dc0a63525fa729",
+        "coordinateSha256": "f1e96a098b137c0221773cf1845d76a5e10d523227dcb93e8b36f4859b669e30",
+        "incidenceSha256": "45873124ed41a75be0822c705a4bd636df808d1f8504b73aa738e18570e537e7"
+      },
+      "counts": [
+        6,
+        12,
+        8,
+        0
+      ],
+      "numericMode": "float64-approximate",
+      "certified": false,
+      "maxFrames": 100000,
+      "search": {
+        "order": 48,
+        "properOrder": 24,
+        "complete": true,
+        "closureVerified": true,
+        "termination": "exhausted",
+        "candidateFramesEvaluated": 48,
+        "searchNodesEvaluated": 79,
+        "searchNodeLimit": 1000003,
+        "frameConditionNumber": 1.0,
+        "tolerance": 8e-08,
+        "algorithmVersion": "0.7.0"
+      },
+      "independent": {
+        "normalizedCoordinateResidual": 0.0,
+        "orthogonalityResidual": 0.0,
+        "actionsMetricChecked": 48,
+        "generatorsIncidenceChecked": 5,
+        "flagCount": 48,
+        "flagOrbitSizes": [
+          48
+        ],
+        "flagOrbitCount": 1
+      },
+      "actionPermutationSha256": "9011181dbc41dcbf865b3e05141a9e2a9b7950075dc93802fff87a4659551f2b",
+      "status": "passed"
+    },
+    {
+      "id": "r7-symmetry-dodecahedron",
+      "key": "dodecahedron",
+      "family": "Platonic",
+      "variant": "source",
+      "expected": {
+        "order": 120,
+        "properOrder": 60,
+        "flagOrbitCount": 1
+      },
+      "source": {
+        "fingerprint": "5e3dacd536a20b3a6e94f0a30614c574e8faafe88fa02a4e711d0cfc192131ac",
+        "coordinateSha256": "dbf503e264e17b236617a31fad19cb6d4a145804db83bc30a4270703c8b509ae",
+        "incidenceSha256": "a0e53ccb54cd21fbde6b9353fdf8a9b4c34f896ad50f6020063c85a628ddba77"
+      },
+      "counts": [
+        20,
+        30,
+        12,
+        0
+      ],
+      "numericMode": "float64-approximate",
+      "certified": false,
+      "maxFrames": 100000,
+      "search": {
+        "order": 120,
+        "properOrder": 60,
+        "complete": true,
+        "closureVerified": true,
+        "termination": "exhausted",
+        "candidateFramesEvaluated": 120,
+        "searchNodesEvaluated": 201,
+        "searchNodeLimit": 1000003,
+        "frameConditionNumber": 2.78396128233199,
+        "tolerance": 8e-08,
+        "algorithmVersion": "0.7.0"
+      },
+      "independent": {
+        "normalizedCoordinateResidual": 2.676478128560483e-16,
+        "orthogonalityResidual": 3.885780586188048e-16,
+        "actionsMetricChecked": 120,
+        "generatorsIncidenceChecked": 2,
+        "flagCount": 120,
+        "flagOrbitSizes": [
+          120
+        ],
+        "flagOrbitCount": 1
+      },
+      "actionPermutationSha256": "ceb586d4e6fc22f6ff750f650d6df66c079ad3b38b3344e03bceb67800ca95c1",
+      "status": "passed"
+    },
+    {
+      "id": "r7-symmetry-icosahedron",
+      "key": "icosahedron",
+      "family": "Platonic",
+      "variant": "source",
+      "expected": {
+        "order": 120,
+        "properOrder": 60,
+        "flagOrbitCount": 1
+      },
+      "source": {
+        "fingerprint": "c546a1e53912e0f684dbd33d686d5b9258bbf1d95f66349d8730375c4047d68f",
+        "coordinateSha256": "7c0eba5ba39892da4a1d3f323d952dc222ff3238be107b47f835cf152048e833",
+        "incidenceSha256": "2f8ef13397ca8b17ff97fe2367e05e6a9973034fe69718058144ce7ecad88050"
+      },
+      "counts": [
+        12,
+        30,
+        20,
+        0
+      ],
+      "numericMode": "float64-approximate",
+      "certified": false,
+      "maxFrames": 100000,
+      "search": {
+        "order": 120,
+        "properOrder": 60,
+        "complete": true,
+        "closureVerified": true,
+        "termination": "exhausted",
+        "candidateFramesEvaluated": 120,
+        "searchNodesEvaluated": 193,
+        "searchNodeLimit": 1000003,
+        "frameConditionNumber": 1.8512295868219162,
+        "tolerance": 8e-08,
+        "algorithmVersion": "0.7.0"
+      },
+      "independent": {
+        "normalizedCoordinateResidual": 1.5700924586837752e-16,
+        "orthogonalityResidual": 4.440892098500626e-16,
+        "actionsMetricChecked": 120,
+        "generatorsIncidenceChecked": 3,
+        "flagCount": 120,
+        "flagOrbitSizes": [
+          120
+        ],
+        "flagOrbitCount": 1
+      },
+      "actionPermutationSha256": "17d9c63957fd182ff946ce9f7c1d5f6660bb0b429c091d20865847c18a4a5c14",
+      "status": "passed"
+    },
+    {
+      "id": "r7-symmetry-cuboctahedron",
+      "key": "cuboctahedron",
+      "family": "Archimedean",
+      "variant": "source",
+      "expected": {
+        "order": 48,
+        "properOrder": 24,
+        "flagOrbitCount": 2
+      },
+      "source": {
+        "fingerprint": "114d31d0c0cfa1d4282f4d01727d38bd01b5d91f9a06bc2d5e7adf14aefcbaaa",
+        "coordinateSha256": "9c4f943cd05165be552ad361f0a55250d5719b77ca80992911a3ddd77e0b8962",
+        "incidenceSha256": "496fa7242b9ff3aa4d3c8bddaeb871e875fadbc6e1d81daf8ee2c98a4814a6b8"
+      },
+      "counts": [
+        12,
+        24,
+        14,
+        0
+      ],
+      "numericMode": "float64-approximate",
+      "certified": false,
+      "maxFrames": 100000,
+      "search": {
+        "order": 48,
+        "properOrder": 24,
+        "complete": true,
+        "closureVerified": true,
+        "termination": "exhausted",
+        "candidateFramesEvaluated": 48,
+        "searchNodesEvaluated": 85,
+        "searchNodeLimit": 1000003,
+        "frameConditionNumber": 2.4142135623730954,
+        "tolerance": 8e-08,
+        "algorithmVersion": "0.7.0"
+      },
+      "independent": {
+        "normalizedCoordinateResidual": 0.0,
+        "orthogonalityResidual": 0.0,
+        "actionsMetricChecked": 48,
+        "generatorsIncidenceChecked": 3,
+        "flagCount": 96,
+        "flagOrbitSizes": [
+          48,
+          48
+        ],
+        "flagOrbitCount": 2
+      },
+      "actionPermutationSha256": "c8b1a754302c0e8b481e62350c2474c38a3dc26c19c4ce91789b2d680c863109",
+      "status": "passed"
+    },
+    {
+      "id": "r7-symmetry-icosidodecahedron",
+      "key": "icosidodecahedron",
+      "family": "Archimedean",
+      "variant": "source",
+      "expected": {
+        "order": 120,
+        "properOrder": 60,
+        "flagOrbitCount": 2
+      },
+      "source": {
+        "fingerprint": "c52af4371e9186a11d42451ade9f1fd1087625e24bfd515e31361f8c9a8a657c",
+        "coordinateSha256": "3565b204fa2091383e1f14e62d084efb48fa02bb64d2f75d04857db1dc6b44b6",
+        "incidenceSha256": "dc1de820b890eef3b9e5342cd935b65730e55187365a971de7705f4946ef364c"
+      },
+      "counts": [
+        30,
+        60,
+        32,
+        0
+      ],
+      "numericMode": "float64-approximate",
+      "certified": false,
+      "maxFrames": 100000,
+      "search": {
+        "order": 120,
+        "properOrder": 60,
+        "complete": true,
+        "closureVerified": true,
+        "termination": "exhausted",
+        "candidateFramesEvaluated": 240,
+        "searchNodesEvaluated": 391,
+        "searchNodeLimit": 1000003,
+        "frameConditionNumber": 1.0000000000000002,
+        "tolerance": 8e-08,
+        "algorithmVersion": "0.7.0"
+      },
+      "independent": {
+        "normalizedCoordinateResidual": 1.6883057536160649e-16,
+        "orthogonalityResidual": 6.661338147750939e-16,
+        "actionsMetricChecked": 120,
+        "generatorsIncidenceChecked": 3,
+        "flagCount": 240,
+        "flagOrbitSizes": [
+          120,
+          120
+        ],
+        "flagOrbitCount": 2
+      },
+      "actionPermutationSha256": "58df81e7bcc6ac00a76b9d22ac8337c0273d6ea2c583baa1ea16e76d14127e86",
+      "status": "passed"
+    },
+    {
+      "id": "r7-symmetry-truncated-tetrahedron",
+      "key": "truncated-tetrahedron",
+      "family": "Archimedean",
+      "variant": "source",
+      "expected": {
+        "order": 24,
+        "properOrder": 12,
+        "flagOrbitCount": 3
+      },
+      "source": {
+        "fingerprint": "1e659905da80cc85ead3ed576070fba2588b6df4a831f80c59888a22047d941b",
+        "coordinateSha256": "f9d705aa9815ab48a0245b462a9472de15f565ec9186e0712b18354a380c31bd",
+        "incidenceSha256": "e5a22e52c76404cb8797ed9f566badee9de21e5097c239c9a9d0e3a7cdd144f7"
+      },
+      "counts": [
+        12,
+        18,
+        8,
+        0
+      ],
+      "numericMode": "float64-approximate",
+      "certified": false,
+      "maxFrames": 100000,
+      "search": {
+        "order": 24,
+        "properOrder": 12,
+        "complete": true,
+        "closureVerified": true,
+        "termination": "exhausted",
+        "candidateFramesEvaluated": 24,
+        "searchNodesEvaluated": 61,
+        "searchNodeLimit": 1000003,
+        "frameConditionNumber": 1.6861406616345067,
+        "tolerance": 8e-08,
+        "algorithmVersion": "0.7.0"
+      },
+      "independent": {
+        "normalizedCoordinateResidual": 2.6945789820192466e-16,
+        "orthogonalityResidual": 9.992007221626409e-16,
+        "actionsMetricChecked": 24,
+        "generatorsIncidenceChecked": 3,
+        "flagCount": 72,
+        "flagOrbitSizes": [
+          24,
+          24,
+          24
+        ],
+        "flagOrbitCount": 3
+      },
+      "actionPermutationSha256": "87da01a83c345241eeb8a7c2d1db84edfe3a70ac7da32d9277d99c2388906db3",
+      "status": "passed"
+    },
+    {
+      "id": "r7-symmetry-truncated-cube",
+      "key": "truncated-cube",
+      "family": "Archimedean",
+      "variant": "source",
+      "expected": {
+        "order": 48,
+        "properOrder": 24,
+        "flagOrbitCount": 3
+      },
+      "source": {
+        "fingerprint": "a46db30359418c65ec316e6ab4869954a299eeda8ec0c66d1d1103c8a0b9f4cd",
+        "coordinateSha256": "143fb9086ef5bbef594fd82809de6fec777f12a387ea66d1df6c7664c162b242",
+        "incidenceSha256": "087fe3860571841925a239dfc301fe49a39bbf490d4b281b481f0370b9ee5041"
+      },
+      "counts": [
+        24,
+        36,
+        14,
+        0
+      ],
+      "numericMode": "float64-approximate",
+      "certified": false,
+      "maxFrames": 100000,
+      "search": {
+        "order": 48,
+        "properOrder": 24,
+        "complete": true,
+        "closureVerified": true,
+        "termination": "exhausted",
+        "candidateFramesEvaluated": 48,
+        "searchNodesEvaluated": 145,
+        "searchNodeLimit": 1000003,
+        "frameConditionNumber": 3.7282859514632425,
+        "tolerance": 8e-08,
+        "algorithmVersion": "0.7.0"
+      },
+      "independent": {
+        "normalizedCoordinateResidual": 1.594436429147036e-16,
+        "orthogonalityResidual": 4.440892098500626e-16,
+        "actionsMetricChecked": 48,
+        "generatorsIncidenceChecked": 3,
+        "flagCount": 144,
+        "flagOrbitSizes": [
+          48,
+          48,
+          48
+        ],
+        "flagOrbitCount": 3
+      },
+      "actionPermutationSha256": "4749a463971a1e36e89ef44de4eeebfa8ad628b38573976eb37a17b1a05c1d4e",
+      "status": "passed"
+    },
+    {
+      "id": "r7-symmetry-truncated-octahedron",
+      "key": "truncated-octahedron",
+      "family": "Archimedean",
+      "variant": "source",
+      "expected": {
+        "order": 48,
+        "properOrder": 24,
+        "flagOrbitCount": 3
+      },
+      "source": {
+        "fingerprint": "ad652ec43fec5b10fba61ae537b01414f95149100c4ab9c03a5201ea4e01b2ac",
+        "coordinateSha256": "c6c177bb4cc9b242f1d9372fed41997bc02d2e87bf6be84756f1b6c8056b77d4",
+        "incidenceSha256": "96b01f60aa3822263bdea09a150477c56702b8c4375ebc67bf23cd9255e0a3e7"
+      },
+      "counts": [
+        24,
+        36,
+        14,
+        0
+      ],
+      "numericMode": "float64-approximate",
+      "certified": false,
+      "maxFrames": 100000,
+      "search": {
+        "order": 48,
+        "properOrder": 24,
+        "complete": true,
+        "closureVerified": true,
+        "termination": "exhausted",
+        "candidateFramesEvaluated": 48,
+        "searchNodesEvaluated": 97,
+        "searchNodeLimit": 1000003,
+        "frameConditionNumber": 2.3582944711822633,
+        "tolerance": 8e-08,
+        "algorithmVersion": "0.7.0"
+      },
+      "independent": {
+        "normalizedCoordinateResidual": 2.6020852139652106e-17,
+        "orthogonalityResidual": 2.0816681711721685e-17,
+        "actionsMetricChecked": 48,
+        "generatorsIncidenceChecked": 4,
+        "flagCount": 144,
+        "flagOrbitSizes": [
+          48,
+          48,
+          48
+        ],
+        "flagOrbitCount": 3
+      },
+      "actionPermutationSha256": "bf8cac1b83a05e3db1a603845f8f25f0bcef0e916116ef9ff39a35e2f5062b16",
+      "status": "passed"
+    },
+    {
+      "id": "r7-symmetry-truncated-dodecahedron",
+      "key": "truncated-dodecahedron",
+      "family": "Archimedean",
+      "variant": "source",
+      "expected": {
+        "order": 120,
+        "properOrder": 60,
+        "flagOrbitCount": 3
+      },
+      "source": {
+        "fingerprint": "e712d70611a1ac1f2ad03b5070e90359d8a5c2336342bc3c13d16c2ae039ded3",
+        "coordinateSha256": "54ce8f58e2118640b49c3d41c0785fa9cdefde2c5d51b63136f53577c30a3e9d",
+        "incidenceSha256": "bc57b2b67ed4fde115c4dbb5def102f8ebf62f3e90fe1c5b6616d8b307e98728"
+      },
+      "counts": [
+        60,
+        90,
+        32,
+        0
+      ],
+      "numericMode": "float64-approximate",
+      "certified": false,
+      "maxFrames": 100000,
+      "search": {
+        "order": 120,
+        "properOrder": 60,
+        "complete": true,
+        "closureVerified": true,
+        "termination": "exhausted",
+        "candidateFramesEvaluated": 120,
+        "searchNodesEvaluated": 301,
+        "searchNodeLimit": 1000003,
+        "frameConditionNumber": 1.6069829305569119,
+        "tolerance": 8e-08,
+        "algorithmVersion": "0.7.0"
+      },
+      "independent": {
+        "normalizedCoordinateResidual": 1.3877787807814457e-16,
+        "orthogonalityResidual": 4.440892098500626e-16,
+        "actionsMetricChecked": 120,
+        "generatorsIncidenceChecked": 3,
+        "flagCount": 360,
+        "flagOrbitSizes": [
+          120,
+          120,
+          120
+        ],
+        "flagOrbitCount": 3
+      },
+      "actionPermutationSha256": "8618cfd6280f6a4148bfd5135d5cfc57ab4588cd1f8d7beb8b5a8bc9d2188488",
+      "status": "passed"
+    },
+    {
+      "id": "r7-symmetry-truncated-icosahedron",
+      "key": "truncated-icosahedron",
+      "family": "Archimedean",
+      "variant": "source",
+      "expected": {
+        "order": 120,
+        "properOrder": 60,
+        "flagOrbitCount": 3
+      },
+      "source": {
+        "fingerprint": "d413e681892001439dcd7788384de7c2202deed0479c6f00ef03f24078fec053",
+        "coordinateSha256": "09320d5232dfe80ac2461b46ae24edd09f559687e38143ed9cd1f2a45e434509",
+        "incidenceSha256": "90803d914ff7a45b92ffccb0717817e0da538a761c691bef14747c8e5ef9cf88"
+      },
+      "counts": [
+        60,
+        90,
+        32,
+        0
+      ],
+      "numericMode": "float64-approximate",
+      "certified": false,
+      "maxFrames": 100000,
+      "search": {
+        "order": 120,
+        "properOrder": 60,
+        "complete": true,
+        "closureVerified": true,
+        "termination": "exhausted",
+        "candidateFramesEvaluated": 120,
+        "searchNodesEvaluated": 301,
+        "searchNodeLimit": 1000003,
+        "frameConditionNumber": 1.1079764134438548,
+        "tolerance": 8e-08,
+        "algorithmVersion": "0.7.0"
+      },
+      "independent": {
+        "normalizedCoordinateResidual": 2.487074588547028e-16,
+        "orthogonalityResidual": 5.551115123125783e-16,
+        "actionsMetricChecked": 120,
+        "generatorsIncidenceChecked": 3,
+        "flagCount": 360,
+        "flagOrbitSizes": [
+          120,
+          120,
+          120
+        ],
+        "flagOrbitCount": 3
+      },
+      "actionPermutationSha256": "a34b8e5d66297105072888537335cc2efcaffdf9471abfbd1e5671c07e6c2abe",
+      "status": "passed"
+    },
+    {
+      "id": "r7-symmetry-rhombicuboctahedron",
+      "key": "rhombicuboctahedron",
+      "family": "Archimedean",
+      "variant": "source",
+      "expected": {
+        "order": 48,
+        "properOrder": 24,
+        "flagOrbitCount": 4
+      },
+      "source": {
+        "fingerprint": "3df3a331c65ea301a76f1bced374f78b910f925f912d5624b2ae14df2537cf42",
+        "coordinateSha256": "63e0eca5776c4a050fdd3004874ac0e9f94e3fd0cfd24fe11e10a13d49488344",
+        "incidenceSha256": "537a6a6d7d1e74266981719aad598b1bd949b74a8079858a862e7f02fc48c32f"
+      },
+      "counts": [
+        24,
+        48,
+        26,
+        0
+      ],
+      "numericMode": "float64-approximate",
+      "certified": false,
+      "maxFrames": 100000,
+      "search": {
+        "order": 48,
+        "properOrder": 24,
+        "complete": true,
+        "closureVerified": true,
+        "termination": "exhausted",
+        "candidateFramesEvaluated": 48,
+        "searchNodesEvaluated": 145,
+        "searchNodeLimit": 1000003,
+        "frameConditionNumber": 1.8161088805998526,
+        "tolerance": 8e-08,
+        "algorithmVersion": "0.7.0"
+      },
+      "independent": {
+        "normalizedCoordinateResidual": 1.1909050386352223e-15,
+        "orthogonalityResidual": 1.9984014443252818e-15,
+        "actionsMetricChecked": 48,
+        "generatorsIncidenceChecked": 4,
+        "flagCount": 192,
+        "flagOrbitSizes": [
+          48,
+          48,
+          48,
+          48
+        ],
+        "flagOrbitCount": 4
+      },
+      "actionPermutationSha256": "a96968b8127ec764564bd742f9703a2d4a664c4a1aa3146e2e9a21daae7d43f9",
+      "status": "passed"
+    },
+    {
+      "id": "r7-symmetry-truncated-cuboctahedron",
+      "key": "truncated-cuboctahedron",
+      "family": "Archimedean",
+      "variant": "source",
+      "expected": {
+        "order": 48,
+        "properOrder": 24,
+        "flagOrbitCount": 6
+      },
+      "source": {
+        "fingerprint": "b27b01eec03e9ff748c98f342b165ddcb537a653187c8fd291fbf12d092fcb69",
+        "coordinateSha256": "94b57e5ed88a10e2e6d7e0a02615a2a49162a2c9f3c09bd19df29d6ddfd29189",
+        "incidenceSha256": "7ee2da9b630d3d6bfafedb13ea5b2ca65d72548d43c7570e36e20858869fa6fd"
+      },
+      "counts": [
+        48,
+        72,
+        26,
+        0
+      ],
+      "numericMode": "float64-approximate",
+      "certified": false,
+      "maxFrames": 100000,
+      "search": {
+        "order": 48,
+        "properOrder": 24,
+        "complete": true,
+        "closureVerified": true,
+        "termination": "exhausted",
+        "candidateFramesEvaluated": 48,
+        "searchNodesEvaluated": 145,
+        "searchNodeLimit": 1000003,
+        "frameConditionNumber": 1.4928100263054798,
+        "tolerance": 8e-08,
+        "algorithmVersion": "0.7.0"
+      },
+      "independent": {
+        "normalizedCoordinateResidual": 1.273131038501653e-15,
+        "orthogonalityResidual": 1.831867990631509e-15,
+        "actionsMetricChecked": 48,
+        "generatorsIncidenceChecked": 3,
+        "flagCount": 288,
+        "flagOrbitSizes": [
+          48,
+          48,
+          48,
+          48,
+          48,
+          48
+        ],
+        "flagOrbitCount": 6
+      },
+      "actionPermutationSha256": "9b5736eed51ee327ce84a87b1f772a17a5d318dd8d9d0acd369bbe4bfc91a1be",
+      "status": "passed"
+    },
+    {
+      "id": "r7-symmetry-rhombicosidodecahedron",
+      "key": "rhombicosidodecahedron",
+      "family": "Archimedean",
+      "variant": "source",
+      "expected": {
+        "order": 120,
+        "properOrder": 60,
+        "flagOrbitCount": 4
+      },
+      "source": {
+        "fingerprint": "c680cbe94d856359c7624b5c96261e3e6e90771b1cb8dd61d7cd6cfde205c435",
+        "coordinateSha256": "7928f5780ed2d07f6ef5bea0944c19a704715550e0d5ffd80c7282abb68565cc",
+        "incidenceSha256": "a700431b519a4ca86e738d28fa99d03af44e775d9b9c5796f597515f4680b458"
+      },
+      "counts": [
+        60,
+        120,
+        62,
+        0
+      ],
+      "numericMode": "float64-approximate",
+      "certified": false,
+      "maxFrames": 100000,
+      "search": {
+        "order": 120,
+        "properOrder": 60,
+        "complete": true,
+        "closureVerified": true,
+        "termination": "exhausted",
+        "candidateFramesEvaluated": 120,
+        "searchNodesEvaluated": 301,
+        "searchNodeLimit": 1000003,
+        "frameConditionNumber": 2.5775507417149357,
+        "tolerance": 8e-08,
+        "algorithmVersion": "0.7.0"
+      },
+      "independent": {
+        "normalizedCoordinateResidual": 2.02938626019732e-15,
+        "orthogonalityResidual": 2.4424906541753444e-15,
+        "actionsMetricChecked": 120,
+        "generatorsIncidenceChecked": 3,
+        "flagCount": 480,
+        "flagOrbitSizes": [
+          120,
+          120,
+          120,
+          120
+        ],
+        "flagOrbitCount": 4
+      },
+      "actionPermutationSha256": "d1b1912a980182c865b2c189bf1a1e756e41950c30c80351384b72124e168fa4",
+      "status": "passed"
+    },
+    {
+      "id": "r7-symmetry-truncated-icosidodecahedron",
+      "key": "truncated-icosidodecahedron",
+      "family": "Archimedean",
+      "variant": "source",
+      "expected": {
+        "order": 120,
+        "properOrder": 60,
+        "flagOrbitCount": 6
+      },
+      "source": {
+        "fingerprint": "78c06f538fb568476baadb206ec86270833ffafbe767639f59ecb9acb71b0018",
+        "coordinateSha256": "eec78a4ea4da54ceca8fcf7eec82ff2bad1328292bd98d66ae28bc3aad5fbf45",
+        "incidenceSha256": "ee023fcc084c49d6cf3a0208e94cf2c4417fe85e481456fa407e2ee57a591d07"
+      },
+      "counts": [
+        120,
+        180,
+        62,
+        0
+      ],
+      "numericMode": "float64-approximate",
+      "certified": false,
+      "maxFrames": 100000,
+      "search": {
+        "order": 120,
+        "properOrder": 60,
+        "complete": true,
+        "closureVerified": true,
+        "termination": "exhausted",
+        "candidateFramesEvaluated": 120,
+        "searchNodesEvaluated": 361,
+        "searchNodeLimit": 1000003,
+        "frameConditionNumber": 1.4853596029558351,
+        "tolerance": 8e-08,
+        "algorithmVersion": "0.7.0"
+      },
+      "independent": {
+        "normalizedCoordinateResidual": 1.8318679906315083e-15,
+        "orthogonalityResidual": 3.9968028886505635e-15,
+        "actionsMetricChecked": 120,
+        "generatorsIncidenceChecked": 2,
+        "flagCount": 720,
+        "flagOrbitSizes": [
+          120,
+          120,
+          120,
+          120,
+          120,
+          120
+        ],
+        "flagOrbitCount": 6
+      },
+      "actionPermutationSha256": "1ec44662809572d4035c46a6b8295c4d03aeb3fda9683a1ebadc97f9472a604d",
+      "status": "passed"
+    },
+    {
+      "id": "r7-symmetry-snub-cube",
+      "key": "snub-cube",
+      "family": "Archimedean",
+      "variant": "source",
+      "expected": {
+        "order": 24,
+        "properOrder": 24,
+        "flagOrbitCount": 10
+      },
+      "source": {
+        "fingerprint": "94866bbf0da9e45b8f0d8c56bb96a1b0f9254aaa6e7a7253588679e99cc13604",
+        "coordinateSha256": "b3d01d8c8cea0381ba19752e03322636766987a2515420663f81c0117d6f87b1",
+        "incidenceSha256": "330379fded72cbac7adc0d8feb9b05f9e5c0a7226f1d1476221ee74502f50610"
+      },
+      "counts": [
+        24,
+        60,
+        38,
+        0
+      ],
+      "numericMode": "float64-approximate",
+      "certified": false,
+      "maxFrames": 100000,
+      "search": {
+        "order": 24,
+        "properOrder": 24,
+        "complete": true,
+        "closureVerified": true,
+        "termination": "exhausted",
+        "candidateFramesEvaluated": 24,
+        "searchNodesEvaluated": 73,
+        "searchNodeLimit": 1000003,
+        "frameConditionNumber": 1.9788262618594932,
+        "tolerance": 8e-08,
+        "algorithmVersion": "0.7.0"
+      },
+      "independent": {
+        "normalizedCoordinateResidual": 1.1339095338133984e-15,
+        "orthogonalityResidual": 1.7763568394002505e-15,
+        "actionsMetricChecked": 24,
+        "generatorsIncidenceChecked": 2,
+        "flagCount": 240,
+        "flagOrbitSizes": [
+          24,
+          24,
+          24,
+          24,
+          24,
+          24,
+          24,
+          24,
+          24,
+          24
+        ],
+        "flagOrbitCount": 10
+      },
+      "actionPermutationSha256": "cfd9027b22873996db6d08422357ea9188b09403e2e75da0c1d02d1f9362f645",
+      "status": "passed"
+    },
+    {
+      "id": "r7-symmetry-snub-cube-mirror",
+      "key": "snub-cube-mirror",
+      "family": "Archimedean",
+      "variant": "source",
+      "expected": {
+        "order": 24,
+        "properOrder": 24,
+        "flagOrbitCount": 10
+      },
+      "source": {
+        "fingerprint": "253bd9ba477711c72ebd97d6cf745e7383248922558060e2eb7fad87e9bd524b",
+        "coordinateSha256": "ecc2f044d586f5eeb16164740450900477ec778b205a510757acdb04e8d9ce28",
+        "incidenceSha256": "30e7fb161e51884fa4c202deda8a152df842f8807cfd7ae8def87a42fd95d86b"
+      },
+      "counts": [
+        24,
+        60,
+        38,
+        0
+      ],
+      "numericMode": "float64-approximate",
+      "certified": false,
+      "maxFrames": 100000,
+      "search": {
+        "order": 24,
+        "properOrder": 24,
+        "complete": true,
+        "closureVerified": true,
+        "termination": "exhausted",
+        "candidateFramesEvaluated": 24,
+        "searchNodesEvaluated": 73,
+        "searchNodeLimit": 1000003,
+        "frameConditionNumber": 1.9788262618594932,
+        "tolerance": 8e-08,
+        "algorithmVersion": "0.7.0"
+      },
+      "independent": {
+        "normalizedCoordinateResidual": 1.1339095338133984e-15,
+        "orthogonalityResidual": 1.7763568394002505e-15,
+        "actionsMetricChecked": 24,
+        "generatorsIncidenceChecked": 2,
+        "flagCount": 240,
+        "flagOrbitSizes": [
+          24,
+          24,
+          24,
+          24,
+          24,
+          24,
+          24,
+          24,
+          24,
+          24
+        ],
+        "flagOrbitCount": 10
+      },
+      "actionPermutationSha256": "cfd9027b22873996db6d08422357ea9188b09403e2e75da0c1d02d1f9362f645",
+      "status": "passed"
+    },
+    {
+      "id": "r7-symmetry-snub-dodecahedron",
+      "key": "snub-dodecahedron",
+      "family": "Archimedean",
+      "variant": "source",
+      "expected": {
+        "order": 60,
+        "properOrder": 60,
+        "flagOrbitCount": 10
+      },
+      "source": {
+        "fingerprint": "3ed207ddc3d928ca9b4d261abf2fa6f1b98fe87be61c37cd7b3ffecbe1ddca12",
+        "coordinateSha256": "3a9d99b3aceb216d383c5506482342daeb9014b779d219ae7abdb5232a0ad20b",
+        "incidenceSha256": "a36b9dacbb9e44a537bae3b3866111db837baa594b5c4995278f8f4a6b37b35a"
+      },
+      "counts": [
+        60,
+        150,
+        92,
+        0
+      ],
+      "numericMode": "float64-approximate",
+      "certified": false,
+      "maxFrames": 100000,
+      "search": {
+        "order": 60,
+        "properOrder": 60,
+        "complete": true,
+        "closureVerified": true,
+        "termination": "exhausted",
+        "candidateFramesEvaluated": 60,
+        "searchNodesEvaluated": 181,
+        "searchNodeLimit": 1000003,
+        "frameConditionNumber": 1.211039096801711,
+        "tolerance": 8e-08,
+        "algorithmVersion": "0.7.0"
+      },
+      "independent": {
+        "normalizedCoordinateResidual": 8.264277987388393e-16,
+        "orthogonalityResidual": 1.7763568394002505e-15,
+        "actionsMetricChecked": 60,
+        "generatorsIncidenceChecked": 2,
+        "flagCount": 600,
+        "flagOrbitSizes": [
+          60,
+          60,
+          60,
+          60,
+          60,
+          60,
+          60,
+          60,
+          60,
+          60
+        ],
+        "flagOrbitCount": 10
+      },
+      "actionPermutationSha256": "6d19aad1e56db0fdd7bf35fc25e9ca801f640268d4cba8c81f1d7a9899f4e3e3",
+      "status": "passed"
+    },
+    {
+      "id": "r7-symmetry-snub-dodecahedron-mirror",
+      "key": "snub-dodecahedron-mirror",
+      "family": "Archimedean",
+      "variant": "source",
+      "expected": {
+        "order": 60,
+        "properOrder": 60,
+        "flagOrbitCount": 10
+      },
+      "source": {
+        "fingerprint": "b56d1bf2d0003f506d9e975662fcc8c334a3800148360fa2dc8be6dba335cb1d",
+        "coordinateSha256": "e066d7dc29012ed754cfe2f93ed2d7f8027921bbef943ccb357c01d7ebfa88b6",
+        "incidenceSha256": "d2f670ee27f78673e56c8ccef46cc694b9ae9eaed3ea030c049ad6c08156cb44"
+      },
+      "counts": [
+        60,
+        150,
+        92,
+        0
+      ],
+      "numericMode": "float64-approximate",
+      "certified": false,
+      "maxFrames": 100000,
+      "search": {
+        "order": 60,
+        "properOrder": 60,
+        "complete": true,
+        "closureVerified": true,
+        "termination": "exhausted",
+        "candidateFramesEvaluated": 60,
+        "searchNodesEvaluated": 181,
+        "searchNodeLimit": 1000003,
+        "frameConditionNumber": 1.211039096801711,
+        "tolerance": 8e-08,
+        "algorithmVersion": "0.7.0"
+      },
+      "independent": {
+        "normalizedCoordinateResidual": 8.264277987388393e-16,
+        "orthogonalityResidual": 1.7763568394002505e-15,
+        "actionsMetricChecked": 60,
+        "generatorsIncidenceChecked": 2,
+        "flagCount": 600,
+        "flagOrbitSizes": [
+          60,
+          60,
+          60,
+          60,
+          60,
+          60,
+          60,
+          60,
+          60,
+          60
+        ],
+        "flagOrbitCount": 10
+      },
+      "actionPermutationSha256": "6d19aad1e56db0fdd7bf35fc25e9ca801f640268d4cba8c81f1d7a9899f4e3e3",
+      "status": "passed"
+    },
+    {
+      "id": "r7-symmetry-triakis-tetrahedron",
+      "key": "triakis-tetrahedron",
+      "family": "Catalan",
+      "variant": "source",
+      "expected": {
+        "order": 24,
+        "properOrder": 12,
+        "flagOrbitCount": 3
+      },
+      "source": {
+        "fingerprint": "b16c43269ba57b156bfd984fb570e2510e93f3b53d66ae231c7164e560e2209f",
+        "coordinateSha256": "1306b2922ac40681d25c81b7edf30760d1662dfee9bb24d706015de9ff860797",
+        "incidenceSha256": "d5461027450860e77d83ccc403485971facb33d1e7148728401686094bab3258"
+      },
+      "counts": [
+        8,
+        18,
+        12,
+        0
+      ],
+      "numericMode": "float64-approximate",
+      "certified": false,
+      "maxFrames": 100000,
+      "search": {
+        "order": 24,
+        "properOrder": 12,
+        "complete": true,
+        "closureVerified": true,
+        "termination": "exhausted",
+        "candidateFramesEvaluated": 24,
+        "searchNodesEvaluated": 41,
+        "searchNodeLimit": 1000003,
+        "frameConditionNumber": 2.0,
+        "tolerance": 8e-08,
+        "algorithmVersion": "0.7.0"
+      },
+      "independent": {
+        "normalizedCoordinateResidual": 4.521688700116115e-16,
+        "orthogonalityResidual": 6.661338147750939e-16,
+        "actionsMetricChecked": 24,
+        "generatorsIncidenceChecked": 3,
+        "flagCount": 72,
+        "flagOrbitSizes": [
+          24,
+          24,
+          24
+        ],
+        "flagOrbitCount": 3
+      },
+      "actionPermutationSha256": "3f4427dc7be61a437a7c4000a56e2b5c48890742fa263fcabadd14dab5f5d165",
+      "status": "passed"
+    },
+    {
+      "id": "r7-symmetry-rhombic-dodecahedron",
+      "key": "rhombic-dodecahedron",
+      "family": "Catalan",
+      "variant": "source",
+      "expected": {
+        "order": 48,
+        "properOrder": 24,
+        "flagOrbitCount": 2
+      },
+      "source": {
+        "fingerprint": "e654b2f89c521823b81f5a8c7faa3f4735b81390e6763e4585c2c55160476cfc",
+        "coordinateSha256": "f0cdfc1dd081d2717ceb0c9130d1e01a7ea5c44d8a1c8d51a11227ed426f14c0",
+        "incidenceSha256": "02dab2b1524321b0ff91122dced61aef8f4c5b81c032dec20d3159c39ce8140f"
+      },
+      "counts": [
+        14,
+        24,
+        12,
+        0
+      ],
+      "numericMode": "float64-approximate",
+      "certified": false,
+      "maxFrames": 100000,
+      "search": {
+        "order": 48,
+        "properOrder": 24,
+        "complete": true,
+        "closureVerified": true,
+        "termination": "exhausted",
+        "candidateFramesEvaluated": 48,
+        "searchNodesEvaluated": 79,
+        "searchNodeLimit": 1000003,
+        "frameConditionNumber": 1.0,
+        "tolerance": 8e-08,
+        "algorithmVersion": "0.7.0"
+      },
+      "independent": {
+        "normalizedCoordinateResidual": 0.0,
+        "orthogonalityResidual": 0.0,
+        "actionsMetricChecked": 48,
+        "generatorsIncidenceChecked": 3,
+        "flagCount": 96,
+        "flagOrbitSizes": [
+          48,
+          48
+        ],
+        "flagOrbitCount": 2
+      },
+      "actionPermutationSha256": "6a2b194566ac1f716397ba8b99b271ed529c3edb1d8615c94aff9cd2c01ed3bf",
+      "status": "passed"
+    },
+    {
+      "id": "r7-symmetry-triakis-octahedron",
+      "key": "triakis-octahedron",
+      "family": "Catalan",
+      "variant": "source",
+      "expected": {
+        "order": 48,
+        "properOrder": 24,
+        "flagOrbitCount": 3
+      },
+      "source": {
+        "fingerprint": "5a086119dab9cc5805c95598694b9d5ad6622d12a1394968653fd51084792bbf",
+        "coordinateSha256": "549e1c5c86781ea31a7ff9a48d3ecaa593228202a3fc0dba9efb36fe70650f99",
+        "incidenceSha256": "232c5a5d77d9c761c8e6e8a3e58412491ec4207defe9f348fb0ab5b35e6249d4"
+      },
+      "counts": [
+        14,
+        36,
+        24,
+        0
+      ],
+      "numericMode": "float64-approximate",
+      "certified": false,
+      "maxFrames": 100000,
+      "search": {
+        "order": 48,
+        "properOrder": 24,
+        "complete": true,
+        "closureVerified": true,
+        "termination": "exhausted",
+        "candidateFramesEvaluated": 48,
+        "searchNodesEvaluated": 79,
+        "searchNodeLimit": 1000003,
+        "frameConditionNumber": 1.0,
+        "tolerance": 8e-08,
+        "algorithmVersion": "0.7.0"
+      },
+      "independent": {
+        "normalizedCoordinateResidual": 4.485978453382214e-17,
+        "orthogonalityResidual": 6.344131569286608e-17,
+        "actionsMetricChecked": 48,
+        "generatorsIncidenceChecked": 3,
+        "flagCount": 144,
+        "flagOrbitSizes": [
+          48,
+          48,
+          48
+        ],
+        "flagOrbitCount": 3
+      },
+      "actionPermutationSha256": "ec122b1034ed238c031bb108d41a9ddf9d2c7a4966ab604bc0aaac60eb041a87",
+      "status": "passed"
+    },
+    {
+      "id": "r7-symmetry-tetrakis-hexahedron",
+      "key": "tetrakis-hexahedron",
+      "family": "Catalan",
+      "variant": "source",
+      "expected": {
+        "order": 48,
+        "properOrder": 24,
+        "flagOrbitCount": 3
+      },
+      "source": {
+        "fingerprint": "b2ebeb7a69f001914a8c0c677f6fcd9a92a8731ff88b3e860c2f8aaf02835dd3",
+        "coordinateSha256": "b5a07c5d3dd0f1252b6bc5fa126662e13bba9812002ca89060243871148a189f",
+        "incidenceSha256": "7bbce1fbe856ef72058a92ca76412923dc929dcfb82a45fb1fb661ea248d8b08"
+      },
+      "counts": [
+        14,
+        36,
+        24,
+        0
+      ],
+      "numericMode": "float64-approximate",
+      "certified": false,
+      "maxFrames": 100000,
+      "search": {
+        "order": 48,
+        "properOrder": 24,
+        "complete": true,
+        "closureVerified": true,
+        "termination": "exhausted",
+        "candidateFramesEvaluated": 48,
+        "searchNodesEvaluated": 79,
+        "searchNodeLimit": 1000003,
+        "frameConditionNumber": 1.0000000000000002,
+        "tolerance": 8e-08,
+        "algorithmVersion": "0.7.0"
+      },
+      "independent": {
+        "normalizedCoordinateResidual": 9.614813431917819e-17,
+        "orthogonalityResidual": 6.608470384673552e-17,
+        "actionsMetricChecked": 48,
+        "generatorsIncidenceChecked": 4,
+        "flagCount": 144,
+        "flagOrbitSizes": [
+          48,
+          48,
+          48
+        ],
+        "flagOrbitCount": 3
+      },
+      "actionPermutationSha256": "eb5165848ac2667ab00a61b0e6fb6fb8c96050f11c5bf731099a1b523851b065",
+      "status": "passed"
+    },
+    {
+      "id": "r7-symmetry-pentakis-dodecahedron",
+      "key": "pentakis-dodecahedron",
+      "family": "Catalan",
+      "variant": "source",
+      "expected": {
+        "order": 120,
+        "properOrder": 60,
+        "flagOrbitCount": 3
+      },
+      "source": {
+        "fingerprint": "93a008255df3cecf6ab2070b49be5a47669f1b2cba5101c69400b10dfee93282",
+        "coordinateSha256": "735ae31b94ebf5d45919748b9e792d35c4211697440f5408c98ed7f6a7176c29",
+        "incidenceSha256": "8b15348ddbc677506c10b4a4c6e48e5166b83b5bf2c7d55cec22cc55d15f9675"
+      },
+      "counts": [
+        32,
+        90,
+        60,
+        0
+      ],
+      "numericMode": "float64-approximate",
+      "certified": false,
+      "maxFrames": 100000,
+      "search": {
+        "order": 120,
+        "properOrder": 60,
+        "complete": true,
+        "closureVerified": true,
+        "termination": "exhausted",
+        "candidateFramesEvaluated": 120,
+        "searchNodesEvaluated": 193,
+        "searchNodeLimit": 1000003,
+        "frameConditionNumber": 1.8512295868219153,
+        "tolerance": 8e-08,
+        "algorithmVersion": "0.7.0"
+      },
+      "independent": {
+        "normalizedCoordinateResidual": 6.521083742145178e-16,
+        "orthogonalityResidual": 1.4432899320127035e-15,
+        "actionsMetricChecked": 120,
+        "generatorsIncidenceChecked": 3,
+        "flagCount": 360,
+        "flagOrbitSizes": [
+          120,
+          120,
+          120
+        ],
+        "flagOrbitCount": 3
+      },
+      "actionPermutationSha256": "1391468ff6b90b3844ba528ee83e9456c8da35f536eed108d8d00d06eb782d4f",
+      "status": "passed"
+    },
+    {
+      "id": "r7-symmetry-triakis-icosahedron",
+      "key": "triakis-icosahedron",
+      "family": "Catalan",
+      "variant": "source",
+      "expected": {
+        "order": 120,
+        "properOrder": 60,
+        "flagOrbitCount": 3
+      },
+      "source": {
+        "fingerprint": "d0f03cc4029984caf03e0b26ad0c39f1c9432e283d5b075d8fba24da8ac8d54a",
+        "coordinateSha256": "f0f3af722047bd4924b1d61067ac0bc16d6ba929a6957d996333e812d401c15f",
+        "incidenceSha256": "bafdffc1c8300e9c47ba339e8a074bd15ee11c90d90fefaa1f74569845f0a936"
+      },
+      "counts": [
+        32,
+        90,
+        60,
+        0
+      ],
+      "numericMode": "float64-approximate",
+      "certified": false,
+      "maxFrames": 100000,
+      "search": {
+        "order": 120,
+        "properOrder": 60,
+        "complete": true,
+        "closureVerified": true,
+        "termination": "exhausted",
+        "candidateFramesEvaluated": 120,
+        "searchNodesEvaluated": 193,
+        "searchNodeLimit": 1000003,
+        "frameConditionNumber": 1.8512295868219162,
+        "tolerance": 8e-08,
+        "algorithmVersion": "0.7.0"
+      },
+      "independent": {
+        "normalizedCoordinateResidual": 4.573171851040186e-16,
+        "orthogonalityResidual": 6.661338147750939e-16,
+        "actionsMetricChecked": 120,
+        "generatorsIncidenceChecked": 3,
+        "flagCount": 360,
+        "flagOrbitSizes": [
+          120,
+          120,
+          120
+        ],
+        "flagOrbitCount": 3
+      },
+      "actionPermutationSha256": "93ea11d4000feb41f657f22569d7447ef3391b92c298c58bfed0fca42989ae71",
+      "status": "passed"
+    },
+    {
+      "id": "r7-symmetry-rhombic-triacontahedron",
+      "key": "rhombic-triacontahedron",
+      "family": "Catalan",
+      "variant": "source",
+      "expected": {
+        "order": 120,
+        "properOrder": 60,
+        "flagOrbitCount": 2
+      },
+      "source": {
+        "fingerprint": "8c854464f6f73c1b3152a82d4e960bee4c73ae2e4ca68ce1f20c9dfeb024038f",
+        "coordinateSha256": "8dbbdc1774f83db1a0320244e25b1aff815d9a89a2adabe47b36d472b04cb00c",
+        "incidenceSha256": "44a3181a4526241c15a08174fc11184b5b59b335277217b908d4e423dbff7e12"
+      },
+      "counts": [
+        32,
+        60,
+        30,
+        0
+      ],
+      "numericMode": "float64-approximate",
+      "certified": false,
+      "maxFrames": 100000,
+      "search": {
+        "order": 120,
+        "properOrder": 60,
+        "complete": true,
+        "closureVerified": true,
+        "termination": "exhausted",
+        "candidateFramesEvaluated": 120,
+        "searchNodesEvaluated": 193,
+        "searchNodeLimit": 1000003,
+        "frameConditionNumber": 1.8512295868219164,
+        "tolerance": 8e-08,
+        "algorithmVersion": "0.7.0"
+      },
+      "independent": {
+        "normalizedCoordinateResidual": 4.84122242258895e-16,
+        "orthogonalityResidual": 8.881784197001252e-16,
+        "actionsMetricChecked": 120,
+        "generatorsIncidenceChecked": 3,
+        "flagCount": 240,
+        "flagOrbitSizes": [
+          120,
+          120
+        ],
+        "flagOrbitCount": 2
+      },
+      "actionPermutationSha256": "eed393d1c0778203d9e5ffe4c2268a7a562cc395c5093262fea1ade8874947b1",
+      "status": "passed"
+    },
+    {
+      "id": "r7-symmetry-deltoidal-icositetrahedron",
+      "key": "deltoidal-icositetrahedron",
+      "family": "Catalan",
+      "variant": "source",
+      "expected": {
+        "order": 48,
+        "properOrder": 24,
+        "flagOrbitCount": 4
+      },
+      "source": {
+        "fingerprint": "819ed29664334bbc479d6737e119f51d55a1030d8973cd3100e3d71fd23d5ab5",
+        "coordinateSha256": "aa5bdc99fa6923e80f17f223d248f1e02b8d346d70a562842f604c7377286245",
+        "incidenceSha256": "c2088b4490a42144315f3f93e924a4f51d76670c154bdc736742b28e74a5131f"
+      },
+      "counts": [
+        26,
+        48,
+        24,
+        0
+      ],
+      "numericMode": "float64-approximate",
+      "certified": false,
+      "maxFrames": 100000,
+      "search": {
+        "order": 48,
+        "properOrder": 24,
+        "complete": true,
+        "closureVerified": true,
+        "termination": "exhausted",
+        "candidateFramesEvaluated": 48,
+        "searchNodesEvaluated": 81,
+        "searchNodeLimit": 1000003,
+        "frameConditionNumber": 2.0000000000000004,
+        "tolerance": 8e-08,
+        "algorithmVersion": "0.7.0"
+      },
+      "independent": {
+        "normalizedCoordinateResidual": 7.259024953699689e-16,
+        "orthogonalityResidual": 1.3322676295501878e-15,
+        "actionsMetricChecked": 48,
+        "generatorsIncidenceChecked": 4,
+        "flagCount": 192,
+        "flagOrbitSizes": [
+          48,
+          48,
+          48,
+          48
+        ],
+        "flagOrbitCount": 4
+      },
+      "actionPermutationSha256": "cc6eb6eba3ed5b04adc9cd6ff8f62a828490b40dae524fa45cd204d89eea005e",
+      "status": "passed"
+    },
+    {
+      "id": "r7-symmetry-disdyakis-dodecahedron",
+      "key": "disdyakis-dodecahedron",
+      "family": "Catalan",
+      "variant": "source",
+      "expected": {
+        "order": 48,
+        "properOrder": 24,
+        "flagOrbitCount": 6
+      },
+      "source": {
+        "fingerprint": "f3c55bc1c5f2b5071085cb664c6ea5c9462ead5b1283de7dff43902c3598c19f",
+        "coordinateSha256": "f4f6d38203c928aae06abc9056a9be99f65f6953ef66a622fabcf5576c4423aa",
+        "incidenceSha256": "af6a21e13f264b6677d3c65150aa9ca398457bf3bd6a79b34da86d2b88cdbf65"
+      },
+      "counts": [
+        26,
+        72,
+        48,
+        0
+      ],
+      "numericMode": "float64-approximate",
+      "certified": false,
+      "maxFrames": 100000,
+      "search": {
+        "order": 48,
+        "properOrder": 24,
+        "complete": true,
+        "closureVerified": true,
+        "termination": "exhausted",
+        "candidateFramesEvaluated": 48,
+        "searchNodesEvaluated": 79,
+        "searchNodeLimit": 1000003,
+        "frameConditionNumber": 1.0000000000000009,
+        "tolerance": 8e-08,
+        "algorithmVersion": "0.7.0"
+      },
+      "independent": {
+        "normalizedCoordinateResidual": 1.417654743593857e-15,
+        "orthogonalityResidual": 1.6550718919127616e-15,
+        "actionsMetricChecked": 48,
+        "generatorsIncidenceChecked": 3,
+        "flagCount": 288,
+        "flagOrbitSizes": [
+          48,
+          48,
+          48,
+          48,
+          48,
+          48
+        ],
+        "flagOrbitCount": 6
+      },
+      "actionPermutationSha256": "18b11adb9bac789d5cced51bda2da471a5256456431a98906d48f3c9d1ba7057",
+      "status": "passed"
+    },
+    {
+      "id": "r7-symmetry-pentagonal-icositetrahedron",
+      "key": "pentagonal-icositetrahedron",
+      "family": "Catalan",
+      "variant": "source",
+      "expected": {
+        "order": 24,
+        "properOrder": 24,
+        "flagOrbitCount": 10
+      },
+      "source": {
+        "fingerprint": "8a3315473a63460082a11ef77a084c38df6b56b153d428954d82c821d91b4de7",
+        "coordinateSha256": "c33143451cb42283083b6f72cd5e42c25302204ff7bc425b3cc20d5f57b55163",
+        "incidenceSha256": "a4cf9440df5d7e86d0c98dc1e334a54058da41a78eb5a4d5fd8f7883b26d5a11"
+      },
+      "counts": [
+        38,
+        60,
+        24,
+        0
+      ],
+      "numericMode": "float64-approximate",
+      "certified": false,
+      "maxFrames": 100000,
+      "search": {
+        "order": 24,
+        "properOrder": 24,
+        "complete": true,
+        "closureVerified": true,
+        "termination": "exhausted",
+        "candidateFramesEvaluated": 48,
+        "searchNodesEvaluated": 79,
+        "searchNodeLimit": 1000003,
+        "frameConditionNumber": 1.0000000000000004,
+        "tolerance": 8e-08,
+        "algorithmVersion": "0.7.0"
+      },
+      "independent": {
+        "normalizedCoordinateResidual": 9.727329446859754e-16,
+        "orthogonalityResidual": 1.2174687576716809e-15,
+        "actionsMetricChecked": 24,
+        "generatorsIncidenceChecked": 2,
+        "flagCount": 240,
+        "flagOrbitSizes": [
+          24,
+          24,
+          24,
+          24,
+          24,
+          24,
+          24,
+          24,
+          24,
+          24
+        ],
+        "flagOrbitCount": 10
+      },
+      "actionPermutationSha256": "d1c79c5f9611245437d39d5f2d93701e77effd9e37873674e452165018a916cf",
+      "status": "passed"
+    },
+    {
+      "id": "r7-symmetry-deltoidal-hexecontahedron",
+      "key": "deltoidal-hexecontahedron",
+      "family": "Catalan",
+      "variant": "source",
+      "expected": {
+        "order": 120,
+        "properOrder": 60,
+        "flagOrbitCount": 4
+      },
+      "source": {
+        "fingerprint": "3db823a92c42842f16578063ba613b7e76d03e93865b7beabffccca9ac14953c",
+        "coordinateSha256": "d6c37cbe1f3f5dfb312983d51b5236a5d73079617d9eb418e6069b0e977ed1a5",
+        "incidenceSha256": "5b3b65f500ebd0e076ea465b8e734a146c7e76ad0ead21bf303946eea3f46267"
+      },
+      "counts": [
+        62,
+        120,
+        60,
+        0
+      ],
+      "numericMode": "float64-approximate",
+      "certified": false,
+      "maxFrames": 100000,
+      "search": {
+        "order": 120,
+        "properOrder": 60,
+        "complete": true,
+        "closureVerified": true,
+        "termination": "exhausted",
+        "candidateFramesEvaluated": 120,
+        "searchNodesEvaluated": 193,
+        "searchNodeLimit": 1000003,
+        "frameConditionNumber": 1.8512295868219157,
+        "tolerance": 8e-08,
+        "algorithmVersion": "0.7.0"
+      },
+      "independent": {
+        "normalizedCoordinateResidual": 2.0636415127218816e-15,
+        "orthogonalityResidual": 4.440892098500626e-15,
+        "actionsMetricChecked": 120,
+        "generatorsIncidenceChecked": 3,
+        "flagCount": 480,
+        "flagOrbitSizes": [
+          120,
+          120,
+          120,
+          120
+        ],
+        "flagOrbitCount": 4
+      },
+      "actionPermutationSha256": "664be5dd0c3e108c6741dfd5c67e08418d8718c889e2b6860a08f966a1f2a8ed",
+      "status": "passed"
+    },
+    {
+      "id": "r7-symmetry-disdyakis-triacontahedron",
+      "key": "disdyakis-triacontahedron",
+      "family": "Catalan",
+      "variant": "source",
+      "expected": {
+        "order": 120,
+        "properOrder": 60,
+        "flagOrbitCount": 6
+      },
+      "source": {
+        "fingerprint": "0e01b12d64554e4dc70f507f3104828e047c0a39516b0686880e7272751f44ca",
+        "coordinateSha256": "8ceec93683b54b8838f92323d23287a4ff307e99302ab8be5945b437061dcc3c",
+        "incidenceSha256": "ba3b43ca280270ebae5db83cb4216e3c167dfe1b6e1ed60dfad0641cc879b386"
+      },
+      "counts": [
+        62,
+        180,
+        120,
+        0
+      ],
+      "numericMode": "float64-approximate",
+      "certified": false,
+      "maxFrames": 100000,
+      "search": {
+        "order": 120,
+        "properOrder": 60,
+        "complete": true,
+        "closureVerified": true,
+        "termination": "exhausted",
+        "candidateFramesEvaluated": 120,
+        "searchNodesEvaluated": 193,
+        "searchNodeLimit": 1000003,
+        "frameConditionNumber": 1.8512295868219142,
+        "tolerance": 8e-08,
+        "algorithmVersion": "0.7.0"
+      },
+      "independent": {
+        "normalizedCoordinateResidual": 3.519818482003612e-15,
+        "orthogonalityResidual": 4.884981308350689e-15,
+        "actionsMetricChecked": 120,
+        "generatorsIncidenceChecked": 2,
+        "flagCount": 720,
+        "flagOrbitSizes": [
+          120,
+          120,
+          120,
+          120,
+          120,
+          120
+        ],
+        "flagOrbitCount": 6
+      },
+      "actionPermutationSha256": "cef5f27de282050623da5f1259e8906bddd3b1ea4f123e1075f8d1904e7109c5",
+      "status": "passed"
+    },
+    {
+      "id": "r7-symmetry-pentagonal-hexecontahedron",
+      "key": "pentagonal-hexecontahedron",
+      "family": "Catalan",
+      "variant": "source",
+      "expected": {
+        "order": 60,
+        "properOrder": 60,
+        "flagOrbitCount": 10
+      },
+      "source": {
+        "fingerprint": "24bcead76eb7f6a9d0539ad0dd4de35f47c6320b4effb42868c962644d5b2682",
+        "coordinateSha256": "9d1eff0784f515a3f28d33affd3b064c1c45bff0dbf2e4015cb6ead2498f6f96",
+        "incidenceSha256": "c14d4304e28c7f616167db919603d8b4c44110ca081f806df226cae91a57a6ac"
+      },
+      "counts": [
+        92,
+        150,
+        60,
+        0
+      ],
+      "numericMode": "float64-approximate",
+      "certified": false,
+      "maxFrames": 100000,
+      "search": {
+        "order": 60,
+        "properOrder": 60,
+        "complete": true,
+        "closureVerified": true,
+        "termination": "exhausted",
+        "candidateFramesEvaluated": 120,
+        "searchNodesEvaluated": 193,
+        "searchNodeLimit": 1000003,
+        "frameConditionNumber": 1.851229586821916,
+        "tolerance": 8e-08,
+        "algorithmVersion": "0.7.0"
+      },
+      "independent": {
+        "normalizedCoordinateResidual": 1.340123006720315e-15,
+        "orthogonalityResidual": 2.6645352591003757e-15,
+        "actionsMetricChecked": 60,
+        "generatorsIncidenceChecked": 2,
+        "flagCount": 600,
+        "flagOrbitSizes": [
+          60,
+          60,
+          60,
+          60,
+          60,
+          60,
+          60,
+          60,
+          60,
+          60
+        ],
+        "flagOrbitCount": 10
+      },
+      "actionPermutationSha256": "82d4201c6bc54828e8536172ba1a758d2cb7d0fa65e309ca890615342f56ff2d",
+      "status": "passed"
+    },
+    {
+      "id": "r7-symmetry-pentagonal-icositetrahedron-mirror",
+      "key": "pentagonal-icositetrahedron-mirror",
+      "family": "Catalan",
+      "variant": "source",
+      "expected": {
+        "order": 24,
+        "properOrder": 24,
+        "flagOrbitCount": 10
+      },
+      "source": {
+        "fingerprint": "fcc12387204974025622a4246b777dd1a214d699d0f44a3d4a81ab005e04a01a",
+        "coordinateSha256": "3153c9ce3bf6deb9bfd32e7a9ce3d7d91e95412a04b15216b181d4f21a3fa361",
+        "incidenceSha256": "255e62f148d8c011f9375a2b2105e0618b377a93de768dbbc06718aba0837cf5"
+      },
+      "counts": [
+        38,
+        60,
+        24,
+        0
+      ],
+      "numericMode": "float64-approximate",
+      "certified": false,
+      "maxFrames": 100000,
+      "search": {
+        "order": 24,
+        "properOrder": 24,
+        "complete": true,
+        "closureVerified": true,
+        "termination": "exhausted",
+        "candidateFramesEvaluated": 48,
+        "searchNodesEvaluated": 79,
+        "searchNodeLimit": 1000003,
+        "frameConditionNumber": 1.0000000000000004,
+        "tolerance": 8e-08,
+        "algorithmVersion": "0.7.0"
+      },
+      "independent": {
+        "normalizedCoordinateResidual": 1.0678684938098335e-15,
+        "orthogonalityResidual": 1.3505395390993918e-15,
+        "actionsMetricChecked": 24,
+        "generatorsIncidenceChecked": 2,
+        "flagCount": 240,
+        "flagOrbitSizes": [
+          24,
+          24,
+          24,
+          24,
+          24,
+          24,
+          24,
+          24,
+          24,
+          24
+        ],
+        "flagOrbitCount": 10
+      },
+      "actionPermutationSha256": "d1c79c5f9611245437d39d5f2d93701e77effd9e37873674e452165018a916cf",
+      "status": "passed"
+    },
+    {
+      "id": "r7-symmetry-pentagonal-hexecontahedron-mirror",
+      "key": "pentagonal-hexecontahedron-mirror",
+      "family": "Catalan",
+      "variant": "source",
+      "expected": {
+        "order": 60,
+        "properOrder": 60,
+        "flagOrbitCount": 10
+      },
+      "source": {
+        "fingerprint": "d09c6902c6ec7252a24b830d000492dd4fda5f5230be8fca262ae3495a98bdc9",
+        "coordinateSha256": "ce4bb9ff15888c8f2cce7e07e492f74f76043434f38c2546dfdb21b32514b381",
+        "incidenceSha256": "a60c2dba911f9642edd4cdad0dcc94f1226f09c66f22aa73cfd9ffa4407e3c75"
+      },
+      "counts": [
+        92,
+        150,
+        60,
+        0
+      ],
+      "numericMode": "float64-approximate",
+      "certified": false,
+      "maxFrames": 100000,
+      "search": {
+        "order": 60,
+        "properOrder": 60,
+        "complete": true,
+        "closureVerified": true,
+        "termination": "exhausted",
+        "candidateFramesEvaluated": 120,
+        "searchNodesEvaluated": 193,
+        "searchNodeLimit": 1000003,
+        "frameConditionNumber": 1.8512295868219162,
+        "tolerance": 8e-08,
+        "algorithmVersion": "0.7.0"
+      },
+      "independent": {
+        "normalizedCoordinateResidual": 1.1102284456227842e-15,
+        "orthogonalityResidual": 1.3322676295501878e-15,
+        "actionsMetricChecked": 60,
+        "generatorsIncidenceChecked": 2,
+        "flagCount": 600,
+        "flagOrbitSizes": [
+          60,
+          60,
+          60,
+          60,
+          60,
+          60,
+          60,
+          60,
+          60,
+          60
+        ],
+        "flagOrbitCount": 10
+      },
+      "actionPermutationSha256": "82d4201c6bc54828e8536172ba1a758d2cb7d0fa65e309ca890615342f56ff2d",
+      "status": "passed"
+    },
+    {
+      "id": "r7-symmetry-small-stellated-dodecahedron",
+      "key": "small-stellated-dodecahedron",
+      "family": "Kepler-Poinsot",
+      "variant": "source",
+      "expected": {
+        "order": 120,
+        "properOrder": 60,
+        "flagOrbitCount": 1
+      },
+      "source": {
+        "fingerprint": "694f3e02d5d04cf457471b9821dec808a7cf19cc10efd8e529dca48db43445e9",
+        "coordinateSha256": "7c0eba5ba39892da4a1d3f323d952dc222ff3238be107b47f835cf152048e833",
+        "incidenceSha256": "221eb3758d9c5ff880497859c8eb3a985f1f8b8a6605333a22043228c3d3fe74"
+      },
+      "counts": [
+        12,
+        30,
+        12,
+        0
+      ],
+      "numericMode": "float64-approximate",
+      "certified": false,
+      "maxFrames": 100000,
+      "search": {
+        "order": 120,
+        "properOrder": 60,
+        "complete": true,
+        "closureVerified": true,
+        "termination": "exhausted",
+        "candidateFramesEvaluated": 120,
+        "searchNodesEvaluated": 193,
+        "searchNodeLimit": 1000003,
+        "frameConditionNumber": 1.8512295868219162,
+        "tolerance": 8e-08,
+        "algorithmVersion": "0.7.0"
+      },
+      "independent": {
+        "normalizedCoordinateResidual": 1.5700924586837752e-16,
+        "orthogonalityResidual": 4.440892098500626e-16,
+        "actionsMetricChecked": 120,
+        "generatorsIncidenceChecked": 3,
+        "flagCount": 120,
+        "flagOrbitSizes": [
+          120
+        ],
+        "flagOrbitCount": 1
+      },
+      "actionPermutationSha256": "17d9c63957fd182ff946ce9f7c1d5f6660bb0b429c091d20865847c18a4a5c14",
+      "status": "passed"
+    },
+    {
+      "id": "r7-symmetry-great-dodecahedron",
+      "key": "great-dodecahedron",
+      "family": "Kepler-Poinsot",
+      "variant": "source",
+      "expected": {
+        "order": 120,
+        "properOrder": 60,
+        "flagOrbitCount": 1
+      },
+      "source": {
+        "fingerprint": "fccef570c61425fa5ea8e70a305af7db47027d46fe0e2f3838b5ae067d6db54e",
+        "coordinateSha256": "7c0eba5ba39892da4a1d3f323d952dc222ff3238be107b47f835cf152048e833",
+        "incidenceSha256": "6503539c9e4fda5a0497ece1f21c77afa8436c522fde268666e1847152d8c22b"
+      },
+      "counts": [
+        12,
+        30,
+        12,
+        0
+      ],
+      "numericMode": "float64-approximate",
+      "certified": false,
+      "maxFrames": 100000,
+      "search": {
+        "order": 120,
+        "properOrder": 60,
+        "complete": true,
+        "closureVerified": true,
+        "termination": "exhausted",
+        "candidateFramesEvaluated": 120,
+        "searchNodesEvaluated": 193,
+        "searchNodeLimit": 1000003,
+        "frameConditionNumber": 1.8512295868219162,
+        "tolerance": 8e-08,
+        "algorithmVersion": "0.7.0"
+      },
+      "independent": {
+        "normalizedCoordinateResidual": 1.5700924586837752e-16,
+        "orthogonalityResidual": 4.440892098500626e-16,
+        "actionsMetricChecked": 120,
+        "generatorsIncidenceChecked": 3,
+        "flagCount": 120,
+        "flagOrbitSizes": [
+          120
+        ],
+        "flagOrbitCount": 1
+      },
+      "actionPermutationSha256": "17d9c63957fd182ff946ce9f7c1d5f6660bb0b429c091d20865847c18a4a5c14",
+      "status": "passed"
+    },
+    {
+      "id": "r7-symmetry-great-stellated-dodecahedron",
+      "key": "great-stellated-dodecahedron",
+      "family": "Kepler-Poinsot",
+      "variant": "source",
+      "expected": {
+        "order": 120,
+        "properOrder": 60,
+        "flagOrbitCount": 1
+      },
+      "source": {
+        "fingerprint": "99f44b5384ce3dc4288214f14ce8ff31c4e58a74fc9513ca8824af57d881d098",
+        "coordinateSha256": "dbf503e264e17b236617a31fad19cb6d4a145804db83bc30a4270703c8b509ae",
+        "incidenceSha256": "3c6c3e9555bcfd3da9980fe7d06e9a0d96e10247640fec73afa5b6a50b244a65"
+      },
+      "counts": [
+        20,
+        30,
+        12,
+        0
+      ],
+      "numericMode": "float64-approximate",
+      "certified": false,
+      "maxFrames": 100000,
+      "search": {
+        "order": 120,
+        "properOrder": 60,
+        "complete": true,
+        "closureVerified": true,
+        "termination": "exhausted",
+        "candidateFramesEvaluated": 120,
+        "searchNodesEvaluated": 201,
+        "searchNodeLimit": 1000003,
+        "frameConditionNumber": 2.78396128233199,
+        "tolerance": 8e-08,
+        "algorithmVersion": "0.7.0"
+      },
+      "independent": {
+        "normalizedCoordinateResidual": 2.676478128560483e-16,
+        "orthogonalityResidual": 3.885780586188048e-16,
+        "actionsMetricChecked": 120,
+        "generatorsIncidenceChecked": 2,
+        "flagCount": 120,
+        "flagOrbitSizes": [
+          120
+        ],
+        "flagOrbitCount": 1
+      },
+      "actionPermutationSha256": "ceb586d4e6fc22f6ff750f650d6df66c079ad3b38b3344e03bceb67800ca95c1",
+      "status": "passed"
+    },
+    {
+      "id": "r7-symmetry-great-icosahedron",
+      "key": "great-icosahedron",
+      "family": "Kepler-Poinsot",
+      "variant": "source",
+      "expected": {
+        "order": 120,
+        "properOrder": 60,
+        "flagOrbitCount": 1
+      },
+      "source": {
+        "fingerprint": "c1beaa16b74ff4128396228e662cc8a341813db60ce56b5d3e3b45140ce8115c",
+        "coordinateSha256": "7c0eba5ba39892da4a1d3f323d952dc222ff3238be107b47f835cf152048e833",
+        "incidenceSha256": "771e54a407cce973d4ebcb427d69d1ac596a9d38d0f98f2c1f81675acbec6b9a"
+      },
+      "counts": [
+        12,
+        30,
+        20,
+        0
+      ],
+      "numericMode": "float64-approximate",
+      "certified": false,
+      "maxFrames": 100000,
+      "search": {
+        "order": 120,
+        "properOrder": 60,
+        "complete": true,
+        "closureVerified": true,
+        "termination": "exhausted",
+        "candidateFramesEvaluated": 120,
+        "searchNodesEvaluated": 193,
+        "searchNodeLimit": 1000003,
+        "frameConditionNumber": 1.8512295868219162,
+        "tolerance": 8e-08,
+        "algorithmVersion": "0.7.0"
+      },
+      "independent": {
+        "normalizedCoordinateResidual": 1.5700924586837752e-16,
+        "orthogonalityResidual": 4.440892098500626e-16,
+        "actionsMetricChecked": 120,
+        "generatorsIncidenceChecked": 3,
+        "flagCount": 120,
+        "flagOrbitSizes": [
+          120
+        ],
+        "flagOrbitCount": 1
+      },
+      "actionPermutationSha256": "17d9c63957fd182ff946ce9f7c1d5f6660bb0b429c091d20865847c18a4a5c14",
+      "status": "passed"
+    },
+    {
+      "id": "r7-symmetry-simplex4",
+      "key": "simplex4",
+      "family": "Classical regular 4D",
+      "variant": "source",
+      "expected": {
+        "order": 120,
+        "properOrder": 60,
+        "flagOrbitCount": 1
+      },
+      "source": {
+        "fingerprint": "a68e442f6f39288264d2ac03420ba9b39e159f529470c59ca26292bf44dc079f",
+        "coordinateSha256": "392730b62d6963b4d7120c75c14c08e8b2857373f8e94e312370e0ef905136af",
+        "incidenceSha256": "73993577e0fe047bc0dd9ee4024cff4351e8813a0d450206d5ed200d0f4b7811"
+      },
+      "counts": [
+        5,
+        10,
+        10,
+        5
+      ],
+      "numericMode": "float64-approximate",
+      "certified": false,
+      "maxFrames": 100000,
+      "search": {
+        "order": 120,
+        "properOrder": 60,
+        "complete": true,
+        "closureVerified": true,
+        "termination": "exhausted",
+        "candidateFramesEvaluated": 120,
+        "searchNodesEvaluated": 206,
+        "searchNodeLimit": 1000004,
+        "frameConditionNumber": 2.23606797749979,
+        "tolerance": 8e-08,
+        "algorithmVersion": "0.7.0"
+      },
+      "independent": {
+        "normalizedCoordinateResidual": 3.04126265848902e-16,
+        "orthogonalityResidual": 6.661338147750939e-16,
+        "actionsMetricChecked": 120,
+        "generatorsIncidenceChecked": 4,
+        "flagCount": 120,
+        "flagOrbitSizes": [
+          120
+        ],
+        "flagOrbitCount": 1
+      },
+      "actionPermutationSha256": "6093a33ec685f54836d2e49434acf3efdfe6e13ac11413832535ff6e12cfecce",
+      "regularFlagCheck": {
+        "flagCount": 120,
+        "reachedFlags": 120,
+        "generatedSubgroupOrder": 120,
+        "maxCoordinateResidual": 8.326672684688674e-16,
+        "maxFaceResidual": 4.440892098500626e-16,
+        "maxMirrorResidual": 2.7755575615628914e-16,
+        "relativeEdgeSpread": 2.220446049250313e-16
+      },
+      "status": "passed"
+    },
+    {
+      "id": "r7-symmetry-tesseract",
+      "key": "tesseract",
+      "family": "Classical regular 4D",
+      "variant": "source",
+      "expected": {
+        "order": 384,
+        "properOrder": 192,
+        "flagOrbitCount": 1
+      },
+      "source": {
+        "fingerprint": "7184b78112587526fffa727ea91d5fca9a988932202ef3501211fe5076d25fe6",
+        "coordinateSha256": "bc5b9e370939bf167426904f6cbfc44bb316542ab76cd85f97641917de190582",
+        "incidenceSha256": "29a53369443c170a837627d14f033d46c04a4755e0fbe721c7c2b82abbba10c8"
+      },
+      "counts": [
+        16,
+        32,
+        24,
+        8
+      ],
+      "numericMode": "float64-approximate",
+      "certified": false,
+      "maxFrames": 100000,
+      "search": {
+        "order": 384,
+        "properOrder": 192,
+        "complete": true,
+        "closureVerified": true,
+        "termination": "exhausted",
+        "candidateFramesEvaluated": 384,
+        "searchNodesEvaluated": 657,
+        "searchNodeLimit": 1000004,
+        "frameConditionNumber": 2.414213562373094,
+        "tolerance": 8e-08,
+        "algorithmVersion": "0.7.0"
+      },
+      "independent": {
+        "normalizedCoordinateResidual": 0.0,
+        "orthogonalityResidual": 0.0,
+        "actionsMetricChecked": 384,
+        "generatorsIncidenceChecked": 4,
+        "flagCount": 384,
+        "flagOrbitSizes": [
+          384
+        ],
+        "flagOrbitCount": 1
+      },
+      "actionPermutationSha256": "e73ad0b665d325084603ae332d20b66ee75da7df499863c5daff9a2b31af1ce0",
+      "regularFlagCheck": {
+        "flagCount": 384,
+        "reachedFlags": 384,
+        "generatedSubgroupOrder": 384,
+        "maxCoordinateResidual": 6.106226635438361e-16,
+        "maxFaceResidual": 1.5700924586837752e-16,
+        "maxMirrorResidual": 3.3306690738754696e-16,
+        "relativeEdgeSpread": 0.0
+      },
+      "status": "passed"
+    },
+    {
+      "id": "r7-symmetry-cross4",
+      "key": "cross4",
+      "family": "Classical regular 4D",
+      "variant": "source",
+      "expected": {
+        "order": 384,
+        "properOrder": 192,
+        "flagOrbitCount": 1
+      },
+      "source": {
+        "fingerprint": "0bf7f22e225b6e1eafb25643ef8211640e3d8a80383da9228b54c1cdd82c6788",
+        "coordinateSha256": "807a2663b6b5678b9411ab6e951dc9f141cb561031b102fa2addd5963384858a",
+        "incidenceSha256": "6d828ac8c505153b4dfaff05dcbe8c8b6fb5a99b56f6d22f72324cb96542bc80"
+      },
+      "counts": [
+        8,
+        24,
+        32,
+        16
+      ],
+      "numericMode": "float64-approximate",
+      "certified": false,
+      "maxFrames": 100000,
+      "search": {
+        "order": 384,
+        "properOrder": 192,
+        "complete": true,
+        "closureVerified": true,
+        "termination": "exhausted",
+        "candidateFramesEvaluated": 384,
+        "searchNodesEvaluated": 633,
+        "searchNodeLimit": 1000004,
+        "frameConditionNumber": 1.0,
+        "tolerance": 8e-08,
+        "algorithmVersion": "0.7.0"
+      },
+      "independent": {
+        "normalizedCoordinateResidual": 0.0,
+        "orthogonalityResidual": 0.0,
+        "actionsMetricChecked": 384,
+        "generatorsIncidenceChecked": 7,
+        "flagCount": 384,
+        "flagOrbitSizes": [
+          384
+        ],
+        "flagOrbitCount": 1
+      },
+      "actionPermutationSha256": "498edf5b18b5bce1d0aff41fefb66e195ed1cb0f87cbff2c818a5db5c9def0a4",
+      "regularFlagCheck": {
+        "flagCount": 384,
+        "reachedFlags": 384,
+        "generatedSubgroupOrder": 384,
+        "maxCoordinateResidual": 5.061113341978249e-16,
+        "maxFaceResidual": 4.440892098500626e-16,
+        "maxMirrorResidual": 1.6653345369377348e-16,
+        "relativeEdgeSpread": 0.0
+      },
+      "status": "passed"
+    },
+    {
+      "id": "r7-symmetry-cell24",
+      "key": "cell24",
+      "family": "Classical regular 4D",
+      "variant": "source",
+      "expected": {
+        "order": 1152,
+        "properOrder": 576,
+        "flagOrbitCount": 1
+      },
+      "source": {
+        "fingerprint": "8eb19c658708e122c956f68ddf4206c2f5ddffddf1419d8854a952198f0e351b",
+        "coordinateSha256": "00fa204fa46e53721aac4d13d4da5e2620e55b762c33eeb3443fb0cb3863853d",
+        "incidenceSha256": "a5d03410495e614a947345e6e6194d65fabcdb4561c4d9d0a26e9e159d0b591f"
+      },
+      "counts": [
+        24,
+        96,
+        96,
+        24
+      ],
+      "numericMode": "float64-approximate",
+      "certified": false,
+      "maxFrames": 100000,
+      "search": {
+        "order": 1152,
+        "properOrder": 576,
+        "complete": true,
+        "closureVerified": true,
+        "termination": "exhausted",
+        "candidateFramesEvaluated": 1152,
+        "searchNodesEvaluated": 1897,
+        "searchNodeLimit": 1000004,
+        "frameConditionNumber": 1.0000000000000002,
+        "tolerance": 8e-08,
+        "algorithmVersion": "0.7.0"
+      },
+      "independent": {
+        "normalizedCoordinateResidual": 0.0,
+        "orthogonalityResidual": 0.0,
+        "actionsMetricChecked": 1152,
+        "generatorsIncidenceChecked": 4,
+        "flagCount": 1152,
+        "flagOrbitSizes": [
+          1152
+        ],
+        "flagOrbitCount": 1
+      },
+      "actionPermutationSha256": "affa66d0daf4200e0c12b678b5dd4524dabcb4fc7402c8368d58ce93aa078d00",
+      "regularFlagCheck": {
+        "flagCount": 1152,
+        "reachedFlags": 1152,
+        "generatedSubgroupOrder": 1152,
+        "maxCoordinateResidual": 4.877362748386922e-16,
+        "maxFaceResidual": 4.440892098500626e-16,
+        "maxMirrorResidual": 2.220446049250313e-16,
+        "relativeEdgeSpread": 0.0
+      },
+      "status": "passed"
+    },
+    {
+      "id": "r7-symmetry-cell120",
+      "key": "cell120",
+      "family": "Classical regular 4D",
+      "variant": "source",
+      "expected": {
+        "order": 14400,
+        "properOrder": 7200,
+        "flagOrbitCount": 1
+      },
+      "source": {
+        "fingerprint": "1a0b9ffb0a61ca697d5dc8c50547162354b54136044a805abe504fe64ae28150",
+        "coordinateSha256": "2181169c362ba3275a6608ddf3e2343423c02b0f6e4f641eb6819f8b23d8d189",
+        "incidenceSha256": "9389d9358a4fd21fc8452572800f58f76bf6801863c52678caba33c3ef551d88"
+      },
+      "counts": [
+        600,
+        1200,
+        720,
+        120
+      ],
+      "numericMode": "float64-approximate",
+      "certified": false,
+      "maxFrames": 100000,
+      "search": {
+        "order": 14400,
+        "properOrder": 7200,
+        "complete": true,
+        "closureVerified": true,
+        "termination": "exhausted",
+        "candidateFramesEvaluated": 14400,
+        "searchNodesEvaluated": 24601,
+        "searchNodeLimit": 1000004,
+        "frameConditionNumber": 2.966642034576352,
+        "tolerance": 8e-08,
+        "algorithmVersion": "0.7.0"
+      },
+      "independent": {
+        "normalizedCoordinateResidual": 9.711477198482368e-16,
+        "orthogonalityResidual": 2.1094237467877974e-15,
+        "actionsMetricChecked": 14400,
+        "generatorsIncidenceChecked": 3,
+        "flagCount": 14400,
+        "flagOrbitSizes": [
+          14400
+        ],
+        "flagOrbitCount": 1
+      },
+      "actionPermutationSha256": "c01f065ebd3208ce3d5673391b17b11f8b3731479eae52d51c1ff9970af923a0",
+      "regularFlagCheck": {
+        "flagCount": 14400,
+        "reachedFlags": 14400,
+        "generatedSubgroupOrder": 14400,
+        "maxCoordinateResidual": 1.4905545222651586e-15,
+        "maxFaceResidual": 2.2046184252462625e-15,
+        "maxMirrorResidual": 4.996003610813204e-16,
+        "relativeEdgeSpread": 2.220446049250313e-15
+      },
+      "status": "passed"
+    },
+    {
+      "id": "r7-symmetry-cell600",
+      "key": "cell600",
+      "family": "Classical regular 4D",
+      "variant": "source",
+      "expected": {
+        "order": 14400,
+        "properOrder": 7200,
+        "flagOrbitCount": 1
+      },
+      "source": {
+        "fingerprint": "0763555c286cf5c88b0f504d3ac93224c28745bfc7b3c347ca208a533fec426e",
+        "coordinateSha256": "445c95f3a3ea5acbc8e67ddbdb8312b18d153ff3df97eac8eaef0e6280b6be71",
+        "incidenceSha256": "1c2e89fd0ab5ea4f29ea4bc34234d585577f1a232c754eb67e62d9e04c72d4e5"
+      },
+      "counts": [
+        120,
+        720,
+        1200,
+        600
+      ],
+      "numericMode": "float64-approximate",
+      "certified": false,
+      "maxFrames": 100000,
+      "search": {
+        "order": 14400,
+        "properOrder": 7200,
+        "complete": true,
+        "closureVerified": true,
+        "termination": "exhausted",
+        "candidateFramesEvaluated": 14400,
+        "searchNodesEvaluated": 23161,
+        "searchNodeLimit": 1000004,
+        "frameConditionNumber": 1.8726830794745242,
+        "tolerance": 8e-08,
+        "algorithmVersion": "0.7.0"
+      },
+      "independent": {
+        "normalizedCoordinateResidual": 2.667440942819657e-16,
+        "orthogonalityResidual": 6.661338147750939e-16,
+        "actionsMetricChecked": 14400,
+        "generatorsIncidenceChecked": 2,
+        "flagCount": 14400,
+        "flagOrbitSizes": [
+          14400
+        ],
+        "flagOrbitCount": 1
+      },
+      "actionPermutationSha256": "a9fd90dc8eb8ea9dfe8bbf3ffcb9c6b9b748cec582e4276819903e22fce5976b",
+      "regularFlagCheck": {
+        "flagCount": 14400,
+        "reachedFlags": 14400,
+        "generatedSubgroupOrder": 14400,
+        "maxCoordinateResidual": 5.268181340580215e-16,
+        "maxFaceResidual": 1.3322676295501878e-15,
+        "maxMirrorResidual": 2.498001805406602e-16,
+        "relativeEdgeSpread": 4.440892098500626e-16
+      },
+      "status": "passed"
+    },
+    {
+      "id": "r7-symmetry-miratope-icosahedral-hecatonicosachoron",
+      "key": "miratope-icosahedral-hecatonicosachoron",
+      "family": "Classical regular 4D",
+      "variant": "source",
+      "expected": {
+        "order": 14400,
+        "properOrder": 7200,
+        "flagOrbitCount": 1
+      },
+      "source": {
+        "fingerprint": "c391aa689f4a7b1ef510b704a488719399214a62b4eaddaa34a318c89ae91ffa",
+        "coordinateSha256": "4ba6774eafc17e50f1717eaae37d11c85b817ee0e859e2fc42b4db43b4c26604",
+        "incidenceSha256": "fcb77828e89cfd1a7b7d062a215b66757070381bd1610122533df8ff009c10b9"
+      },
+      "counts": [
+        120,
+        720,
+        1200,
+        120
+      ],
+      "numericMode": "float64-approximate",
+      "certified": false,
+      "maxFrames": 100000,
+      "search": {
+        "order": 14400,
+        "properOrder": 7200,
+        "complete": true,
+        "closureVerified": true,
+        "termination": "exhausted",
+        "candidateFramesEvaluated": 14400,
+        "searchNodesEvaluated": 23161,
+        "searchNodeLimit": 1000004,
+        "frameConditionNumber": 1.8512295868218964,
+        "tolerance": 8e-08,
+        "algorithmVersion": "0.7.0"
+      },
+      "independent": {
+        "normalizedCoordinateResidual": 1.2158963197990872e-13,
+        "orthogonalityResidual": 2.517985819849855e-13,
+        "actionsMetricChecked": 14400,
+        "generatorsIncidenceChecked": 3,
+        "flagCount": 14400,
+        "flagOrbitSizes": [
+          14400
+        ],
+        "flagOrbitCount": 1
+      },
+      "actionPermutationSha256": "b5e0e93071fed15f646cb80c6e48d9223d8a3ff335a37d0a0c8f7cd4aca2e6b8",
+      "regularFlagCheck": {
+        "flagCount": 14400,
+        "reachedFlags": 14400,
+        "generatedSubgroupOrder": 14400,
+        "maxCoordinateResidual": 1.4260797464837617e-13,
+        "maxFaceResidual": 1.603162047558726e-13,
+        "maxMirrorResidual": 5.695444116327053e-14,
+        "relativeEdgeSpread": 1.8096635301390052e-13
+      },
+      "status": "passed"
+    },
+    {
+      "id": "r7-symmetry-miratope-great-hecatonicosachoron",
+      "key": "miratope-great-hecatonicosachoron",
+      "family": "Classical regular 4D",
+      "variant": "source",
+      "expected": {
+        "order": 14400,
+        "properOrder": 7200,
+        "flagOrbitCount": 1
+      },
+      "source": {
+        "fingerprint": "b012e3eb7e02555eb4d69ca93d859dd4850f5f87b6aa4e0e0a67e40392a26bf5",
+        "coordinateSha256": "3061ba582e6124931f9309c3327d93927c31d3fc02ee2b7cd57cca8b3dc0bc09",
+        "incidenceSha256": "87c5bb36c84ea2548b0afccd0636c18c1021ba9a769c186d35a0fe57b91c5139"
+      },
+      "counts": [
+        120,
+        720,
+        720,
+        120
+      ],
+      "numericMode": "float64-approximate",
+      "certified": false,
+      "maxFrames": 100000,
+      "search": {
+        "order": 14400,
+        "properOrder": 7200,
+        "complete": true,
+        "closureVerified": true,
+        "termination": "exhausted",
+        "candidateFramesEvaluated": 14400,
+        "searchNodesEvaluated": 23161,
+        "searchNodeLimit": 1000004,
+        "frameConditionNumber": 1.8512295868217976,
+        "tolerance": 8e-08,
+        "algorithmVersion": "0.7.0"
+      },
+      "independent": {
+        "normalizedCoordinateResidual": 1.233444614585643e-13,
+        "orthogonalityResidual": 2.617905892066119e-13,
+        "actionsMetricChecked": 14400,
+        "generatorsIncidenceChecked": 2,
+        "flagCount": 14400,
+        "flagOrbitSizes": [
+          14400
+        ],
+        "flagOrbitCount": 1
+      },
+      "actionPermutationSha256": "3c9005c23b472f17ee9214e6feb23a4c090d26b6b288f9bc1189ed012c8ac1d7",
+      "regularFlagCheck": {
+        "flagCount": 14400,
+        "reachedFlags": 14400,
+        "generatedSubgroupOrder": 14400,
+        "maxCoordinateResidual": 1.2241108153160464e-13,
+        "maxFaceResidual": 1.4921397450962104e-13,
+        "maxMirrorResidual": 1.9456658506555868e-14,
+        "relativeEdgeSpread": 2.120525977034049e-13
+      },
+      "status": "passed"
+    },
+    {
+      "id": "r7-symmetry-miratope-grand-hecatonicosachoron",
+      "key": "miratope-grand-hecatonicosachoron",
+      "family": "Classical regular 4D",
+      "variant": "source",
+      "expected": {
+        "order": 14400,
+        "properOrder": 7200,
+        "flagOrbitCount": 1
+      },
+      "source": {
+        "fingerprint": "24c01e91e9fe93bba8789ae1bc076957b8e550daf79fa782e23a2e7a18760ccf",
+        "coordinateSha256": "2670bddae018833d7eb12dd0bd02713df5acad06a3d3ba89e21b7aad8b99b8c2",
+        "incidenceSha256": "5f26a881a108fc58d4a3775ae48b7caf6b63766ef250015dc2349f5c515248e1"
+      },
+      "counts": [
+        120,
+        720,
+        720,
+        120
+      ],
+      "numericMode": "float64-approximate",
+      "certified": false,
+      "maxFrames": 100000,
+      "search": {
+        "order": 14400,
+        "properOrder": 7200,
+        "complete": true,
+        "closureVerified": true,
+        "termination": "exhausted",
+        "candidateFramesEvaluated": 14400,
+        "searchNodesEvaluated": 23161,
+        "searchNodeLimit": 1000004,
+        "frameConditionNumber": 1.8726830794744505,
+        "tolerance": 8e-08,
+        "algorithmVersion": "0.7.0"
+      },
+      "independent": {
+        "normalizedCoordinateResidual": 1.0344570829165148e-13,
+        "orthogonalityResidual": 2.2293278334473143e-13,
+        "actionsMetricChecked": 14400,
+        "generatorsIncidenceChecked": 3,
+        "flagCount": 14400,
+        "flagOrbitSizes": [
+          14400
+        ],
+        "flagOrbitCount": 1
+      },
+      "actionPermutationSha256": "9335e505cb525827ed12963c72ff036fd4d738d4bb191a75e8a7213b35519914",
+      "regularFlagCheck": {
+        "flagCount": 14400,
+        "reachedFlags": 14400,
+        "generatedSubgroupOrder": 14400,
+        "maxCoordinateResidual": 1.2607956975982017e-13,
+        "maxFaceResidual": 1.7291758787895233e-13,
+        "maxMirrorResidual": 2.1038726316646716e-14,
+        "relativeEdgeSpread": 2.120525977034049e-13
+      },
+      "status": "passed"
+    },
+    {
+      "id": "r7-symmetry-miratope-stellated-hecatonicosachoron",
+      "key": "miratope-stellated-hecatonicosachoron",
+      "family": "Classical regular 4D",
+      "variant": "source",
+      "expected": {
+        "order": 14400,
+        "properOrder": 7200,
+        "flagOrbitCount": 1
+      },
+      "source": {
+        "fingerprint": "7b1e23331b4564d1993a5538ddd6ead527944ee1bc67eb849e2da8e0026f5d4e",
+        "coordinateSha256": "27e3b316e4864e944faf483338d5d3db489a346fe67c9853330f71a1eb4da107",
+        "incidenceSha256": "027339c7fba1854a7c0b71835b7e3ccb480f89d27ed99dc7b83ec8160d756710"
+      },
+      "counts": [
+        120,
+        1200,
+        720,
+        120
+      ],
+      "numericMode": "float64-approximate",
+      "certified": false,
+      "maxFrames": 100000,
+      "search": {
+        "order": 14400,
+        "properOrder": 7200,
+        "complete": true,
+        "closureVerified": true,
+        "termination": "exhausted",
+        "candidateFramesEvaluated": 14400,
+        "searchNodesEvaluated": 23161,
+        "searchNodeLimit": 1000004,
+        "frameConditionNumber": 1.8726830794743534,
+        "tolerance": 8e-08,
+        "algorithmVersion": "0.7.0"
+      },
+      "independent": {
+        "normalizedCoordinateResidual": 1.9465912058043737e-13,
+        "orthogonalityResidual": 3.7125857943465235e-13,
+        "actionsMetricChecked": 14400,
+        "generatorsIncidenceChecked": 2,
+        "flagCount": 14400,
+        "flagOrbitSizes": [
+          14400
+        ],
+        "flagOrbitCount": 1
+      },
+      "actionPermutationSha256": "2fe5d884849d8e96add6df200de1e4f7ae8e29b14b92e6a7ec32d7423751d9a8",
+      "regularFlagCheck": {
+        "flagCount": 14400,
+        "reachedFlags": 14400,
+        "generatedSubgroupOrder": 14400,
+        "maxCoordinateResidual": 3.806631481478161e-13,
+        "maxFaceResidual": 3.7111188137562336e-13,
+        "maxMirrorResidual": 2.245426067304379e-13,
+        "relativeEdgeSpread": 2.1183055309847987e-13
+      },
+      "status": "passed"
+    },
+    {
+      "id": "r7-symmetry-miratope-great-grand-hecatonicosachoron",
+      "key": "miratope-great-grand-hecatonicosachoron",
+      "family": "Classical regular 4D",
+      "variant": "source",
+      "expected": {
+        "order": 14400,
+        "properOrder": 7200,
+        "flagOrbitCount": 1
+      },
+      "source": {
+        "fingerprint": "d364644ceaa0d828d48750815cf2efe02b87306e3d9f941f8f2f4f2c844face6",
+        "coordinateSha256": "3497d6970b23f97bd643d702124aa30e5d6de0ef2bddc19d05558a0e2a0e64d6",
+        "incidenceSha256": "027339c7fba1854a7c0b71835b7e3ccb480f89d27ed99dc7b83ec8160d756710"
+      },
+      "counts": [
+        120,
+        1200,
+        720,
+        120
+      ],
+      "numericMode": "float64-approximate",
+      "certified": false,
+      "maxFrames": 100000,
+      "search": {
+        "order": 14400,
+        "properOrder": 7200,
+        "complete": true,
+        "closureVerified": true,
+        "termination": "exhausted",
+        "candidateFramesEvaluated": 14400,
+        "searchNodesEvaluated": 23161,
+        "searchNodeLimit": 1000004,
+        "frameConditionNumber": 1.8512295868219042,
+        "tolerance": 8e-08,
+        "algorithmVersion": "0.7.0"
+      },
+      "independent": {
+        "normalizedCoordinateResidual": 6.67314750733526e-15,
+        "orthogonalityResidual": 1.532107773982716e-14,
+        "actionsMetricChecked": 14400,
+        "generatorsIncidenceChecked": 4,
+        "flagCount": 14400,
+        "flagOrbitSizes": [
+          14400
+        ],
+        "flagOrbitCount": 1
+      },
+      "actionPermutationSha256": "2fe5d884849d8e96add6df200de1e4f7ae8e29b14b92e6a7ec32d7423751d9a8",
+      "regularFlagCheck": {
+        "flagCount": 14400,
+        "reachedFlags": 14400,
+        "generatedSubgroupOrder": 14400,
+        "maxCoordinateResidual": 8.613356079119645e-15,
+        "maxFaceResidual": 3.3293967002919876e-15,
+        "maxMirrorResidual": 1.6653345369377348e-15,
+        "relativeEdgeSpread": 2.886579864025407e-15
+      },
+      "status": "passed"
+    },
+    {
+      "id": "r7-symmetry-miratope-great-stellated-hecatonicosachoron",
+      "key": "miratope-great-stellated-hecatonicosachoron",
+      "family": "Classical regular 4D",
+      "variant": "source",
+      "expected": {
+        "order": 14400,
+        "properOrder": 7200,
+        "flagOrbitCount": 1
+      },
+      "source": {
+        "fingerprint": "479cf997646ae458a408f385591b6bb9d12c6e7bcc160d4b88828aa4a3db4a78",
+        "coordinateSha256": "c4abb76a3cf164bd607038c028c0a6a4a0708cdb75c1ec9afff81ef1223a705d",
+        "incidenceSha256": "7aedb3cd73ee6c2f0f62a3b8ffa3ffbc85edee843f7cd3eaeaa0ad6f77eca8fa"
+      },
+      "counts": [
+        120,
+        720,
+        720,
+        120
+      ],
+      "numericMode": "float64-approximate",
+      "certified": false,
+      "maxFrames": 100000,
+      "search": {
+        "order": 14400,
+        "properOrder": 7200,
+        "complete": true,
+        "closureVerified": true,
+        "termination": "exhausted",
+        "candidateFramesEvaluated": 14400,
+        "searchNodesEvaluated": 23161,
+        "searchNodeLimit": 1000004,
+        "frameConditionNumber": 1.9626105055049918,
+        "tolerance": 8e-08,
+        "algorithmVersion": "0.7.0"
+      },
+      "independent": {
+        "normalizedCoordinateResidual": 1.9715527015775254e-13,
+        "orthogonalityResidual": 4.445332990599127e-13,
+        "actionsMetricChecked": 14400,
+        "generatorsIncidenceChecked": 2,
+        "flagCount": 14400,
+        "flagOrbitSizes": [
+          14400
+        ],
+        "flagOrbitCount": 1
+      },
+      "actionPermutationSha256": "62b43ba51e1e56ec8a4fafadb1472ba796ea1622334a5c1a02724c5b33ffdd68",
+      "regularFlagCheck": {
+        "flagCount": 14400,
+        "reachedFlags": 14400,
+        "generatedSubgroupOrder": 14400,
+        "maxCoordinateResidual": 1.0444698048911763e-12,
+        "maxFaceResidual": 2.485738526310168e-13,
+        "maxMirrorResidual": 5.882516695976392e-13,
+        "relativeEdgeSpread": 8.104628079763643e-14
+      },
+      "status": "passed"
+    },
+    {
+      "id": "r7-symmetry-miratope-grand-stellated-hecatonicosachoron",
+      "key": "miratope-grand-stellated-hecatonicosachoron",
+      "family": "Classical regular 4D",
+      "variant": "source",
+      "expected": {
+        "order": 14400,
+        "properOrder": 7200,
+        "flagOrbitCount": 1
+      },
+      "source": {
+        "fingerprint": "bcf11eb2d144ebf89e75c6d50f3c082d14c070ea49ad97f6f0546f337d567a58",
+        "coordinateSha256": "21d372e895af02f7530b7e2a7c43ff0a71f89c1788f43d51004154ca7e45e048",
+        "incidenceSha256": "87c5bb36c84ea2548b0afccd0636c18c1021ba9a769c186d35a0fe57b91c5139"
+      },
+      "counts": [
+        120,
+        720,
+        720,
+        120
+      ],
+      "numericMode": "float64-approximate",
+      "certified": false,
+      "maxFrames": 100000,
+      "search": {
+        "order": 14400,
+        "properOrder": 7200,
+        "complete": true,
+        "closureVerified": true,
+        "termination": "exhausted",
+        "candidateFramesEvaluated": 14400,
+        "searchNodesEvaluated": 23161,
+        "searchNodeLimit": 1000004,
+        "frameConditionNumber": 1.9626105055049912,
+        "tolerance": 8e-08,
+        "algorithmVersion": "0.7.0"
+      },
+      "independent": {
+        "normalizedCoordinateResidual": 1.9715388720820365e-13,
+        "orthogonalityResidual": 4.445332990599127e-13,
+        "actionsMetricChecked": 14400,
+        "generatorsIncidenceChecked": 3,
+        "flagCount": 14400,
+        "flagOrbitSizes": [
+          14400
+        ],
+        "flagOrbitCount": 1
+      },
+      "actionPermutationSha256": "3c9005c23b472f17ee9214e6feb23a4c090d26b6b288f9bc1189ed012c8ac1d7",
+      "regularFlagCheck": {
+        "flagCount": 14400,
+        "reachedFlags": 14400,
+        "generatedSubgroupOrder": 14400,
+        "maxCoordinateResidual": 5.287750076884042e-13,
+        "maxFaceResidual": 2.485738526310168e-13,
+        "maxMirrorResidual": 1.3913870056114774e-13,
+        "relativeEdgeSpread": 8.104628079763643e-14
+      },
+      "status": "passed"
+    },
+    {
+      "id": "r7-symmetry-miratope-great-icosahedral-hecatonicosachoron",
+      "key": "miratope-great-icosahedral-hecatonicosachoron",
+      "family": "Classical regular 4D",
+      "variant": "source",
+      "expected": {
+        "order": 14400,
+        "properOrder": 7200,
+        "flagOrbitCount": 1
+      },
+      "source": {
+        "fingerprint": "571a08acded5b567fc9d0b6bcb2700641fa62219615d17ba9d8145091c86bfd6",
+        "coordinateSha256": "4bb4f83343bf9c7654c6aba65d2c806ab5da9ca4a55bcb61bc216713605295a4",
+        "incidenceSha256": "fcb77828e89cfd1a7b7d062a215b66757070381bd1610122533df8ff009c10b9"
+      },
+      "counts": [
+        120,
+        720,
+        1200,
+        120
+      ],
+      "numericMode": "float64-approximate",
+      "certified": false,
+      "maxFrames": 100000,
+      "search": {
+        "order": 14400,
+        "properOrder": 7200,
+        "complete": true,
+        "closureVerified": true,
+        "termination": "exhausted",
+        "candidateFramesEvaluated": 14400,
+        "searchNodesEvaluated": 23161,
+        "searchNodeLimit": 1000004,
+        "frameConditionNumber": 1.8726830794745168,
+        "tolerance": 8e-08,
+        "algorithmVersion": "0.7.0"
+      },
+      "independent": {
+        "normalizedCoordinateResidual": 1.4153721538703904e-14,
+        "orthogonalityResidual": 3.2529534621517087e-14,
+        "actionsMetricChecked": 14400,
+        "generatorsIncidenceChecked": 3,
+        "flagCount": 14400,
+        "flagOrbitSizes": [
+          14400
+        ],
+        "flagOrbitCount": 1
+      },
+      "actionPermutationSha256": "b5e0e93071fed15f646cb80c6e48d9223d8a3ff335a37d0a0c8f7cd4aca2e6b8",
+      "regularFlagCheck": {
+        "flagCount": 14400,
+        "reachedFlags": 14400,
+        "generatedSubgroupOrder": 14400,
+        "maxCoordinateResidual": 3.3832057298087105e-14,
+        "maxFaceResidual": 1.021405182655144e-14,
+        "maxMirrorResidual": 1.4155343563970746e-14,
+        "relativeEdgeSpread": 7.993605777301127e-15
+      },
+      "status": "passed"
+    },
+    {
+      "id": "r7-symmetry-miratope-grand-hexacosichoron",
+      "key": "miratope-grand-hexacosichoron",
+      "family": "Classical regular 4D",
+      "variant": "source",
+      "expected": {
+        "order": 14400,
+        "properOrder": 7200,
+        "flagOrbitCount": 1
+      },
+      "source": {
+        "fingerprint": "2b6ce8bc3895a37da50354a124df8461f730b3aab35930992c9e1be69d637964",
+        "coordinateSha256": "28e28df638a9fa5e41f78c693fa96b88743273c298eb19e1df0b104521361f33",
+        "incidenceSha256": "cae52cbaf6ff137ec960ad12330c30e9ece58468fb5dc4ec682a6c8ba1b34132"
+      },
+      "counts": [
+        120,
+        720,
+        1200,
+        600
+      ],
+      "numericMode": "float64-approximate",
+      "certified": false,
+      "maxFrames": 100000,
+      "search": {
+        "order": 14400,
+        "properOrder": 7200,
+        "complete": true,
+        "closureVerified": true,
+        "termination": "exhausted",
+        "candidateFramesEvaluated": 14400,
+        "searchNodesEvaluated": 23161,
+        "searchNodeLimit": 1000004,
+        "frameConditionNumber": 1.851229586821508,
+        "tolerance": 8e-08,
+        "algorithmVersion": "0.7.0"
+      },
+      "independent": {
+        "normalizedCoordinateResidual": 3.157310772183187e-13,
+        "orthogonalityResidual": 7.593925488436071e-13,
+        "actionsMetricChecked": 14400,
+        "generatorsIncidenceChecked": 2,
+        "flagCount": 14400,
+        "flagOrbitSizes": [
+          14400
+        ],
+        "flagOrbitCount": 1
+      },
+      "actionPermutationSha256": "850534f25ad1eae7ba7315e03457415609c8e9b7e8a6a2e3563bf9673520eb42",
+      "regularFlagCheck": {
+        "flagCount": 14400,
+        "reachedFlags": 14400,
+        "generatedSubgroupOrder": 14400,
+        "maxCoordinateResidual": 5.760691944838131e-13,
+        "maxFaceResidual": 1.212363542890671e-13,
+        "maxMirrorResidual": 1.48991929904696e-13,
+        "relativeEdgeSpread": 1.5565326805244695e-13
+      },
+      "status": "passed"
+    },
+    {
+      "id": "r7-symmetry-miratope-great-grand-stellated-hecatonicosachoron",
+      "key": "miratope-great-grand-stellated-hecatonicosachoron",
+      "family": "Classical regular 4D",
+      "variant": "source",
+      "expected": {
+        "order": 14400,
+        "properOrder": 7200,
+        "flagOrbitCount": 1
+      },
+      "source": {
+        "fingerprint": "25de7b097ddba75983f09d00a1de5519ff943b572b887caf5f28fcb617e13f5e",
+        "coordinateSha256": "8b368b4f5979cc2a33ca72d9975b7d5d2bfb26d60fe51c68af8ccd88533a3e29",
+        "incidenceSha256": "217c3275628627e2652685d94fe73cb081abed3aef4dca1bed2164313f0f71ba"
+      },
+      "counts": [
+        600,
+        1200,
+        720,
+        120
+      ],
+      "numericMode": "float64-approximate",
+      "certified": false,
+      "maxFrames": 100000,
+      "search": {
+        "order": 14400,
+        "properOrder": 7200,
+        "complete": true,
+        "closureVerified": true,
+        "termination": "exhausted",
+        "candidateFramesEvaluated": 14400,
+        "searchNodesEvaluated": 24601,
+        "searchNodeLimit": 1000004,
+        "frameConditionNumber": 2.770831716240888,
+        "tolerance": 8e-08,
+        "algorithmVersion": "0.7.0"
+      },
+      "independent": {
+        "normalizedCoordinateResidual": 6.537219852752606e-16,
+        "orthogonalityResidual": 1.5543122344752192e-15,
+        "actionsMetricChecked": 14400,
+        "generatorsIncidenceChecked": 3,
+        "flagCount": 14400,
+        "flagOrbitSizes": [
+          14400
+        ],
+        "flagOrbitCount": 1
+      },
+      "actionPermutationSha256": "da8d61cb6a5267a18ad209d1ed6982a22df5c023dde41f1ed9b6e64c299ffaeb",
+      "regularFlagCheck": {
+        "flagCount": 14400,
+        "reachedFlags": 14400,
+        "generatedSubgroupOrder": 14400,
+        "maxCoordinateResidual": 3.0275035230719744e-15,
+        "maxFaceResidual": 8.93798490114984e-16,
+        "maxMirrorResidual": 1.1102230246251565e-15,
+        "relativeEdgeSpread": 2.220446049250313e-16
+      },
+      "status": "passed"
+    },
+    {
+      "id": "r7-symmetry-uniform4-rap",
+      "key": "uniform4-rap",
+      "family": "Convex Wythoff representatives",
+      "variant": "source",
+      "expected": {
+        "order": 120,
+        "properOrder": 60
+      },
+      "source": {
+        "fingerprint": "23eb5f73c59e14f0577afed405589a396e1f7d9e577237153f6415a64001f140",
+        "coordinateSha256": "455ec8ca6fc62ead0c0ddc4dab942c9b2132c59143b2916ef3b96ef11258c755",
+        "incidenceSha256": "d22ed29cc4ad0f67295067e9c43c837365e396f6102d92ac3e5c461efb94b70e"
+      },
+      "counts": [
+        10,
+        30,
+        30,
+        10
+      ],
+      "numericMode": "float64-approximate",
+      "certified": false,
+      "maxFrames": 100000,
+      "search": {
+        "order": 120,
+        "properOrder": 60,
+        "complete": true,
+        "closureVerified": true,
+        "termination": "exhausted",
+        "candidateFramesEvaluated": 120,
+        "searchNodesEvaluated": 221,
+        "searchNodeLimit": 1000004,
+        "frameConditionNumber": 4.690938339548676,
+        "tolerance": 8e-08,
+        "algorithmVersion": "0.7.0"
+      },
+      "independent": {
+        "normalizedCoordinateResidual": 3.925239941759829e-15,
+        "orthogonalityResidual": 6.994405055138486e-15,
+        "actionsMetricChecked": 120,
+        "generatorsIncidenceChecked": 3,
+        "flagCount": 360,
+        "flagOrbitSizes": [
+          120,
+          120,
+          120
+        ],
+        "flagOrbitCount": 3
+      },
+      "actionPermutationSha256": "0a0b911befbc84f7a01764f7882d09e6dc1c7d0441b91c5d489a567a5af80120",
+      "status": "passed"
+    },
+    {
+      "id": "r7-symmetry-uniform4-rit",
+      "key": "uniform4-rit",
+      "family": "Convex Wythoff representatives",
+      "variant": "source",
+      "expected": {
+        "order": 384,
+        "properOrder": 192
+      },
+      "source": {
+        "fingerprint": "1486f6cb232f4a724fe80e2e75dccaf6cc080492758c4375e6e8d36656804d8c",
+        "coordinateSha256": "532f0f270c61d3313ea10bfd42c500bedc58f72130b07a8b017e751ee129c25e",
+        "incidenceSha256": "f2727f34edc21d3212e30b729767ea8867ca55f5da4d75fc974d7b1db4001428"
+      },
+      "counts": [
+        32,
+        96,
+        88,
+        24
+      ],
+      "numericMode": "float64-approximate",
+      "certified": false,
+      "maxFrames": 100000,
+      "search": {
+        "order": 384,
+        "properOrder": 192,
+        "complete": true,
+        "closureVerified": true,
+        "termination": "exhausted",
+        "candidateFramesEvaluated": 384,
+        "searchNodesEvaluated": 705,
+        "searchNodeLimit": 1000004,
+        "frameConditionNumber": 3.1861406616345054,
+        "tolerance": 8e-08,
+        "algorithmVersion": "0.7.0"
+      },
+      "independent": {
+        "normalizedCoordinateResidual": 3.980707110614603e-15,
+        "orthogonalityResidual": 4.884981308350689e-15,
+        "actionsMetricChecked": 384,
+        "generatorsIncidenceChecked": 3,
+        "flagCount": 1152,
+        "flagOrbitSizes": [
+          384,
+          384,
+          384
+        ],
+        "flagOrbitCount": 3
+      },
+      "actionPermutationSha256": "2f294a03377a944ee0b79f199f9fb347372a0cd91f933a4b351a993ecc149969",
+      "status": "passed"
+    },
+    {
+      "id": "r7-symmetry-uniform4-rico",
+      "key": "uniform4-rico",
+      "family": "Convex Wythoff representatives",
+      "variant": "source",
+      "expected": {
+        "order": 1152,
+        "properOrder": 576
+      },
+      "source": {
+        "fingerprint": "155d16bb5cc88aeeaa281d0016dc3e197900f54a94681ca7be59ea64a6b808d8",
+        "coordinateSha256": "869b6d97a8313147d5040e62bad7de707356d937929d1e80b28ba6c09ba18788",
+        "incidenceSha256": "70326474cb1ebb8a7d768a417b129f1ee41af1f7b815404edf4ad78427dc823c"
+      },
+      "counts": [
+        96,
+        288,
+        240,
+        48
+      ],
+      "numericMode": "float64-approximate",
+      "certified": false,
+      "maxFrames": 100000,
+      "search": {
+        "order": 1152,
+        "properOrder": 576,
+        "complete": true,
+        "closureVerified": true,
+        "termination": "exhausted",
+        "candidateFramesEvaluated": 1152,
+        "searchNodesEvaluated": 2113,
+        "searchNodeLimit": 1000004,
+        "frameConditionNumber": 2.367233440475529,
+        "tolerance": 8e-08,
+        "algorithmVersion": "0.7.0"
+      },
+      "independent": {
+        "normalizedCoordinateResidual": 7.041456060594087e-15,
+        "orthogonalityResidual": 1.6542323066914832e-14,
+        "actionsMetricChecked": 1152,
+        "generatorsIncidenceChecked": 5,
+        "flagCount": 3456,
+        "flagOrbitSizes": [
+          1152,
+          1152,
+          1152
+        ],
+        "flagOrbitCount": 3
+      },
+      "actionPermutationSha256": "c641abafe1646bc7c22fd65f9ceb45921eed4860e1abdd7c1057293722b673f3",
+      "status": "passed"
+    },
+    {
+      "id": "r7-symmetry-goursat-wythoff-gax",
+      "key": "goursat-wythoff-gax",
+      "family": "Goursat H4 representatives",
+      "variant": "source",
+      "expected": {
+        "order": 14400,
+        "properOrder": 7200,
+        "flagOrbitCount": 1
+      },
+      "source": {
+        "fingerprint": "701abbe72caeefbc9fd05ed2695d49ad3d9e71553c8cabb4fdafe79a30459269",
+        "coordinateSha256": "c25dfb5aacfb1d990fb60098e30e0544a037087e4d5887b44166ad0975442574",
+        "incidenceSha256": "3c54c819e7aceb345b54d8b0d5154c4756d9545dae0adf42b3ba5daedbafa0b6"
+      },
+      "counts": [
+        120,
+        720,
+        1200,
+        600
+      ],
+      "numericMode": "float64-approximate",
+      "certified": false,
+      "maxFrames": 100000,
+      "search": {
+        "order": 14400,
+        "properOrder": 7200,
+        "complete": true,
+        "closureVerified": true,
+        "termination": "exhausted",
+        "candidateFramesEvaluated": 14400,
+        "searchNodesEvaluated": 23161,
+        "searchNodeLimit": 1000004,
+        "frameConditionNumber": 1.9626105055051448,
+        "tolerance": 8e-08,
+        "algorithmVersion": "0.7.0"
+      },
+      "independent": {
+        "normalizedCoordinateResidual": 4.091476882082294e-15,
+        "orthogonalityResidual": 1.1102230246251565e-14,
+        "actionsMetricChecked": 14400,
+        "generatorsIncidenceChecked": 3,
+        "flagCount": 14400,
+        "flagOrbitSizes": [
+          14400
+        ],
+        "flagOrbitCount": 1
+      },
+      "actionPermutationSha256": "850534f25ad1eae7ba7315e03457415609c8e9b7e8a6a2e3563bf9673520eb42",
+      "status": "passed"
+    },
+    {
+      "id": "r7-symmetry-goursat-wythoff-raggix",
+      "key": "goursat-wythoff-raggix",
+      "family": "Goursat H4 representatives",
+      "variant": "source",
+      "expected": {
+        "order": 14400,
+        "properOrder": 7200
+      },
+      "source": {
+        "fingerprint": "466ad5946109746cd4d2b79301948252f50aa5789752dcb3304db8a741e443f5",
+        "coordinateSha256": "61b9d18a4cb36fe0f237f61728fe4ca29c503b1a8a26efac063e77ff78c4ba1d",
+        "incidenceSha256": "bd66d5063358625cb6826145d83c872adbfb5be838b6b2182fc7dbbc14fdd83d"
+      },
+      "counts": [
+        720,
+        3600,
+        3600,
+        720
+      ],
+      "numericMode": "float64-approximate",
+      "certified": false,
+      "maxFrames": 100000,
+      "search": {
+        "order": 14400,
+        "properOrder": 7200,
+        "complete": true,
+        "closureVerified": true,
+        "termination": "exhausted",
+        "candidateFramesEvaluated": 14400,
+        "searchNodesEvaluated": 25921,
+        "searchNodeLimit": 1000004,
+        "frameConditionNumber": 6.6471942232760455,
+        "tolerance": 8e-08,
+        "algorithmVersion": "0.7.0"
+      },
+      "independent": {
+        "normalizedCoordinateResidual": 2.08881314697386e-14,
+        "orthogonalityResidual": 6.328271240363392e-14,
+        "actionsMetricChecked": 14400,
+        "generatorsIncidenceChecked": 4,
+        "flagCount": 43200,
+        "flagOrbitSizes": [
+          14400,
+          14400,
+          14400
+        ],
+        "flagOrbitCount": 3
+      },
+      "actionPermutationSha256": "6e869c6315bdbecbad1ba8a52d7c87fd41e24b1902cdf5c1a3bb5460271c683f",
+      "status": "passed"
+    },
+    {
+      "id": "r7-symmetry-goursat-wythoff-rigogishi",
+      "key": "goursat-wythoff-rigogishi",
+      "family": "Goursat H4 resource boundary",
+      "variant": "source",
+      "expected": {
+        "order": 14400,
+        "properOrder": 7200
+      },
+      "source": {
+        "fingerprint": "1b35e96dd712a10b78b6c92b4a2fdca0b583464d96fd2c90d882d72ffe7133e9",
+        "coordinateSha256": "61d9eb7cca3216b27cabfe3a2056edd282c06f127f00b80054fac7f03f9c2291",
+        "incidenceSha256": "60b9986c70dec327fca02ce1c676c59f92e73101b659667d16282858fcc66ec1"
+      },
+      "counts": [
+        1200,
+        3600,
+        3120,
+        720
+      ],
+      "numericMode": "float64-approximate",
+      "certified": false,
+      "maxFrames": 100000,
+      "status": "limited",
+      "reason": "Source exceeds the frame engine limit of 1,000 vertices; no full-group or flag claim."
+    },
+    {
+      "id": "r7-symmetry-icosahedron-rotated-scaled-small",
+      "key": "icosahedron",
+      "family": "Similarity invariance",
+      "variant": "rotated-scaled",
+      "expected": {
+        "order": 120,
+        "properOrder": 60,
+        "flagOrbitCount": 1
+      },
+      "source": {
+        "fingerprint": "08342e3791d8c2500548944573528f53a1391d5471fe3fbbd451961b0f974e18",
+        "coordinateSha256": "9786697830b2ee562f54cbc8f14256fbfc2fe7c3a2caaf51dff95a846f586394",
+        "incidenceSha256": "2f8ef13397ca8b17ff97fe2367e05e6a9973034fe69718058144ce7ecad88050"
+      },
+      "counts": [
+        12,
+        30,
+        20,
+        0
+      ],
+      "numericMode": "float64-approximate",
+      "certified": false,
+      "maxFrames": 100000,
+      "search": {
+        "order": 120,
+        "properOrder": 60,
+        "complete": true,
+        "closureVerified": true,
+        "termination": "exhausted",
+        "candidateFramesEvaluated": 120,
+        "searchNodesEvaluated": 193,
+        "searchNodeLimit": 1000003,
+        "frameConditionNumber": 1.8512295868219153,
+        "tolerance": 8e-08,
+        "algorithmVersion": "0.7.0"
+      },
+      "independent": {
+        "normalizedCoordinateResidual": 3.2426617573569344e-15,
+        "orthogonalityResidual": 7.882583474838611e-15,
+        "actionsMetricChecked": 120,
+        "generatorsIncidenceChecked": 2,
+        "flagCount": 120,
+        "flagOrbitSizes": [
+          120
+        ],
+        "flagOrbitCount": 1
+      },
+      "actionPermutationSha256": "17d9c63957fd182ff946ce9f7c1d5f6660bb0b429c091d20865847c18a4a5c14",
+      "status": "passed",
+      "sameSourceActionPermutations": true
+    },
+    {
+      "id": "r7-symmetry-cell24-rotated-scaled-large",
+      "key": "cell24",
+      "family": "Similarity invariance",
+      "variant": "rotated-scaled",
+      "expected": {
+        "order": 1152,
+        "properOrder": 576,
+        "flagOrbitCount": 1
+      },
+      "source": {
+        "fingerprint": "d70a3b3c668cfb9d531e6afa94992c9a361cb72bbb154b1c71dc39492b462336",
+        "coordinateSha256": "73f213646bc6bfa6d21d8cccb7976721a366622f24483e877985b869620374ed",
+        "incidenceSha256": "a5d03410495e614a947345e6e6194d65fabcdb4561c4d9d0a26e9e159d0b591f"
+      },
+      "counts": [
+        24,
+        96,
+        96,
+        24
+      ],
+      "numericMode": "float64-approximate",
+      "certified": false,
+      "maxFrames": 100000,
+      "search": {
+        "order": 1152,
+        "properOrder": 576,
+        "complete": true,
+        "closureVerified": true,
+        "termination": "exhausted",
+        "candidateFramesEvaluated": 1152,
+        "searchNodesEvaluated": 1897,
+        "searchNodeLimit": 1000004,
+        "frameConditionNumber": 1.0000000000000009,
+        "tolerance": 8e-08,
+        "algorithmVersion": "0.7.0"
+      },
+      "independent": {
+        "normalizedCoordinateResidual": 1.5143967042278984e-15,
+        "orthogonalityResidual": 2.6645352591003757e-15,
+        "actionsMetricChecked": 1152,
+        "generatorsIncidenceChecked": 3,
+        "flagCount": 1152,
+        "flagOrbitSizes": [
+          1152
+        ],
+        "flagOrbitCount": 1
+      },
+      "actionPermutationSha256": "affa66d0daf4200e0c12b678b5dd4524dabcb4fc7402c8368d58ce93aa078d00",
+      "status": "passed",
+      "sameSourceActionPermutations": true
+    },
+    {
+      "id": "r7-symmetry-cell24-rotated-scaled-small",
+      "key": "cell24",
+      "family": "Similarity invariance",
+      "variant": "rotated-scaled",
+      "expected": {
+        "order": 1152,
+        "properOrder": 576,
+        "flagOrbitCount": 1
+      },
+      "source": {
+        "fingerprint": "429ba1eaefc46f83c433ab0f90b6ce51af9812afc86ce0459ee3a2df1a291567",
+        "coordinateSha256": "188141bb899fe8d45310371bc8476b3faa9a67c124ec433f4d1fedf4f740cef7",
+        "incidenceSha256": "a5d03410495e614a947345e6e6194d65fabcdb4561c4d9d0a26e9e159d0b591f"
+      },
+      "counts": [
+        24,
+        96,
+        96,
+        24
+      ],
+      "numericMode": "float64-approximate",
+      "certified": false,
+      "maxFrames": 100000,
+      "search": {
+        "order": 1152,
+        "properOrder": 576,
+        "complete": true,
+        "closureVerified": true,
+        "termination": "exhausted",
+        "candidateFramesEvaluated": 1152,
+        "searchNodesEvaluated": 1897,
+        "searchNodeLimit": 1000004,
+        "frameConditionNumber": 1.0000000000000022,
+        "tolerance": 8e-08,
+        "algorithmVersion": "0.7.0"
+      },
+      "independent": {
+        "normalizedCoordinateResidual": 3.799595681771246e-15,
+        "orthogonalityResidual": 9.103828801926284e-15,
+        "actionsMetricChecked": 1152,
+        "generatorsIncidenceChecked": 3,
+        "flagCount": 1152,
+        "flagOrbitSizes": [
+          1152
+        ],
+        "flagOrbitCount": 1
+      },
+      "actionPermutationSha256": "affa66d0daf4200e0c12b678b5dd4524dabcb4fc7402c8368d58ce93aa078d00",
+      "status": "passed",
+      "sameSourceActionPermutations": true
+    },
+    {
+      "id": "r7-symmetry-icosahedron-missing-face",
+      "key": "icosahedron",
+      "family": "Altered ordered incidence",
+      "variant": "missing-face",
+      "expected": {
+        "order": 6,
+        "properOrder": 3
+      },
+      "source": {
+        "fingerprint": "5d4ff357428b80255711481a3954c8f03f2806d5246faf6e6db1bb7357c473a9",
+        "coordinateSha256": "7c0eba5ba39892da4a1d3f323d952dc222ff3238be107b47f835cf152048e833",
+        "incidenceSha256": "95134255011bfc07798e7b210e40a45a408e66d377507380aeed4705bf5a4d95"
+      },
+      "counts": [
+        12,
+        30,
+        19,
+        0
+      ],
+      "numericMode": "float64-approximate",
+      "certified": false,
+      "maxFrames": 100000,
+      "search": {
+        "order": 6,
+        "properOrder": 3,
+        "complete": true,
+        "closureVerified": true,
+        "termination": "exhausted",
+        "candidateFramesEvaluated": 120,
+        "searchNodesEvaluated": 193,
+        "searchNodeLimit": 1000003,
+        "frameConditionNumber": 1.8512295868219162,
+        "tolerance": 8e-08,
+        "algorithmVersion": "0.7.0"
+      },
+      "independent": {
+        "normalizedCoordinateResidual": 1.3597399555105182e-16,
+        "orthogonalityResidual": 2.220446049250313e-16,
+        "actionsMetricChecked": 6,
+        "generatorsIncidenceChecked": 2,
+        "flagCount": 114,
+        "flagOrbitSizes": [
+          6,
+          6,
+          6,
+          6,
+          6,
+          6,
+          6,
+          6,
+          6,
+          6,
+          6,
+          6,
+          6,
+          6,
+          6,
+          6,
+          6,
+          6,
+          6
+        ],
+        "flagOrbitCount": 19
+      },
+      "actionPermutationSha256": "19c1c7f48ac6d30892dde1ad27a7433af7f2e52c33537d7bfb57d5c47de51e01",
+      "status": "passed"
+    },
+    {
+      "id": "r7-symmetry-tesseract-extra-open-cell",
+      "key": "tesseract",
+      "family": "Altered cell-face incidence",
+      "variant": "extra-open-cell",
+      "expected": {
+        "order": 8,
+        "properOrder": 4
+      },
+      "source": {
+        "fingerprint": "f27fcddf61c1d6a366094ccbeac63c2cd794ee7d3dcd8421d28f4eb6b7fa45da",
+        "coordinateSha256": "bc5b9e370939bf167426904f6cbfc44bb316542ab76cd85f97641917de190582",
+        "incidenceSha256": "9d8aea6b47fd4fab1600fae2b301a017ab71699ccd5623d570be7d8e6c57d21f"
+      },
+      "counts": [
+        16,
+        32,
+        24,
+        9
+      ],
+      "numericMode": "float64-approximate",
+      "certified": false,
+      "maxFrames": 100000,
+      "search": {
+        "order": 8,
+        "properOrder": 4,
+        "complete": true,
+        "closureVerified": true,
+        "termination": "exhausted",
+        "candidateFramesEvaluated": 384,
+        "searchNodesEvaluated": 657,
+        "searchNodeLimit": 1000004,
+        "frameConditionNumber": 2.414213562373094,
+        "tolerance": 8e-08,
+        "algorithmVersion": "0.7.0"
+      },
+      "independent": {
+        "normalizedCoordinateResidual": 0.0,
+        "orthogonalityResidual": 0.0,
+        "actionsMetricChecked": 8,
+        "generatorsIncidenceChecked": 2,
+        "flagCount": 424,
+        "flagOrbitSizes": [
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8
+        ],
+        "flagOrbitCount": 53
+      },
+      "actionPermutationSha256": "794ae417e73799d9150a364d74813f6eca8011f686fb6d2e03a4fd75ac7ccf29",
+      "status": "passed"
+    },
+    {
+      "id": "r7-symmetry-cube-frame-limit",
+      "key": "cube",
+      "family": "Frame budget boundary",
+      "variant": "source",
+      "expected": {
+        "order": 48,
+        "properOrder": 24
+      },
+      "source": {
+        "fingerprint": "5e0d2b7b73fb36c5c155a6c5b0c7ada92e79c2e529864520ae041a795044877b",
+        "coordinateSha256": "899206f4312cc11403bc68cb26e8425168301e463899db43debe5c1e2033b36d",
+        "incidenceSha256": "144db04ce904e2c2db2fc92069ca9b7bfab9b0765980dbb09980459762e91c88"
+      },
+      "counts": [
+        8,
+        12,
+        6,
+        0
+      ],
+      "numericMode": "float64-approximate",
+      "certified": false,
+      "maxFrames": 1,
+      "search": {
+        "order": 1,
+        "properOrder": 1,
+        "complete": false,
+        "closureVerified": null,
+        "termination": "frame-limit",
+        "candidateFramesEvaluated": 1,
+        "searchNodesEvaluated": 5,
+        "searchNodeLimit": 13,
+        "frameConditionNumber": 2.0000000000000004,
+        "tolerance": 8e-08,
+        "algorithmVersion": "0.7.0"
+      },
+      "status": "limited",
+      "reason": "Frame search did not exhaust; reported actions do not establish a complete group."
+    }
+  ]
+}

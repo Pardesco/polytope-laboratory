@@ -5,6 +5,7 @@ the regular folder bootstrap's first-page listing. No scripts are evaluated.
 The manifest records the listing method; Google exposes no authoritative
 total through this HTML endpoint, so inventory completeness is not certified.
 """
+
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timezone
 from html.parser import HTMLParser
@@ -49,9 +50,13 @@ def drive_id(value):
 
 
 def safe_component(name):
-    if (not name or name in ('.', '..') or name[-1] in '. '
-            or re.search(r'[<>:"/\\|?*\x00-\x1f]', name)
-            or re.fullmatch(r'(?:CON|PRN|AUX|NUL|COM[1-9]|LPT[1-9])(?:\..*)?', name, re.I)):
+    if (
+        not name
+        or name in ('.', '..')
+        or name[-1] in '. '
+        or re.search(r'[<>:"/\\|?*\x00-\x1f]', name)
+        or re.fullmatch(r'(?:CON|PRN|AUX|NUL|COM[1-9]|LPT[1-9])(?:\..*)?', name, re.I)
+    ):
         raise DownloadError(f'Unsafe or nonportable source filename: {name!r}')
     return name
 
@@ -134,7 +139,9 @@ def parse_folder(html):
     parser = FolderParser()
     parser.feed(html)
     if not parser.has_listing or not parser.closed:
-        raise DownloadError('Public folder listing is unavailable or truncated; sign-in/access pages are not downloaded.')
+        raise DownloadError(
+            'Public folder listing is unavailable or truncated; sign-in/access pages are not downloaded.'
+        )
     if parser.entry_count != len(parser.children):
         raise DownloadError('Folder listing contains unrecognized entries; refusing a partial inventory.')
     if re.search(r'nextPageToken|show more|load more', html, re.I):
@@ -153,7 +160,9 @@ def fetch(url, limit=MAX_BYTES, retries=2):
             with urllib.request.urlopen(request, timeout=45) as response:
                 final = urllib.parse.urlparse(response.url)
                 if final.hostname not in ('drive.google.com', 'drive.usercontent.google.com'):
-                    raise DownloadError('Public download redirected outside supported Drive hosts; no authentication is attempted.')
+                    raise DownloadError(
+                        'Public download redirected outside supported Drive hosts; no authentication is attempted.'
+                    )
                 declared = response.headers.get('Content-Length')
                 if declared and int(declared) > limit:
                     raise DownloadError('Response exceeds the bounded download size.')
@@ -165,10 +174,12 @@ def fetch(url, limit=MAX_BYTES, retries=2):
                 return data
         except (urllib.error.URLError, TimeoutError, OSError) as exc:
             if isinstance(exc, urllib.error.HTTPError) and exc.code not in (429, 500, 502, 503, 504):
-                raise DownloadError(f'Public Drive request denied (HTTP {exc.code}); no authentication is attempted.') from exc
+                raise DownloadError(
+                    f'Public Drive request denied (HTTP {exc.code}); no authentication is attempted.'
+                ) from exc
             if attempt == retries:
                 raise DownloadError(f'Public Drive request failed: {exc}') from exc
-            time.sleep(min(2 ** attempt, 4))
+            time.sleep(min(2**attempt, 4))
 
 
 def inventory(folder_id, workers=4, fetcher=fetch):
@@ -194,8 +205,15 @@ def inventory(folder_id, workers=4, fetcher=fetch):
                 item_id, relative, url = tasks[task]
                 data = task.result()
                 children = parse_folder(data.decode('utf-8'))
-                folders.append({'id': item_id, 'relativePath': relative, 'sourceUrl': url,
-                                'listingSha256': hashlib.sha256(data).hexdigest(), 'entryCount': len(children)})
+                folders.append(
+                    {
+                        'id': item_id,
+                        'relativePath': relative,
+                        'sourceUrl': url,
+                        'listingSha256': hashlib.sha256(data).hexdigest(),
+                        'entryCount': len(children),
+                    }
+                )
                 names = set()
                 for child in children:
                     name = child['name']
@@ -212,12 +230,17 @@ def inventory(folder_id, workers=4, fetcher=fetch):
                         ignored.append(child)
                 if len(files) + len(ignored) > MAX_ENTRIES:
                     raise DownloadError('Drive tree exceeds the file resource limit.')
-    return {'schemaVersion': 1, 'sourceFolderId': folder_id,
-            'sourceUrl': f'https://drive.google.com/drive/folders/{folder_id}',
-            'inventoriedAt': timestamp(), 'listingMethod': 'public-embeddedfolderview-unpaginated',
-            'listingCompleteness': 'All parsed embedded-view entries traversed; Google provides no independent authoritative total through this endpoint.',
-            'folders': sorted(folders, key=lambda x: x['relativePath']),
-            'files': sorted(files, key=lambda x: x['relativePath']), 'ignored': ignored}
+    return {
+        'schemaVersion': 1,
+        'sourceFolderId': folder_id,
+        'sourceUrl': f'https://drive.google.com/drive/folders/{folder_id}',
+        'inventoriedAt': timestamp(),
+        'listingMethod': 'public-embeddedfolderview-unpaginated',
+        'listingCompleteness': 'All parsed embedded-view entries traversed; Google provides no independent authoritative total through this endpoint.',
+        'folders': sorted(folders, key=lambda x: x['relativePath']),
+        'files': sorted(files, key=lambda x: x['relativePath']),
+        'ignored': ignored,
+    }
 
 
 def off_marker(data):
@@ -244,12 +267,24 @@ def write_manifest(root, manifest):
 
 def download_one(root, entry, previous=None, fetcher=fetch):
     target = safe_target(root, entry['relativePath'])
-    if (previous and previous.get('id') == entry['id'] and previous.get('sha256') and target.is_file()
-            and target.stat().st_size <= MAX_BYTES):
+    if (
+        previous
+        and previous.get('id') == entry['id']
+        and previous.get('sha256')
+        and target.is_file()
+        and target.stat().st_size <= MAX_BYTES
+    ):
         data = target.read_bytes()
         if hashlib.sha256(data).hexdigest() == previous['sha256']:
-            return {**entry, 'status': 'downloaded', 'bytes': len(data), 'sha256': previous['sha256'],
-                    'marker': off_marker(data), 'downloadedAt': previous.get('downloadedAt'), 'resumed': True}
+            return {
+                **entry,
+                'status': 'downloaded',
+                'bytes': len(data),
+                'sha256': previous['sha256'],
+                'marker': off_marker(data),
+                'downloadedAt': previous.get('downloadedAt'),
+                'resumed': True,
+            }
     url = 'https://drive.google.com/uc?' + urllib.parse.urlencode({'export': 'download', 'id': entry['id']})
     data = fetcher(url)
     marker = off_marker(data)
@@ -259,8 +294,16 @@ def download_one(root, entry, previous=None, fetcher=fetch):
     pending = safe_target(root, entry['relativePath'] + '.download-pending')
     pending.write_bytes(data)
     pending.replace(target)
-    return {**entry, 'status': 'downloaded', 'bytes': len(data), 'sha256': hashlib.sha256(data).hexdigest(),
-            'marker': marker, 'downloadedAt': timestamp(), 'downloadUrl': url, 'resumed': False}
+    return {
+        **entry,
+        'status': 'downloaded',
+        'bytes': len(data),
+        'sha256': hashlib.sha256(data).hexdigest(),
+        'marker': marker,
+        'downloadedAt': timestamp(),
+        'downloadUrl': url,
+        'resumed': False,
+    }
 
 
 def download_inventory(root, manifest, workers=4, limit=None, fetcher=fetch):
@@ -277,8 +320,10 @@ def download_inventory(root, manifest, workers=4, limit=None, fetcher=fetch):
     selected = list(enumerate(entries))[:limit]
     start = time.monotonic()
     with ThreadPoolExecutor(max_workers=workers) as pool:
-        tasks = {pool.submit(download_one, root, entry, previous.get(entry['relativePath']), fetcher): index
-                 for index, entry in selected}
+        tasks = {
+            pool.submit(download_one, root, entry, previous.get(entry['relativePath']), fetcher): index
+            for index, entry in selected
+        }
         for count, task in enumerate(as_completed(tasks), 1):
             index = tasks[task]
             try:
@@ -287,15 +332,23 @@ def download_inventory(root, manifest, workers=4, limit=None, fetcher=fetch):
                 manifest['files'][index] = {**entries[index], 'status': 'failed', 'error': str(exc)}
             if count % 25 == 0 or count == len(selected):
                 write_manifest(root, manifest)
-                print(f'Downloaded/checked {count}/{len(selected)} files in {time.monotonic()-start:.1f}s', flush=True)
+                print(
+                    f'Downloaded/checked {count}/{len(selected)} files in {time.monotonic() - start:.1f}s', flush=True
+                )
     statuses = [item['status'] for item in manifest['files']]
     manifest['downloadComplete'] = all(status == 'downloaded' for status in statuses)
     manifest['updatedAt'] = timestamp()
-    manifest['stats'] = {'folders': len(manifest['folders']), 'offFiles': len(statuses),
-                         'downloaded': statuses.count('downloaded'), 'failed': statuses.count('failed'),
-                         'pending': statuses.count('pending'), 'bytes': sum(item.get('bytes', 0) for item in manifest['files']),
-                         'transferElapsedSeconds': round(time.monotonic()-start, 1), 'workers': workers,
-                         'resumeVerifiedFiles': sum(bool(item.get('resumed')) for item in manifest['files'])}
+    manifest['stats'] = {
+        'folders': len(manifest['folders']),
+        'offFiles': len(statuses),
+        'downloaded': statuses.count('downloaded'),
+        'failed': statuses.count('failed'),
+        'pending': statuses.count('pending'),
+        'bytes': sum(item.get('bytes', 0) for item in manifest['files']),
+        'transferElapsedSeconds': round(time.monotonic() - start, 1),
+        'workers': workers,
+        'resumeVerifiedFiles': sum(bool(item.get('resumed')) for item in manifest['files']),
+    }
     write_manifest(root, manifest)
     return manifest['stats']
 
@@ -303,15 +356,20 @@ def download_inventory(root, manifest, workers=4, limit=None, fetcher=fetch):
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--folder', default=DEFAULT_FOLDER)
-    parser.add_argument('--output', type=Path, default=Path(__file__).resolve().parents[1]/'data'/'drive-uniforms')
+    parser.add_argument('--output', type=Path, default=Path(__file__).resolve().parents[1] / 'data' / 'drive-uniforms')
     parser.add_argument('--workers', type=int, default=4)
     parser.add_argument('--inventory-only', action='store_true')
-    parser.add_argument('--limit', type=int, help='Download only this many files, explicitly leaving the manifest incomplete.')
+    parser.add_argument(
+        '--limit', type=int, help='Download only this many files, explicitly leaving the manifest incomplete.'
+    )
     args = parser.parse_args(argv)
     if not 1 <= args.workers <= 8 or args.limit is not None and args.limit < 1:
         parser.error('Workers must be 1-8 and the optional download limit must be positive.')
     manifest = inventory(drive_id(args.folder), args.workers)
-    print(f"Inventoried {len(manifest['folders'])} folders, {len(manifest['files'])} OFF files, {len(manifest['ignored'])} ignored files.", flush=True)
+    print(
+        f"Inventoried {len(manifest['folders'])} folders, {len(manifest['files'])} OFF files, {len(manifest['ignored'])} ignored files.",
+        flush=True,
+    )
     print(manifest['listingCompleteness'], flush=True)
     if args.inventory_only:
         root = args.output

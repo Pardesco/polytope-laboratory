@@ -1,0 +1,32 @@
+#library-symmetry-evidence {
+  margin-block: var(--space-1);
+  padding: var(--space-1);
+  border: 1px solid var(--border);
+  font-size: var(--font-body);
+}
+#library-symmetry-evidence > summary {
+  min-height: var(--control-height);
+  align-content: center;
+  cursor: pointer;
+}
+#library-symmetry-evidence p {
+  margin-block: var(--space-1);
+  overflow-wrap: anywhere;
+}
+#library-symmetry-evidence select {
+  width: 100%;
+  min-height: var(--control-height);
+  margin-block: var(--space-1);
+}
+#library-symmetry-evidence pre {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font-size: var(--font-secondary);
+  max-height: 320px;
+  overflow: auto;
+}
+#library-symmetry-evidence output {
+  display: block;
+  margin-block: var(--space-1);
+  overflow-wrap: anywhere;
+}

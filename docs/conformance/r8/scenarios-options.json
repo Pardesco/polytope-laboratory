@@ -1,0 +1,2914 @@
+{
+  "schema_version": 2,
+  "scenarios": [
+    {
+      "id": "lib-01-r7-finite-u-duals",
+      "requirement_id": "LIB-01",
+      "option": "r7-finite-u-duals",
+      "title": "Forty finite generated U-dual mappings and thirteen explicit singularities",
+      "source": {
+        "description": "classification/3d.json formerly unmatched 53 dual obligations"
+      },
+      "parameters": {
+        "successes": 40,
+        "unresolved": 13,
+        "center": "vertex mean",
+        "radius": 1
+      },
+      "domain": {
+        "dimensions": [
+          3
+        ],
+        "object_classes": [
+          "named numerical classification relationship realizations"
+        ],
+        "limits": {
+          "domain": "107 separate versioned relationship records; successful records are not new identities"
+        },
+        "numeric_contract": "Approximate float64 geometry/predicates; residuals qualify the supplied source, never exact algebraic or benchmark parity.",
+        "refusals": [
+          "Center-plane/coincident reciprocal-plane singularities refuse finite dual generation",
+          "Missing sources/hypotheses are never current numerical passes"
+        ]
+      },
+      "checks": [
+        "Independent polarity/involution, reversed rank counts and complete incidence",
+        "Source hashes distinguish generated and supplied identities"
+      ],
+      "fixtures": [
+        {
+          "path": "tests/test_classification_qualification.py",
+          "selector": "test_every_named_receipt_rechecks_current_geometry_or_retains_explicit_failure",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/test_classification_qualification.py",
+          "selector": "test_generated_catalog_load_preserves_polarity_and_distinguishes_generated_from_supplied",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/test_classification_qualification.py",
+          "selector": "test_adversarial_polarity_and_regularity_are_independently_detected",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/classification-qualification-mounted.test.mjs",
+          "selector": "expert-off Library opens a generated dual, rechecks both tranches and reopens source-owned evidence",
+          "kind": "node-test",
+          "level": "ui-mounted",
+          "run_id": "ui",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        }
+      ],
+      "source_files": [
+        "docs/R7_CLASSIFICATION.md",
+        "engine/classification_qualification.py",
+        "engine/classification_duals.py",
+        "engine/catalog_data/classification/3d.json",
+        "engine/catalog_data/classification/4d.json",
+        "ui/classification-qualification-controls.mjs"
+      ],
+      "ui": {
+        "element_ids": [
+          "classification-tranche",
+          "classification-identity",
+          "classification-refresh",
+          "classification-verify",
+          "classification-open-dual"
+        ],
+        "route": "Library > Specialized relationships (collapsed) > Classification tranche; Expert off."
+      },
+      "closure": {
+        "kind": "inventory-only",
+        "legacy_case_ids": [],
+        "scope": "Forty finite generated U-dual mappings and thirteen explicit singularities; only the declared input/options and checks.",
+        "legacy_disposition": {}
+      },
+      "remaining": "Current mounted UI selection failed: expert-off Library opens a generated dual, rechecks both tranches and reopens source-owned evidence. Raw startup/navigation/summary timeout evidence is retained in ui.xml. Earlier UI passes remain historical attempts, not replacement current passes. Native implementation evidence does not close this UI qualification gap. Named numerical relationship tranche only; authoritative identity/license/chirality review and baseline roster correspondence remain unverified. R9 (0.28.0 release receipts, 2026-11-10): this mounted selector passed on a clean run; the earlier failure was a load timeout. Closure level is unchanged pending lead review.",
+      "benchmark_status": "unverified",
+      "platform_status": "not-run",
+      "competitor_status": "not-run",
+      "parameters_are_executable": false,
+      "evidence_status": "incomplete"
+    },
+    {
+      "id": "lib-02-r7-near-miss-deviations",
+      "requirement_id": "LIB-02",
+      "option": "r7-near-miss-deviations",
+      "title": "Ten named fitted near-miss realization deviations",
+      "source": {
+        "description": "classification/3d.json near-miss tranche"
+      },
+      "parameters": {
+        "family": "near-miss",
+        "deviations": [
+          "edge",
+          "angle",
+          "planarity"
+        ]
+      },
+      "domain": {
+        "dimensions": [
+          3
+        ],
+        "object_classes": [
+          "named numerical classification relationship realizations"
+        ],
+        "limits": {
+          "domain": "107 separate versioned relationship records; successful records are not new identities"
+        },
+        "numeric_contract": "Approximate float64 geometry/predicates; residuals qualify the supplied source, never exact algebraic or benchmark parity.",
+        "refusals": [
+          "Center-plane/coincident reciprocal-plane singularities refuse finite dual generation",
+          "Missing sources/hypotheses are never current numerical passes"
+        ]
+      },
+      "checks": [
+        "Approximation flags and residuals retained; no global optimum or impossibility claim"
+      ],
+      "fixtures": [
+        {
+          "path": "tests/test_classification_qualification.py",
+          "selector": "test_every_named_receipt_rechecks_current_geometry_or_retains_explicit_failure",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/test_classification_qualification.py",
+          "selector": "test_scenario_fixture_counts_separate_both_tranches_and_keep_every_missing_dual",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/classification-qualification-mounted.test.mjs",
+          "selector": "expert-off Library opens a generated dual, rechecks both tranches and reopens source-owned evidence",
+          "kind": "node-test",
+          "level": "ui-mounted",
+          "run_id": "ui",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        }
+      ],
+      "source_files": [
+        "docs/R7_CLASSIFICATION.md",
+        "engine/classification_qualification.py",
+        "engine/classification_duals.py",
+        "engine/catalog_data/classification/3d.json",
+        "engine/catalog_data/classification/4d.json",
+        "ui/classification-qualification-controls.mjs"
+      ],
+      "ui": {
+        "element_ids": [
+          "classification-tranche",
+          "classification-identity",
+          "classification-refresh",
+          "classification-verify",
+          "classification-open-dual"
+        ],
+        "route": "Library > Specialized relationships (collapsed) > Classification tranche; Expert off."
+      },
+      "closure": {
+        "kind": "inventory-only",
+        "legacy_case_ids": [],
+        "scope": "Ten named fitted near-miss realization deviations; only the declared input/options and checks.",
+        "legacy_disposition": {}
+      },
+      "remaining": "Current mounted UI selection failed: expert-off Library opens a generated dual, rechecks both tranches and reopens source-owned evidence. Raw startup/navigation/summary timeout evidence is retained in ui.xml. Earlier UI passes remain historical attempts, not replacement current passes. Native implementation evidence does not close this UI qualification gap. Named numerical relationship tranche only; authoritative identity/license/chirality review and baseline roster correspondence remain unverified. R9 (0.28.0 release receipts, 2026-11-10): this mounted selector passed on a clean run; the earlier failure was a load timeout. Closure level is unchanged pending lead review.",
+      "benchmark_status": "unverified",
+      "platform_status": "not-run",
+      "competitor_status": "not-run",
+      "parameters_are_executable": false,
+      "evidence_status": "incomplete"
+    },
+    {
+      "id": "lib-03-r7-stewart-compound-relationships",
+      "requirement_id": "LIB-03",
+      "option": "r7-stewart-compound-relationships",
+      "title": "Stewart and compound realization qualification",
+      "source": {
+        "description": "classification/3d.json seven Stewart and seven compound realizations"
+      },
+      "parameters": {
+        "stewart": 7,
+        "compounds": 7
+      },
+      "domain": {
+        "dimensions": [
+          3
+        ],
+        "object_classes": [
+          "named numerical classification relationship realizations"
+        ],
+        "limits": {
+          "domain": "107 separate versioned relationship records; successful records are not new identities"
+        },
+        "numeric_contract": "Approximate float64 geometry/predicates; residuals qualify the supplied source, never exact algebraic or benchmark parity.",
+        "refusals": [
+          "Center-plane/coincident reciprocal-plane singularities refuse finite dual generation",
+          "Missing sources/hypotheses are never current numerical passes"
+        ]
+      },
+      "checks": [
+        "Stewart bounded R/A/Q/T/D and genus hypotheses",
+        "Literal constituent owners and independent convex reconstruction; no full compound symmetry promotion"
+      ],
+      "fixtures": [
+        {
+          "path": "tests/test_classification_qualification.py",
+          "selector": "test_every_named_receipt_rechecks_current_geometry_or_retains_explicit_failure",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/test_classification_qualification.py",
+          "selector": "test_separate_coordinate_and_incidence_bindings_never_weld_or_deduplicate_topology",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/classification-qualification-mounted.test.mjs",
+          "selector": "expert-off Library opens a generated dual, rechecks both tranches and reopens source-owned evidence",
+          "kind": "node-test",
+          "level": "ui-mounted",
+          "run_id": "ui",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        }
+      ],
+      "source_files": [
+        "docs/R7_CLASSIFICATION.md",
+        "engine/classification_qualification.py",
+        "engine/classification_duals.py",
+        "engine/catalog_data/classification/3d.json",
+        "engine/catalog_data/classification/4d.json",
+        "ui/classification-qualification-controls.mjs"
+      ],
+      "ui": {
+        "element_ids": [
+          "classification-tranche",
+          "classification-identity",
+          "classification-refresh",
+          "classification-verify",
+          "classification-open-dual"
+        ],
+        "route": "Library > Specialized relationships (collapsed) > Classification tranche; Expert off."
+      },
+      "closure": {
+        "kind": "inventory-only",
+        "legacy_case_ids": [],
+        "scope": "Stewart and compound realization qualification; only the declared input/options and checks.",
+        "legacy_disposition": {}
+      },
+      "remaining": "Current mounted UI selection failed: expert-off Library opens a generated dual, rechecks both tranches and reopens source-owned evidence. Raw startup/navigation/summary timeout evidence is retained in ui.xml. Earlier UI passes remain historical attempts, not replacement current passes. Native implementation evidence does not close this UI qualification gap. Named numerical relationship tranche only; authoritative identity/license/chirality review and baseline roster correspondence remain unverified. R9 (0.28.0 release receipts, 2026-11-10): this mounted selector passed on a clean run; the earlier failure was a load timeout. Closure level is unchanged pending lead review.",
+      "benchmark_status": "unverified",
+      "platform_status": "not-run",
+      "competitor_status": "not-run",
+      "parameters_are_executable": false,
+      "evidence_status": "incomplete"
+    },
+    {
+      "id": "lib-06-r7-scaliform-regiment-relationships",
+      "requirement_id": "LIB-06",
+      "option": "r7-scaliform-regiment-relationships",
+      "title": "Scaliform and regiment coordinate/incidence distinction",
+      "source": {
+        "description": "classification/4d.json Tuta, Koho, three compounds and Koho/16-cell relation"
+      },
+      "parameters": {
+        "scaliforms": 2,
+        "compounds": 3,
+        "regimentRelations": 1,
+        "missingFissarySources": 24
+      },
+      "domain": {
+        "dimensions": [
+          4
+        ],
+        "object_classes": [
+          "named numerical classification relationship realizations"
+        ],
+        "limits": {
+          "domain": "107 separate versioned relationship records; successful records are not new identities"
+        },
+        "numeric_contract": "Approximate float64 geometry/predicates; residuals qualify the supplied source, never exact algebraic or benchmark parity.",
+        "refusals": [
+          "Center-plane/coincident reciprocal-plane singularities refuse finite dual generation",
+          "Missing sources/hypotheses are never current numerical passes"
+        ]
+      },
+      "checks": [
+        "Equal edges, element spheres and closed cell/ridge incidence",
+        "Koho and scaled 16-cell share vertices/edges, preserve distinct faces/cells",
+        "Missing named fissary geometry remains missing"
+      ],
+      "fixtures": [
+        {
+          "path": "tests/test_classification_qualification.py",
+          "selector": "test_every_named_receipt_rechecks_current_geometry_or_retains_explicit_failure",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/test_classification_qualification.py",
+          "selector": "test_source_and_generated_binding_changes_refuse_named_identity_substitution",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/test_classification_qualification.py",
+          "selector": "test_request_boundaries_refuse_unknown_domains",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/classification-qualification-mounted.test.mjs",
+          "selector": "expert-off Library opens a generated dual, rechecks both tranches and reopens source-owned evidence",
+          "kind": "node-test",
+          "level": "ui-mounted",
+          "run_id": "ui",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        }
+      ],
+      "source_files": [
+        "docs/R7_CLASSIFICATION.md",
+        "engine/classification_qualification.py",
+        "engine/classification_duals.py",
+        "engine/catalog_data/classification/3d.json",
+        "engine/catalog_data/classification/4d.json",
+        "ui/classification-qualification-controls.mjs"
+      ],
+      "ui": {
+        "element_ids": [
+          "classification-tranche",
+          "classification-identity",
+          "classification-refresh",
+          "classification-verify",
+          "classification-open-dual"
+        ],
+        "route": "Library > Specialized relationships (collapsed) > Classification tranche; Expert off."
+      },
+      "closure": {
+        "kind": "inventory-only",
+        "legacy_case_ids": [],
+        "scope": "Scaliform and regiment coordinate/incidence distinction; only the declared input/options and checks.",
+        "legacy_disposition": {}
+      },
+      "remaining": "Current mounted UI selection failed: expert-off Library opens a generated dual, rechecks both tranches and reopens source-owned evidence. Raw startup/navigation/summary timeout evidence is retained in ui.xml. Earlier UI passes remain historical attempts, not replacement current passes. Native implementation evidence does not close this UI qualification gap. Named numerical relationship tranche only; authoritative identity/license/chirality review and baseline roster correspondence remain unverified. R9 (0.28.0 release receipts, 2026-11-10): this mounted selector passed on a clean run; the earlier failure was a load timeout. Closure level is unchanged pending lead review.",
+      "benchmark_status": "unverified",
+      "platform_status": "not-run",
+      "competitor_status": "not-run",
+      "parameters_are_executable": false,
+      "evidence_status": "incomplete"
+    },
+    {
+      "id": "lib-01-r7-schwarz-source-generation",
+      "requirement_id": "LIB-01",
+      "option": "r7-schwarz-source-generation",
+      "title": "Sixty-three Schwarz/Wythoff generated uniform 3D definitions",
+      "source": {
+        "description": "engine/catalog_data/goursat_wythoff/schwarz.json U-number definitions and independently supplied source references"
+      },
+      "parameters": {
+        "generatedDefinitions": 63,
+        "explicitQueue": 12,
+        "sourceExample": "schwarz-wythoff-u39"
+      },
+      "domain": {
+        "dimensions": [
+          3
+        ],
+        "object_classes": [
+          "finite reflection-orbit ordinary/generalized uniform polyhedra"
+        ],
+        "limits": {
+          "domain": "registered Schwarz definitions only; 63 generated is not 63 newly qualified identities"
+        },
+        "numeric_contract": "Approximate float64 geometry/predicates; residuals qualify the supplied source, never exact algebraic or benchmark parity.",
+        "refusals": [
+          "Nonfinite/unsupported symbols and corrupt metric/cycles refuse"
+        ]
+      },
+      "checks": [
+        "Native orbit generation uses no supplied source mesh",
+        "Independent metric and complete ordered-boundary reference comparison",
+        "Saved project/OFF/history retain generated receipt"
+      ],
+      "fixtures": [
+        {
+          "path": "tests/test_schwarz_wythoff.py",
+          "selector": "test_manifest_accounts_for_all_u75_without_conflating_supplied_and_generated",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/test_schwarz_wythoff.py",
+          "selector": "test_native_generation_matches_independent_source_metric_and_complete_ordered_boundary",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/test_schwarz_wythoff.py",
+          "selector": "test_native_construction_never_loads_a_supplied_mesh",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/test_schwarz_wythoff.py",
+          "selector": "test_project_off_and_history_replay_preserve_generated_receipts",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/goursat-wythoff-controls.test.mjs",
+          "selector": "Schwarz generation uses the same guarded document path and displays its own evidence",
+          "kind": "node-test",
+          "level": "ui-unit",
+          "run_id": "ui",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        }
+      ],
+      "source_files": [
+        "engine/schwarz_wythoff.py",
+        "engine/catalog_data/goursat_wythoff/schwarz.json",
+        "ui/goursat-wythoff-controls.mjs"
+      ],
+      "ui": {
+        "element_ids": [
+          "goursat-wythoff-choice",
+          "generate-goursat-wythoff"
+        ],
+        "route": "Construct > Goursat / Wythoff generators > Schwarz 3D; Expert off."
+      },
+      "closure": {
+        "kind": "local-tranche",
+        "legacy_case_ids": [],
+        "scope": "Sixty-three Schwarz/Wythoff generated uniform 3D definitions; only the declared input/options and checks.",
+        "legacy_disposition": {}
+      },
+      "remaining": "Other source/option cross-products and installed benchmark semantics require separate evidence.",
+      "benchmark_status": "unverified",
+      "platform_status": "not-run",
+      "competitor_status": "not-run",
+      "parameters_are_executable": false
+    },
+    {
+      "id": "lib-05-r7-goursat-registered-tranche",
+      "requirement_id": "LIB-05",
+      "option": "r7-goursat-registered-tranche",
+      "title": "Seventy-nine Goursat/Wythoff 4D registered qualifications",
+      "source": {
+        "description": "Registered goursat_wythoff definitions, including the 16 already-existing keys, plus seven remaining unsupported definitions"
+      },
+      "parameters": {
+        "registered": 79,
+        "regularIncluded": 10,
+        "remainingDefinitions": 7
+      },
+      "domain": {
+        "dimensions": [
+          4
+        ],
+        "object_classes": [
+          "registered generalized 4D finite reflection orbits"
+        ],
+        "limits": {
+          "domain": "79 registered definitions; no unavailable 2,191-roster mapping"
+        },
+        "numeric_contract": "Approximate float64 geometry/predicates; residuals qualify the supplied source, never exact algebraic or benchmark parity.",
+        "refusals": [
+          "Unregistered seed stabilizers and seven queued definitions remain refused/unsupported"
+        ]
+      },
+      "checks": [
+        "Definition hashes, independent root coset orbit counts, local links and complete literal supplied incidence",
+        "No welding, exact certificate or duplicate identity increment"
+      ],
+      "fixtures": [
+        {
+          "path": "tests/test_goursat_wythoff.py",
+          "selector": "test_tranche_is_79_named_definitions_and_keeps_all_remaining_definitions_visible",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/test_goursat_wythoff.py",
+          "selector": "test_every_registered_output_is_built_checked_and_preserves_literal_source_incidence",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/test_goursat_wythoff.py",
+          "selector": "test_every_remaining_chain_mask_has_a_concrete_refusal",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/goursat-wythoff-controls.test.mjs",
+          "selector": "generation uses existing document construction and renders bound native evidence",
+          "kind": "node-test",
+          "level": "ui-unit",
+          "run_id": "ui",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        }
+      ],
+      "source_files": [
+        "engine/goursat_wythoff.py",
+        "ui/goursat-wythoff-controls.mjs"
+      ],
+      "ui": {
+        "element_ids": [
+          "goursat-wythoff-choice",
+          "generate-goursat-wythoff"
+        ],
+        "route": "Construct > Goursat stars; Expert off."
+      },
+      "closure": {
+        "kind": "local-tranche",
+        "legacy_case_ids": [],
+        "scope": "Seventy-nine Goursat/Wythoff 4D registered qualifications; only the declared input/options and checks.",
+        "legacy_disposition": {}
+      },
+      "remaining": "Seventy-nine registered generation receipts do not close LIB-05 or create new baseline identity matches; missing authoritative 2,191 roster remains explicit.",
+      "benchmark_status": "unverified",
+      "platform_status": "not-run",
+      "competitor_status": "not-run",
+      "parameters_are_executable": false
+    },
+    {
+      "id": "lib-04-r7-regular-source-labels",
+      "requirement_id": "LIB-04",
+      "option": "r7-regular-source-labels",
+      "title": "Sixteen distinct regular-4D primary source identities",
+      "source": {
+        "description": "Six convex plus ten retained regular star source keys in regular4d_validation"
+      },
+      "parameters": {
+        "identities": 16,
+        "labels": "detached primary labels; regular by supplied incidence"
+      },
+      "domain": {
+        "dimensions": [
+          4
+        ],
+        "object_classes": [
+          "named regular convex/star polychora"
+        ],
+        "limits": {
+          "domain": "source label/metadata option with related numerical symmetry receipts"
+        },
+        "numeric_contract": "Approximate float64 geometry/predicates; residuals qualify the supplied source, never exact algebraic or benchmark parity.",
+        "refusals": [
+          "Alternate realization counts never increase named identity coverage"
+        ]
+      },
+      "checks": [
+        "All sixteen keys keep independent primary labels and coordinate/incidence evidence"
+      ],
+      "fixtures": [
+        {
+          "path": "tests/test_regular4d_validation.py",
+          "selector": "test_existing_sixteen_keys_have_complete_detached_primary_labels",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/corpus-reconciliation-controls.test.mjs",
+          "selector": "4D groups display every candidate name without increasing coverage",
+          "kind": "node-test",
+          "level": "ui-unit",
+          "run_id": "ui",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        }
+      ],
+      "source_files": [
+        "engine/regular4d_validation.py",
+        "engine/corpus_reconciliation.py",
+        "ui/corpus-reconciliation-controls.mjs"
+      ],
+      "ui": {
+        "element_ids": [
+          "library-corpus"
+        ],
+        "route": "Library > Corpus coverage > regular 4D group (collapsed); Expert off."
+      },
+      "closure": {
+        "kind": "local-tranche",
+        "legacy_case_ids": [],
+        "scope": "Sixteen distinct regular-4D primary source identities; only the declared input/options and checks.",
+        "legacy_disposition": {}
+      },
+      "remaining": "Other source/option cross-products and installed benchmark semantics require separate evidence.",
+      "benchmark_status": "unverified",
+      "platform_status": "not-run",
+      "competitor_status": "not-run",
+      "parameters_are_executable": false
+    },
+    {
+      "id": "lib-07-r8-uniform-family-options",
+      "requirement_id": "LIB-07",
+      "option": "r8-uniform-family-options",
+      "title": "Parameterized uniform family count/domain options",
+      "source": {
+        "description": "Named prism, antiprism and product family cases in test_library_navigation"
+      },
+      "parameters": {
+        "familyCounts": "literal parametrized fixture n/m and independent counts"
+      },
+      "domain": {
+        "dimensions": [
+          3,
+          4
+        ],
+        "object_classes": [
+          "qualified uniform prism/antiprism/product families"
+        ],
+        "limits": {
+          "domain": "named ordinary factor families, not arbitrary rational step multiprisms"
+        },
+        "numeric_contract": "Approximate float64 geometry/predicates; residuals qualify the supplied source, never exact algebraic or benchmark parity.",
+        "refusals": [
+          "Unsupported factor/count domains refuse before publication"
+        ]
+      },
+      "checks": [
+        "Equalized edges, literal counts, generator roundtrip and invalid domain boundaries"
+      ],
+      "fixtures": [
+        {
+          "path": "tests/test_library_navigation.py",
+          "selector": "test_uniform_parameterized_families_equalize_edges_and_roundtrip_generator",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/test_library_navigation.py",
+          "selector": "test_uniform_family_refuses_unsupported_domains",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/library-navigation.test.mjs",
+          "selector": "uniform family NumericEntry evaluates counts atomically and generates a guarded document",
+          "kind": "node-test",
+          "level": "ui-unit",
+          "run_id": "ui",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        }
+      ],
+      "source_files": [
+        "engine/library_navigation.py",
+        "ui/library-navigation.mjs"
+      ],
+      "ui": {
+        "element_ids": [
+          "library-family"
+        ],
+        "route": "Library > Uniform family builder; Expert off."
+      },
+      "closure": {
+        "kind": "local-tranche",
+        "legacy_case_ids": [],
+        "scope": "Parameterized uniform family count/domain options; only the declared input/options and checks.",
+        "legacy_disposition": {}
+      },
+      "remaining": "Other source/option cross-products and installed benchmark semantics require separate evidence.",
+      "benchmark_status": "unverified",
+      "platform_status": "not-run",
+      "competitor_status": "not-run",
+      "parameters_are_executable": false
+    },
+    {
+      "id": "lib-08-r8-alias-and-identity-options",
+      "requirement_id": "LIB-08",
+      "option": "r8-alias-and-identity-options",
+      "title": "Aliases and candidate/source/qualified identity separation",
+      "source": {
+        "description": "U/C/W/Bowers aliases and corpus obligations, including unmatched duals"
+      },
+      "parameters": {
+        "queries": "named fixture aliases and corpus identity/realization selection"
+      },
+      "domain": {
+        "dimensions": [
+          3,
+          4
+        ],
+        "object_classes": [
+          "catalog navigation metadata"
+        ],
+        "limits": {
+          "domain": "search/navigation and coverage policy; no geometry reclassification"
+        },
+        "numeric_contract": "Approximate float64 geometry/predicates; residuals qualify the supplied source, never exact algebraic or benchmark parity.",
+        "refusals": [
+          "Unknown metadata stays unknown; stale pins revoke source matches"
+        ]
+      },
+      "checks": [
+        "Alias resolution does not collide on numeric prefixes",
+        "Separate candidate realization counts, source matches and qualified identities"
+      ],
+      "fixtures": [
+        {
+          "path": "tests/test_library_navigation.py",
+          "selector": "test_uniform_75_crosswalk_is_complete_and_searchable_metadata_is_not_geometry_reclassification",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/test_corpus_reconciliation.py",
+          "selector": "test_source_changes_and_missing_metadata_revoke_matches",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/test_corpus_reconciliation.py",
+          "selector": "test_source_counts_and_external_inventory_are_not_coverage",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/corpus-reconciliation-controls.test.mjs",
+          "selector": "named identity view retains separate realization, coordinate, topology and review evidence",
+          "kind": "node-test",
+          "level": "ui-unit",
+          "run_id": "ui",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/library-navigation.test.mjs",
+          "selector": "every Bowers and published U/C/W alias resolves without numeric prefix collisions",
+          "kind": "node-test",
+          "level": "ui-unit",
+          "run_id": "ui",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        }
+      ],
+      "source_files": [
+        "docs/CORPUS_RECONCILIATION.md",
+        "engine/corpus_reconciliation.py",
+        "engine/library_navigation.py",
+        "ui/library-navigation.mjs",
+        "ui/corpus-reconciliation-controls.mjs"
+      ],
+      "ui": {
+        "element_ids": [
+          "library-search",
+          "library-corpus"
+        ],
+        "route": "Library > Search / Corpus coverage; Expert off."
+      },
+      "closure": {
+        "kind": "local-tranche",
+        "legacy_case_ids": [],
+        "scope": "Aliases and candidate/source/qualified identity separation; only the declared input/options and checks.",
+        "legacy_disposition": {}
+      },
+      "remaining": "Other source/option cross-products and installed benchmark semantics require separate evidence.",
+      "benchmark_status": "unverified",
+      "platform_status": "not-run",
+      "competitor_status": "not-run",
+      "parameters_are_executable": false
+    },
+    {
+      "id": "con-13-r7-tuta-vf-completion",
+      "requirement_id": "CON-13",
+      "option": "r7-tuta-vf-completion",
+      "title": "Tuta five-vertex figure finite completion",
+      "source": {
+        "description": "Tuta five-vertex 3D figure with independently generated 4D completion 24/60/52/16"
+      },
+      "parameters": {
+        "search": "registered finite completion candidates",
+        "expectedCounts": [
+          24,
+          60,
+          52,
+          16
+        ]
+      },
+      "domain": {
+        "dimensions": [
+          3
+        ],
+        "object_classes": [
+          "eligible 3D vertex figure -> named scaliform 4D completion"
+        ],
+        "limits": {
+          "domain": "Tuta selected candidate in finite search; not inverse-VF universality"
+        },
+        "numeric_contract": "Approximate float64 geometry/predicates; residuals qualify the supplied source, never exact algebraic or benchmark parity.",
+        "refusals": [
+          "Metric/cycle spoof and altered candidate/output evidence refuse; no-match names searched domain"
+        ]
+      },
+      "checks": [
+        "Full metric/incidence and equal-edge scaliform evidence",
+        "Ambiguity retained; Undo/Redo, branch, save/reopen/replay"
+      ],
+      "fixtures": [
+        {
+          "path": "tests/test_vertex_figure_scaliform.py",
+          "selector": "test_previously_unsupported_named_figure_has_one_explicit_new_match",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/test_vertex_figure_scaliform.py",
+          "selector": "test_expected_polychoron_metric_complete_incidence_and_scaliform_evidence",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/test_vertex_figure_scaliform.py",
+          "selector": "test_recipe_undo_redo_reopen_replay_and_parameter_branch",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/vertex-figure-scaliform-mounted.test.mjs",
+          "selector": "mounted Tuta figure completion: expert-off search, metric evidence, undo/reopen/replay and branch",
+          "kind": "node-test",
+          "level": "ui-mounted",
+          "run_id": "ui",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        }
+      ],
+      "source_files": [
+        "docs/VERTEX_FIGURE_SCALIFORM.md",
+        "engine/vertex_figure_construction.py",
+        "engine/scaliform4.py"
+      ],
+      "ui": {
+        "element_ids": [
+          "vertex-figure-search"
+        ],
+        "route": "Construct > Vertex figure completion; Expert off."
+      },
+      "closure": {
+        "kind": "local-tranche",
+        "legacy_case_ids": [
+          "con-13-scaliform-completion"
+        ],
+        "scope": "Tuta five-vertex figure finite completion; only the declared input/options and checks.",
+        "legacy_disposition": {
+          "con-13-scaliform-completion": "local-tranche-only"
+        }
+      },
+      "remaining": "R9 focused mounted search/build/history workflow passes with the original waits; The 0.28.0 release ui run records it as passed (the focused R9 run is kept as ui-r9-vf.xml for history). The failed R8 suite remains historical in ui.xml. Named Tuta tranche closes only this eligible figure; original broad scaliform completion remains restricted to finite registered candidates.",
+      "benchmark_status": "unverified",
+      "platform_status": "not-run",
+      "competitor_status": "not-run",
+      "parameters_are_executable": false
+    },
+    {
+      "id": "view-06-r7-source-symmetry-evidence",
+      "requirement_id": "VIEW-06",
+      "option": "r7-source-symmetry-evidence",
+      "title": "Symmetry source/incidence binding and explicit limited outcomes",
+      "source": {
+        "description": "67 recorded symmetry fixtures: 65 numerical passes and two expected resource limits"
+      },
+      "parameters": {
+        "fixtures": 67,
+        "fullPasses": 65,
+        "expectedLimits": 2,
+        "controls": "changed incidence and similarity"
+      },
+      "domain": {
+        "dimensions": [
+          3,
+          4
+        ],
+        "object_classes": [
+          "named ordinary/generalized source actions"
+        ],
+        "limits": {
+          "vertices": 1000,
+          "domain": "bounded exhaustive spanning-frame group engine; report read is not live recomputation"
+        },
+        "numeric_contract": "Approximate float64 geometry/predicates; residuals qualify the supplied source, never exact algebraic or benchmark parity.",
+        "refusals": [
+          "Rigogishi vertex limit and cube one-frame budget are explicit limitations, not completeness passes"
+        ]
+      },
+      "checks": [
+        "Independent expected full/proper orders, complete permutation/incidence checks and distinct source bindings",
+        "Recorded evidence cannot transfer to changed incidence"
+      ],
+      "fixtures": [
+        {
+          "path": "tests/test_symmetry_qualification.py",
+          "selector": "test_shipped_evidence_covers_declared_families_and_all_expected_outcomes",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/test_symmetry_qualification.py",
+          "selector": "test_altered_incidence_has_its_own_group_and_cannot_inherit_source_receipt",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/test_symmetry_qualification.py",
+          "selector": "test_frame_and_vertex_limits_are_explicit_and_never_complete",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/symmetry-evidence-controls.test.mjs",
+          "selector": "mounted app reads native evidence, matches source hashes and links corpus receipts with Expert off",
+          "kind": "node-test",
+          "level": "ui-mounted",
+          "run_id": "ui",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        }
+      ],
+      "source_files": [
+        "docs/SYMMETRY_QUALIFICATION.md",
+        "engine/symmetry_qualification.py",
+        "ui/symmetry-evidence-controls.mjs"
+      ],
+      "ui": {
+        "element_ids": [
+          "library-symmetry-evidence"
+        ],
+        "route": "Library > Symmetry evidence (collapsed); Expert off."
+      },
+      "closure": {
+        "kind": "inventory-only",
+        "legacy_case_ids": [],
+        "scope": "Symmetry source/incidence binding and explicit limited outcomes; only the declared input/options and checks.",
+        "legacy_disposition": {}
+      },
+      "remaining": "Current mounted UI selection failed: mounted app reads native evidence, matches source hashes and links corpus receipts with Expert off. Raw startup/navigation/summary timeout evidence is retained in ui.xml. Earlier UI passes remain historical attempts, not replacement current passes. Native implementation evidence does not close this UI qualification gap. Mounted symmetry evidence summary failed twice at its existing 20-second wait after opening library-symmetry-evidence. Recorded numerical/native evidence remains separate; current mounted UI workflow is unqualified. Reproduce and investigate in the symmetry UI package; no runtime fix or timeout change is made here. R9 (0.28.0 release receipts, 2026-11-10): this mounted selector passed on a clean run; the earlier failure was a load timeout. Closure level is unchanged pending lead review.",
+      "benchmark_status": "unverified",
+      "platform_status": "not-run",
+      "competitor_status": "not-run",
+      "parameters_are_executable": false,
+      "evidence_status": "incomplete"
+    },
+    {
+      "id": "anim-02-r7-via-snub-h3-dodecahedron",
+      "requirement_id": "ANIM-02",
+      "option": "r7-via-snub-h3-dodecahedron",
+      "title": "H3 via-snub from dodecahedron",
+      "source": {
+        "description": "Complete ordinary regular dodecahedron with literal source colors, units and notes"
+      },
+      "parameters": {
+        "method": "via-snub",
+        "source": "dodecahedron",
+        "uniformRatio": 0.5,
+        "interiorCounts": [
+          60,
+          150,
+          92
+        ]
+      },
+      "domain": {
+        "dimensions": [
+          3
+        ],
+        "object_classes": [
+          "regular H3 dodecahedron/icosahedron and prepared polar"
+        ],
+        "limits": {
+          "domain": "ratios 0,1 or conditioned interior; complete metric/cyclic-source qualification",
+          "literalEndpointRatios": [
+            0,
+            1
+          ],
+          "interiorRatio": [
+            0.001,
+            0.999
+          ]
+        },
+        "numeric_contract": "Approximate float64 geometry/predicates; residuals qualify the supplied source, never exact algebraic or benchmark parity.",
+        "refusals": [
+          "Near-endpoint ill-conditioned collars, altered metric/incidence/center/context refuse without snapping"
+        ]
+      },
+      "checks": [
+        "Independent hull and Coxeter-orbit event oracle; all entity/corner maps",
+        "Native reopen and mounted ratio playback, PNG and real VP8 decode"
+      ],
+      "fixtures": [
+        {
+          "path": "tests/test_dual_morph_snub_h3.py",
+          "selector": "test_endpoints_interiors_and_independent_hull_oracle",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/test_dual_morph_snub_h3.py",
+          "selector": "test_uniform_event_matches_independent_coxeter_orbit_distance_oracle",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/test_dual_morph_snub_h3.py",
+          "selector": "test_parameter_refusal_without_snapping",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/dual-morph-snub-h3-mounted.test.mjs",
+          "selector": "mounted H3 dodecahedron: Expert off, reopen, ratio sweep and real VP8 video",
+          "kind": "node-test",
+          "level": "ui-mounted",
+          "run_id": "ui",
+          "template": "mounted H3 ${key}: Expert off, reopen, ratio sweep and real VP8 video",
+          "bindings": {
+            "key": "dodecahedron"
+          },
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        }
+      ],
+      "source_files": [
+        "docs/R7_MORPH.md",
+        "engine/dual_morph_snub_h3.py",
+        "ui/dual-morph-controls.mjs",
+        "ui/dual-morph-session.mjs"
+      ],
+      "ui": {
+        "element_ids": [
+          "dual-morph-method",
+          "dual-morph-ratio",
+          "dual-morph-apply",
+          "animation-morph",
+          "animation-webm"
+        ],
+        "route": "Library > dodecahedron > Dock More > Dual morph > Via-snub; Timeline > Dual morph for export; Expert off."
+      },
+      "closure": {
+        "kind": "local-tranche",
+        "legacy_case_ids": [],
+        "scope": "H3 via-snub from dodecahedron; only the declared input/options and checks.",
+        "legacy_disposition": {}
+      },
+      "remaining": "Declared numerical H3 trajectory only. VP8 Chromium export is not packaged encoder/GPU qualification; collar and arbitrary-domain gaps remain.",
+      "benchmark_status": "unverified",
+      "platform_status": "not-run",
+      "competitor_status": "not-run",
+      "parameters_are_executable": false
+    },
+    {
+      "id": "anim-02-r7-via-snub-h3-icosahedron",
+      "requirement_id": "ANIM-02",
+      "option": "r7-via-snub-h3-icosahedron",
+      "title": "H3 via-snub from icosahedron",
+      "source": {
+        "description": "Complete ordinary regular icosahedron with literal source colors, units and notes"
+      },
+      "parameters": {
+        "method": "via-snub",
+        "source": "icosahedron",
+        "uniformRatio": 0.5,
+        "interiorCounts": [
+          60,
+          150,
+          92
+        ]
+      },
+      "domain": {
+        "dimensions": [
+          3
+        ],
+        "object_classes": [
+          "regular H3 dodecahedron/icosahedron and prepared polar"
+        ],
+        "limits": {
+          "domain": "ratios 0,1 or conditioned interior; complete metric/cyclic-source qualification",
+          "literalEndpointRatios": [
+            0,
+            1
+          ],
+          "interiorRatio": [
+            0.001,
+            0.999
+          ]
+        },
+        "numeric_contract": "Approximate float64 geometry/predicates; residuals qualify the supplied source, never exact algebraic or benchmark parity.",
+        "refusals": [
+          "Near-endpoint ill-conditioned collars, altered metric/incidence/center/context refuse without snapping"
+        ]
+      },
+      "checks": [
+        "Independent hull and Coxeter-orbit event oracle; all entity/corner maps",
+        "Native reopen and mounted ratio playback, PNG and real VP8 decode"
+      ],
+      "fixtures": [
+        {
+          "path": "tests/test_dual_morph_snub_h3.py",
+          "selector": "test_endpoints_interiors_and_independent_hull_oracle",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/test_dual_morph_snub_h3.py",
+          "selector": "test_uniform_event_matches_independent_coxeter_orbit_distance_oracle",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/test_dual_morph_snub_h3.py",
+          "selector": "test_parameter_refusal_without_snapping",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/dual-morph-snub-h3-mounted.test.mjs",
+          "selector": "mounted H3 icosahedron: Expert off, reopen, ratio sweep and real VP8 video",
+          "kind": "node-test",
+          "level": "ui-mounted",
+          "run_id": "ui",
+          "template": "mounted H3 ${key}: Expert off, reopen, ratio sweep and real VP8 video",
+          "bindings": {
+            "key": "icosahedron"
+          },
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        }
+      ],
+      "source_files": [
+        "docs/R7_MORPH.md",
+        "engine/dual_morph_snub_h3.py",
+        "ui/dual-morph-controls.mjs",
+        "ui/dual-morph-session.mjs"
+      ],
+      "ui": {
+        "element_ids": [
+          "dual-morph-method",
+          "dual-morph-ratio",
+          "dual-morph-apply",
+          "animation-morph",
+          "animation-webm"
+        ],
+        "route": "Library > icosahedron > Dock More > Dual morph > Via-snub; Timeline > Dual morph for export; Expert off."
+      },
+      "closure": {
+        "kind": "local-tranche",
+        "legacy_case_ids": [],
+        "scope": "H3 via-snub from icosahedron; only the declared input/options and checks.",
+        "legacy_disposition": {}
+      },
+      "remaining": "Declared numerical H3 trajectory only. VP8 Chromium export is not packaged encoder/GPU qualification; collar and arbitrary-domain gaps remain.",
+      "benchmark_status": "unverified",
+      "platform_status": "not-run",
+      "competitor_status": "not-run",
+      "parameters_are_executable": false
+    },
+    {
+      "id": "anim-02-r8-method-sizing",
+      "requirement_id": "ANIM-02",
+      "option": "r8-method-sizing",
+      "title": "Morph method/domain inventory: sizing",
+      "source": {
+        "description": "13 named source fingerprints in tests/fixtures/morph_method_inventory_r7.json"
+      },
+      "parameters": {
+        "method": "sizing",
+        "ratios": [
+          0,
+          0.25,
+          0.5,
+          0.75,
+          1
+        ],
+        "sampledSources": [
+          "tetrahedron",
+          "cube",
+          "octahedron",
+          "dodecahedron",
+          "icosahedron",
+          "great-dodecahedron",
+          "simplex4",
+          "tesseract",
+          "cross4",
+          "cell24",
+          "cell120",
+          "cell600"
+        ],
+        "refusedSources": {
+          "star-uniform4-quidpith": "4D sizing/truncation requires a finite intrinsic convex 4D polytope."
+        }
+      },
+      "domain": {
+        "dimensions": [
+          3,
+          4
+        ],
+        "object_classes": [
+          "five Platonic sources, generalized great dodecahedron, six convex regular polychora, generalized quidpith"
+        ],
+        "limits": {
+          "domain": "five recorded samples per supported named row; no arbitrary-input or continuous-trajectory certification"
+        },
+        "numeric_contract": "Approximate float64 geometry/predicates; residuals qualify the supplied source, never exact algebraic or benchmark parity.",
+        "refusals": [
+          "Every refused row keeps its native reason; sampled source cannot expand method eligibility"
+        ]
+      },
+      "checks": [
+        "All 117 matrix rows and nine methods have unique source/method identities",
+        "Selected implementation hash and explicit sampled/refused outcomes retained; matrix not reexecuted by inventory test"
+      ],
+      "fixtures": [
+        {
+          "path": "tests/test_dual_morph_snub_h3.py",
+          "selector": "test_inventory_receipt_retains_refusals_and_binds_selected_implementation",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/dual-morph-snub-mounted.test.mjs",
+          "selector": "mounted via-snub works with Expert off, literal source save/reopen and unsupported-domain UI",
+          "kind": "node-test",
+          "level": "ui-mounted",
+          "run_id": "ui",
+          "role": "related-not-oracle",
+          "scope": "Context/entry-point regression only; not direct evidence for the scenario mathematical or option cross-product claims."
+        }
+      ],
+      "source_files": [
+        "docs/R7_MORPH.md",
+        "tests/fixtures/morph_method_inventory_r7.json",
+        "scripts/morph_method_inventory.py",
+        "engine/dual_morph.py",
+        "ui/dual-morph-controls.mjs"
+      ],
+      "ui": {
+        "element_ids": [
+          "dual-morph-method",
+          "dual-morph-ratio",
+          "dual-morph-apply"
+        ],
+        "route": "Dock > More > Dual morph > method selector; Expert off."
+      },
+      "closure": {
+        "kind": "inventory-only",
+        "legacy_case_ids": [],
+        "scope": "Morph method/domain inventory: sizing; only the declared input/options and checks.",
+        "legacy_disposition": {}
+      },
+      "remaining": "This validates recorded matrix structure and selected hash, not fresh execution or independent oracles for every method. Reproduce each row and qualify unsupported domains separately.",
+      "benchmark_status": "unverified",
+      "platform_status": "not-run",
+      "competitor_status": "not-run",
+      "parameters_are_executable": false
+    },
+    {
+      "id": "anim-02-r8-method-truncation",
+      "requirement_id": "ANIM-02",
+      "option": "r8-method-truncation",
+      "title": "Morph method/domain inventory: truncation",
+      "source": {
+        "description": "13 named source fingerprints in tests/fixtures/morph_method_inventory_r7.json"
+      },
+      "parameters": {
+        "method": "truncation",
+        "ratios": [
+          0,
+          0.25,
+          0.5,
+          0.75,
+          1
+        ],
+        "sampledSources": [
+          "tetrahedron",
+          "cube",
+          "octahedron",
+          "dodecahedron",
+          "icosahedron",
+          "simplex4",
+          "tesseract",
+          "cross4",
+          "cell24",
+          "cell120",
+          "cell600"
+        ],
+        "refusedSources": {
+          "great-dodecahedron": "Sizing prototype supports finite checked intrinsic 3D convex sources only; no 4D/generalized benchmark claim.",
+          "star-uniform4-quidpith": "4D sizing/truncation requires a finite intrinsic convex 4D polytope."
+        }
+      },
+      "domain": {
+        "dimensions": [
+          3,
+          4
+        ],
+        "object_classes": [
+          "five Platonic sources, generalized great dodecahedron, six convex regular polychora, generalized quidpith"
+        ],
+        "limits": {
+          "domain": "five recorded samples per supported named row; no arbitrary-input or continuous-trajectory certification"
+        },
+        "numeric_contract": "Approximate float64 geometry/predicates; residuals qualify the supplied source, never exact algebraic or benchmark parity.",
+        "refusals": [
+          "Every refused row keeps its native reason; sampled source cannot expand method eligibility"
+        ]
+      },
+      "checks": [
+        "All 117 matrix rows and nine methods have unique source/method identities",
+        "Selected implementation hash and explicit sampled/refused outcomes retained; matrix not reexecuted by inventory test"
+      ],
+      "fixtures": [
+        {
+          "path": "tests/test_dual_morph_snub_h3.py",
+          "selector": "test_inventory_receipt_retains_refusals_and_binds_selected_implementation",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/dual-morph-snub-mounted.test.mjs",
+          "selector": "mounted via-snub works with Expert off, literal source save/reopen and unsupported-domain UI",
+          "kind": "node-test",
+          "level": "ui-mounted",
+          "run_id": "ui",
+          "role": "related-not-oracle",
+          "scope": "Context/entry-point regression only; not direct evidence for the scenario mathematical or option cross-product claims."
+        }
+      ],
+      "source_files": [
+        "docs/R7_MORPH.md",
+        "tests/fixtures/morph_method_inventory_r7.json",
+        "scripts/morph_method_inventory.py",
+        "engine/dual_morph.py",
+        "ui/dual-morph-controls.mjs"
+      ],
+      "ui": {
+        "element_ids": [
+          "dual-morph-method",
+          "dual-morph-ratio",
+          "dual-morph-apply"
+        ],
+        "route": "Dock > More > Dual morph > method selector; Expert off."
+      },
+      "closure": {
+        "kind": "inventory-only",
+        "legacy_case_ids": [],
+        "scope": "Morph method/domain inventory: truncation; only the declared input/options and checks.",
+        "legacy_disposition": {}
+      },
+      "remaining": "This validates recorded matrix structure and selected hash, not fresh execution or independent oracles for every method. Reproduce each row and qualify unsupported domains separately.",
+      "benchmark_status": "unverified",
+      "platform_status": "not-run",
+      "competitor_status": "not-run",
+      "parameters_are_executable": false
+    },
+    {
+      "id": "anim-02-r8-method-augmentation",
+      "requirement_id": "ANIM-02",
+      "option": "r8-method-augmentation",
+      "title": "Morph method/domain inventory: augmentation",
+      "source": {
+        "description": "13 named source fingerprints in tests/fixtures/morph_method_inventory_r7.json"
+      },
+      "parameters": {
+        "method": "augmentation",
+        "ratios": [
+          0,
+          0.25,
+          0.5,
+          0.75,
+          1
+        ],
+        "sampledSources": [
+          "tetrahedron",
+          "cube",
+          "octahedron",
+          "dodecahedron",
+          "icosahedron"
+        ],
+        "refusedSources": {
+          "great-dodecahedron": "Sizing prototype supports finite checked intrinsic 3D convex sources only; no 4D/generalized benchmark claim.",
+          "simplex4": "Sizing prototype supports finite checked intrinsic 3D convex sources only; no 4D/generalized benchmark claim.",
+          "tesseract": "Sizing prototype supports finite checked intrinsic 3D convex sources only; no 4D/generalized benchmark claim.",
+          "cross4": "Sizing prototype supports finite checked intrinsic 3D convex sources only; no 4D/generalized benchmark claim.",
+          "cell24": "Sizing prototype supports finite checked intrinsic 3D convex sources only; no 4D/generalized benchmark claim.",
+          "cell120": "Sizing prototype supports finite checked intrinsic 3D convex sources only; no 4D/generalized benchmark claim.",
+          "cell600": "Sizing prototype supports finite checked intrinsic 3D convex sources only; no 4D/generalized benchmark claim.",
+          "star-uniform4-quidpith": "Sizing prototype supports finite checked intrinsic 3D convex sources only; no 4D/generalized benchmark claim."
+        }
+      },
+      "domain": {
+        "dimensions": [
+          3,
+          4
+        ],
+        "object_classes": [
+          "five Platonic sources, generalized great dodecahedron, six convex regular polychora, generalized quidpith"
+        ],
+        "limits": {
+          "domain": "five recorded samples per supported named row; no arbitrary-input or continuous-trajectory certification"
+        },
+        "numeric_contract": "Approximate float64 geometry/predicates; residuals qualify the supplied source, never exact algebraic or benchmark parity.",
+        "refusals": [
+          "Every refused row keeps its native reason; sampled source cannot expand method eligibility"
+        ]
+      },
+      "checks": [
+        "All 117 matrix rows and nine methods have unique source/method identities",
+        "Selected implementation hash and explicit sampled/refused outcomes retained; matrix not reexecuted by inventory test"
+      ],
+      "fixtures": [
+        {
+          "path": "tests/test_dual_morph_snub_h3.py",
+          "selector": "test_inventory_receipt_retains_refusals_and_binds_selected_implementation",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/dual-morph-snub-mounted.test.mjs",
+          "selector": "mounted via-snub works with Expert off, literal source save/reopen and unsupported-domain UI",
+          "kind": "node-test",
+          "level": "ui-mounted",
+          "run_id": "ui",
+          "role": "related-not-oracle",
+          "scope": "Context/entry-point regression only; not direct evidence for the scenario mathematical or option cross-product claims."
+        }
+      ],
+      "source_files": [
+        "docs/R7_MORPH.md",
+        "tests/fixtures/morph_method_inventory_r7.json",
+        "scripts/morph_method_inventory.py",
+        "engine/dual_morph.py",
+        "ui/dual-morph-controls.mjs"
+      ],
+      "ui": {
+        "element_ids": [
+          "dual-morph-method",
+          "dual-morph-ratio",
+          "dual-morph-apply"
+        ],
+        "route": "Dock > More > Dual morph > method selector; Expert off."
+      },
+      "closure": {
+        "kind": "inventory-only",
+        "legacy_case_ids": [],
+        "scope": "Morph method/domain inventory: augmentation; only the declared input/options and checks.",
+        "legacy_disposition": {}
+      },
+      "remaining": "This validates recorded matrix structure and selected hash, not fresh execution or independent oracles for every method. Reproduce each row and qualify unsupported domains separately.",
+      "benchmark_status": "unverified",
+      "platform_status": "not-run",
+      "competitor_status": "not-run",
+      "parameters_are_executable": false
+    },
+    {
+      "id": "anim-02-r8-method-expansion",
+      "requirement_id": "ANIM-02",
+      "option": "r8-method-expansion",
+      "title": "Morph method/domain inventory: expansion",
+      "source": {
+        "description": "13 named source fingerprints in tests/fixtures/morph_method_inventory_r7.json"
+      },
+      "parameters": {
+        "method": "expansion",
+        "ratios": [
+          0,
+          0.25,
+          0.5,
+          0.75,
+          1
+        ],
+        "sampledSources": [
+          "tetrahedron",
+          "cube",
+          "octahedron",
+          "dodecahedron",
+          "icosahedron",
+          "great-dodecahedron",
+          "simplex4",
+          "tesseract",
+          "cross4",
+          "cell24",
+          "star-uniform4-quidpith"
+        ],
+        "refusedSources": {
+          "cell120": "Expansion correspondence exceeds bounded incidence visits.",
+          "cell600": "Dual correspondence exceeds the bounded incidence-pair budget."
+        }
+      },
+      "domain": {
+        "dimensions": [
+          3,
+          4
+        ],
+        "object_classes": [
+          "five Platonic sources, generalized great dodecahedron, six convex regular polychora, generalized quidpith"
+        ],
+        "limits": {
+          "domain": "five recorded samples per supported named row; no arbitrary-input or continuous-trajectory certification"
+        },
+        "numeric_contract": "Approximate float64 geometry/predicates; residuals qualify the supplied source, never exact algebraic or benchmark parity.",
+        "refusals": [
+          "Every refused row keeps its native reason; sampled source cannot expand method eligibility"
+        ]
+      },
+      "checks": [
+        "All 117 matrix rows and nine methods have unique source/method identities",
+        "Selected implementation hash and explicit sampled/refused outcomes retained; matrix not reexecuted by inventory test"
+      ],
+      "fixtures": [
+        {
+          "path": "tests/test_dual_morph_snub_h3.py",
+          "selector": "test_inventory_receipt_retains_refusals_and_binds_selected_implementation",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/dual-morph-snub-mounted.test.mjs",
+          "selector": "mounted via-snub works with Expert off, literal source save/reopen and unsupported-domain UI",
+          "kind": "node-test",
+          "level": "ui-mounted",
+          "run_id": "ui",
+          "role": "related-not-oracle",
+          "scope": "Context/entry-point regression only; not direct evidence for the scenario mathematical or option cross-product claims."
+        }
+      ],
+      "source_files": [
+        "docs/R7_MORPH.md",
+        "tests/fixtures/morph_method_inventory_r7.json",
+        "scripts/morph_method_inventory.py",
+        "engine/dual_morph.py",
+        "ui/dual-morph-controls.mjs"
+      ],
+      "ui": {
+        "element_ids": [
+          "dual-morph-method",
+          "dual-morph-ratio",
+          "dual-morph-apply"
+        ],
+        "route": "Dock > More > Dual morph > method selector; Expert off."
+      },
+      "closure": {
+        "kind": "inventory-only",
+        "legacy_case_ids": [],
+        "scope": "Morph method/domain inventory: expansion; only the declared input/options and checks.",
+        "legacy_disposition": {}
+      },
+      "remaining": "This validates recorded matrix structure and selected hash, not fresh execution or independent oracles for every method. Reproduce each row and qualify unsupported domains separately.",
+      "benchmark_status": "unverified",
+      "platform_status": "not-run",
+      "competitor_status": "not-run",
+      "parameters_are_executable": false
+    },
+    {
+      "id": "anim-02-r8-method-tilting-quads",
+      "requirement_id": "ANIM-02",
+      "option": "r8-method-tilting-quads",
+      "title": "Morph method/domain inventory: tilting-quads",
+      "source": {
+        "description": "13 named source fingerprints in tests/fixtures/morph_method_inventory_r7.json"
+      },
+      "parameters": {
+        "method": "tilting-quads",
+        "ratios": [
+          0,
+          0.25,
+          0.5,
+          0.75,
+          1
+        ],
+        "sampledSources": [
+          "tetrahedron",
+          "cube",
+          "octahedron",
+          "dodecahedron",
+          "icosahedron",
+          "simplex4",
+          "tesseract",
+          "cross4",
+          "cell24"
+        ],
+        "refusedSources": {
+          "great-dodecahedron": "This prototype supports closed intrinsic 3D/4D convex sources only; generalized/infinite polars are unsupported.",
+          "cell120": "Expansion correspondence exceeds bounded incidence visits.",
+          "cell600": "Dual correspondence exceeds the bounded incidence-pair budget.",
+          "star-uniform4-quidpith": "This prototype supports closed intrinsic 3D/4D convex sources only; generalized/infinite polars are unsupported."
+        }
+      },
+      "domain": {
+        "dimensions": [
+          3,
+          4
+        ],
+        "object_classes": [
+          "five Platonic sources, generalized great dodecahedron, six convex regular polychora, generalized quidpith"
+        ],
+        "limits": {
+          "domain": "five recorded samples per supported named row; no arbitrary-input or continuous-trajectory certification"
+        },
+        "numeric_contract": "Approximate float64 geometry/predicates; residuals qualify the supplied source, never exact algebraic or benchmark parity.",
+        "refusals": [
+          "Every refused row keeps its native reason; sampled source cannot expand method eligibility"
+        ]
+      },
+      "checks": [
+        "All 117 matrix rows and nine methods have unique source/method identities",
+        "Selected implementation hash and explicit sampled/refused outcomes retained; matrix not reexecuted by inventory test"
+      ],
+      "fixtures": [
+        {
+          "path": "tests/test_dual_morph_snub_h3.py",
+          "selector": "test_inventory_receipt_retains_refusals_and_binds_selected_implementation",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/dual-morph-snub-mounted.test.mjs",
+          "selector": "mounted via-snub works with Expert off, literal source save/reopen and unsupported-domain UI",
+          "kind": "node-test",
+          "level": "ui-mounted",
+          "run_id": "ui",
+          "role": "related-not-oracle",
+          "scope": "Context/entry-point regression only; not direct evidence for the scenario mathematical or option cross-product claims."
+        }
+      ],
+      "source_files": [
+        "docs/R7_MORPH.md",
+        "tests/fixtures/morph_method_inventory_r7.json",
+        "scripts/morph_method_inventory.py",
+        "engine/dual_morph.py",
+        "ui/dual-morph-controls.mjs"
+      ],
+      "ui": {
+        "element_ids": [
+          "dual-morph-method",
+          "dual-morph-ratio",
+          "dual-morph-apply"
+        ],
+        "route": "Dock > More > Dual morph > method selector; Expert off."
+      },
+      "closure": {
+        "kind": "inventory-only",
+        "legacy_case_ids": [],
+        "scope": "Morph method/domain inventory: tilting-quads; only the declared input/options and checks.",
+        "legacy_disposition": {}
+      },
+      "remaining": "This validates recorded matrix structure and selected hash, not fresh execution or independent oracles for every method. Reproduce each row and qualify unsupported domains separately.",
+      "benchmark_status": "unverified",
+      "platform_status": "not-run",
+      "competitor_status": "not-run",
+      "parameters_are_executable": false
+    },
+    {
+      "id": "anim-02-r8-method-tilting-triangles",
+      "requirement_id": "ANIM-02",
+      "option": "r8-method-tilting-triangles",
+      "title": "Morph method/domain inventory: tilting-triangles",
+      "source": {
+        "description": "13 named source fingerprints in tests/fixtures/morph_method_inventory_r7.json"
+      },
+      "parameters": {
+        "method": "tilting-triangles",
+        "ratios": [
+          0,
+          0.25,
+          0.5,
+          0.75,
+          1
+        ],
+        "sampledSources": [
+          "tetrahedron",
+          "cube",
+          "octahedron",
+          "dodecahedron",
+          "icosahedron"
+        ],
+        "refusedSources": {
+          "great-dodecahedron": "Sizing prototype supports finite checked intrinsic 3D convex sources only; no 4D/generalized benchmark claim.",
+          "simplex4": "Sizing prototype supports finite checked intrinsic 3D convex sources only; no 4D/generalized benchmark claim.",
+          "tesseract": "Sizing prototype supports finite checked intrinsic 3D convex sources only; no 4D/generalized benchmark claim.",
+          "cross4": "Sizing prototype supports finite checked intrinsic 3D convex sources only; no 4D/generalized benchmark claim.",
+          "cell24": "Sizing prototype supports finite checked intrinsic 3D convex sources only; no 4D/generalized benchmark claim.",
+          "cell120": "Sizing prototype supports finite checked intrinsic 3D convex sources only; no 4D/generalized benchmark claim.",
+          "cell600": "Sizing prototype supports finite checked intrinsic 3D convex sources only; no 4D/generalized benchmark claim.",
+          "star-uniform4-quidpith": "Sizing prototype supports finite checked intrinsic 3D convex sources only; no 4D/generalized benchmark claim."
+        }
+      },
+      "domain": {
+        "dimensions": [
+          3,
+          4
+        ],
+        "object_classes": [
+          "five Platonic sources, generalized great dodecahedron, six convex regular polychora, generalized quidpith"
+        ],
+        "limits": {
+          "domain": "five recorded samples per supported named row; no arbitrary-input or continuous-trajectory certification"
+        },
+        "numeric_contract": "Approximate float64 geometry/predicates; residuals qualify the supplied source, never exact algebraic or benchmark parity.",
+        "refusals": [
+          "Every refused row keeps its native reason; sampled source cannot expand method eligibility"
+        ]
+      },
+      "checks": [
+        "All 117 matrix rows and nine methods have unique source/method identities",
+        "Selected implementation hash and explicit sampled/refused outcomes retained; matrix not reexecuted by inventory test"
+      ],
+      "fixtures": [
+        {
+          "path": "tests/test_dual_morph_snub_h3.py",
+          "selector": "test_inventory_receipt_retains_refusals_and_binds_selected_implementation",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/dual-morph-snub-mounted.test.mjs",
+          "selector": "mounted via-snub works with Expert off, literal source save/reopen and unsupported-domain UI",
+          "kind": "node-test",
+          "level": "ui-mounted",
+          "run_id": "ui",
+          "role": "related-not-oracle",
+          "scope": "Context/entry-point regression only; not direct evidence for the scenario mathematical or option cross-product claims."
+        }
+      ],
+      "source_files": [
+        "docs/R7_MORPH.md",
+        "tests/fixtures/morph_method_inventory_r7.json",
+        "scripts/morph_method_inventory.py",
+        "engine/dual_morph.py",
+        "ui/dual-morph-controls.mjs"
+      ],
+      "ui": {
+        "element_ids": [
+          "dual-morph-method",
+          "dual-morph-ratio",
+          "dual-morph-apply"
+        ],
+        "route": "Dock > More > Dual morph > method selector; Expert off."
+      },
+      "closure": {
+        "kind": "inventory-only",
+        "legacy_case_ids": [],
+        "scope": "Morph method/domain inventory: tilting-triangles; only the declared input/options and checks.",
+        "legacy_disposition": {}
+      },
+      "remaining": "This validates recorded matrix structure and selected hash, not fresh execution or independent oracles for every method. Reproduce each row and qualify unsupported domains separately.",
+      "benchmark_status": "unverified",
+      "platform_status": "not-run",
+      "competitor_status": "not-run",
+      "parameters_are_executable": false
+    },
+    {
+      "id": "anim-02-r8-method-tilting-to-compound",
+      "requirement_id": "ANIM-02",
+      "option": "r8-method-tilting-to-compound",
+      "title": "Morph method/domain inventory: tilting-to-compound",
+      "source": {
+        "description": "13 named source fingerprints in tests/fixtures/morph_method_inventory_r7.json"
+      },
+      "parameters": {
+        "method": "tilting-to-compound",
+        "ratios": [
+          0,
+          0.25,
+          0.5,
+          0.75,
+          1
+        ],
+        "sampledSources": [
+          "tetrahedron",
+          "cube",
+          "octahedron",
+          "dodecahedron",
+          "icosahedron"
+        ],
+        "refusedSources": {
+          "great-dodecahedron": "Sizing prototype supports finite checked intrinsic 3D convex sources only; no 4D/generalized benchmark claim.",
+          "simplex4": "Sizing prototype supports finite checked intrinsic 3D convex sources only; no 4D/generalized benchmark claim.",
+          "tesseract": "Sizing prototype supports finite checked intrinsic 3D convex sources only; no 4D/generalized benchmark claim.",
+          "cross4": "Sizing prototype supports finite checked intrinsic 3D convex sources only; no 4D/generalized benchmark claim.",
+          "cell24": "Sizing prototype supports finite checked intrinsic 3D convex sources only; no 4D/generalized benchmark claim.",
+          "cell120": "Sizing prototype supports finite checked intrinsic 3D convex sources only; no 4D/generalized benchmark claim.",
+          "cell600": "Sizing prototype supports finite checked intrinsic 3D convex sources only; no 4D/generalized benchmark claim.",
+          "star-uniform4-quidpith": "Sizing prototype supports finite checked intrinsic 3D convex sources only; no 4D/generalized benchmark claim."
+        }
+      },
+      "domain": {
+        "dimensions": [
+          3,
+          4
+        ],
+        "object_classes": [
+          "five Platonic sources, generalized great dodecahedron, six convex regular polychora, generalized quidpith"
+        ],
+        "limits": {
+          "domain": "five recorded samples per supported named row; no arbitrary-input or continuous-trajectory certification"
+        },
+        "numeric_contract": "Approximate float64 geometry/predicates; residuals qualify the supplied source, never exact algebraic or benchmark parity.",
+        "refusals": [
+          "Every refused row keeps its native reason; sampled source cannot expand method eligibility"
+        ]
+      },
+      "checks": [
+        "All 117 matrix rows and nine methods have unique source/method identities",
+        "Selected implementation hash and explicit sampled/refused outcomes retained; matrix not reexecuted by inventory test"
+      ],
+      "fixtures": [
+        {
+          "path": "tests/test_dual_morph_snub_h3.py",
+          "selector": "test_inventory_receipt_retains_refusals_and_binds_selected_implementation",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/dual-morph-snub-mounted.test.mjs",
+          "selector": "mounted via-snub works with Expert off, literal source save/reopen and unsupported-domain UI",
+          "kind": "node-test",
+          "level": "ui-mounted",
+          "run_id": "ui",
+          "role": "related-not-oracle",
+          "scope": "Context/entry-point regression only; not direct evidence for the scenario mathematical or option cross-product claims."
+        }
+      ],
+      "source_files": [
+        "docs/R7_MORPH.md",
+        "tests/fixtures/morph_method_inventory_r7.json",
+        "scripts/morph_method_inventory.py",
+        "engine/dual_morph.py",
+        "ui/dual-morph-controls.mjs"
+      ],
+      "ui": {
+        "element_ids": [
+          "dual-morph-method",
+          "dual-morph-ratio",
+          "dual-morph-apply"
+        ],
+        "route": "Dock > More > Dual morph > method selector; Expert off."
+      },
+      "closure": {
+        "kind": "inventory-only",
+        "legacy_case_ids": [],
+        "scope": "Morph method/domain inventory: tilting-to-compound; only the declared input/options and checks.",
+        "legacy_disposition": {}
+      },
+      "remaining": "This validates recorded matrix structure and selected hash, not fresh execution or independent oracles for every method. Reproduce each row and qualify unsupported domains separately.",
+      "benchmark_status": "unverified",
+      "platform_status": "not-run",
+      "competitor_status": "not-run",
+      "parameters_are_executable": false
+    },
+    {
+      "id": "anim-02-r8-method-tilting-to-rectify",
+      "requirement_id": "ANIM-02",
+      "option": "r8-method-tilting-to-rectify",
+      "title": "Morph method/domain inventory: tilting-to-rectify",
+      "source": {
+        "description": "13 named source fingerprints in tests/fixtures/morph_method_inventory_r7.json"
+      },
+      "parameters": {
+        "method": "tilting-to-rectify",
+        "ratios": [
+          0,
+          0.25,
+          0.5,
+          0.75,
+          1
+        ],
+        "sampledSources": [
+          "tetrahedron",
+          "cube",
+          "octahedron",
+          "dodecahedron",
+          "icosahedron"
+        ],
+        "refusedSources": {
+          "great-dodecahedron": "Sizing prototype supports finite checked intrinsic 3D convex sources only; no 4D/generalized benchmark claim.",
+          "simplex4": "Sizing prototype supports finite checked intrinsic 3D convex sources only; no 4D/generalized benchmark claim.",
+          "tesseract": "Sizing prototype supports finite checked intrinsic 3D convex sources only; no 4D/generalized benchmark claim.",
+          "cross4": "Sizing prototype supports finite checked intrinsic 3D convex sources only; no 4D/generalized benchmark claim.",
+          "cell24": "Sizing prototype supports finite checked intrinsic 3D convex sources only; no 4D/generalized benchmark claim.",
+          "cell120": "Sizing prototype supports finite checked intrinsic 3D convex sources only; no 4D/generalized benchmark claim.",
+          "cell600": "Sizing prototype supports finite checked intrinsic 3D convex sources only; no 4D/generalized benchmark claim.",
+          "star-uniform4-quidpith": "Sizing prototype supports finite checked intrinsic 3D convex sources only; no 4D/generalized benchmark claim."
+        }
+      },
+      "domain": {
+        "dimensions": [
+          3,
+          4
+        ],
+        "object_classes": [
+          "five Platonic sources, generalized great dodecahedron, six convex regular polychora, generalized quidpith"
+        ],
+        "limits": {
+          "domain": "five recorded samples per supported named row; no arbitrary-input or continuous-trajectory certification"
+        },
+        "numeric_contract": "Approximate float64 geometry/predicates; residuals qualify the supplied source, never exact algebraic or benchmark parity.",
+        "refusals": [
+          "Every refused row keeps its native reason; sampled source cannot expand method eligibility"
+        ]
+      },
+      "checks": [
+        "All 117 matrix rows and nine methods have unique source/method identities",
+        "Selected implementation hash and explicit sampled/refused outcomes retained; matrix not reexecuted by inventory test"
+      ],
+      "fixtures": [
+        {
+          "path": "tests/test_dual_morph_snub_h3.py",
+          "selector": "test_inventory_receipt_retains_refusals_and_binds_selected_implementation",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/dual-morph-snub-mounted.test.mjs",
+          "selector": "mounted via-snub works with Expert off, literal source save/reopen and unsupported-domain UI",
+          "kind": "node-test",
+          "level": "ui-mounted",
+          "run_id": "ui",
+          "role": "related-not-oracle",
+          "scope": "Context/entry-point regression only; not direct evidence for the scenario mathematical or option cross-product claims."
+        }
+      ],
+      "source_files": [
+        "docs/R7_MORPH.md",
+        "tests/fixtures/morph_method_inventory_r7.json",
+        "scripts/morph_method_inventory.py",
+        "engine/dual_morph.py",
+        "ui/dual-morph-controls.mjs"
+      ],
+      "ui": {
+        "element_ids": [
+          "dual-morph-method",
+          "dual-morph-ratio",
+          "dual-morph-apply"
+        ],
+        "route": "Dock > More > Dual morph > method selector; Expert off."
+      },
+      "closure": {
+        "kind": "inventory-only",
+        "legacy_case_ids": [],
+        "scope": "Morph method/domain inventory: tilting-to-rectify; only the declared input/options and checks.",
+        "legacy_disposition": {}
+      },
+      "remaining": "This validates recorded matrix structure and selected hash, not fresh execution or independent oracles for every method. Reproduce each row and qualify unsupported domains separately.",
+      "benchmark_status": "unverified",
+      "platform_status": "not-run",
+      "competitor_status": "not-run",
+      "parameters_are_executable": false
+    },
+    {
+      "id": "anim-02-r8-method-via-snub",
+      "requirement_id": "ANIM-02",
+      "option": "r8-method-via-snub",
+      "title": "Morph method/domain inventory: via-snub",
+      "source": {
+        "description": "13 named source fingerprints in tests/fixtures/morph_method_inventory_r7.json"
+      },
+      "parameters": {
+        "method": "via-snub",
+        "ratios": [
+          0,
+          0.25,
+          0.5,
+          0.75,
+          1
+        ],
+        "sampledSources": [
+          "cube",
+          "dodecahedron",
+          "icosahedron"
+        ],
+        "refusedSources": {
+          "tetrahedron": "Via-snub supports only a centered axis-aligned cube with complete ordinary incidence, origin center, and form A, or a regular dodecahedron/icosahedron at its geometric center; rotated/translated cubes, other sources and 4D are unavailable.",
+          "octahedron": "Via-snub supports only a centered axis-aligned cube with complete ordinary incidence, origin center, and form A, or a regular dodecahedron/icosahedron at its geometric center; rotated/translated cubes, other sources and 4D are unavailable.",
+          "great-dodecahedron": "H3 via-snub requires a regular convex dodecahedron or icosahedron with complete ordinary incidence and polarity at its geometric center; generalized, distorted and 4D sources are unavailable.",
+          "simplex4": "Via-snub supports only a centered axis-aligned cube with complete ordinary incidence, origin center, and form A, or a regular dodecahedron/icosahedron at its geometric center; rotated/translated cubes, other sources and 4D are unavailable.",
+          "tesseract": "Via-snub supports only a centered axis-aligned cube with complete ordinary incidence, origin center, and form A, or a regular dodecahedron/icosahedron at its geometric center; rotated/translated cubes, other sources and 4D are unavailable.",
+          "cross4": "Via-snub supports only a centered axis-aligned cube with complete ordinary incidence, origin center, and form A, or a regular dodecahedron/icosahedron at its geometric center; rotated/translated cubes, other sources and 4D are unavailable.",
+          "cell24": "Via-snub supports only a centered axis-aligned cube with complete ordinary incidence, origin center, and form A, or a regular dodecahedron/icosahedron at its geometric center; rotated/translated cubes, other sources and 4D are unavailable.",
+          "cell120": "Via-snub supports only a centered axis-aligned cube with complete ordinary incidence, origin center, and form A, or a regular dodecahedron/icosahedron at its geometric center; rotated/translated cubes, other sources and 4D are unavailable.",
+          "cell600": "Via-snub supports only a centered axis-aligned cube with complete ordinary incidence, origin center, and form A, or a regular dodecahedron/icosahedron at its geometric center; rotated/translated cubes, other sources and 4D are unavailable.",
+          "star-uniform4-quidpith": "Via-snub supports only a centered axis-aligned cube with complete ordinary incidence, origin center, and form A, or a regular dodecahedron/icosahedron at its geometric center; rotated/translated cubes, other sources and 4D are unavailable."
+        }
+      },
+      "domain": {
+        "dimensions": [
+          3,
+          4
+        ],
+        "object_classes": [
+          "five Platonic sources, generalized great dodecahedron, six convex regular polychora, generalized quidpith"
+        ],
+        "limits": {
+          "domain": "five recorded samples per supported named row; no arbitrary-input or continuous-trajectory certification"
+        },
+        "numeric_contract": "Approximate float64 geometry/predicates; residuals qualify the supplied source, never exact algebraic or benchmark parity.",
+        "refusals": [
+          "Every refused row keeps its native reason; sampled source cannot expand method eligibility"
+        ]
+      },
+      "checks": [
+        "All 117 matrix rows and nine methods have unique source/method identities",
+        "Selected implementation hash and explicit sampled/refused outcomes retained; matrix not reexecuted by inventory test"
+      ],
+      "fixtures": [
+        {
+          "path": "tests/test_dual_morph_snub_h3.py",
+          "selector": "test_inventory_receipt_retains_refusals_and_binds_selected_implementation",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/dual-morph-snub-mounted.test.mjs",
+          "selector": "mounted via-snub works with Expert off, literal source save/reopen and unsupported-domain UI",
+          "kind": "node-test",
+          "level": "ui-mounted",
+          "run_id": "ui",
+          "role": "related-not-oracle",
+          "scope": "Context/entry-point regression only; not direct evidence for the scenario mathematical or option cross-product claims."
+        }
+      ],
+      "source_files": [
+        "docs/R7_MORPH.md",
+        "tests/fixtures/morph_method_inventory_r7.json",
+        "scripts/morph_method_inventory.py",
+        "engine/dual_morph.py",
+        "ui/dual-morph-controls.mjs"
+      ],
+      "ui": {
+        "element_ids": [
+          "dual-morph-method",
+          "dual-morph-ratio",
+          "dual-morph-apply"
+        ],
+        "route": "Dock > More > Dual morph > method selector; Expert off."
+      },
+      "closure": {
+        "kind": "inventory-only",
+        "legacy_case_ids": [],
+        "scope": "Morph method/domain inventory: via-snub; only the declared input/options and checks.",
+        "legacy_disposition": {}
+      },
+      "remaining": "This validates recorded matrix structure and selected hash, not fresh execution or independent oracles for every method. Reproduce each row and qualify unsupported domains separately.",
+      "benchmark_status": "unverified",
+      "platform_status": "not-run",
+      "competitor_status": "not-run",
+      "parameters_are_executable": false
+    },
+    {
+      "id": "doc-01-r8-legacy-branch-document",
+      "requirement_id": "DOC-01",
+      "option": "r8-legacy-branch-document",
+      "title": "Legacy operation branch creates independent history document",
+      "source": {
+        "description": "tests/fixtures/history/polygon-prism-0.1.polyproj reconstructed retained-kernel fixture"
+      },
+      "parameters": {
+        "operation": "polygon-prism/0.1.0",
+        "action": "parameter branch"
+      },
+      "domain": {
+        "dimensions": [
+          3,
+          4
+        ],
+        "object_classes": [
+          "schema-1 native project snapshots/graphs; analytic legacy 3D prism fixture"
+        ],
+        "limits": {
+          "domain": "explicit retained-version policy, no automatic schema/algorithm upgrades"
+        },
+        "numeric_contract": "Approximate float64 geometry/predicates; residuals qualify the supplied source, never exact algebraic or benchmark parity.",
+        "refusals": [
+          "Unrelated source annotation owners never transfer to new entities"
+        ]
+      },
+      "checks": [
+        "Analytic square prism 8/12/6 and literal versions/graph retained",
+        "Native source-bound content, Undo/Redo, replay/branch or honest snapshot fallback"
+      ],
+      "fixtures": [
+        {
+          "path": "tests/test_history_migrations.py",
+          "selector": "test_legacy_parameter_branch_retains_version_and_old_branch",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/test_history_migrations.py",
+          "selector": "test_annotation_ownership_survives_reload_replay_branch_and_rejects_wrong_owner",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/history-support-mounted.test.mjs",
+          "selector": "mounted History opens a legacy fixture, checks support, replays, branches and reports snapshot fallback without Expert mode",
+          "kind": "node-test",
+          "level": "ui-mounted",
+          "run_id": "ui",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        }
+      ],
+      "source_files": [
+        "docs/HISTORY_SUPPORT.md",
+        "tests/fixtures/history/polygon-prism-0.1.polyproj",
+        "engine/history_migrations.py",
+        "ui/history-controls.mjs"
+      ],
+      "ui": {
+        "element_ids": [
+          "history-settings",
+          "history-check-support",
+          "history-replay",
+          "history-branch",
+          "history-support-status"
+        ],
+        "route": "Workspace > History > Check replay support / Replay / Parameters; Expert off."
+      },
+      "closure": {
+        "kind": "inventory-only",
+        "legacy_case_ids": [],
+        "scope": "Legacy operation branch creates independent history document; only the declared input/options and checks.",
+        "legacy_disposition": {}
+      },
+      "remaining": "Current mounted UI selection failed: mounted History opens a legacy fixture, checks support, replays, branches and reports snapshot fallback without Expert mode. Raw startup/navigation/summary timeout evidence is retained in ui.xml. Earlier UI passes remain historical attempts, not replacement current passes. Native implementation evidence does not close this UI qualification gap. Reconstructed fixture is not an archived installed-build/user-file receipt; arbitrary migrations, OS recovery/install/upgrade remain unverified. R9 (0.28.0 release receipts, 2026-11-10): this mounted selector passed on a clean run; the earlier failure was a load timeout. Closure level is unchanged pending lead review.",
+      "benchmark_status": "unverified",
+      "platform_status": "not-run",
+      "competitor_status": "not-run",
+      "parameters_are_executable": false,
+      "evidence_status": "incomplete"
+    },
+    {
+      "id": "doc-03-r8-retained-legacy-version",
+      "requirement_id": "DOC-03",
+      "option": "r8-retained-legacy-version",
+      "title": "Retain legacy version and analytic prism replay",
+      "source": {
+        "description": "tests/fixtures/history/polygon-prism-0.1.polyproj reconstructed retained-kernel fixture"
+      },
+      "parameters": {
+        "operation": "polygon-prism/0.1.0",
+        "schema": 1
+      },
+      "domain": {
+        "dimensions": [
+          3,
+          4
+        ],
+        "object_classes": [
+          "schema-1 native project snapshots/graphs; analytic legacy 3D prism fixture"
+        ],
+        "limits": {
+          "domain": "explicit retained-version policy, no automatic schema/algorithm upgrades"
+        },
+        "numeric_contract": "Approximate float64 geometry/predicates; residuals qualify the supplied source, never exact algebraic or benchmark parity.",
+        "refusals": [
+          "Availability report verified:false is never replay verification"
+        ]
+      },
+      "checks": [
+        "Analytic square prism 8/12/6 and literal versions/graph retained",
+        "Native source-bound content, Undo/Redo, replay/branch or honest snapshot fallback"
+      ],
+      "fixtures": [
+        {
+          "path": "tests/test_history_migrations.py",
+          "selector": "test_legacy_fixture_roundtrip_preserves_graph_versions_and_analytic_prism",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/test_history_migrations.py",
+          "selector": "test_supported_report_is_availability_never_verification",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/history-support-mounted.test.mjs",
+          "selector": "mounted History opens a legacy fixture, checks support, replays, branches and reports snapshot fallback without Expert mode",
+          "kind": "node-test",
+          "level": "ui-mounted",
+          "run_id": "ui",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        }
+      ],
+      "source_files": [
+        "docs/HISTORY_SUPPORT.md",
+        "tests/fixtures/history/polygon-prism-0.1.polyproj",
+        "engine/history_migrations.py",
+        "ui/history-controls.mjs"
+      ],
+      "ui": {
+        "element_ids": [
+          "history-settings",
+          "history-check-support",
+          "history-replay",
+          "history-branch",
+          "history-support-status"
+        ],
+        "route": "Workspace > History > Check replay support / Replay / Parameters; Expert off."
+      },
+      "closure": {
+        "kind": "inventory-only",
+        "legacy_case_ids": [],
+        "scope": "Retain legacy version and analytic prism replay; only the declared input/options and checks.",
+        "legacy_disposition": {}
+      },
+      "remaining": "Current mounted UI selection failed: mounted History opens a legacy fixture, checks support, replays, branches and reports snapshot fallback without Expert mode. Raw startup/navigation/summary timeout evidence is retained in ui.xml. Earlier UI passes remain historical attempts, not replacement current passes. Native implementation evidence does not close this UI qualification gap. Reconstructed fixture is not an archived installed-build/user-file receipt; arbitrary migrations, OS recovery/install/upgrade remain unverified. R9 (0.28.0 release receipts, 2026-11-10): this mounted selector passed on a clean run; the earlier failure was a load timeout. Closure level is unchanged pending lead review.",
+      "benchmark_status": "unverified",
+      "platform_status": "not-run",
+      "competitor_status": "not-run",
+      "parameters_are_executable": false,
+      "evidence_status": "incomplete"
+    },
+    {
+      "id": "doc-03-r8-unknown-version-snapshot",
+      "requirement_id": "DOC-03",
+      "option": "r8-unknown-version-snapshot",
+      "title": "Unknown algorithm retains readable snapshots and refuses replay",
+      "source": {
+        "description": "tests/fixtures/history/polygon-prism-0.1.polyproj reconstructed retained-kernel fixture"
+      },
+      "parameters": {
+        "unknownOperation": "fixture-defined unsupported version/policy"
+      },
+      "domain": {
+        "dimensions": [
+          3,
+          4
+        ],
+        "object_classes": [
+          "schema-1 native project snapshots/graphs; analytic legacy 3D prism fixture"
+        ],
+        "limits": {
+          "domain": "explicit retained-version policy, no automatic schema/algorithm upgrades"
+        },
+        "numeric_contract": "Approximate float64 geometry/predicates; residuals qualify the supplied source, never exact algebraic or benchmark parity.",
+        "refusals": [
+          "Affected replay/branch fails preflight; snapshots/graph roundtrip unchanged"
+        ]
+      },
+      "checks": [
+        "Analytic square prism 8/12/6 and literal versions/graph retained",
+        "Native source-bound content, Undo/Redo, replay/branch or honest snapshot fallback"
+      ],
+      "fixtures": [
+        {
+          "path": "tests/test_history_migrations.py",
+          "selector": "test_unknown_semantics_roundtrip_snapshot_only_and_refuse_replay_branch",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/test_history_migrations.py",
+          "selector": "test_specialized_replay_and_branch_cannot_bypass_unknown_version_preflight",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/history-support-mounted.test.mjs",
+          "selector": "mounted History opens a legacy fixture, checks support, replays, branches and reports snapshot fallback without Expert mode",
+          "kind": "node-test",
+          "level": "ui-mounted",
+          "run_id": "ui",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        }
+      ],
+      "source_files": [
+        "docs/HISTORY_SUPPORT.md",
+        "tests/fixtures/history/polygon-prism-0.1.polyproj",
+        "engine/history_migrations.py",
+        "ui/history-controls.mjs"
+      ],
+      "ui": {
+        "element_ids": [
+          "history-settings",
+          "history-check-support",
+          "history-replay",
+          "history-branch",
+          "history-support-status"
+        ],
+        "route": "Workspace > History > Check replay support / Replay / Parameters; Expert off."
+      },
+      "closure": {
+        "kind": "inventory-only",
+        "legacy_case_ids": [],
+        "scope": "Unknown algorithm retains readable snapshots and refuses replay; only the declared input/options and checks.",
+        "legacy_disposition": {}
+      },
+      "remaining": "Current mounted UI selection failed: mounted History opens a legacy fixture, checks support, replays, branches and reports snapshot fallback without Expert mode. Raw startup/navigation/summary timeout evidence is retained in ui.xml. Earlier UI passes remain historical attempts, not replacement current passes. Native implementation evidence does not close this UI qualification gap. Reconstructed fixture is not an archived installed-build/user-file receipt; arbitrary migrations, OS recovery/install/upgrade remain unverified. R9 (0.28.0 release receipts, 2026-11-10): this mounted selector passed on a clean run; the earlier failure was a load timeout. Closure level is unchanged pending lead review.",
+      "benchmark_status": "unverified",
+      "platform_status": "not-run",
+      "competitor_status": "not-run",
+      "parameters_are_executable": false,
+      "evidence_status": "incomplete"
+    },
+    {
+      "id": "doc-03-r8-schema-and-pregraph",
+      "requirement_id": "DOC-03",
+      "option": "r8-schema-and-pregraph",
+      "title": "Reject unknown schema; pre-graph snapshots invent no recipe",
+      "source": {
+        "description": "tests/fixtures/history/polygon-prism-0.1.polyproj reconstructed retained-kernel fixture"
+      },
+      "parameters": {
+        "projectSchema": "unknown versus legacy schema-1 without graph"
+      },
+      "domain": {
+        "dimensions": [
+          3,
+          4
+        ],
+        "object_classes": [
+          "schema-1 native project snapshots/graphs; analytic legacy 3D prism fixture"
+        ],
+        "limits": {
+          "domain": "explicit retained-version policy, no automatic schema/algorithm upgrades"
+        },
+        "numeric_contract": "Approximate float64 geometry/predicates; residuals qualify the supplied source, never exact algebraic or benchmark parity.",
+        "refusals": [
+          "Unknown schema rejected without destination writes; pre-graph replay unavailable"
+        ]
+      },
+      "checks": [
+        "Analytic square prism 8/12/6 and literal versions/graph retained",
+        "Native source-bound content, Undo/Redo, replay/branch or honest snapshot fallback"
+      ],
+      "fixtures": [
+        {
+          "path": "tests/test_history_migrations.py",
+          "selector": "test_unknown_project_schema_rejected_without_touching_original_or_destination",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/test_history_migrations.py",
+          "selector": "test_pre_graph_legacy_snapshots_open_without_inventing_a_recipe",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/history-support-mounted.test.mjs",
+          "selector": "mounted History opens a legacy fixture, checks support, replays, branches and reports snapshot fallback without Expert mode",
+          "kind": "node-test",
+          "level": "ui-mounted",
+          "run_id": "ui",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        }
+      ],
+      "source_files": [
+        "docs/HISTORY_SUPPORT.md",
+        "tests/fixtures/history/polygon-prism-0.1.polyproj",
+        "engine/history_migrations.py",
+        "ui/history-controls.mjs"
+      ],
+      "ui": {
+        "element_ids": [
+          "history-settings",
+          "history-check-support",
+          "history-replay",
+          "history-branch",
+          "history-support-status"
+        ],
+        "route": "Workspace > History > Check replay support / Replay / Parameters; Expert off."
+      },
+      "closure": {
+        "kind": "inventory-only",
+        "legacy_case_ids": [],
+        "scope": "Reject unknown schema; pre-graph snapshots invent no recipe; only the declared input/options and checks.",
+        "legacy_disposition": {}
+      },
+      "remaining": "Current mounted UI selection failed: mounted History opens a legacy fixture, checks support, replays, branches and reports snapshot fallback without Expert mode. Raw startup/navigation/summary timeout evidence is retained in ui.xml. Earlier UI passes remain historical attempts, not replacement current passes. Native implementation evidence does not close this UI qualification gap. Reconstructed fixture is not an archived installed-build/user-file receipt; arbitrary migrations, OS recovery/install/upgrade remain unverified. R9 (0.28.0 release receipts, 2026-11-10): this mounted selector passed on a clean run; the earlier failure was a load timeout. Closure level is unchanged pending lead review.",
+      "benchmark_status": "unverified",
+      "platform_status": "not-run",
+      "competitor_status": "not-run",
+      "parameters_are_executable": false,
+      "evidence_status": "incomplete"
+    },
+    {
+      "id": "view-04-r8-common-cell-visibility",
+      "requirement_id": "VIEW-04",
+      "option": "r8-common-cell-visibility",
+      "title": "Common cell visibility preserves source incidence",
+      "source": {
+        "description": "Source-native catalog labels and mounted cube/tesseract startup workflows"
+      },
+      "parameters": {
+        "expertMode": false,
+        "uiScope": "specific mounted subtests only"
+      },
+      "domain": {
+        "dimensions": [
+          3,
+          4
+        ],
+        "object_classes": [
+          "ordinary browser app startup/common paths"
+        ],
+        "limits": {
+          "domain": "Vite + headless Chromium mounted app; no native menus/dialogs or OS DPI run"
+        },
+        "numeric_contract": "Approximate float64 geometry/predicates; residuals qualify the supplied source, never exact algebraic or benchmark parity.",
+        "refusals": [
+          "Expert-only advanced paths are not covered as common; source snapshots must remain unchanged for display"
+        ]
+      },
+      "checks": [
+        "Real mounted source operations and visibility paths keep IDs and topology",
+        "Core/zonohedron adoption uses Undo/Redo and validated reopen"
+      ],
+      "fixtures": [
+        {
+          "path": "tests/test_regular4d_validation.py",
+          "selector": "test_existing_sixteen_keys_have_complete_detached_primary_labels",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "related-not-oracle",
+          "scope": "Context/entry-point regression only; not direct evidence for the scenario mathematical or option cross-product claims."
+        },
+        {
+          "path": "tests/common-workflows-mounted.test.mjs",
+          "selector": "ordinary startup reaches common inspection, construction and appearance paths with Expert off",
+          "kind": "node-test",
+          "level": "ui-mounted",
+          "run_id": "ui",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        }
+      ],
+      "source_files": [
+        "docs/UI_PASS_2026-11-05.md",
+        "ui/inspector-layout.mjs",
+        "ui/viewport-controls.mjs"
+      ],
+      "ui": {
+        "element_ids": [
+          "hide-cell",
+          "isolate-cell"
+        ],
+        "route": "Inspector / common Select and Construct cards; Expert off."
+      },
+      "closure": {
+        "kind": "inventory-only",
+        "legacy_case_ids": [],
+        "scope": "Common cell visibility preserves source incidence; only the declared input/options and checks.",
+        "legacy_disposition": {}
+      },
+      "remaining": "UI receipts cover mounted subtests only; native fixture here supplies catalog-label context, not a visibility/UI oracle. Native menus/dialogs, real monitor DPI, shipped layouts and full contextual help require lead qualification.",
+      "benchmark_status": "unverified",
+      "platform_status": "not-run",
+      "competitor_status": "not-run",
+      "parameters_are_executable": false
+    },
+    {
+      "id": "desk-01-r8-common-expert-off",
+      "requirement_id": "DESK-01",
+      "option": "r8-common-expert-off",
+      "title": "Common first-use inspection/construction/appearance routes",
+      "source": {
+        "description": "Source-native catalog labels and mounted cube/tesseract startup workflows"
+      },
+      "parameters": {
+        "expertMode": false,
+        "uiScope": "specific mounted subtests only"
+      },
+      "domain": {
+        "dimensions": [
+          3,
+          4
+        ],
+        "object_classes": [
+          "ordinary browser app startup/common paths"
+        ],
+        "limits": {
+          "domain": "Vite + headless Chromium mounted app; no native menus/dialogs or OS DPI run"
+        },
+        "numeric_contract": "Approximate float64 geometry/predicates; residuals qualify the supplied source, never exact algebraic or benchmark parity.",
+        "refusals": [
+          "Expert-only advanced paths are not covered as common; source snapshots must remain unchanged for display"
+        ]
+      },
+      "checks": [
+        "Real mounted source operations and visibility paths keep IDs and topology",
+        "Core/zonohedron adoption uses Undo/Redo and validated reopen"
+      ],
+      "fixtures": [
+        {
+          "path": "tests/test_regular4d_validation.py",
+          "selector": "test_existing_sixteen_keys_have_complete_detached_primary_labels",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "related-not-oracle",
+          "scope": "Context/entry-point regression only; not direct evidence for the scenario mathematical or option cross-product claims."
+        },
+        {
+          "path": "tests/common-workflows-mounted.test.mjs",
+          "selector": "ordinary startup reaches common inspection, construction and appearance paths with Expert off",
+          "kind": "node-test",
+          "level": "ui-mounted",
+          "run_id": "ui",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        }
+      ],
+      "source_files": [
+        "docs/UI_PASS_2026-11-05.md",
+        "ui/inspector-layout.mjs",
+        "ui/viewport-controls.mjs"
+      ],
+      "ui": {
+        "element_ids": [
+          "toggle-inspector",
+          "make-convex-core",
+          "make-source-zonohedron"
+        ],
+        "route": "Inspector / common Select and Construct cards; Expert off."
+      },
+      "closure": {
+        "kind": "inventory-only",
+        "legacy_case_ids": [],
+        "scope": "Common first-use inspection/construction/appearance routes; only the declared input/options and checks.",
+        "legacy_disposition": {}
+      },
+      "remaining": "UI receipts cover mounted subtests only; native fixture here supplies catalog-label context, not a visibility/UI oracle. Native menus/dialogs, real monitor DPI, shipped layouts and full contextual help require lead qualification.",
+      "benchmark_status": "unverified",
+      "platform_status": "not-run",
+      "competitor_status": "not-run",
+      "parameters_are_executable": false
+    },
+    {
+      "id": "desk-01-r7-common-runner-plan",
+      "requirement_id": "DESK-01",
+      "option": "r7-common-runner-plan",
+      "title": "Common-workflow candidate runner plan and strict Expert-off reveal",
+      "source": {
+        "description": "Deterministic versioned qualification tooling fixtures"
+      },
+      "parameters": {
+        "execution": "self-test/source tooling only",
+        "candidateExecuted": false
+      },
+      "domain": {
+        "dimensions": [
+          3,
+          4
+        ],
+        "object_classes": [
+          "qualification plans and source CLI fixture projects"
+        ],
+        "limits": {
+          "domain": "read-only/source tooling tests; no installed candidate or Electron launch"
+        },
+        "numeric_contract": "Approximate float64 geometry/predicates; residuals qualify the supplied source, never exact algebraic or benchmark parity.",
+        "refusals": [
+          "Absent candidate/platform evidence cannot become a platform pass"
+        ]
+      },
+      "checks": [
+        "Test declared fixture/plan against current source; retain actual output pin and separate platform status"
+      ],
+      "fixtures": [
+        {
+          "path": "tests/common-workflows-qualification.test.cjs",
+          "selector": "plan is executable without candidate or Electron and covers the requested feature matrix",
+          "kind": "node-test",
+          "level": "tooling-unit",
+          "run_id": "ui",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        }
+      ],
+      "source_files": [
+        "docs/COMMON_WORKFLOWS_QUALIFICATION.md",
+        "scripts/common-workflows-qualification.cjs",
+        "scripts/common-workflows-evidence.cjs"
+      ],
+      "ui": {
+        "element_ids": [
+          "toggle-inspector"
+        ],
+        "route": "Existing export/Library entry points are pointers; qualification runners execute from CLI, not a new control."
+      },
+      "closure": {
+        "kind": "inventory-only",
+        "legacy_case_ids": [],
+        "scope": "Common-workflow candidate runner plan and strict Expert-off reveal; only the declared input/options and checks.",
+        "legacy_disposition": {}
+      },
+      "remaining": "26-case candidate runner is implemented and self-tested; zero packaged candidate runs here. Native menus, DPI and window behavior stay unverified.",
+      "benchmark_status": "unverified",
+      "platform_status": "not-run",
+      "competitor_status": "not-run",
+      "parameters_are_executable": false
+    },
+    {
+      "id": "io-03-r7-media-runner-fixtures",
+      "requirement_id": "IO-03",
+      "option": "r7-media-runner-fixtures",
+      "title": "Media runner codec/project fixtures without desktop launch",
+      "source": {
+        "description": "Deterministic versioned qualification tooling fixtures"
+      },
+      "parameters": {
+        "execution": "self-test/source tooling only",
+        "candidateExecuted": false
+      },
+      "domain": {
+        "dimensions": [
+          3,
+          4
+        ],
+        "object_classes": [
+          "qualification plans and source CLI fixture projects"
+        ],
+        "limits": {
+          "domain": "read-only/source tooling tests; no installed candidate or Electron launch"
+        },
+        "numeric_contract": "Approximate float64 geometry/predicates; residuals qualify the supplied source, never exact algebraic or benchmark parity.",
+        "refusals": [
+          "Absent candidate/platform evidence cannot become a platform pass"
+        ]
+      },
+      "checks": [
+        "Test declared fixture/plan against current source; retain actual output pin and separate platform status"
+      ],
+      "fixtures": [
+        {
+          "path": "tests/media-qualification.test.cjs",
+          "selector": "all deterministic case projects pass the real native save/reopen validator",
+          "kind": "node-test",
+          "level": "tooling-unit",
+          "run_id": "ui",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        }
+      ],
+      "source_files": [
+        "docs/MEDIA_QUALIFICATION.md",
+        "scripts/media-qualification.cjs",
+        "scripts/media-verifier.cjs"
+      ],
+      "ui": {
+        "element_ids": [
+          "animation-export"
+        ],
+        "route": "Existing export/Library entry points are pointers; qualification runners execute from CLI, not a new control."
+      },
+      "closure": {
+        "kind": "inventory-only",
+        "legacy_case_ids": [],
+        "scope": "Media runner codec/project fixtures without desktop launch; only the declared input/options and checks.",
+        "legacy_disposition": {}
+      },
+      "remaining": "Ten case fixtures/tooling validated; zero forty-result packaged codec matrix runs here. Actual GPU/encoder/runtime support remains unverified.",
+      "benchmark_status": "unverified",
+      "platform_status": "not-run",
+      "competitor_status": "not-run",
+      "parameters_are_executable": false
+    },
+    {
+      "id": "desk-02-r7-offline-batch-source",
+      "requirement_id": "DESK-02",
+      "option": "r7-offline-batch-source",
+      "title": "Offline batch experiment source CLI/checkpoint domain",
+      "source": {
+        "description": "Deterministic versioned qualification tooling fixtures"
+      },
+      "parameters": {
+        "execution": "self-test/source tooling only",
+        "candidateExecuted": false
+      },
+      "domain": {
+        "dimensions": [
+          3,
+          4
+        ],
+        "object_classes": [
+          "qualification plans and source CLI fixture projects"
+        ],
+        "limits": {
+          "domain": "read-only/source tooling tests; no installed candidate or Electron launch"
+        },
+        "numeric_contract": "Approximate float64 geometry/predicates; residuals qualify the supplied source, never exact algebraic or benchmark parity.",
+        "refusals": [
+          "Absent candidate/platform evidence cannot become a platform pass"
+        ]
+      },
+      "checks": [
+        "Test declared fixture/plan against current source; retain actual output pin and separate platform status"
+      ],
+      "fixtures": [
+        {
+          "path": "tests/test_batch_experiment.py",
+          "selector": "test_real_source_cli_sample_resume_and_jsonlines",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/batch-experiment.test.cjs",
+          "selector": "frozen build pins source/version manifest and retains CLI entry",
+          "kind": "node-test",
+          "level": "tooling-unit",
+          "run_id": "ui",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        }
+      ],
+      "source_files": [
+        "docs/BATCH_EXPERIMENT.md",
+        "engine/batch_experiment.py"
+      ],
+      "ui": {
+        "element_ids": [
+          "library-corpus"
+        ],
+        "route": "Existing export/Library entry points are pointers; qualification runners execute from CLI, not a new control."
+      },
+      "closure": {
+        "kind": "inventory-only",
+        "legacy_case_ids": [],
+        "scope": "Offline batch experiment source CLI/checkpoint domain; only the declared input/options and checks.",
+        "legacy_disposition": {}
+      },
+      "remaining": "Source CLI test is not installed frozen-engine qualification. Clean VM, installer/upgrade/offline environment and hardware remain unverified.",
+      "benchmark_status": "unverified",
+      "platform_status": "not-run",
+      "competitor_status": "not-run",
+      "parameters_are_executable": false
+    }
+  ]
+}

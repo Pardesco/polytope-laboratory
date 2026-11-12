@@ -1,0 +1,1019 @@
+{
+  "schema_version": 1,
+  "scenarios": [
+    {
+      "id": "net-02-tabs-none",
+      "requirement_id": "NET-02",
+      "option": "tabs-none",
+      "title": "Glue tabs none",
+      "domain_id": "nets",
+      "input": {
+        "description": "Literal concave L-prism with independent physical-mm face charts",
+        "parameters": {
+          "mode": "none",
+          "width_mm": [
+            0.1,
+            5,
+            100
+          ]
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "NET-02",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "nets",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "installed54-manual",
+            "locator": "#tabs",
+            "role": "documented-options"
+          },
+          {
+            "source_id": "independent-fixtures",
+            "locator": "Glue tabs none",
+            "role": "expectation-oracle"
+          }
+        ],
+        "checks": [
+          "Tab widths are physical mm independent of model E0",
+          "Only cut edges receive selected tabs",
+          "Match labels/source owners survive rigid placement"
+        ],
+        "basis": "independent-invariant"
+      },
+      "implementation": "supported",
+      "fixtures": [
+        {
+          "path": "tests/test_net_tabs.py",
+          "selector": null,
+          "role": "direct",
+          "evidence": "existing-suite-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "net-tabs",
+          "net-tab-settings",
+          "coincident-edge-assembly"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R6-NETS",
+        "priority": "P2",
+        "unverified": "Bounded native coverage exists; benchmark option behavior and shipped UI are unverified.",
+        "next_action": "Run native tab modes and per-edge side override; measure exported SVG tab depth at two E0 values and inspect labels/paper clipping."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3
+        ],
+        "supported_source_dimensions": [
+          3
+        ],
+        "support_note": "Supported only under referenced domain qualifications.",
+        "object_class": "Literal concave L-prism with independent physical-mm face charts"
+      }
+    },
+    {
+      "id": "net-02-tabs-single",
+      "requirement_id": "NET-02",
+      "option": "tabs-single",
+      "title": "Glue tabs single",
+      "domain_id": "nets",
+      "input": {
+        "description": "Literal concave L-prism with independent physical-mm face charts",
+        "parameters": {
+          "mode": "single",
+          "width_mm": [
+            0.1,
+            5,
+            100
+          ]
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "NET-02",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "nets",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "installed54-manual",
+            "locator": "#tabs",
+            "role": "documented-options"
+          },
+          {
+            "source_id": "independent-fixtures",
+            "locator": "Glue tabs single",
+            "role": "expectation-oracle"
+          }
+        ],
+        "checks": [
+          "Tab widths are physical mm independent of model E0",
+          "Only cut edges receive selected tabs",
+          "Match labels/source owners survive rigid placement"
+        ],
+        "basis": "independent-invariant"
+      },
+      "implementation": "supported",
+      "fixtures": [
+        {
+          "path": "tests/test_net_tabs.py",
+          "selector": null,
+          "role": "direct",
+          "evidence": "existing-suite-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "net-tabs",
+          "net-tab-settings",
+          "coincident-edge-assembly"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R6-NETS",
+        "priority": "P2",
+        "unverified": "Bounded native coverage exists; benchmark option behavior and shipped UI are unverified.",
+        "next_action": "Run native tab modes and per-edge side override; measure exported SVG tab depth at two E0 values and inspect labels/paper clipping."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3
+        ],
+        "supported_source_dimensions": [
+          3
+        ],
+        "support_note": "Supported only under referenced domain qualifications.",
+        "object_class": "Literal concave L-prism with independent physical-mm face charts"
+      }
+    },
+    {
+      "id": "net-02-tabs-double",
+      "requirement_id": "NET-02",
+      "option": "tabs-double",
+      "title": "Glue tabs double",
+      "domain_id": "nets",
+      "input": {
+        "description": "Literal concave L-prism with independent physical-mm face charts",
+        "parameters": {
+          "mode": "double",
+          "width_mm": [
+            0.1,
+            5,
+            100
+          ]
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "NET-02",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "nets",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "installed54-manual",
+            "locator": "#tabs",
+            "role": "documented-options"
+          },
+          {
+            "source_id": "independent-fixtures",
+            "locator": "Glue tabs double",
+            "role": "expectation-oracle"
+          }
+        ],
+        "checks": [
+          "Tab widths are physical mm independent of model E0",
+          "Only cut edges receive selected tabs",
+          "Match labels/source owners survive rigid placement"
+        ],
+        "basis": "independent-invariant"
+      },
+      "implementation": "supported",
+      "fixtures": [
+        {
+          "path": "tests/test_net_tabs.py",
+          "selector": null,
+          "role": "direct",
+          "evidence": "existing-suite-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "net-tabs",
+          "net-tab-settings",
+          "coincident-edge-assembly"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R6-NETS",
+        "priority": "P2",
+        "unverified": "Bounded native coverage exists; benchmark option behavior and shipped UI are unverified.",
+        "next_action": "Run native tab modes and per-edge side override; measure exported SVG tab depth at two E0 values and inspect labels/paper clipping."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3
+        ],
+        "supported_source_dimensions": [
+          3
+        ],
+        "support_note": "Supported only under referenced domain qualifications.",
+        "object_class": "Literal concave L-prism with independent physical-mm face charts"
+      }
+    },
+    {
+      "id": "net-02-tongue-in-groove",
+      "requirement_id": "NET-02",
+      "option": "tongue-in-groove",
+      "title": "Coincident-edge tongue-in-groove",
+      "domain_id": "nets",
+      "input": {
+        "description": "Qualified four-face coincident/pinched source-edge assembly",
+        "parameters": {
+          "policy": "tongue-in-groove",
+          "support_side": [
+            0,
+            1
+          ]
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "NET-02",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "nets",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "installed54-manual",
+            "locator": "#coincEdges",
+            "role": "documented-options"
+          }
+        ],
+        "checks": [
+          "Pair source faces according to explicit inside/outside connection policy",
+          "Double tabs/forced cuts follow selected support side",
+          "Keep matching edge IDs"
+        ],
+        "basis": "documented-or-local-contract"
+      },
+      "implementation": "restricted",
+      "fixtures": [
+        {
+          "path": "tests/net-assembly.test.mjs",
+          "selector": null,
+          "role": "related-not-oracle",
+          "evidence": "existing-suite-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "net-tabs",
+          "net-tab-settings",
+          "coincident-edge-assembly"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R6-NETS",
+        "priority": "P2",
+        "unverified": "Four native policy names exist, but cited general assembly tests do not independently qualify this policy.",
+        "next_action": "Add literal four-face joint oracle for tongue-in-groove using engine/coincident_edge_assembly.py; check exact pair IDs, forced cuts, tab direction and physical pages before physical assembly."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3
+        ],
+        "supported_source_dimensions": [
+          3
+        ],
+        "support_note": "Supported only under referenced domain qualifications.",
+        "object_class": "Qualified four-face coincident/pinched source-edge assembly"
+      }
+    },
+    {
+      "id": "net-02-internal-support",
+      "requirement_id": "NET-02",
+      "option": "internal-support",
+      "title": "Coincident-edge internal-support",
+      "domain_id": "nets",
+      "input": {
+        "description": "Qualified four-face coincident/pinched source-edge assembly",
+        "parameters": {
+          "policy": "internal-support",
+          "support_side": [
+            0,
+            1
+          ]
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "NET-02",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "nets",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "installed54-manual",
+            "locator": "#coincEdges",
+            "role": "documented-options"
+          }
+        ],
+        "checks": [
+          "Pair source faces according to explicit inside/outside connection policy",
+          "Double tabs/forced cuts follow selected support side",
+          "Keep matching edge IDs"
+        ],
+        "basis": "documented-or-local-contract"
+      },
+      "implementation": "restricted",
+      "fixtures": [
+        {
+          "path": "tests/net-assembly.test.mjs",
+          "selector": null,
+          "role": "related-not-oracle",
+          "evidence": "existing-suite-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "net-tabs",
+          "net-tab-settings",
+          "coincident-edge-assembly"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R6-NETS",
+        "priority": "P2",
+        "unverified": "Four native policy names exist, but cited general assembly tests do not independently qualify this policy.",
+        "next_action": "Add literal four-face joint oracle for internal-support using engine/coincident_edge_assembly.py; check exact pair IDs, forced cuts, tab direction and physical pages before physical assembly."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3
+        ],
+        "supported_source_dimensions": [
+          3
+        ],
+        "support_note": "Supported only under referenced domain qualifications.",
+        "object_class": "Qualified four-face coincident/pinched source-edge assembly"
+      }
+    },
+    {
+      "id": "net-02-no-internal-support",
+      "requirement_id": "NET-02",
+      "option": "no-internal-support",
+      "title": "Coincident-edge no-internal-support",
+      "domain_id": "nets",
+      "input": {
+        "description": "Qualified four-face coincident/pinched source-edge assembly",
+        "parameters": {
+          "policy": "no-internal-support",
+          "support_side": [
+            0,
+            1
+          ]
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "NET-02",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "nets",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "installed54-manual",
+            "locator": "#coincEdges",
+            "role": "documented-options"
+          }
+        ],
+        "checks": [
+          "Pair source faces according to explicit inside/outside connection policy",
+          "Double tabs/forced cuts follow selected support side",
+          "Keep matching edge IDs"
+        ],
+        "basis": "documented-or-local-contract"
+      },
+      "implementation": "restricted",
+      "fixtures": [
+        {
+          "path": "tests/net-assembly.test.mjs",
+          "selector": null,
+          "role": "related-not-oracle",
+          "evidence": "existing-suite-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "net-tabs",
+          "net-tab-settings",
+          "coincident-edge-assembly"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R6-NETS",
+        "priority": "P2",
+        "unverified": "Four native policy names exist, but cited general assembly tests do not independently qualify this policy.",
+        "next_action": "Add literal four-face joint oracle for no-internal-support using engine/coincident_edge_assembly.py; check exact pair IDs, forced cuts, tab direction and physical pages before physical assembly."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3
+        ],
+        "supported_source_dimensions": [
+          3
+        ],
+        "support_note": "Supported only under referenced domain qualifications.",
+        "object_class": "Qualified four-face coincident/pinched source-edge assembly"
+      }
+    },
+    {
+      "id": "net-02-disconnected",
+      "requirement_id": "NET-02",
+      "option": "disconnected",
+      "title": "Coincident-edge disconnected",
+      "domain_id": "nets",
+      "input": {
+        "description": "Qualified four-face coincident/pinched source-edge assembly",
+        "parameters": {
+          "policy": "disconnected",
+          "support_side": [
+            0,
+            1
+          ]
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "NET-02",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "nets",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "installed54-manual",
+            "locator": "#coincEdges",
+            "role": "documented-options"
+          }
+        ],
+        "checks": [
+          "Pair source faces according to explicit inside/outside connection policy",
+          "Double tabs/forced cuts follow selected support side",
+          "Keep matching edge IDs"
+        ],
+        "basis": "documented-or-local-contract"
+      },
+      "implementation": "restricted",
+      "fixtures": [
+        {
+          "path": "tests/net-assembly.test.mjs",
+          "selector": null,
+          "role": "related-not-oracle",
+          "evidence": "existing-suite-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "net-tabs",
+          "net-tab-settings",
+          "coincident-edge-assembly"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R6-NETS",
+        "priority": "P2",
+        "unverified": "Four native policy names exist, but cited general assembly tests do not independently qualify this policy.",
+        "next_action": "Add literal four-face joint oracle for disconnected using engine/coincident_edge_assembly.py; check exact pair IDs, forced cuts, tab direction and physical pages before physical assembly."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3
+        ],
+        "supported_source_dimensions": [
+          3
+        ],
+        "support_note": "Supported only under referenced domain qualifications.",
+        "object_class": "Qualified four-face coincident/pinched source-edge assembly"
+      }
+    },
+    {
+      "id": "net-03-packing-scale",
+      "requirement_id": "NET-03",
+      "option": "packing-scale",
+      "title": "Multipage physical packing",
+      "domain_id": "nets",
+      "input": {
+        "description": "Separated cube-net components across A4/Letter pages",
+        "parameters": {
+          "paper": [
+            "A4",
+            "Letter"
+          ],
+          "orientation": [
+            "portrait",
+            "landscape"
+          ],
+          "quarter_turn": [
+            true,
+            false
+          ]
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "NET-03",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "nets",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "installed54-manual",
+            "locator": "#nets",
+            "role": "documented-options"
+          },
+          {
+            "source_id": "independent-fixtures",
+            "locator": "test_page_rectangles_are_disjoint_inside_margins_and_geometry_scale_is_unchanged",
+            "role": "expectation-oracle"
+          }
+        ],
+        "checks": [
+          "Each source face appears exactly once",
+          "Global tab ownership/labels survive page split",
+          "No automatic rescaling or splitting intact oversized component"
+        ],
+        "basis": "independent-invariant"
+      },
+      "implementation": "supported",
+      "fixtures": [
+        {
+          "path": "tests/test_net_printing.py",
+          "selector": "test_page_rectangles_are_disjoint_inside_margins_and_geometry_scale_is_unchanged",
+          "role": "direct",
+          "evidence": "existing-test-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "net-pack",
+          "net-paper",
+          "net-page-prev"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R7-PRINT",
+        "priority": "P2",
+        "unverified": "Bounded native coverage exists; benchmark option behavior and shipped UI are unverified.",
+        "next_action": "Run packing/oversize fixtures and independent PDF vector measurements; record component bounds/margins separately from printer calibration."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3
+        ],
+        "supported_source_dimensions": [
+          3
+        ],
+        "support_note": "Supported only under referenced domain qualifications.",
+        "object_class": "Separated cube-net components across A4/Letter pages"
+      }
+    },
+    {
+      "id": "net-03-multiple-images-colors",
+      "requirement_id": "NET-03",
+      "option": "multiple-images-colors",
+      "title": "Multiple nets, images and color separation",
+      "domain_id": "nets",
+      "input": {
+        "description": "Two requested copies, colored faces and portable text/PNG content",
+        "parameters": {
+          "copies": 2,
+          "separate_colors": true,
+          "texture": "2x2 RGBA PNG"
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "NET-03",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "nets",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "installed54-manual",
+            "locator": "#nets",
+            "role": "documented-options"
+          }
+        ],
+        "checks": [
+          "Retain requested copies and source ownership",
+          "Content survives packing/export",
+          "Color separation must not drop tabs or matching IDs"
+        ],
+        "basis": "documented-or-local-contract"
+      },
+      "implementation": "supported",
+      "fixtures": [
+        {
+          "path": "tests/test_net_color_printing.py",
+          "selector": null,
+          "role": "direct",
+          "evidence": "existing-suite-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "net-pack",
+          "net-paper",
+          "net-page-prev"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R7-PRINT",
+        "priority": "P2",
+        "unverified": "Baseline multiple-net/image placement and color-separation policies remain unqualified.",
+        "next_action": "Define expected piece/color/copy/annotation tables and inspect SVG/PDF output with independent parser; coordinate common path with R5-NETS."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3
+        ],
+        "supported_source_dimensions": [
+          3
+        ],
+        "support_note": "Supported only under referenced domain qualifications.",
+        "object_class": "Two requested copies, colored faces and portable text/PNG content"
+      }
+    },
+    {
+      "id": "net-05-reinforcement-patterns",
+      "requirement_id": "NET-05",
+      "option": "reinforcement-patterns",
+      "title": "Reinforcement pattern geometry",
+      "domain_id": "nets",
+      "input": {
+        "description": "Cube/tetrahedron panels, strips, cross braces and vertex support",
+        "parameters": {
+          "patterns": [
+            "inset-panel",
+            "strip",
+            "cross-brace",
+            "vertex-support"
+          ],
+          "allowance": "explicit finite mm"
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "NET-05",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "nets",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "spec",
+            "locator": "test_cut_list_csv_complete_labels_units_sides_angles_and_dxf_line_geometry",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "independent-fixtures",
+            "locator": "test_cut_list_csv_complete_labels_units_sides_angles_and_dxf_line_geometry",
+            "role": "expectation-oracle"
+          }
+        ],
+        "checks": [
+          "Cut list labels/lengths use physical mm",
+          "Reject collapsed offsets and unsafe/unsupported geometry",
+          "No structural-strength claim"
+        ],
+        "basis": "independent-invariant"
+      },
+      "implementation": "restricted",
+      "fixtures": [
+        {
+          "path": "tests/test_net_fabrication.py",
+          "selector": "test_cut_list_csv_complete_labels_units_sides_angles_and_dxf_line_geometry",
+          "role": "direct",
+          "evidence": "existing-test-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "net-reinforcement-settings",
+          "net-fabrication-settings"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R6-NETS",
+        "priority": "P2",
+        "unverified": "Patterns exist; baseline pattern/allowance equivalence and physical fit are unverified.",
+        "next_action": "Choose one documented pattern and independently derive its cut lengths/allowance, then fabricate at measured scale before generalizing presets."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3
+        ],
+        "supported_source_dimensions": [
+          3
+        ],
+        "support_note": "Supported only under referenced domain qualifications.",
+        "object_class": "Cube/tetrahedron panels, strips, cross braces and vertex support"
+      }
+    },
+    {
+      "id": "net-05-measurements",
+      "requirement_id": "NET-05",
+      "option": "measurements",
+      "title": "Measurement text/CSV/SVG/DXF",
+      "domain_id": "nets",
+      "input": {
+        "description": "Literal internal diagonal panel and tetrahedron dihedrals",
+        "parameters": {
+          "formats": [
+            "text",
+            "CSV",
+            "SVG",
+            "DXF"
+          ],
+          "units": [
+            "mm",
+            "inch"
+          ],
+          "angles": [
+            "degrees",
+            "radians"
+          ]
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "NET-05",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "nets",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "spec",
+            "locator": "test_measurement_csv_json_source_indices_and_units_are_independently_checked",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "independent-fixtures",
+            "locator": "test_measurement_csv_json_source_indices_and_units_are_independently_checked",
+            "role": "expectation-oracle"
+          }
+        ],
+        "checks": [
+          "Independent parser checks source IDs, lengths and angle conventions",
+          "Changing net placement does not change physical measurements"
+        ],
+        "basis": "independent-invariant"
+      },
+      "implementation": "supported",
+      "fixtures": [
+        {
+          "path": "tests/test_net_reinforcement.py",
+          "selector": "test_measurement_csv_json_source_indices_and_units_are_independently_checked",
+          "role": "direct",
+          "evidence": "existing-test-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "net-reinforcement-settings",
+          "net-fabrication-settings"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R6-NETS",
+        "priority": "P2",
+        "unverified": "Bounded native coverage exists; benchmark option behavior and shipped UI are unverified.",
+        "next_action": "Run format/unit fixtures and execute CSV export with Expert off after R5-NETS access update; compare rows and geometric dimensions."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3
+        ],
+        "supported_source_dimensions": [
+          3
+        ],
+        "support_note": "Supported only under referenced domain qualifications.",
+        "object_class": "Literal internal diagonal panel and tetrahedron dihedrals"
+      }
+    }
+  ]
+}

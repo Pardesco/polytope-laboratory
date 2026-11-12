@@ -1,4 +1,5 @@
 """Document information survives projects and both supported geometry carriers."""
+
 from copy import deepcopy
 import json
 import pytest
@@ -11,16 +12,32 @@ from engine.server import dispatch
 
 
 def metadata():
-    return {'title': 'Study #1 — cube', 'author': 'Ada', 'description': 'First line\nSecond line',
-            'reference': 'https://example.test/#reference\nA book', 'tags': ['regular', '3D'],
-            'license': 'CC BY 4.0', 'source': 'Local archive', 'custom': {'page': 12},
-            'futureField': {'retained': True}}
+    return {
+        'title': 'Study #1 — cube',
+        'author': 'Ada',
+        'description': 'First line\nSecond line',
+        'reference': 'https://example.test/#reference\nA book',
+        'tags': ['regular', '3D'],
+        'license': 'CC BY 4.0',
+        'source': 'Local archive',
+        'custom': {'page': 12},
+        'futureField': {'retained': True},
+    }
 
 
 def test_native_project_save_load_preserves_document_view_information(tmp_path):
     source = regular('cube')
-    project = {'format': 'polytope-laboratory', 'version': 1, 'active': 0,
-               'documents': [{'cursor': 0, 'states': [{'model': source, 'view': {'documentMetadata': metadata()}, 'notes': 'Document note'}]}]}
+    project = {
+        'format': 'polytope-laboratory',
+        'version': 1,
+        'active': 0,
+        'documents': [
+            {
+                'cursor': 0,
+                'states': [{'model': source, 'view': {'documentMetadata': metadata()}, 'notes': 'Document note'}],
+            }
+        ],
+    }
     path = tmp_path / 'metadata.polyproj'
     save_project(path, project)
     restored = load_file(path)['project']['documents'][0]['states'][0]
@@ -33,7 +50,18 @@ def test_native_project_save_load_preserves_document_view_information(tmp_path):
 def test_native_export_preparation_and_import_round_trip_all_fields(tmp_path, format):
     source = regular('cube')
     original = deepcopy(source)
-    prepared = dispatch({'op': 'prepare-export', 'model': source, 'params': {'format': format, 'document_metadata': metadata(), 'notes': 'Notes\n# OFF comment injection? No.', 'include_text': True}})
+    prepared = dispatch(
+        {
+            'op': 'prepare-export',
+            'model': source,
+            'params': {
+                'format': format,
+                'document_metadata': metadata(),
+                'notes': 'Notes\n# OFF comment injection? No.',
+                'include_text': True,
+            },
+        }
+    )
     path = tmp_path / ('metadata.' + format)
     path.write_text(prepared['text'], encoding='utf-8')
     restored = load_file(path)['model']
@@ -57,8 +85,20 @@ def test_off_4d_comment_is_plain_bounded_data_and_preserves_geometry():
     assert any('other readers may discard' in loss for loss in prepared['report']['losses'])
 
 
-@pytest.mark.parametrize('invalid', [{'tags': 'regular'}, {'tags': [4]}, {'tags': ['a'*129]}, {'tags': ['x']*129},
-                                     {'license': []}, {'source': {}}, {'custom': []}, {'custom': {'n': float('inf')}}, {'large': 'x'*131073}])
+@pytest.mark.parametrize(
+    'invalid',
+    [
+        {'tags': 'regular'},
+        {'tags': [4]},
+        {'tags': ['a' * 129]},
+        {'tags': ['x'] * 129},
+        {'license': []},
+        {'source': {}},
+        {'custom': []},
+        {'custom': {'n': float('inf')}},
+        {'large': 'x' * 131073},
+    ],
+)
 def test_project_and_export_refuse_invalid_extended_metadata(invalid):
     source = regular('cube')
     with pytest.raises(GeometryError):
@@ -66,8 +106,14 @@ def test_project_and_export_refuse_invalid_extended_metadata(invalid):
     with pytest.raises(GeometryError):
         prepare_export(source, 'off', document_metadata=invalid)
     with pytest.raises(GeometryError):
-        validate_project({'format': 'polytope-laboratory', 'version': 1, 'active': 0,
-                          'documents': [{'cursor': 0, 'states': [{'model': source, 'view': {'documentMetadata': invalid}}]}]})
+        validate_project(
+            {
+                'format': 'polytope-laboratory',
+                'version': 1,
+                'active': 0,
+                'documents': [{'cursor': 0, 'states': [{'model': source, 'view': {'documentMetadata': invalid}}]}],
+            }
+        )
 
 
 @pytest.mark.parametrize('comment', ['{', '[]', '{"metadata":{},"notes":4}', '{"metadata":{"tags":[4]},"notes":""}'])

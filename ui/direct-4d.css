@@ -1,14 +1,121 @@
-.direct-4d-gizmo{position:absolute;z-index:3;top:40px;right:16px;display:grid;grid-template-columns:repeat(3,40px);gap:8px;padding:8px;border:1px solid var(--border);border-radius:12px;background:var(--panel);box-shadow:0 4px 16px #0003;color:var(--text);user-select:none}
-.direct-4d-heading{grid-column:1/-1;font-size:12px;letter-spacing:.08em;color:var(--muted);line-height:16px}
-.direct-4d-gizmo button{min-width:32px;min-height:32px;margin:0;white-space:nowrap;border-radius:8px;background:var(--panel2);border:1px solid var(--border);color:var(--text);font-size:14px;line-height:16px}
-.direct-4d-gizmo .direct-4d-pad{height:40px;padding:0;touch-action:none;cursor:ew-resize;position:relative;overflow:hidden}
-.direct-4d-pad::after{content:'';position:absolute;bottom:4px;left:calc(50% - 6px);width:12px;height:2px;background:var(--accent);border-radius:2px;transform:rotate(var(--turn,0deg));transform-origin:center}
-.direct-4d-gizmo #direct-4d-straighten{grid-column:1/-1;padding:4px 8px;background:var(--panel2)}
-.direct-4d-gizmo button:hover{background:var(--panel2);border-color:var(--accent)}.direct-4d-gizmo button:focus-visible,.direct-4d-hint button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
-.direct-4d-gizmo button:disabled{opacity:.45;cursor:default}
-.direct-4d-hint{display:flex;align-items:center;gap:8px;color:var(--text);font-size:12px}
-.direct-4d-hint button{padding:0;width:32px;height:32px;flex:none;border:0;border-radius:50%;color:var(--text);background:transparent;font-size:18px}.direct-4d-hint button:hover{background:var(--panel2)}
-.direct-4d-visibility{display:flex;gap:8px;align-items:center}.direct-4d-visibility input{width:auto}
-#direct-4d-gizmo[hidden],#direct-4d-hint[hidden],.direct-4d-visibility[hidden]{display:none}
-.direct-4d-demo{outline:2px solid var(--accent);outline-offset:4px;box-shadow:0 0 24px var(--accent)}
-@media(max-width:800px){.direct-4d-gizmo{right:8px;grid-template-columns:repeat(3,32px)}.direct-4d-gizmo .direct-4d-pad{height:32px}}
+.direct-4d-gizmo {
+  position: absolute;
+  z-index: 3;
+  top: 40px;
+  right: 16px;
+  display: grid;
+  grid-template-columns: repeat(3, 40px);
+  gap: 8px;
+  padding: 8px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--panel);
+  box-shadow: 0 4px 16px #0003;
+  color: var(--text);
+  user-select: none;
+}
+.direct-4d-heading {
+  grid-column: 1/-1;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  line-height: 16px;
+}
+.direct-4d-gizmo button {
+  min-width: 32px;
+  min-height: 32px;
+  margin: 0;
+  white-space: nowrap;
+  border-radius: 8px;
+  background: var(--panel2);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-size: 14px;
+  line-height: 16px;
+}
+.direct-4d-gizmo .direct-4d-pad {
+  height: 40px;
+  padding: 0;
+  touch-action: none;
+  cursor: ew-resize;
+  position: relative;
+  overflow: hidden;
+}
+.direct-4d-pad::after {
+  content: '';
+  position: absolute;
+  bottom: 4px;
+  left: calc(50% - 6px);
+  width: 12px;
+  height: 2px;
+  background: var(--accent);
+  border-radius: 2px;
+  transform: rotate(var(--turn, 0deg));
+  transform-origin: center;
+}
+.direct-4d-gizmo #direct-4d-straighten {
+  grid-column: 1/-1;
+  padding: 4px 8px;
+  background: var(--panel2);
+}
+.direct-4d-gizmo button:hover {
+  background: var(--panel2);
+  border-color: var(--accent);
+}
+.direct-4d-gizmo button:focus-visible,
+.direct-4d-hint button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+.direct-4d-gizmo button:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+.direct-4d-hint {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text);
+  font-size: 12px;
+}
+.direct-4d-hint button {
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  flex: none;
+  border: 0;
+  border-radius: 50%;
+  color: var(--text);
+  background: transparent;
+  font-size: 18px;
+}
+.direct-4d-hint button:hover {
+  background: var(--panel2);
+}
+.direct-4d-visibility {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.direct-4d-visibility input {
+  width: auto;
+}
+#direct-4d-gizmo[hidden],
+#direct-4d-hint[hidden],
+.direct-4d-visibility[hidden] {
+  display: none;
+}
+.direct-4d-demo {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+  box-shadow: 0 0 24px var(--accent);
+}
+@media (max-width: 800px) {
+  .direct-4d-gizmo {
+    right: 8px;
+    grid-template-columns: repeat(3, 32px);
+  }
+  .direct-4d-gizmo .direct-4d-pad {
+    height: 32px;
+  }
+}

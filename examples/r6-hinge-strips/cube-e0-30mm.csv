@@ -1,0 +1,13 @@
+policy,source_hash,part_id,match_id,source_edge_id,source_vertex_ids,source_face_ids,adjacent_faces,reference_e0_mm,source_length_mm,end_setback_mm,cut_length_mm,width_mm,cut_perimeter_mm,score_length_mm,interior_dihedral_deg,fold,net_hinge
+symmetric-end-setback-v1,bcf44fb1961c9f8928e38dd1ad79f2afe16f3c57744be057dc2f95ca82fc556a,H-E0,E0,0,0;1,0;1,P1/F0;P2/F1,30,30,2,26,8,68,26,90,valley,False
+symmetric-end-setback-v1,bcf44fb1961c9f8928e38dd1ad79f2afe16f3c57744be057dc2f95ca82fc556a,H-E1,E1,1,0;2,0;2,P1/F0;P3/F2,30,30,2,26,8,68,26,90,valley,False
+symmetric-end-setback-v1,bcf44fb1961c9f8928e38dd1ad79f2afe16f3c57744be057dc2f95ca82fc556a,H-E2,E2,2,0;4,1;2,P2/F1;P3/F2,30,30,2,26,8,68,26,90,valley,False
+symmetric-end-setback-v1,bcf44fb1961c9f8928e38dd1ad79f2afe16f3c57744be057dc2f95ca82fc556a,H-E3,E3,3,1;3,0;3,P1/F0;P4/F3,30,30,2,26,8,68,26,90,valley,False
+symmetric-end-setback-v1,bcf44fb1961c9f8928e38dd1ad79f2afe16f3c57744be057dc2f95ca82fc556a,H-E4,E4,4,1;5,1;3,P2/F1;P4/F3,30,30,2,26,8,68,26,90,valley,False
+symmetric-end-setback-v1,bcf44fb1961c9f8928e38dd1ad79f2afe16f3c57744be057dc2f95ca82fc556a,H-E5,E5,5,2;3,0;4,P1/F0;P5/F4,30,30,2,26,8,68,26,90,valley,False
+symmetric-end-setback-v1,bcf44fb1961c9f8928e38dd1ad79f2afe16f3c57744be057dc2f95ca82fc556a,H-E6,E6,6,2;6,2;4,P3/F2;P5/F4,30,30,2,26,8,68,26,90,valley,False
+symmetric-end-setback-v1,bcf44fb1961c9f8928e38dd1ad79f2afe16f3c57744be057dc2f95ca82fc556a,H-E7,E7,7,3;7,3;4,P4/F3;P5/F4,30,30,2,26,8,68,26,90,valley,False
+symmetric-end-setback-v1,bcf44fb1961c9f8928e38dd1ad79f2afe16f3c57744be057dc2f95ca82fc556a,H-E8,E8,8,4;5,1;5,P2/F1;P6/F5,30,30,2,26,8,68,26,90,valley,False
+symmetric-end-setback-v1,bcf44fb1961c9f8928e38dd1ad79f2afe16f3c57744be057dc2f95ca82fc556a,H-E9,E9,9,4;6,2;5,P3/F2;P6/F5,30,30,2,26,8,68,26,90,valley,False
+symmetric-end-setback-v1,bcf44fb1961c9f8928e38dd1ad79f2afe16f3c57744be057dc2f95ca82fc556a,H-E10,E10,10,5;7,3;5,P4/F3;P6/F5,30,30,2,26,8,68,26,90,valley,False
+symmetric-end-setback-v1,bcf44fb1961c9f8928e38dd1ad79f2afe16f3c57744be057dc2f95ca82fc556a,H-E11,E11,11,6;7,4;5,P5/F4;P6/F5,30,30,2,26,8,68,26,90,valley,False

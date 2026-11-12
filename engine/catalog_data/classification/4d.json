@@ -1,0 +1,1397 @@
+{
+  "schemaVersion": 1,
+  "tranche": "4d",
+  "provider": "Polytope Laboratory R7 classification",
+  "algorithmVersion": "0.1.0",
+  "label": "4D scaliforms, compounds, regiments and fissary source gaps",
+  "sourcePins": {},
+  "definitionPins": {
+    "scaliform4": "f7894aab3aee5380b187b70aee9f8628e8e2a9371d4ef0b859d259ed6fa92ae1",
+    "compound4": "5ac7929d9cf73942f715ad78c60ccc2a4353206cb542d6cb15d0f27012730bb7",
+    "fissaryAcronyms": "2697f7299281ef986682dc1f11eed6f7f4277bcf3cf59758bed2fc2eec3b83eb"
+  },
+  "implementationEvidence": {
+    "engine/classification_qualification.py": "762f2a2a184f850fe25d4bcb23faf846c72971dc3156ee3cbbaef55723e16721",
+    "engine/scaliform4.py": "b017719ccd3fcb09f1ce6a31141987c795e67035c0a10eefe7968e6f17692bfa",
+    "engine/compound4.py": "e85cefb00c2f66ef639b7960ace4ebe284d7675500e0a8bd8e552b24c2f282d8",
+    "engine/polychoron_relationships.py": "d6f518fd22da1cb398370540f13bf0263c1f18416a819038dae936b5fa664c97",
+    "engine/coincidic_regiments.py": "cdbb011256ac69ed91eebea31c4c24477129509cea56635138c1335b3c00f472"
+  },
+  "entries": [
+    {
+      "id": "scaliform:scaliform4-tuta",
+      "name": "Truncated tetrahedral alterprism (Tuta)",
+      "kind": "scaliform",
+      "sourceKey": "scaliform4-tuta",
+      "counts": [
+        24,
+        60,
+        52,
+        16
+      ],
+      "cellInventory": [
+        [
+          4,
+          4,
+          6
+        ],
+        [
+          9,
+          8,
+          8
+        ],
+        [
+          12,
+          8,
+          2
+        ]
+      ],
+      "sourceHypotheses": {
+        "fissary": false,
+        "uniform": false
+      },
+      "identityBasis": "Existing independently constructed named scaliform.",
+      "references": [
+        "https://bendwavy.org/klitzing/incmats/tut=invtut.htm",
+        "https://polytope.net/hedrondude/simplesc.htm"
+      ],
+      "receipt": {
+        "source": {
+          "fingerprint": "599e0c53abe7ac76ef98e2af7f735386a726a7989a8565c730f6d5f73d4fb1c0",
+          "coordinatesSha256": "73d7c615ec1a94fecc68ce99d772ea4537efbd98e5898d10d22f3b100ecdbc5c",
+          "incidenceSha256": "6884ebe750ab7d633e518ca970d366aed8268102d6fe39c924219381c7590429",
+          "counts": [
+            24,
+            60,
+            52,
+            16
+          ]
+        },
+        "certified": false,
+        "releaseQualified": false,
+        "metrics": {
+          "maximumRelativeEdgeDeviation": 0.0,
+          "maximumFacePlanarity": 2.2737748216566016e-16,
+          "maximumFaceRegularityResidual": 1.7763568394002505e-15,
+          "maximumElementSphereRelativeSpread": 5.768888059150692e-16,
+          "tolerance": 1e-07,
+          "certified": false
+        },
+        "symmetry": {
+          "order": 48,
+          "properOrder": 24,
+          "vertexOrbits": 1,
+          "closureVerified": true,
+          "chirality": "numerically achiral",
+          "convention": "Supplied coordinates retained; no absolute left/right designation.",
+          "certified": false
+        },
+        "cellInventory": [
+          [
+            4,
+            4,
+            6
+          ],
+          [
+            9,
+            8,
+            8
+          ],
+          [
+            12,
+            8,
+            2
+          ]
+        ],
+        "ridgeClosure": true,
+        "classificationScope": "Equal edges, circumscribable elements and one vertex orbit; uniform cells and filled generalized interior are not asserted.",
+        "status": "numerical-pass"
+      }
+    },
+    {
+      "id": "scaliform:scaliform4-koho",
+      "name": "Skew octahemioctachoron (Koho)",
+      "kind": "scaliform",
+      "sourceKey": "scaliform4-koho",
+      "counts": [
+        8,
+        24,
+        28,
+        12
+      ],
+      "cellInventory": [
+        [
+          4,
+          4,
+          8
+        ],
+        [
+          6,
+          6,
+          4
+        ]
+      ],
+      "sourceHypotheses": {
+        "fissary": false,
+        "uniform": false
+      },
+      "identityBasis": "Existing independently constructed named scaliform.",
+      "references": [
+        "https://bendwavy.org/klitzing/incmats/koho.htm",
+        "https://polytope.net/hedrondude/simplesc.htm"
+      ],
+      "receipt": {
+        "source": {
+          "fingerprint": "65d25ee5632ea6c4f3556f3ed22b75763985dbfc469de43c064dba2731fdad23",
+          "coordinatesSha256": "65cc7c2f2b397f6c56e580c6bd821b5d2cca784ed7d5c3273e6ea34791b6400e",
+          "incidenceSha256": "589f494726d0eb9f8d6e8883bfa39357d7c118ad955d25cc6fb5219a72c5004d",
+          "counts": [
+            8,
+            24,
+            28,
+            12
+          ]
+        },
+        "certified": false,
+        "releaseQualified": false,
+        "metrics": {
+          "maximumRelativeEdgeDeviation": 0.0,
+          "maximumFacePlanarity": 1.1555567610933199e-16,
+          "maximumFaceRegularityResidual": 8.881784197001252e-16,
+          "maximumElementSphereRelativeSpread": 1.2690906251431504e-15,
+          "tolerance": 1e-07,
+          "certified": false
+        },
+        "symmetry": {
+          "order": 16,
+          "properOrder": 16,
+          "vertexOrbits": 1,
+          "closureVerified": true,
+          "chirality": "numerically chiral",
+          "convention": "Supplied coordinates retained; no absolute left/right designation.",
+          "certified": false
+        },
+        "cellInventory": [
+          [
+            4,
+            4,
+            8
+          ],
+          [
+            6,
+            6,
+            4
+          ]
+        ],
+        "ridgeClosure": true,
+        "classificationScope": "Equal edges, circumscribable elements and one vertex orbit; uniform cells and filled generalized interior are not asserted.",
+        "status": "numerical-pass"
+      }
+    },
+    {
+      "id": "compound4:compound4-two-16-cells",
+      "name": "Compound of 2 16-cells in the tesseract",
+      "kind": "compound",
+      "sourceKey": "compound4-two-16-cells",
+      "counts": [
+        16,
+        48,
+        64,
+        32
+      ],
+      "componentCount": 2,
+      "sourceHypotheses": {
+        "classification": "specified symmetry orbit; no complete regular-compound classification",
+        "chirality": "unresolved"
+      },
+      "identityBasis": "Native declared finite-group compound; independent literal constituent verification.",
+      "references": [
+        "https://johncarlosbaez.wordpress.com/2017/12/28/the-600-cell-part-3/",
+        "https://en.wikipedia.org/wiki/600-cell#Twenty-five_24-cells",
+        "https://en.wikipedia.org/wiki/Polytope_compound#4-polytope_compounds"
+      ],
+      "receipt": {
+        "source": {
+          "fingerprint": "ab5e79fcc16e1276c20e277e68e809192b46244f3206ee8df52da7ad15f69696",
+          "coordinatesSha256": "a8675e442cac12f197f945d4101417046e72f30f5f009960cd3995ebba5afce5",
+          "incidenceSha256": "30bd91a83197cac42f87b1db3df9a2774c465df37b67392b91bca2af34da317c",
+          "counts": [
+            16,
+            48,
+            64,
+            32
+          ]
+        },
+        "certified": false,
+        "releaseQualified": false,
+        "components": {
+          "componentCount": 2,
+          "ownershipPartition": true,
+          "independentConstituentHulls": true,
+          "literalVertexCount": 16,
+          "distinctCoordinateCount": 16,
+          "coordinateMultiplicityHistogram": {
+            "1": 16
+          },
+          "coordinateComparison": "Literal binary64 tuples only; near-coincident coordinates remain distinct. No vertices are welded.",
+          "welded": false,
+          "certified": false
+        },
+        "status": "numerical-pass"
+      }
+    },
+    {
+      "id": "compound4:compound4-three-16-cells",
+      "name": "Compound of 3 16-cells in the 24-cell",
+      "kind": "compound",
+      "sourceKey": "compound4-three-16-cells",
+      "counts": [
+        24,
+        72,
+        96,
+        48
+      ],
+      "componentCount": 3,
+      "sourceHypotheses": {
+        "classification": "regular compound in the F4 frame",
+        "chirality": "unresolved"
+      },
+      "identityBasis": "Native declared finite-group compound; independent literal constituent verification.",
+      "references": [
+        "https://johncarlosbaez.wordpress.com/2017/12/28/the-600-cell-part-3/",
+        "https://en.wikipedia.org/wiki/600-cell#Twenty-five_24-cells",
+        "https://en.wikipedia.org/wiki/Polytope_compound#4-polytope_compounds"
+      ],
+      "receipt": {
+        "source": {
+          "fingerprint": "8b700bbf3437a78748b4ae46a3d3606d00325c91359a0934e03cb28a3619f902",
+          "coordinatesSha256": "8bfcbd1febce3042b733f627f259639841a48a8cc2051ee9eafe12a1df7aae27",
+          "incidenceSha256": "063a15848a252ff2fd18d8d013cdd095da24120221be89da9b92bd236e70df21",
+          "counts": [
+            24,
+            72,
+            96,
+            48
+          ]
+        },
+        "certified": false,
+        "releaseQualified": false,
+        "components": {
+          "componentCount": 3,
+          "ownershipPartition": true,
+          "independentConstituentHulls": true,
+          "literalVertexCount": 24,
+          "distinctCoordinateCount": 24,
+          "coordinateMultiplicityHistogram": {
+            "1": 24
+          },
+          "coordinateComparison": "Literal binary64 tuples only; near-coincident coordinates remain distinct. No vertices are welded.",
+          "welded": false,
+          "certified": false
+        },
+        "status": "numerical-pass"
+      }
+    },
+    {
+      "id": "compound4:compound4-three-tesseracts",
+      "name": "Compound of 3 tesseracts in the 24-cell",
+      "kind": "compound",
+      "sourceKey": "compound4-three-tesseracts",
+      "counts": [
+        48,
+        96,
+        72,
+        24
+      ],
+      "componentCount": 3,
+      "sourceHypotheses": {
+        "classification": "regular compound in the F4 frame",
+        "chirality": "unresolved"
+      },
+      "identityBasis": "Native declared finite-group compound; independent literal constituent verification.",
+      "references": [
+        "https://johncarlosbaez.wordpress.com/2017/12/28/the-600-cell-part-3/",
+        "https://en.wikipedia.org/wiki/600-cell#Twenty-five_24-cells",
+        "https://en.wikipedia.org/wiki/Polytope_compound#4-polytope_compounds"
+      ],
+      "receipt": {
+        "source": {
+          "fingerprint": "2f06ef36b7baf91228c6624be0a6d89773dd0116ac628d48005c73853823385b",
+          "coordinatesSha256": "789ca2bd0ee633b022ded3d852ff09371adaa442310255ec6381783468d0ab28",
+          "incidenceSha256": "e07fd3a291868215146ce5327132e2a828655eb7cbf6fe4a33f310e8b277a59e",
+          "counts": [
+            48,
+            96,
+            72,
+            24
+          ]
+        },
+        "certified": false,
+        "releaseQualified": false,
+        "components": {
+          "componentCount": 3,
+          "ownershipPartition": true,
+          "independentConstituentHulls": true,
+          "literalVertexCount": 48,
+          "distinctCoordinateCount": 24,
+          "coordinateMultiplicityHistogram": {
+            "2": 24
+          },
+          "coordinateComparison": "Literal binary64 tuples only; near-coincident coordinates remain distinct. No vertices are welded.",
+          "welded": false,
+          "certified": false
+        },
+        "status": "numerical-pass"
+      }
+    },
+    {
+      "id": "regiment:koho-cross4",
+      "name": "Koho / 16-cell common vertex and edge arrangement",
+      "kind": "regiment",
+      "sourceKey": "scaliform4-koho",
+      "counts": [
+        8,
+        24,
+        28,
+        12
+      ],
+      "otherKey": "cross4",
+      "otherScale": 0.7071067811865476,
+      "otherName": "16-cell",
+      "comparisonScaleDefinition": "1/sqrt(2)",
+      "identityBasis": "Explicit fixed-placement numerical bijection with independent full rank-by-rank incidence comparison.",
+      "references": [
+        "engine/scaliform4.py",
+        "engine/coincidic_regiments.py"
+      ],
+      "receipt": {
+        "source": {
+          "fingerprint": "65d25ee5632ea6c4f3556f3ed22b75763985dbfc469de43c064dba2731fdad23",
+          "coordinatesSha256": "65cc7c2f2b397f6c56e580c6bd821b5d2cca784ed7d5c3273e6ea34791b6400e",
+          "incidenceSha256": "589f494726d0eb9f8d6e8883bfa39357d7c118ad955d25cc6fb5219a72c5004d",
+          "counts": [
+            8,
+            24,
+            28,
+            12
+          ]
+        },
+        "certified": false,
+        "releaseQualified": false,
+        "other": {
+          "fingerprint": "a47cadb56bb9c58ccbacb80a4b99579818b6cd11e6000e3563e73a783cc3a0b8",
+          "coordinatesSha256": "6523e311e96ad6e23f0dc833076944370ec4ac3e3c896f59830a1697a620b4f5",
+          "incidenceSha256": "6d828ac8c505153b4dfaff05dcbe8c8b6fb5a99b56f6d22f72324cb96542bc80",
+          "counts": [
+            8,
+            24,
+            32,
+            16
+          ]
+        },
+        "comparison": {
+          "schema": "polytope-arrangement-comparison",
+          "version": 1,
+          "algorithmVersion": "0.1.0",
+          "sourceAttributesSha256": [
+            "7843571db0edfe87b431f53e610c06e3661f55126e592394c7d40373c23375f7",
+            "5a60404f296114114da1e06479959aa1e802e49b4124652c494fc201cbaaf4ca"
+          ],
+          "sourceFingerprints": [
+            "65d25ee5632ea6c4f3556f3ed22b75763985dbfc469de43c064dba2731fdad23",
+            "a47cadb56bb9c58ccbacb80a4b99579818b6cd11e6000e3563e73a783cc3a0b8"
+          ],
+          "contract": {
+            "action": "identity in supplied XYZW coordinates",
+            "units": "must agree when used as states",
+            "norm": "coordinate maximum norm",
+            "relativeTolerance": 1e-08,
+            "absoluteTolerance": 1.414213562373095e-08,
+            "scale": 1.414213562373095,
+            "vertexSelection": "unique fixed-placement proximity bijection, verified against every source vertex",
+            "faceCorrespondence": "same literal cyclic boundary modulo starting vertex and reversal; original winding/cycles remain in source snapshots",
+            "classification": "literal arrangement evidence only; uniformity and catalogue membership are not inferred"
+          },
+          "maximumVertexResidual": 1.1102230246251565e-16,
+          "rankCorrespondences": {
+            "vertices": {
+              "aToB": [
+                1,
+                3,
+                5,
+                7,
+                0,
+                2,
+                4,
+                6
+              ],
+              "bToA": [
+                4,
+                0,
+                5,
+                1,
+                6,
+                2,
+                7,
+                3
+              ],
+              "sameArrangement": true
+            },
+            "edges": {
+              "aToB": [
+                [
+                  7
+                ],
+                [
+                  9
+                ],
+                [
+                  11
+                ],
+                [
+                  6
+                ],
+                [
+                  8
+                ],
+                [
+                  10
+                ],
+                [
+                  17
+                ],
+                [
+                  19
+                ],
+                [
+                  1
+                ],
+                [
+                  16
+                ],
+                [
+                  18
+                ],
+                [
+                  23
+                ],
+                [
+                  3
+                ],
+                [
+                  13
+                ],
+                [
+                  22
+                ],
+                [
+                  5
+                ],
+                [
+                  15
+                ],
+                [
+                  21
+                ],
+                [
+                  0
+                ],
+                [
+                  2
+                ],
+                [
+                  4
+                ],
+                [
+                  12
+                ],
+                [
+                  14
+                ],
+                [
+                  20
+                ]
+              ],
+              "bToA": [
+                [
+                  18
+                ],
+                [
+                  8
+                ],
+                [
+                  19
+                ],
+                [
+                  12
+                ],
+                [
+                  20
+                ],
+                [
+                  15
+                ],
+                [
+                  3
+                ],
+                [
+                  0
+                ],
+                [
+                  4
+                ],
+                [
+                  1
+                ],
+                [
+                  5
+                ],
+                [
+                  2
+                ],
+                [
+                  21
+                ],
+                [
+                  13
+                ],
+                [
+                  22
+                ],
+                [
+                  16
+                ],
+                [
+                  9
+                ],
+                [
+                  6
+                ],
+                [
+                  10
+                ],
+                [
+                  7
+                ],
+                [
+                  23
+                ],
+                [
+                  17
+                ],
+                [
+                  14
+                ],
+                [
+                  11
+                ]
+              ],
+              "sameArrangement": true,
+              "unmatchedA": [],
+              "unmatchedB": [],
+              "ambiguousA": []
+            },
+            "faces": {
+              "aToB": [
+                [
+                  17
+                ],
+                [
+                  19
+                ],
+                [
+                  16
+                ],
+                [
+                  18
+                ],
+                [
+                  23
+                ],
+                [
+                  22
+                ],
+                [
+                  12
+                ],
+                [
+                  14
+                ],
+                [
+                  20
+                ],
+                [
+                  31
+                ],
+                [
+                  5
+                ],
+                [
+                  30
+                ],
+                [
+                  7
+                ],
+                [
+                  28
+                ],
+                [
+                  11
+                ],
+                [
+                  27
+                ],
+                [
+                  1
+                ],
+                [
+                  3
+                ],
+                [
+                  9
+                ],
+                [
+                  25
+                ],
+                [
+                  0
+                ],
+                [
+                  2
+                ],
+                [
+                  8
+                ],
+                [
+                  24
+                ],
+                [],
+                [],
+                [],
+                []
+              ],
+              "bToA": [
+                [
+                  20
+                ],
+                [
+                  16
+                ],
+                [
+                  21
+                ],
+                [
+                  17
+                ],
+                [],
+                [
+                  10
+                ],
+                [],
+                [
+                  12
+                ],
+                [
+                  22
+                ],
+                [
+                  18
+                ],
+                [],
+                [
+                  14
+                ],
+                [
+                  6
+                ],
+                [],
+                [
+                  7
+                ],
+                [],
+                [
+                  2
+                ],
+                [
+                  0
+                ],
+                [
+                  3
+                ],
+                [
+                  1
+                ],
+                [
+                  8
+                ],
+                [],
+                [
+                  5
+                ],
+                [
+                  4
+                ],
+                [
+                  23
+                ],
+                [
+                  19
+                ],
+                [],
+                [
+                  15
+                ],
+                [
+                  13
+                ],
+                [],
+                [
+                  11
+                ],
+                [
+                  9
+                ]
+              ],
+              "sameArrangement": false,
+              "unmatchedA": [
+                24,
+                25,
+                26,
+                27
+              ],
+              "unmatchedB": [
+                4,
+                6,
+                10,
+                13,
+                15,
+                21,
+                26,
+                29
+              ],
+              "ambiguousA": []
+            },
+            "cells": {
+              "aToB": [
+                [
+                  15
+                ],
+                [
+                  7
+                ],
+                [
+                  3
+                ],
+                [
+                  1
+                ],
+                [
+                  0
+                ],
+                [
+                  8
+                ],
+                [
+                  12
+                ],
+                [
+                  14
+                ],
+                [],
+                [],
+                [],
+                []
+              ],
+              "bToA": [
+                [
+                  4
+                ],
+                [
+                  3
+                ],
+                [],
+                [
+                  2
+                ],
+                [],
+                [],
+                [],
+                [
+                  1
+                ],
+                [
+                  5
+                ],
+                [],
+                [],
+                [],
+                [
+                  6
+                ],
+                [],
+                [
+                  7
+                ],
+                [
+                  0
+                ]
+              ],
+              "sameArrangement": false,
+              "unmatchedA": [
+                8,
+                9,
+                10,
+                11
+              ],
+              "unmatchedB": [
+                2,
+                4,
+                5,
+                6,
+                9,
+                10,
+                11,
+                13
+              ],
+              "ambiguousA": []
+            }
+          },
+          "sameVertexArrangement": true,
+          "sameEdgeArrangement": true,
+          "sameFaceArrangement": false,
+          "sameCellArrangement": false,
+          "regimentEvidence": {
+            "verified": true,
+            "meaning": "common literal vertex and edge arrangement under the declared identity action"
+          },
+          "coincidicEvidence": {
+            "sourceA": {
+              "verified": false,
+              "witnesses": []
+            },
+            "sourceB": {
+              "verified": false,
+              "witnesses": []
+            },
+            "crossSourceWitnesses": [],
+            "crossSourceMeaning": "cross-model distinct-boundary corealmic arrangement witnesses; identical boundaries are retained in rank maps; neither source is classified from cross witnesses alone",
+            "complete": true,
+            "cellPairsExamined": 378,
+            "interiorSemantics": "none inferred"
+          }
+        },
+        "status": "numerical-pass"
+      }
+    },
+    {
+      "id": "fissary:affic",
+      "name": "affic",
+      "kind": "missing-source",
+      "identityBasis": "Retained published-acronym source assertion; no geometry is inferred from a name or shared coordinates.",
+      "sourceHypotheses": {
+        "fissary": true,
+        "chirality": "unresolved",
+        "genus": null
+      },
+      "references": [
+        "https://polytope.net/hedrondude/regiments.html"
+      ],
+      "reason": "No pinned loadable named geometry in this tranche; fissary rank, chirality and literal topology remain unqualified.",
+      "receipt": {
+        "status": "missing-source",
+        "reason": "No pinned loadable named geometry in this tranche; fissary rank, chirality and literal topology remain unqualified.",
+        "certified": false,
+        "releaseQualified": false
+      }
+    },
+    {
+      "id": "fissary:affidhi",
+      "name": "affidhi",
+      "kind": "missing-source",
+      "identityBasis": "Retained published-acronym source assertion; no geometry is inferred from a name or shared coordinates.",
+      "sourceHypotheses": {
+        "fissary": true,
+        "chirality": "unresolved",
+        "genus": null
+      },
+      "references": [
+        "https://polytope.net/hedrondude/regiments.html"
+      ],
+      "reason": "No pinned loadable named geometry in this tranche; fissary rank, chirality and literal topology remain unqualified.",
+      "receipt": {
+        "status": "missing-source",
+        "reason": "No pinned loadable named geometry in this tranche; fissary rank, chirality and literal topology remain unqualified.",
+        "certified": false,
+        "releaseQualified": false
+      }
+    },
+    {
+      "id": "fissary:datfodippady",
+      "name": "datfodippady",
+      "kind": "missing-source",
+      "identityBasis": "Retained published-acronym source assertion; no geometry is inferred from a name or shared coordinates.",
+      "sourceHypotheses": {
+        "fissary": true,
+        "chirality": "unresolved",
+        "genus": null
+      },
+      "references": [
+        "https://polytope.net/hedrondude/regiments.html"
+      ],
+      "reason": "No pinned loadable named geometry in this tranche; fissary rank, chirality and literal topology remain unqualified.",
+      "receipt": {
+        "status": "missing-source",
+        "reason": "No pinned loadable named geometry in this tranche; fissary rank, chirality and literal topology remain unqualified.",
+        "certified": false,
+        "releaseQualified": false
+      }
+    },
+    {
+      "id": "fissary:ditsop",
+      "name": "ditsop",
+      "kind": "missing-source",
+      "identityBasis": "Retained published-acronym source assertion; no geometry is inferred from a name or shared coordinates.",
+      "sourceHypotheses": {
+        "fissary": true,
+        "chirality": "unresolved",
+        "genus": null
+      },
+      "references": [
+        "https://polytope.net/hedrondude/regiments.html"
+      ],
+      "reason": "No pinned loadable named geometry in this tranche; fissary rank, chirality and literal topology remain unqualified.",
+      "receipt": {
+        "status": "missing-source",
+        "reason": "No pinned loadable named geometry in this tranche; fissary rank, chirality and literal topology remain unqualified.",
+        "certified": false,
+        "releaseQualified": false
+      }
+    },
+    {
+      "id": "fissary:dittafady",
+      "name": "dittafady",
+      "kind": "missing-source",
+      "identityBasis": "Retained published-acronym source assertion; no geometry is inferred from a name or shared coordinates.",
+      "sourceHypotheses": {
+        "fissary": true,
+        "chirality": "unresolved",
+        "genus": null
+      },
+      "references": [
+        "https://polytope.net/hedrondude/regiments.html"
+      ],
+      "reason": "No pinned loadable named geometry in this tranche; fissary rank, chirality and literal topology remain unqualified.",
+      "receipt": {
+        "status": "missing-source",
+        "reason": "No pinned loadable named geometry in this tranche; fissary rank, chirality and literal topology remain unqualified.",
+        "certified": false,
+        "releaseQualified": false
+      }
+    },
+    {
+      "id": "fissary:dittanfodipdy",
+      "name": "dittanfodipdy",
+      "kind": "missing-source",
+      "identityBasis": "Retained published-acronym source assertion; no geometry is inferred from a name or shared coordinates.",
+      "sourceHypotheses": {
+        "fissary": true,
+        "chirality": "unresolved",
+        "genus": null
+      },
+      "references": [
+        "https://polytope.net/hedrondude/regiments.html"
+      ],
+      "reason": "No pinned loadable named geometry in this tranche; fissary rank, chirality and literal topology remain unqualified.",
+      "receipt": {
+        "status": "missing-source",
+        "reason": "No pinned loadable named geometry in this tranche; fissary rank, chirality and literal topology remain unqualified.",
+        "certified": false,
+        "releaseQualified": false
+      }
+    },
+    {
+      "id": "fissary:dupapadi",
+      "name": "dupapadi",
+      "kind": "missing-source",
+      "identityBasis": "Retained published-acronym source assertion; no geometry is inferred from a name or shared coordinates.",
+      "sourceHypotheses": {
+        "fissary": true,
+        "chirality": "unresolved",
+        "genus": null
+      },
+      "references": [
+        "https://polytope.net/hedrondude/regiments.html"
+      ],
+      "reason": "No pinned loadable named geometry in this tranche; fissary rank, chirality and literal topology remain unqualified.",
+      "receipt": {
+        "status": "missing-source",
+        "reason": "No pinned loadable named geometry in this tranche; fissary rank, chirality and literal topology remain unqualified.",
+        "certified": false,
+        "releaseQualified": false
+      }
+    },
+    {
+      "id": "fissary:dupti",
+      "name": "dupti",
+      "kind": "missing-source",
+      "identityBasis": "Retained published-acronym source assertion; no geometry is inferred from a name or shared coordinates.",
+      "sourceHypotheses": {
+        "fissary": true,
+        "chirality": "unresolved",
+        "genus": null
+      },
+      "references": [
+        "https://polytope.net/hedrondude/regiments.html"
+      ],
+      "reason": "No pinned loadable named geometry in this tranche; fissary rank, chirality and literal topology remain unqualified.",
+      "receipt": {
+        "status": "missing-source",
+        "reason": "No pinned loadable named geometry in this tranche; fissary rank, chirality and literal topology remain unqualified.",
+        "certified": false,
+        "releaseQualified": false
+      }
+    },
+    {
+      "id": "fissary:gadtaf-dapixhi",
+      "name": "gadtaf dapixhi",
+      "kind": "missing-source",
+      "identityBasis": "Retained published-acronym source assertion; no geometry is inferred from a name or shared coordinates.",
+      "sourceHypotheses": {
+        "fissary": true,
+        "chirality": "unresolved",
+        "genus": null
+      },
+      "references": [
+        "https://polytope.net/hedrondude/regiments.html"
+      ],
+      "reason": "No pinned loadable named geometry in this tranche; fissary rank, chirality and literal topology remain unqualified.",
+      "receipt": {
+        "status": "missing-source",
+        "reason": "No pinned loadable named geometry in this tranche; fissary rank, chirality and literal topology remain unqualified.",
+        "certified": false,
+        "releaseQualified": false
+      }
+    },
+    {
+      "id": "fissary:gadtaf-dipdy",
+      "name": "gadtaf dipdy",
+      "kind": "missing-source",
+      "identityBasis": "Retained published-acronym source assertion; no geometry is inferred from a name or shared coordinates.",
+      "sourceHypotheses": {
+        "fissary": true,
+        "chirality": "unresolved",
+        "genus": null
+      },
+      "references": [
+        "https://polytope.net/hedrondude/regiments.html"
+      ],
+      "reason": "No pinned loadable named geometry in this tranche; fissary rank, chirality and literal topology remain unqualified.",
+      "receipt": {
+        "status": "missing-source",
+        "reason": "No pinned loadable named geometry in this tranche; fissary rank, chirality and literal topology remain unqualified.",
+        "certified": false,
+        "releaseQualified": false
+      }
+    },
+    {
+      "id": "fissary:gadtafady",
+      "name": "gadtafady",
+      "kind": "missing-source",
+      "identityBasis": "Retained published-acronym source assertion; no geometry is inferred from a name or shared coordinates.",
+      "sourceHypotheses": {
+        "fissary": true,
+        "chirality": "unresolved",
+        "genus": null
+      },
+      "references": [
+        "https://polytope.net/hedrondude/regiments.html"
+      ],
+      "reason": "No pinned loadable named geometry in this tranche; fissary rank, chirality and literal topology remain unqualified.",
+      "receipt": {
+        "status": "missing-source",
+        "reason": "No pinned loadable named geometry in this tranche; fissary rank, chirality and literal topology remain unqualified.",
+        "certified": false,
+        "releaseQualified": false
+      }
+    },
+    {
+      "id": "fissary:gitphi",
+      "name": "gitphi",
+      "kind": "missing-source",
+      "identityBasis": "Retained published-acronym source assertion; no geometry is inferred from a name or shared coordinates.",
+      "sourceHypotheses": {
+        "fissary": true,
+        "chirality": "unresolved",
+        "genus": null
+      },
+      "references": [
+        "https://polytope.net/hedrondude/regiments.html"
+      ],
+      "reason": "No pinned loadable named geometry in this tranche; fissary rank, chirality and literal topology remain unqualified.",
+      "receipt": {
+        "status": "missing-source",
+        "reason": "No pinned loadable named geometry in this tranche; fissary rank, chirality and literal topology remain unqualified.",
+        "certified": false,
+        "releaseQualified": false
+      }
+    },
+    {
+      "id": "fissary:gitpodady",
+      "name": "gitpodady",
+      "kind": "missing-source",
+      "identityBasis": "Retained published-acronym source assertion; no geometry is inferred from a name or shared coordinates.",
+      "sourceHypotheses": {
+        "fissary": true,
+        "chirality": "unresolved",
+        "genus": null
+      },
+      "references": [
+        "https://polytope.net/hedrondude/regiments.html"
+      ],
+      "reason": "No pinned loadable named geometry in this tranche; fissary rank, chirality and literal topology remain unqualified.",
+      "receipt": {
+        "status": "missing-source",
+        "reason": "No pinned loadable named geometry in this tranche; fissary rank, chirality and literal topology remain unqualified.",
+        "certified": false,
+        "releaseQualified": false
+      }
+    },
+    {
+      "id": "fissary:nadupapdi",
+      "name": "nadupapdi",
+      "kind": "missing-source",
+      "identityBasis": "Retained published-acronym source assertion; no geometry is inferred from a name or shared coordinates.",
+      "sourceHypotheses": {
+        "fissary": true,
+        "chirality": "unresolved",
+        "genus": null
+      },
+      "references": [
+        "https://polytope.net/hedrondude/regiments.html"
+      ],
+      "reason": "No pinned loadable named geometry in this tranche; fissary rank, chirality and literal topology remain unqualified.",
+      "receipt": {
+        "status": "missing-source",
+        "reason": "No pinned loadable named geometry in this tranche; fissary rank, chirality and literal topology remain unqualified.",
+        "certified": false,
+        "releaseQualified": false
+      }
+    },
+    {
+      "id": "fissary:nadupti",
+      "name": "nadupti",
+      "kind": "missing-source",
+      "identityBasis": "Retained published-acronym source assertion; no geometry is inferred from a name or shared coordinates.",
+      "sourceHypotheses": {
+        "fissary": true,
+        "chirality": "unresolved",
+        "genus": null
+      },
+      "references": [
+        "https://polytope.net/hedrondude/regiments.html"
+      ],
+      "reason": "No pinned loadable named geometry in this tranche; fissary rank, chirality and literal topology remain unqualified.",
+      "receipt": {
+        "status": "missing-source",
+        "reason": "No pinned loadable named geometry in this tranche; fissary rank, chirality and literal topology remain unqualified.",
+        "certified": false,
+        "releaseQualified": false
+      }
+    },
+    {
+      "id": "fissary:quad-pagaxhi",
+      "name": "quad pagaxhi",
+      "kind": "missing-source",
+      "identityBasis": "Retained published-acronym source assertion; no geometry is inferred from a name or shared coordinates.",
+      "sourceHypotheses": {
+        "fissary": true,
+        "chirality": "unresolved",
+        "genus": null
+      },
+      "references": [
+        "https://polytope.net/hedrondude/regiments.html"
+      ],
+      "reason": "No pinned loadable named geometry in this tranche; fissary rank, chirality and literal topology remain unqualified.",
+      "receipt": {
+        "status": "missing-source",
+        "reason": "No pinned loadable named geometry in this tranche; fissary rank, chirality and literal topology remain unqualified.",
+        "certified": false,
+        "releaseQualified": false
+      }
+    },
+    {
+      "id": "fissary:quadippady",
+      "name": "quadippady",
+      "kind": "missing-source",
+      "identityBasis": "Retained published-acronym source assertion; no geometry is inferred from a name or shared coordinates.",
+      "sourceHypotheses": {
+        "fissary": true,
+        "chirality": "unresolved",
+        "genus": null
+      },
+      "references": [
+        "https://polytope.net/hedrondude/regiments.html"
+      ],
+      "reason": "No pinned loadable named geometry in this tranche; fissary rank, chirality and literal topology remain unqualified.",
+      "receipt": {
+        "status": "missing-source",
+        "reason": "No pinned loadable named geometry in this tranche; fissary rank, chirality and literal topology remain unqualified.",
+        "certified": false,
+        "releaseQualified": false
+      }
+    },
+    {
+      "id": "fissary:sadtaf-dapixhi",
+      "name": "sadtaf dapixhi",
+      "kind": "missing-source",
+      "identityBasis": "Retained published-acronym source assertion; no geometry is inferred from a name or shared coordinates.",
+      "sourceHypotheses": {
+        "fissary": true,
+        "chirality": "unresolved",
+        "genus": null
+      },
+      "references": [
+        "https://polytope.net/hedrondude/regiments.html"
+      ],
+      "reason": "No pinned loadable named geometry in this tranche; fissary rank, chirality and literal topology remain unqualified.",
+      "receipt": {
+        "status": "missing-source",
+        "reason": "No pinned loadable named geometry in this tranche; fissary rank, chirality and literal topology remain unqualified.",
+        "certified": false,
+        "releaseQualified": false
+      }
+    },
+    {
+      "id": "fissary:sadtaf-dipdy",
+      "name": "sadtaf dipdy",
+      "kind": "missing-source",
+      "identityBasis": "Retained published-acronym source assertion; no geometry is inferred from a name or shared coordinates.",
+      "sourceHypotheses": {
+        "fissary": true,
+        "chirality": "unresolved",
+        "genus": null
+      },
+      "references": [
+        "https://polytope.net/hedrondude/regiments.html"
+      ],
+      "reason": "No pinned loadable named geometry in this tranche; fissary rank, chirality and literal topology remain unqualified.",
+      "receipt": {
+        "status": "missing-source",
+        "reason": "No pinned loadable named geometry in this tranche; fissary rank, chirality and literal topology remain unqualified.",
+        "certified": false,
+        "releaseQualified": false
+      }
+    },
+    {
+      "id": "fissary:sadtifady",
+      "name": "sadtifady",
+      "kind": "missing-source",
+      "identityBasis": "Retained published-acronym source assertion; no geometry is inferred from a name or shared coordinates.",
+      "sourceHypotheses": {
+        "fissary": true,
+        "chirality": "unresolved",
+        "genus": null
+      },
+      "references": [
+        "https://polytope.net/hedrondude/regiments.html"
+      ],
+      "reason": "No pinned loadable named geometry in this tranche; fissary rank, chirality and literal topology remain unqualified.",
+      "receipt": {
+        "status": "missing-source",
+        "reason": "No pinned loadable named geometry in this tranche; fissary rank, chirality and literal topology remain unqualified.",
+        "certified": false,
+        "releaseQualified": false
+      }
+    },
+    {
+      "id": "fissary:saquid-paxhi",
+      "name": "saquid paxhi",
+      "kind": "missing-source",
+      "identityBasis": "Retained published-acronym source assertion; no geometry is inferred from a name or shared coordinates.",
+      "sourceHypotheses": {
+        "fissary": true,
+        "chirality": "unresolved",
+        "genus": null
+      },
+      "references": [
+        "https://polytope.net/hedrondude/regiments.html"
+      ],
+      "reason": "No pinned loadable named geometry in this tranche; fissary rank, chirality and literal topology remain unqualified.",
+      "receipt": {
+        "status": "missing-source",
+        "reason": "No pinned loadable named geometry in this tranche; fissary rank, chirality and literal topology remain unqualified.",
+        "certified": false,
+        "releaseQualified": false
+      }
+    },
+    {
+      "id": "fissary:sitphi",
+      "name": "sitphi",
+      "kind": "missing-source",
+      "identityBasis": "Retained published-acronym source assertion; no geometry is inferred from a name or shared coordinates.",
+      "sourceHypotheses": {
+        "fissary": true,
+        "chirality": "unresolved",
+        "genus": null
+      },
+      "references": [
+        "https://polytope.net/hedrondude/regiments.html"
+      ],
+      "reason": "No pinned loadable named geometry in this tranche; fissary rank, chirality and literal topology remain unqualified.",
+      "receipt": {
+        "status": "missing-source",
+        "reason": "No pinned loadable named geometry in this tranche; fissary rank, chirality and literal topology remain unqualified.",
+        "certified": false,
+        "releaseQualified": false
+      }
+    },
+    {
+      "id": "fissary:sitpodady",
+      "name": "sitpodady",
+      "kind": "missing-source",
+      "identityBasis": "Retained published-acronym source assertion; no geometry is inferred from a name or shared coordinates.",
+      "sourceHypotheses": {
+        "fissary": true,
+        "chirality": "unresolved",
+        "genus": null
+      },
+      "references": [
+        "https://polytope.net/hedrondude/regiments.html"
+      ],
+      "reason": "No pinned loadable named geometry in this tranche; fissary rank, chirality and literal topology remain unqualified.",
+      "receipt": {
+        "status": "missing-source",
+        "reason": "No pinned loadable named geometry in this tranche; fissary rank, chirality and literal topology remain unqualified.",
+        "certified": false,
+        "releaseQualified": false
+      }
+    },
+    {
+      "id": "fissary:tipsop",
+      "name": "tipsop",
+      "kind": "missing-source",
+      "identityBasis": "Retained published-acronym source assertion; no geometry is inferred from a name or shared coordinates.",
+      "sourceHypotheses": {
+        "fissary": true,
+        "chirality": "unresolved",
+        "genus": null
+      },
+      "references": [
+        "https://polytope.net/hedrondude/regiments.html"
+      ],
+      "reason": "No pinned loadable named geometry in this tranche; fissary rank, chirality and literal topology remain unqualified.",
+      "receipt": {
+        "status": "missing-source",
+        "reason": "No pinned loadable named geometry in this tranche; fissary rank, chirality and literal topology remain unqualified.",
+        "certified": false,
+        "releaseQualified": false
+      }
+    }
+  ],
+  "unresolved": [
+    "All 24 retained fissary acronym assertions lack pinned geometry in this tranche and remain unresolved.",
+    "The specialized 4D benchmark roster and discovery-candidate identities remain unresolved; a common skeleton never merges topology.",
+    "No full regular-compound enumeration, generalized filled interiors, exact arithmetic, redistribution approval or specialist release review is claimed."
+  ],
+  "scope": "Recorded numerical qualification for named source realizations and relationships. Recheck binds current geometry to separate coordinate/incidence hashes. No aggregate crosswalk or release-qualification promotion."
+}

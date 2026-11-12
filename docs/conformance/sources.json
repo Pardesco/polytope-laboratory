@@ -1,0 +1,107 @@
+{
+  "schema_version": 1,
+  "sources": [
+    {
+      "id": "spec",
+      "kind": "repository-specification",
+      "version": "Stella4D / Pro 6.0 target",
+      "path": "STELLA4D_FEATURE_COMPLETE_BUILD_SPEC.md",
+      "locator": "sections 2, 3, 5.4-5.9, 12, 13",
+      "scope": "Required workflows; no competitor execution or option oracle."
+    },
+    {
+      "id": "audit",
+      "kind": "source-audit",
+      "version": "01c5d22e104a0f2c89ea42ce1241427f883a0a2d",
+      "path": "docs/GAP_AUDIT_2026-11-09.md",
+      "locator": "requirement tables and R5-DOMAINS",
+      "scope": "Implementation starting point; cited tests are coverage pointers, not all executed."
+    },
+    {
+      "id": "installed54-report",
+      "kind": "installed-static-report",
+      "version": "5.4, 10th May 2014",
+      "path": "docs/STELLA54_STATIC_CONSTRUCTION_BASELINE.md",
+      "locator": "Construction commands; dialogs 191, 212, 221; explicit 5.4-to-6.0 gaps",
+      "scope": "Static labels/manual claims and historical launch; no executed construction parity."
+    },
+    {
+      "id": "installed54-manual",
+      "kind": "installed-manual",
+      "version": "5.4 manual, May 4 2014",
+      "external_path": "C:/Program Files (x86)/Stella4D/Stella4DManual.html",
+      "sha256": "9cda8b03212946417655ce2d95a5ffece4904b83e4c9f8b936434dbf0050e49c",
+      "locator": "Named HTML anchors on each scenario",
+      "scope": "Read-only text inspection on 2026-11-09; manual semantics, not executed geometry. Not required on CI."
+    },
+    {
+      "id": "installed54-exe",
+      "kind": "installed-static-report",
+      "version": "5.4, 10th May 2014",
+      "external_path": "C:/Program Files (x86)/Stella4D/Stella4D.exe",
+      "sha256": "e56977ded0a791da1003ab85a38177923ee08e2502419292dc7bcd0b9d8e0a4d",
+      "locator": "Version/menu/dialog metadata reported in installed54-report",
+      "scope": "No launch in this package; metadata is not an operation-result oracle."
+    },
+    {
+      "id": "history60",
+      "kind": "official-version-history",
+      "version": "6.0 entry dated 2026-08-11; live page includes later versions",
+      "url": "https://www.software3d.com/History.php",
+      "retrieved_on": "2026-11-09",
+      "locator": "Stella 6.0 entry only",
+      "scope": "New precision constructors, fit conditions, materials/assets and media options; later releases do not expand the frozen target."
+    },
+    {
+      "id": "manual-io",
+      "kind": "official-live-manual",
+      "version": "Live Stella4D Pro manual; not a frozen 6.0 snapshot",
+      "url": "https://www.software3d.com/Manual/IO.php?prod=Stella4DPro",
+      "retrieved_on": "2026-11-09",
+      "locator": "13.1 Importing Models",
+      "scope": "OFF/4OFF incidence/colors, optional cells, hull fallback and DXF import; no enumerated DXF entity guarantee."
+    },
+    {
+      "id": "manual-export",
+      "kind": "official-live-manual",
+      "version": "Live Stella4D Pro manual; not a frozen 6.0 snapshot",
+      "url": "https://www.software3d.com/Manual/Export.php?prod=Stella4DPro",
+      "retrieved_on": "2026-11-09",
+      "locator": "13.2 Exporting Models",
+      "scope": "Selected-view geometry, orientation, units, sphere/strut output and named formats."
+    },
+    {
+      "id": "manual-fitting",
+      "kind": "official-live-manual",
+      "version": "Live Stella4D Pro manual; not a frozen 6.0 snapshot",
+      "url": "https://www.software3d.com/Manual/TryTo.php?prod=Stella4DPro",
+      "retrieved_on": "2026-11-09",
+      "locator": "9.16 Trying to Satisfy Conditions",
+      "scope": "Selected-face regularity, global edge equality and equal area are separate attempted conditions; no guaranteed convergence."
+    },
+    {
+      "id": "manual-materials-link",
+      "kind": "unretrieved-reference",
+      "version": "6.0 target reference in repository specification; page version unconfirmed",
+      "url": "https://www.software3d.com/Manual/Materials.php",
+      "locator": "spec section 5.8",
+      "scope": "Fetch failed during this audit; use spec/history for scope, obtain versioned option evidence before declaring material parity."
+    },
+    {
+      "id": "native-contracts",
+      "kind": "implementation-contract",
+      "version": "582c0015f4baa5a8a567a06523c8a664061825f2",
+      "path": "docs/ARCHITECTURE.md",
+      "locator": "Per-domain code pointers and scenario fixtures",
+      "scope": "Local behavior only; source inspection on 2026-11-09 supersedes stale architecture known-limits prose."
+    },
+    {
+      "id": "independent-fixtures",
+      "kind": "independent-mathematics",
+      "version": "Repository fixtures inspected 2026-11-09 at 582c0015f4baa5a8a567a06523c8a664061825f2",
+      "path": "tests/test_kernel.py",
+      "locator": "Each case names its actual fixture and independently checkable invariant",
+      "scope": "Analytic counts, literal cycles, distances and measures; not competitor execution."
+    }
+  ]
+}

@@ -4,6 +4,7 @@ Full audit JSON bodies can be hundreds of MiB. Compilation reads just the
 bounded report header and streams the adjacent checkpoint once. GUI indexing
 reads only the resulting compact index and the ordinary bounded source hashes.
 """
+
 from datetime import datetime, timezone
 import hashlib
 from importlib.metadata import version
@@ -22,23 +23,38 @@ MAX_JOURNAL_LINE_BYTES = 16 * 1024 * 1024
 MAX_RECORDS = 10000
 IMPORTER_SOURCES = ('engine/__init__.py', 'engine/formats.py', 'engine/geometry.py')
 ROOT = Path(__file__).resolve().parents[1]
-RESULT_STATUSES = {'parsed', 'diagnosed', 'validation-failed', 'count-mismatch',
-                   'timeout', 'worker-error', 'source-changed'}
+RESULT_STATUSES = {
+    'parsed',
+    'diagnosed',
+    'validation-failed',
+    'count-mismatch',
+    'timeout',
+    'worker-error',
+    'source-changed',
+}
 
 
 def importer_fingerprint():
-    return {'sourceHashes': {relative: hashlib.sha256((ROOT / relative).read_bytes()).hexdigest()
-                             for relative in IMPORTER_SOURCES},
-            'pythonVersion': sys.version,
-            'dependencyVersions': {name: version(name) for name in ('numpy', 'scipy')}}
+    return {
+        'sourceHashes': {
+            relative: hashlib.sha256((ROOT / relative).read_bytes()).hexdigest() for relative in IMPORTER_SOURCES
+        },
+        'pythonVersion': sys.version,
+        'dependencyVersions': {name: version(name) for name in ('numpy', 'scipy')},
+    }
 
 
 def _relative(value):
     if not isinstance(value, str) or len(value) > 4096:
         raise GeometryError('Audit record has an invalid relative source path.')
     path = PurePosixPath(value)
-    if (not value or path.is_absolute() or '\\' in value or ':' in value
-            or any(part in ('', '.', '..') for part in value.split('/'))):
+    if (
+        not value
+        or path.is_absolute()
+        or '\\' in value
+        or ':' in value
+        or any(part in ('', '.', '..') for part in value.split('/'))
+    ):
         raise GeometryError('Audit record has an invalid relative source path.')
     return value
 
@@ -105,17 +121,23 @@ def read_audit_index(path):
             raise GeometryError('Compact audit index exceeds the 10,000-record limit.')
         for relative, record in records.items():
             _relative(relative)
-            if not isinstance(record, dict) or record.get('status') not in RESULT_STATUSES or not _sha(record.get('sourceHash')):
+            if (
+                not isinstance(record, dict)
+                or record.get('status') not in RESULT_STATUSES
+                or not _sha(record.get('sourceHash'))
+            ):
                 raise GeometryError('Compact audit index contains an invalid source result.')
             if record.get('status') == 'parsed' and record.get('validationPassed') is not True:
                 raise GeometryError('Compact parsed result lacks passing incidence validation.')
-            if (type(record.get('sourceUnchanged')) is not bool
-                    or type(record.get('validationPassed')) is not bool):
+            if type(record.get('sourceUnchanged')) is not bool or type(record.get('validationPassed')) is not bool:
                 raise GeometryError('Compact audit index lacks explicit source and validation evidence.')
             for key in ('warnings', 'errors'):
                 values = record.get(key, [])
-                if (not isinstance(values, list) or len(values) > 8
-                        or any(not isinstance(value, str) or len(value) > 512 for value in values)):
+                if (
+                    not isinstance(values, list)
+                    or len(values) > 8
+                    or any(not isinstance(value, str) or len(value) > 512 for value in values)
+                ):
                     raise GeometryError('Compact audit diagnostics exceed the bounded message limits.')
             if type(record.get('warningCount', 0)) is not int or record.get('warningCount', 0) < 0:
                 raise GeometryError('Compact audit warning count must be a nonnegative integer.')
@@ -143,16 +165,22 @@ def compile_audit_index(report_path, output_path):
     else:
         context = metadata.get('resumeContext')
         signature = metadata.get('resumeContextSha256')
-        if (metadata.get('schemaVersion') != 2 or not isinstance(context, dict)
-                or not _sha(signature) or hashlib.sha256(json.dumps(context, sort_keys=True).encode('utf-8')).hexdigest() != signature):
+        if (
+            metadata.get('schemaVersion') != 2
+            or not isinstance(context, dict)
+            or not _sha(signature)
+            or hashlib.sha256(json.dumps(context, sort_keys=True).encode('utf-8')).hexdigest() != signature
+        ):
             raise GeometryError('Report does not contain a verified resumable audit context.')
         source = metadata.get('sourceDirectory')
         if not source or source != context.get('sourceDirectory'):
             raise GeometryError('Report and checkpoint source-directory provenance disagree.')
         hashes = context.get('validatorHashes', {})
-        importer = {'sourceHashes': {relative: hashes.get(relative) for relative in IMPORTER_SOURCES},
-                    'pythonVersion': context.get('pythonVersion'),
-                    'dependencyVersions': context.get('dependencyVersions')}
+        importer = {
+            'sourceHashes': {relative: hashes.get(relative) for relative in IMPORTER_SOURCES},
+            'pythonVersion': context.get('pythonVersion'),
+            'dependencyVersions': context.get('dependencyVersions'),
+        }
         journal = report_path.with_suffix('.checkpoint.jsonl')
         if not journal.is_file() or journal.stat().st_size > MAX_JOURNAL_BYTES:
             raise GeometryError('Expected adjacent checkpoint journal no larger than 512 MiB.')
@@ -184,20 +212,32 @@ def compile_audit_index(report_path, output_path):
                     errors = validation.get('errors', [])
                     if record.get('error'):
                         errors = [record['error']] + (errors if isinstance(errors, list) else [])
-                    records[relative] = {'sourceHash': record['sha256'], 'status': record['status'],
+                    records[relative] = {
+                        'sourceHash': record['sha256'],
+                        'status': record['status'],
                         'sourceUnchanged': record.get('sourceUnchanged') is True,
                         'validationPassed': validation.get('passed') is True,
-                        'warnings': _messages(warnings), 'errors': _messages(errors),
+                        'warnings': _messages(warnings),
+                        'errors': _messages(errors),
                         'warningCount': len(warnings) if isinstance(warnings, list) else 0,
-                        'interpretation': record.get('interpretation'), 'auditedUtc': record.get('auditedUtc')}
+                        'interpretation': record.get('interpretation'),
+                        'auditedUtc': record.get('auditedUtc'),
+                    }
                     if len(records) > MAX_RECORDS:
                         raise GeometryError('Audit exceeds the 10,000-record library limit.')
                 except (ValueError, KeyError, TypeError, AttributeError) as exc:
                     raise GeometryError(f'Invalid audit checkpoint line {number}: {exc}') from exc
-        index = {'format': FORMAT, 'schemaVersion': 1, 'sourceDirectory': source,
-                 'createdUtc': datetime.now(timezone.utc).isoformat(),
-                 'sourceReport': str(report_path), 'sourceContextSha256': signature,
-                 'importer': importer, 'records': records, 'ignoredIncompleteTail': ignored_tail}
+        index = {
+            'format': FORMAT,
+            'schemaVersion': 1,
+            'sourceDirectory': source,
+            'createdUtc': datetime.now(timezone.utc).isoformat(),
+            'sourceReport': str(report_path),
+            'sourceContextSha256': signature,
+            'importer': importer,
+            'records': records,
+            'ignoredIncompleteTail': ignored_tail,
+        }
     source_root = Path(index['sourceDirectory']).expanduser().resolve()
     if output_path == report_path or output_path == source_root or source_root in output_path.parents:
         raise GeometryError('Write the compact audit index outside the linked source directory and original report.')
@@ -205,10 +245,14 @@ def compile_audit_index(report_path, output_path):
     if len(encoded.encode('utf-8')) > MAX_INDEX_BYTES:
         raise GeometryError('Compiled audit index exceeds the 32 MiB limit.')
     atomic_write(output_path, encoded)
-    return {'path': str(output_path), 'sourceDirectory': index['sourceDirectory'],
-            'recordCount': len(index['records']), 'bytes': len(encoded.encode('utf-8')),
-            'importerFresh': index['importer'] == importer_fingerprint(),
-            'ignoredIncompleteTail': index.get('ignoredIncompleteTail', False)}
+    return {
+        'path': str(output_path),
+        'sourceDirectory': index['sourceDirectory'],
+        'recordCount': len(index['records']),
+        'bytes': len(encoded.encode('utf-8')),
+        'importerFresh': index['importer'] == importer_fingerprint(),
+        'ignoredIncompleteTail': index.get('ignoredIncompleteTail', False),
+    }
 
 
 def attach_audit(entries, audit_path):
@@ -226,24 +270,46 @@ def attach_audit(entries, audit_path):
         if record is None:
             entry['auditDiagnostic'] = 'No importer result is recorded for this source file.'
             continue
-        entry.update(auditWarnings=record.get('warnings', []), auditErrors=record.get('errors', []),
-                     auditWarningCount=record.get('warningCount', 0), auditResultStatus=record['status'])
+        entry.update(
+            auditWarnings=record.get('warnings', []),
+            auditErrors=record.get('errors', []),
+            auditWarningCount=record.get('warningCount', 0),
+            auditResultStatus=record['status'],
+        )
         if not fresh:
-            entry.update(auditStatus='stale', auditDiagnostic='Importer source, Python, or dependency versions have changed since this audit.')
+            entry.update(
+                auditStatus='stale',
+                auditDiagnostic='Importer source, Python, or dependency versions have changed since this audit.',
+            )
         elif not record.get('sourceUnchanged'):
-            entry.update(auditStatus='stale', auditDiagnostic='Audit did not verify that source bytes remained unchanged.')
+            entry.update(
+                auditStatus='stale', auditDiagnostic='Audit did not verify that source bytes remained unchanged.'
+            )
         elif not entry.get('sourceHash'):
-            reasons = {'not-computed-size': 'file exceeds the startup per-file hash limit',
-                       'not-computed-budget': 'aggregate hash budget exhausted',
-                       'not-computed-file-changed': 'source grew beyond the hash allowance during reading'}
+            reasons = {
+                'not-computed-size': 'file exceeds the startup per-file hash limit',
+                'not-computed-budget': 'aggregate hash budget exhausted',
+                'not-computed-file-changed': 'source grew beyond the hash allowance during reading',
+            }
             reason = reasons.get(entry.get('hashStatus'), entry.get('hashStatus', 'unknown hash status'))
-            entry.update(auditStatus='stale', auditDiagnostic='Current source hash was not computed within the catalog resource limits: ' + reason + '.')
+            entry.update(
+                auditStatus='stale',
+                auditDiagnostic='Current source hash was not computed within the catalog resource limits: '
+                + reason
+                + '.',
+            )
         elif entry['sourceHash'] != record['sourceHash']:
             entry.update(auditStatus='stale', auditDiagnostic='Source bytes have changed since the audit.')
         elif record['status'] == 'parsed':
-            entry.update(auditStatus='passed', auditDiagnostic='Complete importer incidence validation passed for these source bytes.')
+            entry.update(
+                auditStatus='passed',
+                auditDiagnostic='Complete importer incidence validation passed for these source bytes.',
+            )
         elif record['status'] in ('diagnosed', 'validation-failed', 'count-mismatch'):
-            entry.update(auditStatus='rejected', auditDiagnostic='; '.join(record.get('errors', [])) or 'Importer rejected this source.')
+            entry.update(
+                auditStatus='rejected',
+                auditDiagnostic='; '.join(record.get('errors', [])) or 'Importer rejected this source.',
+            )
         else:
             entry['auditDiagnostic'] = 'Audit did not complete importer validation: ' + record['status']
     return entries

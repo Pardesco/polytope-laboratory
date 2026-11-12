@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "basis": "Fixed named source rank counts and literal polygon turning inventories, not outputs of dual generation. Euler characteristic is V-E+F. Nonorientable genus is deliberately unassigned. Face counts refer to retained Antiprism ordered cycles; geometric crossings never weld vertices.",
+  "entries": [
+    {"number":3,"counts":[12,24,12,0],"eulerCharacteristic":0,"orientable":true,"genus":1,"polygons":[[3,1,8],[6,1,4]],"centerPlaneCount":4,"coincidentGroupCount":0},
+    {"number":4,"counts":[6,12,7,0],"eulerCharacteristic":1,"orientable":false,"genus":null,"polygons":[[3,1,4],[4,1,3]],"centerPlaneCount":3,"coincidentGroupCount":0},
+    {"number":15,"counts":[12,24,10,0],"eulerCharacteristic":-2,"orientable":false,"genus":null,"polygons":[[4,1,6],[6,1,4]],"centerPlaneCount":4,"coincidentGroupCount":0},
+    {"number":32,"counts":[60,180,112,0],"eulerCharacteristic":-8,"orientable":true,"genus":5,"polygons":[[3,1,100],[5,2,12]],"centerPlaneCount":0,"coincidentGroupCount":20},
+    {"number":49,"counts":[30,60,26,0],"eulerCharacteristic":-4,"orientable":false,"genus":null,"polygons":[[3,1,20],[10,1,6]],"centerPlaneCount":6,"coincidentGroupCount":0},
+    {"number":51,"counts":[30,60,18,0],"eulerCharacteristic":-12,"orientable":false,"genus":null,"polygons":[[5,1,12],[10,1,6]],"centerPlaneCount":6,"coincidentGroupCount":0},
+    {"number":62,"counts":[30,60,22,0],"eulerCharacteristic":-8,"orientable":false,"genus":null,"polygons":[[5,2,12],[6,1,10]],"centerPlaneCount":10,"coincidentGroupCount":0},
+    {"number":64,"counts":[60,180,104,0],"eulerCharacteristic":-16,"orientable":true,"genus":9,"polygons":[[3,1,80],[5,2,24]],"centerPlaneCount":0,"coincidentGroupCount":12},
+    {"number":65,"counts":[30,60,22,0],"eulerCharacteristic":-8,"orientable":false,"genus":null,"polygons":[[5,1,12],[6,1,10]],"centerPlaneCount":10,"coincidentGroupCount":0},
+    {"number":70,"counts":[30,60,18,0],"eulerCharacteristic":-12,"orientable":false,"genus":null,"polygons":[[5,2,12],[10,3,6]],"centerPlaneCount":6,"coincidentGroupCount":0},
+    {"number":71,"counts":[30,60,26,0],"eulerCharacteristic":-4,"orientable":false,"genus":null,"polygons":[[3,1,20],[10,3,6]],"centerPlaneCount":6,"coincidentGroupCount":0},
+    {"number":72,"counts":[60,180,112,0],"eulerCharacteristic":-8,"orientable":true,"genus":5,"polygons":[[3,1,100],[5,2,12]],"centerPlaneCount":0,"coincidentGroupCount":20},
+    {"number":75,"counts":[60,240,124,0],"eulerCharacteristic":-56,"orientable":true,"genus":29,"polygons":[[3,1,40],[4,1,60],[5,2,24]],"centerPlaneCount":60,"coincidentGroupCount":62}
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "scenarios": [
+    {"id":"r7-classification-finite-u-duals","tranche":"3d","kind":"dual","records":53,"numericalPasses":40,"unresolved":[3,4,15,32,49,51,62,64,65,70,71,72,75]},
+    {"id":"r7-classification-near-miss-realizations","tranche":"3d","kind":"near-miss","records":10,"numericalPasses":10},
+    {"id":"r7-classification-stewart-genus","tranche":"3d","kind":"stewart","records":7,"numericalPasses":7},
+    {"id":"r7-classification-compound3-ownership","tranche":"3d","kind":"compound","records":7,"numericalPasses":7},
+    {"id":"r7-classification-scaliform-elements","tranche":"4d","kind":"scaliform","records":2,"numericalPasses":2},
+    {"id":"r7-classification-compound4-ownership","tranche":"4d","kind":"compound","records":3,"numericalPasses":3},
+    {"id":"r7-classification-koho-regiment","tranche":"4d","kind":"regiment","records":1,"numericalPasses":1},
+    {"id":"r7-classification-fissary-source-gaps","tranche":"4d","kind":"missing-source","records":24,"numericalPasses":0}
+  ]
+}

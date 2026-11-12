@@ -8,9 +8,10 @@ version=json.loads((root/'package.json').read_text())['version']
 output=root/'release'/f'Polytope Laboratory {version} source.zip'
 if output.exists():raise SystemExit('Source archive already exists; preserve it or choose a new package version.')
 paths=[]
-for directory in ['engine','ui','desktop','scripts','tests','docs','examples','.github','third_party_licenses']:
+# Recursive roots include ui/app/*.mjs and the desktop IPC/dialog/menu modules.
+for directory in ['engine','ui','desktop','scripts','tests','docs','examples','.github','third_party_licenses','data-external']:
     paths.extend(p for p in (root/directory).rglob('*') if p.is_file() and '__pycache__' not in p.parts and p.suffix!='.pyc')
-for name in ['README.md','LICENSE','THIRD_PARTY_NOTICES.md','CONTRIBUTING.md','package.json','package-lock.json','requirements.txt','vite.config.mjs','.gitignore']:
+for name in ['README.md','LICENSE','THIRD_PARTY_NOTICES.md','CONTRIBUTING.md','package.json','package-lock.json','requirements.txt','vite.config.mjs','.gitignore','.prettierrc.json','.prettierignore','ruff.toml','.git-blame-ignore-revs']:
     paths.append(root/name)
 for name in ['dense-stereographic-packet.mjs','dense-stereographic-budget.mjs','conforming-worker-fixtures.mjs']:
     p=root/'development'/name

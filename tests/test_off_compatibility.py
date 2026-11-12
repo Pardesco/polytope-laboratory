@@ -10,8 +10,7 @@ from engine.geometry import GeometryError, identity
 
 def colored_source():
     model = regular('cross4')
-    model['metadata']['offColors'] = {
-        'faces': [None] * len(model['faces']), 'cells': [None] * len(model['cells'])}
+    model['metadata']['offColors'] = {'faces': [None] * len(model['faces']), 'cells': [None] * len(model['cells'])}
     model['metadata']['offColors']['faces'][0] = {'encoding': 'byte', 'values': [255, 0, 128]}
     model['metadata']['offColors']['faces'][1] = {'encoding': 'unit', 'values': [1.0, 0.2, 0.0, 0.5]}
     model['metadata']['offColors']['cells'][0] = {'encoding': 'byte', 'values': [20, 40, 60, 128]}
@@ -27,8 +26,10 @@ def test_boundary_colors_preserve_incidence_and_both_encodings_roundtrip():
     assert parse_off(export_off(imported))['metadata']['offColors'] == original['metadata']['offColors']
 
 
-@pytest.mark.parametrize('suffix', ['1', '1 2', '1 2 3 4 5', '256 0 0', '-1 0 0',
-                                   '1.1 0.0 0.0', 'nan 0.0 0.0', 'inf 0.0 0.0', '0.5 0.5 -0.1'])
+@pytest.mark.parametrize(
+    'suffix',
+    ['1', '1 2', '1 2 3 4 5', '256 0 0', '-1 0 0', '1.1 0.0 0.0', 'nan 0.0 0.0', 'inf 0.0 0.0', '0.5 0.5 -0.1'],
+)
 def test_malformed_color_suffixes_rejected(suffix):
     model = regular('cross4')
     lines = export_off(model).splitlines()

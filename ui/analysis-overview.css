@@ -1,30 +1,166 @@
-.analysis-overview{padding:16px;margin:0 0 16px;border:1px solid #3c4d59;border-radius:8px;background:linear-gradient(145deg,#202b33,#1b2026 75%)}
-.analysis-overview h2{margin:0 0 8px;color:var(--muted);font-size:18px;font-weight:600;letter-spacing:.04em}
-.analysis-overview h3{margin:0;font-size:20px;line-height:1.2;font-weight:600;overflow-wrap:anywhere}
-#analysis-overview-family{margin:8px 0;color:var(--muted);font-size:12px}
-#analysis-overview-description{margin:8px 0 16px;line-height:1.6;color:#d0d5db}
-#analysis-overview-counts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:0}
-#analysis-overview-counts>div{display:flex;flex-direction:column-reverse;gap:0;padding:8px;border:1px solid #35414b;border-radius:4px;background:#161d23}
-#analysis-overview-counts dt{font-size:12px;color:var(--muted);text-transform:capitalize}
-#analysis-overview-counts dd{margin:0;font-size:24px;line-height:1.25;font-weight:600;font-variant-numeric:tabular-nums;letter-spacing:-.03em;overflow-wrap:anywhere}
-#analysis-overview-facts{display:grid;gap:8px;list-style:none;padding:16px 0 0;margin:16px 0 0;border-top:1px solid #35414b;line-height:1.5}
-#analysis-overview-facts li{position:relative;padding-left:16px;color:#d0d8df}
-#analysis-overview-facts li::before{content:'·';position:absolute;left:0;color:#a7c8de;font-weight:700}
-#analysis-details-heading{font-size:14px;font-weight:600;margin:24px 0 8px;color:var(--text)}
-#info-panel>#element-types{padding:8px 0;margin:0 0 16px}
-#element-types .element-type-list{margin:4px 0 8px}
-#element-types>details>summary{padding:8px 0;font-size:12px;color:var(--muted)}
-#element-types .element-type-list button{margin:4px 0;max-width:100%;text-align:left;overflow-wrap:anywhere}
-#info-panel>#library-related{margin-bottom:16px}
-#analysis-measurements{margin-bottom:8px}
-#analysis-measurements .stat-row{gap:8px;align-items:baseline}
-#analysis-measurements .stat-row>b{overflow-wrap:anywhere;text-align:right}
-#analysis-overview-method{margin-top:16px;border-top:1px solid var(--border);padding-top:8px;color:var(--muted);font-size:12px;line-height:1.6}
-#analysis-overview-method>summary{min-height:32px;align-content:center;cursor:pointer;color:var(--text)}
-#analysis-overview-method>summary:focus-visible,#precision-details>summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-#analysis-overview-method p{margin:8px 0 0}
-#precision-details{margin:8px 0 16px;border:1px solid var(--border);border-radius:8px;padding:8px;color:var(--text)}
-#precision-details>summary{min-height:32px;align-content:center;cursor:pointer}
-#precision-details p{font-size:12px;line-height:1.6;overflow-wrap:anywhere}
-#precision-details .numeric-context{margin:8px 0}
-#validation-summary{font-size:14px;line-height:1.6;color:var(--text)}
+.analysis-overview {
+  padding: 16px;
+  margin: 0 0 16px;
+  border: 1px solid #3c4d59;
+  border-radius: 8px;
+  background: linear-gradient(145deg, #202b33, #1b2026 75%);
+}
+.analysis-overview h2 {
+  margin: 0 0 8px;
+  color: var(--muted);
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+.analysis-overview h3 {
+  margin: 0;
+  font-size: 20px;
+  line-height: 1.2;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+#analysis-overview-family {
+  margin: 8px 0;
+  color: var(--muted);
+  font-size: 12px;
+}
+#analysis-overview-description {
+  margin: 8px 0 16px;
+  line-height: 1.6;
+  color: #d0d5db;
+}
+#analysis-overview-counts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  margin: 0;
+}
+#analysis-overview-counts > div {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 0;
+  padding: 8px;
+  border: 1px solid #35414b;
+  border-radius: 4px;
+  background: #161d23;
+}
+#analysis-overview-counts dt {
+  font-size: 12px;
+  color: var(--muted);
+  text-transform: capitalize;
+}
+#analysis-overview-counts dd {
+  margin: 0;
+  font-size: 24px;
+  line-height: 1.25;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.03em;
+  overflow-wrap: anywhere;
+}
+#analysis-overview-facts {
+  display: grid;
+  gap: 8px;
+  list-style: none;
+  padding: 16px 0 0;
+  margin: 16px 0 0;
+  border-top: 1px solid #35414b;
+  line-height: 1.5;
+}
+#analysis-overview-facts li {
+  position: relative;
+  padding-left: 16px;
+  color: #d0d8df;
+}
+#analysis-overview-facts li::before {
+  content: '·';
+  position: absolute;
+  left: 0;
+  color: #a7c8de;
+  font-weight: 700;
+}
+#analysis-details-heading {
+  font-size: 14px;
+  font-weight: 600;
+  margin: 24px 0 8px;
+  color: var(--text);
+}
+#info-panel > #element-types {
+  padding: 8px 0;
+  margin: 0 0 16px;
+}
+#element-types .element-type-list {
+  margin: 4px 0 8px;
+}
+#element-types > details > summary {
+  padding: 8px 0;
+  font-size: 12px;
+  color: var(--muted);
+}
+#element-types .element-type-list button {
+  margin: 4px 0;
+  max-width: 100%;
+  text-align: left;
+  overflow-wrap: anywhere;
+}
+#info-panel > #library-related {
+  margin-bottom: 16px;
+}
+#analysis-measurements {
+  margin-bottom: 8px;
+}
+#analysis-measurements .stat-row {
+  gap: 8px;
+  align-items: baseline;
+}
+#analysis-measurements .stat-row > b {
+  overflow-wrap: anywhere;
+  text-align: right;
+}
+#analysis-overview-method {
+  margin-top: 16px;
+  border-top: 1px solid var(--border);
+  padding-top: 8px;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.6;
+}
+#analysis-overview-method > summary {
+  min-height: 32px;
+  align-content: center;
+  cursor: pointer;
+  color: var(--text);
+}
+#analysis-overview-method > summary:focus-visible,
+#precision-details > summary:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+#analysis-overview-method p {
+  margin: 8px 0 0;
+}
+#precision-details {
+  margin: 8px 0 16px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 8px;
+  color: var(--text);
+}
+#precision-details > summary {
+  min-height: 32px;
+  align-content: center;
+  cursor: pointer;
+}
+#precision-details p {
+  font-size: 12px;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+#precision-details .numeric-context {
+  margin: 8px 0;
+}
+#validation-summary {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text);
+}

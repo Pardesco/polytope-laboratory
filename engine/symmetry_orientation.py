@@ -1,4 +1,5 @@
 """Numerical source symmetry directions, bounded to canonical feature directions in 4D."""
+
 import math
 import numpy as np
 from .geometry import GeometryError, identity, points_array
@@ -22,7 +23,7 @@ def _report(query):
     points = points_array(model['vertices'])
     center = points.mean(axis=0)
     choices = []
-    residual = 0.
+    residual = 0.0
     if d == 3:
         for action in group['actions']:
             if action['determinant'] != 1:
@@ -34,14 +35,20 @@ def _report(query):
             axis = vt[-1]
             if next((x for x in axis if abs(x) > 1e-8), 1) < 0:
                 axis = -axis
-            permutation = action['permutation']; seen = set(); order = 1
+            permutation = action['permutation']
+            seen = set()
+            order = 1
             for i in range(len(permutation)):
-                j = i; length = 0
+                j = i
+                length = 0
                 while j not in seen:
-                    seen.add(j); length += 1; j = permutation[j]
+                    seen.add(j)
+                    length += 1
+                    j = permutation[j]
                 if length:
                     order = math.lcm(order, length)
-            error = float(np.linalg.norm(matrix @ axis - axis)); residual = max(residual, error)
+            error = float(np.linalg.norm(matrix @ axis - axis))
+            residual = max(residual, error)
             existing = next((c for c in choices if abs(np.dot(c['direction'], axis)) > 1 - 1e-8), None)
             if existing:
                 existing['order'] = max(existing['order'], order)
@@ -50,7 +57,7 @@ def _report(query):
         choices = [c for c in choices if c['order'] in (2, 3, 4, 5)]
         choices.sort(key=lambda c: (-c['order'], tuple(round(x, 8) for x in c['direction'])))
         for i, c in enumerate(choices):
-            c.update(id=str(i), label=f"{c['order']}-fold axis {i+1}")
+            c.update(id=str(i), label=f"{c['order']}-fold axis {i + 1}")
         definition = 'maximal proper rotation order about each unoriented source axis; orders 2, 3, 4 and 5'
     else:
         # One representative per complete source orbit exhausts equivalent feature directions.
@@ -58,7 +65,9 @@ def _report(query):
             for orbit in group['entityOrbits'][kind]:
                 entity = {'kind': kind, 'index': orbit['ids'][0]}
                 frame = entity_frame(model, entity, points)
-                direction = (np.eye(d) - frame['basis'] @ frame['basis'].T) @ ((frame['origin'] - center) / frame['scale'])
+                direction = (np.eye(d) - frame['basis'] @ frame['basis'].T) @ (
+                    (frame['origin'] - center) / frame['scale']
+                )
                 length = np.linalg.norm(direction)
                 if length < 1e-7:
                     continue
@@ -67,17 +76,35 @@ def _report(query):
                 fixed = errors < 1e-7
                 order = int(np.sum(fixed))
                 residual = max(residual, float(np.max(errors[fixed])))
-                choices.append({'id': f'{kind}-{entity["index"]}', 'label': f'{kind}-first {entity["index"]} · projected group order {order}',
-                                'entity': entity, 'direction': direction.tolist(), 'order': order})
+                choices.append(
+                    {
+                        'id': f'{kind}-{entity["index"]}',
+                        'label': f'{kind}-first {entity["index"]} · projected group order {order}',
+                        'entity': entity,
+                        'direction': direction.tolist(),
+                        'order': order,
+                    }
+                )
         definition = 'order of the full source orthogonal group fixing the signed projection direction; maximum among perpendicular radial vertex/edge/face/cell directions, one representative per orbit; ties prefer cell, vertex, face, edge'
     if not choices:
         raise GeometryError('This source has no supported noncentral symmetry directions.')
     best = max(choices, key=lambda c: c['order'])
-    q = (points-center) / np.max(np.ptp(points, axis=0))
-    vertex_residual = max(float(np.max(np.linalg.norm(q @ np.asarray(a['matrix']).T-q[a['permutation']], axis=1))) for a in group['actions'])
-    return {'choices': choices, 'greatest': best['id'], 'definition': definition, 'groupOrder': group['order'],
-            'complete': True, 'sourceFingerprint': identity(model), 'numericMode': 'float64-approximate',
-            'maximumAxisResidual': residual, 'maximumNormalizedVertexResidual': vertex_residual}
+    q = (points - center) / np.max(np.ptp(points, axis=0))
+    vertex_residual = max(
+        float(np.max(np.linalg.norm(q @ np.asarray(a['matrix']).T - q[a['permutation']], axis=1)))
+        for a in group['actions']
+    )
+    return {
+        'choices': choices,
+        'greatest': best['id'],
+        'definition': definition,
+        'groupOrder': group['order'],
+        'complete': True,
+        'sourceFingerprint': identity(model),
+        'numericMode': 'float64-approximate',
+        'maximumAxisResidual': residual,
+        'maximumNormalizedVertexResidual': vertex_residual,
+    }
 
 
 def symmetry_orientation(model, choice=None):
@@ -86,7 +113,9 @@ def symmetry_orientation(model, choice=None):
         return report
     if type(choice) is not str:
         raise GeometryError('Choose a listed symmetry direction or greatest.')
-    selected = next((c for c in report['choices'] if c['id'] == (report['greatest'] if choice == 'greatest' else choice)), None)
+    selected = next(
+        (c for c in report['choices'] if c['id'] == (report['greatest'] if choice == 'greatest' else choice)), None
+    )
     if selected is None:
         raise GeometryError('Choose a listed source symmetry direction.')
     report['selected'] = selected

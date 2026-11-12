@@ -1,0 +1,4306 @@
+{
+  "schemaVersion": 1,
+  "scenario": "anim-02-method-domain-inventory-r7",
+  "sampleRatios": [
+    0,
+    0.25,
+    0.5,
+    0.75,
+    1
+  ],
+  "rowTimeBudgetSeconds": 15.0,
+  "evidence": "Native binary64 samples only; not installed benchmark or desktop qualification.",
+  "rows": [
+    {
+      "source": "tetrahedron",
+      "dimension": 3,
+      "interpretation": "convex-polytope",
+      "sourceFingerprint": "9cc0dcff3e7d0400a7f7a2c5b629f2998dc51547da01e2f9a7b51b55a174387e",
+      "method": "sizing",
+      "status": "sampled",
+      "samples": [
+        {
+          "ratio": 0,
+          "counts": [
+            4,
+            6,
+            4,
+            0
+          ]
+        },
+        {
+          "ratio": 0.25,
+          "counts": [
+            8,
+            12,
+            8,
+            0
+          ]
+        },
+        {
+          "ratio": 0.5,
+          "counts": [
+            8,
+            12,
+            8,
+            0
+          ]
+        },
+        {
+          "ratio": 0.75,
+          "counts": [
+            8,
+            12,
+            8,
+            0
+          ]
+        },
+        {
+          "ratio": 1,
+          "counts": [
+            4,
+            6,
+            4,
+            0
+          ]
+        }
+      ],
+      "certified": false,
+      "elapsedSeconds": 0.422
+    },
+    {
+      "source": "tetrahedron",
+      "dimension": 3,
+      "interpretation": "convex-polytope",
+      "sourceFingerprint": "9cc0dcff3e7d0400a7f7a2c5b629f2998dc51547da01e2f9a7b51b55a174387e",
+      "method": "truncation",
+      "status": "sampled",
+      "samples": [
+        {
+          "ratio": 0,
+          "counts": [
+            4,
+            6,
+            4,
+            0
+          ]
+        },
+        {
+          "ratio": 0.25,
+          "counts": [
+            4,
+            6,
+            4,
+            0
+          ]
+        },
+        {
+          "ratio": 0.5,
+          "counts": [
+            4,
+            6,
+            4,
+            0
+          ]
+        },
+        {
+          "ratio": 0.75,
+          "counts": [
+            12,
+            18,
+            8,
+            0
+          ]
+        },
+        {
+          "ratio": 1,
+          "counts": [
+            4,
+            6,
+            4,
+            0
+          ]
+        }
+      ],
+      "certified": false,
+      "elapsedSeconds": 0.391
+    },
+    {
+      "source": "tetrahedron",
+      "dimension": 3,
+      "interpretation": "convex-polytope",
+      "sourceFingerprint": "9cc0dcff3e7d0400a7f7a2c5b629f2998dc51547da01e2f9a7b51b55a174387e",
+      "method": "augmentation",
+      "status": "sampled",
+      "samples": [
+        {
+          "ratio": 0,
+          "counts": [
+            4,
+            6,
+            4,
+            0
+          ]
+        },
+        {
+          "ratio": 0.25,
+          "counts": [
+            8,
+            18,
+            12,
+            0
+          ]
+        },
+        {
+          "ratio": 0.5,
+          "counts": [
+            4,
+            6,
+            4,
+            0
+          ]
+        },
+        {
+          "ratio": 0.75,
+          "counts": [
+            4,
+            6,
+            4,
+            0
+          ]
+        },
+        {
+          "ratio": 1,
+          "counts": [
+            4,
+            6,
+            4,
+            0
+          ]
+        }
+      ],
+      "certified": false,
+      "elapsedSeconds": 0.406
+    },
+    {
+      "source": "tetrahedron",
+      "dimension": 3,
+      "interpretation": "convex-polytope",
+      "sourceFingerprint": "9cc0dcff3e7d0400a7f7a2c5b629f2998dc51547da01e2f9a7b51b55a174387e",
+      "method": "expansion",
+      "status": "sampled",
+      "samples": [
+        {
+          "ratio": 0,
+          "counts": [
+            4,
+            6,
+            4,
+            0
+          ]
+        },
+        {
+          "ratio": 0.25,
+          "counts": [
+            12,
+            24,
+            14,
+            0
+          ]
+        },
+        {
+          "ratio": 0.5,
+          "counts": [
+            12,
+            24,
+            14,
+            0
+          ]
+        },
+        {
+          "ratio": 0.75,
+          "counts": [
+            12,
+            24,
+            14,
+            0
+          ]
+        },
+        {
+          "ratio": 1,
+          "counts": [
+            4,
+            6,
+            4,
+            0
+          ]
+        }
+      ],
+      "certified": false,
+      "elapsedSeconds": 0.406
+    },
+    {
+      "source": "tetrahedron",
+      "dimension": 3,
+      "interpretation": "convex-polytope",
+      "sourceFingerprint": "9cc0dcff3e7d0400a7f7a2c5b629f2998dc51547da01e2f9a7b51b55a174387e",
+      "method": "tilting-quads",
+      "status": "sampled",
+      "samples": [
+        {
+          "ratio": 0,
+          "counts": [
+            4,
+            6,
+            4,
+            0
+          ]
+        },
+        {
+          "ratio": 0.25,
+          "counts": [
+            14,
+            24,
+            12,
+            0
+          ]
+        },
+        {
+          "ratio": 0.5,
+          "counts": [
+            14,
+            24,
+            12,
+            0
+          ]
+        },
+        {
+          "ratio": 0.75,
+          "counts": [
+            14,
+            24,
+            12,
+            0
+          ]
+        },
+        {
+          "ratio": 1,
+          "counts": [
+            4,
+            6,
+            4,
+            0
+          ]
+        }
+      ],
+      "certified": false,
+      "elapsedSeconds": 0.391
+    },
+    {
+      "source": "tetrahedron",
+      "dimension": 3,
+      "interpretation": "convex-polytope",
+      "sourceFingerprint": "9cc0dcff3e7d0400a7f7a2c5b629f2998dc51547da01e2f9a7b51b55a174387e",
+      "method": "tilting-triangles",
+      "status": "sampled",
+      "samples": [
+        {
+          "ratio": 0,
+          "counts": [
+            4,
+            6,
+            4,
+            0
+          ]
+        },
+        {
+          "ratio": 0.25,
+          "counts": [
+            14,
+            36,
+            24,
+            0
+          ]
+        },
+        {
+          "ratio": 0.5,
+          "counts": [
+            14,
+            36,
+            24,
+            0
+          ]
+        },
+        {
+          "ratio": 0.75,
+          "counts": [
+            14,
+            36,
+            24,
+            0
+          ]
+        },
+        {
+          "ratio": 1,
+          "counts": [
+            4,
+            6,
+            4,
+            0
+          ]
+        }
+      ],
+      "certified": false,
+      "elapsedSeconds": 0.406
+    },
+    {
+      "source": "tetrahedron",
+      "dimension": 3,
+      "interpretation": "convex-polytope",
+      "sourceFingerprint": "9cc0dcff3e7d0400a7f7a2c5b629f2998dc51547da01e2f9a7b51b55a174387e",
+      "method": "tilting-to-compound",
+      "status": "sampled",
+      "samples": [
+        {
+          "ratio": 0,
+          "counts": [
+            4,
+            6,
+            4,
+            0
+          ]
+        },
+        {
+          "ratio": 0.25,
+          "counts": [
+            40,
+            42,
+            16,
+            0
+          ]
+        },
+        {
+          "ratio": 0.5,
+          "counts": [
+            8,
+            12,
+            8,
+            0
+          ]
+        },
+        {
+          "ratio": 0.75,
+          "counts": [
+            40,
+            42,
+            16,
+            0
+          ]
+        },
+        {
+          "ratio": 1,
+          "counts": [
+            4,
+            6,
+            4,
+            0
+          ]
+        }
+      ],
+      "certified": false,
+      "elapsedSeconds": 0.391
+    },
+    {
+      "source": "tetrahedron",
+      "dimension": 3,
+      "interpretation": "convex-polytope",
+      "sourceFingerprint": "9cc0dcff3e7d0400a7f7a2c5b629f2998dc51547da01e2f9a7b51b55a174387e",
+      "method": "tilting-to-rectify",
+      "status": "sampled",
+      "samples": [
+        {
+          "ratio": 0,
+          "counts": [
+            4,
+            6,
+            4,
+            0
+          ]
+        },
+        {
+          "ratio": 0.25,
+          "counts": [
+            48,
+            48,
+            16,
+            0
+          ]
+        },
+        {
+          "ratio": 0.5,
+          "counts": [
+            6,
+            12,
+            8,
+            0
+          ]
+        },
+        {
+          "ratio": 0.75,
+          "counts": [
+            48,
+            48,
+            16,
+            0
+          ]
+        },
+        {
+          "ratio": 1,
+          "counts": [
+            4,
+            6,
+            4,
+            0
+          ]
+        }
+      ],
+      "certified": false,
+      "elapsedSeconds": 0.406
+    },
+    {
+      "source": "tetrahedron",
+      "dimension": 3,
+      "interpretation": "convex-polytope",
+      "sourceFingerprint": "9cc0dcff3e7d0400a7f7a2c5b629f2998dc51547da01e2f9a7b51b55a174387e",
+      "method": "via-snub",
+      "status": "refused",
+      "reason": "Via-snub supports only a centered axis-aligned cube with complete ordinary incidence, origin center, and form A, or a regular dodecahedron/icosahedron at its geometric center; rotated/translated cubes, other sources and 4D are unavailable.",
+      "elapsedSeconds": 0.391
+    },
+    {
+      "source": "cube",
+      "dimension": 3,
+      "interpretation": "convex-polytope",
+      "sourceFingerprint": "5e0d2b7b73fb36c5c155a6c5b0c7ada92e79c2e529864520ae041a795044877b",
+      "method": "sizing",
+      "status": "sampled",
+      "samples": [
+        {
+          "ratio": 0,
+          "counts": [
+            8,
+            12,
+            6,
+            0
+          ]
+        },
+        {
+          "ratio": 0.25,
+          "counts": [
+            14,
+            24,
+            14,
+            0
+          ]
+        },
+        {
+          "ratio": 0.5,
+          "counts": [
+            14,
+            24,
+            14,
+            0
+          ]
+        },
+        {
+          "ratio": 0.75,
+          "counts": [
+            14,
+            24,
+            14,
+            0
+          ]
+        },
+        {
+          "ratio": 1,
+          "counts": [
+            6,
+            12,
+            8,
+            0
+          ]
+        }
+      ],
+      "certified": false,
+      "elapsedSeconds": 0.406
+    },
+    {
+      "source": "cube",
+      "dimension": 3,
+      "interpretation": "convex-polytope",
+      "sourceFingerprint": "5e0d2b7b73fb36c5c155a6c5b0c7ada92e79c2e529864520ae041a795044877b",
+      "method": "truncation",
+      "status": "sampled",
+      "samples": [
+        {
+          "ratio": 0,
+          "counts": [
+            8,
+            12,
+            6,
+            0
+          ]
+        },
+        {
+          "ratio": 0.25,
+          "counts": [
+            12,
+            24,
+            14,
+            0
+          ]
+        },
+        {
+          "ratio": 0.5,
+          "counts": [
+            6,
+            12,
+            8,
+            0
+          ]
+        },
+        {
+          "ratio": 0.75,
+          "counts": [
+            6,
+            12,
+            8,
+            0
+          ]
+        },
+        {
+          "ratio": 1,
+          "counts": [
+            6,
+            12,
+            8,
+            0
+          ]
+        }
+      ],
+      "certified": false,
+      "elapsedSeconds": 0.422
+    },
+    {
+      "source": "cube",
+      "dimension": 3,
+      "interpretation": "convex-polytope",
+      "sourceFingerprint": "5e0d2b7b73fb36c5c155a6c5b0c7ada92e79c2e529864520ae041a795044877b",
+      "method": "augmentation",
+      "status": "sampled",
+      "samples": [
+        {
+          "ratio": 0,
+          "counts": [
+            8,
+            12,
+            6,
+            0
+          ]
+        },
+        {
+          "ratio": 0.25,
+          "counts": [
+            8,
+            12,
+            6,
+            0
+          ]
+        },
+        {
+          "ratio": 0.5,
+          "counts": [
+            8,
+            12,
+            6,
+            0
+          ]
+        },
+        {
+          "ratio": 0.75,
+          "counts": [
+            14,
+            24,
+            12,
+            0
+          ]
+        },
+        {
+          "ratio": 1,
+          "counts": [
+            6,
+            12,
+            8,
+            0
+          ]
+        }
+      ],
+      "certified": false,
+      "elapsedSeconds": 0.422
+    },
+    {
+      "source": "cube",
+      "dimension": 3,
+      "interpretation": "convex-polytope",
+      "sourceFingerprint": "5e0d2b7b73fb36c5c155a6c5b0c7ada92e79c2e529864520ae041a795044877b",
+      "method": "expansion",
+      "status": "sampled",
+      "samples": [
+        {
+          "ratio": 0,
+          "counts": [
+            8,
+            12,
+            6,
+            0
+          ]
+        },
+        {
+          "ratio": 0.25,
+          "counts": [
+            24,
+            48,
+            26,
+            0
+          ]
+        },
+        {
+          "ratio": 0.5,
+          "counts": [
+            24,
+            48,
+            26,
+            0
+          ]
+        },
+        {
+          "ratio": 0.75,
+          "counts": [
+            24,
+            48,
+            26,
+            0
+          ]
+        },
+        {
+          "ratio": 1,
+          "counts": [
+            6,
+            12,
+            8,
+            0
+          ]
+        }
+      ],
+      "certified": false,
+      "elapsedSeconds": 0.406
+    },
+    {
+      "source": "cube",
+      "dimension": 3,
+      "interpretation": "convex-polytope",
+      "sourceFingerprint": "5e0d2b7b73fb36c5c155a6c5b0c7ada92e79c2e529864520ae041a795044877b",
+      "method": "tilting-quads",
+      "status": "sampled",
+      "samples": [
+        {
+          "ratio": 0,
+          "counts": [
+            8,
+            12,
+            6,
+            0
+          ]
+        },
+        {
+          "ratio": 0.25,
+          "counts": [
+            26,
+            48,
+            24,
+            0
+          ]
+        },
+        {
+          "ratio": 0.5,
+          "counts": [
+            26,
+            48,
+            24,
+            0
+          ]
+        },
+        {
+          "ratio": 0.75,
+          "counts": [
+            26,
+            48,
+            24,
+            0
+          ]
+        },
+        {
+          "ratio": 1,
+          "counts": [
+            6,
+            12,
+            8,
+            0
+          ]
+        }
+      ],
+      "certified": false,
+      "elapsedSeconds": 0.406
+    },
+    {
+      "source": "cube",
+      "dimension": 3,
+      "interpretation": "convex-polytope",
+      "sourceFingerprint": "5e0d2b7b73fb36c5c155a6c5b0c7ada92e79c2e529864520ae041a795044877b",
+      "method": "tilting-triangles",
+      "status": "sampled",
+      "samples": [
+        {
+          "ratio": 0,
+          "counts": [
+            8,
+            12,
+            6,
+            0
+          ]
+        },
+        {
+          "ratio": 0.25,
+          "counts": [
+            26,
+            72,
+            48,
+            0
+          ]
+        },
+        {
+          "ratio": 0.5,
+          "counts": [
+            26,
+            72,
+            48,
+            0
+          ]
+        },
+        {
+          "ratio": 0.75,
+          "counts": [
+            26,
+            72,
+            48,
+            0
+          ]
+        },
+        {
+          "ratio": 1,
+          "counts": [
+            6,
+            12,
+            8,
+            0
+          ]
+        }
+      ],
+      "certified": false,
+      "elapsedSeconds": 0.407
+    },
+    {
+      "source": "cube",
+      "dimension": 3,
+      "interpretation": "convex-polytope",
+      "sourceFingerprint": "5e0d2b7b73fb36c5c155a6c5b0c7ada92e79c2e529864520ae041a795044877b",
+      "method": "tilting-to-compound",
+      "status": "sampled",
+      "samples": [
+        {
+          "ratio": 0,
+          "counts": [
+            8,
+            12,
+            6,
+            0
+          ]
+        },
+        {
+          "ratio": 0.25,
+          "counts": [
+            80,
+            84,
+            30,
+            0
+          ]
+        },
+        {
+          "ratio": 0.5,
+          "counts": [
+            14,
+            24,
+            14,
+            0
+          ]
+        },
+        {
+          "ratio": 0.75,
+          "counts": [
+            78,
+            84,
+            32,
+            0
+          ]
+        },
+        {
+          "ratio": 1,
+          "counts": [
+            6,
+            12,
+            8,
+            0
+          ]
+        }
+      ],
+      "certified": false,
+      "elapsedSeconds": 0.421
+    },
+    {
+      "source": "cube",
+      "dimension": 3,
+      "interpretation": "convex-polytope",
+      "sourceFingerprint": "5e0d2b7b73fb36c5c155a6c5b0c7ada92e79c2e529864520ae041a795044877b",
+      "method": "tilting-to-rectify",
+      "status": "sampled",
+      "samples": [
+        {
+          "ratio": 0,
+          "counts": [
+            8,
+            12,
+            6,
+            0
+          ]
+        },
+        {
+          "ratio": 0.25,
+          "counts": [
+            96,
+            96,
+            30,
+            0
+          ]
+        },
+        {
+          "ratio": 0.5,
+          "counts": [
+            12,
+            24,
+            14,
+            0
+          ]
+        },
+        {
+          "ratio": 0.75,
+          "counts": [
+            96,
+            96,
+            32,
+            0
+          ]
+        },
+        {
+          "ratio": 1,
+          "counts": [
+            6,
+            12,
+            8,
+            0
+          ]
+        }
+      ],
+      "certified": false,
+      "elapsedSeconds": 0.438
+    },
+    {
+      "source": "cube",
+      "dimension": 3,
+      "interpretation": "convex-polytope",
+      "sourceFingerprint": "5e0d2b7b73fb36c5c155a6c5b0c7ada92e79c2e529864520ae041a795044877b",
+      "method": "via-snub",
+      "status": "sampled",
+      "samples": [
+        {
+          "ratio": 0,
+          "counts": [
+            8,
+            12,
+            6,
+            0
+          ]
+        },
+        {
+          "ratio": 0.25,
+          "counts": [
+            24,
+            60,
+            38,
+            0
+          ]
+        },
+        {
+          "ratio": 0.5,
+          "counts": [
+            24,
+            60,
+            38,
+            0
+          ]
+        },
+        {
+          "ratio": 0.75,
+          "counts": [
+            24,
+            60,
+            38,
+            0
+          ]
+        },
+        {
+          "ratio": 1,
+          "counts": [
+            6,
+            12,
+            8,
+            0
+          ]
+        }
+      ],
+      "certified": false,
+      "elapsedSeconds": 0.469
+    },
+    {
+      "source": "octahedron",
+      "dimension": 3,
+      "interpretation": "convex-polytope",
+      "sourceFingerprint": "f93d0caccbcea15c79fc40d300b9190c5bb74b6eb565470672dc0a63525fa729",
+      "method": "sizing",
+      "status": "sampled",
+      "samples": [
+        {
+          "ratio": 0,
+          "counts": [
+            6,
+            12,
+            8,
+            0
+          ]
+        },
+        {
+          "ratio": 0.25,
+          "counts": [
+            14,
+            24,
+            14,
+            0
+          ]
+        },
+        {
+          "ratio": 0.5,
+          "counts": [
+            14,
+            24,
+            14,
+            0
+          ]
+        },
+        {
+          "ratio": 0.75,
+          "counts": [
+            14,
+            24,
+            14,
+            0
+          ]
+        },
+        {
+          "ratio": 1,
+          "counts": [
+            8,
+            12,
+            6,
+            0
+          ]
+        }
+      ],
+      "certified": false,
+      "elapsedSeconds": 0.468
+    },
+    {
+      "source": "octahedron",
+      "dimension": 3,
+      "interpretation": "convex-polytope",
+      "sourceFingerprint": "f93d0caccbcea15c79fc40d300b9190c5bb74b6eb565470672dc0a63525fa729",
+      "method": "truncation",
+      "status": "sampled",
+      "samples": [
+        {
+          "ratio": 0,
+          "counts": [
+            6,
+            12,
+            8,
+            0
+          ]
+        },
+        {
+          "ratio": 0.25,
+          "counts": [
+            6,
+            12,
+            8,
+            0
+          ]
+        },
+        {
+          "ratio": 0.5,
+          "counts": [
+            6,
+            12,
+            8,
+            0
+          ]
+        },
+        {
+          "ratio": 0.75,
+          "counts": [
+            12,
+            24,
+            14,
+            0
+          ]
+        },
+        {
+          "ratio": 1,
+          "counts": [
+            8,
+            12,
+            6,
+            0
+          ]
+        }
+      ],
+      "certified": false,
+      "elapsedSeconds": 0.454
+    },
+    {
+      "source": "octahedron",
+      "dimension": 3,
+      "interpretation": "convex-polytope",
+      "sourceFingerprint": "f93d0caccbcea15c79fc40d300b9190c5bb74b6eb565470672dc0a63525fa729",
+      "method": "augmentation",
+      "status": "sampled",
+      "samples": [
+        {
+          "ratio": 0,
+          "counts": [
+            6,
+            12,
+            8,
+            0
+          ]
+        },
+        {
+          "ratio": 0.25,
+          "counts": [
+            14,
+            24,
+            12,
+            0
+          ]
+        },
+        {
+          "ratio": 0.5,
+          "counts": [
+            8,
+            12,
+            6,
+            0
+          ]
+        },
+        {
+          "ratio": 0.75,
+          "counts": [
+            8,
+            12,
+            6,
+            0
+          ]
+        },
+        {
+          "ratio": 1,
+          "counts": [
+            8,
+            12,
+            6,
+            0
+          ]
+        }
+      ],
+      "certified": false,
+      "elapsedSeconds": 0.546
+    },
+    {
+      "source": "octahedron",
+      "dimension": 3,
+      "interpretation": "convex-polytope",
+      "sourceFingerprint": "f93d0caccbcea15c79fc40d300b9190c5bb74b6eb565470672dc0a63525fa729",
+      "method": "expansion",
+      "status": "sampled",
+      "samples": [
+        {
+          "ratio": 0,
+          "counts": [
+            6,
+            12,
+            8,
+            0
+          ]
+        },
+        {
+          "ratio": 0.25,
+          "counts": [
+            24,
+            48,
+            26,
+            0
+          ]
+        },
+        {
+          "ratio": 0.5,
+          "counts": [
+            24,
+            48,
+            26,
+            0
+          ]
+        },
+        {
+          "ratio": 0.75,
+          "counts": [
+            24,
+            48,
+            26,
+            0
+          ]
+        },
+        {
+          "ratio": 1,
+          "counts": [
+            8,
+            12,
+            6,
+            0
+          ]
+        }
+      ],
+      "certified": false,
+      "elapsedSeconds": 0.532
+    },
+    {
+      "source": "octahedron",
+      "dimension": 3,
+      "interpretation": "convex-polytope",
+      "sourceFingerprint": "f93d0caccbcea15c79fc40d300b9190c5bb74b6eb565470672dc0a63525fa729",
+      "method": "tilting-quads",
+      "status": "sampled",
+      "samples": [
+        {
+          "ratio": 0,
+          "counts": [
+            6,
+            12,
+            8,
+            0
+          ]
+        },
+        {
+          "ratio": 0.25,
+          "counts": [
+            26,
+            48,
+            24,
+            0
+          ]
+        },
+        {
+          "ratio": 0.5,
+          "counts": [
+            26,
+            48,
+            24,
+            0
+          ]
+        },
+        {
+          "ratio": 0.75,
+          "counts": [
+            26,
+            48,
+            24,
+            0
+          ]
+        },
+        {
+          "ratio": 1,
+          "counts": [
+            8,
+            12,
+            6,
+            0
+          ]
+        }
+      ],
+      "certified": false,
+      "elapsedSeconds": 0.515
+    },
+    {
+      "source": "octahedron",
+      "dimension": 3,
+      "interpretation": "convex-polytope",
+      "sourceFingerprint": "f93d0caccbcea15c79fc40d300b9190c5bb74b6eb565470672dc0a63525fa729",
+      "method": "tilting-triangles",
+      "status": "sampled",
+      "samples": [
+        {
+          "ratio": 0,
+          "counts": [
+            6,
+            12,
+            8,
+            0
+          ]
+        },
+        {
+          "ratio": 0.25,
+          "counts": [
+            26,
+            72,
+            48,
+            0
+          ]
+        },
+        {
+          "ratio": 0.5,
+          "counts": [
+            26,
+            72,
+            48,
+            0
+          ]
+        },
+        {
+          "ratio": 0.75,
+          "counts": [
+            26,
+            72,
+            48,
+            0
+          ]
+        },
+        {
+          "ratio": 1,
+          "counts": [
+            8,
+            12,
+            6,
+            0
+          ]
+        }
+      ],
+      "certified": false,
+      "elapsedSeconds": 0.485
+    },
+    {
+      "source": "octahedron",
+      "dimension": 3,
+      "interpretation": "convex-polytope",
+      "sourceFingerprint": "f93d0caccbcea15c79fc40d300b9190c5bb74b6eb565470672dc0a63525fa729",
+      "method": "tilting-to-compound",
+      "status": "sampled",
+      "samples": [
+        {
+          "ratio": 0,
+          "counts": [
+            6,
+            12,
+            8,
+            0
+          ]
+        },
+        {
+          "ratio": 0.25,
+          "counts": [
+            78,
+            84,
+            32,
+            0
+          ]
+        },
+        {
+          "ratio": 0.5,
+          "counts": [
+            14,
+            24,
+            14,
+            0
+          ]
+        },
+        {
+          "ratio": 0.75,
+          "counts": [
+            80,
+            84,
+            30,
+            0
+          ]
+        },
+        {
+          "ratio": 1,
+          "counts": [
+            8,
+            12,
+            6,
+            0
+          ]
+        }
+      ],
+      "certified": false,
+      "elapsedSeconds": 0.5
+    },
+    {
+      "source": "octahedron",
+      "dimension": 3,
+      "interpretation": "convex-polytope",
+      "sourceFingerprint": "f93d0caccbcea15c79fc40d300b9190c5bb74b6eb565470672dc0a63525fa729",
+      "method": "tilting-to-rectify",
+      "status": "sampled",
+      "samples": [
+        {
+          "ratio": 0,
+          "counts": [
+            6,
+            12,
+            8,
+            0
+          ]
+        },
+        {
+          "ratio": 0.25,
+          "counts": [
+            96,
+            96,
+            32,
+            0
+          ]
+        },
+        {
+          "ratio": 0.5,
+          "counts": [
+            12,
+            24,
+            14,
+            0
+          ]
+        },
+        {
+          "ratio": 0.75,
+          "counts": [
+            96,
+            96,
+            30,
+            0
+          ]
+        },
+        {
+          "ratio": 1,
+          "counts": [
+            8,
+            12,
+            6,
+            0
+          ]
+        }
+      ],
+      "certified": false,
+      "elapsedSeconds": 0.562
+    },
+    {
+      "source": "octahedron",
+      "dimension": 3,
+      "interpretation": "convex-polytope",
+      "sourceFingerprint": "f93d0caccbcea15c79fc40d300b9190c5bb74b6eb565470672dc0a63525fa729",
+      "method": "via-snub",
+      "status": "refused",
+      "reason": "Via-snub supports only a centered axis-aligned cube with complete ordinary incidence, origin center, and form A, or a regular dodecahedron/icosahedron at its geometric center; rotated/translated cubes, other sources and 4D are unavailable.",
+      "elapsedSeconds": 0.563
+    },
+    {
+      "source": "dodecahedron",
+      "dimension": 3,
+      "interpretation": "convex-polytope",
+      "sourceFingerprint": "5e3dacd536a20b3a6e94f0a30614c574e8faafe88fa02a4e711d0cfc192131ac",
+      "method": "sizing",
+      "status": "sampled",
+      "samples": [
+        {
+          "ratio": 0,
+          "counts": [
+            20,
+            30,
+            12,
+            0
+          ]
+        },
+        {
+          "ratio": 0.25,
+          "counts": [
+            32,
+            60,
+            32,
+            0
+          ]
+        },
+        {
+          "ratio": 0.5,
+          "counts": [
+            32,
+            60,
+            32,
+            0
+          ]
+        },
+        {
+          "ratio": 0.75,
+          "counts": [
+            32,
+            60,
+            32,
+            0
+          ]
+        },
+        {
+          "ratio": 1,
+          "counts": [
+            12,
+            30,
+            20,
+            0
+          ]
+        }
+      ],
+      "certified": false,
+      "elapsedSeconds": 0.625
+    },
+    {
+      "source": "dodecahedron",
+      "dimension": 3,
+      "interpretation": "convex-polytope",
+      "sourceFingerprint": "5e3dacd536a20b3a6e94f0a30614c574e8faafe88fa02a4e711d0cfc192131ac",
+      "method": "truncation",
+      "status": "sampled",
+      "samples": [
+        {
+          "ratio": 0,
+          "counts": [
+            20,
+            30,
+            12,
+            0
+          ]
+        },
+        {
+          "ratio": 0.25,
+          "counts": [
+            20,
+            30,
+            12,
+            0
+          ]
+        },
+        {
+          "ratio": 0.5,
+          "counts": [
+            20,
+            30,
+            12,
+            0
+          ]
+        },
+        {
+          "ratio": 0.75,
+          "counts": [
+            60,
+            90,
+            32,
+            0
+          ]
+        },
+        {
+          "ratio": 1,
+          "counts": [
+            12,
+            30,
+            20,
+            0
+          ]
+        }
+      ],
+      "certified": false,
+      "elapsedSeconds": 0.906
+    },
+    {
+      "source": "dodecahedron",
+      "dimension": 3,
+      "interpretation": "convex-polytope",
+      "sourceFingerprint": "5e3dacd536a20b3a6e94f0a30614c574e8faafe88fa02a4e711d0cfc192131ac",
+      "method": "augmentation",
+      "status": "sampled",
+      "samples": [
+        {
+          "ratio": 0,
+          "counts": [
+            20,
+            30,
+            12,
+            0
+          ]
+        },
+        {
+          "ratio": 0.25,
+          "counts": [
+            32,
+            90,
+            60,
+            0
+          ]
+        },
+        {
+          "ratio": 0.5,
+          "counts": [
+            12,
+            30,
+            20,
+            0
+          ]
+        },
+        {
+          "ratio": 0.75,
+          "counts": [
+            12,
+            30,
+            20,
+            0
+          ]
+        },
+        {
+          "ratio": 1,
+          "counts": [
+            12,
+            30,
+            20,
+            0
+          ]
+        }
+      ],
+      "certified": false,
+      "elapsedSeconds": 0.906
+    },
+    {
+      "source": "dodecahedron",
+      "dimension": 3,
+      "interpretation": "convex-polytope",
+      "sourceFingerprint": "5e3dacd536a20b3a6e94f0a30614c574e8faafe88fa02a4e711d0cfc192131ac",
+      "method": "expansion",
+      "status": "sampled",
+      "samples": [
+        {
+          "ratio": 0,
+          "counts": [
+            20,
+            30,
+            12,
+            0
+          ]
+        },
+        {
+          "ratio": 0.25,
+          "counts": [
+            60,
+            120,
+            62,
+            0
+          ]
+        },
+        {
+          "ratio": 0.5,
+          "counts": [
+            60,
+            120,
+            62,
+            0
+          ]
+        },
+        {
+          "ratio": 0.75,
+          "counts": [
+            60,
+            120,
+            62,
+            0
+          ]
+        },
+        {
+          "ratio": 1,
+          "counts": [
+            12,
+            30,
+            20,
+            0
+          ]
+        }
+      ],
+      "certified": false,
+      "elapsedSeconds": 0.61
+    },
+    {
+      "source": "dodecahedron",
+      "dimension": 3,
+      "interpretation": "convex-polytope",
+      "sourceFingerprint": "5e3dacd536a20b3a6e94f0a30614c574e8faafe88fa02a4e711d0cfc192131ac",
+      "method": "tilting-quads",
+      "status": "sampled",
+      "samples": [
+        {
+          "ratio": 0,
+          "counts": [
+            20,
+            30,
+            12,
+            0
+          ]
+        },
+        {
+          "ratio": 0.25,
+          "counts": [
+            62,
+            120,
+            60,
+            0
+          ]
+        },
+        {
+          "ratio": 0.5,
+          "counts": [
+            62,
+            120,
+            60,
+            0
+          ]
+        },
+        {
+          "ratio": 0.75,
+          "counts": [
+            62,
+            120,
+            60,
+            0
+          ]
+        },
+        {
+          "ratio": 1,
+          "counts": [
+            12,
+            30,
+            20,
+            0
+          ]
+        }
+      ],
+      "certified": false,
+      "elapsedSeconds": 0.656
+    },
+    {
+      "source": "dodecahedron",
+      "dimension": 3,
+      "interpretation": "convex-polytope",
+      "sourceFingerprint": "5e3dacd536a20b3a6e94f0a30614c574e8faafe88fa02a4e711d0cfc192131ac",
+      "method": "tilting-triangles",
+      "status": "sampled",
+      "samples": [
+        {
+          "ratio": 0,
+          "counts": [
+            20,
+            30,
+            12,
+            0
+          ]
+        },
+        {
+          "ratio": 0.25,
+          "counts": [
+            62,
+            180,
+            120,
+            0
+          ]
+        },
+        {
+          "ratio": 0.5,
+          "counts": [
+            62,
+            180,
+            120,
+            0
+          ]
+        },
+        {
+          "ratio": 0.75,
+          "counts": [
+            62,
+            180,
+            120,
+            0
+          ]
+        },
+        {
+          "ratio": 1,
+          "counts": [
+            12,
+            30,
+            20,
+            0
+          ]
+        }
+      ],
+      "certified": false,
+      "elapsedSeconds": 0.656
+    },
+    {
+      "source": "dodecahedron",
+      "dimension": 3,
+      "interpretation": "convex-polytope",
+      "sourceFingerprint": "5e3dacd536a20b3a6e94f0a30614c574e8faafe88fa02a4e711d0cfc192131ac",
+      "method": "tilting-to-compound",
+      "status": "sampled",
+      "samples": [
+        {
+          "ratio": 0,
+          "counts": [
+            20,
+            30,
+            12,
+            0
+          ]
+        },
+        {
+          "ratio": 0.25,
+          "counts": [
+            200,
+            210,
+            72,
+            0
+          ]
+        },
+        {
+          "ratio": 0.5,
+          "counts": [
+            32,
+            60,
+            32,
+            0
+          ]
+        },
+        {
+          "ratio": 0.75,
+          "counts": [
+            192,
+            210,
+            80,
+            0
+          ]
+        },
+        {
+          "ratio": 1,
+          "counts": [
+            12,
+            30,
+            20,
+            0
+          ]
+        }
+      ],
+      "certified": false,
+      "elapsedSeconds": 0.656
+    },
+    {
+      "source": "dodecahedron",
+      "dimension": 3,
+      "interpretation": "convex-polytope",
+      "sourceFingerprint": "5e3dacd536a20b3a6e94f0a30614c574e8faafe88fa02a4e711d0cfc192131ac",
+      "method": "tilting-to-rectify",
+      "status": "sampled",
+      "samples": [
+        {
+          "ratio": 0,
+          "counts": [
+            20,
+            30,
+            12,
+            0
+          ]
+        },
+        {
+          "ratio": 0.25,
+          "counts": [
+            240,
+            240,
+            72,
+            0
+          ]
+        },
+        {
+          "ratio": 0.5,
+          "counts": [
+            30,
+            60,
+            32,
+            0
+          ]
+        },
+        {
+          "ratio": 0.75,
+          "counts": [
+            240,
+            240,
+            80,
+            0
+          ]
+        },
+        {
+          "ratio": 1,
+          "counts": [
+            12,
+            30,
+            20,
+            0
+          ]
+        }
+      ],
+      "certified": false,
+      "elapsedSeconds": 0.641
+    },
+    {
+      "source": "dodecahedron",
+      "dimension": 3,
+      "interpretation": "convex-polytope",
+      "sourceFingerprint": "5e3dacd536a20b3a6e94f0a30614c574e8faafe88fa02a4e711d0cfc192131ac",
+      "method": "via-snub",
+      "status": "sampled",
+      "samples": [
+        {
+          "ratio": 0,
+          "counts": [
+            20,
+            30,
+            12,
+            0
+          ]
+        },
+        {
+          "ratio": 0.25,
+          "counts": [
+            60,
+            150,
+            92,
+            0
+          ]
+        },
+        {
+          "ratio": 0.5,
+          "counts": [
+            60,
+            150,
+            92,
+            0
+          ]
+        },
+        {
+          "ratio": 0.75,
+          "counts": [
+            60,
+            150,
+            92,
+            0
+          ]
+        },
+        {
+          "ratio": 1,
+          "counts": [
+            12,
+            30,
+            20,
+            0
+          ]
+        }
+      ],
+      "certified": false,
+      "elapsedSeconds": 1.0
+    },
+    {
+      "source": "icosahedron",
+      "dimension": 3,
+      "interpretation": "convex-polytope",
+      "sourceFingerprint": "c546a1e53912e0f684dbd33d686d5b9258bbf1d95f66349d8730375c4047d68f",
+      "method": "sizing",
+      "status": "sampled",
+      "samples": [
+        {
+          "ratio": 0,
+          "counts": [
+            12,
+            30,
+            20,
+            0
+          ]
+        },
+        {
+          "ratio": 0.25,
+          "counts": [
+            32,
+            60,
+            32,
+            0
+          ]
+        },
+        {
+          "ratio": 0.5,
+          "counts": [
+            32,
+            60,
+            32,
+            0
+          ]
+        },
+        {
+          "ratio": 0.75,
+          "counts": [
+            32,
+            60,
+            32,
+            0
+          ]
+        },
+        {
+          "ratio": 1,
+          "counts": [
+            20,
+            30,
+            12,
+            0
+          ]
+        }
+      ],
+      "certified": false,
+      "elapsedSeconds": 0.687
+    },
+    {
+      "source": "icosahedron",
+      "dimension": 3,
+      "interpretation": "convex-polytope",
+      "sourceFingerprint": "c546a1e53912e0f684dbd33d686d5b9258bbf1d95f66349d8730375c4047d68f",
+      "method": "truncation",
+      "status": "sampled",
+      "samples": [
+        {
+          "ratio": 0,
+          "counts": [
+            12,
+            30,
+            20,
+            0
+          ]
+        },
+        {
+          "ratio": 0.25,
+          "counts": [
+            60,
+            90,
+            32,
+            0
+          ]
+        },
+        {
+          "ratio": 0.5,
+          "counts": [
+            20,
+            30,
+            12,
+            0
+          ]
+        },
+        {
+          "ratio": 0.75,
+          "counts": [
+            20,
+            30,
+            12,
+            0
+          ]
+        },
+        {
+          "ratio": 1,
+          "counts": [
+            20,
+            30,
+            12,
+            0
+          ]
+        }
+      ],
+      "certified": false,
+      "elapsedSeconds": 1.079
+    },
+    {
+      "source": "icosahedron",
+      "dimension": 3,
+      "interpretation": "convex-polytope",
+      "sourceFingerprint": "c546a1e53912e0f684dbd33d686d5b9258bbf1d95f66349d8730375c4047d68f",
+      "method": "augmentation",
+      "status": "sampled",
+      "samples": [
+        {
+          "ratio": 0,
+          "counts": [
+            12,
+            30,
+            20,
+            0
+          ]
+        },
+        {
+          "ratio": 0.25,
+          "counts": [
+            12,
+            30,
+            20,
+            0
+          ]
+        },
+        {
+          "ratio": 0.5,
+          "counts": [
+            12,
+            30,
+            20,
+            0
+          ]
+        },
+        {
+          "ratio": 0.75,
+          "counts": [
+            32,
+            90,
+            60,
+            0
+          ]
+        },
+        {
+          "ratio": 1,
+          "counts": [
+            20,
+            30,
+            12,
+            0
+          ]
+        }
+      ],
+      "certified": false,
+      "elapsedSeconds": 1.109
+    },
+    {
+      "source": "icosahedron",
+      "dimension": 3,
+      "interpretation": "convex-polytope",
+      "sourceFingerprint": "c546a1e53912e0f684dbd33d686d5b9258bbf1d95f66349d8730375c4047d68f",
+      "method": "expansion",
+      "status": "sampled",
+      "samples": [
+        {
+          "ratio": 0,
+          "counts": [
+            12,
+            30,
+            20,
+            0
+          ]
+        },
+        {
+          "ratio": 0.25,
+          "counts": [
+            60,
+            120,
+            62,
+            0
+          ]
+        },
+        {
+          "ratio": 0.5,
+          "counts": [
+            60,
+            120,
+            62,
+            0
+          ]
+        },
+        {
+          "ratio": 0.75,
+          "counts": [
+            60,
+            120,
+            62,
+            0
+          ]
+        },
+        {
+          "ratio": 1,
+          "counts": [
+            20,
+            30,
+            12,
+            0
+          ]
+        }
+      ],
+      "certified": false,
+      "elapsedSeconds": 0.734
+    },
+    {
+      "source": "icosahedron",
+      "dimension": 3,
+      "interpretation": "convex-polytope",
+      "sourceFingerprint": "c546a1e53912e0f684dbd33d686d5b9258bbf1d95f66349d8730375c4047d68f",
+      "method": "tilting-quads",
+      "status": "sampled",
+      "samples": [
+        {
+          "ratio": 0,
+          "counts": [
+            12,
+            30,
+            20,
+            0
+          ]
+        },
+        {
+          "ratio": 0.25,
+          "counts": [
+            62,
+            120,
+            60,
+            0
+          ]
+        },
+        {
+          "ratio": 0.5,
+          "counts": [
+            62,
+            120,
+            60,
+            0
+          ]
+        },
+        {
+          "ratio": 0.75,
+          "counts": [
+            62,
+            120,
+            60,
+            0
+          ]
+        },
+        {
+          "ratio": 1,
+          "counts": [
+            20,
+            30,
+            12,
+            0
+          ]
+        }
+      ],
+      "certified": false,
+      "elapsedSeconds": 0.735
+    },
+    {
+      "source": "icosahedron",
+      "dimension": 3,
+      "interpretation": "convex-polytope",
+      "sourceFingerprint": "c546a1e53912e0f684dbd33d686d5b9258bbf1d95f66349d8730375c4047d68f",
+      "method": "tilting-triangles",
+      "status": "sampled",
+      "samples": [
+        {
+          "ratio": 0,
+          "counts": [
+            12,
+            30,
+            20,
+            0
+          ]
+        },
+        {
+          "ratio": 0.25,
+          "counts": [
+            62,
+            180,
+            120,
+            0
+          ]
+        },
+        {
+          "ratio": 0.5,
+          "counts": [
+            62,
+            180,
+            120,
+            0
+          ]
+        },
+        {
+          "ratio": 0.75,
+          "counts": [
+            62,
+            180,
+            120,
+            0
+          ]
+        },
+        {
+          "ratio": 1,
+          "counts": [
+            20,
+            30,
+            12,
+            0
+          ]
+        }
+      ],
+      "certified": false,
+      "elapsedSeconds": 0.812
+    },
+    {
+      "source": "icosahedron",
+      "dimension": 3,
+      "interpretation": "convex-polytope",
+      "sourceFingerprint": "c546a1e53912e0f684dbd33d686d5b9258bbf1d95f66349d8730375c4047d68f",
+      "method": "tilting-to-compound",
+      "status": "sampled",
+      "samples": [
+        {
+          "ratio": 0,
+          "counts": [
+            12,
+            30,
+            20,
+            0
+          ]
+        },
+        {
+          "ratio": 0.25,
+          "counts": [
+            192,
+            210,
+            80,
+            0
+          ]
+        },
+        {
+          "ratio": 0.5,
+          "counts": [
+            32,
+            60,
+            32,
+            0
+          ]
+        },
+        {
+          "ratio": 0.75,
+          "counts": [
+            200,
+            210,
+            72,
+            0
+          ]
+        },
+        {
+          "ratio": 1,
+          "counts": [
+            20,
+            30,
+            12,
+            0
+          ]
+        }
+      ],
+      "certified": false,
+      "elapsedSeconds": 0.75
+    },
+    {
+      "source": "icosahedron",
+      "dimension": 3,
+      "interpretation": "convex-polytope",
+      "sourceFingerprint": "c546a1e53912e0f684dbd33d686d5b9258bbf1d95f66349d8730375c4047d68f",
+      "method": "tilting-to-rectify",
+      "status": "sampled",
+      "samples": [
+        {
+          "ratio": 0,
+          "counts": [
+            12,
+            30,
+            20,
+            0
+          ]
+        },
+        {
+          "ratio": 0.25,
+          "counts": [
+            240,
+            240,
+            80,
+            0
+          ]
+        },
+        {
+          "ratio": 0.5,
+          "counts": [
+            30,
+            60,
+            32,
+            0
+          ]
+        },
+        {
+          "ratio": 0.75,
+          "counts": [
+            240,
+            240,
+            72,
+            0
+          ]
+        },
+        {
+          "ratio": 1,
+          "counts": [
+            20,
+            30,
+            12,
+            0
+          ]
+        }
+      ],
+      "certified": false,
+      "elapsedSeconds": 0.703
+    },
+    {
+      "source": "icosahedron",
+      "dimension": 3,
+      "interpretation": "convex-polytope",
+      "sourceFingerprint": "c546a1e53912e0f684dbd33d686d5b9258bbf1d95f66349d8730375c4047d68f",
+      "method": "via-snub",
+      "status": "sampled",
+      "samples": [
+        {
+          "ratio": 0,
+          "counts": [
+            12,
+            30,
+            20,
+            0
+          ]
+        },
+        {
+          "ratio": 0.25,
+          "counts": [
+            60,
+            150,
+            92,
+            0
+          ]
+        },
+        {
+          "ratio": 0.5,
+          "counts": [
+            60,
+            150,
+            92,
+            0
+          ]
+        },
+        {
+          "ratio": 0.75,
+          "counts": [
+            60,
+            150,
+            92,
+            0
+          ]
+        },
+        {
+          "ratio": 1,
+          "counts": [
+            20,
+            30,
+            12,
+            0
+          ]
+        }
+      ],
+      "certified": false,
+      "elapsedSeconds": 1.032
+    },
+    {
+      "source": "great-dodecahedron",
+      "dimension": 3,
+      "interpretation": "generalized-complex",
+      "sourceFingerprint": "fccef570c61425fa5ea8e70a305af7db47027d46fe0e2f3838b5ae067d6db54e",
+      "method": "sizing",
+      "status": "sampled",
+      "samples": [
+        {
+          "ratio": 0,
+          "counts": [
+            12,
+            30,
+            12,
+            0
+          ]
+        },
+        {
+          "ratio": 0.25,
+          "counts": [
+            24,
+            60,
+            24,
+            0
+          ]
+        },
+        {
+          "ratio": 0.5,
+          "counts": [
+            24,
+            60,
+            24,
+            0
+          ]
+        },
+        {
+          "ratio": 0.75,
+          "counts": [
+            24,
+            60,
+            24,
+            0
+          ]
+        },
+        {
+          "ratio": 1,
+          "counts": [
+            12,
+            30,
+            12,
+            0
+          ]
+        }
+      ],
+      "certified": false,
+      "elapsedSeconds": 0.75
+    },
+    {
+      "source": "great-dodecahedron",
+      "dimension": 3,
+      "interpretation": "generalized-complex",
+      "sourceFingerprint": "fccef570c61425fa5ea8e70a305af7db47027d46fe0e2f3838b5ae067d6db54e",
+      "method": "truncation",
+      "status": "refused",
+      "reason": "Sizing prototype supports finite checked intrinsic 3D convex sources only; no 4D/generalized benchmark claim.",
+      "elapsedSeconds": 0.687
+    },
+    {
+      "source": "great-dodecahedron",
+      "dimension": 3,
+      "interpretation": "generalized-complex",
+      "sourceFingerprint": "fccef570c61425fa5ea8e70a305af7db47027d46fe0e2f3838b5ae067d6db54e",
+      "method": "augmentation",
+      "status": "refused",
+      "reason": "Sizing prototype supports finite checked intrinsic 3D convex sources only; no 4D/generalized benchmark claim.",
+      "elapsedSeconds": 0.672
+    },
+    {
+      "source": "great-dodecahedron",
+      "dimension": 3,
+      "interpretation": "generalized-complex",
+      "sourceFingerprint": "fccef570c61425fa5ea8e70a305af7db47027d46fe0e2f3838b5ae067d6db54e",
+      "method": "expansion",
+      "status": "sampled",
+      "samples": [
+        {
+          "ratio": 0,
+          "counts": [
+            12,
+            30,
+            12,
+            0
+          ]
+        },
+        {
+          "ratio": 0.25,
+          "counts": [
+            60,
+            120,
+            54,
+            0
+          ]
+        },
+        {
+          "ratio": 0.5,
+          "counts": [
+            60,
+            120,
+            54,
+            0
+          ]
+        },
+        {
+          "ratio": 0.75,
+          "counts": [
+            60,
+            120,
+            54,
+            0
+          ]
+        },
+        {
+          "ratio": 1,
+          "counts": [
+            12,
+            30,
+            12,
+            0
+          ]
+        }
+      ],
+      "certified": false,
+      "elapsedSeconds": 0.75
+    },
+    {
+      "source": "great-dodecahedron",
+      "dimension": 3,
+      "interpretation": "generalized-complex",
+      "sourceFingerprint": "fccef570c61425fa5ea8e70a305af7db47027d46fe0e2f3838b5ae067d6db54e",
+      "method": "tilting-quads",
+      "status": "refused",
+      "reason": "This prototype supports closed intrinsic 3D/4D convex sources only; generalized/infinite polars are unsupported.",
+      "elapsedSeconds": 0.734
+    },
+    {
+      "source": "great-dodecahedron",
+      "dimension": 3,
+      "interpretation": "generalized-complex",
+      "sourceFingerprint": "fccef570c61425fa5ea8e70a305af7db47027d46fe0e2f3838b5ae067d6db54e",
+      "method": "tilting-triangles",
+      "status": "refused",
+      "reason": "Sizing prototype supports finite checked intrinsic 3D convex sources only; no 4D/generalized benchmark claim.",
+      "elapsedSeconds": 0.844
+    },
+    {
+      "source": "great-dodecahedron",
+      "dimension": 3,
+      "interpretation": "generalized-complex",
+      "sourceFingerprint": "fccef570c61425fa5ea8e70a305af7db47027d46fe0e2f3838b5ae067d6db54e",
+      "method": "tilting-to-compound",
+      "status": "refused",
+      "reason": "Sizing prototype supports finite checked intrinsic 3D convex sources only; no 4D/generalized benchmark claim.",
+      "elapsedSeconds": 0.703
+    },
+    {
+      "source": "great-dodecahedron",
+      "dimension": 3,
+      "interpretation": "generalized-complex",
+      "sourceFingerprint": "fccef570c61425fa5ea8e70a305af7db47027d46fe0e2f3838b5ae067d6db54e",
+      "method": "tilting-to-rectify",
+      "status": "refused",
+      "reason": "Sizing prototype supports finite checked intrinsic 3D convex sources only; no 4D/generalized benchmark claim.",
+      "elapsedSeconds": 0.719
+    },
+    {
+      "source": "great-dodecahedron",
+      "dimension": 3,
+      "interpretation": "generalized-complex",
+      "sourceFingerprint": "fccef570c61425fa5ea8e70a305af7db47027d46fe0e2f3838b5ae067d6db54e",
+      "method": "via-snub",
+      "status": "refused",
+      "reason": "H3 via-snub requires a regular convex dodecahedron or icosahedron with complete ordinary incidence and polarity at its geometric center; generalized, distorted and 4D sources are unavailable.",
+      "elapsedSeconds": 0.906
+    },
+    {
+      "source": "simplex4",
+      "dimension": 4,
+      "interpretation": "convex-polytope",
+      "sourceFingerprint": "a68e442f6f39288264d2ac03420ba9b39e159f529470c59ca26292bf44dc079f",
+      "method": "sizing",
+      "status": "sampled",
+      "samples": [
+        {
+          "ratio": 0,
+          "counts": [
+            5,
+            10,
+            10,
+            5
+          ]
+        },
+        {
+          "ratio": 0.25,
+          "counts": [
+            10,
+            20,
+            20,
+            10
+          ]
+        },
+        {
+          "ratio": 0.5,
+          "counts": [
+            10,
+            20,
+            20,
+            10
+          ]
+        },
+        {
+          "ratio": 0.75,
+          "counts": [
+            10,
+            20,
+            20,
+            10
+          ]
+        },
+        {
+          "ratio": 1,
+          "counts": [
+            5,
+            10,
+            10,
+            5
+          ]
+        }
+      ],
+      "certified": false,
+      "elapsedSeconds": 0.75
+    },
+    {
+      "source": "simplex4",
+      "dimension": 4,
+      "interpretation": "convex-polytope",
+      "sourceFingerprint": "a68e442f6f39288264d2ac03420ba9b39e159f529470c59ca26292bf44dc079f",
+      "method": "truncation",
+      "status": "sampled",
+      "samples": [
+        {
+          "ratio": 0,
+          "counts": [
+            5,
+            10,
+            10,
+            5
+          ]
+        },
+        {
+          "ratio": 0.25,
+          "counts": [
+            5,
+            10,
+            10,
+            5
+          ]
+        },
+        {
+          "ratio": 0.5,
+          "counts": [
+            5,
+            10,
+            10,
+            5
+          ]
+        },
+        {
+          "ratio": 0.75,
+          "counts": [
+            20,
+            40,
+            30,
+            10
+          ]
+        },
+        {
+          "ratio": 1,
+          "counts": [
+            5,
+            10,
+            10,
+            5
+          ]
+        }
+      ],
+      "certified": false,
+      "elapsedSeconds": 0.828
+    },
+    {
+      "source": "simplex4",
+      "dimension": 4,
+      "interpretation": "convex-polytope",
+      "sourceFingerprint": "a68e442f6f39288264d2ac03420ba9b39e159f529470c59ca26292bf44dc079f",
+      "method": "augmentation",
+      "status": "refused",
+      "reason": "Sizing prototype supports finite checked intrinsic 3D convex sources only; no 4D/generalized benchmark claim.",
+      "elapsedSeconds": 0.75
+    },
+    {
+      "source": "simplex4",
+      "dimension": 4,
+      "interpretation": "convex-polytope",
+      "sourceFingerprint": "a68e442f6f39288264d2ac03420ba9b39e159f529470c59ca26292bf44dc079f",
+      "method": "expansion",
+      "status": "sampled",
+      "samples": [
+        {
+          "ratio": 0,
+          "counts": [
+            5,
+            10,
+            10,
+            5
+          ]
+        },
+        {
+          "ratio": 0.25,
+          "counts": [
+            20,
+            60,
+            70,
+            30
+          ]
+        },
+        {
+          "ratio": 0.5,
+          "counts": [
+            20,
+            60,
+            70,
+            30
+          ]
+        },
+        {
+          "ratio": 0.75,
+          "counts": [
+            20,
+            60,
+            70,
+            30
+          ]
+        },
+        {
+          "ratio": 1,
+          "counts": [
+            5,
+            10,
+            10,
+            5
+          ]
+        }
+      ],
+      "certified": false,
+      "elapsedSeconds": 0.813
+    },
+    {
+      "source": "simplex4",
+      "dimension": 4,
+      "interpretation": "convex-polytope",
+      "sourceFingerprint": "a68e442f6f39288264d2ac03420ba9b39e159f529470c59ca26292bf44dc079f",
+      "method": "tilting-quads",
+      "status": "sampled",
+      "samples": [
+        {
+          "ratio": 0,
+          "counts": [
+            5,
+            10,
+            10,
+            5
+          ]
+        },
+        {
+          "ratio": 0.25,
+          "counts": [
+            30,
+            70,
+            60,
+            20
+          ]
+        },
+        {
+          "ratio": 0.5,
+          "counts": [
+            30,
+            70,
+            60,
+            20
+          ]
+        },
+        {
+          "ratio": 0.75,
+          "counts": [
+            30,
+            70,
+            60,
+            20
+          ]
+        },
+        {
+          "ratio": 1,
+          "counts": [
+            5,
+            10,
+            10,
+            5
+          ]
+        }
+      ],
+      "certified": false,
+      "elapsedSeconds": 0.969
+    },
+    {
+      "source": "simplex4",
+      "dimension": 4,
+      "interpretation": "convex-polytope",
+      "sourceFingerprint": "a68e442f6f39288264d2ac03420ba9b39e159f529470c59ca26292bf44dc079f",
+      "method": "tilting-triangles",
+      "status": "refused",
+      "reason": "Sizing prototype supports finite checked intrinsic 3D convex sources only; no 4D/generalized benchmark claim.",
+      "elapsedSeconds": 0.921
+    },
+    {
+      "source": "simplex4",
+      "dimension": 4,
+      "interpretation": "convex-polytope",
+      "sourceFingerprint": "a68e442f6f39288264d2ac03420ba9b39e159f529470c59ca26292bf44dc079f",
+      "method": "tilting-to-compound",
+      "status": "refused",
+      "reason": "Sizing prototype supports finite checked intrinsic 3D convex sources only; no 4D/generalized benchmark claim.",
+      "elapsedSeconds": 1.032
+    },
+    {
+      "source": "simplex4",
+      "dimension": 4,
+      "interpretation": "convex-polytope",
+      "sourceFingerprint": "a68e442f6f39288264d2ac03420ba9b39e159f529470c59ca26292bf44dc079f",
+      "method": "tilting-to-rectify",
+      "status": "refused",
+      "reason": "Sizing prototype supports finite checked intrinsic 3D convex sources only; no 4D/generalized benchmark claim.",
+      "elapsedSeconds": 1.562
+    },
+    {
+      "source": "simplex4",
+      "dimension": 4,
+      "interpretation": "convex-polytope",
+      "sourceFingerprint": "a68e442f6f39288264d2ac03420ba9b39e159f529470c59ca26292bf44dc079f",
+      "method": "via-snub",
+      "status": "refused",
+      "reason": "Via-snub supports only a centered axis-aligned cube with complete ordinary incidence, origin center, and form A, or a regular dodecahedron/icosahedron at its geometric center; rotated/translated cubes, other sources and 4D are unavailable.",
+      "elapsedSeconds": 1.969
+    },
+    {
+      "source": "tesseract",
+      "dimension": 4,
+      "interpretation": "convex-polytope",
+      "sourceFingerprint": "7184b78112587526fffa727ea91d5fca9a988932202ef3501211fe5076d25fe6",
+      "method": "sizing",
+      "status": "sampled",
+      "samples": [
+        {
+          "ratio": 0,
+          "counts": [
+            16,
+            32,
+            24,
+            8
+          ]
+        },
+        {
+          "ratio": 0.25,
+          "counts": [
+            24,
+            56,
+            56,
+            24
+          ]
+        },
+        {
+          "ratio": 0.5,
+          "counts": [
+            24,
+            56,
+            56,
+            24
+          ]
+        },
+        {
+          "ratio": 0.75,
+          "counts": [
+            24,
+            56,
+            56,
+            24
+          ]
+        },
+        {
+          "ratio": 1,
+          "counts": [
+            8,
+            24,
+            32,
+            16
+          ]
+        }
+      ],
+      "certified": false,
+      "elapsedSeconds": 2.312
+    },
+    {
+      "source": "tesseract",
+      "dimension": 4,
+      "interpretation": "convex-polytope",
+      "sourceFingerprint": "7184b78112587526fffa727ea91d5fca9a988932202ef3501211fe5076d25fe6",
+      "method": "truncation",
+      "status": "sampled",
+      "samples": [
+        {
+          "ratio": 0,
+          "counts": [
+            16,
+            32,
+            24,
+            8
+          ]
+        },
+        {
+          "ratio": 0.25,
+          "counts": [
+            96,
+            192,
+            120,
+            24
+          ]
+        },
+        {
+          "ratio": 0.5,
+          "counts": [
+            8,
+            24,
+            32,
+            16
+          ]
+        },
+        {
+          "ratio": 0.75,
+          "counts": [
+            8,
+            24,
+            32,
+            16
+          ]
+        },
+        {
+          "ratio": 1,
+          "counts": [
+            8,
+            24,
+            32,
+            16
+          ]
+        }
+      ],
+      "certified": false,
+      "elapsedSeconds": 2.594
+    },
+    {
+      "source": "tesseract",
+      "dimension": 4,
+      "interpretation": "convex-polytope",
+      "sourceFingerprint": "7184b78112587526fffa727ea91d5fca9a988932202ef3501211fe5076d25fe6",
+      "method": "augmentation",
+      "status": "refused",
+      "reason": "Sizing prototype supports finite checked intrinsic 3D convex sources only; no 4D/generalized benchmark claim.",
+      "elapsedSeconds": 2.0
+    },
+    {
+      "source": "tesseract",
+      "dimension": 4,
+      "interpretation": "convex-polytope",
+      "sourceFingerprint": "7184b78112587526fffa727ea91d5fca9a988932202ef3501211fe5076d25fe6",
+      "method": "expansion",
+      "status": "sampled",
+      "samples": [
+        {
+          "ratio": 0,
+          "counts": [
+            16,
+            32,
+            24,
+            8
+          ]
+        },
+        {
+          "ratio": 0.25,
+          "counts": [
+            64,
+            192,
+            208,
+            80
+          ]
+        },
+        {
+          "ratio": 0.5,
+          "counts": [
+            64,
+            192,
+            208,
+            80
+          ]
+        },
+        {
+          "ratio": 0.75,
+          "counts": [
+            64,
+            192,
+            208,
+            80
+          ]
+        },
+        {
+          "ratio": 1,
+          "counts": [
+            8,
+            24,
+            32,
+            16
+          ]
+        }
+      ],
+      "certified": false,
+      "elapsedSeconds": 2.735
+    },
+    {
+      "source": "tesseract",
+      "dimension": 4,
+      "interpretation": "convex-polytope",
+      "sourceFingerprint": "7184b78112587526fffa727ea91d5fca9a988932202ef3501211fe5076d25fe6",
+      "method": "tilting-quads",
+      "status": "sampled",
+      "samples": [
+        {
+          "ratio": 0,
+          "counts": [
+            16,
+            32,
+            24,
+            8
+          ]
+        },
+        {
+          "ratio": 0.25,
+          "counts": [
+            80,
+            208,
+            192,
+            64
+          ]
+        },
+        {
+          "ratio": 0.5,
+          "counts": [
+            80,
+            208,
+            192,
+            64
+          ]
+        },
+        {
+          "ratio": 0.75,
+          "counts": [
+            80,
+            208,
+            192,
+            64
+          ]
+        },
+        {
+          "ratio": 1,
+          "counts": [
+            8,
+            24,
+            32,
+            16
+          ]
+        }
+      ],
+      "certified": false,
+      "elapsedSeconds": 2.421
+    },
+    {
+      "source": "tesseract",
+      "dimension": 4,
+      "interpretation": "convex-polytope",
+      "sourceFingerprint": "7184b78112587526fffa727ea91d5fca9a988932202ef3501211fe5076d25fe6",
+      "method": "tilting-triangles",
+      "status": "refused",
+      "reason": "Sizing prototype supports finite checked intrinsic 3D convex sources only; no 4D/generalized benchmark claim.",
+      "elapsedSeconds": 1.86
+    },
+    {
+      "source": "tesseract",
+      "dimension": 4,
+      "interpretation": "convex-polytope",
+      "sourceFingerprint": "7184b78112587526fffa727ea91d5fca9a988932202ef3501211fe5076d25fe6",
+      "method": "tilting-to-compound",
+      "status": "refused",
+      "reason": "Sizing prototype supports finite checked intrinsic 3D convex sources only; no 4D/generalized benchmark claim.",
+      "elapsedSeconds": 2.0
+    },
+    {
+      "source": "tesseract",
+      "dimension": 4,
+      "interpretation": "convex-polytope",
+      "sourceFingerprint": "7184b78112587526fffa727ea91d5fca9a988932202ef3501211fe5076d25fe6",
+      "method": "tilting-to-rectify",
+      "status": "refused",
+      "reason": "Sizing prototype supports finite checked intrinsic 3D convex sources only; no 4D/generalized benchmark claim.",
+      "elapsedSeconds": 1.359
+    },
+    {
+      "source": "tesseract",
+      "dimension": 4,
+      "interpretation": "convex-polytope",
+      "sourceFingerprint": "7184b78112587526fffa727ea91d5fca9a988932202ef3501211fe5076d25fe6",
+      "method": "via-snub",
+      "status": "refused",
+      "reason": "Via-snub supports only a centered axis-aligned cube with complete ordinary incidence, origin center, and form A, or a regular dodecahedron/icosahedron at its geometric center; rotated/translated cubes, other sources and 4D are unavailable.",
+      "elapsedSeconds": 0.75
+    },
+    {
+      "source": "cross4",
+      "dimension": 4,
+      "interpretation": "convex-polytope",
+      "sourceFingerprint": "0bf7f22e225b6e1eafb25643ef8211640e3d8a80383da9228b54c1cdd82c6788",
+      "method": "sizing",
+      "status": "sampled",
+      "samples": [
+        {
+          "ratio": 0,
+          "counts": [
+            8,
+            24,
+            32,
+            16
+          ]
+        },
+        {
+          "ratio": 0.25,
+          "counts": [
+            24,
+            56,
+            56,
+            24
+          ]
+        },
+        {
+          "ratio": 0.5,
+          "counts": [
+            24,
+            56,
+            56,
+            24
+          ]
+        },
+        {
+          "ratio": 0.75,
+          "counts": [
+            24,
+            56,
+            56,
+            24
+          ]
+        },
+        {
+          "ratio": 1,
+          "counts": [
+            16,
+            32,
+            24,
+            8
+          ]
+        }
+      ],
+      "certified": false,
+      "elapsedSeconds": 0.735
+    },
+    {
+      "source": "cross4",
+      "dimension": 4,
+      "interpretation": "convex-polytope",
+      "sourceFingerprint": "0bf7f22e225b6e1eafb25643ef8211640e3d8a80383da9228b54c1cdd82c6788",
+      "method": "truncation",
+      "status": "sampled",
+      "samples": [
+        {
+          "ratio": 0,
+          "counts": [
+            8,
+            24,
+            32,
+            16
+          ]
+        },
+        {
+          "ratio": 0.25,
+          "counts": [
+            8,
+            24,
+            32,
+            16
+          ]
+        },
+        {
+          "ratio": 0.5,
+          "counts": [
+            8,
+            24,
+            32,
+            16
+          ]
+        },
+        {
+          "ratio": 0.75,
+          "counts": [
+            96,
+            192,
+            120,
+            24
+          ]
+        },
+        {
+          "ratio": 1,
+          "counts": [
+            16,
+            32,
+            24,
+            8
+          ]
+        }
+      ],
+      "certified": false,
+      "elapsedSeconds": 0.843
+    },
+    {
+      "source": "cross4",
+      "dimension": 4,
+      "interpretation": "convex-polytope",
+      "sourceFingerprint": "0bf7f22e225b6e1eafb25643ef8211640e3d8a80383da9228b54c1cdd82c6788",
+      "method": "augmentation",
+      "status": "refused",
+      "reason": "Sizing prototype supports finite checked intrinsic 3D convex sources only; no 4D/generalized benchmark claim.",
+      "elapsedSeconds": 0.657
+    },
+    {
+      "source": "cross4",
+      "dimension": 4,
+      "interpretation": "convex-polytope",
+      "sourceFingerprint": "0bf7f22e225b6e1eafb25643ef8211640e3d8a80383da9228b54c1cdd82c6788",
+      "method": "expansion",
+      "status": "sampled",
+      "samples": [
+        {
+          "ratio": 0,
+          "counts": [
+            8,
+            24,
+            32,
+            16
+          ]
+        },
+        {
+          "ratio": 0.25,
+          "counts": [
+            64,
+            192,
+            208,
+            80
+          ]
+        },
+        {
+          "ratio": 0.5,
+          "counts": [
+            64,
+            192,
+            208,
+            80
+          ]
+        },
+        {
+          "ratio": 0.75,
+          "counts": [
+            64,
+            192,
+            208,
+            80
+          ]
+        },
+        {
+          "ratio": 1,
+          "counts": [
+            16,
+            32,
+            24,
+            8
+          ]
+        }
+      ],
+      "certified": false,
+      "elapsedSeconds": 0.609
+    },
+    {
+      "source": "cross4",
+      "dimension": 4,
+      "interpretation": "convex-polytope",
+      "sourceFingerprint": "0bf7f22e225b6e1eafb25643ef8211640e3d8a80383da9228b54c1cdd82c6788",
+      "method": "tilting-quads",
+      "status": "sampled",
+      "samples": [
+        {
+          "ratio": 0,
+          "counts": [
+            8,
+            24,
+            32,
+            16
+          ]
+        },
+        {
+          "ratio": 0.25,
+          "counts": [
+            80,
+            208,
+            192,
+            64
+          ]
+        },
+        {
+          "ratio": 0.5,
+          "counts": [
+            80,
+            208,
+            192,
+            64
+          ]
+        },
+        {
+          "ratio": 0.75,
+          "counts": [
+            80,
+            208,
+            192,
+            64
+          ]
+        },
+        {
+          "ratio": 1,
+          "counts": [
+            16,
+            32,
+            24,
+            8
+          ]
+        }
+      ],
+      "certified": false,
+      "elapsedSeconds": 0.5
+    },
+    {
+      "source": "cross4",
+      "dimension": 4,
+      "interpretation": "convex-polytope",
+      "sourceFingerprint": "0bf7f22e225b6e1eafb25643ef8211640e3d8a80383da9228b54c1cdd82c6788",
+      "method": "tilting-triangles",
+      "status": "refused",
+      "reason": "Sizing prototype supports finite checked intrinsic 3D convex sources only; no 4D/generalized benchmark claim.",
+      "elapsedSeconds": 0.422
+    },
+    {
+      "source": "cross4",
+      "dimension": 4,
+      "interpretation": "convex-polytope",
+      "sourceFingerprint": "0bf7f22e225b6e1eafb25643ef8211640e3d8a80383da9228b54c1cdd82c6788",
+      "method": "tilting-to-compound",
+      "status": "refused",
+      "reason": "Sizing prototype supports finite checked intrinsic 3D convex sources only; no 4D/generalized benchmark claim.",
+      "elapsedSeconds": 0.422
+    },
+    {
+      "source": "cross4",
+      "dimension": 4,
+      "interpretation": "convex-polytope",
+      "sourceFingerprint": "0bf7f22e225b6e1eafb25643ef8211640e3d8a80383da9228b54c1cdd82c6788",
+      "method": "tilting-to-rectify",
+      "status": "refused",
+      "reason": "Sizing prototype supports finite checked intrinsic 3D convex sources only; no 4D/generalized benchmark claim.",
+      "elapsedSeconds": 0.422
+    },
+    {
+      "source": "cross4",
+      "dimension": 4,
+      "interpretation": "convex-polytope",
+      "sourceFingerprint": "0bf7f22e225b6e1eafb25643ef8211640e3d8a80383da9228b54c1cdd82c6788",
+      "method": "via-snub",
+      "status": "refused",
+      "reason": "Via-snub supports only a centered axis-aligned cube with complete ordinary incidence, origin center, and form A, or a regular dodecahedron/icosahedron at its geometric center; rotated/translated cubes, other sources and 4D are unavailable.",
+      "elapsedSeconds": 0.406
+    },
+    {
+      "source": "cell24",
+      "dimension": 4,
+      "interpretation": "convex-polytope",
+      "sourceFingerprint": "8eb19c658708e122c956f68ddf4206c2f5ddffddf1419d8854a952198f0e351b",
+      "method": "sizing",
+      "status": "sampled",
+      "samples": [
+        {
+          "ratio": 0,
+          "counts": [
+            24,
+            96,
+            96,
+            24
+          ]
+        },
+        {
+          "ratio": 0.25,
+          "counts": [
+            48,
+            192,
+            192,
+            48
+          ]
+        },
+        {
+          "ratio": 0.5,
+          "counts": [
+            48,
+            192,
+            192,
+            48
+          ]
+        },
+        {
+          "ratio": 0.75,
+          "counts": [
+            48,
+            192,
+            192,
+            48
+          ]
+        },
+        {
+          "ratio": 1,
+          "counts": [
+            24,
+            96,
+            96,
+            24
+          ]
+        }
+      ],
+      "certified": false,
+      "elapsedSeconds": 0.5
+    },
+    {
+      "source": "cell24",
+      "dimension": 4,
+      "interpretation": "convex-polytope",
+      "sourceFingerprint": "8eb19c658708e122c956f68ddf4206c2f5ddffddf1419d8854a952198f0e351b",
+      "method": "truncation",
+      "status": "sampled",
+      "samples": [
+        {
+          "ratio": 0,
+          "counts": [
+            24,
+            96,
+            96,
+            24
+          ]
+        },
+        {
+          "ratio": 0.25,
+          "counts": [
+            96,
+            288,
+            240,
+            48
+          ]
+        },
+        {
+          "ratio": 0.5,
+          "counts": [
+            24,
+            96,
+            96,
+            24
+          ]
+        },
+        {
+          "ratio": 0.75,
+          "counts": [
+            24,
+            96,
+            96,
+            24
+          ]
+        },
+        {
+          "ratio": 1,
+          "counts": [
+            24,
+            96,
+            96,
+            24
+          ]
+        }
+      ],
+      "certified": false,
+      "elapsedSeconds": 0.64
+    },
+    {
+      "source": "cell24",
+      "dimension": 4,
+      "interpretation": "convex-polytope",
+      "sourceFingerprint": "8eb19c658708e122c956f68ddf4206c2f5ddffddf1419d8854a952198f0e351b",
+      "method": "augmentation",
+      "status": "refused",
+      "reason": "Sizing prototype supports finite checked intrinsic 3D convex sources only; no 4D/generalized benchmark claim.",
+      "elapsedSeconds": 0.438
+    },
+    {
+      "source": "cell24",
+      "dimension": 4,
+      "interpretation": "convex-polytope",
+      "sourceFingerprint": "8eb19c658708e122c956f68ddf4206c2f5ddffddf1419d8854a952198f0e351b",
+      "method": "expansion",
+      "status": "sampled",
+      "samples": [
+        {
+          "ratio": 0,
+          "counts": [
+            24,
+            96,
+            96,
+            24
+          ]
+        },
+        {
+          "ratio": 0.25,
+          "counts": [
+            144,
+            576,
+            672,
+            240
+          ]
+        },
+        {
+          "ratio": 0.5,
+          "counts": [
+            144,
+            576,
+            672,
+            240
+          ]
+        },
+        {
+          "ratio": 0.75,
+          "counts": [
+            144,
+            576,
+            672,
+            240
+          ]
+        },
+        {
+          "ratio": 1,
+          "counts": [
+            24,
+            96,
+            96,
+            24
+          ]
+        }
+      ],
+      "certified": false,
+      "elapsedSeconds": 0.719
+    },
+    {
+      "source": "cell24",
+      "dimension": 4,
+      "interpretation": "convex-polytope",
+      "sourceFingerprint": "8eb19c658708e122c956f68ddf4206c2f5ddffddf1419d8854a952198f0e351b",
+      "method": "tilting-quads",
+      "status": "sampled",
+      "samples": [
+        {
+          "ratio": 0,
+          "counts": [
+            24,
+            96,
+            96,
+            24
+          ]
+        },
+        {
+          "ratio": 0.25,
+          "counts": [
+            240,
+            672,
+            576,
+            144
+          ]
+        },
+        {
+          "ratio": 0.5,
+          "counts": [
+            240,
+            672,
+            576,
+            144
+          ]
+        },
+        {
+          "ratio": 0.75,
+          "counts": [
+            240,
+            672,
+            576,
+            144
+          ]
+        },
+        {
+          "ratio": 1,
+          "counts": [
+            24,
+            96,
+            96,
+            24
+          ]
+        }
+      ],
+      "certified": false,
+      "elapsedSeconds": 0.703
+    },
+    {
+      "source": "cell24",
+      "dimension": 4,
+      "interpretation": "convex-polytope",
+      "sourceFingerprint": "8eb19c658708e122c956f68ddf4206c2f5ddffddf1419d8854a952198f0e351b",
+      "method": "tilting-triangles",
+      "status": "refused",
+      "reason": "Sizing prototype supports finite checked intrinsic 3D convex sources only; no 4D/generalized benchmark claim.",
+      "elapsedSeconds": 0.437
+    },
+    {
+      "source": "cell24",
+      "dimension": 4,
+      "interpretation": "convex-polytope",
+      "sourceFingerprint": "8eb19c658708e122c956f68ddf4206c2f5ddffddf1419d8854a952198f0e351b",
+      "method": "tilting-to-compound",
+      "status": "refused",
+      "reason": "Sizing prototype supports finite checked intrinsic 3D convex sources only; no 4D/generalized benchmark claim.",
+      "elapsedSeconds": 0.438
+    },
+    {
+      "source": "cell24",
+      "dimension": 4,
+      "interpretation": "convex-polytope",
+      "sourceFingerprint": "8eb19c658708e122c956f68ddf4206c2f5ddffddf1419d8854a952198f0e351b",
+      "method": "tilting-to-rectify",
+      "status": "refused",
+      "reason": "Sizing prototype supports finite checked intrinsic 3D convex sources only; no 4D/generalized benchmark claim.",
+      "elapsedSeconds": 0.406
+    },
+    {
+      "source": "cell24",
+      "dimension": 4,
+      "interpretation": "convex-polytope",
+      "sourceFingerprint": "8eb19c658708e122c956f68ddf4206c2f5ddffddf1419d8854a952198f0e351b",
+      "method": "via-snub",
+      "status": "refused",
+      "reason": "Via-snub supports only a centered axis-aligned cube with complete ordinary incidence, origin center, and form A, or a regular dodecahedron/icosahedron at its geometric center; rotated/translated cubes, other sources and 4D are unavailable.",
+      "elapsedSeconds": 0.422
+    },
+    {
+      "source": "cell120",
+      "dimension": 4,
+      "interpretation": "convex-polytope",
+      "sourceFingerprint": "1a0b9ffb0a61ca697d5dc8c50547162354b54136044a805abe504fe64ae28150",
+      "method": "sizing",
+      "status": "sampled",
+      "samples": [
+        {
+          "ratio": 0,
+          "counts": [
+            600,
+            1200,
+            720,
+            120
+          ]
+        },
+        {
+          "ratio": 0.25,
+          "counts": [
+            720,
+            1920,
+            1920,
+            720
+          ]
+        },
+        {
+          "ratio": 0.5,
+          "counts": [
+            720,
+            1920,
+            1920,
+            720
+          ]
+        },
+        {
+          "ratio": 0.75,
+          "counts": [
+            720,
+            1920,
+            1920,
+            720
+          ]
+        },
+        {
+          "ratio": 1,
+          "counts": [
+            120,
+            720,
+            1200,
+            600
+          ]
+        }
+      ],
+      "certified": false,
+      "elapsedSeconds": 1.75
+    },
+    {
+      "source": "cell120",
+      "dimension": 4,
+      "interpretation": "convex-polytope",
+      "sourceFingerprint": "1a0b9ffb0a61ca697d5dc8c50547162354b54136044a805abe504fe64ae28150",
+      "method": "truncation",
+      "status": "sampled",
+      "samples": [
+        {
+          "ratio": 0,
+          "counts": [
+            600,
+            1200,
+            720,
+            120
+          ]
+        },
+        {
+          "ratio": 0.25,
+          "counts": [
+            1440,
+            4320,
+            3600,
+            720
+          ]
+        },
+        {
+          "ratio": 0.5,
+          "counts": [
+            120,
+            720,
+            1200,
+            600
+          ]
+        },
+        {
+          "ratio": 0.75,
+          "counts": [
+            120,
+            720,
+            1200,
+            600
+          ]
+        },
+        {
+          "ratio": 1,
+          "counts": [
+            120,
+            720,
+            1200,
+            600
+          ]
+        }
+      ],
+      "certified": false,
+      "elapsedSeconds": 4.344
+    },
+    {
+      "source": "cell120",
+      "dimension": 4,
+      "interpretation": "convex-polytope",
+      "sourceFingerprint": "1a0b9ffb0a61ca697d5dc8c50547162354b54136044a805abe504fe64ae28150",
+      "method": "augmentation",
+      "status": "refused",
+      "reason": "Sizing prototype supports finite checked intrinsic 3D convex sources only; no 4D/generalized benchmark claim.",
+      "elapsedSeconds": 1.078
+    },
+    {
+      "source": "cell120",
+      "dimension": 4,
+      "interpretation": "convex-polytope",
+      "sourceFingerprint": "1a0b9ffb0a61ca697d5dc8c50547162354b54136044a805abe504fe64ae28150",
+      "method": "expansion",
+      "status": "refused",
+      "reason": "Expansion correspondence exceeds bounded incidence visits.",
+      "elapsedSeconds": 1.5
+    },
+    {
+      "source": "cell120",
+      "dimension": 4,
+      "interpretation": "convex-polytope",
+      "sourceFingerprint": "1a0b9ffb0a61ca697d5dc8c50547162354b54136044a805abe504fe64ae28150",
+      "method": "tilting-quads",
+      "status": "refused",
+      "reason": "Expansion correspondence exceeds bounded incidence visits.",
+      "elapsedSeconds": 1.562
+    },
+    {
+      "source": "cell120",
+      "dimension": 4,
+      "interpretation": "convex-polytope",
+      "sourceFingerprint": "1a0b9ffb0a61ca697d5dc8c50547162354b54136044a805abe504fe64ae28150",
+      "method": "tilting-triangles",
+      "status": "refused",
+      "reason": "Sizing prototype supports finite checked intrinsic 3D convex sources only; no 4D/generalized benchmark claim.",
+      "elapsedSeconds": 0.938
+    },
+    {
+      "source": "cell120",
+      "dimension": 4,
+      "interpretation": "convex-polytope",
+      "sourceFingerprint": "1a0b9ffb0a61ca697d5dc8c50547162354b54136044a805abe504fe64ae28150",
+      "method": "tilting-to-compound",
+      "status": "refused",
+      "reason": "Sizing prototype supports finite checked intrinsic 3D convex sources only; no 4D/generalized benchmark claim.",
+      "elapsedSeconds": 0.922
+    },
+    {
+      "source": "cell120",
+      "dimension": 4,
+      "interpretation": "convex-polytope",
+      "sourceFingerprint": "1a0b9ffb0a61ca697d5dc8c50547162354b54136044a805abe504fe64ae28150",
+      "method": "tilting-to-rectify",
+      "status": "refused",
+      "reason": "Sizing prototype supports finite checked intrinsic 3D convex sources only; no 4D/generalized benchmark claim.",
+      "elapsedSeconds": 1.062
+    },
+    {
+      "source": "cell120",
+      "dimension": 4,
+      "interpretation": "convex-polytope",
+      "sourceFingerprint": "1a0b9ffb0a61ca697d5dc8c50547162354b54136044a805abe504fe64ae28150",
+      "method": "via-snub",
+      "status": "refused",
+      "reason": "Via-snub supports only a centered axis-aligned cube with complete ordinary incidence, origin center, and form A, or a regular dodecahedron/icosahedron at its geometric center; rotated/translated cubes, other sources and 4D are unavailable.",
+      "elapsedSeconds": 1.188
+    },
+    {
+      "source": "cell600",
+      "dimension": 4,
+      "interpretation": "convex-polytope",
+      "sourceFingerprint": "0763555c286cf5c88b0f504d3ac93224c28745bfc7b3c347ca208a533fec426e",
+      "method": "sizing",
+      "status": "sampled",
+      "samples": [
+        {
+          "ratio": 0,
+          "counts": [
+            120,
+            720,
+            1200,
+            600
+          ]
+        },
+        {
+          "ratio": 0.25,
+          "counts": [
+            720,
+            1920,
+            1920,
+            720
+          ]
+        },
+        {
+          "ratio": 0.5,
+          "counts": [
+            720,
+            1920,
+            1920,
+            720
+          ]
+        },
+        {
+          "ratio": 0.75,
+          "counts": [
+            720,
+            1920,
+            1920,
+            720
+          ]
+        },
+        {
+          "ratio": 1,
+          "counts": [
+            600,
+            1200,
+            720,
+            120
+          ]
+        }
+      ],
+      "certified": false,
+      "elapsedSeconds": 2.703
+    },
+    {
+      "source": "cell600",
+      "dimension": 4,
+      "interpretation": "convex-polytope",
+      "sourceFingerprint": "0763555c286cf5c88b0f504d3ac93224c28745bfc7b3c347ca208a533fec426e",
+      "method": "truncation",
+      "status": "sampled",
+      "samples": [
+        {
+          "ratio": 0,
+          "counts": [
+            120,
+            720,
+            1200,
+            600
+          ]
+        },
+        {
+          "ratio": 0.25,
+          "counts": [
+            120,
+            720,
+            1200,
+            600
+          ]
+        },
+        {
+          "ratio": 0.5,
+          "counts": [
+            120,
+            720,
+            1200,
+            600
+          ]
+        },
+        {
+          "ratio": 0.75,
+          "counts": [
+            1440,
+            4320,
+            3600,
+            720
+          ]
+        },
+        {
+          "ratio": 1,
+          "counts": [
+            600,
+            1200,
+            720,
+            120
+          ]
+        }
+      ],
+      "certified": false,
+      "elapsedSeconds": 6.812
+    },
+    {
+      "source": "cell600",
+      "dimension": 4,
+      "interpretation": "convex-polytope",
+      "sourceFingerprint": "0763555c286cf5c88b0f504d3ac93224c28745bfc7b3c347ca208a533fec426e",
+      "method": "augmentation",
+      "status": "refused",
+      "reason": "Sizing prototype supports finite checked intrinsic 3D convex sources only; no 4D/generalized benchmark claim.",
+      "elapsedSeconds": 1.203
+    },
+    {
+      "source": "cell600",
+      "dimension": 4,
+      "interpretation": "convex-polytope",
+      "sourceFingerprint": "0763555c286cf5c88b0f504d3ac93224c28745bfc7b3c347ca208a533fec426e",
+      "method": "expansion",
+      "status": "refused",
+      "reason": "Dual correspondence exceeds the bounded incidence-pair budget.",
+      "elapsedSeconds": 1.516
+    },
+    {
+      "source": "cell600",
+      "dimension": 4,
+      "interpretation": "convex-polytope",
+      "sourceFingerprint": "0763555c286cf5c88b0f504d3ac93224c28745bfc7b3c347ca208a533fec426e",
+      "method": "tilting-quads",
+      "status": "refused",
+      "reason": "Dual correspondence exceeds the bounded incidence-pair budget.",
+      "elapsedSeconds": 1.813
+    },
+    {
+      "source": "cell600",
+      "dimension": 4,
+      "interpretation": "convex-polytope",
+      "sourceFingerprint": "0763555c286cf5c88b0f504d3ac93224c28745bfc7b3c347ca208a533fec426e",
+      "method": "tilting-triangles",
+      "status": "refused",
+      "reason": "Sizing prototype supports finite checked intrinsic 3D convex sources only; no 4D/generalized benchmark claim.",
+      "elapsedSeconds": 2.25
+    },
+    {
+      "source": "cell600",
+      "dimension": 4,
+      "interpretation": "convex-polytope",
+      "sourceFingerprint": "0763555c286cf5c88b0f504d3ac93224c28745bfc7b3c347ca208a533fec426e",
+      "method": "tilting-to-compound",
+      "status": "refused",
+      "reason": "Sizing prototype supports finite checked intrinsic 3D convex sources only; no 4D/generalized benchmark claim.",
+      "elapsedSeconds": 1.89
+    },
+    {
+      "source": "cell600",
+      "dimension": 4,
+      "interpretation": "convex-polytope",
+      "sourceFingerprint": "0763555c286cf5c88b0f504d3ac93224c28745bfc7b3c347ca208a533fec426e",
+      "method": "tilting-to-rectify",
+      "status": "refused",
+      "reason": "Sizing prototype supports finite checked intrinsic 3D convex sources only; no 4D/generalized benchmark claim.",
+      "elapsedSeconds": 1.75
+    },
+    {
+      "source": "cell600",
+      "dimension": 4,
+      "interpretation": "convex-polytope",
+      "sourceFingerprint": "0763555c286cf5c88b0f504d3ac93224c28745bfc7b3c347ca208a533fec426e",
+      "method": "via-snub",
+      "status": "refused",
+      "reason": "Via-snub supports only a centered axis-aligned cube with complete ordinary incidence, origin center, and form A, or a regular dodecahedron/icosahedron at its geometric center; rotated/translated cubes, other sources and 4D are unavailable.",
+      "elapsedSeconds": 1.188
+    },
+    {
+      "source": "star-uniform4-quidpith",
+      "dimension": 4,
+      "interpretation": "generalized-complex",
+      "sourceFingerprint": "8d97aa7cd9e14dad20fcaa7c8d96ef16678563fdcff49084871e9444d129c020",
+      "method": "sizing",
+      "status": "refused",
+      "reason": "4D sizing/truncation requires a finite intrinsic convex 4D polytope.",
+      "elapsedSeconds": 0.594
+    },
+    {
+      "source": "star-uniform4-quidpith",
+      "dimension": 4,
+      "interpretation": "generalized-complex",
+      "sourceFingerprint": "8d97aa7cd9e14dad20fcaa7c8d96ef16678563fdcff49084871e9444d129c020",
+      "method": "truncation",
+      "status": "refused",
+      "reason": "4D sizing/truncation requires a finite intrinsic convex 4D polytope.",
+      "elapsedSeconds": 0.609
+    },
+    {
+      "source": "star-uniform4-quidpith",
+      "dimension": 4,
+      "interpretation": "generalized-complex",
+      "sourceFingerprint": "8d97aa7cd9e14dad20fcaa7c8d96ef16678563fdcff49084871e9444d129c020",
+      "method": "augmentation",
+      "status": "refused",
+      "reason": "Sizing prototype supports finite checked intrinsic 3D convex sources only; no 4D/generalized benchmark claim.",
+      "elapsedSeconds": 0.641
+    },
+    {
+      "source": "star-uniform4-quidpith",
+      "dimension": 4,
+      "interpretation": "generalized-complex",
+      "sourceFingerprint": "8d97aa7cd9e14dad20fcaa7c8d96ef16678563fdcff49084871e9444d129c020",
+      "method": "expansion",
+      "status": "sampled",
+      "samples": [
+        {
+          "ratio": 0,
+          "counts": [
+            64,
+            192,
+            208,
+            80
+          ]
+        },
+        {
+          "ratio": 0.25,
+          "counts": [
+            512,
+            1536,
+            1568,
+            544
+          ]
+        },
+        {
+          "ratio": 0.5,
+          "counts": [
+            512,
+            1536,
+            1568,
+            544
+          ]
+        },
+        {
+          "ratio": 0.75,
+          "counts": [
+            512,
+            1536,
+            1568,
+            544
+          ]
+        },
+        {
+          "ratio": 1,
+          "counts": [
+            80,
+            208,
+            192,
+            64
+          ]
+        }
+      ],
+      "certified": false,
+      "elapsedSeconds": 1.484
+    },
+    {
+      "source": "star-uniform4-quidpith",
+      "dimension": 4,
+      "interpretation": "generalized-complex",
+      "sourceFingerprint": "8d97aa7cd9e14dad20fcaa7c8d96ef16678563fdcff49084871e9444d129c020",
+      "method": "tilting-quads",
+      "status": "refused",
+      "reason": "This prototype supports closed intrinsic 3D/4D convex sources only; generalized/infinite polars are unsupported.",
+      "elapsedSeconds": 0.703
+    },
+    {
+      "source": "star-uniform4-quidpith",
+      "dimension": 4,
+      "interpretation": "generalized-complex",
+      "sourceFingerprint": "8d97aa7cd9e14dad20fcaa7c8d96ef16678563fdcff49084871e9444d129c020",
+      "method": "tilting-triangles",
+      "status": "refused",
+      "reason": "Sizing prototype supports finite checked intrinsic 3D convex sources only; no 4D/generalized benchmark claim.",
+      "elapsedSeconds": 0.735
+    },
+    {
+      "source": "star-uniform4-quidpith",
+      "dimension": 4,
+      "interpretation": "generalized-complex",
+      "sourceFingerprint": "8d97aa7cd9e14dad20fcaa7c8d96ef16678563fdcff49084871e9444d129c020",
+      "method": "tilting-to-compound",
+      "status": "refused",
+      "reason": "Sizing prototype supports finite checked intrinsic 3D convex sources only; no 4D/generalized benchmark claim.",
+      "elapsedSeconds": 0.625
+    },
+    {
+      "source": "star-uniform4-quidpith",
+      "dimension": 4,
+      "interpretation": "generalized-complex",
+      "sourceFingerprint": "8d97aa7cd9e14dad20fcaa7c8d96ef16678563fdcff49084871e9444d129c020",
+      "method": "tilting-to-rectify",
+      "status": "refused",
+      "reason": "Sizing prototype supports finite checked intrinsic 3D convex sources only; no 4D/generalized benchmark claim.",
+      "elapsedSeconds": 0.578
+    },
+    {
+      "source": "star-uniform4-quidpith",
+      "dimension": 4,
+      "interpretation": "generalized-complex",
+      "sourceFingerprint": "8d97aa7cd9e14dad20fcaa7c8d96ef16678563fdcff49084871e9444d129c020",
+      "method": "via-snub",
+      "status": "refused",
+      "reason": "Via-snub supports only a centered axis-aligned cube with complete ordinary incidence, origin center, and form A, or a regular dodecahedron/icosahedron at its geometric center; rotated/translated cubes, other sources and 4D are unavailable.",
+      "elapsedSeconds": 0.656
+    }
+  ],
+  "implementationSha256": {
+    "engine/dual_morph.py": "8b627bbfd87e25a26b74a886f070be77aab24888df0a62d4c49ce6415c11d5ac",
+    "engine/dual_morph_4d.py": "45656f2e09f145cefb2d8862a4c283ba5269cc7eb60f4d5975b87deda27401d5",
+    "engine/dual_morph_augmentation.py": "4317e76bc3166db91deb7eebbf0af1ed7bd02d530817698fcb22db895086d98a",
+    "engine/dual_morph_cache.py": "baa8ab2e237da8464cb7a8468a0ad672010c4c8b995e066a4be173125c14cd93",
+    "engine/dual_morph_colors.py": "56254cd415f2ef7eb7a0985ef4c99a9a0944fbafce04450f273299566c1010ba",
+    "engine/dual_morph_compound.py": "031aada5ff569581bdce03deab1afe4493ceab2db51dfd0fce9e9edec6a9f257",
+    "engine/dual_morph_expansion.py": "8a4665218eab7cd2bef21f29c6f5e34a26b0ff1e5aa784fd21d174da5532ee38",
+    "engine/dual_morph_generalized_expansion.py": "8096fa88ab5cf7a566d7412e8f76f7589e07cc2d6afa6799d243ed3e8c6fac1d",
+    "engine/dual_morph_generalized_expansion_4d.py": "759c538fded5b325d39b0555154bd3c57e75ea6fd06c04716ab772ed5dbcb020",
+    "engine/dual_morph_generalized_sizing.py": "f734d74db0ed3fb93981faeb94b727730f9472f4190bea92d6485f381d52ed75",
+    "engine/dual_morph_rectify.py": "c6ea8c4e84844a37cedd95901d4565fb7d920a1136cc20739417ceafae1036ac",
+    "engine/dual_morph_sizing.py": "040f9f6ed3536aef96dd6934872a717ec32fefe01e6c21d04b266350e95051dc",
+    "engine/dual_morph_snub.py": "c2621b1497b6d869bf46810bc510bded7d3bb64f7276120c270bb671c479d1f6",
+    "engine/dual_morph_snub_h3.py": "23f29bf102bf92a0b325937d2eada5a2065bff3ae5118d5d12e539c4f9aceaed",
+    "engine/dual_morph_tour.py": "56a02b4981b1dded4072277f76185ca91a334bba037a22271bd4211622d95779",
+    "engine/dual_morph_triangles.py": "832f53889b0fe2f06441aa6257ec72f9d83cfde47a3652acd3a1851446c20d53",
+    "engine/dual_morph_truncation.py": "f3017d26e1c34373fd284c1ddcb37dcd3f72889faf5eb34d2b31d0d706156e76"
+  }
+}

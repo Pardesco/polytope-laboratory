@@ -2,7 +2,7 @@
 
 The key retains complete canonical JSON, not IDs, counts or a digest. Dispatch
 still compares the entire supplied preparation against the native preparation.
-Dispatch admits convex 3D sizing and stateless convex 4D sizing/truncation only;
+Dispatch admits convex 3D sizing and stateless convex 4D sizing/truncation/product plans;
 other morph plans can maintain additional intermediate state.
 """
 from copy import deepcopy

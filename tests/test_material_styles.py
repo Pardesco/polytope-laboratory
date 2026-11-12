@@ -18,8 +18,14 @@ def test_all_renderer_presets_and_custom_edits_roundtrip_through_native_project(
     views[2]['appearance']['backgroundBottom'] = '#123456'
     views[2]['appearance']['shininess'] = 90
     model = regular('cube')
-    project = {'format': 'polytope-laboratory', 'version': 1, 'active': 0, 'documents': [
-        {'cursor': len(views)-1, 'states': [{'model': deepcopy(model), 'view': view} for view in views]}]}
+    project = {
+        'format': 'polytope-laboratory',
+        'version': 1,
+        'active': 0,
+        'documents': [
+            {'cursor': len(views) - 1, 'states': [{'model': deepcopy(model), 'view': view} for view in views]}
+        ],
+    }
     checked = validate_project(deepcopy(project))
     assert [state['view'] for state in checked['documents'][0]['states']] == views
     target = tmp_path / 'styles.polytope'
@@ -29,18 +35,31 @@ def test_all_renderer_presets_and_custom_edits_roundtrip_through_native_project(
     assert restored['documents'][0]['states'][0]['model']['vertices'] == model['vertices']
 
 
-@pytest.mark.parametrize('value', [{'style':'unknown'}, {'backgroundMode':'image'}, {'backgroundBottom':'#fff'},
-    {'edgeGlow':float('nan')}, {'edgeGlow':4}, {'edgeGlow':True}, {'vertexMetal':1}, {'newField':0}])
+@pytest.mark.parametrize(
+    'value',
+    [
+        {'style': 'unknown'},
+        {'backgroundMode': 'image'},
+        {'backgroundBottom': '#fff'},
+        {'edgeGlow': float('nan')},
+        {'edgeGlow': 4},
+        {'edgeGlow': True},
+        {'vertexMetal': 1},
+        {'newField': 0},
+    ],
+)
 def test_native_rejects_unsupported_material_configuration(value):
     with pytest.raises(GeometryError):
         validate_appearance(value)
 
 
-@pytest.mark.parametrize('value', [{'reflection':'remote'}, {'reflectivity':2}, {'refractiveIndex':float('inf')}, {'bumpStrength':True}])
+@pytest.mark.parametrize(
+    'value', [{'reflection': 'remote'}, {'reflectivity': 2}, {'refractiveIndex': float('inf')}, {'bumpStrength': True}]
+)
 def test_native_rejects_unsupported_effects(value):
     with pytest.raises(GeometryError):
         validate_material_effects(value)
 
 
 def test_legacy_sparse_appearance_is_preserved():
-    assert validate_appearance({'preset':'matte','shininess':0}) == {'preset':'matte','shininess':0}
+    assert validate_appearance({'preset': 'matte', 'shininess': 0}) == {'preset': 'matte', 'shininess': 0}

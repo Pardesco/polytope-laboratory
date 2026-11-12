@@ -1,0 +1,32 @@
+#library-classification {
+  margin-block: var(--space-1);
+  padding: var(--space-1);
+  border: 1px solid var(--border);
+  font-size: var(--font-secondary);
+}
+#library-classification > summary {
+  min-height: var(--control-height);
+  align-content: center;
+  cursor: pointer;
+  font-size: var(--font-body);
+}
+#library-classification p {
+  margin-block: var(--space-1);
+  overflow-wrap: anywhere;
+}
+#library-classification select {
+  width: 100%;
+  min-height: var(--control-height);
+  margin-block: var(--space-1);
+}
+#library-classification pre {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font-size: var(--font-secondary);
+  max-height: 320px;
+  overflow: auto;
+}
+#library-classification output {
+  display: block;
+  margin-block: var(--space-1);
+}

@@ -1,0 +1,2163 @@
+{
+  "schema_version": 1,
+  "scenarios": [
+    {
+      "id": "con-03-hull-cube-tesseract",
+      "requirement_id": "CON-03",
+      "option": "hull-cube-tesseract",
+      "title": "Hull of cube and tesseract point sets",
+      "domain_id": "hull-core",
+      "input": {
+        "description": "Independent +/-1 Cartesian vertices in 3D and 4D",
+        "parameters": {
+          "dimensions": [
+            3,
+            4
+          ]
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "CON-03",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "hull-core",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "installed54-manual",
+            "locator": "#hull",
+            "role": "documented-options"
+          },
+          {
+            "source_id": "independent-fixtures",
+            "locator": "test_analytic_contents",
+            "role": "expectation-oracle"
+          }
+        ],
+        "checks": [
+          "Cube V/E/F=8/12/6, volume 8",
+          "Tesseract V/E/F/C=16/32/24/8, four-volume 16",
+          "Numerical status stays approximate"
+        ],
+        "basis": "independent-invariant"
+      },
+      "implementation": "supported",
+      "fixtures": [
+        {
+          "path": "tests/test_kernel.py",
+          "selector": "test_analytic_contents",
+          "role": "related-not-oracle",
+          "evidence": "existing-test-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "build-hull",
+          "make-convex-core"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R5-NUMERIC",
+        "priority": "P2",
+        "unverified": "Analytic generator fixture supplies expected measures, not explicit hull-workflow coverage.",
+        "next_action": "Add hull-only literal Cartesian fixtures with full incidence/measure checks; execute build-hull in both dimensions."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3,
+          4
+        ],
+        "supported_source_dimensions": [
+          3,
+          4
+        ],
+        "support_note": "Supported only under referenced domain qualifications.",
+        "object_class": "Independent +/-1 Cartesian vertices in 3D and 4D"
+      }
+    },
+    {
+      "id": "con-03-hull-degenerate",
+      "requirement_id": "CON-03",
+      "option": "hull-degenerate",
+      "title": "Degenerate hull input",
+      "domain_id": "hull-core",
+      "input": {
+        "description": "Coplanar 3D points, duplicates, tiny nonzero z perturbation",
+        "parameters": {
+          "variants": [
+            "rank2",
+            "duplicate",
+            "near-rank3"
+          ]
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "CON-03",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "hull-core",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "installed54-manual",
+            "locator": "#hull",
+            "role": "documented-options"
+          }
+        ],
+        "checks": [
+          "Report intrinsic dimension or clear degeneracy refusal",
+          "Do not claim certified float predicates"
+        ],
+        "basis": "documented-or-local-contract"
+      },
+      "implementation": "restricted",
+      "fixtures": [
+        {
+          "path": "tests/test_kernel.py",
+          "selector": null,
+          "role": "related-not-oracle",
+          "evidence": "existing-suite-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "build-hull",
+          "make-convex-core"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R5-NUMERIC",
+        "priority": "P2",
+        "unverified": "Bounded native coverage exists; benchmark option behavior and shipped UI are unverified.",
+        "next_action": "Add literal rank-transition fixtures and record actual dispatch result/refusal; compare permitted installed 5.4 behavior separately."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3,
+          4
+        ],
+        "supported_source_dimensions": [
+          3,
+          4
+        ],
+        "support_note": "Supported only under referenced domain qualifications.",
+        "object_class": "Coplanar 3D points, duplicates, tiny nonzero z perturbation"
+      }
+    },
+    {
+      "id": "con-03-rational-hull",
+      "requirement_id": "CON-03",
+      "option": "rational-hull",
+      "title": "Supplied-rational tesseract certificate",
+      "domain_id": "hull-core",
+      "input": {
+        "description": "Literal rational +/-1 tesseract",
+        "parameters": {
+          "max_points": 32
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "CON-03",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "hull-core",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "independent-fixtures",
+            "locator": "test_exhaustive_tesseract_certificate",
+            "role": "expectation-oracle"
+          }
+        ],
+        "checks": [
+          "Exhaustive exact supporting facets match tesseract incidence",
+          "Exactness concerns supplied rationals, not intended algebraic coordinates"
+        ],
+        "basis": "independent-invariant"
+      },
+      "implementation": "supported",
+      "fixtures": [
+        {
+          "path": "tests/test_rational.py",
+          "selector": "test_exhaustive_tesseract_certificate",
+          "role": "direct",
+          "evidence": "existing-test-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "build-hull",
+          "make-convex-core"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R5-NUMERIC",
+        "priority": "P2",
+        "unverified": "Bounded native coverage exists; benchmark option behavior and shipped UI are unverified.",
+        "next_action": "Run the named fixture, then reproduce supplied-rational tesseract certificate through the listed UI; retain source, parameters, residuals, incidence and versioned comparison evidence."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          4
+        ],
+        "supported_source_dimensions": [
+          4
+        ],
+        "support_note": "Supported only under referenced domain qualifications.",
+        "object_class": "Literal rational +/-1 tesseract"
+      }
+    },
+    {
+      "id": "con-03-core-center",
+      "requirement_id": "CON-03",
+      "option": "core-center",
+      "title": "Center-selected 3D and 4D cores",
+      "domain_id": "hull-core",
+      "input": {
+        "description": "Literal cube and tesseract at origin",
+        "parameters": {
+          "center": "origin"
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "CON-03",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "hull-core",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "installed54-manual",
+            "locator": "#core",
+            "role": "documented-options"
+          },
+          {
+            "source_id": "independent-fixtures",
+            "locator": "test_cube_plane_chamber_is_literal_cube_with_complete_support_owners_rgba_and_measures",
+            "role": "expectation-oracle"
+          }
+        ],
+        "checks": [
+          "Recover complete supporting halfspaces and analytic content",
+          "Preserve support-owner maps and RGBA"
+        ],
+        "basis": "independent-invariant"
+      },
+      "implementation": "supported",
+      "fixtures": [
+        {
+          "path": "tests/test_convex_core.py",
+          "selector": "test_cube_plane_chamber_is_literal_cube_with_complete_support_owners_rgba_and_measures",
+          "role": "direct",
+          "evidence": "existing-test-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "build-hull",
+          "make-convex-core"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R5-NUMERIC",
+        "priority": "P2",
+        "unverified": "Bounded native coverage exists; benchmark option behavior and shipped UI are unverified.",
+        "next_action": "Run 3D fixture and test_convex_core4d.py::test_literal_tesseract_has_full_boundary_independent_cell_supports_and_native_measures; capture center controls and receipts."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3,
+          4
+        ],
+        "supported_source_dimensions": [
+          3,
+          4
+        ],
+        "support_note": "Supported only under referenced domain qualifications.",
+        "object_class": "Literal cube and tesseract at origin"
+      }
+    },
+    {
+      "id": "con-03-core-unbounded",
+      "requirement_id": "CON-03",
+      "option": "core-unbounded",
+      "title": "Unbounded core refusal",
+      "domain_id": "hull-core",
+      "input": {
+        "description": "Exterior/boundary cube center; tesseract missing one cell plane",
+        "parameters": {
+          "center": [
+            "boundary",
+            "outside"
+          ]
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "CON-03",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "hull-core",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "installed54-manual",
+            "locator": "#core",
+            "role": "documented-options"
+          },
+          {
+            "source_id": "independent-fixtures",
+            "locator": "test_missing_source_cell_halfspace_is_unbounded_without_fake_clipping_box",
+            "role": "expectation-oracle"
+          }
+        ],
+        "checks": [
+          "Refuse unbounded chamber without invented clipping box",
+          "Source/history unchanged"
+        ],
+        "basis": "independent-invariant"
+      },
+      "implementation": "restricted",
+      "fixtures": [
+        {
+          "path": "tests/test_convex_core4d.py",
+          "selector": "test_missing_source_cell_halfspace_is_unbounded_without_fake_clipping_box",
+          "role": "direct",
+          "evidence": "existing-test-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "build-hull",
+          "make-convex-core"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R5-NUMERIC",
+        "priority": "P2",
+        "unverified": "Bounded native coverage exists; benchmark option behavior and shipped UI are unverified.",
+        "next_action": "Run the named fixture, then reproduce unbounded core refusal through the listed UI; retain source, parameters, residuals, incidence and versioned comparison evidence."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          4
+        ],
+        "supported_source_dimensions": [
+          4
+        ],
+        "support_note": "Supported only under referenced domain qualifications.",
+        "object_class": "Exterior/boundary cube center; tesseract missing one cell plane"
+      }
+    },
+    {
+      "id": "con-04-polar-involution",
+      "requirement_id": "CON-04",
+      "option": "polar-involution",
+      "title": "Convex polar dual twice",
+      "domain_id": "dual",
+      "input": {
+        "description": "Cube and tesseract",
+        "parameters": {
+          "center": "origin",
+          "radius": 1
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "CON-04",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "dual",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "installed54-manual",
+            "locator": "#dual",
+            "role": "documented-options"
+          },
+          {
+            "source_id": "independent-fixtures",
+            "locator": "test_dual_dual_recovers_geometry",
+            "role": "expectation-oracle"
+          }
+        ],
+        "checks": [
+          "Recover vertices within 1e-7 and complete incidence counts",
+          "No exactness claim"
+        ],
+        "basis": "independent-invariant"
+      },
+      "implementation": "supported",
+      "fixtures": [
+        {
+          "path": "tests/test_kernel.py",
+          "selector": "test_dual_dual_recovers_geometry",
+          "role": "direct",
+          "evidence": "existing-test-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "make-dual",
+          "dual-options-settings"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R7-DESKTOP",
+        "priority": "P2",
+        "unverified": "Bounded native coverage exists; benchmark option behavior and shipped UI are unverified.",
+        "next_action": "Run the named fixture, then reproduce convex polar dual twice through the listed UI; retain source, parameters, residuals, incidence and versioned comparison evidence."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3,
+          4
+        ],
+        "supported_source_dimensions": [
+          3,
+          4
+        ],
+        "support_note": "Supported only under referenced domain qualifications.",
+        "object_class": "Cube and tesseract"
+      }
+    },
+    {
+      "id": "con-04-center-radius",
+      "requirement_id": "CON-04",
+      "option": "center-radius",
+      "title": "Selected reciprocal center/radius",
+      "domain_id": "dual",
+      "input": {
+        "description": "Translated nonsymmetric tetrahedron and tesseract",
+        "parameters": {
+          "center": "explicit finite point",
+          "radius": "positive user value"
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "CON-04",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "dual",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "installed54-manual",
+            "locator": "#dual",
+            "role": "documented-options"
+          }
+        ],
+        "checks": [
+          "Plane reciprocals use chosen center and squared radius",
+          "Save/reopen/replay preserve parameters"
+        ],
+        "basis": "documented-or-local-contract"
+      },
+      "implementation": "supported",
+      "fixtures": [
+        {
+          "path": "tests/test_incidence_dual_4d.py",
+          "selector": null,
+          "role": "related-not-oracle",
+          "evidence": "existing-suite-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "make-dual",
+          "dual-options-settings"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R7-DESKTOP",
+        "priority": "P2",
+        "unverified": "Default involution does not qualify all center/radius options.",
+        "next_action": "Add independent plane-equation checks at shifted center and two radii in 3D/4D; capture round-trip parameters."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3,
+          4
+        ],
+        "supported_source_dimensions": [
+          3,
+          4
+        ],
+        "support_note": "Supported only under referenced domain qualifications.",
+        "object_class": "Translated nonsymmetric tetrahedron and tesseract"
+      }
+    },
+    {
+      "id": "con-04-singular-projective",
+      "requirement_id": "CON-04",
+      "option": "singular-projective",
+      "title": "Singular finite dual and projective inspection",
+      "domain_id": "dual",
+      "input": {
+        "description": "Face plane through chosen center",
+        "parameters": {
+          "finite_vs_projective": true
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "CON-04",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "dual",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "installed54-manual",
+            "locator": "#dual",
+            "role": "documented-options"
+          }
+        ],
+        "checks": [
+          "Finite construction refuses singular reciprocal",
+          "Projective 3D clipping retains infinity diagnostics without a finite solid claim"
+        ],
+        "basis": "documented-or-local-contract"
+      },
+      "implementation": "restricted",
+      "fixtures": [
+        {
+          "path": "tests/test_projective_incidence_dual.py",
+          "selector": null,
+          "role": "direct",
+          "evidence": "existing-suite-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "make-dual",
+          "dual-options-settings"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R7-DESKTOP",
+        "priority": "P2",
+        "unverified": "Bounded native coverage exists; benchmark option behavior and shipped UI are unverified.",
+        "next_action": "Run the named fixture, then reproduce singular finite dual and projective inspection through the listed UI; retain source, parameters, residuals, incidence and versioned comparison evidence."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3
+        ],
+        "supported_source_dimensions": [
+          3
+        ],
+        "support_note": "Supported only under referenced domain qualifications.",
+        "object_class": "Face plane through chosen center"
+      }
+    },
+    {
+      "id": "sec-01-axis-slices",
+      "requirement_id": "SEC-01",
+      "option": "axis-slices",
+      "title": "Axis sections of cube/tesseract",
+      "domain_id": "sections",
+      "input": {
+        "description": "Cube z=0; tesseract w=-1,-0.5,0,0.5,1",
+        "parameters": {
+          "depths": [
+            -1,
+            -0.5,
+            0,
+            0.5,
+            1
+          ]
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "SEC-01",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "sections",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "installed54-manual",
+            "locator": "#slice",
+            "role": "documented-options"
+          },
+          {
+            "source_id": "independent-fixtures",
+            "locator": "test_section_events",
+            "role": "expectation-oracle"
+          }
+        ],
+        "checks": [
+          "Cube central section area 4",
+          "Tesseract section V/E/F=8/12/6, volume 8, including supporting-cell endpoint",
+          "Retain source correspondence"
+        ],
+        "basis": "independent-invariant"
+      },
+      "implementation": "supported",
+      "fixtures": [
+        {
+          "path": "tests/test_kernel.py",
+          "selector": "test_section_events",
+          "role": "direct",
+          "evidence": "existing-test-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "derived-mode",
+          "section-normal",
+          "section-offset",
+          "apply-section"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R6-SECTIONS",
+        "priority": "P2",
+        "unverified": "Bounded native coverage exists; benchmark option behavior and shipped UI are unverified.",
+        "next_action": "Run the named fixture, then reproduce axis sections of cube/tesseract through the listed UI; retain source, parameters, residuals, incidence and versioned comparison evidence."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3,
+          4
+        ],
+        "supported_source_dimensions": [
+          3,
+          4
+        ],
+        "support_note": "Supported only under referenced domain qualifications.",
+        "object_class": "Cube z=0; tesseract w=-1,-0.5,0,0.5,1"
+      }
+    },
+    {
+      "id": "sec-02-tangent-empty",
+      "requirement_id": "SEC-02",
+      "option": "tangent-empty",
+      "title": "Tangent and empty events",
+      "domain_id": "sections",
+      "input": {
+        "description": "Tesseract diagonal contact and outside axis slice",
+        "parameters": {
+          "normal": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "contact_depth": 2,
+          "outside_axis_depth": 1.1
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "SEC-02",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "sections",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "installed54-manual",
+            "locator": "#slice",
+            "role": "documented-options"
+          },
+          {
+            "source_id": "independent-fixtures",
+            "locator": "test_section_events",
+            "role": "expectation-oracle"
+          }
+        ],
+        "checks": [
+          "Diagonal contact has rank zero and outside slice is empty",
+          "No fabricated bridges or degenerate volume"
+        ],
+        "basis": "independent-invariant"
+      },
+      "implementation": "supported",
+      "fixtures": [
+        {
+          "path": "tests/test_kernel.py",
+          "selector": "test_section_events",
+          "role": "direct",
+          "evidence": "existing-test-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "section-events"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R6-SECTIONS",
+        "priority": "P2",
+        "unverified": "Bounded native coverage exists; benchmark option behavior and shipped UI are unverified.",
+        "next_action": "Run the named fixture, then reproduce tangent and empty events through the listed UI; retain source, parameters, residuals, incidence and versioned comparison evidence."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          4
+        ],
+        "supported_source_dimensions": [
+          4
+        ],
+        "support_note": "Supported only under referenced domain qualifications.",
+        "object_class": "Tesseract diagonal contact and outside axis slice"
+      }
+    },
+    {
+      "id": "sec-05-surface-winding",
+      "requirement_id": "SEC-05",
+      "option": "surface-winding",
+      "title": "Pentagram surface winding rules",
+      "domain_id": "sections",
+      "input": {
+        "description": "Literal pentagram cut through center",
+        "parameters": {
+          "fill_rules": [
+            "nonzero",
+            "even-odd"
+          ]
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "SEC-05",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "sections",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "installed54-manual",
+            "locator": "#slice",
+            "role": "documented-options"
+          },
+          {
+            "source_id": "independent-fixtures",
+            "locator": "test_pentagram_slice_nonzero_keeps_center_even_odd_has_hole",
+            "role": "expectation-oracle"
+          }
+        ],
+        "checks": [
+          "Nonzero retains center, even-odd has a hole",
+          "Surface intervals do not define global filled solid"
+        ],
+        "basis": "independent-invariant"
+      },
+      "implementation": "restricted",
+      "fixtures": [
+        {
+          "path": "tests/test_generalized_sections.py",
+          "selector": "test_pentagram_slice_nonzero_keeps_center_even_odd_has_hole",
+          "role": "direct",
+          "evidence": "existing-test-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "derived-mode",
+          "density-section-controls"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R6-SECTIONS",
+        "priority": "P2",
+        "unverified": "Bounded native coverage exists; benchmark option behavior and shipped UI are unverified.",
+        "next_action": "Run the named fixture, then reproduce pentagram surface winding rules through the listed UI; retain source, parameters, residuals, incidence and versioned comparison evidence."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3
+        ],
+        "supported_source_dimensions": [
+          3
+        ],
+        "support_note": "Supported only under referenced domain qualifications.",
+        "object_class": "Literal pentagram cut through center"
+      }
+    },
+    {
+      "id": "sec-05-filled-density",
+      "requirement_id": "SEC-05",
+      "option": "filled-density",
+      "title": "Filled density sections",
+      "domain_id": "sections",
+      "input": {
+        "description": "Stella octangula two-tetrahedra overlap",
+        "parameters": {
+          "rules": [
+            "nonzero",
+            "even-odd",
+            "density"
+          ]
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "SEC-05",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "sections",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "independent-fixtures",
+            "locator": "test_stella_octangula_independent_analytic_density_areas",
+            "role": "expectation-oracle"
+          }
+        ],
+        "checks": [
+          "Compare independent analytic occupied area/density",
+          "Preserve disconnected regions and promotion receipt"
+        ],
+        "basis": "independent-invariant"
+      },
+      "implementation": "restricted",
+      "fixtures": [
+        {
+          "path": "tests/test_filled_sections.py",
+          "selector": "test_stella_octangula_independent_analytic_density_areas",
+          "role": "direct",
+          "evidence": "existing-test-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "derived-mode",
+          "density-section-controls"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R6-SECTIONS",
+        "priority": "P2",
+        "unverified": "Bounded native coverage exists; benchmark option behavior and shipped UI are unverified.",
+        "next_action": "Coordinate with R5-SECTIONS: run common Surface/Filled path with Expert off, analytic depths and Undo/reopen/replay."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3
+        ],
+        "supported_source_dimensions": [
+          3
+        ],
+        "support_note": "Supported only under referenced domain qualifications.",
+        "object_class": "Stella octangula two-tetrahedra overlap"
+      }
+    },
+    {
+      "id": "sec-05-unknown-interior",
+      "requirement_id": "SEC-05",
+      "option": "unknown-interior",
+      "title": "Unqualified global 4D interior",
+      "domain_id": "sections",
+      "input": {
+        "description": "Generalized 4D boundary without qualified global orientation",
+        "parameters": {
+          "interpretation": "filled-global"
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "SEC-05",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "sections",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "spec",
+            "locator": "test_empty_contact_open_cellless_and_resource_diagnostics",
+            "role": "requirement-scope"
+          }
+        ],
+        "checks": [
+          "Refuse unsupported interior clearly",
+          "Do not substitute surface curves or convex hull"
+        ],
+        "basis": "documented-or-local-contract"
+      },
+      "implementation": "restricted",
+      "fixtures": [
+        {
+          "path": "tests/test_filled_sections.py",
+          "selector": "test_empty_contact_open_cellless_and_resource_diagnostics",
+          "role": "related-not-oracle",
+          "evidence": "existing-test-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "derived-mode",
+          "density-section-controls"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R6-SECTIONS",
+        "priority": "P2",
+        "unverified": "Bounded native coverage exists; benchmark option behavior and shipped UI are unverified.",
+        "next_action": "Have R5-SECTIONS select one refused star-cell case and independent orientation evidence before scheduling R6-SECTIONS."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          4
+        ],
+        "supported_source_dimensions": [
+          4
+        ],
+        "support_note": "Supported only under referenced domain qualifications.",
+        "object_class": "Generalized 4D boundary without qualified global orientation"
+      }
+    },
+    {
+      "id": "net-01-face-net",
+      "requirement_id": "NET-01",
+      "option": "face-net",
+      "title": "Rigid cube net and cut edit",
+      "domain_id": "nets",
+      "input": {
+        "description": "Cube with six square faces",
+        "parameters": {
+          "hinges": "spanning tree",
+          "edit": "cut/reattach"
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "NET-01",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "nets",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "installed54-manual",
+            "locator": "#nets",
+            "role": "documented-options"
+          },
+          {
+            "source_id": "independent-fixtures",
+            "locator": "test_net_face_areas_and_hinge_lengths",
+            "role": "expectation-oracle"
+          }
+        ],
+        "checks": [
+          "Retain six rigid squares/source IDs",
+          "Cut/reattach and Undo/Redo preserve every face"
+        ],
+        "basis": "independent-invariant"
+      },
+      "implementation": "supported",
+      "fixtures": [
+        {
+          "path": "tests/test_nets.py",
+          "selector": "test_net_face_areas_and_hinge_lengths",
+          "role": "direct",
+          "evidence": "existing-test-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "net-rebuild",
+          "net-rearrange",
+          "net-toggle-edge"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R5-NETS",
+        "priority": "P2",
+        "unverified": "Bounded native coverage exists; benchmark option behavior and shipped UI are unverified.",
+        "next_action": "Run the named fixture, then reproduce rigid cube net and cut edit through the listed UI; retain source, parameters, residuals, incidence and versioned comparison evidence."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3
+        ],
+        "supported_source_dimensions": [
+          3
+        ],
+        "support_note": "Supported only under referenced domain qualifications.",
+        "object_class": "Cube with six square faces"
+      }
+    },
+    {
+      "id": "net-04-fold-endpoints",
+      "requirement_id": "NET-04",
+      "option": "fold-endpoints",
+      "title": "Rigid fold endpoint/intermediate poses",
+      "domain_id": "nets",
+      "input": {
+        "description": "Cube net",
+        "parameters": {
+          "fractions": [
+            0,
+            0.5,
+            1
+          ]
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "NET-04",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "nets",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "installed54-manual",
+            "locator": "#folding",
+            "role": "documented-options"
+          }
+        ],
+        "checks": [
+          "Face pairwise distances stay rigid",
+          "Full fold reconstructs source with reported hinge/endpoint residuals",
+          "No collision-free claim"
+        ],
+        "basis": "documented-or-local-contract"
+      },
+      "implementation": "supported",
+      "fixtures": [
+        {
+          "path": "tests/test_net_editing.py",
+          "selector": null,
+          "role": "direct",
+          "evidence": "existing-suite-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "net-fold",
+          "net-play"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R5-NETS",
+        "priority": "P2",
+        "unverified": "Bounded native coverage exists; benchmark option behavior and shipped UI are unverified.",
+        "next_action": "Run native/renderer pose comparison and capture net-fold 0/0.5/1; retain max rigidity, hinge-gap and endpoint errors."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3
+        ],
+        "supported_source_dimensions": [
+          3
+        ],
+        "support_note": "Supported only under referenced domain qualifications.",
+        "object_class": "Cube net"
+      }
+    },
+    {
+      "id": "net-06-whole-cell",
+      "requirement_id": "NET-06",
+      "option": "whole-cell",
+      "title": "Whole-cell tesseract net",
+      "domain_id": "nets",
+      "input": {
+        "description": "Eight complete cube cells",
+        "parameters": {
+          "edit": "cut/reattach rigid component"
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "NET-06",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "nets",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "installed54-manual",
+            "locator": "#net4D",
+            "role": "documented-options"
+          },
+          {
+            "source_id": "independent-fixtures",
+            "locator": "Whole-cell tesseract net",
+            "role": "expectation-oracle"
+          }
+        ],
+        "checks": [
+          "Retain eight whole source cells and adjacency",
+          "Cell intersections may be ignored",
+          "No partial 4D folding"
+        ],
+        "basis": "independent-invariant"
+      },
+      "implementation": "supported",
+      "fixtures": [
+        {
+          "path": "tests/test_cell_nets.py",
+          "selector": "test_every_complete_source_cell_is_preserved_with_matching_face_joins",
+          "role": "direct",
+          "evidence": "existing-test-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "cell-net-build",
+          "cell-net-reattach"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R5-NETS",
+        "priority": "P2",
+        "unverified": "Bounded native coverage exists; benchmark option behavior and shipped UI are unverified.",
+        "next_action": "Run the named fixture, then reproduce whole-cell tesseract net through the listed UI; retain source, parameters, residuals, incidence and versioned comparison evidence."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          4
+        ],
+        "supported_source_dimensions": [
+          4
+        ],
+        "support_note": "Supported only under referenced domain qualifications.",
+        "object_class": "Eight complete cube cells"
+      }
+    },
+    {
+      "id": "con-09-regular-faces",
+      "requirement_id": "CON-09",
+      "option": "regular-faces",
+      "title": "Fitting regular-faces",
+      "domain_id": "fitting",
+      "input": {
+        "description": "Perturbed convex cube; equal-edge 4D variant is tesseract",
+        "parameters": {
+          "objectives": [
+            "regular-faces"
+          ]
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "CON-09",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "fitting",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "manual-fitting",
+            "locator": "Fitting regular-faces",
+            "role": "documented-options"
+          },
+          {
+            "source_id": "history60",
+            "locator": "Fitting regular-faces",
+            "role": "requirement-scope"
+          }
+        ],
+        "checks": [
+          "Report before/after max/RMS residuals and solver termination separately",
+          "Preserve incidence/scale",
+          "Convergence does not establish uniformity"
+        ],
+        "basis": "documented-or-local-contract"
+      },
+      "implementation": "supported",
+      "fixtures": [
+        {
+          "path": "tests/test_condition_fitting.py",
+          "selector": null,
+          "role": "direct",
+          "evidence": "existing-suite-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "preview-fitting",
+          "adopt-fitting",
+          "accept-fitting-near-miss"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R6-FITTING",
+        "priority": "P2",
+        "unverified": "Bounded native coverage exists; benchmark option behavior and shipped UI are unverified.",
+        "next_action": "Run regular-faces fixture and mounted preview/adopt; independently measure condition then reopen/replay parameters."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3,
+          4
+        ],
+        "supported_source_dimensions": [
+          3,
+          4
+        ],
+        "support_note": "Supported only under referenced domain qualifications.",
+        "object_class": "Perturbed convex cube; equal-edge 4D variant is tesseract"
+      }
+    },
+    {
+      "id": "con-09-planar-faces",
+      "requirement_id": "CON-09",
+      "option": "planar-faces",
+      "title": "Fitting planar-faces",
+      "domain_id": "fitting",
+      "input": {
+        "description": "Perturbed convex cube; equal-edge 4D variant is tesseract",
+        "parameters": {
+          "objectives": [
+            "planar-faces"
+          ]
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "CON-09",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "fitting",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "manual-fitting",
+            "locator": "Fitting planar-faces",
+            "role": "documented-options"
+          },
+          {
+            "source_id": "history60",
+            "locator": "Fitting planar-faces",
+            "role": "requirement-scope"
+          }
+        ],
+        "checks": [
+          "Report before/after max/RMS residuals and solver termination separately",
+          "Preserve incidence/scale",
+          "Convergence does not establish uniformity"
+        ],
+        "basis": "documented-or-local-contract"
+      },
+      "implementation": "supported",
+      "fixtures": [
+        {
+          "path": "tests/test_condition_fitting.py",
+          "selector": null,
+          "role": "direct",
+          "evidence": "existing-suite-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "preview-fitting",
+          "adopt-fitting",
+          "accept-fitting-near-miss"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R6-FITTING",
+        "priority": "P2",
+        "unverified": "Bounded native coverage exists; benchmark option behavior and shipped UI are unverified.",
+        "next_action": "Run planar-faces fixture and mounted preview/adopt; independently measure condition then reopen/replay parameters."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3,
+          4
+        ],
+        "supported_source_dimensions": [
+          3,
+          4
+        ],
+        "support_note": "Supported only under referenced domain qualifications.",
+        "object_class": "Perturbed convex cube; equal-edge 4D variant is tesseract"
+      }
+    },
+    {
+      "id": "con-09-equal-edges",
+      "requirement_id": "CON-09",
+      "option": "equal-edges",
+      "title": "Fitting equal-edges",
+      "domain_id": "fitting",
+      "input": {
+        "description": "Perturbed convex cube; equal-edge 4D variant is tesseract",
+        "parameters": {
+          "objectives": [
+            "equal-edges"
+          ]
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "CON-09",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "fitting",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "manual-fitting",
+            "locator": "Fitting equal-edges",
+            "role": "documented-options"
+          },
+          {
+            "source_id": "history60",
+            "locator": "Fitting equal-edges",
+            "role": "requirement-scope"
+          }
+        ],
+        "checks": [
+          "Report before/after max/RMS residuals and solver termination separately",
+          "Preserve incidence/scale",
+          "Convergence does not establish uniformity"
+        ],
+        "basis": "documented-or-local-contract"
+      },
+      "implementation": "supported",
+      "fixtures": [
+        {
+          "path": "tests/test_condition_fitting.py",
+          "selector": null,
+          "role": "direct",
+          "evidence": "existing-suite-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "preview-fitting",
+          "adopt-fitting",
+          "accept-fitting-near-miss"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R6-FITTING",
+        "priority": "P2",
+        "unverified": "Bounded native coverage exists; benchmark option behavior and shipped UI are unverified.",
+        "next_action": "Run equal-edges fixture and mounted preview/adopt; independently measure condition then reopen/replay parameters."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3,
+          4
+        ],
+        "supported_source_dimensions": [
+          3,
+          4
+        ],
+        "support_note": "Supported only under referenced domain qualifications.",
+        "object_class": "Perturbed convex cube; equal-edge 4D variant is tesseract"
+      }
+    },
+    {
+      "id": "con-09-equal-areas",
+      "requirement_id": "CON-09",
+      "option": "equal-areas",
+      "title": "Fitting equal-areas",
+      "domain_id": "fitting",
+      "input": {
+        "description": "Perturbed convex cube; equal-edge 4D variant is tesseract",
+        "parameters": {
+          "objectives": [
+            "equal-areas"
+          ]
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "CON-09",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "fitting",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "manual-fitting",
+            "locator": "Fitting equal-areas",
+            "role": "documented-options"
+          },
+          {
+            "source_id": "history60",
+            "locator": "Fitting equal-areas",
+            "role": "requirement-scope"
+          }
+        ],
+        "checks": [
+          "Report before/after max/RMS residuals and solver termination separately",
+          "Preserve incidence/scale",
+          "Convergence does not establish uniformity"
+        ],
+        "basis": "documented-or-local-contract"
+      },
+      "implementation": "supported",
+      "fixtures": [
+        {
+          "path": "tests/test_condition_fitting.py",
+          "selector": null,
+          "role": "direct",
+          "evidence": "existing-suite-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "preview-fitting",
+          "adopt-fitting",
+          "accept-fitting-near-miss"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R6-FITTING",
+        "priority": "P2",
+        "unverified": "Bounded native coverage exists; benchmark option behavior and shipped UI are unverified.",
+        "next_action": "Run equal-areas fixture and mounted preview/adopt; independently measure condition then reopen/replay parameters."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3,
+          4
+        ],
+        "supported_source_dimensions": [
+          3,
+          4
+        ],
+        "support_note": "Supported only under referenced domain qualifications.",
+        "object_class": "Perturbed convex cube; equal-edge 4D variant is tesseract"
+      }
+    },
+    {
+      "id": "con-09-infeasible",
+      "requirement_id": "CON-09",
+      "option": "infeasible",
+      "title": "Stationary fitting non-solution",
+      "domain_id": "fitting",
+      "input": {
+        "description": "Symmetric heptagonal bipyramid",
+        "parameters": {
+          "objectives": [
+            "regular-faces"
+          ],
+          "keep_symmetry": true,
+          "max_evaluations": 100
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "CON-09",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "fitting",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "independent-fixtures",
+            "locator": "test_impossible_symmetric_heptagonal_bipyramid_exposes_stationary_non_solution",
+            "role": "expectation-oracle"
+          },
+          {
+            "source_id": "manual-fitting",
+            "locator": "test_impossible_symmetric_heptagonal_bipyramid_exposes_stationary_non_solution",
+            "role": "documented-options"
+          }
+        ],
+        "checks": [
+          "Solver success cannot override residual >0.01",
+          "Strict adoption refuses and explicit valid-near-miss is separate"
+        ],
+        "basis": "independent-invariant"
+      },
+      "implementation": "supported",
+      "fixtures": [
+        {
+          "path": "tests/test_condition_fitting.py",
+          "selector": "test_impossible_symmetric_heptagonal_bipyramid_exposes_stationary_non_solution",
+          "role": "direct",
+          "evidence": "existing-test-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "preview-fitting",
+          "adopt-fitting",
+          "accept-fitting-near-miss"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R6-FITTING",
+        "priority": "P2",
+        "unverified": "Bounded native coverage exists; benchmark option behavior and shipped UI are unverified.",
+        "next_action": "Run the named fixture, then reproduce stationary fitting non-solution through the listed UI; retain source, parameters, residuals, incidence and versioned comparison evidence."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3
+        ],
+        "supported_source_dimensions": [
+          3
+        ],
+        "support_note": "Supported only under referenced domain qualifications.",
+        "object_class": "Symmetric heptagonal bipyramid"
+      }
+    },
+    {
+      "id": "con-09-generalized-domain",
+      "requirement_id": "CON-09",
+      "option": "generalized-domain",
+      "title": "Generalized near-miss fitting",
+      "domain_id": "fitting",
+      "input": {
+        "description": "Named generalized/nonconvex near-miss boundary",
+        "parameters": {
+          "source_class": "generalized"
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "CON-09",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "fitting",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "manual-fitting",
+            "locator": "Generalized near-miss fitting",
+            "role": "documented-options"
+          }
+        ],
+        "checks": [
+          "Current convex-only refusal stays explicit",
+          "No regularity assertion on unsupported input"
+        ],
+        "basis": "documented-or-local-contract"
+      },
+      "implementation": "unsupported",
+      "fixtures": [
+        {
+          "path": "tests/test_geometric_fitting.py",
+          "selector": null,
+          "role": "related-not-oracle",
+          "evidence": "existing-suite-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "preview-fitting",
+          "adopt-fitting",
+          "accept-fitting-near-miss"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R6-FITTING",
+        "priority": "P1",
+        "unverified": "Generalized near-miss source/constraint tranche not selected or implemented.",
+        "next_action": "Choose one named licensed near-miss and one condition for R6-FITTING; define orientation/intersection/adoption checks first."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3
+        ],
+        "supported_source_dimensions": [],
+        "support_note": "No supported-domain claim for this requested case; see implementation status and follow-up.",
+        "object_class": "Named generalized/nonconvex near-miss boundary"
+      }
+    },
+    {
+      "id": "io-01-off-colors",
+      "requirement_id": "IO-01",
+      "option": "off-colors",
+      "title": "OFF/4OFF color/incidence import",
+      "domain_id": "interchange",
+      "input": {
+        "description": "Colored 3D boundary and 4D cross-polytope with cells",
+        "parameters": {
+          "encoding": [
+            "byte",
+            "unit"
+          ],
+          "color_owner": [
+            "face",
+            "cell"
+          ]
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "IO-01",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "interchange",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "installed54-manual",
+            "locator": "#import",
+            "role": "documented-options"
+          },
+          {
+            "source_id": "manual-io",
+            "locator": "test_boundary_colors_preserve_incidence_and_both_encodings_roundtrip",
+            "role": "documented-options"
+          }
+        ],
+        "checks": [
+          "Preserve ordered incidence/RGBA under supported encoding",
+          "Color suffix cannot hide invalid indices"
+        ],
+        "basis": "documented-or-local-contract"
+      },
+      "implementation": "supported",
+      "fixtures": [
+        {
+          "path": "tests/test_off_compatibility.py",
+          "selector": "test_boundary_colors_preserve_incidence_and_both_encodings_roundtrip",
+          "role": "direct",
+          "evidence": "existing-test-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "open"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R6-INTERCHANGE",
+        "priority": "P2",
+        "unverified": "Bounded native coverage exists; benchmark option behavior and shipped UI are unverified.",
+        "next_action": "Run the named fixture, then reproduce off/4off color/incidence import through the listed UI; retain source, parameters, residuals, incidence and versioned comparison evidence."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3,
+          4
+        ],
+        "supported_source_dimensions": [
+          3,
+          4
+        ],
+        "support_note": "Supported only under referenced domain qualifications.",
+        "object_class": "Colored 3D boundary and 4D cross-polytope with cells"
+      }
+    },
+    {
+      "id": "io-02-units-loss",
+      "requirement_id": "IO-02",
+      "option": "units-loss",
+      "title": "Export units and loss preview",
+      "domain_id": "interchange",
+      "input": {
+        "description": "25.4-mm cube exported in inches and mm",
+        "parameters": {
+          "formats": [
+            "OFF",
+            "OBJ",
+            "STL",
+            "DXF",
+            "VRML",
+            "POV"
+          ],
+          "inch_factor": "1/25.4"
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "IO-02",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "interchange",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "installed54-manual",
+            "locator": "#export",
+            "role": "documented-options"
+          },
+          {
+            "source_id": "manual-export",
+            "locator": "Export units and loss preview",
+            "role": "documented-options"
+          }
+        ],
+        "checks": [
+          "Independent reader checks scale/orientation and representable incidence",
+          "Preview names attribute/topology loss before destination review"
+        ],
+        "basis": "documented-or-local-contract"
+      },
+      "implementation": "supported",
+      "fixtures": [
+        {
+          "path": "tests/test_export_options.py",
+          "selector": null,
+          "role": "direct",
+          "evidence": "existing-suite-inspected"
+        },
+        {
+          "path": "tests/test_export_context.py",
+          "selector": "test_millimeters_to_inches_literal_25_point_4_cube",
+          "role": "direct",
+          "evidence": "existing-test-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "export-source",
+          "export-format",
+          "export-units",
+          "export-preview",
+          "confirm-export"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R6-INTERCHANGE",
+        "priority": "P2",
+        "unverified": "Bounded native coverage exists; benchmark option behavior and shipped UI are unverified.",
+        "next_action": "Create independent-reader receipts per codec; distinguish topology-preserving output from triangulated output and retain unit settings."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3,
+          4
+        ],
+        "supported_source_dimensions": [
+          3,
+          4
+        ],
+        "support_note": "Supported only under referenced domain qualifications.",
+        "object_class": "25.4-mm cube exported in inches and mm"
+      }
+    }
+  ]
+}

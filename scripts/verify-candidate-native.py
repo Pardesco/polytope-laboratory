@@ -1,4 +1,5 @@
 """Verify a chosen unpacked candidate against its qualified native inputs."""
+
 import argparse
 import ast
 import hashlib
@@ -61,22 +62,30 @@ def main():
             assert source.read_bytes() == (bundle / 'catalog_data' / relative).read_bytes()
             assets.append({'path': relative.as_posix(), 'sha256': digest(source)})
     result = {
-        'passed': True, 'version': proof['version'],
+        'passed': True,
+        'version': proof['version'],
         'createdUtc': datetime.now(timezone.utc).isoformat(),
         'scope': 'Native source/build receipt and exact candidate resource bytes; runtime behavior qualified separately',
-        'unpackedRoot': str(unpacked), 'nativeSourceProof': str(args.native_proof.resolve()),
+        'unpackedRoot': str(unpacked),
+        'nativeSourceProof': str(args.native_proof.resolve()),
         'nativeSourceProofSha256': digest(args.native_proof),
-        'nativeSourceHashCount': len(hashes), 'sourceUnchanged': True,
-        'moduleCount': len(modules), 'modules': modules,
+        'nativeSourceHashCount': len(hashes),
+        'sourceUnchanged': True,
+        'moduleCount': len(modules),
+        'modules': modules,
         'buildTocSha256': digest(toc_path),
         'buildExecutableSha256': digest(built_engine),
         'packagedExecutableSha256': digest(packed_engine),
-        'frozenImporterFiles': importer, 'catalogAssetCount': len(assets),
-        'catalogBytesMatch': True, 'catalogAssets': assets,
+        'frozenImporterFiles': importer,
+        'catalogAssetCount': len(assets),
+        'catalogBytesMatch': True,
+        'catalogAssets': assets,
     }
     args.output.write_text(json.dumps(result, indent=2) + '\n', encoding='utf-8')
-    print(f'{len(hashes)} unchanged inputs; {len(modules)} build modules; '
-          f'{len(assets)} catalog assets; {len(importer)} importer files: PASS')
+    print(
+        f'{len(hashes)} unchanged inputs; {len(modules)} build modules; '
+        f'{len(assets)} catalog assets; {len(importer)} importer files: PASS'
+    )
 
 
 if __name__ == '__main__':

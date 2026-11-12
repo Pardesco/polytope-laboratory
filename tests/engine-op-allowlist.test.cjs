@@ -1,15 +1,27 @@
-// Every renderer run('op') must pass the main-process geometry API allowlist (desktop/main.cjs),
-// or the op fails only in the real app ("Operation is unavailable through the geometry API").
-const test=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path');
-const root=path.resolve(__dirname,'..');
-test('renderer engine ops are allowed by the desktop geometry API',()=>{
-  const main=fs.readFileSync(path.join(root,'desktop/main.cjs'),'utf8'),allowed=new Set();
-  for(const m of main.matchAll(/(?:allowed\s*=\s*new Set\(\[|for\(const op of \[)([^\]]*)\]/g))for(const y of m[1].matchAll(/'([^']+)'/g))allowed.add(y[1]);
-  for(const m of main.matchAll(/allowed\.add\('([^']+)'\)/g))allowed.add(m[1]);
-  const missing=[];
-  for(const f of fs.readdirSync(path.join(root,'ui')).filter(f=>/\.m?js$/.test(f))){
-    const source=fs.readFileSync(path.join(root,'ui',f),'utf8');
-    for(const r of source.matchAll(/(?<![.\w])run\(\s*'([a-z0-9-]+)'/g))if(!allowed.has(r[1]))missing.push(`${r[1]} (${f})`);
+// Check literal renderer operations against actual desktop allowlist syntax.
+const test = require('node:test'),
+  assert = require('node:assert/strict'),
+  fs = require('node:fs'),
+  path = require('node:path');
+const { sourceNodes } = require('./helpers/source-match.cjs');
+const root = path.resolve(__dirname, '..');
+test('renderer engine ops are allowed by the desktop geometry API', () => {
+  const { allowed } = require('../desktop/engine-allowlist.cjs');
+  assert.ok(allowed.size > 0, 'Find the actual desktop operation allowlist');
+  const missing = [];
+  let calls = 0;
+  for (const f of fs.readdirSync(path.join(root, 'ui'), { recursive: true }).filter((f) => /\.m?js$/.test(f))) {
+    const source = fs.readFileSync(path.join(root, 'ui', f), 'utf8');
+    for (const node of sourceNodes(
+      source,
+      (n) => n.type === 'CallExpression' && n.callee.name === 'run' && typeof n.arguments[0]?.value === 'string'
+    )) {
+      const op = node.arguments[0].value;
+      if (!/^[a-z0-9-]+$/.test(op)) continue;
+      calls++;
+      if (!allowed.has(op)) missing.push(op + ' (' + f + ')');
+    }
   }
-  assert.deepEqual([...new Set(missing)],[]);
+  assert.ok(calls > 0, 'Inspect literal renderer run calls');
+  assert.deepEqual([...new Set(missing)], []);
 });

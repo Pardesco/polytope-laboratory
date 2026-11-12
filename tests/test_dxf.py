@@ -1,4 +1,5 @@
 """Hand-authored source geometry; expected incidence never comes from a hull."""
+
 import json
 import math
 
@@ -29,13 +30,11 @@ def face(points, extra=(), omit_fourth=False):
     points = list(points)
     if len(points) == 3 and not omit_fourth:
         points.append(points[2])
-    return [(0, '3DFACE')] + list(extra) + [pair for i, p in enumerate(points) for pair in point_groups(p, 10+i)]
+    return [(0, '3DFACE')] + list(extra) + [pair for i, p in enumerate(points) for pair in point_groups(p, 10 + i)]
 
 
-CUBE = [[0, 0, 0], [1, 0, 0], [1, 1, 0], [0, 1, 0],
-        [0, 0, 1], [1, 0, 1], [1, 1, 1], [0, 1, 1]]
-CUBE_FACES = [[0, 3, 2, 1], [4, 5, 6, 7], [0, 1, 5, 4],
-              [1, 2, 6, 5], [2, 3, 7, 6], [3, 0, 4, 7]]
+CUBE = [[0, 0, 0], [1, 0, 0], [1, 1, 0], [0, 1, 0], [0, 0, 1], [1, 0, 1], [1, 1, 1], [0, 1, 1]]
+CUBE_FACES = [[0, 3, 2, 1], [4, 5, 6, 7], [0, 1, 5, 4], [1, 2, 6, 5], [2, 3, 7, 6], [3, 0, 4, 7]]
 TETRA = [[0, 0, 0], [1, 0, 0], [0, 1, 0], [0, 0, 1]]
 TETRA_FACES = [[0, 2, 1], [0, 1, 3], [0, 3, 2], [1, 2, 3]]
 
@@ -44,7 +43,11 @@ def polyface(points, faces, counts=None, faces_first=False):
     counts = counts or (len(points), len(faces))
     start = [(0, 'POLYLINE'), (70, 64), (71, counts[0]), (72, counts[1])]
     coordinates = [pair for p in points for pair in [(0, 'VERTEX'), (70, 192)] + point_groups(p)]
-    boundaries = [pair for f in faces for pair in [(0, 'VERTEX'), (70, 128), (10, 0), (20, 0), (30, 0)] + list(zip(range(71, 75), f))]
+    boundaries = [
+        pair
+        for f in faces
+        for pair in [(0, 'VERTEX'), (70, 128), (10, 0), (20, 0), (30, 0)] + list(zip(range(71, 75), f))
+    ]
     return start + (boundaries + coordinates if faces_first else coordinates + boundaries) + [(0, 'SEQEND')]
 
 
@@ -61,14 +64,16 @@ def test_3dface_exact_incidence_and_source_coordinates(points, cycles, counts):
     assert model['cells'] == [] and model['interpretation'] == 'generalized-complex'
     assert model['metadata']['dxf']['affineDimension'] == 3
     assert validate(model)['passed']
-    assert all(model['vertices'][s['modelVertex']] == s['coordinates'] for s in model['metadata']['dxf']['sourceVertexMap'])
+    assert all(
+        model['vertices'][s['modelVertex']] == s['coordinates'] for s in model['metadata']['dxf']['sourceVertexMap']
+    )
     # Incidence is retained instead of adding support planes or convexification.
     assert 'facetEquations' not in model and 'measure' not in model
 
 
 @pytest.mark.parametrize('faces_first', [False, True])
 def test_polyface_cube_accepts_odd_record_order_with_identical_incidence(faces_first):
-    indices = [[v+1 for v in f] for f in CUBE_FACES]
+    indices = [[v + 1 for v in f] for f in CUBE_FACES]
     model = parse_dxf(drawing(polyface(CUBE, indices, faces_first=faces_first)))
     assert (len(model['vertices']), len(model['edges']), len(model['faces'])) == (8, 12, 6)
     assert model['vertices'] == CUBE
@@ -97,8 +102,16 @@ def test_triangle_hidden_fourth_source_edge_maps_to_closing_boundary():
 
 
 def test_quad_hidden_edge_and_layer_units_truecolor_metadata_json_persistence():
-    tables = [(0, 'TABLE'), (2, 'LAYER'), (0, 'LAYER'), (2, 'boundary'), (70, 1),
-              (62, -3), (420, 0x204060), (0, 'ENDTAB')]
+    tables = [
+        (0, 'TABLE'),
+        (2, 'LAYER'),
+        (0, 'LAYER'),
+        (2, 'boundary'),
+        (70, 1),
+        (62, -3),
+        (420, 0x204060),
+        (0, 'ENDTAB'),
+    ]
     header = [(9, '$INSUNITS'), (70, 4), (9, '$ACADVER'), (1, 'AC1032')]
     source = face(CUBE[:4], [(8, 'boundary'), (62, 256), (70, 5), (60, 1)])
     model = parse_dxf(drawing(source, header, tables))
@@ -117,7 +130,7 @@ def test_quad_hidden_edge_and_layer_units_truecolor_metadata_json_persistence():
 def test_line_point_wcs_extrusion_and_duplicate_line_sources():
     a, b = [2, 3, 4], [6, 3, 4]
     line = [(0, 'LINE'), (62, 0), (210, 1), (220, 0), (230, 0)] + point_groups(a) + point_groups(b, 11)
-    source = line + line + [(0, 'POINT'), (420, 0xff0080)] + point_groups([10, 0, 0])
+    source = line + line + [(0, 'POINT'), (420, 0xFF0080)] + point_groups([10, 0, 0])
     model = parse_dxf(drawing(source))
     assert model['vertices'] == [a, b, [10, 0, 0]] and model['edges'] == [[0, 1]]
     metadata = model['metadata']['dxf']
@@ -142,7 +155,7 @@ def test_explicit_welding_retains_first_source_coordinates_and_map():
     source = [(0, 'LINE')] + point_groups([0, 0, 0]) + point_groups([1, 0, 0], 11)
     source += [(0, 'LINE')] + point_groups([1.0005, 0, 0]) + point_groups([2, 0, 0], 11)
     exact = parse_dxf(drawing(source))
-    welded = parse_dxf(drawing(source), weld_tolerance=.001)
+    welded = parse_dxf(drawing(source), weld_tolerance=0.001)
     assert len(exact['vertices']) == 4
     assert welded['vertices'] == [[0, 0, 0], [1, 0, 0], [2, 0, 0]]
     assert welded['edges'] == [[0, 1], [1, 2]]
@@ -150,13 +163,13 @@ def test_explicit_welding_retains_first_source_coordinates_and_map():
     assert [s['modelVertex'] for s in mapping] == [0, 1, 1, 2]
     assert mapping[2]['coordinates'] == [1.0005, 0, 0]
     assert mapping[1]['coordinates'] != mapping[2]['coordinates']
-    assert welded['provenance']['parameters']['weldTolerance'] == .001
+    assert welded['provenance']['parameters']['weldTolerance'] == 0.001
 
 
 def test_weld_is_not_transitive_chain_clustering_and_handles_tiny_tolerance():
-    source = [pair for x in (0, .09, .18) for pair in [(0, 'POINT')] + point_groups([x, 0, 0])]
-    model = parse_dxf(drawing(source), weld_tolerance=.1)
-    assert model['vertices'] == [[0, 0, 0], [.18, 0, 0]]
+    source = [pair for x in (0, 0.09, 0.18) for pair in [(0, 'POINT')] + point_groups([x, 0, 0])]
+    model = parse_dxf(drawing(source), weld_tolerance=0.1)
+    assert model['vertices'] == [[0, 0, 0], [0.18, 0, 0]]
     tiny = parse_dxf(drawing([(0, 'POINT')] + point_groups([1e99, 0, 0])), weld_tolerance=5e-324)
     assert tiny['vertices'] == [[1e99, 0, 0]]
 
@@ -168,10 +181,18 @@ def test_unsupported_geometry_after_valid_entity_rejects_entire_file(entity):
         parse_dxf(drawing(source))
 
 
-@pytest.mark.parametrize('extra,message', [([(39, 1)], 'thickness'), ([(67, 1)], 'paper-space'),
-                                         ([(60, 2)], 'visibility'), ([(70, 16)], 'mask'),
-                                         ([(62, 300)], 'ACI'), ([(420, 0x1000000)], '24-bit'),
-                                         ([(10, 2)], 'duplicate group')])
+@pytest.mark.parametrize(
+    'extra,message',
+    [
+        ([(39, 1)], 'thickness'),
+        ([(67, 1)], 'paper-space'),
+        ([(60, 2)], 'visibility'),
+        ([(70, 16)], 'mask'),
+        ([(62, 300)], 'ACI'),
+        ([(420, 0x1000000)], '24-bit'),
+        ([(10, 2)], 'duplicate group'),
+    ],
+)
 def test_invalid_face_fields_fail(extra, message):
     with pytest.raises(GeometryError, match=message):
         parse_dxf(drawing(face(TETRA[:3], extra)))
@@ -183,10 +204,16 @@ def test_invalid_local_polyface_incidence_rejected(indices):
         parse_dxf(drawing(polyface(TETRA[:3], [indices])))
 
 
-@pytest.mark.parametrize('source', ['0\nSECTION\n2\nENTITIES\n0\nPOINT\n10\n',
-                                   '0\nSECTION\n2\nENTITIES\n0\nEOF\n',
-                                   '0\nSECTION\n2\nENTITIES\n0\nENDSEC\n',
-                                   'oops\nEOF\n', 'AutoCAD Binary DXF\r\n\x1a\x00'])
+@pytest.mark.parametrize(
+    'source',
+    [
+        '0\nSECTION\n2\nENTITIES\n0\nPOINT\n10\n',
+        '0\nSECTION\n2\nENTITIES\n0\nEOF\n',
+        '0\nSECTION\n2\nENTITIES\n0\nENDSEC\n',
+        'oops\nEOF\n',
+        'AutoCAD Binary DXF\r\n\x1a\x00',
+    ],
+)
 def test_malformed_structure_rejected(source):
     with pytest.raises(GeometryError):
         parse_dxf(source)
@@ -198,7 +225,7 @@ def test_nonfinite_or_unbounded_coordinates_rejected(value):
         parse_dxf(drawing([(0, 'POINT'), (10, value), (20, 0)]))
 
 
-@pytest.mark.parametrize('tolerance', [True, -.1, math.inf, math.nan, '0', 10**500])
+@pytest.mark.parametrize('tolerance', [True, -0.1, math.inf, math.nan, '0', 10**500])
 def test_invalid_welding_tolerance_rejected(tolerance):
     with pytest.raises(GeometryError):
         parse_dxf(drawing([(0, 'POINT')] + point_groups([0, 0, 0])), weld_tolerance=tolerance)
@@ -206,7 +233,7 @@ def test_invalid_welding_tolerance_rejected(tolerance):
 
 def test_weld_collapsed_face_and_nonplanar_quad_rejected():
     with pytest.raises(GeometryError, match='collapsed'):
-        parse_dxf(drawing(face([[0, 0, 0], [.0001, 0, 0], [0, 1, 0]])), weld_tolerance=.001)
+        parse_dxf(drawing(face([[0, 0, 0], [0.0001, 0, 0], [0, 1, 0]])), weld_tolerance=0.001)
     with pytest.raises(GeometryError, match='planar'):
         parse_dxf(drawing(face([[0, 0, 0], [1, 0, 0], [1, 1, 1], [0, 1, 0]])))
 
@@ -222,11 +249,18 @@ def test_blocks_with_geometry_reject_and_empty_definitions_are_allowed():
     source = [(0, 'POINT')] + point_groups([0, 0, 0])
     assert parse_dxf(drawing(source, blocks=empty))['validation']['passed']
     with pytest.raises(GeometryError, match='BLOCKS'):
-        parse_dxf(drawing(source, blocks=empty[:-1]+source+empty[-1:]))
+        parse_dxf(drawing(source, blocks=empty[:-1] + source + empty[-1:]))
 
 
-@pytest.mark.parametrize('header', [[(9, '$INSUNITS'), (70, -1)], [(9, '$INSUNITS'), (70, 25)],
-                                   [(9, '$INSUNITS'), (1, 4)], [(9, '$INSUNITS'), (70, 4), (70, 6)]])
+@pytest.mark.parametrize(
+    'header',
+    [
+        [(9, '$INSUNITS'), (70, -1)],
+        [(9, '$INSUNITS'), (70, 25)],
+        [(9, '$INSUNITS'), (1, 4)],
+        [(9, '$INSUNITS'), (70, 4), (70, 6)],
+    ],
+)
 def test_ambiguous_or_invalid_units_rejected(header):
     with pytest.raises(GeometryError):
         parse_dxf(drawing([(0, 'POINT')] + point_groups([0, 0, 0]), header=header))
@@ -252,7 +286,7 @@ def test_duplicate_face_identity_is_retained_and_comments_order_are_tolerated():
 
 def test_group_integer_overflow_and_invalid_unicode_are_diagnosed():
     with pytest.raises(GeometryError):
-        parse_dxf('9'*5000+'\nEOF\n')
+        parse_dxf('9' * 5000 + '\nEOF\n')
     with pytest.raises(GeometryError, match='Unicode'):
         parse_dxf('\ud800')
 
@@ -262,16 +296,16 @@ def test_byte_and_weld_comparison_budgets(monkeypatch):
     monkeypatch.setattr(dxf, 'MAX_FILE_BYTES', 10)
     with pytest.raises(GeometryError, match='file exceeds'):
         parse_dxf(source)
-    monkeypatch.setattr(dxf, 'MAX_FILE_BYTES', 128*1024*1024)
+    monkeypatch.setattr(dxf, 'MAX_FILE_BYTES', 128 * 1024 * 1024)
     monkeypatch.setattr(dxf, 'MAX_WELD_COMPARISONS', 1)
-    points = [pair for x in (0, .09, .18) for pair in [(0, 'POINT')] + point_groups([x, 0, 0])]
+    points = [pair for x in (0, 0.09, 0.18) for pair in [(0, 'POINT')] + point_groups([x, 0, 0])]
     with pytest.raises(GeometryError, match='comparison resource'):
-        parse_dxf(drawing(points), weld_tolerance=.1)
+        parse_dxf(drawing(points), weld_tolerance=0.1)
 
 
 def test_fitted_polyface_and_wrong_table_record_are_not_silently_ignored():
     source = polyface(TETRA[:3], [[1, 2, 3]])
-    source.insert(6, (42, .5))
+    source.insert(6, (42, 0.5))
     with pytest.raises(GeometryError, match='bulged'):
         parse_dxf(drawing(source))
     tables = [(0, 'TABLE'), (2, 'LTYPE'), (0, 'LINE'), (0, 'ENDTAB')]

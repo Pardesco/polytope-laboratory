@@ -1,4 +1,5 @@
 """Preserve qualified native and frontend inputs without replacing old evidence."""
+
 import argparse
 from datetime import datetime, timezone
 import hashlib
@@ -23,10 +24,19 @@ def preserve(destination, hashes, version, scope):
         target.parent.mkdir(parents=True, exist_ok=True)
         target.write_bytes(data)
         assert digest(target.read_bytes()) == expected
-    (destination / 'source-hashes.json').write_text(json.dumps({
-        'version': version, 'createdUtc': datetime.now(timezone.utc).isoformat(),
-        'scope': scope, 'sourceHashes': hashes,
-    }, indent=2) + '\n', encoding='utf-8')
+    (destination / 'source-hashes.json').write_text(
+        json.dumps(
+            {
+                'version': version,
+                'createdUtc': datetime.now(timezone.utc).isoformat(),
+                'scope': scope,
+                'sourceHashes': hashes,
+            },
+            indent=2,
+        )
+        + '\n',
+        encoding='utf-8',
+    )
     print(f'Preserved {len(hashes)} inputs: {destination}')
 
 
@@ -41,14 +51,19 @@ def main():
     native = ROOT / 'artifacts' / f'frozen-{version}-qualified-native-source'
     frontend = ROOT / 'artifacts' / f'frozen-{version}-candidate-inputs'
     assert not native.exists() and not frontend.exists(), 'Existing freezes must be preserved'
-    preserve(native, proof['sourceHashes'], version,
-             'Exact qualified native/catalog/test inputs; future mutations cannot replace this evidence')
+    preserve(
+        native,
+        proof['sourceHashes'],
+        version,
+        'Exact qualified native/catalog/test inputs; future mutations cannot replace this evidence',
+    )
     paths = {ROOT / name for name in ['package.json', 'package-lock.json', 'vite.config.mjs']}
     for folder in ['ui', 'desktop']:
         paths.update(path for path in (ROOT / folder).rglob('*') if path.is_file())
     hashes = {path.relative_to(ROOT).as_posix(): digest(path.read_bytes()) for path in sorted(paths)}
-    preserve(frontend, hashes, version,
-             'Frontend/desktop build inputs; retaining a module does not claim that it is mounted')
+    preserve(
+        frontend, hashes, version, 'Frontend/desktop build inputs; retaining a module does not claim that it is mounted'
+    )
 
 
 if __name__ == '__main__':

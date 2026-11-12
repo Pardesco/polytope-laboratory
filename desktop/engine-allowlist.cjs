@@ -1,0 +1,137 @@
+const allowed = new Set([
+  'prepare-dual-morph',
+  'evaluate-dual-morph',
+  'catalog',
+  'regular4d-validate',
+  'generate',
+  'hull',
+  'rational-hull',
+  'rational-dual',
+  'analyze',
+  'validate',
+  'validate-project',
+  'entity-orientation',
+  'compound-add',
+  'compound-component',
+  'compound-drop',
+  'cell-facing',
+  'recipe-run',
+  'recipe-replay',
+  'recipe-branch',
+  'prepare-export',
+  'export-options',
+  'validate-tour',
+  'face-coincidences',
+  'remove-coincident-pairs',
+  'blend-faces',
+  'subdivide-edges',
+  'polygon-prism',
+  'polyhedron-prism',
+  'attach-at-faces',
+  'place-at-faces',
+  'source-zonohedron',
+  'spring-relaxation',
+  'spring-relaxation-preview',
+  'convex-core-4d',
+  'triangular-geodesic',
+  'convex-core',
+  'convex-layer-join',
+  'fit-strict-layer-join',
+  'analyze-strict-segmentotope',
+  'scale-reference',
+  'dual',
+  'incidence-dual',
+  'truncate',
+  'section',
+  'vertex-figure',
+  'extrude',
+  'transform',
+  'symmetry',
+  'measure',
+  'entity-measure',
+  'entity-info',
+  'dihedral',
+  'align-section',
+  'expression',
+  'expression-batch',
+  'orientation',
+  'net',
+  'net-edit',
+  'net-fold',
+  'net-pack',
+  'cell-net',
+  'cell-net-edit',
+  'cell',
+  'facet',
+  'facet-candidates',
+  'facet-search',
+  'facet-adopt',
+  'arrangement',
+  'arrangement-diagram',
+  'stellation-union',
+  'stellation-enumerate',
+]);
+allowed.add('symmetry-qualification');
+allowed.add('material-environment');
+allowed.add('material-bump');
+allowed.add('add-dual');
+allowed.add('corpus-reconciliation');
+allowed.add('corpus-receipts');
+allowed.add('classification-qualification');
+allowed.add('u-dual-obstructions');
+allowed.add('history-support');
+allowed.add('coxeter-build');
+allowed.add('prepare-view-export');
+allowed.add('uniform-compound');
+allowed.add('visible-surface');
+for (const op of ['blend-regions', 'merge-compound', 'pseudo-uniform']) allowed.add(op);
+allowed.add('verify-dual-tour');
+allowed.add('facet-diagram');
+allowed.add('facet-source-arithmetic');
+allowed.add('facet-diagram-adopt');
+allowed.add('element-content-describe');
+allowed.add('stellation-cell-graph');
+allowed.add('stellation-cavity-analysis');
+allowed.add('stellation-diagram-data');
+allowed.add('stellation-supported-enumerate');
+allowed.add('stellation-miller-enumerate');
+allowed.add('stellation-make-base');
+allowed.add('sphere-project');
+for (const op of ['subdivide-faces', 'conway', 'axis-zonohedron', 'add-zones', 'symmetry-axes']) allowed.add(op);
+allowed.add('reflect-source');
+for (const op of ['coincidic-compare', 'coincidic-record', 'coincidic-compound']) allowed.add(op);
+for (const op of ['generalized-density-info', 'generalized-density-restore']) allowed.add(op);
+allowed.add('projective-incidence-dual');
+allowed.add('element-label-presets');
+allowed.add('element-types');
+allowed.add('information-panel');
+allowed.add('polychoron-relationships');
+allowed.add('symmetry-orientation');
+allowed.add('prepare-printable-export');
+allowed.add('expand-runcinate');
+allowed.add('live-construction-preview');
+allowed.add('geometry-fit');
+allowed.add('geometry-fit-preview');
+allowed.add('geometry-fit-deviation');
+allowed.add('exact-surface-section');
+allowed.add('exact-surface-section-preview');
+allowed.add('incidence-truncate');
+allowed.add('incidence-truncate-preview');
+for (const op of ['net-reinforcement', 'net-measurements', 'net-reinforcement-pages']) allowed.add(op);
+allowed.add('net-hinge-strip-allowance');
+for (const op of [
+  'coincident-edge-qualify',
+  'coincident-edge-net',
+  'coincident-edge-edit',
+  'coincident-edge-pages',
+  'coincident-edge-fold',
+  'coincident-edge-restore',
+])
+  allowed.add(op);
+for (const op of ['rebuild-coplanar-cells', 'rebuild-coplanar-cells-preview']) allowed.add(op);
+for (const op of ['vertex-figure-candidates', 'construct-from-vertex-figure']) allowed.add(op);
+allowed.add('face-surgery');
+allowed.add('face-surgery-preview');
+allowed.add('subdivision-inheritance-preview');
+
+module.exports = { allowed };

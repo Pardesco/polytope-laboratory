@@ -3,6 +3,7 @@
 No geometry is reconstructed. Files retain separate identity even when their
 headers, coordinates, or complete contents match. Full validation occurs on load.
 """
+
 import hashlib
 import os
 from pathlib import Path
@@ -63,8 +64,12 @@ def _header(stream):
         raise GeometryError('OFF count header has the wrong length or invalid element counts.')
     if any(x > 1000000 for x in declared):
         raise GeometryError('OFF element counts exceed import resource limits.')
-    counts = [declared[0], declared[2] if dimension >= 3 else (declared[1] if dimension == 2 else 0),
-              declared[1] if dimension >= 3 else 0, declared[3] if dimension >= 4 else 0]
+    counts = [
+        declared[0],
+        declared[2] if dimension >= 3 else (declared[1] if dimension == 2 else 0),
+        declared[1] if dimension >= 3 else 0,
+        declared[3] if dimension >= 4 else 0,
+    ]
     return marker, dimension, declared, counts
 
 
@@ -117,16 +122,30 @@ def index_library(path, max_entries=MAX_LIBRARY_ENTRIES, audit_path=None, verify
         category = relative.parent.as_posix() if relative.parent != Path('.') else 'Uncategorized'
         filename = str(file)
         entry = {
-            'key': filename, 'filePath': filename,
+            'key': filename,
+            'filePath': filename,
             'id': hashlib.sha256(os.path.normcase(filename).encode('utf-8')).hexdigest(),
-            'name': file.stem, 'family': 'Local OFF · ' + category,
-            'category': category, 'sourceCategory': category, 'categoryVerified': False,
-            'relativePath': relative.as_posix(), 'libraryRoot': str(root),
-            'external': True, 'dimension': None, 'counts': None, 'headerCounts': None,
-            'status': 'invalid-header', 'supported': False, 'validation': 'header-only', 'sourceHash': None,
+            'name': file.stem,
+            'family': 'Local OFF · ' + category,
+            'category': category,
+            'sourceCategory': category,
+            'categoryVerified': False,
+            'relativePath': relative.as_posix(),
+            'libraryRoot': str(root),
+            'external': True,
+            'dimension': None,
+            'counts': None,
+            'headerCounts': None,
+            'status': 'invalid-header',
+            'supported': False,
+            'validation': 'header-only',
+            'sourceHash': None,
             'hashStatus': 'not-computed',
             'hashVerification': 'explicit' if verify_audit_hashes else 'bounded-startup',
-            'auditStatus': 'untested', 'auditWarnings': [], 'auditErrors': [], 'auditWarningCount': 0,
+            'auditStatus': 'untested',
+            'auditWarnings': [],
+            'auditErrors': [],
+            'auditWarningCount': 0,
             'auditDiagnostic': 'No audit evidence is attached to this library.',
             'diagnostic': 'Header indexed only; complete geometry is checked when opened.',
         }
@@ -134,7 +153,9 @@ def index_library(path, max_entries=MAX_LIBRARY_ENTRIES, audit_path=None, verify
         try:
             resolved = file.resolve(strict=True)
             if not _within(resolved, root):
-                entry.update(status='unsafe-path', diagnostic='File link resolves outside the authorized library directory.')
+                entry.update(
+                    status='unsafe-path', diagnostic='File link resolves outside the authorized library directory.'
+                )
                 continue
             entry['resolvedPath'] = str(resolved)
             source_stat = file.stat()
@@ -175,9 +196,14 @@ def index_library(path, max_entries=MAX_LIBRARY_ENTRIES, audit_path=None, verify
                     continue
             entry.update(format=marker, dimension=dimension, headerCounts=declared, counts=counts)
             if dimension not in (3, 4):
-                entry.update(status='unsupported-dimension', diagnostic=f'{dimension}D OFF is indexed; model loading currently supports 3D and 4D.')
+                entry.update(
+                    status='unsupported-dimension',
+                    diagnostic=f'{dimension}D OFF is indexed; model loading currently supports 3D and 4D.',
+                )
             elif marker not in ('OFF', '4OFF'):
-                entry.update(status='unsupported-format', diagnostic=f'{marker} is indexed; model loading expects OFF or 4OFF.')
+                entry.update(
+                    status='unsupported-format', diagnostic=f'{marker} is indexed; model loading expects OFF or 4OFF.'
+                )
             elif counts[0] > MAX_VERTICES:
                 entry.update(status='resource-limit', diagnostic=f'OFF declares more than {MAX_VERTICES:,} vertices.')
             else:
@@ -186,5 +212,6 @@ def index_library(path, max_entries=MAX_LIBRARY_ENTRIES, audit_path=None, verify
             entry.update(status='unreadable', diagnostic='Cannot read linked OFF entry: ' + str(exc))
     if audit_path is not None:
         from .library_audit import attach_audit
+
         return attach_audit(results, audit_path)
     return results

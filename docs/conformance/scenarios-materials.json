@@ -1,0 +1,903 @@
+{
+  "schema_version": 1,
+  "scenarios": [
+    {
+      "id": "vis-03-preset-studio",
+      "requirement_id": "VIS-03",
+      "option": "preset-studio",
+      "title": "Studio material persistence",
+      "domain_id": "materials",
+      "input": {
+        "description": "3D cube with customized source RGBA",
+        "parameters": {
+          "preset": "Studio",
+          "customize_then_reset": true
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "VIS-03",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "materials",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "spec",
+            "locator": "test_all_renderer_presets_and_custom_edits_roundtrip_through_native_project",
+            "role": "requirement-scope"
+          }
+        ],
+        "checks": [
+          "Saved project restores literal view material fields",
+          "Geometry/observer pose remain unchanged",
+          "Reset reapplies selected preset"
+        ],
+        "basis": "documented-or-local-contract"
+      },
+      "implementation": "supported",
+      "fixtures": [
+        {
+          "path": "tests/test_material_styles.py",
+          "selector": "test_all_renderer_presets_and_custom_edits_roundtrip_through_native_project",
+          "role": "direct",
+          "evidence": "existing-test-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "material-effects-settings",
+          "effects-bump",
+          "effects-environmentMode"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R6-MATERIALS",
+        "priority": "P2",
+        "unverified": "Bounded native coverage exists; benchmark option behavior and shipped UI are unverified.",
+        "next_action": "Capture Studio on 3D cube before/after reopen/reset and PNG; compare saved fields plus device pixels without claiming physical material equivalence."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3
+        ],
+        "supported_source_dimensions": [
+          3
+        ],
+        "support_note": "Supported only under referenced domain qualifications.",
+        "object_class": "3D cube with customized source RGBA"
+      }
+    },
+    {
+      "id": "vis-03-preset-glass",
+      "requirement_id": "VIS-03",
+      "option": "preset-glass",
+      "title": "Glass material persistence",
+      "domain_id": "materials",
+      "input": {
+        "description": "3D cube with customized source RGBA",
+        "parameters": {
+          "preset": "Glass",
+          "customize_then_reset": true
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "VIS-03",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "materials",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "spec",
+            "locator": "test_all_renderer_presets_and_custom_edits_roundtrip_through_native_project",
+            "role": "requirement-scope"
+          }
+        ],
+        "checks": [
+          "Saved project restores literal view material fields",
+          "Geometry/observer pose remain unchanged",
+          "Reset reapplies selected preset"
+        ],
+        "basis": "documented-or-local-contract"
+      },
+      "implementation": "supported",
+      "fixtures": [
+        {
+          "path": "tests/test_material_styles.py",
+          "selector": "test_all_renderer_presets_and_custom_edits_roundtrip_through_native_project",
+          "role": "direct",
+          "evidence": "existing-test-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "material-effects-settings",
+          "effects-bump",
+          "effects-environmentMode"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R6-MATERIALS",
+        "priority": "P2",
+        "unverified": "Bounded native coverage exists; benchmark option behavior and shipped UI are unverified.",
+        "next_action": "Capture Glass on 3D cube before/after reopen/reset and PNG; compare saved fields plus device pixels without claiming physical material equivalence."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3
+        ],
+        "supported_source_dimensions": [
+          3
+        ],
+        "support_note": "Supported only under referenced domain qualifications.",
+        "object_class": "3D cube with customized source RGBA"
+      }
+    },
+    {
+      "id": "vis-03-preset-metal",
+      "requirement_id": "VIS-03",
+      "option": "preset-metal",
+      "title": "Metal material persistence",
+      "domain_id": "materials",
+      "input": {
+        "description": "3D cube with customized source RGBA",
+        "parameters": {
+          "preset": "Metal",
+          "customize_then_reset": true
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "VIS-03",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "materials",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "spec",
+            "locator": "test_all_renderer_presets_and_custom_edits_roundtrip_through_native_project",
+            "role": "requirement-scope"
+          }
+        ],
+        "checks": [
+          "Saved project restores literal view material fields",
+          "Geometry/observer pose remain unchanged",
+          "Reset reapplies selected preset"
+        ],
+        "basis": "documented-or-local-contract"
+      },
+      "implementation": "supported",
+      "fixtures": [
+        {
+          "path": "tests/test_material_styles.py",
+          "selector": "test_all_renderer_presets_and_custom_edits_roundtrip_through_native_project",
+          "role": "direct",
+          "evidence": "existing-test-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "material-effects-settings",
+          "effects-bump",
+          "effects-environmentMode"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R6-MATERIALS",
+        "priority": "P2",
+        "unverified": "Bounded native coverage exists; benchmark option behavior and shipped UI are unverified.",
+        "next_action": "Capture Metal on 3D cube before/after reopen/reset and PNG; compare saved fields plus device pixels without claiming physical material equivalence."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3
+        ],
+        "supported_source_dimensions": [
+          3
+        ],
+        "support_note": "Supported only under referenced domain qualifications.",
+        "object_class": "3D cube with customized source RGBA"
+      }
+    },
+    {
+      "id": "vis-03-preset-geomag",
+      "requirement_id": "VIS-03",
+      "option": "preset-geomag",
+      "title": "Geomag material persistence",
+      "domain_id": "materials",
+      "input": {
+        "description": "3D cube with customized source RGBA",
+        "parameters": {
+          "preset": "Geomag",
+          "customize_then_reset": true
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "VIS-03",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "materials",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "spec",
+            "locator": "test_all_renderer_presets_and_custom_edits_roundtrip_through_native_project",
+            "role": "requirement-scope"
+          }
+        ],
+        "checks": [
+          "Saved project restores literal view material fields",
+          "Geometry/observer pose remain unchanged",
+          "Reset reapplies selected preset"
+        ],
+        "basis": "documented-or-local-contract"
+      },
+      "implementation": "supported",
+      "fixtures": [
+        {
+          "path": "tests/test_material_styles.py",
+          "selector": "test_all_renderer_presets_and_custom_edits_roundtrip_through_native_project",
+          "role": "direct",
+          "evidence": "existing-test-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "material-effects-settings",
+          "effects-bump",
+          "effects-environmentMode"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R6-MATERIALS",
+        "priority": "P2",
+        "unverified": "Bounded native coverage exists; benchmark option behavior and shipped UI are unverified.",
+        "next_action": "Capture Geomag on 3D cube before/after reopen/reset and PNG; compare saved fields plus device pixels without claiming physical material equivalence."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3
+        ],
+        "supported_source_dimensions": [
+          3
+        ],
+        "support_note": "Supported only under referenced domain qualifications.",
+        "object_class": "3D cube with customized source RGBA"
+      }
+    },
+    {
+      "id": "vis-02-alpha-overlap",
+      "requirement_id": "VIS-02",
+      "option": "alpha-overlap",
+      "title": "RGBA overlap and owner colors",
+      "domain_id": "materials",
+      "input": {
+        "description": "Intersecting translucent 3D faces and shared projected 4D face owners",
+        "parameters": {
+          "alpha": [
+            0,
+            0.5,
+            1
+          ],
+          "color_policy": "first-visible-owner"
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "VIS-02",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "materials",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "history60",
+            "locator": "RGBA overlap and owner colors",
+            "role": "requirement-scope"
+          }
+        ],
+        "checks": [
+          "Retain source alpha and owner policy",
+          "Transparent ordering artifacts must not be described as exact visibility"
+        ],
+        "basis": "documented-or-local-contract"
+      },
+      "implementation": "restricted",
+      "fixtures": [
+        {
+          "path": "tests/packed-surface-colors.test.mjs",
+          "selector": null,
+          "role": "direct",
+          "evidence": "existing-suite-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "surface-colors",
+          "surface-opacity"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "desktop-qualification",
+        "owner": "R7-DESKTOP",
+        "priority": "P2",
+        "unverified": "Device overlap/depth ordering and subgroup coloring options not qualified.",
+        "next_action": "Capture overlapping-face color/depth matrix on supported GPU; compare same-source type/subgroup colors and retain first-owner policy evidence."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3,
+          4
+        ],
+        "supported_source_dimensions": [
+          3,
+          4
+        ],
+        "support_note": "Supported only under referenced domain qualifications.",
+        "object_class": "Intersecting translucent 3D faces and shared projected 4D face owners"
+      }
+    },
+    {
+      "id": "vis-03-bump",
+      "requirement_id": "VIS-03",
+      "option": "bump",
+      "title": "Procedural bump modes and bounds",
+      "domain_id": "materials",
+      "input": {
+        "description": "3D cube with waves/pebbles bump",
+        "parameters": {
+          "bump": [
+            "none",
+            "waves",
+            "pebbles"
+          ],
+          "strength": [
+            0,
+            0.1
+          ],
+          "frequency": [
+            1,
+            32
+          ]
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "VIS-03",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "materials",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "history60",
+            "locator": "test_native_rejects_unsupported_effects",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "manual-materials-link",
+            "locator": "test_native_rejects_unsupported_effects",
+            "role": "unretrieved-scope-link"
+          }
+        ],
+        "checks": [
+          "Saved effects preserve bounded parameters",
+          "Invalid ranges reject",
+          "Procedural bumps do not change geometry"
+        ],
+        "basis": "documented-or-local-contract"
+      },
+      "implementation": "restricted",
+      "fixtures": [
+        {
+          "path": "tests/test_material_styles.py",
+          "selector": "test_native_rejects_unsupported_effects",
+          "role": "direct",
+          "evidence": "existing-test-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "material-effects-settings",
+          "effects-bump",
+          "effects-environmentMode"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R6-MATERIALS",
+        "priority": "P2",
+        "unverified": "Bounded native coverage exists; benchmark option behavior and shipped UI are unverified.",
+        "next_action": "Capture both modes at parameter endpoints; compare reopen and PNG output; keep imported normal-map support separate."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3
+        ],
+        "supported_source_dimensions": [
+          3
+        ],
+        "support_note": "Supported only under referenced domain qualifications.",
+        "object_class": "3D cube with waves/pebbles bump"
+      }
+    },
+    {
+      "id": "vis-03-reflection-refraction",
+      "requirement_id": "VIS-03",
+      "option": "reflection-refraction",
+      "title": "Studio reflection/environment refraction",
+      "domain_id": "materials",
+      "input": {
+        "description": "3D glass cube against deterministic studio environment",
+        "parameters": {
+          "mode": [
+            "reflection",
+            "refraction"
+          ],
+          "reflectivity": [
+            0,
+            1
+          ],
+          "ior": [
+            1,
+            3
+          ]
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "VIS-03",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "materials",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "history60",
+            "locator": "Studio reflection/environment refraction",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "manual-materials-link",
+            "locator": "Studio reflection/environment refraction",
+            "role": "unretrieved-scope-link"
+          }
+        ],
+        "checks": [
+          "Show environment-only optical effect with truthful label",
+          "Preserve settings",
+          "Dense >12000-face fallback is explicit"
+        ],
+        "basis": "documented-or-local-contract"
+      },
+      "implementation": "restricted",
+      "fixtures": [
+        {
+          "path": "tests/material-styles.test.mjs",
+          "selector": null,
+          "role": "direct",
+          "evidence": "existing-suite-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "material-effects-settings",
+          "effects-bump",
+          "effects-environmentMode"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R6-MATERIALS",
+        "priority": "P2",
+        "unverified": "Environment sampling is not object ray tracing; pixel equivalence/material-dialog options are unverified.",
+        "next_action": "Obtain versioned 3D optical-option definition; capture reflected/refracted environment and dense fallback through reopen/PNG before declaring parity."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3
+        ],
+        "supported_source_dimensions": [
+          3
+        ],
+        "support_note": "Supported only under referenced domain qualifications.",
+        "object_class": "3D glass cube against deterministic studio environment"
+      }
+    },
+    {
+      "id": "vis-03-imported-assets",
+      "requirement_id": "VIS-03",
+      "option": "imported-assets",
+      "title": "Portable imported bump/environment assets",
+      "domain_id": "materials",
+      "input": {
+        "description": "User image normal map and six-face or spherical environment",
+        "parameters": {
+          "asset_types": [
+            "bump-image",
+            "cube-environment",
+            "spherical-environment"
+          ]
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "VIS-03",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "materials",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "history60",
+            "locator": "Portable imported bump/environment assets",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "manual-materials-link",
+            "locator": "Portable imported bump/environment assets",
+            "role": "unretrieved-scope-link"
+          }
+        ],
+        "checks": [
+          "Current built-in studio/procedural options do not establish imported asset support",
+          "New assets need project portability and bounded decode"
+        ],
+        "basis": "documented-or-local-contract"
+      },
+      "implementation": "unsupported",
+      "fixtures": [
+        {
+          "path": "tests/test_material_styles.py",
+          "selector": null,
+          "role": "related-not-oracle",
+          "evidence": "existing-suite-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "material-effects-settings",
+          "effects-bump",
+          "effects-environmentMode"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "domain-extension",
+        "owner": "R6-MATERIALS",
+        "priority": "P1",
+        "unverified": "Full imported material/bump/environment options absent; materials reference page fetch failed.",
+        "next_action": "R6-MATERIALS: select one documented 6.0 asset type, define portable asset/hash/decode bounds and saved-output oracle before implementation."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3
+        ],
+        "supported_source_dimensions": [],
+        "support_note": "No supported-domain claim for this requested case; see implementation status and follow-up.",
+        "object_class": "User image normal map and six-face or spherical environment"
+      }
+    },
+    {
+      "id": "vis-03-image-mapping-video",
+      "requirement_id": "VIS-03",
+      "option": "image-mapping-video",
+      "title": "Image mapping, glass/cutout and face video",
+      "domain_id": "materials",
+      "input": {
+        "description": "Portable face PNG versus documented 6.0 mapping/video options",
+        "parameters": {
+          "options": [
+            "planar",
+            "cubic",
+            "spherical",
+            "cylindrical",
+            "mirror-repeat",
+            "glass-alpha",
+            "face-video"
+          ]
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "VIS-03",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "materials",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "history60",
+            "locator": "Image mapping, glass/cutout and face video",
+            "role": "requirement-scope"
+          }
+        ],
+        "checks": [
+          "PNG face textures are a bounded subset",
+          "No claim that face video/imported projection modes are implemented"
+        ],
+        "basis": "documented-or-local-contract"
+      },
+      "implementation": "unverified",
+      "fixtures": [
+        {
+          "path": "tests/element-content-presentations.test.mjs",
+          "selector": null,
+          "role": "related-not-oracle",
+          "evidence": "existing-suite-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "material-effects-settings",
+          "effects-bump",
+          "effects-environmentMode"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R6-MATERIALS",
+        "priority": "P1",
+        "unverified": "Image-map projection/repeat/alpha/video option crosswalk is incomplete.",
+        "next_action": "Map each documented 6.0 option to existing image/content flow; freeze one genuinely missing mode and independent sampling/portability case rather than add generic textures."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3
+        ],
+        "supported_source_dimensions": [],
+        "support_note": "No supported-domain claim for this requested case; see implementation status and follow-up.",
+        "object_class": "Portable face PNG versus documented 6.0 mapping/video options"
+      }
+    },
+    {
+      "id": "vis-03-background",
+      "requirement_id": "VIS-03",
+      "option": "background",
+      "title": "Background image/theme and transparent capture",
+      "domain_id": "materials",
+      "input": {
+        "description": "Cube on saved background image, gradient and transparent preset",
+        "parameters": {
+          "backgrounds": [
+            "solid",
+            "gradient",
+            "image",
+            "transparent"
+          ]
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "VIS-03",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "materials",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "spec",
+            "locator": "Background image/theme and transparent capture",
+            "role": "requirement-scope"
+          }
+        ],
+        "checks": [
+          "Background does not mutate geometry",
+          "Transparent PNG clears backdrop and restores renderer",
+          "Saved/session preferences stay distinguished"
+        ],
+        "basis": "documented-or-local-contract"
+      },
+      "implementation": "supported",
+      "fixtures": [
+        {
+          "path": "tests/png-capture-options.test.mjs",
+          "selector": null,
+          "role": "direct",
+          "evidence": "existing-suite-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "material-effects-settings",
+          "effects-bump",
+          "effects-environmentMode"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R6-MATERIALS",
+        "priority": "P2",
+        "unverified": "Bounded native coverage exists; benchmark option behavior and shipped UI are unverified.",
+        "next_action": "Capture each supported background before/after project reopen and PNG; qualify alpha and asset portability separately from imported environment optics."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3
+        ],
+        "supported_source_dimensions": [
+          3
+        ],
+        "support_note": "Supported only under referenced domain qualifications.",
+        "object_class": "Cube on saved background image, gradient and transparent preset"
+      }
+    }
+  ]
+}

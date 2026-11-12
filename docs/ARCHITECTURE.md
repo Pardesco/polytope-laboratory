@@ -1,129 +1,119 @@
-# Architecture and contracts
+# Architecture
 
-[Image capture ownership](IMAGE_CAPTURE_RELIABILITY_2026-10-25.md) binds
-main screenshots to source/view/actual camera and canvas size before async
-preparation. Observation holders span preparation and destination review.
-Client-known bounded image ticket IDs support pending-chooser cancellation;
-the dedicated PNG profile uses copied bytes and fsynced atomic replacement.
-Legacy image callers share atomic writes, retaining their own capture checks.
+Polytope Laboratory is a Windows desktop app for building, inspecting and exporting 3D polyhedra and 4D polytopes.
+It has three parts: an Electron shell, a browser-style renderer, and a Python geometry engine.
 
-[Reviewed direct printing](NET_PRINT_OWNERSHIP_2026-10-25.md) prepares a
-private bounded-ID document, then rechecks source/layout/settings before
-committing the native dialog. One desktop manager owns prepared/active print
-windows through cancellation, expiry and cleanup. Net output exposes global
-Cancel; legacy direct printing shares the manager. Existing paper CSS and
-100% scale remain unchanged. Actual printer qualification is still pending.
+```
+┌───────────────────────────── Electron main process (desktop/) ──────────────────────────────┐
+│ window, menus, file dialogs, saving, printing, export sessions, engine process pool          │
+│                                                                                              │
+│   ┌──────── renderer (ui/, sandboxed) ────────┐     JSON lines over stdin/stdout             │
+│   │ three.js viewer, inspector panels,        │  ┌──────────────────────────────────────┐   │
+│   │ documents + undo history                  │  │ Python engine (engine/server.py)     │   │
+│   │      window.polytope.engine(request) ─────┼─▶│ numpy/scipy geometry, one op per job │   │
+│   └────────────── preload.cjs ────────────────┘  └──────────────────────────────────────┘   │
+└──────────────────────────────────────────────────────────────────────────────────────────────┘
+```
 
-[Document-field edits](DOCUMENT_FIELD_EDITS_2026-10-25.md) use lightweight
-revision/dirty bookkeeping for notes and observer cameras. Pending file-read
-ownership and tour preview invalidation remain immediate. Notes additionally
-synchronize their morph source owner; unchanged text is a no-op and export-queued
-text is restored. Geometry/settings/busy/export changes retain full panel sync.
+## The three processes
 
-[Net drag ownership](NET_DRAG_OWNERSHIP_2026-10-25.md) binds SVG gestures
-to pointer, source state/model, layout and editor sequence. Provisional DOM
-translation is removed before the native edit await, cancellation, view
-replacement or export. Motion uses cheap identity checks; release verifies
-current print/content inputs before existing native publication checks.
+**Main process (`desktop/`).** Owns everything that touches the operating system: windows, menus, native dialogs,
+reading and writing files, printing, and the engine processes. The renderer can't reach Node or the file system; it
+calls a small set of methods that `desktop/preload.cjs` exposes as `window.polytope`.
 
-[Derived document context](DERIVED_DOCUMENT_CONTEXT_2026-10-25.md) shares initial
-state construction between promotion and memory snapshots. Document units, notes,
-metadata and fill/color policy transfer; source-bound cameras, selections and
-annotation ownership do not. addDocument enforces the native 100-document bound
-before mutation. Geometry export supplies captured document fields explicitly,
-including empty notes/metadata, so native model hints cannot resurrect cleared
-content. Existing publication checks and native standalone defaults remain intact.
+| File | Role |
+| --- | --- |
+| `main.cjs` | App lifecycle, window creation, hidden test mode, shutdown |
+| `ipc-handlers.cjs` | Every IPC route the renderer may call |
+| `engine-allowlist.cjs` | The engine operations the renderer is allowed to request |
+| `engine-pool.cjs` | Up to 3 engine processes, a bounded queue, 2-minute timeout, warm reuse for read-only ops |
+| `dialogs.cjs`, `menu.cjs` | File choosers and the application menu |
+| `project-storage.cjs` | Atomic project saves with a `.bak` copy, plus crash recovery snapshots |
+| `animation-export.cjs`, `image-export.cjs`, `geometry-export.cjs`, `net-printing.cjs` | Output sessions |
 
-Derived [Cancel ownership](CANCEL_CONTENT_2026-10-25.md) includes debounce/manual/
-presentation phases and revokes publication before aborting work. Active-only
-ordinary-cell cancellation retains completed independently rechecked receipts.
-Fold annotation diagnostics use a display token plus source/Viewer/mode/sequence
-fences; the token retains no workspace data after its callback completes.
+**Renderer (`ui/`).** Plain ES modules bundled by Vite, drawing with three.js. `ui/app.js` is the entry point; it
+composes the modules in `ui/app/`:
 
-Derived [action publication](DERIVED_PUBLICATION_2026-10-25.md) commits model/result
-globals after presentation awaits and a final sequence/source/input ownership
-check. Failures expose no derived model; only the latest request updates availability.
-Derived export review follows these boundaries while Model export stays independent.
-Opening review pauses playback and reevaluates an interrupted frozen section plane.
+| File | Role |
+| --- | --- |
+| `app/startup.mjs` | Catalog load, the first document, crash recovery |
+| `app/history-wiring.mjs` | Document tabs, undo/redo history, open/save |
+| `app/panels.mjs` | Builds and mounts the inspector panels |
+| `app/catalog-view.mjs` | Library browsing, search and filters |
+| `app/export.mjs` | Export, image capture and net printing actions |
+| `app/workspace-render.mjs` | Redraws the workspace when the document or view changes |
+| `app/context.mjs` | The one shared state object the modules read through |
 
-Portable annotation [source emission](PORTABLE_SOURCE_STREAM_2026-10-25.md) writes
-canonical tagged JSON directly with incremental UTF-8 bounds, retaining complete
-visits, exact numeric/key order and source/hash/descriptor checks. A null-prototype
-per-call table holds at most 2,048 small integer spellings; it retains no source
-authority. Own enumerable index validation rejects disguised sparse arrays.
+Feature controls live in their own files (`ui/*-controls.mjs`, `ui/net-editor.js`, `ui/timeline-panel.mjs`, …).
+`ui/viewer.js` is the 3D viewer. Theme tokens are in `ui/theme.css`.
 
-Annotation [source encoding](ANNOTATION_SOURCE_ENCODING_2026-10-25.md) extracts
-binary64 words through private synchronous scratch storage, retaining exact native
-portable spellings. Memory-signature array checks inspect every own data slot and
-compare enumerable slot/key counts, preserving hidden-index semantics and refusing
-extra enumerable properties. Complete walks, resource checks and ownership remain.
+**Engine (`engine/`).** A Python process that reads one JSON request per line on stdin and writes one JSON response
+per line on stdout:
 
-Workspace [selection restoration](NAVIGATION_DISPLAY_2026-10-25.md) sets source
-selection before its one full base display. That display still prepares geometry,
-highlight positions, picking and annotations together. Interactive selection retains
-its ordinary full display and content validation; navigation uses no pose shortcut.
+```
+→ {"id": 7, "op": "dual", "model": {...}, "params": {...}}
+← {"id": 7, "ok": true, "result": {...}}
+← {"id": 7, "ok": false, "error": "message", "type": "GeometryError"}
+```
 
-Memory/tour [native result publication](MEMORY_TOUR_PUBLICATION_2026-10-25.md)
-rechecks export and document ownership after awaits. Memory Swap supplies a final
-bank verifier and synchronous slot callback to restoreMemoryState so document,
-slot and dirty notification share one continuation. Tour pause forwards its
-AbortSignal through NativeJobs; the tour bank is verified before preview adoption.
+`engine/server.py` dispatches each `op` to a module. Models are plain JSON: `vertices` (coordinates), `edges`,
+`faces` (ordered vertex cycles), `cells` (lists of faces, for 4D), plus `metadata`. The main modules:
 
-The shared native [validation-key encoder](VALIDATION_KEY_ENCODING_2026-10-25.md)
-uses a conservative ASCII size bound during plain-type/node preflight to select
-bounded C JSON encoding. The streaming fallback retains exact size eligibility;
-both paths use complete canonical literal keys and the same cache ownership/budgets.
+| Area | Modules |
+| --- | --- |
+| Convex hulls, validation, measures | `geometry.py`, `measurements.py` |
+| Constructions | `operations.py`, `wythoff.py`, `schwarz_wythoff.py`, `chiral.py`, `faceting.py`, `stellation.py` |
+| Catalog | `catalog.py`, `generators.py`, `catalog_data/` (hash-pinned, don't reformat) |
+| Symmetry | `symmetry.py` |
+| Sections | `operations.py` (`section`), `generalized_sections.py`, `filled_sections.py` |
+| Nets and printing | `nets.py`, `cell_nets.py`, `net_printing.py` |
+| Files | `formats.py` (OFF, projects, exports) |
+| Exact arithmetic | `rational.py` (exact hulls for small rational inputs) |
 
-Project validation now has [bounded request-local reuse](PROJECT_VALIDATION_REUSE_2026-10-25.md)
-for identical complete literal model records. It retains per-state view/net/
-certificate/history checks and bypasses keying for single-state projects.
-Pending file reads are canceled when workspace revisions/export make adoption
-ineligible; status completion remains scoped to the operation that owns it.
+## How a construction runs
 
-The desktop shell is Electron, the visualization layer is Three.js, and the replaceable geometry process is Python/NumPy/SciPy. This prioritizes a runnable mathematical prototype over selecting the eventual principal C++/Rust kernel prematurely. Exact geometry and production-scale nonconvex kernels remain separate workstreams.
+1. A control calls `run(op, params, model)` in the renderer.
+2. The main process checks the op against the allowlist and hands it to a pool process.
+3. The engine computes, validates the result, and replies.
+4. The renderer commits the new model as a history step (`commitOperation`). Undo/redo, replay and saved projects all
+   use these steps. A result is dropped if the source document changed while it was computing.
 
-`desktop/main.cjs` owns native file access, approved local catalog paths, process lifetime, cancellation and printing. A sandboxed renderer has no Node access. Narrow contextBridge methods expose whitelisted computation and native-dialog file actions. Navigation and child windows are blocked. Geometry jobs run in up to three isolated processes, with a bounded queue and two-minute timeout. Cancellation kills active jobs or removes queued requests; inputs remain unchanged.
+Cancel kills the running process or drops the queued request, so the document is never left half-changed.
 
-`engine/geometry.py` owns convex incidence, validation and intrinsic measures. Supporting Qhull hyperplanes are deduplicated by all coplanar extreme vertices. For 4D, rank-two intersections of true facets become polygon faces and each supporting facet owns its faces. Source coordinates remain distinct from normalized/rotated/projected display buffers. Hash identity includes full incidence and coordinates; it normalizes integer/float spellings and signed zero across Python/JavaScript JSON. It is representation identity, not a combinatorial-isomorphism result.
+## Correctness rules
 
-`engine/measurements.py` builds normalized intrinsic affine frames for source entities and explicitly supplied flats. Least-squares distance witnesses, finite-segment active sets and singular values of direction-space overlaps define distances and principal angles. Circumspheres require every source vertex to fit a common sphere in the entity affine hull. Outward supporting facet normals define convex interior dihedrals; perpendicular complements define entity-aligned section normals. Whole-model measures are independently rebuilt from coordinates and complete incidence on analysis and native validation; unsupported generalized caches are removed. Region-union sums retain their declared disjoint-interior support contract. `ui/measurement-controls.js` persists preferences and discards stale computation responses. See [measurement contracts](MEASUREMENTS.md).
+- Approximate results are never labelled exact. Floating-point results report residuals; `rational.py` results carry
+  exact coordinates and a certificate that is rechecked on load.
+- Unsupported inputs are refused with a message, not approximated silently.
+- Catalog entries are checked against independent counts (see `CATALOG_AUDIT_2026-11-05.md`); unverified discovery
+  candidates are hidden by default (`CATALOG_DEFAULTS.md`).
+- What is and isn't verified is tracked in `GAP_AUDIT_2026-11-10.md` and `conformance/`.
 
-`engine/operations.py` implements convex construction contracts. `wythoff.py` constructs finite reflection orbits and records seed, family, Gram residual and termination status. `faceting.py` retains supplied ordered cycles with generalized interpretation. Signed-axis actions verify cyclic face boundaries and cell-face incidence; cube/cross completeness requires the supplied metric vertex pattern and full known order, rather than a catalog label.
+## Running and testing
 
-`chiral.py` solves the positive B3/H3 chamber seed's equal pairwise-rotation edge constraints and exhausts the proper finite orbit for the two convex snubs. Mirror forms have an explicit coordinate convention. `generators.py` also names all Catalan polar duals. `star_polyhedra.py` exhaustively derives regular pentagonal plane sets or long-edge triangles from analytic vertices; pentagrams retain cyclic step 2. Stars remain generalized complexes without filled-solid claims.
+```
+npm install
+npm run build                # bundle the renderer with Vite
+npm start                    # launch the app
+npm run test:features:run    # Node tests (unit + mounted browser tests)
+python -m pytest tests -q    # engine tests
+npm run test:hidden          # launches the real app off-screen and checks startup
+npm run format               # Prettier + Ruff (npm run format:check only checks)
+```
 
-`incidence_dual.py` reciprocates validated 3D face planes and traverses each source vertex's cyclic face link to define dual winding. It rejects open/nonmanifold/pinched links, center-plane singularities and coincident reciprocal planes, with a 2,048-face limit. No angular sorting or hull changes the generalized topology. Source-entity extraction likewise projects original cycles into an intrinsic plane/cell basis with reversible embedding references. Selection state belongs to its source snapshot, is restored on document changes and clears on geometry operations.
+Mounted Node tests start Chromium and can time out on a loaded machine; rerun a failing file on its own before
+treating it as real. Each `npm run test:<area>` script is an end-to-end smoke of one workflow in the real app.
 
-`nets.py` unfolds convex 3D boundaries as rigid-face hinge forests. Explicit hinges must be acyclic; cuts may create separate components. Edits preserve root-face placements across forest changes and store physical-mm rigid component transforms. Signed dihedral rotations generate fold poses; component roots interpolate proper rotation/translation into common source positions. Full-fold endpoint, face rigidity and hinge gap residuals are checked. `ui/net-motion.mjs` evaluates the same kinematics on the rendering clock; tests compare it against kernel poses at intermediate and endpoint fractions. Shared cuts have exactly two source-edge labels and one default trapezoid tab; convex face/tab overlaps are reported. Collision checking and advanced coincident-edge policies remain pending.
+Adding an engine operation needs three things: the op in `engine/server.py`, its name in
+`desktop/engine-allowlist.cjs` (a test enforces this), and a test in `tests/test_<feature>.py`.
 
-`net_printing.py` packs whole connected pieces into physical paper rectangles using deterministic guillotine placement with optional quarter turns. Face/tab bounds include label padding; global tab ownership survives distribution across pages. Oversized components fail without scaling or splitting. The shell prints vector SVG pages with exact declared CSS page dimensions and scale 1. Independent PyMuPDF checks measure digital vectors and source labels. Chromium paper-size rounding and hardware calibration remain explicit limits.
+## Where else to look
 
-`cell_nets.py` rotates complete convex 4D boundary cells about shared 2-faces into a common 3D hyperplane. Connections form a forest; cuts preserve root placement and reattachment moves descendants. Proper SE(3) component placements persist as quaternion/translation records. Every cell's pairwise distances and connected-face endpoints are checked. `ui/cell-net-editor.js` retains layout history and source-copy selection; renderer surface shrink changes presentation buffers only. Cell intersections are ignored and intact cells are retained.
+- `CONTRIBUTING.md`: code style and how to propose changes.
+- `docs/` feature pages: one per feature, e.g. `TIMELINE.md`, `MEASUREMENTS.md`, `SYMMETRY.md`.
+- `docs/history/`: dated design notes and change records, including the earlier version of this page
+  (`ARCHITECTURE_NOTES_2026-10.md`), the formatting round (`R9_FORMAT.md`) and the module split (`R9_MODULES.md`).
 
-`engine/symmetry.py` enumerates all Gram-compatible images of a spanning vertex frame for full-dimensional 2D/3D/4D source geometry of up to 1,000 vertices. A symmetry fixes the vertex mean and is uniquely determined by its frame action. Each candidate must preserve the metric, vertex bijection, edge multiplicities, cyclic face boundaries and cell-face incidence. Exhausted searches verify closure through generator Cayley traversal on spanning-frame action keys, avoiding an order-squared multiplication table. Exact batched integer comparisons preserve cyclic faces and cell-face boundaries. Complete results provide source entity orbits and orbit-stabilizer orders; proper rotations, setwise entity stabilizers and user-generated subgroups preserve explicit restricted scope. Resource-limited searches do not claim completeness. The algorithm uses approximate coordinates/predicates and does not certify exact algebraic groups. Signed-coordinate permutations remain an explicit comparison subgroup. The full six regular convex 4D groups are verified by independent expected orders and complete incidence. See [symmetry contracts](SYMMETRY.md).
-
-`engine/stellation.py` successively clips every observation-box region against every supplied facial/arbitrary plane. Unboxed signed half-space LPs classify boundedness. Partition volume is checked; enumeration completeness names the finite box domain. Selected regions retain convex pieces while shared internal facets cancel from the exposed boundary. Sections operate on these pieces, deduplicate coincident planar interfaces, and retain disconnected/degenerate strata. Orbit-union enumeration verifies source actions against region geometry and incidence, checks group closure, then exhausts subsets under named seed/connectivity criteria. It reports result limits and box-domain group restrictions. These are explicit custom criteria rather than the benchmark's full option semantics.
-
-`engine/rational.py` independently exhausts rational supporting planes for up to 32 input points, compares the exact facet set to the float candidate, records original inputs and the exhaustive search count, and constructs rational polar vertices. Every exact model carries both rational coordinates and a float display adapter. Project validation recomputes its certificate; ordinary float transformations explicitly drop exact guarantees. This certifies the named supplied-input hull property, not intended algebraic coordinates, float measurements or unrelated mathematical claims.
-
-`engine/formats.py` validates imported indices/counts/planarity and preserves supplied faces/cells. Convex classification requires complete incidence agreement with a separately reconstructed hull, including face cycles. OFF color/extra records and repeated vertices are currently unsupported and diagnosed. Projects use a versioned JSON snapshot container. Saving validates all history states, writes and fsyncs a sibling temporary file, then atomically replaces the destination. The shell keeps a `.bak` before replacement. Recovery snapshots are stored in Electron's local user-data folder, separate from source catalogs.
-
-`ui/app.js` maintains multiple documents with independent snapshot histories. Operations capture an immutable source state and refuse to commit if that source history moved during computation. Derived analysis/view sequence IDs discard obsolete responses. `ui/net-editor.js` adds compact per-layout undo/redo histories, dragging, edge edits and folding playback. Projects retain layout parameters; validation regenerates cached net geometry, motion descriptors and SVG from source incidence. Each state contains source model, notes and display settings. Geometry snapshots preserve inspection when a future algorithm is unavailable; full deterministic graph replay/migrations still need implementation.
-
-## References
-
-Qhull equations and triangulated facets: [SciPy ConvexHull documentation](https://docs.scipy.org/doc/scipy/reference/generated/scipy.spatial.ConvexHull.html). Electron IPC design: [official IPC tutorial](https://www.electronjs.org/docs/latest/tutorial/ipc) and [context isolation](https://www.electronjs.org/docs/latest/tutorial/context-isolation). Viewer controls: [Three.js OrbitControls](https://threejs.org/docs/pages/OrbitControls.html). Reflection construction definition: [Classifying Regular Polyhedra and Polytopes using Wythoff's Construction](https://doi.org/10.48550/arXiv.2001.09364); 600-cell/reflection background: [G. Heckman, Coxeter Groups](https://www.math.ru.nl/~heckman/CoxeterGroups.pdf).
-
-## Qualification limits
-
-Only Windows x64 is a current build target. No clean-machine installation, printer calibration, general exact geometry, exact/certified or unbounded-domain symmetry enumeration, full catalog crosswalk, or specialist mathematical review has been claimed. Nonconvex solid sections require a declared convex-region union. Generalized sources support ordered face-surface intersections and the bounded 3D incidence-dual workflow; arbitrary generalized solid interiors, benchmark stellation criteria and automatic faceting remain pending. Runtime dependency terms/NOTICE and product distribution policy must be reviewed before publishing.
-
-The current npm audit reports eight high-severity transitive build-tool findings rooted in `http-cache-semantics` (electron-builder download tooling); `npm audit fix` does not currently resolve them and the registry's latest package is still 4.2.0. This is a recorded build-chain issue; the app's local rendering/geometry does not use that HTTP cache. Do not claim a clean dependency audit.
-
-`ui/face-fill.mjs` tessellates intrinsic ordered face cycles using nonzero or even/odd winding without editing source geometry. Bounded display triangles and visibility masks retain source IDs, source face/cell RGBA colors and explicit diagnostics. `engine/generalized_sections.py` intersects source-face fills with an intrinsic hyperplane, preserving separate curve segments and coplanar faces with reversible source embeddings; no generalized solid interior is inferred.
-
-`engine/library_audit.py` compiles bounded provenance headers and streamed checkpoint records into a compact evidence index. Badges require matching importer fingerprints and current source hashes; startup hashing is bounded and explicit Verify expands the budget. Frozen builds retain the three importer source files and dependency metadata so source and packaged builds compare the same evidence. Native repair actions validate a corrected OFF string before creating an exclusive destination copy.
-
-`ui/animation.mjs` evaluates saved rotation/depth keyframes deterministically. PNG exports evaluate each exact frame time and await section completion. `desktop/animation-export.cjs` owns opaque export sessions and exclusive temporary destinations, publishing only completed sequences or streamed WebM recordings. Playback/video use the rendering clock; PNG timestamps remain independent of computation speed.
-
-`ui/viewport-controls.mjs` owns workspace layout, render presets, continuous selected-plane rotation and direct XW/YW drag gestures. These controls persist display state independently of source geometry. The 4D projection and 3D observer projection are separate. `ui/view-camera.mjs` supplies aspect-aware orthographic/perspective fitting and canonical observer poses; camera snapshots add projection, zoom, up and orthographic half-height while accepting legacy position/target snapshots. `ui/viewer.js` recomputes projected surface normals for matte Phong lighting. Fully opaque surfaces write depth; actual source RGBA alpha retains blending. Shelf popovers and collapsible sidebars keep the canvas visible.
+Built with Electron ([IPC](https://www.electronjs.org/docs/latest/tutorial/ipc),
+[context isolation](https://www.electronjs.org/docs/latest/tutorial/context-isolation)), three.js, NumPy and SciPy
+([ConvexHull](https://docs.scipy.org/doc/scipy/reference/generated/scipy.spatial.ConvexHull.html)).

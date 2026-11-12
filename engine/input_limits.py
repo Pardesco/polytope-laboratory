@@ -1,4 +1,5 @@
 """Import-only resource checks before geometry or JSON allocation."""
+
 from functools import wraps
 import json
 import math
@@ -29,10 +30,21 @@ def input_boundary(label):
                 raise
             except OSError as exc:
                 raise GeometryError(f'{label}: {exc}') from exc
-            except (ValueError, TypeError, KeyError, IndexError, AttributeError,
-                    OverflowError, RecursionError, ZeroDivisionError, np.linalg.LinAlgError) as exc:
+            except (
+                ValueError,
+                TypeError,
+                KeyError,
+                IndexError,
+                AttributeError,
+                OverflowError,
+                RecursionError,
+                ZeroDivisionError,
+                np.linalg.LinAlgError,
+            ) as exc:
                 raise GeometryError(f'{label}: malformed or unsupported input ({type(exc).__name__}).') from exc
+
         return checked
+
     return decorate
 
 
@@ -83,8 +95,10 @@ def parse_json(text):
             entries += 1
         if entries > MAX_JSON_ENTRIES:
             raise GeometryError(f'JSON import exceeds the {MAX_JSON_ENTRIES:,}-entry structural limit.')
+
     def constant(value):
         raise GeometryError(f'JSON import requires finite numbers; {value} is unsupported.')
+
     return json.loads(text, parse_constant=constant)
 
 
@@ -100,7 +114,9 @@ def rational_limits(table):
             literal = str(value)
             exponent = re.search(r'[eE]([+-]?\d+)', literal)
             if len(literal) > 256 or exponent and (len(exponent[1].lstrip('+-')) > 4 or abs(int(exponent[1])) > 1024):
-                raise GeometryError('Imported rational literals are limited to 256 characters and exponent magnitude 1,024.')
+                raise GeometryError(
+                    'Imported rational literals are limited to 256 characters and exponent magnitude 1,024.'
+                )
 
 
 def model_limits(model):
@@ -113,7 +129,11 @@ def model_limits(model):
         if not isinstance(row, list) or len(row) not in (2, 3, 4):
             raise GeometryError('Imported coordinates must be rectangular 2D, 3D or 4D numeric arrays.')
         for value in row:
-            if type(value) not in (int, float) or not -MAX_COORDINATE <= value <= MAX_COORDINATE or not math.isfinite(value):
+            if (
+                type(value) not in (int, float)
+                or not -MAX_COORDINATE <= value <= MAX_COORDINATE
+                or not math.isfinite(value)
+            ):
                 raise GeometryError(f'OFF/JSON coordinates must be finite numbers within ±{MAX_COORDINATE:g}.')
     references = 0
     for key in ('edges', 'faces', 'cells'):
@@ -139,7 +159,9 @@ def model_limits(model):
         rational_limits(certificate.get('sourceCoordinates'))
     if model.get('interpretation') == 'convex-polytope':
         from .native_uniform_validation import native_uniform_measure
-        if native_uniform_measure(model) is None:hull_budget(vertices)
+
+        if native_uniform_measure(model) is None:
+            hull_budget(vertices)
     for piece in model.get('convexPieces', []):
         model_limits(piece)
 
@@ -148,6 +170,7 @@ def hull_budget(vertices):
     """Bound the optional importer hull's support scan and 4D ridge pairs."""
     from scipy.spatial import ConvexHull, QhullError
     from .geometry import rank
+
     points = np.asarray(vertices, dtype=float)
     scale = float(np.max(np.ptp(points, axis=0)))
     if not scale:

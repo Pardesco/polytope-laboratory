@@ -1,0 +1,63 @@
+[36mvite v7.3.6 [32mbuilding client environment for production...[36m[39m
+transforming...
+[32m✓[39m 398 modules transformed.
+rendering chunks...
+computing gzip size...
+[2m../dist/[22m[32mindex.html                                               [39m[1m[2m   18.39 kB[22m[1m[22m[2m │ gzip:   5.47 kB[22m
+[2m../dist/[22m[32massets/stereographic-worker-DCf-gOCp.js                  [39m[1m[2m   47.62 kB[22m[1m[22m
+[2m../dist/[22m[35massets/index-cS7-q3Jy.css                                [39m[1m[2m   94.88 kB[22m[1m[22m[2m │ gzip:  18.66 kB[22m
+[2m../dist/[22m[36massets/TIDY_DUAL_FACETING-sDIeGSEj.js                    [39m[1m[2m    1.84 kB[22m[1m[22m[2m │ gzip:   0.94 kB[22m
+[2m../dist/[22m[36massets/VIEWER_UX-CHApMhhc.js                             [39m[1m[2m    3.96 kB[22m[1m[22m[2m │ gzip:   1.96 kB[22m
+[2m../dist/[22m[36massets/HELP_SCOPE-DlZINuMz.js                            [39m[1m[2m    4.26 kB[22m[1m[22m[2m │ gzip:   2.16 kB[22m
+[2m../dist/[22m[36massets/ELEMENT_TYPES-DHM18QO6.js                         [39m[1m[2m    4.29 kB[22m[1m[22m[2m │ gzip:   2.16 kB[22m
+[2m../dist/[22m[36massets/W37_GUIDE-MaEBTH6r.js                             [39m[1m[2m    4.59 kB[22m[1m[22m[2m │ gzip:   2.14 kB[22m
+[2m../dist/[22m[36massets/PRODUCT_POLISH-DV-tb_6s.js                        [39m[1m[2m    4.73 kB[22m[1m[22m[2m │ gzip:   2.21 kB[22m
+[2m../dist/[22m[36massets/TIMELINE-ByJkmia-.js                              [39m[1m[2m    4.76 kB[22m[1m[22m[2m │ gzip:   2.33 kB[22m
+[2m../dist/[22m[36massets/STAR_UNIFORM4-BJrGypzu.js                         [39m[1m[2m    4.82 kB[22m[1m[22m[2m │ gzip:   2.44 kB[22m
+[2m../dist/[22m[36massets/guide-documents-B1N23SsZ.js                       [39m[1m[2m    5.33 kB[22m[1m[22m[2m │ gzip:   1.24 kB[22m
+[2m../dist/[22m[36massets/IMAGE_CAPTURE_RELIABILITY_2026-10-25-Df_XPCJ2.js  [39m[1m[2m    5.38 kB[22m[1m[22m[2m │ gzip:   2.49 kB[22m
+[2m../dist/[22m[36massets/GENERALIZED_4D_CONSTRUCTIONS-o24z4Gbb.js          [39m[1m[2m    5.59 kB[22m[1m[22m[2m │ gzip:   2.60 kB[22m
+[2m../dist/[22m[36massets/gif-encoder-OcsypIJR.js                           [39m[1m[2m    5.60 kB[22m[1m[22m[2m │ gzip:   2.74 kB[22m
+[2m../dist/[22m[36massets/ELEMENT_VISIBILITY_LINKED_VIEWS-CayypVGZ.js       [39m[1m[2m    5.67 kB[22m[1m[22m[2m │ gzip:   2.66 kB[22m
+[2m../dist/[22m[36massets/W38_TARGET_RENDER-DR8ZeKeL.js                     [39m[1m[2m    5.78 kB[22m[1m[22m[2m │ gzip:   2.80 kB[22m
+[2m../dist/[22m[36massets/MATERIAL_STYLES-3cB_9iZ5.js                       [39m[1m[2m    5.81 kB[22m[1m[22m[2m │ gzip:   2.66 kB[22m
+[2m../dist/[22m[36massets/DESKTOP_READINESS-Bs_bSdBu.js                     [39m[1m[2m    6.03 kB[22m[1m[22m[2m │ gzip:   2.81 kB[22m
+[2m../dist/[22m[36massets/W36_MEDIA_EXPORT-C3WEFk_J.js                      [39m[1m[2m    6.07 kB[22m[1m[22m[2m │ gzip:   3.01 kB[22m
+[2m../dist/[22m[36massets/SOLID_PRINTING-BsWSVXH4.js                        [39m[1m[2m    6.12 kB[22m[1m[22m[2m │ gzip:   2.95 kB[22m
+[2m../dist/[22m[36massets/CONDITION_FITTING-DZIjFibJ.js                     [39m[1m[2m    6.29 kB[22m[1m[22m[2m │ gzip:   2.89 kB[22m
+[2m../dist/[22m[36massets/PRINTABLE_EXPORT-Ch9-7BYQ.js                      [39m[1m[2m    6.31 kB[22m[1m[22m[2m │ gzip:   3.05 kB[22m
+[2m../dist/[22m[36massets/COMPOUND_LIBRARY-NAHvD65o.js                      [39m[1m[2m    6.35 kB[22m[1m[22m[2m │ gzip:   2.98 kB[22m
+[2m../dist/[22m[36massets/INFORMATION_PANEL_STEREO-B6NlAhuY.js              [39m[1m[2m    6.36 kB[22m[1m[22m[2m │ gzip:   2.98 kB[22m
+[2m../dist/[22m[36massets/VISIBLE_SURFACE_NETS-CSybw8O0.js                  [39m[1m[2m    6.38 kB[22m[1m[22m[2m │ gzip:   3.01 kB[22m
+[2m../dist/[22m[36massets/FACETING_DIAGRAM_EDITOR-B3absLmb.js               [39m[1m[2m    6.51 kB[22m[1m[22m[2m │ gzip:   2.90 kB[22m
+[2m../dist/[22m[36massets/NET_PAPER_UX-DLyfp9iW.js                          [39m[1m[2m    6.52 kB[22m[1m[22m[2m │ gzip:   3.00 kB[22m
+[2m../dist/[22m[36massets/DISCOVERABILITY-BPx_nn2F.js                       [39m[1m[2m    6.58 kB[22m[1m[22m[2m │ gzip:   2.79 kB[22m
+[2m../dist/[22m[36massets/FACE_SURGERY-BOBTHOfb.js                          [39m[1m[2m    6.59 kB[22m[1m[22m[2m │ gzip:   3.14 kB[22m
+[2m../dist/[22m[36massets/MILLER_STELLATIONS-BAcu_PWQ.js                    [39m[1m[2m    6.80 kB[22m[1m[22m[2m │ gzip:   3.28 kB[22m
+[2m../dist/[22m[36massets/STELLATION_DIAGRAMS-CYEOw8vx.js                   [39m[1m[2m    6.90 kB[22m[1m[22m[2m │ gzip:   3.10 kB[22m
+[2m../dist/[22m[36massets/INTERCHANGE-BeIHW3Ts.js                           [39m[1m[2m    6.94 kB[22m[1m[22m[2m │ gzip:   3.43 kB[22m
+[2m../dist/[22m[36massets/LIBRARY_COVERAGE-CIefOSGj.js                      [39m[1m[2m    7.34 kB[22m[1m[22m[2m │ gzip:   3.38 kB[22m
+[2m../dist/[22m[36massets/INPUT_LIMITS-DWiGLXQo.js                          [39m[1m[2m    7.37 kB[22m[1m[22m[2m │ gzip:   3.48 kB[22m
+[2m../dist/[22m[36massets/W12_FACE_CONWAY_ZONES-B7Lpnz3s.js                 [39m[1m[2m    7.38 kB[22m[1m[22m[2m │ gzip:   3.43 kB[22m
+[2m../dist/[22m[36massets/FILLED_DENSITY_SECTIONS-DylXDlwB.js               [39m[1m[2m    7.52 kB[22m[1m[22m[2m │ gzip:   3.35 kB[22m
+[2m../dist/[22m[36massets/W44_PRESENTATION-L7hKOtc9.js                      [39m[1m[2m    7.54 kB[22m[1m[22m[2m │ gzip:   3.34 kB[22m
+[2m../dist/[22m[36massets/W29_ANIMATION-FE89FYmK.js                         [39m[1m[2m    7.63 kB[22m[1m[22m[2m │ gzip:   3.50 kB[22m
+[2m../dist/[22m[36massets/UNIFORM_COMPOUNDS-WSwcIgQY.js                     [39m[1m[2m    7.84 kB[22m[1m[22m[2m │ gzip:   3.75 kB[22m
+[2m../dist/[22m[36massets/FIRST_RUN-BJAryAb8.js                             [39m[1m[2m    7.94 kB[22m[1m[22m[2m │ gzip:   3.63 kB[22m
+[2m../dist/[22m[36massets/NEAR_MISS_JOHNSON_SOLIDS-CZGChviv.js              [39m[1m[2m    8.25 kB[22m[1m[22m[2m │ gzip:   3.72 kB[22m
+[2m../dist/[22m[36massets/COMPOUNDS_SCALIFORMS_4D-B6eJWmeT.js               [39m[1m[2m    8.60 kB[22m[1m[22m[2m │ gzip:   3.78 kB[22m
+[2m../dist/[22m[36massets/ENTITY_ORIENTATION-B9gnKCym.js                    [39m[1m[2m   10.75 kB[22m[1m[22m[2m │ gzip:   4.54 kB[22m
+[2m../dist/[22m[36massets/GENERATOR_PARITY-BuM5di3s.js                      [39m[1m[2m   11.52 kB[22m[1m[22m[2m │ gzip:   4.99 kB[22m
+[2m../dist/[22m[36massets/video-recorder-Ddb-yBiT.js                        [39m[1m[2m   11.60 kB[22m[1m[22m[2m │ gzip:   4.96 kB[22m
+[2m../dist/[22m[36massets/OVERNIGHT_2026-10-26-Q1C-671j.js                  [39m[1m[2m   15.05 kB[22m[1m[22m[2m │ gzip:   6.96 kB[22m
+[2m../dist/[22m[36massets/PERFORMANCE_DENSE-CXIgO3ZT.js                     [39m[1m[2m   21.86 kB[22m[1m[22m[2m │ gzip:   8.35 kB[22m
+[2m../dist/[22m[36massets/index-CKjJTQYn.js                                 [39m[1m[33m2,410.76 kB[39m[22m[2m │ gzip: 666.39 kB[22m
+[32m✓ built in 2.78s[39m
+[33m[plugin vite:reporter] 
+(!) C:/Users/Randall/Documents/polytope-orchestra/main/ui/viewer.js is dynamically imported by C:/Users/Randall/Documents/polytope-orchestra/main/ui/library-thumbnails.mjs but also statically imported by C:/Users/Randall/Documents/polytope-orchestra/main/ui/animated-tour-layer.mjs, C:/Users/Randall/Documents/polytope-orchestra/main/ui/app.js, C:/Users/Randall/Documents/polytope-orchestra/main/ui/app/panels.mjs, C:/Users/Randall/Documents/polytope-orchestra/main/ui/welcome-controls.mjs, dynamic import will not move module into another chunk.
+[39m
+[33m
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.[39m

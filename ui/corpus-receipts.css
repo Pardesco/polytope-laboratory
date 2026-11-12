@@ -1,0 +1,26 @@
+#corpus-receipts {
+  margin-block: var(--space-1);
+  border-top: 1px solid var(--border);
+  padding-block: var(--space-1);
+}
+#corpus-receipts > summary {
+  min-height: var(--control-height);
+  align-content: center;
+  cursor: pointer;
+  font-size: var(--font-body);
+}
+#corpus-receipts textarea {
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 128px;
+  font-size: var(--font-secondary);
+  margin-block: var(--space-1);
+}
+#corpus-receipts input {
+  width: 100%;
+  min-height: var(--control-height);
+}
+#corpus-receipt-results {
+  max-height: 480px;
+  overflow: auto;
+}

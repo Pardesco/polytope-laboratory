@@ -1,0 +1,1833 @@
+{
+  "schemaVersion": 1,
+  "algorithmVersion": "1",
+  "scope": "63 reflection-based U1?U75 entries independently generated from Schwarz triangles; snubs and exceptional U75 remain outside this generator.",
+  "entries": [
+    {
+      "key": "schwarz-wythoff-u1",
+      "name": "tetrahedron",
+      "dimension": 3,
+      "symbol": "3|2 3",
+      "uniformNumber": 1,
+      "identity": "uniform3:U1",
+      "counts": [
+        4,
+        6,
+        4,
+        0
+      ],
+      "groupOrder": 24,
+      "convex": true,
+      "regular": true,
+      "definitionSha256": "86673d16ba7121f9f0d4232d4d1d1dc2566ea7378252c6a653aefc138806656e",
+      "sourceKey": "antiprism-u1",
+      "sourceAssetSha256": "0db439eac5497040747660ed75b92e55de185c6cf76da14c8444439378a9a22e",
+      "referenceComparison": {
+        "status": "passed",
+        "exact": false,
+        "normalizedVertexResidual": 2.482534153247273e-16,
+        "orderedFaceCyclesMatched": true,
+        "edgesMatched": true,
+        "scaleAndRigidMotionAllowed": true
+      }
+    },
+    {
+      "key": "schwarz-wythoff-u2",
+      "name": "truncated tetrahedron",
+      "dimension": 3,
+      "symbol": "2 3|3",
+      "uniformNumber": 2,
+      "identity": "uniform3:U2",
+      "counts": [
+        12,
+        18,
+        8,
+        0
+      ],
+      "groupOrder": 24,
+      "convex": true,
+      "regular": false,
+      "definitionSha256": "3c901b8ef1c395e57a9750b4b48777c9b864cc9fa76133b2f672a1b2c6c1c734",
+      "sourceKey": "antiprism-u2",
+      "sourceAssetSha256": "af18218a87c62c2743cb42a2361dbcfd4bdb69fb5ac6ec846bfc11ae1741f6b2",
+      "referenceComparison": {
+        "status": "passed",
+        "exact": false,
+        "normalizedVertexResidual": 7.468261590855957e-16,
+        "orderedFaceCyclesMatched": true,
+        "edgesMatched": true,
+        "scaleAndRigidMotionAllowed": true
+      }
+    },
+    {
+      "key": "schwarz-wythoff-u3",
+      "name": "octahemioctahedron",
+      "dimension": 3,
+      "symbol": "3/2 3|3",
+      "uniformNumber": 3,
+      "identity": "uniform3:U3",
+      "counts": [
+        12,
+        24,
+        12,
+        0
+      ],
+      "groupOrder": 24,
+      "convex": false,
+      "regular": false,
+      "definitionSha256": "a55af4c54e0c5b15ee025af7384a7e97e2a488332f4e4b032868c103fd13b390",
+      "sourceKey": "antiprism-u3",
+      "sourceAssetSha256": "b4f602a82c59ec4749e272e93f6a973a663fe1a37676fa1cb72a628041fe5a0c",
+      "referenceComparison": {
+        "status": "passed",
+        "exact": false,
+        "normalizedVertexResidual": 1.4294405271141503e-15,
+        "orderedFaceCyclesMatched": true,
+        "edgesMatched": true,
+        "scaleAndRigidMotionAllowed": true
+      }
+    },
+    {
+      "key": "schwarz-wythoff-u4",
+      "name": "tetrahemihexahedron",
+      "dimension": 3,
+      "symbol": "3/2 3|2",
+      "uniformNumber": 4,
+      "identity": "uniform3:U4",
+      "counts": [
+        6,
+        12,
+        7,
+        0
+      ],
+      "groupOrder": 24,
+      "convex": false,
+      "regular": false,
+      "definitionSha256": "5af84232e4b5239db306774b41f2a947526da04c7afde143f01644a1cde537f8",
+      "sourceKey": "antiprism-u4",
+      "sourceAssetSha256": "c9445e7f935cbbaf69dc30510a247eb8c6da48e10b893edbd4281a3561a8596d",
+      "referenceComparison": {
+        "status": "passed",
+        "exact": false,
+        "normalizedVertexResidual": 7.629277997537064e-16,
+        "orderedFaceCyclesMatched": true,
+        "edgesMatched": true,
+        "scaleAndRigidMotionAllowed": true
+      }
+    },
+    {
+      "key": "schwarz-wythoff-u5",
+      "name": "octahedron",
+      "dimension": 3,
+      "symbol": "4|2 3",
+      "uniformNumber": 5,
+      "identity": "uniform3:U5",
+      "counts": [
+        6,
+        12,
+        8,
+        0
+      ],
+      "groupOrder": 48,
+      "convex": true,
+      "regular": true,
+      "definitionSha256": "92b0302f0657112e89576318b7a98b316ac5cebe7c44d2b220e2aec682b2087b",
+      "sourceKey": "antiprism-u5",
+      "sourceAssetSha256": "687aaca2093abb8f0d2f78866a55ee4d16c865cdfe9e20e82731c087f81afbc1",
+      "referenceComparison": {
+        "status": "passed",
+        "exact": false,
+        "normalizedVertexResidual": 1.2225062931717345e-15,
+        "orderedFaceCyclesMatched": true,
+        "edgesMatched": true,
+        "scaleAndRigidMotionAllowed": true
+      }
+    },
+    {
+      "key": "schwarz-wythoff-u6",
+      "name": "cube",
+      "dimension": 3,
+      "symbol": "3|2 4",
+      "uniformNumber": 6,
+      "identity": "uniform3:U6",
+      "counts": [
+        8,
+        12,
+        6,
+        0
+      ],
+      "groupOrder": 48,
+      "convex": true,
+      "regular": true,
+      "definitionSha256": "6d32f24b547afb3be8ba446acce61d1aa149293b4a5f7f6694247620978c245e",
+      "sourceKey": "antiprism-u6",
+      "sourceAssetSha256": "9f4e62a6555255f29eb67620fde27104626bf861755668690c44776971e1422b",
+      "referenceComparison": {
+        "status": "passed",
+        "exact": false,
+        "normalizedVertexResidual": 6.473657049138938e-16,
+        "orderedFaceCyclesMatched": true,
+        "edgesMatched": true,
+        "scaleAndRigidMotionAllowed": true
+      }
+    },
+    {
+      "key": "schwarz-wythoff-u7",
+      "name": "cuboctahedron",
+      "dimension": 3,
+      "symbol": "2|3 4",
+      "uniformNumber": 7,
+      "identity": "uniform3:U7",
+      "counts": [
+        12,
+        24,
+        14,
+        0
+      ],
+      "groupOrder": 48,
+      "convex": true,
+      "regular": false,
+      "definitionSha256": "5fa4e859c0d0b3a69632dd7acf614cfacc772562bc88394238703b45484f661c",
+      "sourceKey": "antiprism-u7",
+      "sourceAssetSha256": "8c20d16b9786eebe498ef23cb84070c1583dbadd14c4143d25d33d7c62cb0aae",
+      "referenceComparison": {
+        "status": "passed",
+        "exact": false,
+        "normalizedVertexResidual": 2.282791809403515e-15,
+        "orderedFaceCyclesMatched": true,
+        "edgesMatched": true,
+        "scaleAndRigidMotionAllowed": true
+      }
+    },
+    {
+      "key": "schwarz-wythoff-u8",
+      "name": "truncated octahedron",
+      "dimension": 3,
+      "symbol": "2 4|3",
+      "uniformNumber": 8,
+      "identity": "uniform3:U8",
+      "counts": [
+        24,
+        36,
+        14,
+        0
+      ],
+      "groupOrder": 48,
+      "convex": true,
+      "regular": false,
+      "definitionSha256": "a4ef821e6494a1abf7d226cd55be5eeff5d6397c4a3de5e36ad1b84ccfeeed1b",
+      "sourceKey": "antiprism-u8",
+      "sourceAssetSha256": "50a0c613cdd2ba9d81faddc2e6acb658934d18fbb84ffca2673b3e16cea0e722",
+      "referenceComparison": {
+        "status": "passed",
+        "exact": false,
+        "normalizedVertexResidual": 1.4794008208736585e-15,
+        "orderedFaceCyclesMatched": true,
+        "edgesMatched": true,
+        "scaleAndRigidMotionAllowed": true
+      }
+    },
+    {
+      "key": "schwarz-wythoff-u9",
+      "name": "truncated cube",
+      "dimension": 3,
+      "symbol": "2 3|4",
+      "uniformNumber": 9,
+      "identity": "uniform3:U9",
+      "counts": [
+        24,
+        36,
+        14,
+        0
+      ],
+      "groupOrder": 48,
+      "convex": true,
+      "regular": false,
+      "definitionSha256": "af642471e73159f238353e092ea433763b99beb0a5f265541799f74a61e3a448",
+      "sourceKey": "antiprism-u9",
+      "sourceAssetSha256": "ab7347f18d8e25de0763571007038e971b49857709ca506e6dd611f02d62b4e9",
+      "referenceComparison": {
+        "status": "passed",
+        "exact": false,
+        "normalizedVertexResidual": 1.7944789959805767e-15,
+        "orderedFaceCyclesMatched": true,
+        "edgesMatched": true,
+        "scaleAndRigidMotionAllowed": true
+      }
+    },
+    {
+      "key": "schwarz-wythoff-u10",
+      "name": "rhombicuboctahedron",
+      "dimension": 3,
+      "symbol": "3 4|2",
+      "uniformNumber": 10,
+      "identity": "uniform3:U10",
+      "counts": [
+        24,
+        48,
+        26,
+        0
+      ],
+      "groupOrder": 48,
+      "convex": true,
+      "regular": false,
+      "definitionSha256": "b4ca84345ead472ce1418576d73da6b0b77aff6d180447e7b41848c4415bc9ee",
+      "sourceKey": "antiprism-u10",
+      "sourceAssetSha256": "b539ff24a56e2df44b68dde66d3a51c840baede0322653d2b242b6416ab760e0",
+      "referenceComparison": {
+        "status": "passed",
+        "exact": false,
+        "normalizedVertexResidual": 1.2875715499064634e-15,
+        "orderedFaceCyclesMatched": true,
+        "edgesMatched": true,
+        "scaleAndRigidMotionAllowed": true
+      }
+    },
+    {
+      "key": "schwarz-wythoff-u11",
+      "name": "truncated cuboctahedron",
+      "dimension": 3,
+      "symbol": "2 3 4|",
+      "uniformNumber": 11,
+      "identity": "uniform3:U11",
+      "counts": [
+        48,
+        72,
+        26,
+        0
+      ],
+      "groupOrder": 48,
+      "convex": true,
+      "regular": false,
+      "definitionSha256": "1ef2669d99d92a0070f50195e33643ac6670b1c98941360bc76d84e6971afdc6",
+      "sourceKey": "antiprism-u11",
+      "sourceAssetSha256": "e76aae3588a2bf4a8dcfcbb7ef5537a833aef337f29356169f7aef3be8604540",
+      "referenceComparison": {
+        "status": "passed",
+        "exact": false,
+        "normalizedVertexResidual": 2.360529710700789e-15,
+        "orderedFaceCyclesMatched": true,
+        "edgesMatched": true,
+        "scaleAndRigidMotionAllowed": true
+      }
+    },
+    {
+      "key": "schwarz-wythoff-u13",
+      "name": "small cubicuboctahedron",
+      "dimension": 3,
+      "symbol": "3/2 4|4",
+      "uniformNumber": 13,
+      "identity": "uniform3:U13",
+      "counts": [
+        24,
+        48,
+        20,
+        0
+      ],
+      "groupOrder": 48,
+      "convex": false,
+      "regular": false,
+      "definitionSha256": "3069800c1a08826213c45ebeed174140b1f2f8d909f5d4fd6e4e5c6c391bd229",
+      "sourceKey": "antiprism-u13",
+      "sourceAssetSha256": "123dd8aa3952581fb030321e47b793c373429df4d5f9a524d61e8bf2fefd8e2f",
+      "referenceComparison": {
+        "status": "passed",
+        "exact": false,
+        "normalizedVertexResidual": 1.5423711185402538e-15,
+        "orderedFaceCyclesMatched": true,
+        "edgesMatched": true,
+        "scaleAndRigidMotionAllowed": true
+      }
+    },
+    {
+      "key": "schwarz-wythoff-u14",
+      "name": "great cubicuboctahedron",
+      "dimension": 3,
+      "symbol": "3 4|4/3",
+      "uniformNumber": 14,
+      "identity": "uniform3:U14",
+      "counts": [
+        24,
+        48,
+        20,
+        0
+      ],
+      "groupOrder": 48,
+      "convex": false,
+      "regular": false,
+      "definitionSha256": "1bfdd449bca63a227ac42bb31dbd96ab31d9a5a3ec4b31209339ab41c448ac5a",
+      "sourceKey": "antiprism-u14",
+      "sourceAssetSha256": "d4a2d104010872862ab7cdb9dc28e5e5bdafaf172b53a87d7c6acf073bf7907b",
+      "referenceComparison": {
+        "status": "passed",
+        "exact": false,
+        "normalizedVertexResidual": 5.900916318210353e-16,
+        "orderedFaceCyclesMatched": true,
+        "edgesMatched": true,
+        "scaleAndRigidMotionAllowed": true
+      }
+    },
+    {
+      "key": "schwarz-wythoff-u15",
+      "name": "cubohemioctahedron",
+      "dimension": 3,
+      "symbol": "4/3 4|3",
+      "uniformNumber": 15,
+      "identity": "uniform3:U15",
+      "counts": [
+        12,
+        24,
+        10,
+        0
+      ],
+      "groupOrder": 48,
+      "convex": false,
+      "regular": false,
+      "definitionSha256": "c57f6133a9f0c89fece1893dabb64de75303d34cc459833ddfbfdffbfefb5c36",
+      "sourceKey": "antiprism-u15",
+      "sourceAssetSha256": "0e69c4b58dc57de5faa2d92107e38ae7f17a532c09835efbbe8c080295ca4d7a",
+      "referenceComparison": {
+        "status": "passed",
+        "exact": false,
+        "normalizedVertexResidual": 7.627206482994199e-16,
+        "orderedFaceCyclesMatched": true,
+        "edgesMatched": true,
+        "scaleAndRigidMotionAllowed": true
+      }
+    },
+    {
+      "key": "schwarz-wythoff-u16",
+      "name": "cubitruncated cuboctahedron",
+      "dimension": 3,
+      "symbol": "4/3 3 4|",
+      "uniformNumber": 16,
+      "identity": "uniform3:U16",
+      "counts": [
+        48,
+        72,
+        20,
+        0
+      ],
+      "groupOrder": 48,
+      "convex": false,
+      "regular": false,
+      "definitionSha256": "276f30d8daf674a503b1d7923f6d80d26163106b2cb7e098608d47ec864be693",
+      "sourceKey": "antiprism-u16",
+      "sourceAssetSha256": "0625ca26931d23a1bd2ca192b13098373b5e3c2b473ea06d93cfc350b8de3d06",
+      "referenceComparison": {
+        "status": "passed",
+        "exact": false,
+        "normalizedVertexResidual": 1.025079205553247e-15,
+        "orderedFaceCyclesMatched": true,
+        "edgesMatched": true,
+        "scaleAndRigidMotionAllowed": true
+      }
+    },
+    {
+      "key": "schwarz-wythoff-u17",
+      "name": "great rhombicuboctahedron",
+      "dimension": 3,
+      "symbol": "3/2 4|2",
+      "uniformNumber": 17,
+      "identity": "uniform3:U17",
+      "counts": [
+        24,
+        48,
+        26,
+        0
+      ],
+      "groupOrder": 48,
+      "convex": false,
+      "regular": false,
+      "definitionSha256": "4f3d00471befee73be7b734a5a1b62763e2f051056132b6efb9879bbde178f06",
+      "sourceKey": "antiprism-u17",
+      "sourceAssetSha256": "0b48e19a4f57fa0b802b865972020ec80985f619980af33d58b653adf059c07c",
+      "referenceComparison": {
+        "status": "passed",
+        "exact": false,
+        "normalizedVertexResidual": 2.083702585933651e-15,
+        "orderedFaceCyclesMatched": true,
+        "edgesMatched": true,
+        "scaleAndRigidMotionAllowed": true
+      }
+    },
+    {
+      "key": "schwarz-wythoff-u18",
+      "name": "small rhombihexahedron",
+      "dimension": 3,
+      "symbol": "3/2 2 4|",
+      "uniformNumber": 18,
+      "identity": "uniform3:U18",
+      "counts": [
+        24,
+        48,
+        18,
+        0
+      ],
+      "groupOrder": 48,
+      "convex": false,
+      "regular": false,
+      "definitionSha256": "9d430bc874755f46b118c985c202a7aef26b63c0b6b9efdfb905f145334cb967",
+      "sourceKey": "antiprism-u18",
+      "sourceAssetSha256": "9fec46ef8384c7f4a3ec918803a10d8c41869c5485409b12ed1a444534deba89",
+      "referenceComparison": {
+        "status": "passed",
+        "exact": false,
+        "normalizedVertexResidual": 2.19251479839716e-15,
+        "orderedFaceCyclesMatched": true,
+        "edgesMatched": true,
+        "scaleAndRigidMotionAllowed": true
+      }
+    },
+    {
+      "key": "schwarz-wythoff-u19",
+      "name": "stellated truncated hexahedron",
+      "dimension": 3,
+      "symbol": "2 3|4/3",
+      "uniformNumber": 19,
+      "identity": "uniform3:U19",
+      "counts": [
+        24,
+        36,
+        14,
+        0
+      ],
+      "groupOrder": 48,
+      "convex": false,
+      "regular": false,
+      "definitionSha256": "e8c6929eb04066f99b94e2e8d010465ae2a5bf5b435b12f7c1eae6b011600d82",
+      "sourceKey": "antiprism-u19",
+      "sourceAssetSha256": "3b965cf642e2ba0b27ead7a79ea95e36afb59c60d52176ef61839b6fec2bd233",
+      "referenceComparison": {
+        "status": "passed",
+        "exact": false,
+        "normalizedVertexResidual": 8.741904837807691e-16,
+        "orderedFaceCyclesMatched": true,
+        "edgesMatched": true,
+        "scaleAndRigidMotionAllowed": true
+      }
+    },
+    {
+      "key": "schwarz-wythoff-u20",
+      "name": "great truncated cuboctahedron",
+      "dimension": 3,
+      "symbol": "4/3 2 3|",
+      "uniformNumber": 20,
+      "identity": "uniform3:U20",
+      "counts": [
+        48,
+        72,
+        26,
+        0
+      ],
+      "groupOrder": 48,
+      "convex": false,
+      "regular": false,
+      "definitionSha256": "0a5c77e66646f8f0af0c9da6a4019f56c13cd44fa4c52130cb5507483507d153",
+      "sourceKey": "antiprism-u20",
+      "sourceAssetSha256": "49c94c13bb5b6cea73d8b5612d3cd9b1134b0b91fb9c69618cc2b30fa44e4a4b",
+      "referenceComparison": {
+        "status": "passed",
+        "exact": false,
+        "normalizedVertexResidual": 9.292938109463748e-16,
+        "orderedFaceCyclesMatched": true,
+        "edgesMatched": true,
+        "scaleAndRigidMotionAllowed": true
+      }
+    },
+    {
+      "key": "schwarz-wythoff-u21",
+      "name": "great rhombihexahedron",
+      "dimension": 3,
+      "symbol": "4/3 3/2 2|",
+      "uniformNumber": 21,
+      "identity": "uniform3:U21",
+      "counts": [
+        24,
+        48,
+        18,
+        0
+      ],
+      "groupOrder": 48,
+      "convex": false,
+      "regular": false,
+      "definitionSha256": "900655541ef8a3b25e403a2be5e630d05dc4810fe294197925428080b1d8146c",
+      "sourceKey": "antiprism-u21",
+      "sourceAssetSha256": "77732e81166f79a983002f271122320084836c8e06d809b6f9925b8c74aff506",
+      "referenceComparison": {
+        "status": "passed",
+        "exact": false,
+        "normalizedVertexResidual": 2.6442193687558188e-15,
+        "orderedFaceCyclesMatched": true,
+        "edgesMatched": true,
+        "scaleAndRigidMotionAllowed": true
+      }
+    },
+    {
+      "key": "schwarz-wythoff-u22",
+      "name": "icosahedron",
+      "dimension": 3,
+      "symbol": "5|2 3",
+      "uniformNumber": 22,
+      "identity": "uniform3:U22",
+      "counts": [
+        12,
+        30,
+        20,
+        0
+      ],
+      "groupOrder": 120,
+      "convex": true,
+      "regular": true,
+      "definitionSha256": "5f2c2e18ac08c76f00484a5e124fb5d2bc26a63df219da6fce9b2bf92507bdd0",
+      "sourceKey": "antiprism-u22",
+      "sourceAssetSha256": "360f0406c534ff352f726de31b6b5751535ac1f369ddee741353c34fbaefca1b",
+      "referenceComparison": {
+        "status": "passed",
+        "exact": false,
+        "normalizedVertexResidual": 6.83035335636718e-15,
+        "orderedFaceCyclesMatched": true,
+        "edgesMatched": true,
+        "scaleAndRigidMotionAllowed": true
+      }
+    },
+    {
+      "key": "schwarz-wythoff-u23",
+      "name": "dodecahedron",
+      "dimension": 3,
+      "symbol": "3|2 5",
+      "uniformNumber": 23,
+      "identity": "uniform3:U23",
+      "counts": [
+        20,
+        30,
+        12,
+        0
+      ],
+      "groupOrder": 120,
+      "convex": true,
+      "regular": true,
+      "definitionSha256": "925735211b7b1814726e58d2db472c5a8c88a80070f242ce0d5d60741f46f7c2",
+      "sourceKey": "antiprism-u23",
+      "sourceAssetSha256": "30038da9ea18d92fcd50ff0cf2375f1f9f33aa879467e3013d55a13c9e7fb73f",
+      "referenceComparison": {
+        "status": "passed",
+        "exact": false,
+        "normalizedVertexResidual": 2.1513704567906022e-15,
+        "orderedFaceCyclesMatched": true,
+        "edgesMatched": true,
+        "scaleAndRigidMotionAllowed": true
+      }
+    },
+    {
+      "key": "schwarz-wythoff-u24",
+      "name": "icosidodecahedron",
+      "dimension": 3,
+      "symbol": "2|3 5",
+      "uniformNumber": 24,
+      "identity": "uniform3:U24",
+      "counts": [
+        30,
+        60,
+        32,
+        0
+      ],
+      "groupOrder": 120,
+      "convex": true,
+      "regular": false,
+      "definitionSha256": "d9321ecb3c402ef08d8838d6e5125622e408eea76baf3e919f7092ff4f5b7aa0",
+      "sourceKey": "antiprism-u24",
+      "sourceAssetSha256": "86c60d7c3e9c0ed903b8d5ef0929d1fbe2f523cf45a3e8cf65c264acbde368db",
+      "referenceComparison": {
+        "status": "passed",
+        "exact": false,
+        "normalizedVertexResidual": 2.914203267236168e-15,
+        "orderedFaceCyclesMatched": true,
+        "edgesMatched": true,
+        "scaleAndRigidMotionAllowed": true
+      }
+    },
+    {
+      "key": "schwarz-wythoff-u25",
+      "name": "truncated icosahedron",
+      "dimension": 3,
+      "symbol": "2 5|3",
+      "uniformNumber": 25,
+      "identity": "uniform3:U25",
+      "counts": [
+        60,
+        90,
+        32,
+        0
+      ],
+      "groupOrder": 120,
+      "convex": true,
+      "regular": false,
+      "definitionSha256": "53690cecaecae2fd38ee0280cd04f1b7a6c303a20a9d2b93274a91e2f423d5eb",
+      "sourceKey": "antiprism-u25",
+      "sourceAssetSha256": "698002dbe780b88c6b6210538eb082609d31e074210ba37cbde862a1095ba8fb",
+      "referenceComparison": {
+        "status": "passed",
+        "exact": false,
+        "normalizedVertexResidual": 5.910308533343917e-15,
+        "orderedFaceCyclesMatched": true,
+        "edgesMatched": true,
+        "scaleAndRigidMotionAllowed": true
+      }
+    },
+    {
+      "key": "schwarz-wythoff-u26",
+      "name": "truncated dodecahedron",
+      "dimension": 3,
+      "symbol": "2 3|5",
+      "uniformNumber": 26,
+      "identity": "uniform3:U26",
+      "counts": [
+        60,
+        90,
+        32,
+        0
+      ],
+      "groupOrder": 120,
+      "convex": true,
+      "regular": false,
+      "definitionSha256": "1f45b6eff90b6ff61e92e2ce28e423d61e0c851f74cb0fd398814cc48c423cbc",
+      "sourceKey": "antiprism-u26",
+      "sourceAssetSha256": "db6c66e2f9d7afdffdd51cfeab4c752aea284f934be1cd66ab65b206ff9415f8",
+      "referenceComparison": {
+        "status": "passed",
+        "exact": false,
+        "normalizedVertexResidual": 2.8972354183975677e-15,
+        "orderedFaceCyclesMatched": true,
+        "edgesMatched": true,
+        "scaleAndRigidMotionAllowed": true
+      }
+    },
+    {
+      "key": "schwarz-wythoff-u27",
+      "name": "rhombicosidodecahedron",
+      "dimension": 3,
+      "symbol": "3 5|2",
+      "uniformNumber": 27,
+      "identity": "uniform3:U27",
+      "counts": [
+        60,
+        120,
+        62,
+        0
+      ],
+      "groupOrder": 120,
+      "convex": true,
+      "regular": false,
+      "definitionSha256": "4d5af5a89490d8a4b7777afd14315ef5eb8d23631477ff00519ed4ea512f4177",
+      "sourceKey": "antiprism-u27",
+      "sourceAssetSha256": "9822cc4080d016a9542b0dd00eb35b6f02f6d1605f9ad705cb392868899dae4f",
+      "referenceComparison": {
+        "status": "passed",
+        "exact": false,
+        "normalizedVertexResidual": 2.9976021664879227e-15,
+        "orderedFaceCyclesMatched": true,
+        "edgesMatched": true,
+        "scaleAndRigidMotionAllowed": true
+      }
+    },
+    {
+      "key": "schwarz-wythoff-u28",
+      "name": "truncated icosidodecahedron",
+      "dimension": 3,
+      "symbol": "2 3 5|",
+      "uniformNumber": 28,
+      "identity": "uniform3:U28",
+      "counts": [
+        120,
+        180,
+        62,
+        0
+      ],
+      "groupOrder": 120,
+      "convex": true,
+      "regular": false,
+      "definitionSha256": "6294056793bae84df78f3a0d654d04cafa97db7759750cd090e0fe7806d61d4f",
+      "sourceKey": "antiprism-u28",
+      "sourceAssetSha256": "7c3a6fdfe0304a9e2e7721b5ef40551c8cc2e4c89467ba805dd1d37eb15a641e",
+      "referenceComparison": {
+        "status": "passed",
+        "exact": false,
+        "normalizedVertexResidual": 3.985994439185401e-15,
+        "orderedFaceCyclesMatched": true,
+        "edgesMatched": true,
+        "scaleAndRigidMotionAllowed": true
+      }
+    },
+    {
+      "key": "schwarz-wythoff-u30",
+      "name": "small ditrigonal icosidodecahedron",
+      "dimension": 3,
+      "symbol": "3|5/2 3",
+      "uniformNumber": 30,
+      "identity": "uniform3:U30",
+      "counts": [
+        20,
+        60,
+        32,
+        0
+      ],
+      "groupOrder": 120,
+      "convex": false,
+      "regular": false,
+      "definitionSha256": "63f42f106835bc7a67e691f7c399cebabb3c131655136f0919a84ec87a7ac0d8",
+      "sourceKey": "antiprism-u30",
+      "sourceAssetSha256": "74ce65ca8070b0cf1eb82e8c0cf2e70c972c743b3d0575f2bcc1e46c940986dd",
+      "referenceComparison": {
+        "status": "passed",
+        "exact": false,
+        "normalizedVertexResidual": 2.9205407954182373e-15,
+        "orderedFaceCyclesMatched": true,
+        "edgesMatched": true,
+        "scaleAndRigidMotionAllowed": true
+      }
+    },
+    {
+      "key": "schwarz-wythoff-u31",
+      "name": "small icosicosidodecahedron",
+      "dimension": 3,
+      "symbol": "5/2 3|3",
+      "uniformNumber": 31,
+      "identity": "uniform3:U31",
+      "counts": [
+        60,
+        120,
+        52,
+        0
+      ],
+      "groupOrder": 120,
+      "convex": false,
+      "regular": false,
+      "definitionSha256": "e0b04a9de1502d73b23c24db57615eb28fdc79b09f19e442dad57ab7c525f26a",
+      "sourceKey": "antiprism-u31",
+      "sourceAssetSha256": "9c1fc892082ce26c2f50e405ae54bd01a0d3c0113b6517acd6adf82e851ba71a",
+      "referenceComparison": {
+        "status": "passed",
+        "exact": false,
+        "normalizedVertexResidual": 2.7307875685720004e-15,
+        "orderedFaceCyclesMatched": true,
+        "edgesMatched": true,
+        "scaleAndRigidMotionAllowed": true
+      }
+    },
+    {
+      "key": "schwarz-wythoff-u33",
+      "name": "small dodecicosidodecahedron",
+      "dimension": 3,
+      "symbol": "3/2 5|5",
+      "uniformNumber": 33,
+      "identity": "uniform3:U33",
+      "counts": [
+        60,
+        120,
+        44,
+        0
+      ],
+      "groupOrder": 120,
+      "convex": false,
+      "regular": false,
+      "definitionSha256": "e358376974e8a1b80201599781644aa619daa90a79097a1c61b896b82c43840c",
+      "sourceKey": "antiprism-u33",
+      "sourceAssetSha256": "ae64e8669e115c74cc83d73a546713740f5ac4779afae8bdaa1744156bc2ff95",
+      "referenceComparison": {
+        "status": "passed",
+        "exact": false,
+        "normalizedVertexResidual": 3.070725159912542e-15,
+        "orderedFaceCyclesMatched": true,
+        "edgesMatched": true,
+        "scaleAndRigidMotionAllowed": true
+      }
+    },
+    {
+      "key": "schwarz-wythoff-u34",
+      "name": "small stellated dodecahedron",
+      "dimension": 3,
+      "symbol": "5|2 5/2",
+      "uniformNumber": 34,
+      "identity": "uniform3:U34",
+      "counts": [
+        12,
+        30,
+        12,
+        0
+      ],
+      "groupOrder": 120,
+      "convex": false,
+      "regular": true,
+      "definitionSha256": "2b32139a66de8abc2c15b633da164ab51daff5cad8a21e84295c1eca7dc09839",
+      "sourceKey": "antiprism-u34",
+      "sourceAssetSha256": "d19a722b2bd6b93ab611e378ad63729cbbdfc9b007eef7c0e0a438575b4fd136",
+      "referenceComparison": {
+        "status": "passed",
+        "exact": false,
+        "normalizedVertexResidual": 8.325829222934448e-16,
+        "orderedFaceCyclesMatched": true,
+        "edgesMatched": true,
+        "scaleAndRigidMotionAllowed": true
+      }
+    },
+    {
+      "key": "schwarz-wythoff-u35",
+      "name": "great dodecahedron",
+      "dimension": 3,
+      "symbol": "5/2|2 5",
+      "uniformNumber": 35,
+      "identity": "uniform3:U35",
+      "counts": [
+        12,
+        30,
+        12,
+        0
+      ],
+      "groupOrder": 120,
+      "convex": false,
+      "regular": true,
+      "definitionSha256": "6fb5129b810f38bc2222218979017f846ab9c9b1763df81e7d90f5bdeca78d00",
+      "sourceKey": "antiprism-u35",
+      "sourceAssetSha256": "a81dc394b3a763bdbd9ee6b06a110e815a8cfdc984424fc3d0489e0afd5f5463",
+      "referenceComparison": {
+        "status": "passed",
+        "exact": false,
+        "normalizedVertexResidual": 4.839349969133127e-16,
+        "orderedFaceCyclesMatched": true,
+        "edgesMatched": true,
+        "scaleAndRigidMotionAllowed": true
+      }
+    },
+    {
+      "key": "schwarz-wythoff-u36",
+      "name": "dodecadodecahedron",
+      "dimension": 3,
+      "symbol": "2|5/2 5",
+      "uniformNumber": 36,
+      "identity": "uniform3:U36",
+      "counts": [
+        30,
+        60,
+        24,
+        0
+      ],
+      "groupOrder": 120,
+      "convex": false,
+      "regular": false,
+      "definitionSha256": "f97dd4d530eedec7782af0da0329c7f796f61cb3c849a51f6a0456d98970e54d",
+      "sourceKey": "antiprism-u36",
+      "sourceAssetSha256": "5070d62f75ea2025b450c6ba95d16b83cee2e2d050f0f7c374f1d1e18e63a877",
+      "referenceComparison": {
+        "status": "passed",
+        "exact": false,
+        "normalizedVertexResidual": 7.108895957933346e-16,
+        "orderedFaceCyclesMatched": true,
+        "edgesMatched": true,
+        "scaleAndRigidMotionAllowed": true
+      }
+    },
+    {
+      "key": "schwarz-wythoff-u37",
+      "name": "truncated great dodecahedron",
+      "dimension": 3,
+      "symbol": "2 5/2|5",
+      "uniformNumber": 37,
+      "identity": "uniform3:U37",
+      "counts": [
+        60,
+        90,
+        24,
+        0
+      ],
+      "groupOrder": 120,
+      "convex": false,
+      "regular": false,
+      "definitionSha256": "79eac6b872dea92829671a71e8878d3a3cef1486f85e5512ce0d253aab5b0255",
+      "sourceKey": "antiprism-u37",
+      "sourceAssetSha256": "2141f29bcdbb2a5b220dfad435a0a3585e77773f6b265ef6769f9130fa584f80",
+      "referenceComparison": {
+        "status": "passed",
+        "exact": false,
+        "normalizedVertexResidual": 1.0677783136387644e-15,
+        "orderedFaceCyclesMatched": true,
+        "edgesMatched": true,
+        "scaleAndRigidMotionAllowed": true
+      }
+    },
+    {
+      "key": "schwarz-wythoff-u38",
+      "name": "rhombidodecadodecahedron",
+      "dimension": 3,
+      "symbol": "5/2 5|2",
+      "uniformNumber": 38,
+      "identity": "uniform3:U38",
+      "counts": [
+        60,
+        120,
+        54,
+        0
+      ],
+      "groupOrder": 120,
+      "convex": false,
+      "regular": false,
+      "definitionSha256": "a04a8826df91f2efde0a200f5a437599b5dd97df1443c9279f07ad7d18621c2b",
+      "sourceKey": "antiprism-u38",
+      "sourceAssetSha256": "9c66c1ef5e21c0a59c837740d55f563664d35ae749cb9f6ad67609aea05da729",
+      "referenceComparison": {
+        "status": "passed",
+        "exact": false,
+        "normalizedVertexResidual": 1.3653937842860002e-15,
+        "orderedFaceCyclesMatched": true,
+        "edgesMatched": true,
+        "scaleAndRigidMotionAllowed": true
+      }
+    },
+    {
+      "key": "schwarz-wythoff-u39",
+      "name": "small rhombidodecahedron",
+      "dimension": 3,
+      "symbol": "2 5/2 5|",
+      "uniformNumber": 39,
+      "identity": "uniform3:U39",
+      "counts": [
+        60,
+        120,
+        42,
+        0
+      ],
+      "groupOrder": 120,
+      "convex": false,
+      "regular": false,
+      "definitionSha256": "540f9820434a533ce7454f8a569b23439db823c5b6e28d1418ef0eda10c32ed6",
+      "sourceKey": "antiprism-u39",
+      "sourceAssetSha256": "634d6ef8e681887759478c97cd467e2b875d00be14ec661ef5f11dcb75c5bf83",
+      "referenceComparison": {
+        "status": "passed",
+        "exact": false,
+        "normalizedVertexResidual": 9.019494489765868e-16,
+        "orderedFaceCyclesMatched": true,
+        "edgesMatched": true,
+        "scaleAndRigidMotionAllowed": true
+      }
+    },
+    {
+      "key": "schwarz-wythoff-u41",
+      "name": "ditrigonal dodecadodecahedron",
+      "dimension": 3,
+      "symbol": "3|5/3 5",
+      "uniformNumber": 41,
+      "identity": "uniform3:U41",
+      "counts": [
+        20,
+        60,
+        24,
+        0
+      ],
+      "groupOrder": 120,
+      "convex": false,
+      "regular": false,
+      "definitionSha256": "7544c1a31aec019d7b54034dce4770040645f75bac452044d267a6a4c932dfba",
+      "sourceKey": "antiprism-u41",
+      "sourceAssetSha256": "cefc2cf63847c898d9a0b9bda389b48311457453857ad8fdbc5399a320a072b3",
+      "referenceComparison": {
+        "status": "passed",
+        "exact": false,
+        "normalizedVertexResidual": 1.2161883888976235e-15,
+        "orderedFaceCyclesMatched": true,
+        "edgesMatched": true,
+        "scaleAndRigidMotionAllowed": true
+      }
+    },
+    {
+      "key": "schwarz-wythoff-u42",
+      "name": "great ditrigonal dodecicosidodecahedron",
+      "dimension": 3,
+      "symbol": "3 5|5/3",
+      "uniformNumber": 42,
+      "identity": "uniform3:U42",
+      "counts": [
+        60,
+        120,
+        44,
+        0
+      ],
+      "groupOrder": 120,
+      "convex": false,
+      "regular": false,
+      "definitionSha256": "096b1861130fc7d768a8360384f65a0bc40c8644c18c984bdda034115491eede",
+      "sourceKey": "antiprism-u42",
+      "sourceAssetSha256": "eff59ebb8013c55c0137dde2ea5240f85e74c85a4491410ccf7388a4616d00be",
+      "referenceComparison": {
+        "status": "passed",
+        "exact": false,
+        "normalizedVertexResidual": 1.137640067256873e-15,
+        "orderedFaceCyclesMatched": true,
+        "edgesMatched": true,
+        "scaleAndRigidMotionAllowed": true
+      }
+    },
+    {
+      "key": "schwarz-wythoff-u43",
+      "name": "small ditrigonal dodecicosidodecahedron",
+      "dimension": 3,
+      "symbol": "5/3 3|5",
+      "uniformNumber": 43,
+      "identity": "uniform3:U43",
+      "counts": [
+        60,
+        120,
+        44,
+        0
+      ],
+      "groupOrder": 120,
+      "convex": false,
+      "regular": false,
+      "definitionSha256": "fd259e0fe1543e2fbce36b33f5b5d8aecf950e6cff565b85eee9ec54fc7fe530",
+      "sourceKey": "antiprism-u43",
+      "sourceAssetSha256": "a82132e500f5c74653b75fcc122a77e926f3a1d3a3c1cddd44ab9c02c07b968c",
+      "referenceComparison": {
+        "status": "passed",
+        "exact": false,
+        "normalizedVertexResidual": 1.4261072965499199e-15,
+        "orderedFaceCyclesMatched": true,
+        "edgesMatched": true,
+        "scaleAndRigidMotionAllowed": true
+      }
+    },
+    {
+      "key": "schwarz-wythoff-u44",
+      "name": "icosidodecadodecahedron",
+      "dimension": 3,
+      "symbol": "5/3 5|3",
+      "uniformNumber": 44,
+      "identity": "uniform3:U44",
+      "counts": [
+        60,
+        120,
+        44,
+        0
+      ],
+      "groupOrder": 120,
+      "convex": false,
+      "regular": false,
+      "definitionSha256": "7f06dc3bcddd5564a2012af6e5749ea3665371e2ed19f09fc8c44e435331f65e",
+      "sourceKey": "antiprism-u44",
+      "sourceAssetSha256": "0664fc3000c01a602525711f40e29797223f4dcec1d626bae9898eedd7caed92",
+      "referenceComparison": {
+        "status": "passed",
+        "exact": false,
+        "normalizedVertexResidual": 2.0443258006786253e-15,
+        "orderedFaceCyclesMatched": true,
+        "edgesMatched": true,
+        "scaleAndRigidMotionAllowed": true
+      }
+    },
+    {
+      "key": "schwarz-wythoff-u45",
+      "name": "icositruncated dodecadodecahedron",
+      "dimension": 3,
+      "symbol": "5/3 3 5|",
+      "uniformNumber": 45,
+      "identity": "uniform3:U45",
+      "counts": [
+        120,
+        180,
+        44,
+        0
+      ],
+      "groupOrder": 120,
+      "convex": false,
+      "regular": false,
+      "definitionSha256": "d9bfd16ffe30025e0bc1232c39a0a773d9f55b395a38015446d389051063f74c",
+      "sourceKey": "antiprism-u45",
+      "sourceAssetSha256": "d381a174b7de60a7d52c96427d70792d1f602c5f5bc718aee9c8e72a43168524",
+      "referenceComparison": {
+        "status": "passed",
+        "exact": false,
+        "normalizedVertexResidual": 2.0053283331865004e-15,
+        "orderedFaceCyclesMatched": true,
+        "edgesMatched": true,
+        "scaleAndRigidMotionAllowed": true
+      }
+    },
+    {
+      "key": "schwarz-wythoff-u47",
+      "name": "great ditrigonal icosidodecahedron",
+      "dimension": 3,
+      "symbol": "3/2|3 5",
+      "uniformNumber": 47,
+      "identity": "uniform3:U47",
+      "counts": [
+        20,
+        60,
+        32,
+        0
+      ],
+      "groupOrder": 120,
+      "convex": false,
+      "regular": false,
+      "definitionSha256": "419e9930a0ad1206a4c183a6087a22e6d70e5d2559f5b4f58e6432076298af78",
+      "sourceKey": "antiprism-u47",
+      "sourceAssetSha256": "d524074b8a3d01793bb7c0cfd486f5a15e2e1ff4617ebc797a12d5f09aa2bd3d",
+      "referenceComparison": {
+        "status": "passed",
+        "exact": false,
+        "normalizedVertexResidual": 2.0137621733714643e-15,
+        "orderedFaceCyclesMatched": true,
+        "edgesMatched": true,
+        "scaleAndRigidMotionAllowed": true
+      }
+    },
+    {
+      "key": "schwarz-wythoff-u48",
+      "name": "great icosicosidodecahedron",
+      "dimension": 3,
+      "symbol": "3/2 5|3",
+      "uniformNumber": 48,
+      "identity": "uniform3:U48",
+      "counts": [
+        60,
+        120,
+        52,
+        0
+      ],
+      "groupOrder": 120,
+      "convex": false,
+      "regular": false,
+      "definitionSha256": "5d23869353c087f10aeea6f57e28fea2b3245891c6e01301ffffddf5953b07d0",
+      "sourceKey": "antiprism-u48",
+      "sourceAssetSha256": "ede8ab650ec085262a3245368894b6d8d40c05e85e43563363fd2d975c12b5d3",
+      "referenceComparison": {
+        "status": "passed",
+        "exact": false,
+        "normalizedVertexResidual": 2.790007838194451e-15,
+        "orderedFaceCyclesMatched": true,
+        "edgesMatched": true,
+        "scaleAndRigidMotionAllowed": true
+      }
+    },
+    {
+      "key": "schwarz-wythoff-u49",
+      "name": "small icosihemidodecahedron",
+      "dimension": 3,
+      "symbol": "3/2 3|5",
+      "uniformNumber": 49,
+      "identity": "uniform3:U49",
+      "counts": [
+        30,
+        60,
+        26,
+        0
+      ],
+      "groupOrder": 120,
+      "convex": false,
+      "regular": false,
+      "definitionSha256": "643074b99d6a2ffa42380bfb86da576daaf55b86126a4c68a3edc42ce8c02fcc",
+      "sourceKey": "antiprism-u49",
+      "sourceAssetSha256": "794c6d2784d5e5f426edae01e5cb93fa4ca54902478feab0ab3b8b887c3dea37",
+      "referenceComparison": {
+        "status": "passed",
+        "exact": false,
+        "normalizedVertexResidual": 2.0267272597439194e-15,
+        "orderedFaceCyclesMatched": true,
+        "edgesMatched": true,
+        "scaleAndRigidMotionAllowed": true
+      }
+    },
+    {
+      "key": "schwarz-wythoff-u50",
+      "name": "small dodecicosahedron",
+      "dimension": 3,
+      "symbol": "3/2 3 5|",
+      "uniformNumber": 50,
+      "identity": "uniform3:U50",
+      "counts": [
+        60,
+        120,
+        32,
+        0
+      ],
+      "groupOrder": 120,
+      "convex": false,
+      "regular": false,
+      "definitionSha256": "a28767da27ffafbacd0ceeb990f32bb2df86f0b60732b23e05c859fac0247009",
+      "sourceKey": "antiprism-u50",
+      "sourceAssetSha256": "b71c30efb3373df6febdb71cb2368eb6357f9675d2395daf9ff8bcf0bd349b64",
+      "referenceComparison": {
+        "status": "passed",
+        "exact": false,
+        "normalizedVertexResidual": 2.1812421540521875e-15,
+        "orderedFaceCyclesMatched": true,
+        "edgesMatched": true,
+        "scaleAndRigidMotionAllowed": true
+      }
+    },
+    {
+      "key": "schwarz-wythoff-u51",
+      "name": "small dodecahemidodecahedron",
+      "dimension": 3,
+      "symbol": "5/4 5|5",
+      "uniformNumber": 51,
+      "identity": "uniform3:U51",
+      "counts": [
+        30,
+        60,
+        18,
+        0
+      ],
+      "groupOrder": 120,
+      "convex": false,
+      "regular": false,
+      "definitionSha256": "8a6cee52a222454267d2957189a01c92c7092d6b61900f8c84b607dcb219cee0",
+      "sourceKey": "antiprism-u51",
+      "sourceAssetSha256": "2689e53afdc8f630470be3e6453c72d2cace082ae2b4a5ee0adc2541dc890056",
+      "referenceComparison": {
+        "status": "passed",
+        "exact": false,
+        "normalizedVertexResidual": 8.671119018262734e-16,
+        "orderedFaceCyclesMatched": true,
+        "edgesMatched": true,
+        "scaleAndRigidMotionAllowed": true
+      }
+    },
+    {
+      "key": "schwarz-wythoff-u52",
+      "name": "great stellated dodecahedron",
+      "dimension": 3,
+      "symbol": "3|2 5/2",
+      "uniformNumber": 52,
+      "identity": "uniform3:U52",
+      "counts": [
+        20,
+        30,
+        12,
+        0
+      ],
+      "groupOrder": 120,
+      "convex": false,
+      "regular": true,
+      "definitionSha256": "d65e5da2881c03d5bc1da958b7f455da1743a7db3ad78569e4ebd6ef00396732",
+      "sourceKey": "antiprism-u52",
+      "sourceAssetSha256": "adfd3bf6b9693c7bf243443c679cce0e1f0ef5b35bf5b27b95e935981063a23f",
+      "referenceComparison": {
+        "status": "passed",
+        "exact": false,
+        "normalizedVertexResidual": 4.2196598140217893e-16,
+        "orderedFaceCyclesMatched": true,
+        "edgesMatched": true,
+        "scaleAndRigidMotionAllowed": true
+      }
+    },
+    {
+      "key": "schwarz-wythoff-u53",
+      "name": "great icosahedron",
+      "dimension": 3,
+      "symbol": "5/2|2 3",
+      "uniformNumber": 53,
+      "identity": "uniform3:U53",
+      "counts": [
+        12,
+        30,
+        20,
+        0
+      ],
+      "groupOrder": 120,
+      "convex": false,
+      "regular": true,
+      "definitionSha256": "16a6539fe4dac4c4e66d3c3eb75cdedc6df7d24e4fa67d9bc03bc518834209bc",
+      "sourceKey": "antiprism-u53",
+      "sourceAssetSha256": "0ff0059047b482b8269643df09756b1e56796b00d4b8e7e481ff3226489d3d4f",
+      "referenceComparison": {
+        "status": "passed",
+        "exact": false,
+        "normalizedVertexResidual": 1.2670655869532562e-15,
+        "orderedFaceCyclesMatched": true,
+        "edgesMatched": true,
+        "scaleAndRigidMotionAllowed": true
+      }
+    },
+    {
+      "key": "schwarz-wythoff-u54",
+      "name": "great icosidodecahedron",
+      "dimension": 3,
+      "symbol": "2|5/2 3",
+      "uniformNumber": 54,
+      "identity": "uniform3:U54",
+      "counts": [
+        30,
+        60,
+        32,
+        0
+      ],
+      "groupOrder": 120,
+      "convex": false,
+      "regular": false,
+      "definitionSha256": "858966fb384d5571ceed721203acb8de341797438d811285e35afe84e18cc0d8",
+      "sourceKey": "antiprism-u54",
+      "sourceAssetSha256": "aaf0bc8ce49e57fdf31b68ef6273212d2511d430aaefd11caf3e3c5b36bcd7ee",
+      "referenceComparison": {
+        "status": "passed",
+        "exact": false,
+        "normalizedVertexResidual": 1.6504651808933464e-15,
+        "orderedFaceCyclesMatched": true,
+        "edgesMatched": true,
+        "scaleAndRigidMotionAllowed": true
+      }
+    },
+    {
+      "key": "schwarz-wythoff-u55",
+      "name": "great truncated icosahedron",
+      "dimension": 3,
+      "symbol": "2 5/2|3",
+      "uniformNumber": 55,
+      "identity": "uniform3:U55",
+      "counts": [
+        60,
+        90,
+        32,
+        0
+      ],
+      "groupOrder": 120,
+      "convex": false,
+      "regular": false,
+      "definitionSha256": "569f9d13ffa973ae7a2e598148c8b06f01c70401a8987112d63a73a6ba80c702",
+      "sourceKey": "antiprism-u55",
+      "sourceAssetSha256": "74817a3f563b31ab04bde5bf2b2725b60b277c167ffd6caa3893c482f4c2d978",
+      "referenceComparison": {
+        "status": "passed",
+        "exact": false,
+        "normalizedVertexResidual": 1.857810284538323e-15,
+        "orderedFaceCyclesMatched": true,
+        "edgesMatched": true,
+        "scaleAndRigidMotionAllowed": true
+      }
+    },
+    {
+      "key": "schwarz-wythoff-u56",
+      "name": "rhombicosahedron",
+      "dimension": 3,
+      "symbol": "2 5/2 3|",
+      "uniformNumber": 56,
+      "identity": "uniform3:U56",
+      "counts": [
+        60,
+        120,
+        50,
+        0
+      ],
+      "groupOrder": 120,
+      "convex": false,
+      "regular": false,
+      "definitionSha256": "e79405afaae837fda5173b7f9a3d478cfffea1963d04a2f3126dfe75a58fe67a",
+      "sourceKey": "antiprism-u56",
+      "sourceAssetSha256": "d24044faa791caff71044785282315604d25f6ca0450541857f7e092f0d34fcc",
+      "referenceComparison": {
+        "status": "passed",
+        "exact": false,
+        "normalizedVertexResidual": 1.2237659599594665e-15,
+        "orderedFaceCyclesMatched": true,
+        "edgesMatched": true,
+        "scaleAndRigidMotionAllowed": true
+      }
+    },
+    {
+      "key": "schwarz-wythoff-u58",
+      "name": "small stellated truncated dodecahedron",
+      "dimension": 3,
+      "symbol": "2 5|5/3",
+      "uniformNumber": 58,
+      "identity": "uniform3:U58",
+      "counts": [
+        60,
+        90,
+        24,
+        0
+      ],
+      "groupOrder": 120,
+      "convex": false,
+      "regular": false,
+      "definitionSha256": "0cbaa4202b84948d48eb27a23df662642c561b0525031594bcbf8d5a25f40844",
+      "sourceKey": "antiprism-u58",
+      "sourceAssetSha256": "b6315a23110a7e529e46569ab6c407f7a91bba4ec85d1038ef12cbe44ebd1fce",
+      "referenceComparison": {
+        "status": "passed",
+        "exact": false,
+        "normalizedVertexResidual": 9.42055475210265e-16,
+        "orderedFaceCyclesMatched": true,
+        "edgesMatched": true,
+        "scaleAndRigidMotionAllowed": true
+      }
+    },
+    {
+      "key": "schwarz-wythoff-u59",
+      "name": "truncated dodecadodecahedron",
+      "dimension": 3,
+      "symbol": "5/3 2 5|",
+      "uniformNumber": 59,
+      "identity": "uniform3:U59",
+      "counts": [
+        120,
+        180,
+        54,
+        0
+      ],
+      "groupOrder": 120,
+      "convex": false,
+      "regular": false,
+      "definitionSha256": "10078848328e4406d4466601a731741bf48894b7989bab4437f10d49b5ce6b4c",
+      "sourceKey": "antiprism-u59",
+      "sourceAssetSha256": "6eda5149d894ea3b028731037409bccd3a0a588e0327b149c6ace19461d510dd",
+      "referenceComparison": {
+        "status": "passed",
+        "exact": false,
+        "normalizedVertexResidual": 1.276831898851135e-15,
+        "orderedFaceCyclesMatched": true,
+        "edgesMatched": true,
+        "scaleAndRigidMotionAllowed": true
+      }
+    },
+    {
+      "key": "schwarz-wythoff-u61",
+      "name": "great dodecicosidodecahedron",
+      "dimension": 3,
+      "symbol": "5/2 3|5/3",
+      "uniformNumber": 61,
+      "identity": "uniform3:U61",
+      "counts": [
+        60,
+        120,
+        44,
+        0
+      ],
+      "groupOrder": 120,
+      "convex": false,
+      "regular": false,
+      "definitionSha256": "9144a71c1b6472a2781862524c6877953325803037d93e47e87fbfdaba9e5707",
+      "sourceKey": "antiprism-u61",
+      "sourceAssetSha256": "78d9ea6a99319dcab14990f4d18abaad99899ab1b597b17106faf5f3739ff9a1",
+      "referenceComparison": {
+        "status": "passed",
+        "exact": false,
+        "normalizedVertexResidual": 1.3600232051658168e-15,
+        "orderedFaceCyclesMatched": true,
+        "edgesMatched": true,
+        "scaleAndRigidMotionAllowed": true
+      }
+    },
+    {
+      "key": "schwarz-wythoff-u62",
+      "name": "small dodecahemicosahedron",
+      "dimension": 3,
+      "symbol": "5/3 5/2|3",
+      "uniformNumber": 62,
+      "identity": "uniform3:U62",
+      "counts": [
+        30,
+        60,
+        22,
+        0
+      ],
+      "groupOrder": 120,
+      "convex": false,
+      "regular": false,
+      "definitionSha256": "c8b7c3c474a8609e7e76cc2e0ae655ca75d081cbfce62b2988f6233eb5151a72",
+      "sourceKey": "antiprism-u62",
+      "sourceAssetSha256": "083b68a476f1a3a79220684f2176b48260ede30f9a63a80a2e54d6c0cdf0b99a",
+      "referenceComparison": {
+        "status": "passed",
+        "exact": false,
+        "normalizedVertexResidual": 7.28021923224409e-16,
+        "orderedFaceCyclesMatched": true,
+        "edgesMatched": true,
+        "scaleAndRigidMotionAllowed": true
+      }
+    },
+    {
+      "key": "schwarz-wythoff-u63",
+      "name": "great dodecicosahedron",
+      "dimension": 3,
+      "symbol": "5/3 5/2 3|",
+      "uniformNumber": 63,
+      "identity": "uniform3:U63",
+      "counts": [
+        60,
+        120,
+        32,
+        0
+      ],
+      "groupOrder": 120,
+      "convex": false,
+      "regular": false,
+      "definitionSha256": "6208003d6cfe3fae93f5e753fb11d08671c1a6256d38eb2b91fe80d8f9c1ae0f",
+      "sourceKey": "antiprism-u63",
+      "sourceAssetSha256": "7221bf6a6333241a0a8bce4e67fd7793be05083bb4fd121086db480ff1eb7533",
+      "referenceComparison": {
+        "status": "passed",
+        "exact": false,
+        "normalizedVertexResidual": 1.0374052500944784e-15,
+        "orderedFaceCyclesMatched": true,
+        "edgesMatched": true,
+        "scaleAndRigidMotionAllowed": true
+      }
+    },
+    {
+      "key": "schwarz-wythoff-u65",
+      "name": "great dodecahemicosahedron",
+      "dimension": 3,
+      "symbol": "5/4 5|3",
+      "uniformNumber": 65,
+      "identity": "uniform3:U65",
+      "counts": [
+        30,
+        60,
+        22,
+        0
+      ],
+      "groupOrder": 120,
+      "convex": false,
+      "regular": false,
+      "definitionSha256": "c48298ff65f569155867b7e0f88f02e91d15189d65aef6386de046a3d05c272f",
+      "sourceKey": "antiprism-u65",
+      "sourceAssetSha256": "30fa96ae1d2b74ebfeba4f69ebd5c433d683dd6a2b78f41e119027b904b36b11",
+      "referenceComparison": {
+        "status": "passed",
+        "exact": false,
+        "normalizedVertexResidual": 1.4443570596498132e-15,
+        "orderedFaceCyclesMatched": true,
+        "edgesMatched": true,
+        "scaleAndRigidMotionAllowed": true
+      }
+    },
+    {
+      "key": "schwarz-wythoff-u66",
+      "name": "great stellated truncated dodecahedron",
+      "dimension": 3,
+      "symbol": "2 3|5/3",
+      "uniformNumber": 66,
+      "identity": "uniform3:U66",
+      "counts": [
+        60,
+        90,
+        32,
+        0
+      ],
+      "groupOrder": 120,
+      "convex": false,
+      "regular": false,
+      "definitionSha256": "0fa439ad91e89dc6003c89aff1251103fee1820db6f6ff59643a9384cd4aaf85",
+      "sourceKey": "antiprism-u66",
+      "sourceAssetSha256": "49d0aafeace499f6eb5360bf3f3510e56dca75f63c188eb466f53b1278740cde",
+      "referenceComparison": {
+        "status": "passed",
+        "exact": false,
+        "normalizedVertexResidual": 1.4087150935148696e-15,
+        "orderedFaceCyclesMatched": true,
+        "edgesMatched": true,
+        "scaleAndRigidMotionAllowed": true
+      }
+    },
+    {
+      "key": "schwarz-wythoff-u67",
+      "name": "great rhombicosidodecahedron",
+      "dimension": 3,
+      "symbol": "5/3 3|2",
+      "uniformNumber": 67,
+      "identity": "uniform3:U67",
+      "counts": [
+        60,
+        120,
+        62,
+        0
+      ],
+      "groupOrder": 120,
+      "convex": false,
+      "regular": false,
+      "definitionSha256": "17ae606765f7450eff9851da78a3e88e4fe3580ca4e9819f2dba4db5ae543ec1",
+      "sourceKey": "antiprism-u67",
+      "sourceAssetSha256": "685ddd322b3e0bcdca2d93cef57e9648ca83054744404355b39ff2418565ee84",
+      "referenceComparison": {
+        "status": "passed",
+        "exact": false,
+        "normalizedVertexResidual": 1.4518049907399379e-15,
+        "orderedFaceCyclesMatched": true,
+        "edgesMatched": true,
+        "scaleAndRigidMotionAllowed": true
+      }
+    },
+    {
+      "key": "schwarz-wythoff-u68",
+      "name": "great truncated icosidodecahedron",
+      "dimension": 3,
+      "symbol": "5/3 2 3|",
+      "uniformNumber": 68,
+      "identity": "uniform3:U68",
+      "counts": [
+        120,
+        180,
+        62,
+        0
+      ],
+      "groupOrder": 120,
+      "convex": false,
+      "regular": false,
+      "definitionSha256": "2803ac8c100ad44cbc3f983f9a9d29d49346c6e3763b0a2f26ef171e337ce9cd",
+      "sourceKey": "antiprism-u68",
+      "sourceAssetSha256": "9b4b445ebce267322b4b99ef3e769c6bd52648d10c92fb998875095294838ffd",
+      "referenceComparison": {
+        "status": "passed",
+        "exact": false,
+        "normalizedVertexResidual": 1.3440693017233997e-15,
+        "orderedFaceCyclesMatched": true,
+        "edgesMatched": true,
+        "scaleAndRigidMotionAllowed": true
+      }
+    },
+    {
+      "key": "schwarz-wythoff-u70",
+      "name": "great dodecahemidodecahedron",
+      "dimension": 3,
+      "symbol": "5/3 5/2|5/3",
+      "uniformNumber": 70,
+      "identity": "uniform3:U70",
+      "counts": [
+        30,
+        60,
+        18,
+        0
+      ],
+      "groupOrder": 120,
+      "convex": false,
+      "regular": false,
+      "definitionSha256": "fef75a337aa281905879ace6b4fabc2d7f9b02701366d9a0b30f9dabe70afd84",
+      "sourceKey": "antiprism-u70",
+      "sourceAssetSha256": "892b0822f31452562bfa75a861a0bc46b56bd8d4a2db5be1ca5bd8488af7aac8",
+      "referenceComparison": {
+        "status": "passed",
+        "exact": false,
+        "normalizedVertexResidual": 7.216449660063518e-16,
+        "orderedFaceCyclesMatched": true,
+        "edgesMatched": true,
+        "scaleAndRigidMotionAllowed": true
+      }
+    },
+    {
+      "key": "schwarz-wythoff-u71",
+      "name": "great icosihemidodecahedron",
+      "dimension": 3,
+      "symbol": "3/2 3|5/3",
+      "uniformNumber": 71,
+      "identity": "uniform3:U71",
+      "counts": [
+        30,
+        60,
+        26,
+        0
+      ],
+      "groupOrder": 120,
+      "convex": false,
+      "regular": false,
+      "definitionSha256": "e5bd11425846de95a2ba034321084e73daea6c33aa9938b6688eff47594b29da",
+      "sourceKey": "antiprism-u71",
+      "sourceAssetSha256": "90535d9d2943b2c875947655f0395be4dc5840aa14207da79bfdb8c104442fb3",
+      "referenceComparison": {
+        "status": "passed",
+        "exact": false,
+        "normalizedVertexResidual": 1.4496809150000396e-15,
+        "orderedFaceCyclesMatched": true,
+        "edgesMatched": true,
+        "scaleAndRigidMotionAllowed": true
+      }
+    },
+    {
+      "key": "schwarz-wythoff-u73",
+      "name": "great rhombidodecahedron",
+      "dimension": 3,
+      "symbol": "3/2 5/3 2|",
+      "uniformNumber": 73,
+      "identity": "uniform3:U73",
+      "counts": [
+        60,
+        120,
+        42,
+        0
+      ],
+      "groupOrder": 120,
+      "convex": false,
+      "regular": false,
+      "definitionSha256": "f17b9b119f13951b3510490b1b69cf113bcbb545dbd6366f334f888f929b8736",
+      "sourceKey": "antiprism-u73",
+      "sourceAssetSha256": "5c12506794739842462f3b6fc4ef970b88370704183a573c05127d1bf2652c0d",
+      "referenceComparison": {
+        "status": "passed",
+        "exact": false,
+        "normalizedVertexResidual": 2.9774889957820708e-15,
+        "orderedFaceCyclesMatched": true,
+        "edgesMatched": true,
+        "scaleAndRigidMotionAllowed": true
+      }
+    }
+  ],
+  "queue": [
+    {
+      "identity": "uniform3:U12",
+      "symbol": "|2 3 4",
+      "reason": "Rotation-only snub or exceptional non-three-mark construction; supplied source remains available."
+    },
+    {
+      "identity": "uniform3:U29",
+      "symbol": "|2 3 5",
+      "reason": "Rotation-only snub or exceptional non-three-mark construction; supplied source remains available."
+    },
+    {
+      "identity": "uniform3:U32",
+      "symbol": "|5/2 3 3",
+      "reason": "Rotation-only snub or exceptional non-three-mark construction; supplied source remains available."
+    },
+    {
+      "identity": "uniform3:U40",
+      "symbol": "|2 5/2 5",
+      "reason": "Rotation-only snub or exceptional non-three-mark construction; supplied source remains available."
+    },
+    {
+      "identity": "uniform3:U46",
+      "symbol": "|5/3 3 5",
+      "reason": "Rotation-only snub or exceptional non-three-mark construction; supplied source remains available."
+    },
+    {
+      "identity": "uniform3:U57",
+      "symbol": "|2 5/2 3",
+      "reason": "Rotation-only snub or exceptional non-three-mark construction; supplied source remains available."
+    },
+    {
+      "identity": "uniform3:U60",
+      "symbol": "|5/3 2 5",
+      "reason": "Rotation-only snub or exceptional non-three-mark construction; supplied source remains available."
+    },
+    {
+      "identity": "uniform3:U64",
+      "symbol": "|5/3 5/2 3",
+      "reason": "Rotation-only snub or exceptional non-three-mark construction; supplied source remains available."
+    },
+    {
+      "identity": "uniform3:U69",
+      "symbol": "|5/3 2 3",
+      "reason": "Rotation-only snub or exceptional non-three-mark construction; supplied source remains available."
+    },
+    {
+      "identity": "uniform3:U72",
+      "symbol": "|3/2 3/2 5/2",
+      "reason": "Rotation-only snub or exceptional non-three-mark construction; supplied source remains available."
+    },
+    {
+      "identity": "uniform3:U74",
+      "symbol": "|3/2 5/3 2",
+      "reason": "Rotation-only snub or exceptional non-three-mark construction; supplied source remains available."
+    },
+    {
+      "identity": "uniform3:U75",
+      "symbol": "3/2 5/3 3 5/2",
+      "reason": "Rotation-only snub or exceptional non-three-mark construction; supplied source remains available."
+    }
+  ]
+}

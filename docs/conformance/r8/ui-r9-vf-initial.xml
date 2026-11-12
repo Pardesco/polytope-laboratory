@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<testsuites>
+	<testcase name="ambiguous scan requires explicit selection and construction commits a recipe with native numeric input" time="0.010995" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r9-fix-vf\tests\vertex-figure-construction-controls.test.mjs"/>
+	<testcase name="no-match reports the exhausted finite domain without implying a universal refusal" time="0.000823" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r9-fix-vf\tests\vertex-figure-construction-controls.test.mjs"/>
+	<testcase name="construction rechecks edited numeric target and rejects a wrong native candidate before publication" time="0.005963" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r9-fix-vf\tests\vertex-figure-construction-controls.test.mjs"/>
+	<testcase name="stable sync does not rewrite input attributes and invalidation clears stale search evidence" time="0.001126" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r9-fix-vf\tests\vertex-figure-construction-controls.test.mjs"/>
+	<testcase name="held candidate search discards source metadata/content and workspace changes" time="0.002743" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r9-fix-vf\tests\vertex-figure-construction-controls.test.mjs"/>
+	<testcase name="held build and cancellation cannot publish a stale completion" time="0.010602" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r9-fix-vf\tests\vertex-figure-construction-controls.test.mjs"/>
+	<testcase name="mounted Tuta figure completion: expert-off search, metric evidence, undo/reopen/replay and branch" time="83.852418" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r9-fix-vf\tests\vertex-figure-scaliform-mounted.test.mjs" failure="page.waitForFunction: Timeout 20000ms exceeded.">
+		<failure type="testCodeFailure" message="page.waitForFunction: Timeout 20000ms exceeded.">
+[Error [ERR_TEST_FAILURE]: page.waitForFunction: Timeout 20000ms exceeded.] {
+  code: 'ERR_TEST_FAILURE',
+  failureType: 'testCodeFailure',
+  cause: page.waitForFunction: Timeout 20000ms exceeded.
+      at search (C:\Users\Randall\Documents\polytope-orchestra\r9-fix-vf\tests\vertex-figure-scaliform-mounted.test.mjs:36:134)
+      at async TestContext.&lt;anonymous> (C:\Users\Randall\Documents\polytope-orchestra\r9-fix-vf\tests\vertex-figure-scaliform-mounted.test.mjs:68:95) {
+    name: 'TimeoutError',
+    log: []
+  }
+}
+		</failure>
+	</testcase>
+	<!-- tests 7 -->
+	<!-- suites 0 -->
+	<!-- pass 6 -->
+	<!-- fail 1 -->
+	<!-- cancelled 0 -->
+	<!-- skipped 0 -->
+	<!-- todo 0 -->
+	<!-- duration_ms 85218.1691 -->
+</testsuites>

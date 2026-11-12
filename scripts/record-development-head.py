@@ -1,14 +1,23 @@
 """Keep the current handoff separate from retained historical release evidence."""
+
 from pathlib import Path
-import hashlib,json
-root=Path(__file__).resolve().parents[1]
-version=json.loads((root/'package.json').read_text())['version']
-short_version=version.rsplit('.',1)[0]
-previews=[json.loads(p.read_text()) for p in (root/'artifacts').glob('community-preview-*.json')]
-preview_version=max(previews,key=lambda r:tuple(map(int,r['version'].split('.'))))['version']
-protected={name:hashlib.sha256((root/'engine'/name).read_bytes()).hexdigest() for name in ('__init__.py','formats.py','geometry.py')}
-assert protected=={'__init__.py':'386c22bb99742201703c33eba63836bd0bebcccff37107c67a06b139fd0e5923','formats.py':'fdc634c8a992e2b6a33ea69ae68f3fbd5d021949123efd584744d8a0a76c8d23','geometry.py':'9a9a1243223ca38aabce4bc762cbd463939a177f104bfa08c4ada81774b85414'}
-prefix=f'''# Active development - October 7, 2026
+import hashlib, json
+
+root = Path(__file__).resolve().parents[1]
+version = json.loads((root / 'package.json').read_text())['version']
+short_version = version.rsplit('.', 1)[0]
+previews = [json.loads(p.read_text()) for p in (root / 'artifacts').glob('community-preview-*.json')]
+preview_version = max(previews, key=lambda r: tuple(map(int, r['version'].split('.'))))['version']
+protected = {
+    name: hashlib.sha256((root / 'engine' / name).read_bytes()).hexdigest()
+    for name in ('__init__.py', 'formats.py', 'geometry.py')
+}
+assert protected == {
+    '__init__.py': '758fc01b2f2bb85815ce91b5b416e6cf3f3a06332a65470d827334cbdee0f4e5',
+    'formats.py': 'c2ab6e54c809482d31dc7690dce2e06dd26c2253d51d25992ad8714213e99ae5',
+    'geometry.py': '5f0a9af5212d1b089041612efc9cb52ba51cd109eff5f901187c2721606e990d',
+}
+prefix = f'''# Active development - October 7, 2026
 
 The feature-complete goal remains active, using GPT-6.1-Sol subagents. Randall
 prioritizes free/open-source feature coverage or roughly 90% of Stella4D,
@@ -163,6 +172,21 @@ Source archive receipt: `artifacts/source-package-{preview_version}.json`.
 '''
 # The stopping-checkpoint handoff is maintained separately; do not regenerate it.
 for name in ('BUILD_STATUS.md',):
-    p=root/'docs'/name;old=p.read_text(encoding='utf-8');_,history=old.split('\n---\n',1);p.write_text(prefix+history,encoding='utf-8')
-(root/'artifacts'/f'development-head-{version}.json').write_text(json.dumps({'version':version,'goalStatus':'active','license':'GPL-3.0-only','protectedImporterHashes':protected,'currentNotes':str(root/'docs'/f'RELEASE_{short_version}_DEVELOPMENT.md')},indent=2)+'\n')
-print('Updated current development handoff:',version)
+    p = root / 'docs' / name
+    old = p.read_text(encoding='utf-8')
+    _, history = old.split('\n---\n', 1)
+    p.write_text(prefix + history, encoding='utf-8')
+(root / 'artifacts' / f'development-head-{version}.json').write_text(
+    json.dumps(
+        {
+            'version': version,
+            'goalStatus': 'active',
+            'license': 'GPL-3.0-only',
+            'protectedImporterHashes': protected,
+            'currentNotes': str(root / 'docs' / f'RELEASE_{short_version}_DEVELOPMENT.md'),
+        },
+        indent=2,
+    )
+    + '\n'
+)
+print('Updated current development handoff:', version)

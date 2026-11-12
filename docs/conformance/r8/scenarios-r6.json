@@ -1,0 +1,2652 @@
+{
+  "schema_version": 2,
+  "scenarios": [
+    {
+      "id": "stel-01-r6-arbitrary-plane-editor",
+      "requirement_id": "STEL-01",
+      "option": "r6-arbitrary-plane-editor",
+      "title": "Arbitrary plane editor, bounds and source-owned promotion",
+      "source": {
+        "description": "Cube reference for three-plane octants; six entered axis planes on cube/octahedron reference for bounded promotion"
+      },
+      "parameters": {
+        "octantPlanes": [
+          [
+            1,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            1,
+            0
+          ]
+        ],
+        "octantBounds": [
+          [
+            -1,
+            -1,
+            -1
+          ],
+          [
+            1,
+            1,
+            1
+          ]
+        ],
+        "promotionPlanes": [
+          [
+            2,
+            0,
+            0,
+            -2
+          ],
+          [
+            -1,
+            0,
+            0,
+            -1
+          ],
+          [
+            0,
+            1,
+            0,
+            -1
+          ],
+          [
+            0,
+            -1,
+            0,
+            -1
+          ],
+          [
+            0,
+            0,
+            1,
+            -1
+          ],
+          [
+            0,
+            0,
+            -1,
+            -1
+          ]
+        ],
+        "promotionBounds": [
+          [
+            -3,
+            -3,
+            -3
+          ],
+          [
+            3,
+            3,
+            3
+          ]
+        ],
+        "regionBudgetRefusal": 7
+      },
+      "domain": {
+        "dimensions": [
+          3
+        ],
+        "object_classes": [
+          "convex reference with finite plane arrangement"
+        ],
+        "limits": {
+          "planeRows": [
+            1,
+            32
+          ],
+          "regionLimit": [
+            1,
+            2048
+          ],
+          "domain": "finite explicit XYZ observation box"
+        },
+        "numeric_contract": "Approximate float64 geometry/predicates; residuals qualify the supplied source, never exact algebraic or benchmark parity.",
+        "refusals": [
+          "4D/generalized reference unsupported; incomplete region budget refuses; noninvariant box refuses subgroup"
+        ]
+      },
+      "checks": [
+        "Check entered coefficients and partition residual, not seed-hull substitution",
+        "Check source ownership, saved inputs and native replay"
+      ],
+      "fixtures": [
+        {
+          "path": "tests/test_stellation_plane_input.py",
+          "selector": "test_arbitrary_octants_and_region_budget_use_existing_dispatch",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/test_stellation_plane_input.py",
+          "selector": "test_arbitrary_source_binding_retains_entered_coefficients_and_safe_union",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/test_stellation_plane_input.py",
+          "selector": "test_plane_settings_subgroup_selection_and_promoted_model_survive_project_replay",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/stellation-plane-input.test.mjs",
+          "selector": "mounted arbitrary planes and reflection subgroup survive selection undo, project reopen and base promotion",
+          "kind": "node-test",
+          "level": "ui-mounted",
+          "run_id": "ui",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        }
+      ],
+      "source_files": [
+        "docs/R6_STELLATION.md",
+        "engine/stellation.py",
+        "engine/stellation_cells.py",
+        "ui/stellation-cell-controls.mjs",
+        "ui/stellation-diagram-controls.mjs"
+      ],
+      "ui": {
+        "element_ids": [
+          "stellation-arbitrary-planes",
+          "stellation-bounds-min",
+          "stellation-bounds-max",
+          "stellation-region-limit",
+          "stellation-evaluate-arbitrary",
+          "stellation-face-base"
+        ],
+        "route": "Inspector > Construct > Stars & facets > Stellate > Stellation plane regions / Interactive stellation diagrams; Expert off."
+      },
+      "closure": {
+        "kind": "scenario-closed",
+        "legacy_case_ids": [
+          "stel-01-arbitrary-planes"
+        ],
+        "scope": "Arbitrary plane editor, bounds and source-owned promotion; only the declared input/options and checks.",
+        "legacy_disposition": {
+          "stel-01-arbitrary-planes": "implementation-gap-closed"
+        }
+      },
+      "remaining": "Other source/option cross-products and installed benchmark semantics require separate evidence.",
+      "benchmark_status": "unverified",
+      "platform_status": "not-run",
+      "competitor_status": "not-run",
+      "parameters_are_executable": false
+    },
+    {
+      "id": "stel-04-r6-reflection-editor",
+      "requirement_id": "STEL-04",
+      "option": "r6-reflection-editor",
+      "title": "Custom generator subgroup editor and independent reflection unions",
+      "source": {
+        "description": "Regular octahedron intercepts +/-1; reflection diag(-1,1,1)"
+      },
+      "parameters": {
+        "generatorIds": [
+          8
+        ],
+        "order": 2,
+        "seedIncludedUnions": 16
+      },
+      "domain": {
+        "dimensions": [
+          3
+        ],
+        "object_classes": [
+          "convex reference with finite plane arrangement"
+        ],
+        "limits": {
+          "planeRows": [
+            1,
+            32
+          ],
+          "regionLimit": [
+            1,
+            2048
+          ],
+          "domain": "finite explicit XYZ observation box"
+        },
+        "numeric_contract": "Approximate float64 geometry/predicates; residuals qualify the supplied source, never exact algebraic or benchmark parity.",
+        "refusals": [
+          "4D/generalized reference unsupported; incomplete region budget refuses; noninvariant box refuses subgroup"
+        ]
+      },
+      "checks": [
+        "Check entered coefficients and partition residual, not seed-hull substitution",
+        "Check source ownership, saved inputs and native replay",
+        "Check entire reflection permutation and all 16 invariant seed-included unions"
+      ],
+      "fixtures": [
+        {
+          "path": "tests/test_stellation_plane_input.py",
+          "selector": "test_editor_subgroup_has_independent_reflection_orbits_and_source_matrix",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/test_stellation_plane_input.py",
+          "selector": "test_subgroup_allowed_unions_equal_independently_exhausted_pair_sets",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/test_stellation_plane_input.py",
+          "selector": "test_subgroup_refuses_a_box_that_does_not_preserve_requested_action",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/stellation-plane-input.test.mjs",
+          "selector": "mounted arbitrary planes and reflection subgroup survive selection undo, project reopen and base promotion",
+          "kind": "node-test",
+          "level": "ui-mounted",
+          "run_id": "ui",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        }
+      ],
+      "source_files": [
+        "docs/R6_STELLATION.md",
+        "engine/stellation.py",
+        "engine/stellation_cells.py",
+        "ui/stellation-cell-controls.mjs",
+        "ui/stellation-diagram-controls.mjs"
+      ],
+      "ui": {
+        "element_ids": [
+          "stellation-face-generators",
+          "stellation-face-subgroup",
+          "stellation-face-symmetry"
+        ],
+        "route": "Inspector > Construct > Stars & facets > Stellate > Stellation plane regions / Interactive stellation diagrams; Expert off."
+      },
+      "closure": {
+        "kind": "scenario-closed",
+        "legacy_case_ids": [
+          "stel-04-editor-subgroups",
+          "stel-04-group-scope"
+        ],
+        "scope": "Custom generator subgroup editor and independent reflection unions; only the declared input/options and checks.",
+        "legacy_disposition": {
+          "stel-04-editor-subgroups": "implementation-gap-closed",
+          "stel-04-group-scope": "local-tranche-only"
+        }
+      },
+      "remaining": "Other source/option cross-products and installed benchmark semantics require separate evidence.",
+      "benchmark_status": "unverified",
+      "platform_status": "not-run",
+      "competitor_status": "not-run",
+      "parameters_are_executable": false
+    },
+    {
+      "id": "stel-05-r6-arbitrary-promotion-replay",
+      "requirement_id": "STEL-05",
+      "option": "r6-arbitrary-promotion-replay",
+      "title": "Arbitrary-plane promotion retains literal inputs and replays",
+      "source": {
+        "description": "Cube reference and selected enclosed octant"
+      },
+      "parameters": {
+        "operation": "stellation-make-base",
+        "sourceBound": true
+      },
+      "domain": {
+        "dimensions": [
+          3
+        ],
+        "object_classes": [
+          "convex reference with finite plane arrangement"
+        ],
+        "limits": {
+          "planeRows": [
+            1,
+            32
+          ],
+          "regionLimit": [
+            1,
+            2048
+          ],
+          "domain": "finite explicit XYZ observation box"
+        },
+        "numeric_contract": "Approximate float64 geometry/predicates; residuals qualify the supplied source, never exact algebraic or benchmark parity.",
+        "refusals": [
+          "4D/generalized reference unsupported; incomplete region budget refuses; noninvariant box refuses subgroup"
+        ]
+      },
+      "checks": [
+        "Check entered coefficients and partition residual, not seed-hull substitution",
+        "Check source ownership, saved inputs and native replay"
+      ],
+      "fixtures": [
+        {
+          "path": "tests/test_stellation_plane_input.py",
+          "selector": "test_plane_settings_subgroup_selection_and_promoted_model_survive_project_replay",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/stellation-plane-input.test.mjs",
+          "selector": "mounted arbitrary planes and reflection subgroup survive selection undo, project reopen and base promotion",
+          "kind": "node-test",
+          "level": "ui-mounted",
+          "run_id": "ui",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        }
+      ],
+      "source_files": [
+        "docs/R6_STELLATION.md",
+        "engine/stellation.py",
+        "engine/stellation_cells.py",
+        "ui/stellation-cell-controls.mjs",
+        "ui/stellation-diagram-controls.mjs"
+      ],
+      "ui": {
+        "element_ids": [
+          "stellation-face-base"
+        ],
+        "route": "Inspector > Construct > Stars & facets > Stellate > Stellation plane regions / Interactive stellation diagrams; Expert off."
+      },
+      "closure": {
+        "kind": "local-tranche",
+        "legacy_case_ids": [
+          "stel-05-promotion-history"
+        ],
+        "scope": "Arbitrary-plane promotion retains literal inputs and replays; only the declared input/options and checks.",
+        "legacy_disposition": {
+          "stel-05-promotion-history": "local-tranche-only"
+        }
+      },
+      "remaining": "Other source/option cross-products and installed benchmark semantics require separate evidence.",
+      "benchmark_status": "unverified",
+      "platform_status": "not-run",
+      "competitor_status": "not-run",
+      "parameters_are_executable": false
+    },
+    {
+      "id": "fac-02-r6-pyritohedron-candidates",
+      "requirement_id": "FAC-02",
+      "option": "r6-pyritohedron-candidates",
+      "title": "Rational pyritohedron candidate pool and bounded search",
+      "source": {
+        "description": "examples/faceting/pyritohedron-20.off: eight (+/-4,+/-4,+/-4) plus cyclic (0,+/-6,+/-3)"
+      },
+      "parameters": {
+        "symmetry": "full source",
+        "invariant": true,
+        "criterion": "isohedral",
+        "pool": 1761,
+        "candidateOrbits": 101
+      },
+      "domain": {
+        "dimensions": [
+          3
+        ],
+        "object_classes": [
+          "ordered generalized facet surfaces on integer pyritohedron"
+        ],
+        "limits": {
+          "vertices": [
+            4,
+            20
+          ],
+          "candidateLimit": 4096,
+          "domain": "full-vertex invariant isohedral finite pool"
+        },
+        "numeric_contract": "Plane predicates exact for supplied integer/binary64 ratios only; realized geometry and measurements approximate, certified:false.",
+        "refusals": [
+          "Regular golden-ratio dodecahedron not qualified by this source",
+          "Tidy-dual above 12 vertices refused; broad searches can hit caps"
+        ]
+      },
+      "checks": [
+        "Independent integer plane/cycle and signed-permutation oracles",
+        "Exactly one full-vertex invariant isohedral boundary",
+        "Native adoption, project and replay retain receipt"
+      ],
+      "fixtures": [
+        {
+          "path": "tests/test_faceting_scalable.py",
+          "selector": "test_integer_dodecahedron_full_candidate_domain_and_verified_plane_orbits",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/test_faceting_scalable.py",
+          "selector": "test_default_isohedral_profile_has_a_fixed_independent_count_and_small_search",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/test_faceting_scalable.py",
+          "selector": "test_larger_source_budgets_and_unsupported_domains_are_explicit",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/automatic-faceting-controls.test.mjs",
+          "selector": "mounted twenty-vertex fixture searches and previews the complete invariant isohedral slice",
+          "kind": "node-test",
+          "level": "ui-unit",
+          "run_id": "ui",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        }
+      ],
+      "source_files": [
+        "docs/FACETING_SCALABLE.md",
+        "examples/faceting/pyritohedron-20.off",
+        "engine/automatic_faceting.py",
+        "ui/automatic-faceting-controls.mjs"
+      ],
+      "ui": {
+        "element_ids": [
+          "faceting-candidates",
+          "faceting-symmetry-mode",
+          "faceting-invariant",
+          "faceting-criterion",
+          "faceting-search",
+          "faceting-preview",
+          "faceting-adopt"
+        ],
+        "route": "Construct > Stars & facets > Facet (search) > Automatic facets (3D); Expert off."
+      },
+      "closure": {
+        "kind": "local-tranche",
+        "legacy_case_ids": [
+          "fac-02-dodecahedron-frontier",
+          "fac-02-limited-search"
+        ],
+        "scope": "Rational pyritohedron candidate pool and bounded search; only the declared input/options and checks.",
+        "legacy_disposition": {
+          "fac-02-dodecahedron-frontier": "still-open",
+          "fac-02-limited-search": "local-tranche-only"
+        }
+      },
+      "remaining": "Original fac-02-dodecahedron-frontier regular source remains OPEN; this different rational source closes only a local tranche. General searches, tidy-dual >12 and baseline diagram/criterion equivalence remain open.",
+      "benchmark_status": "unverified",
+      "platform_status": "not-run",
+      "competitor_status": "not-run",
+      "parameters_are_executable": false
+    },
+    {
+      "id": "fac-03-r6-pyritohedron-policies",
+      "requirement_id": "FAC-03",
+      "option": "r6-pyritohedron-policies",
+      "title": "Pyritohedron invariant isohedral and exact supplied-ratio policies",
+      "source": {
+        "description": "examples/faceting/pyritohedron-20.off: eight (+/-4,+/-4,+/-4) plus cyclic (0,+/-6,+/-3)"
+      },
+      "parameters": {
+        "symmetry": "full source",
+        "invariant": true,
+        "criterion": "isohedral",
+        "pool": 1761,
+        "candidateOrbits": 101
+      },
+      "domain": {
+        "dimensions": [
+          3
+        ],
+        "object_classes": [
+          "ordered generalized facet surfaces on integer pyritohedron"
+        ],
+        "limits": {
+          "vertices": [
+            4,
+            20
+          ],
+          "candidateLimit": 4096,
+          "domain": "full-vertex invariant isohedral finite pool"
+        },
+        "numeric_contract": "Plane predicates exact for supplied integer/binary64 ratios only; realized geometry and measurements approximate, certified:false.",
+        "refusals": [
+          "Regular golden-ratio dodecahedron not qualified by this source",
+          "Tidy-dual above 12 vertices refused; broad searches can hit caps"
+        ]
+      },
+      "checks": [
+        "Independent integer plane/cycle and signed-permutation oracles",
+        "Exactly one full-vertex invariant isohedral boundary",
+        "Native adoption, project and replay retain receipt"
+      ],
+      "fixtures": [
+        {
+          "path": "tests/test_faceting_scalable.py",
+          "selector": "test_exhausted_isohedral_orbit_search_matches_independent_vertex_link_oracle",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/test_faceting_scalable.py",
+          "selector": "test_exact_policy_filters_on_twenty_vertex_isohedral_domain",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/automatic-faceting-controls.test.mjs",
+          "selector": "mounted twenty-vertex fixture searches and previews the complete invariant isohedral slice",
+          "kind": "node-test",
+          "level": "ui-unit",
+          "run_id": "ui",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        }
+      ],
+      "source_files": [
+        "docs/FACETING_SCALABLE.md",
+        "examples/faceting/pyritohedron-20.off",
+        "engine/automatic_faceting.py",
+        "ui/automatic-faceting-controls.mjs"
+      ],
+      "ui": {
+        "element_ids": [
+          "faceting-candidates",
+          "faceting-symmetry-mode",
+          "faceting-invariant",
+          "faceting-criterion",
+          "faceting-search",
+          "faceting-preview",
+          "faceting-adopt"
+        ],
+        "route": "Construct > Stars & facets > Facet (search) > Automatic facets (3D); Expert off."
+      },
+      "closure": {
+        "kind": "local-tranche",
+        "legacy_case_ids": [
+          "fac-03-isohedral",
+          "fac-03-type-plane-limits"
+        ],
+        "scope": "Pyritohedron invariant isohedral and exact supplied-ratio policies; only the declared input/options and checks.",
+        "legacy_disposition": {
+          "fac-03-isohedral": "local-tranche-only",
+          "fac-03-type-plane-limits": "local-tranche-only"
+        }
+      },
+      "remaining": "Original fac-02-dodecahedron-frontier regular source remains OPEN; this different rational source closes only a local tranche. General searches, tidy-dual >12 and baseline diagram/criterion equivalence remain open.",
+      "benchmark_status": "unverified",
+      "platform_status": "not-run",
+      "competitor_status": "not-run",
+      "parameters_are_executable": false
+    },
+    {
+      "id": "fac-04-r6-pyritohedron-adoption",
+      "requirement_id": "FAC-04",
+      "option": "r6-pyritohedron-adoption",
+      "title": "Pyritohedron diagram, source symmetry and replay",
+      "source": {
+        "description": "examples/faceting/pyritohedron-20.off: eight (+/-4,+/-4,+/-4) plus cyclic (0,+/-6,+/-3)"
+      },
+      "parameters": {
+        "symmetry": "full source",
+        "invariant": true,
+        "criterion": "isohedral",
+        "pool": 1761,
+        "candidateOrbits": 101
+      },
+      "domain": {
+        "dimensions": [
+          3
+        ],
+        "object_classes": [
+          "ordered generalized facet surfaces on integer pyritohedron"
+        ],
+        "limits": {
+          "vertices": [
+            4,
+            20
+          ],
+          "candidateLimit": 4096,
+          "domain": "full-vertex invariant isohedral finite pool"
+        },
+        "numeric_contract": "Plane predicates exact for supplied integer/binary64 ratios only; realized geometry and measurements approximate, certified:false.",
+        "refusals": [
+          "Regular golden-ratio dodecahedron not qualified by this source",
+          "Tidy-dual above 12 vertices refused; broad searches can hit caps"
+        ]
+      },
+      "checks": [
+        "Independent integer plane/cycle and signed-permutation oracles",
+        "Exactly one full-vertex invariant isohedral boundary",
+        "Native adoption, project and replay retain receipt"
+      ],
+      "fixtures": [
+        {
+          "path": "tests/test_faceting_scalable.py",
+          "selector": "test_twenty_vertex_adoption_history_project_and_diagram_use_existing_dispatch",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/automatic-faceting-controls.test.mjs",
+          "selector": "mounted twenty-vertex fixture searches and previews the complete invariant isohedral slice",
+          "kind": "node-test",
+          "level": "ui-unit",
+          "run_id": "ui",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        }
+      ],
+      "source_files": [
+        "docs/FACETING_SCALABLE.md",
+        "examples/faceting/pyritohedron-20.off",
+        "engine/automatic_faceting.py",
+        "ui/automatic-faceting-controls.mjs"
+      ],
+      "ui": {
+        "element_ids": [
+          "faceting-candidates",
+          "faceting-symmetry-mode",
+          "faceting-invariant",
+          "faceting-criterion",
+          "faceting-search",
+          "faceting-preview",
+          "faceting-adopt"
+        ],
+        "route": "Construct > Stars & facets > Facet (search) > Automatic facets (3D); Expert off."
+      },
+      "closure": {
+        "kind": "local-tranche",
+        "legacy_case_ids": [
+          "fac-04-replication-adoption"
+        ],
+        "scope": "Pyritohedron diagram, source symmetry and replay; only the declared input/options and checks.",
+        "legacy_disposition": {
+          "fac-04-replication-adoption": "local-tranche-only"
+        }
+      },
+      "remaining": "Original fac-02-dodecahedron-frontier regular source remains OPEN; this different rational source closes only a local tranche. General searches, tidy-dual >12 and baseline diagram/criterion equivalence remain open.",
+      "benchmark_status": "unverified",
+      "platform_status": "not-run",
+      "competitor_status": "not-run",
+      "parameters_are_executable": false
+    },
+    {
+      "id": "sec-05-r6-pentagram-prism-independent",
+      "requirement_id": "SEC-05",
+      "option": "r6-pentagram-prism-independent",
+      "title": "Independent pentagram-prism cell sheets",
+      "source": {
+        "description": "Regular pentagram prism cells in independently oriented 4D boundary"
+      },
+      "parameters": {
+        "interpretation": "independent-cells",
+        "fillRules": [
+          "nonzero",
+          "even-odd",
+          "threshold"
+        ],
+        "threshold": 2
+      },
+      "domain": {
+        "dimensions": [
+          4
+        ],
+        "object_classes": [
+          "closed independently oriented star boundary cells"
+        ],
+        "limits": {
+          "domain": "per-cell winding sheets; no global union interior",
+          "contacts": "named transverse/empty/tangent fixtures only",
+          "vertices": 2000,
+          "faces": 512,
+          "cells": 64,
+          "incidences": 16000,
+          "outputVertices": 30000,
+          "arrangementRegions": 8192,
+          "densityTriangleVisits": 5000000
+        },
+        "numeric_contract": "Approximate float64 geometry/predicates; residuals qualify the supplied source, never exact algebraic or benchmark parity.",
+        "refusals": [
+          "Open/unowned cells, unsupported coplanar/transverse contacts and global unknown interior refuse"
+        ]
+      },
+      "checks": [
+        "Independent analytic area/perimeter/volume and emitted source embeddings",
+        "Native promotion, Undo/Redo, save/reopen and replay"
+      ],
+      "fixtures": [
+        {
+          "path": "tests/test_independent_cell_sections.py",
+          "selector": "test_star_cell_analytic_areas_boundaries_volume_and_winding_regions",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/test_independent_cell_sections.py",
+          "selector": "test_independent_cavalieri_volume_from_emitted_star_prism_patches",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/test_independent_cell_sections.py",
+          "selector": "test_cell_references_reconstruct_plane_points_and_own_every_output_entity",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/test_independent_cell_sections.py",
+          "selector": "test_native_dispatch_promotion_undo_redo_save_reopen_replay",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/independent-cell-section-controls.test.mjs",
+          "selector": "expert-off mounted app evaluates winding cells, applies an expression, promotes and reopens the native history",
+          "kind": "node-test",
+          "level": "ui-mounted",
+          "run_id": "ui",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        }
+      ],
+      "source_files": [
+        "docs/INDEPENDENT_CELL_SECTIONS.md",
+        "engine/independent_cell_sections.py",
+        "ui/density-section-controls.mjs"
+      ],
+      "ui": {
+        "element_ids": [
+          "section-density-mode",
+          "section-offset",
+          "apply-section",
+          "promote",
+          "section-depth"
+        ],
+        "route": "Derived view Section > Interpretation: Winding cells; options collapsed; Expert off."
+      },
+      "closure": {
+        "kind": "local-tranche",
+        "legacy_case_ids": [
+          "sec-05-filled-density",
+          "sec-05-unknown-interior"
+        ],
+        "scope": "Independent pentagram-prism cell sheets; only the declared input/options and checks.",
+        "legacy_disposition": {
+          "sec-05-filled-density": "local-tranche-only",
+          "sec-05-unknown-interior": "local-tranche-only"
+        }
+      },
+      "remaining": "Neither SEC-05 nor unknown global interior closes: overlapping independent sheets are not a 4D solid union.",
+      "benchmark_status": "unverified",
+      "platform_status": "not-run",
+      "competitor_status": "not-run",
+      "parameters_are_executable": false,
+      "audit_local_case_ids": [
+        "r6-sec05-pentagram-prism-independent"
+      ]
+    },
+    {
+      "id": "sec-05-r6-small-stellated-prism-cells",
+      "requirement_id": "SEC-05",
+      "option": "r6-small-stellated-prism-cells",
+      "title": "Small stellated dodecahedral prism side-cell sheets",
+      "source": {
+        "description": "Constructed prism on small stellated dodecahedron"
+      },
+      "parameters": {
+        "interpretation": "independent-cells",
+        "fillRules": [
+          "nonzero",
+          "even-odd",
+          "threshold"
+        ],
+        "threshold": 2
+      },
+      "domain": {
+        "dimensions": [
+          4
+        ],
+        "object_classes": [
+          "closed independently oriented star boundary cells"
+        ],
+        "limits": {
+          "domain": "per-cell winding sheets; no global union interior",
+          "contacts": "named transverse/empty/tangent fixtures only",
+          "vertices": 2000,
+          "faces": 512,
+          "cells": 64,
+          "incidences": 16000,
+          "outputVertices": 30000,
+          "arrangementRegions": 8192,
+          "densityTriangleVisits": 5000000
+        },
+        "numeric_contract": "Approximate float64 geometry/predicates; residuals qualify the supplied source, never exact algebraic or benchmark parity.",
+        "refusals": [
+          "Open/unowned cells, unsupported coplanar/transverse contacts and global unknown interior refuse"
+        ]
+      },
+      "checks": [
+        "Independent analytic area/perimeter/volume and emitted source embeddings",
+        "Native promotion, Undo/Redo, save/reopen and replay"
+      ],
+      "fixtures": [
+        {
+          "path": "tests/test_independent_cell_sections.py",
+          "selector": "test_small_stellated_dodecahedral_prism_side_cells_with_unqualified_global_chain",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/test_independent_cell_sections.py",
+          "selector": "test_tangent_vertex_edge_empty_and_explicit_coplanar_event_refusals",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/test_independent_cell_sections.py",
+          "selector": "test_open_cell_unowned_geometry_and_work_bounds_refuse_without_mutation",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/independent-cell-section-controls.test.mjs",
+          "selector": "expert-off mounted app evaluates winding cells, applies an expression, promotes and reopens the native history",
+          "kind": "node-test",
+          "level": "ui-mounted",
+          "run_id": "ui",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        }
+      ],
+      "source_files": [
+        "docs/INDEPENDENT_CELL_SECTIONS.md",
+        "engine/independent_cell_sections.py",
+        "ui/density-section-controls.mjs"
+      ],
+      "ui": {
+        "element_ids": [
+          "section-density-mode",
+          "section-offset",
+          "apply-section",
+          "promote",
+          "section-depth"
+        ],
+        "route": "Derived view Section > Interpretation: Winding cells; options collapsed; Expert off."
+      },
+      "closure": {
+        "kind": "local-tranche",
+        "legacy_case_ids": [
+          "sec-05-filled-density",
+          "sec-05-unknown-interior"
+        ],
+        "scope": "Small stellated dodecahedral prism side-cell sheets; only the declared input/options and checks.",
+        "legacy_disposition": {
+          "sec-05-filled-density": "local-tranche-only",
+          "sec-05-unknown-interior": "local-tranche-only"
+        }
+      },
+      "remaining": "Neither SEC-05 nor unknown global interior closes: overlapping independent sheets are not a 4D solid union.",
+      "benchmark_status": "unverified",
+      "platform_status": "not-run",
+      "competitor_status": "not-run",
+      "parameters_are_executable": false,
+      "audit_local_case_ids": [
+        "r6-sec05-small-stellated-prism-cells"
+      ]
+    },
+    {
+      "id": "con-07-r6-same-color-targets",
+      "requirement_id": "CON-07",
+      "option": "r6-same-color-targets",
+      "title": "Convex congruent-face and normalized RGBA target intersection",
+      "source": {
+        "description": "tests/fixtures/r6_face_surgery.json literal colored base and generated/memory pieces"
+      },
+      "parameters": {
+        "targetFilter": "same normalized RGBA AND congruent face",
+        "sideColors": [
+          "piece",
+          "base",
+          "unassigned"
+        ]
+      },
+      "domain": {
+        "dimensions": [
+          3
+        ],
+        "object_classes": [
+          "convex congruent-face surgery"
+        ],
+        "limits": {
+          "domain": "supported augmentation/excavation generated or memory piece"
+        },
+        "numeric_contract": "Approximate float64 geometry/predicates; residuals qualify the supplied source, never exact algebraic or benchmark parity.",
+        "refusals": [
+          "Unsupported geometry/policy refuses without mutation; changed preview color result cannot adopt"
+        ]
+      },
+      "checks": [
+        "Literal target face IDs and RGBA owner tables",
+        "Independent incidence/volume and preview/adopt agreement",
+        "Undo/Redo, reopen/replay retain colors"
+      ],
+      "fixtures": [
+        {
+          "path": "tests/test_face_surgery_conformance.py",
+          "selector": "test_literal_target_color_owner_and_independent_incidence_volume",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/test_face_surgery_conformance.py",
+          "selector": "test_unassigned_filter_and_congruence_intersection_never_broaden_targets",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/face-surgery-mounted.test.mjs",
+          "selector": "Expert-off face surgery previews and adopts colored generated/memory pieces through undo, reopen and replay",
+          "kind": "node-test",
+          "level": "ui-mounted",
+          "run_id": "ui",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        }
+      ],
+      "source_files": [
+        "docs/R6_FACE_SURGERY_CONFORMANCE.md",
+        "tests/fixtures/r6_face_surgery.json",
+        "engine/face_surgery.py",
+        "ui/face-surgery-controls.mjs",
+        "ui/face-surgery-preview.mjs"
+      ],
+      "ui": {
+        "element_ids": [
+          "apply-face-surgery",
+          "surgery-target-filter",
+          "surgery-side-colors"
+        ],
+        "route": "Construct > Modify > Augment / Excavate > Face filter / New side colors; Expert off."
+      },
+      "closure": {
+        "kind": "inventory-only",
+        "legacy_case_ids": [
+          "con-07-target-filters"
+        ],
+        "scope": "Convex congruent-face and normalized RGBA target intersection; only the declared input/options and checks.",
+        "legacy_disposition": {
+          "con-07-target-filters": "local-tranche-only"
+        }
+      },
+      "remaining": "Current mounted UI selection failed: Expert-off face surgery previews and adopts colored generated/memory pieces through undo, reopen and replay. Raw startup/navigation/summary timeout evidence is retained in ui.xml. Earlier UI passes remain historical attempts, not replacement current passes. Native implementation evidence does not close this UI qualification gap. Only convex congruent-face color tranche; generalized targets, complete height and placement policy equivalence remain open. R9 (0.28.0 release receipts, 2026-11-10): this mounted selector passed on a clean run; the earlier failure was a load timeout. Closure level is unchanged pending lead review.",
+      "benchmark_status": "unverified",
+      "platform_status": "not-run",
+      "competitor_status": "not-run",
+      "parameters_are_executable": false,
+      "evidence_status": "incomplete"
+    },
+    {
+      "id": "con-07-r6-side-color-owners",
+      "requirement_id": "CON-07",
+      "option": "r6-side-color-owners",
+      "title": "Piece/base/unassigned side-color ownership and coincidence gate",
+      "source": {
+        "description": "tests/fixtures/r6_face_surgery.json literal colored base and generated/memory pieces"
+      },
+      "parameters": {
+        "targetFilter": "same normalized RGBA AND congruent face",
+        "sideColors": [
+          "piece",
+          "base",
+          "unassigned"
+        ]
+      },
+      "domain": {
+        "dimensions": [
+          3
+        ],
+        "object_classes": [
+          "convex congruent-face surgery"
+        ],
+        "limits": {
+          "domain": "supported augmentation/excavation generated or memory piece"
+        },
+        "numeric_contract": "Approximate float64 geometry/predicates; residuals qualify the supplied source, never exact algebraic or benchmark parity.",
+        "refusals": [
+          "Unsupported geometry/policy refuses without mutation; changed preview color result cannot adopt"
+        ]
+      },
+      "checks": [
+        "Literal target face IDs and RGBA owner tables",
+        "Independent incidence/volume and preview/adopt agreement",
+        "Undo/Redo, reopen/replay retain colors"
+      ],
+      "fixtures": [
+        {
+          "path": "tests/test_face_surgery_conformance.py",
+          "selector": "test_colored_memory_side_cycles_follow_literal_owner_through_every_twist",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/test_face_surgery_conformance.py",
+          "selector": "test_blend_composes_all_owners_and_preserves_unequal_color_seams",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/test_face_surgery_conformance.py",
+          "selector": "test_preview_undo_redo_reopen_and_replay_preserve_literal_incidence_and_colors",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/test_face_surgery_conformance.py",
+          "selector": "test_unsupported_policy_refuses_atomically",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/face-surgery-mounted.test.mjs",
+          "selector": "Expert-off face surgery previews and adopts colored generated/memory pieces through undo, reopen and replay",
+          "kind": "node-test",
+          "level": "ui-mounted",
+          "run_id": "ui",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        }
+      ],
+      "source_files": [
+        "docs/R6_FACE_SURGERY_CONFORMANCE.md",
+        "tests/fixtures/r6_face_surgery.json",
+        "engine/face_surgery.py",
+        "ui/face-surgery-controls.mjs",
+        "ui/face-surgery-preview.mjs"
+      ],
+      "ui": {
+        "element_ids": [
+          "apply-face-surgery",
+          "surgery-target-filter",
+          "surgery-side-colors"
+        ],
+        "route": "Construct > Modify > Augment / Excavate > Face filter / New side colors; Expert off."
+      },
+      "closure": {
+        "kind": "inventory-only",
+        "legacy_case_ids": [
+          "con-07-color-coincidence"
+        ],
+        "scope": "Piece/base/unassigned side-color ownership and coincidence gate; only the declared input/options and checks.",
+        "legacy_disposition": {
+          "con-07-color-coincidence": "local-tranche-only"
+        }
+      },
+      "remaining": "Current mounted UI selection failed: Expert-off face surgery previews and adopts colored generated/memory pieces through undo, reopen and replay. Raw startup/navigation/summary timeout evidence is retained in ui.xml. Earlier UI passes remain historical attempts, not replacement current passes. Native implementation evidence does not close this UI qualification gap. Only convex congruent-face color tranche; generalized targets, complete height and placement policy equivalence remain open. R9 (0.28.0 release receipts, 2026-11-10): this mounted selector passed on a clean run; the earlier failure was a load timeout. Closure level is unchanged pending lead review.",
+      "benchmark_status": "unverified",
+      "platform_status": "not-run",
+      "competitor_status": "not-run",
+      "parameters_are_executable": false,
+      "evidence_status": "incomplete"
+    },
+    {
+      "id": "con-02-r6-waterman-z4-d4",
+      "requirement_id": "CON-02",
+      "option": "r6-waterman-z4-d4",
+      "title": "Defined Z4/D4 Waterman lattice and exact squared-radius cursor",
+      "source": {
+        "description": "Independent lattice reference and Fraction exhaustion: tests/fixtures/waterman4-reference.json"
+      },
+      "parameters": {
+        "lattices": [
+          "Z4",
+          "D4"
+        ],
+        "radius": "squared rational radius",
+        "sequence": "Previous/Next keeps repeated hulls"
+      },
+      "domain": {
+        "dimensions": [
+          4
+        ],
+        "object_classes": [
+          "finite 4D integer/rational lattice sites with numerical convex hull"
+        ],
+        "limits": {
+          "domain": "qualified Z4/D4 origin/radius bounds enforced by native generator",
+          "radiusSquared": "0 < r2 <= 64",
+          "absoluteOriginCoordinate": 1000,
+          "commonDenominatorBits": 512,
+          "inspectedSites": 65536,
+          "selectedPoints": 256,
+          "outputVertices": 128,
+          "payloadBytes": 8388608
+        },
+        "numeric_contract": "Exact rational/integer lattice membership; approximate float64 hull incidence/metrics, never general exact 4D geometry.",
+        "refusals": [
+          "Unsupported lattice, rank, denominator and output budgets refuse atomically"
+        ]
+      },
+      "checks": [
+        "Four full-incidence metric references; exact site membership and threshold neighbors",
+        "Save/reopen, cursor, Undo/Redo and replay"
+      ],
+      "fixtures": [
+        {
+          "path": "tests/test_waterman4.py",
+          "selector": "test_independent_analytic_full_incidence_and_metric_reference",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/test_waterman4.py",
+          "selector": "test_exact_sites_match_independent_fraction_exhaustion",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/test_waterman4.py",
+          "selector": "test_exact_threshold_neighbors_and_sequence_keep_repeated_hulls",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/test_waterman4.py",
+          "selector": "test_generate_save_reopen_undo_redo_cursor_and_history_replay",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/test_waterman4.py",
+          "selector": "test_unsupported_domains_refuse_atomically",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/waterman4-mounted.test.mjs",
+          "selector": "mounted 4D Waterman: common controls, exact sequence, native reopen and undo/replay",
+          "kind": "node-test",
+          "level": "ui-mounted",
+          "run_id": "ui",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        }
+      ],
+      "source_files": [
+        "docs/WATERMAN_4D.md",
+        "tests/fixtures/waterman4-reference.json",
+        "engine/waterman4.py",
+        "ui/waterman4-controls.mjs"
+      ],
+      "ui": {
+        "element_ids": [
+          "waterman4-lattice",
+          "waterman4-radius",
+          "generate-waterman4"
+        ],
+        "route": "Construct > Waterman > 4D lattice; Expert off. Previous/Next radius controls retain history."
+      },
+      "closure": {
+        "kind": "local-tranche",
+        "legacy_case_ids": [
+          "con-02-waterman-4d"
+        ],
+        "scope": "Defined Z4/D4 Waterman lattice and exact squared-radius cursor; only the declared input/options and checks.",
+        "legacy_disposition": {
+          "con-02-waterman-4d": "local-tranche-only"
+        }
+      },
+      "remaining": "Benchmark root numbering, origin/lattice defaults and sequence conventions remain unverified.",
+      "benchmark_status": "unverified",
+      "platform_status": "not-run",
+      "competitor_status": "not-run",
+      "parameters_are_executable": false
+    },
+    {
+      "id": "con-09-r6-separated-components",
+      "requirement_id": "CON-09",
+      "option": "r6-separated-components",
+      "title": "Disjoint convex component fitting and incompatible objectives",
+      "source": {
+        "description": "Separated tetrahedra / incompatible triangular-square pyramids in condition-component-cases.json"
+      },
+      "parameters": {
+        "objectives": [
+          "regular-faces",
+          "equal-areas"
+        ],
+        "selectedFaces": "named fixture IDs",
+        "nearMiss": "explicit valid-near-miss only"
+      },
+      "domain": {
+        "dimensions": [
+          3
+        ],
+        "object_classes": [
+          "generalized-complex of strictly disjoint convex boundary components"
+        ],
+        "limits": {
+          "components": [
+            2,
+            8
+          ],
+          "vertices": 64,
+          "centroids": "fixed individually",
+          "separation": "normalized LP witness >1e-7 mean edges"
+        },
+        "numeric_contract": "Approximate float64 geometry/predicates; residuals qualify the supplied source, never exact algebraic or benchmark parity.",
+        "refusals": [
+          "Connected concave/star, touching/nested/overlap, generalized 4D and generalized Keep symmetry unsupported"
+        ]
+      },
+      "checks": [
+        "Independently measure realized edge/face residuals and separating witnesses",
+        "Optimizer termination distinct from constraints and geometric validity",
+        "Preview/adopt, reopen/replay and invalid-candidate refusal"
+      ],
+      "fixtures": [
+        {
+          "path": "tests/test_condition_components.py",
+          "selector": "test_named_separated_tetrahedra_independent_edges_centroids_separation_and_repeatability",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/test_condition_components.py",
+          "selector": "test_success_and_incompatible_conditions_preview_adopt_save_reopen_replay",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/test_condition_components.py",
+          "selector": "test_unsupported_connected_and_four_dimensional_domains_and_symmetry_refuse",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/fitting-components.test.mjs",
+          "selector": "mounted common Fit faces preview/adopt/undo/save/reopen/replay keeps native generalized gates",
+          "kind": "node-test",
+          "level": "ui-mounted",
+          "run_id": "ui",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        }
+      ],
+      "source_files": [
+        "docs/R6_FITTING.md",
+        "tests/fixtures/condition-component-cases.json",
+        "engine/condition_components.py",
+        "engine/condition_fitting.py",
+        "ui/fitting-controls.mjs"
+      ],
+      "ui": {
+        "element_ids": [
+          "make-faces-regular",
+          "preview-fitting",
+          "adopt-fitting",
+          "accept-fitting-near-miss",
+          "fitting-mode"
+        ],
+        "route": "Construct > Make it regular > Fit faces; Fitting options for combined objectives; Expert off."
+      },
+      "closure": {
+        "kind": "inventory-only",
+        "legacy_case_ids": [
+          "con-09-generalized-domain"
+        ],
+        "scope": "Disjoint convex component fitting and incompatible objectives; only the declared input/options and checks.",
+        "legacy_disposition": {
+          "con-09-generalized-domain": "local-tranche-only"
+        }
+      },
+      "remaining": "Current mounted UI selection failed: mounted common Fit faces preview/adopt/undo/save/reopen/replay keeps native generalized gates. Raw startup/navigation/summary timeout evidence is retained in ui.xml. Earlier UI passes remain historical attempts, not replacement current passes. Native implementation evidence does not close this UI qualification gap. Generalized-domain scenario remains OPEN outside separated convex components. No regularity classification or global feasibility claim. R9 (0.28.0 release receipts, 2026-11-10): this mounted selector passed on a clean run; the earlier failure was a load timeout. Closure level is unchanged pending lead review.",
+      "benchmark_status": "unverified",
+      "platform_status": "not-run",
+      "competitor_status": "not-run",
+      "parameters_are_executable": false,
+      "evidence_status": "incomplete"
+    },
+    {
+      "id": "con-09-r6-selected-incompatible",
+      "requirement_id": "CON-09",
+      "option": "r6-selected-incompatible",
+      "title": "Selected-face residual scope and incompatible regular-face/equal-area targets",
+      "source": {
+        "description": "Separated tetrahedra / incompatible triangular-square pyramids in condition-component-cases.json"
+      },
+      "parameters": {
+        "objectives": [
+          "regular-faces",
+          "equal-areas"
+        ],
+        "selectedFaces": "named fixture IDs",
+        "nearMiss": "explicit valid-near-miss only"
+      },
+      "domain": {
+        "dimensions": [
+          3
+        ],
+        "object_classes": [
+          "generalized-complex of strictly disjoint convex boundary components"
+        ],
+        "limits": {
+          "components": [
+            2,
+            8
+          ],
+          "vertices": 64,
+          "centroids": "fixed individually",
+          "separation": "normalized LP witness >1e-7 mean edges"
+        },
+        "numeric_contract": "Approximate float64 geometry/predicates; residuals qualify the supplied source, never exact algebraic or benchmark parity.",
+        "refusals": [
+          "Connected concave/star, touching/nested/overlap, generalized 4D and generalized Keep symmetry unsupported"
+        ]
+      },
+      "checks": [
+        "Independently measure realized edge/face residuals and separating witnesses",
+        "Optimizer termination distinct from constraints and geometric validity",
+        "Preview/adopt, reopen/replay and invalid-candidate refusal"
+      ],
+      "fixtures": [
+        {
+          "path": "tests/test_condition_components.py",
+          "selector": "test_selected_face_oracle_leaves_unselected_face_residual_out_of_regular_objective",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/test_condition_components.py",
+          "selector": "test_success_and_incompatible_conditions_preview_adopt_save_reopen_replay",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/fitting-components.test.mjs",
+          "selector": "mounted common Fit faces preview/adopt/undo/save/reopen/replay keeps native generalized gates",
+          "kind": "node-test",
+          "level": "ui-mounted",
+          "run_id": "ui",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        }
+      ],
+      "source_files": [
+        "docs/R6_FITTING.md",
+        "tests/fixtures/condition-component-cases.json",
+        "engine/condition_components.py",
+        "engine/condition_fitting.py",
+        "ui/fitting-controls.mjs"
+      ],
+      "ui": {
+        "element_ids": [
+          "make-faces-regular",
+          "preview-fitting",
+          "adopt-fitting",
+          "accept-fitting-near-miss",
+          "fitting-mode"
+        ],
+        "route": "Construct > Make it regular > Fit faces; Fitting options for combined objectives; Expert off."
+      },
+      "closure": {
+        "kind": "inventory-only",
+        "legacy_case_ids": [
+          "con-09-selected-combined"
+        ],
+        "scope": "Selected-face residual scope and incompatible regular-face/equal-area targets; only the declared input/options and checks.",
+        "legacy_disposition": {
+          "con-09-selected-combined": "local-tranche-only"
+        }
+      },
+      "remaining": "Current mounted UI selection failed: mounted common Fit faces preview/adopt/undo/save/reopen/replay keeps native generalized gates. Raw startup/navigation/summary timeout evidence is retained in ui.xml. Earlier UI passes remain historical attempts, not replacement current passes. Native implementation evidence does not close this UI qualification gap. Generalized-domain scenario remains OPEN outside separated convex components. No regularity classification or global feasibility claim. R9 (0.28.0 release receipts, 2026-11-10): this mounted selector passed on a clean run; the earlier failure was a load timeout. Closure level is unchanged pending lead review.",
+      "benchmark_status": "unverified",
+      "platform_status": "not-run",
+      "competitor_status": "not-run",
+      "parameters_are_executable": false,
+      "evidence_status": "incomplete"
+    },
+    {
+      "id": "con-09-r6-invalid-candidate-gate",
+      "requirement_id": "CON-09",
+      "option": "r6-invalid-candidate-gate",
+      "title": "Zero residual cannot override invalid geometry",
+      "source": {
+        "description": "Separated tetrahedra / incompatible triangular-square pyramids in condition-component-cases.json"
+      },
+      "parameters": {
+        "objectives": [
+          "regular-faces",
+          "equal-areas"
+        ],
+        "selectedFaces": "named fixture IDs",
+        "nearMiss": "explicit valid-near-miss only"
+      },
+      "domain": {
+        "dimensions": [
+          3
+        ],
+        "object_classes": [
+          "generalized-complex of strictly disjoint convex boundary components"
+        ],
+        "limits": {
+          "components": [
+            2,
+            8
+          ],
+          "vertices": 64,
+          "centroids": "fixed individually",
+          "separation": "normalized LP witness >1e-7 mean edges"
+        },
+        "numeric_contract": "Approximate float64 geometry/predicates; residuals qualify the supplied source, never exact algebraic or benchmark parity.",
+        "refusals": [
+          "Connected concave/star, touching/nested/overlap, generalized 4D and generalized Keep symmetry unsupported"
+        ]
+      },
+      "checks": [
+        "Independently measure realized edge/face residuals and separating witnesses",
+        "Optimizer termination distinct from constraints and geometric validity",
+        "Preview/adopt, reopen/replay and invalid-candidate refusal"
+      ],
+      "fixtures": [
+        {
+          "path": "tests/test_condition_components.py",
+          "selector": "test_candidate_intersection_cannot_adopt_even_when_condition_residuals_are_zero",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/test_condition_components.py",
+          "selector": "test_flips_and_collapses_remain_invalid_despite_optimizer_success",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/test_condition_components.py",
+          "selector": "test_overlapping_touching_or_unresolved_source_components_refuse",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/fitting-components.test.mjs",
+          "selector": "mounted common Fit faces preview/adopt/undo/save/reopen/replay keeps native generalized gates",
+          "kind": "node-test",
+          "level": "ui-mounted",
+          "run_id": "ui",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        }
+      ],
+      "source_files": [
+        "docs/R6_FITTING.md",
+        "tests/fixtures/condition-component-cases.json",
+        "engine/condition_components.py",
+        "engine/condition_fitting.py",
+        "ui/fitting-controls.mjs"
+      ],
+      "ui": {
+        "element_ids": [
+          "make-faces-regular",
+          "preview-fitting",
+          "adopt-fitting",
+          "accept-fitting-near-miss",
+          "fitting-mode"
+        ],
+        "route": "Construct > Make it regular > Fit faces; Fitting options for combined objectives; Expert off."
+      },
+      "closure": {
+        "kind": "inventory-only",
+        "legacy_case_ids": [
+          "con-09-invalid-adoption"
+        ],
+        "scope": "Zero residual cannot override invalid geometry; only the declared input/options and checks.",
+        "legacy_disposition": {
+          "con-09-invalid-adoption": "local-tranche-only"
+        }
+      },
+      "remaining": "Current mounted UI selection failed: mounted common Fit faces preview/adopt/undo/save/reopen/replay keeps native generalized gates. Raw startup/navigation/summary timeout evidence is retained in ui.xml. Earlier UI passes remain historical attempts, not replacement current passes. Native implementation evidence does not close this UI qualification gap. Generalized-domain scenario remains OPEN outside separated convex components. No regularity classification or global feasibility claim. R9 (0.28.0 release receipts, 2026-11-10): this mounted selector passed on a clean run; the earlier failure was a load timeout. Closure level is unchanged pending lead review.",
+      "benchmark_status": "unverified",
+      "platform_status": "not-run",
+      "competitor_status": "not-run",
+      "parameters_are_executable": false,
+      "evidence_status": "incomplete"
+    },
+    {
+      "id": "net-05-r6-strip-setbacks",
+      "requirement_id": "NET-05",
+      "option": "r6-strip-setbacks",
+      "title": "Rectangular reinforcement strips with physical-mm setbacks",
+      "source": {
+        "description": "Cube and unequal rectangular box nets; independently parsed CSV/SVG strips"
+      },
+      "parameters": {
+        "pattern": "rectangular hinge strips",
+        "allowances": "physical-mm end setbacks",
+        "outputs": [
+          "CSV",
+          "SVG",
+          "PDF"
+        ]
+      },
+      "domain": {
+        "dimensions": [
+          3
+        ],
+        "object_classes": [
+          "qualified closed convex 3D net hinge forests"
+        ],
+        "limits": {
+          "domain": "per-hinge rectangle with positive cut length, explicit physical paper size"
+        },
+        "numeric_contract": "Approximate float64 geometry/predicates; residuals qualify the supplied source, never exact algebraic or benchmark parity.",
+        "refusals": [
+          "Collapsed/invalid allowances, unsupported assembly or oversized pieces refuse; no scaling/clipping"
+        ]
+      },
+      "checks": [
+        "Analytic unequal edge lengths, angles and stable IDs",
+        "Parsed cut/score coordinates, ownership and page transform applied once",
+        "Held source/paper/field/cancel changes prevent stale output"
+      ],
+      "fixtures": [
+        {
+          "path": "tests/test_hinge_strip_allowance.py",
+          "selector": "test_analytic_regular_lengths_angles_ids_and_cut_csv",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/test_hinge_strip_allowance.py",
+          "selector": "test_unequal_box_edges_use_each_source_length_not_e0_for_all",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/test_hinge_strip_allowance.py",
+          "selector": "test_invalid_or_collapsed_allowances_refuse_without_clipping",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/test_hinge_strip_allowance.py",
+          "selector": "test_unsupported_shells_and_assemblies_refuse",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/hinge-strip-controls.test.mjs",
+          "selector": "preview and all three exports use native mm strips and keep source/history unchanged",
+          "kind": "node-test",
+          "level": "ui-unit",
+          "run_id": "ui",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        }
+      ],
+      "source_files": [
+        "docs/HINGE_STRIP_ALLOWANCE.md",
+        "engine/hinge_strip_allowance.py",
+        "ui/hinge-strip-controls.mjs"
+      ],
+      "ui": {
+        "element_ids": [
+          "net-reinforcement-settings",
+          "hinge-strip-settings",
+          "hinge-strip-preview",
+          "hinge-strip-csv",
+          "hinge-strip-pdf"
+        ],
+        "route": "Nets > Reinforcement parts > Hinge strips; common presets, allowances collapsed; Expert off."
+      },
+      "closure": {
+        "kind": "local-tranche",
+        "legacy_case_ids": [
+          "net-05-reinforcement-patterns"
+        ],
+        "scope": "Rectangular reinforcement strips with physical-mm setbacks; only the declared input/options and checks.",
+        "legacy_disposition": {
+          "net-05-reinforcement-patterns": "local-tranche-only"
+        }
+      },
+      "remaining": "Other reinforcement patterns and baseline allowances remain open; digital mm checks do not establish printer/paper calibration.",
+      "benchmark_status": "unverified",
+      "platform_status": "not-run",
+      "competitor_status": "not-run",
+      "parameters_are_executable": false
+    },
+    {
+      "id": "net-05-r6-strip-measurements",
+      "requirement_id": "NET-05",
+      "option": "r6-strip-measurements",
+      "title": "Independent strip CSV/SVG owners, cuts, scores and page placement",
+      "source": {
+        "description": "Cube and unequal rectangular box nets; independently parsed CSV/SVG strips"
+      },
+      "parameters": {
+        "pattern": "rectangular hinge strips",
+        "allowances": "physical-mm end setbacks",
+        "outputs": [
+          "CSV",
+          "SVG",
+          "PDF"
+        ]
+      },
+      "domain": {
+        "dimensions": [
+          3
+        ],
+        "object_classes": [
+          "qualified closed convex 3D net hinge forests"
+        ],
+        "limits": {
+          "domain": "per-hinge rectangle with positive cut length, explicit physical paper size"
+        },
+        "numeric_contract": "Approximate float64 geometry/predicates; residuals qualify the supplied source, never exact algebraic or benchmark parity.",
+        "refusals": [
+          "Collapsed/invalid allowances, unsupported assembly or oversized pieces refuse; no scaling/clipping"
+        ]
+      },
+      "checks": [
+        "Analytic unequal edge lengths, angles and stable IDs",
+        "Parsed cut/score coordinates, ownership and page transform applied once",
+        "Held source/paper/field/cancel changes prevent stale output"
+      ],
+      "fixtures": [
+        {
+          "path": "tests/test_hinge_strip_allowance.py",
+          "selector": "test_parsed_svg_cuts_and_scores_match_csv_mm_and_page_placement_once",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/test_hinge_strip_allowance.py",
+          "selector": "test_source_attachment_and_component_placements_are_independently_reconstructed",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/test_hinge_strip_allowance.py",
+          "selector": "test_oversized_pattern_refuses_physical_paper_and_cancellation_ownership_is_fenced",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/hinge-strip-controls.test.mjs",
+          "selector": "preview and all three exports use native mm strips and keep source/history unchanged",
+          "kind": "node-test",
+          "level": "ui-unit",
+          "run_id": "ui",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        }
+      ],
+      "source_files": [
+        "docs/HINGE_STRIP_ALLOWANCE.md",
+        "engine/hinge_strip_allowance.py",
+        "ui/hinge-strip-controls.mjs"
+      ],
+      "ui": {
+        "element_ids": [
+          "net-reinforcement-settings",
+          "hinge-strip-settings",
+          "hinge-strip-preview",
+          "hinge-strip-csv",
+          "hinge-strip-pdf"
+        ],
+        "route": "Nets > Reinforcement parts > Hinge strips; common presets, allowances collapsed; Expert off."
+      },
+      "closure": {
+        "kind": "local-tranche",
+        "legacy_case_ids": [
+          "net-05-measurements"
+        ],
+        "scope": "Independent strip CSV/SVG owners, cuts, scores and page placement; only the declared input/options and checks.",
+        "legacy_disposition": {
+          "net-05-measurements": "local-tranche-only"
+        }
+      },
+      "remaining": "Other reinforcement patterns and baseline allowances remain open; digital mm checks do not establish printer/paper calibration.",
+      "benchmark_status": "unverified",
+      "platform_status": "not-run",
+      "competitor_status": "not-run",
+      "parameters_are_executable": false
+    },
+    {
+      "id": "io-04-r6-strip-digital-export",
+      "requirement_id": "IO-04",
+      "option": "r6-strip-digital-export",
+      "title": "Physical-mm strip export and oversized/canceled publication refusal",
+      "source": {
+        "description": "Cube and unequal rectangular box nets; independently parsed CSV/SVG strips"
+      },
+      "parameters": {
+        "pattern": "rectangular hinge strips",
+        "allowances": "physical-mm end setbacks",
+        "outputs": [
+          "CSV",
+          "SVG",
+          "PDF"
+        ]
+      },
+      "domain": {
+        "dimensions": [
+          3
+        ],
+        "object_classes": [
+          "qualified closed convex 3D net hinge forests"
+        ],
+        "limits": {
+          "domain": "per-hinge rectangle with positive cut length, explicit physical paper size"
+        },
+        "numeric_contract": "Approximate float64 geometry/predicates; residuals qualify the supplied source, never exact algebraic or benchmark parity.",
+        "refusals": [
+          "Collapsed/invalid allowances, unsupported assembly or oversized pieces refuse; no scaling/clipping"
+        ]
+      },
+      "checks": [
+        "Analytic unequal edge lengths, angles and stable IDs",
+        "Parsed cut/score coordinates, ownership and page transform applied once",
+        "Held source/paper/field/cancel changes prevent stale output"
+      ],
+      "fixtures": [
+        {
+          "path": "tests/test_hinge_strip_allowance.py",
+          "selector": "test_parsed_svg_cuts_and_scores_match_csv_mm_and_page_placement_once",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/test_hinge_strip_allowance.py",
+          "selector": "test_oversized_pattern_refuses_physical_paper_and_cancellation_ownership_is_fenced",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/hinge-strip-controls.test.mjs",
+          "selector": "preview and all three exports use native mm strips and keep source/history unchanged",
+          "kind": "node-test",
+          "level": "ui-unit",
+          "run_id": "ui",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        }
+      ],
+      "source_files": [
+        "docs/HINGE_STRIP_ALLOWANCE.md",
+        "engine/hinge_strip_allowance.py",
+        "ui/hinge-strip-controls.mjs"
+      ],
+      "ui": {
+        "element_ids": [
+          "net-reinforcement-settings",
+          "hinge-strip-settings",
+          "hinge-strip-preview",
+          "hinge-strip-csv",
+          "hinge-strip-pdf"
+        ],
+        "route": "Nets > Reinforcement parts > Hinge strips; common presets, allowances collapsed; Expert off."
+      },
+      "closure": {
+        "kind": "local-tranche",
+        "legacy_case_ids": [],
+        "scope": "Physical-mm strip export and oversized/canceled publication refusal; only the declared input/options and checks.",
+        "legacy_disposition": {}
+      },
+      "remaining": "Other reinforcement patterns and baseline allowances remain open; digital mm checks do not establish printer/paper calibration.",
+      "benchmark_status": "unverified",
+      "platform_status": "not-run",
+      "competitor_status": "not-run",
+      "parameters_are_executable": false
+    },
+    {
+      "id": "con-06-r6-scaled-memory-add",
+      "requirement_id": "CON-06",
+      "option": "r6-scaled-memory-add",
+      "title": "Unit-aware relative memory Add and stable compound parts",
+      "source": {
+        "description": "Literal two-input memory snapshots with RGBA, document units and nested component IDs"
+      },
+      "parameters": {
+        "scale": "1/2 about source origin after unit conversion",
+        "actions": [
+          "Store",
+          "Add",
+          "Blend",
+          "Swap"
+        ]
+      },
+      "domain": {
+        "dimensions": [
+          3,
+          4
+        ],
+        "object_classes": [
+          "3D/4D literal compound addition; supported 3D blends"
+        ],
+        "limits": {
+          "memories": 9,
+          "domain": "existing bounded memory and document capacity; blend subset only"
+        },
+        "numeric_contract": "Approximate float64 geometry/predicates; residuals qualify the supplied source, never exact algebraic or benchmark parity.",
+        "refusals": [
+          "Unitless/physical mixing, invalid scale, disjoint blend and 4D blend refuse atomically"
+        ]
+      },
+      "checks": [
+        "Literal coordinates, RGBA, units, leaf IDs and immutable memory owner",
+        "Independent two-input history survives Undo/Redo, replay, Swap and reopen"
+      ],
+      "fixtures": [
+        {
+          "path": "tests/test_memory_addition.py",
+          "selector": "test_relative_scale_retains_literal_coordinates_colors_ids_and_sources",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/test_memory_addition.py",
+          "selector": "test_physical_units_convert_before_relative_scale_about_origin",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/test_memory_addition.py",
+          "selector": "test_scaled_add_reopen_undo_redo_replay_and_component_extraction",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/test_memory_addition.py",
+          "selector": "test_four_dimensional_add_preserves_cells_and_blend_refuses",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/memory-addition-mounted.test.mjs",
+          "selector": "expert-off Store, scaled Add/Blend, Undo/Redo, replay, Swap and reopen use mounted native workflows",
+          "kind": "node-test",
+          "level": "ui-mounted",
+          "run_id": "ui",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        }
+      ],
+      "source_files": [
+        "docs/MEMORY_RELATIVE_SCALE.md",
+        "engine/memory_addition.py",
+        "ui/memory-controls.mjs"
+      ],
+      "ui": {
+        "element_ids": [
+          "memory-store",
+          "memory-scale",
+          "memory-add",
+          "memory-blend",
+          "memory-swap"
+        ],
+        "route": "Dock > More > Memories; Expert off."
+      },
+      "closure": {
+        "kind": "local-tranche",
+        "legacy_case_ids": [
+          "con-06-add-dual-scale",
+          "con-06-compound-parts"
+        ],
+        "scope": "Unit-aware relative memory Add and stable compound parts; only the declared input/options and checks.",
+        "legacy_disposition": {
+          "con-06-add-dual-scale": "local-tranche-only",
+          "con-06-compound-parts": "local-tranche-only"
+        }
+      },
+      "remaining": "Controlled memory slice closes; full CON-06 blending/coincidence and unsupported blend families remain open.",
+      "benchmark_status": "unverified",
+      "platform_status": "not-run",
+      "competitor_status": "not-run",
+      "parameters_are_executable": false
+    },
+    {
+      "id": "doc-02-r6-controlled-add-blend",
+      "requirement_id": "DOC-02",
+      "option": "r6-controlled-add-blend",
+      "title": "Controlled memory Store/Add/Blend/Swap with immutable bank",
+      "source": {
+        "description": "Literal two-input memory snapshots with RGBA, document units and nested component IDs"
+      },
+      "parameters": {
+        "scale": "1/2 about source origin after unit conversion",
+        "actions": [
+          "Store",
+          "Add",
+          "Blend",
+          "Swap"
+        ]
+      },
+      "domain": {
+        "dimensions": [
+          3,
+          4
+        ],
+        "object_classes": [
+          "3D/4D literal compound addition; supported 3D blends"
+        ],
+        "limits": {
+          "memories": 9,
+          "domain": "existing bounded memory and document capacity; blend subset only"
+        },
+        "numeric_contract": "Approximate float64 geometry/predicates; residuals qualify the supplied source, never exact algebraic or benchmark parity.",
+        "refusals": [
+          "Unitless/physical mixing, invalid scale, disjoint blend and 4D blend refuse atomically"
+        ]
+      },
+      "checks": [
+        "Literal coordinates, RGBA, units, leaf IDs and immutable memory owner",
+        "Independent two-input history survives Undo/Redo, replay, Swap and reopen"
+      ],
+      "fixtures": [
+        {
+          "path": "tests/test_memory_addition.py",
+          "selector": "test_blend_uses_existing_merge_recipe_with_residual_and_replays",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/test_memory_addition.py",
+          "selector": "test_disconnected_blend_refuses_and_source_document_stays_unchanged",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/test_memory_addition.py",
+          "selector": "test_source_content_is_explicitly_detached_and_retained_for_undo_and_replay",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/test_memory_addition.py",
+          "selector": "test_unitless_physical_mix_and_unknown_units_are_refused",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/memory-addition-mounted.test.mjs",
+          "selector": "expert-off Store, scaled Add/Blend, Undo/Redo, replay, Swap and reopen use mounted native workflows",
+          "kind": "node-test",
+          "level": "ui-mounted",
+          "run_id": "ui",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        }
+      ],
+      "source_files": [
+        "docs/MEMORY_RELATIVE_SCALE.md",
+        "engine/memory_addition.py",
+        "ui/memory-controls.mjs"
+      ],
+      "ui": {
+        "element_ids": [
+          "memory-store",
+          "memory-scale",
+          "memory-add",
+          "memory-blend",
+          "memory-swap"
+        ],
+        "route": "Dock > More > Memories; Expert off."
+      },
+      "closure": {
+        "kind": "scenario-closed",
+        "legacy_case_ids": [],
+        "scope": "Controlled memory Store/Add/Blend/Swap with immutable bank; only the declared input/options and checks.",
+        "legacy_disposition": {}
+      },
+      "remaining": "Controlled memory slice closes; full CON-06 blending/coincidence and unsupported blend families remain open.",
+      "benchmark_status": "unverified",
+      "platform_status": "not-run",
+      "competitor_status": "not-run",
+      "parameters_are_executable": false
+    },
+    {
+      "id": "io-01-r6-dxf-boundary-import",
+      "requirement_id": "IO-01",
+      "option": "r6-dxf-boundary-import",
+      "title": "Literal attributed DXF boundary import and palette handoff",
+      "source": {
+        "description": "tests/fixtures/dxf-boundary/attributed-mm.dxf, cube and central tesseract section"
+      },
+      "parameters": {
+        "profile": "boundary",
+        "entities": [
+          "3DFACE",
+          "loose LINE/POINT"
+        ],
+        "units": [
+          "mm",
+          "inch"
+        ],
+        "faceSizes": [
+          3,
+          4
+        ]
+      },
+      "domain": {
+        "dimensions": [
+          3,
+          4
+        ],
+        "object_classes": [
+          "intrinsic 3D base or derived boundary export; 3D import"
+        ],
+        "limits": {
+          "domain": "literal triangle/quad faces, layer-separated components and loose strata"
+        },
+        "numeric_contract": "Approximate float64 geometry/predicates; residuals qualify the supplied source, never exact algebraic or benchmark parity.",
+        "refusals": [
+          "Cells, large polygons, textures and unrepresentable coincident incidence refuse in boundary profile"
+        ]
+      },
+      "checks": [
+        "Independent group-pair parser checks literal incidence, RGB and unit conversion",
+        "Alpha loss and float color residual disclosed",
+        "Reviewed destination publication is atomic and cancel-safe"
+      ],
+      "fixtures": [
+        {
+          "path": "tests/test_dxf_boundary.py",
+          "selector": "test_literal_import_truecolor_layer_and_polyface_style_survive_file_project_and_export",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/test_dxf_boundary.py",
+          "selector": "test_polyface_face_style_overrides_parent_for_document_face_palette",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/dxf-boundary.test.mjs",
+          "selector": "mounted DXF profile reviews base/derived units, RGB loss and publishes the reviewed payload",
+          "kind": "node-test",
+          "level": "ui-unit",
+          "run_id": "ui",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        }
+      ],
+      "source_files": [
+        "docs/DXF_BOUNDARY_INTERCHANGE.md",
+        "tests/fixtures/dxf-boundary/attributed-mm.dxf",
+        "engine/dxf.py",
+        "ui/dxf-export-controls.mjs"
+      ],
+      "ui": {
+        "element_ids": [
+          "export-format",
+          "dxf-export-profile",
+          "export-units",
+          "export-preview",
+          "confirm-export"
+        ],
+        "route": "File > Export > All formats > DXF > Boundary faces; Expert off."
+      },
+      "closure": {
+        "kind": "local-tranche",
+        "legacy_case_ids": [],
+        "scope": "Literal attributed DXF boundary import and palette handoff; only the declared input/options and checks.",
+        "legacy_disposition": {}
+      },
+      "remaining": "DXF boundary subprofile only; other codec/derived/content cross-products remain open. No ACIS obligation inferred.",
+      "benchmark_status": "unverified",
+      "platform_status": "not-run",
+      "competitor_status": "not-run",
+      "parameters_are_executable": false
+    },
+    {
+      "id": "io-02-r6-dxf-boundary-profile",
+      "requirement_id": "IO-02",
+      "option": "r6-dxf-boundary-profile",
+      "title": "Triangle/quad RGB, units and component DXF boundary profile",
+      "source": {
+        "description": "tests/fixtures/dxf-boundary/attributed-mm.dxf, cube and central tesseract section"
+      },
+      "parameters": {
+        "profile": "boundary",
+        "entities": [
+          "3DFACE",
+          "loose LINE/POINT"
+        ],
+        "units": [
+          "mm",
+          "inch"
+        ],
+        "faceSizes": [
+          3,
+          4
+        ]
+      },
+      "domain": {
+        "dimensions": [
+          3,
+          4
+        ],
+        "object_classes": [
+          "intrinsic 3D base or derived boundary export; 3D import"
+        ],
+        "limits": {
+          "domain": "literal triangle/quad faces, layer-separated components and loose strata"
+        },
+        "numeric_contract": "Approximate float64 geometry/predicates; residuals qualify the supplied source, never exact algebraic or benchmark parity.",
+        "refusals": [
+          "Cells, large polygons, textures and unrepresentable coincident incidence refuse in boundary profile"
+        ]
+      },
+      "checks": [
+        "Independent group-pair parser checks literal incidence, RGB and unit conversion",
+        "Alpha loss and float color residual disclosed",
+        "Reviewed destination publication is atomic and cancel-safe"
+      ],
+      "fixtures": [
+        {
+          "path": "tests/test_dxf_boundary.py",
+          "selector": "test_cube_and_central_tesseract_section_independent_units_incidence_rgb",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/test_dxf_boundary.py",
+          "selector": "test_triangle_fourth_slot_and_float_color_residual_alpha_loss",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/test_dxf_boundary.py",
+          "selector": "test_coincident_component_coordinates_keep_distinct_layers_and_incidence",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/test_dxf_boundary.py",
+          "selector": "test_unsupported_boundary_domains_refuse_without_triangulation_or_projection",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/test_dxf_boundary.py",
+          "selector": "test_transparency_is_not_silently_presented_as_preserved_alpha",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/dxf-boundary.test.mjs",
+          "selector": "mounted DXF profile reviews base/derived units, RGB loss and publishes the reviewed payload",
+          "kind": "node-test",
+          "level": "ui-unit",
+          "run_id": "ui",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        }
+      ],
+      "source_files": [
+        "docs/DXF_BOUNDARY_INTERCHANGE.md",
+        "tests/fixtures/dxf-boundary/attributed-mm.dxf",
+        "engine/dxf.py",
+        "ui/dxf-export-controls.mjs"
+      ],
+      "ui": {
+        "element_ids": [
+          "export-format",
+          "dxf-export-profile",
+          "export-units",
+          "export-preview",
+          "confirm-export"
+        ],
+        "route": "File > Export > All formats > DXF > Boundary faces; Expert off."
+      },
+      "closure": {
+        "kind": "local-tranche",
+        "legacy_case_ids": [
+          "io-02-codec-dxf",
+          "io-02-units-loss"
+        ],
+        "scope": "Triangle/quad RGB, units and component DXF boundary profile; only the declared input/options and checks.",
+        "legacy_disposition": {
+          "io-02-codec-dxf": "local-tranche-only",
+          "io-02-units-loss": "local-tranche-only"
+        }
+      },
+      "remaining": "DXF boundary subprofile only; other codec/derived/content cross-products remain open. No ACIS obligation inferred.",
+      "benchmark_status": "unverified",
+      "platform_status": "not-run",
+      "competitor_status": "not-run",
+      "parameters_are_executable": false
+    },
+    {
+      "id": "vis-03-r6-png-environment",
+      "requirement_id": "VIS-03",
+      "option": "r6-png-environment",
+      "title": "Portable PNG environment reflection/refraction and reopen pixels",
+      "source": {
+        "description": "tests/fixtures/material-environment.json panorama and native imported PNG bytes"
+      },
+      "parameters": {
+        "aspectRatio": "2:1",
+        "effects": [
+          "reflection",
+          "refraction"
+        ],
+        "portableAsset": "normalized PNG"
+      },
+      "domain": {
+        "dimensions": [
+          3
+        ],
+        "object_classes": [
+          "3D material environment presentation"
+        ],
+        "limits": {
+          "domain": "bounded native PNG decode/import; 2:1 panorama",
+          "height": [
+            2,
+            512
+          ],
+          "width": "2 * height",
+          "pngBytes": 4194304
+        },
+        "numeric_contract": "Approximate float64 geometry/predicates; residuals qualify the supplied source, never exact algebraic or benchmark parity.",
+        "refusals": [
+          "Corrupt, oversize, non-panorama and 4D environments refuse"
+        ]
+      },
+      "checks": [
+        "Native pixel normalization and forged asset rejection",
+        "Mounted real renderer reflection/refraction pixel hashes before/after reopen; source and print pages unchanged"
+      ],
+      "fixtures": [
+        {
+          "path": "tests/test_material_environment.py",
+          "selector": "test_native_import_normalizes_pixels_and_preserves_source",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/test_material_environment.py",
+          "selector": "test_environment_roundtrip_keeps_assets_camera_source_and_print_pages",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/test_material_environment.py",
+          "selector": "test_project_rejects_forged_asset_records",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/test_material_environment.py",
+          "selector": "test_import_rejects_corrupt_bytes_missing_asset_and_4d",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/material-environment-mounted.test.mjs",
+          "selector": "3D imported environment UI, native project reopen and PNG pixels agree with Expert off",
+          "kind": "node-test",
+          "level": "ui-mounted",
+          "run_id": "ui",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        }
+      ],
+      "source_files": [
+        "docs/MATERIAL_ENVIRONMENT.md",
+        "tests/fixtures/material-environment.json",
+        "engine/material_environment.py",
+        "ui/material-environment.mjs",
+        "ui/material-environment-controls.mjs"
+      ],
+      "ui": {
+        "element_ids": [
+          "effects-image-file",
+          "effects-image-import",
+          "effects-environmentMode"
+        ],
+        "route": "Appearance > Material effects > Environment PNG; Expert off."
+      },
+      "closure": {
+        "kind": "local-tranche",
+        "legacy_case_ids": [
+          "vis-03-reflection-refraction",
+          "vis-03-imported-assets"
+        ],
+        "scope": "Portable PNG environment reflection/refraction and reopen pixels; only the declared input/options and checks.",
+        "legacy_disposition": {
+          "vis-03-reflection-refraction": "local-tranche-only",
+          "vis-03-imported-assets": "local-tranche-only"
+        }
+      },
+      "remaining": "Portable 3D PNG environment tranche only: arbitrary bump assets, all image-mapping/video combinations, 4D optics and GPU/platform equivalence remain open.",
+      "benchmark_status": "unverified",
+      "platform_status": "not-run",
+      "competitor_status": "not-run",
+      "parameters_are_executable": false
+    },
+    {
+      "id": "anim-02-r6-via-snub-b3",
+      "requirement_id": "ANIM-02",
+      "option": "r6-via-snub-b3",
+      "title": "Cube via-snub literal endpoints and numerical uniform event",
+      "source": {
+        "description": "Complete centered ordinary regular cube and prepared polar octahedron"
+      },
+      "parameters": {
+        "method": "via-snub",
+        "ratios": [
+          0,
+          0.25,
+          0.5,
+          0.75,
+          1
+        ],
+        "uniformRatio": "approximately 0.456311"
+      },
+      "domain": {
+        "dimensions": [
+          3
+        ],
+        "object_classes": [
+          "ordinary regular cube -> snub family -> polar octahedron"
+        ],
+        "limits": {
+          "domain": "source-qualified B3 cube, well-conditioned interior ratios",
+          "literalEndpointRatios": [
+            0,
+            1
+          ],
+          "interiorRatio": [
+            0.001,
+            0.999
+          ]
+        },
+        "numeric_contract": "Approximate float64 geometry/predicates; residuals qualify the supplied source, never exact algebraic or benchmark parity.",
+        "refusals": [
+          "Unsupported sources, forged source/context and ill-conditioned endpoint collars refuse"
+        ]
+      },
+      "checks": [
+        "Independent interior hull oracle, equal-edge uniform event and literal endpoint quotient maps",
+        "Saved pose reconstructs from literal source; no source history mutation"
+      ],
+      "fixtures": [
+        {
+          "path": "tests/test_dual_morph_snub.py",
+          "selector": "test_native_literal_endpoints_interiors_residuals_and_hull_oracle",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/test_dual_morph_snub.py",
+          "selector": "test_uniform_snub_event_has_equal_edges_and_matches_generated_catalog",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/test_dual_morph_snub.py",
+          "selector": "test_ill_conditioned_collars_refuse_without_endpoint_snaps",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/test_dual_morph_snub.py",
+          "selector": "test_plan_accessors_are_detached_and_project_roundtrip_rebuilds_saved_pose",
+          "kind": "pytest",
+          "level": "native",
+          "run_id": "native",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        },
+        {
+          "path": "tests/dual-morph-snub-mounted.test.mjs",
+          "selector": "mounted via-snub works with Expert off, literal source save/reopen and unsupported-domain UI",
+          "kind": "node-test",
+          "level": "ui-mounted",
+          "run_id": "ui",
+          "role": "direct",
+          "scope": "Only the assertions and source/parameter values inside this named selector; no option cross-product inferred."
+        }
+      ],
+      "source_files": [
+        "docs/SNUB_MORPH_CONTRACT.md",
+        "engine/dual_morph_snub.py",
+        "ui/dual-morph-controls.mjs",
+        "ui/dual-morph-session.mjs"
+      ],
+      "ui": {
+        "element_ids": [
+          "dual-morph-method",
+          "dual-morph-ratio",
+          "dual-morph-apply"
+        ],
+        "route": "Dock > More > Dual morph > Via-snub; Expert off."
+      },
+      "closure": {
+        "kind": "local-tranche",
+        "legacy_case_ids": [],
+        "scope": "Cube via-snub literal endpoints and numerical uniform event; only the declared input/options and checks.",
+        "legacy_disposition": {}
+      },
+      "remaining": "Native B3 trajectory only; benchmark path equivalence, other sources and endpoint-collar extension remain unverified.",
+      "benchmark_status": "unverified",
+      "platform_status": "not-run",
+      "competitor_status": "not-run",
+      "parameters_are_executable": false
+    }
+  ]
+}

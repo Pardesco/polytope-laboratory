@@ -1,4 +1,5 @@
 """Bounded ASCII DXF source geometry. No tessellation, hull or solid inference."""
+
 from itertools import product
 from collections import Counter
 import hashlib
@@ -17,11 +18,33 @@ MAX_ENTITIES = 100_000
 MAX_SOURCE_VERTICES = 100_000
 MAX_WELD_COMPARISONS = 1_000_000
 MAX_COORDINATE = 1e100
-UNITS = ['unitless', 'inches', 'feet', 'miles', 'millimeters', 'centimeters',
-         'meters', 'kilometers', 'microinches', 'mils', 'yards', 'angstroms',
-         'nanometers', 'micrometers', 'decimeters', 'decameters', 'hectometers',
-         'gigameters', 'astronomical-units', 'light-years', 'parsecs',
-         'us-survey-feet', 'us-survey-inches', 'us-survey-yards', 'us-survey-miles']
+UNITS = [
+    'unitless',
+    'inches',
+    'feet',
+    'miles',
+    'millimeters',
+    'centimeters',
+    'meters',
+    'kilometers',
+    'microinches',
+    'mils',
+    'yards',
+    'angstroms',
+    'nanometers',
+    'micrometers',
+    'decimeters',
+    'decameters',
+    'hectometers',
+    'gigameters',
+    'astronomical-units',
+    'light-years',
+    'parsecs',
+    'us-survey-feet',
+    'us-survey-inches',
+    'us-survey-yards',
+    'us-survey-miles',
+]
 
 
 def _integer(value, label):
@@ -62,7 +85,7 @@ def _float(fields, code, default=0):
 
 def _point(fields, code=10, required=True):
     if required and (_one(fields, code) is None or _one(fields, code + 10) is None):
-        raise GeometryError(f'DXF point groups {code}/{code+10} are required.')
+        raise GeometryError(f'DXF point groups {code}/{code + 10} are required.')
     return [_float(fields, code + offset) for offset in (0, 10, 20)]
 
 
@@ -89,11 +112,11 @@ def _pairs(text):
         raise GeometryError(f'DXF group-pair resource limit exceeded: at most {MAX_PAIRS:,} pairs.')
     pairs = []
     for i in range(0, len(lines), 2):
-        code = _integer(lines[i].strip(), f'group code at line {i+1}')
+        code = _integer(lines[i].strip(), f'group code at line {i + 1}')
         if not 0 <= code <= 1071:
             raise GeometryError(f'DXF group code {code} is outside the supported range.')
         if code != 999:
-            pairs.append((code, lines[i+1].strip()))
+            pairs.append((code, lines[i + 1].strip()))
     return pairs
 
 
@@ -104,9 +127,9 @@ def _sections(pairs):
             if i != len(pairs) - 1:
                 raise GeometryError('DXF has data after EOF.')
             return sections
-        if pairs[i] != (0, 'SECTION') or i + 1 >= len(pairs) or pairs[i+1][0] != 2:
+        if pairs[i] != (0, 'SECTION') or i + 1 >= len(pairs) or pairs[i + 1][0] != 2:
             raise GeometryError('DXF expected SECTION/name or final EOF.')
-        name = pairs[i+1][1]
+        name = pairs[i + 1][1]
         if name in sections:
             raise GeometryError(f'DXF duplicate {name} section.')
         if name not in {'HEADER', 'TABLES', 'BLOCKS', 'ENTITIES', 'CLASSES', 'OBJECTS'}:
@@ -140,12 +163,11 @@ def _color(fields, default=256):
     aci = _int(fields, 62, default)
     if not -255 <= aci <= 256:
         raise GeometryError('DXF ACI color must be in -255–256.')
-    result = {'aci': abs(aci), 'off': aci < 0,
-              'method': 'byblock' if aci == 0 else 'bylayer' if aci == 256 else 'aci'}
+    result = {'aci': abs(aci), 'off': aci < 0, 'method': 'byblock' if aci == 0 else 'bylayer' if aci == 256 else 'aci'}
     rgb = _one(fields, 420)
     if rgb is not None:
         rgb = _integer(rgb, 'true color')
-        if not 0 <= rgb <= 0xffffff:
+        if not 0 <= rgb <= 0xFFFFFF:
             raise GeometryError('DXF true color must be a 24-bit RGB value.')
         result.update(method='true-color', trueColor=rgb, rgb=[rgb >> 16, (rgb >> 8) & 255, rgb & 255])
     name = _one(fields, 430)
@@ -154,7 +176,7 @@ def _color(fields, default=256):
     transparency = _one(fields, 440)
     if transparency is not None:
         transparency = _integer(transparency, 'transparency')
-        if not 0 <= transparency <= 0xffffffff:
+        if not 0 <= transparency <= 0xFFFFFFFF:
             raise GeometryError('DXF transparency code is outside its 32-bit domain.')
         result['transparencyCode'] = transparency
     return result
@@ -180,9 +202,12 @@ def _header(pairs):
         units = _int(fields, 70)
         if not 0 <= units < len(UNITS):
             raise GeometryError('DXF $INSUNITS is outside the supported 0–24 domain.')
-    return {'insunits': units, 'unitName': UNITS[units] if units is not None else 'unspecified',
-            'acadVersion': _one(variables.get('$ACADVER', []), 1),
-            'coordinatesScaled': False}
+    return {
+        'insunits': units,
+        'unitName': UNITS[units] if units is not None else 'unspecified',
+        'acadVersion': _one(variables.get('$ACADVER', []), 1),
+        'coordinatesScaled': False,
+    }
 
 
 def _layers(pairs):
@@ -236,8 +261,14 @@ def _style(record, layers):
     extrusion = [_float(fields, code, default) for code, default in ((210, 0), (220, 0), (230, 1))]
     if not math.hypot(*extrusion):
         raise GeometryError('DXF extrusion direction must be nonzero.')
-    return {'type': record['type'], 'handle': _one(fields, 5), 'layer': layer,
-            'color': color, 'invisible': bool(visibility), 'extrusionDirection': extrusion}
+    return {
+        'type': record['type'],
+        'handle': _one(fields, 5),
+        'layer': layer,
+        'color': color,
+        'invisible': bool(visibility),
+        'extrusionDirection': extrusion,
+    }
 
 
 class _Builder:
@@ -254,18 +285,25 @@ class _Builder:
 
     def vertex(self, point, entity, slot):
         if len(self.sources) >= MAX_SOURCE_VERTICES:
-            raise GeometryError(f'DXF source-vertex resource limit exceeded: at most {MAX_SOURCE_VERTICES:,} occurrences.')
+            raise GeometryError(
+                f'DXF source-vertex resource limit exceeded: at most {MAX_SOURCE_VERTICES:,} occurrences.'
+            )
         key = (self.layer, tuple(point))
         found = self.exact.get(key)
         cell = None
         if found is None and self.tolerance:
             cell = self._cell(point)
-            candidates = sorted(v for delta in product((-1, 0, 1), repeat=3)
-                                for v in self.grid.get((self.layer, tuple(a+b for a, b in zip(cell, delta))), []))
+            candidates = sorted(
+                v
+                for delta in product((-1, 0, 1), repeat=3)
+                for v in self.grid.get((self.layer, tuple(a + b for a, b in zip(cell, delta))), [])
+            )
             for candidate in candidates:
                 self.comparisons += 1
                 if self.comparisons > MAX_WELD_COMPARISONS:
-                    raise GeometryError(f'DXF welding comparison resource limit exceeded: at most {MAX_WELD_COMPARISONS:,} comparisons.')
+                    raise GeometryError(
+                        f'DXF welding comparison resource limit exceeded: at most {MAX_WELD_COMPARISONS:,} comparisons.'
+                    )
                 if math.dist(point, self.vertices[candidate]) <= self.tolerance:
                     found = candidate
                     break
@@ -300,12 +338,14 @@ class _Builder:
             raise GeometryError('DXF face has repeated/collapsed boundary vertices after welding.')
         index = len(self.faces)
         self.faces.append(vertices)
-        edges = [self.edge(a, b, {'entity': entity, 'face': index, 'boundary': i})
-                 for i, (a, b) in enumerate(zip(vertices, vertices[1:]+vertices[:1]))]
-        hidden = [i for i, (a, b) in enumerate(zip(vertices, vertices[1:]+vertices[:1]))
-                  if (a, b) in raw_hidden]
-        self.face_sources.append({'entity': entity, 'sourceVertices': source_vertices,
-                                  'edgeIds': edges, 'hiddenBoundaryEdges': hidden})
+        edges = [
+            self.edge(a, b, {'entity': entity, 'face': index, 'boundary': i})
+            for i, (a, b) in enumerate(zip(vertices, vertices[1:] + vertices[:1]))
+        ]
+        hidden = [i for i, (a, b) in enumerate(zip(vertices, vertices[1:] + vertices[:1])) if (a, b) in raw_hidden]
+        self.face_sources.append(
+            {'entity': entity, 'sourceVertices': source_vertices, 'edgeIds': edges, 'hiddenBoundaryEdges': hidden}
+        )
         return index
 
 
@@ -342,8 +382,10 @@ def parse_dxf(text, name='DXF import', *, weld_tolerance=0.0):
     while i < len(records):
         record = records[i]
         kind, fields = record['type'], record['fields']
-        if kind in {'3DSOLID','REGION','BODY'}:
-            raise GeometryError(f'DXF {kind} contains ACIS solid/region data, which is unsupported. Export tessellated 3DFACE or POLYLINE meshes; no partial model returned.')
+        if kind in {'3DSOLID', 'REGION', 'BODY'}:
+            raise GeometryError(
+                f'DXF {kind} contains ACIS solid/region data, which is unsupported. Export tessellated 3DFACE or POLYLINE meshes; no partial model returned.'
+            )
         if kind not in {'3DFACE', 'LINE', 'POINT', 'POLYLINE', 'LWPOLYLINE'}:
             raise GeometryError(f'DXF unsupported entity {kind} at record {i}; no partial model returned.')
         source_id = len(entities)
@@ -358,6 +400,7 @@ def parse_dxf(text, name='DXF import', *, weld_tolerance=0.0):
                 info['modelEdges'] = [builder.edge(*info['modelVertices'], {'entity': source_id, 'kind': 'LINE'})]
         elif kind == 'LWPOLYLINE':
             from .dxf_breadth import lightweight
+
             lightweight(fields, info, builder, source_id)
         elif kind == '3DFACE':
             points = [_point(fields, code) for code in (10, 11, 12)]
@@ -368,16 +411,16 @@ def parse_dxf(text, name='DXF import', *, weld_tolerance=0.0):
                 raise GeometryError('DXF 3DFACE invisible-edge mask must be in 0–15.')
             mapped = [builder.vertex(point, source_id, k) for k, point in enumerate(points)]
             vertices = [v for v, source in mapped]
-            hidden = [(vertices[k], vertices[(k+1) % 4]) for k in range(4) if mask & (1 << k)]
+            hidden = [(vertices[k], vertices[(k + 1) % 4]) for k in range(4) if mask & (1 << k)]
             # A triangular 3DFACE repeats its third corner in its fourth slot.
             triangle = points[3] == points[2]
-            face = builder.face(vertices[:3] if triangle else vertices, source_id, hidden,
-                                [s for v, s in mapped])
+            face = builder.face(vertices[:3] if triangle else vertices, source_id, hidden, [s for v, s in mapped])
             info.update(modelFaces=[face], invisibleEdgeFlags=mask, implicitFourthCorner=not fourth)
         else:
             flags = _int(fields, 70)
             if flags & 16:
                 from .dxf_breadth import polygon_mesh
+
                 i = polygon_mesh(records, i, info, builder, source_id)
                 i += 1
                 continue
@@ -412,10 +455,15 @@ def parse_dxf(text, name='DXF import', *, weld_tolerance=0.0):
                 raise GeometryError('DXF polyface mesh requires a terminating SEQEND.')
             if not local_vertices or not face_records:
                 raise GeometryError('DXF polyface mesh requires coordinate vertices and faces.')
-            info.update(declaredCounts={'vertices': declared[0], 'faces': declared[1]},
-                        actualCounts={'vertices': len(local_vertices), 'faces': len(face_records)}, modelFaces=[])
+            info.update(
+                declaredCounts={'vertices': declared[0], 'faces': declared[1]},
+                actualCounts={'vertices': len(local_vertices), 'faces': len(face_records)},
+                modelFaces=[],
+            )
             if declared != [len(local_vertices), len(face_records)]:
-                warnings.append(f'Polyface entity {source_id} advisory counts {declared} differ from actual [{len(local_vertices)}, {len(face_records)}].')
+                warnings.append(
+                    f'Polyface entity {source_id} advisory counts {declared} differ from actual [{len(local_vertices)}, {len(face_records)}].'
+                )
             for vf, style, record_index in face_records:
                 signed = [_int(vf, code) for code in (71, 72, 73, 74)]
                 end = next((k for k, value in enumerate(signed) if value == 0), 4)
@@ -424,9 +472,11 @@ def parse_dxf(text, name='DXF import', *, weld_tolerance=0.0):
                 signed = signed[:end]
                 if any(not 1 <= abs(value) <= len(local_vertices) for value in signed):
                     raise GeometryError('DXF polyface index is outside its local coordinate-vertex table.')
-                mapped = [local_vertices[abs(value)-1] for value in signed]
+                mapped = [local_vertices[abs(value) - 1] for value in signed]
                 vertices = [v for v, source in mapped]
-                hidden = [(vertices[k], vertices[(k+1) % len(vertices)]) for k, value in enumerate(signed) if value < 0]
+                hidden = [
+                    (vertices[k], vertices[(k + 1) % len(vertices)]) for k, value in enumerate(signed) if value < 0
+                ]
                 face = builder.face(vertices, source_id, hidden, [s for v, s in mapped])
                 builder.face_sources[face].update(style=style, signedIndices=signed, record=record_index)
                 info['modelFaces'].append(face)
@@ -436,26 +486,61 @@ def parse_dxf(text, name='DXF import', *, weld_tolerance=0.0):
     points = np.asarray(builder.vertices)
     scale = max(float(np.max(np.ptp(points, axis=0))), np.finfo(float).tiny)
     affine_dimension = rank((points - points.mean(axis=0)) / scale)
-    metadata = {'format': 'ASCII-DXF', 'source': name, 'dxf': {
-        'schemaVersion': 1, **header, 'affineDimension': affine_dimension,
-        'layers': layers, 'entities': entities, 'faces': builder.face_sources,
-        'edgeSources': builder.edge_sources, 'sourceVertexMap': builder.sources,
-        'welding': {'tolerance': tolerance, 'units': 'supplied coordinates',
-                    'method': 'first retained vertex within absolute Euclidean tolerance; no averaging',
-                    'sourceVertices': len(builder.sources), 'retainedVertices': len(builder.vertices)},
-        'warnings': warnings, 'entityCounts': dict(Counter(info['type'] for info in entities)),
-        'ignoredNonGeometrySections': [key for key in ('CLASSES', 'OBJECTS') if key in sections]}}
-    model = {'id': str(uuid.uuid4()), 'name': name, 'dimension': 3, 'embeddingDimension': 3,
-             'interpretation': 'generalized-complex', 'vertices': builder.vertices,
-             'edges': builder.edges, 'faces': builder.faces, 'cells': [], 'metadata': metadata,
-             'numeric': {'mode': 'float64-approximate', 'tolerance': TOLERANCE, 'certified': False,
-                         'inputInterpretation': 'Supplied DXF WCS decimal coordinates rounded to float64; no solid inferred'},
-             'provenance': {'operation': 'import-dxf', 'algorithmVersion': '0.1.0',
-                            'sourceSha256': hashlib.sha256(text.encode('utf-8')).hexdigest(),
-                            'parameters': {'weldTolerance': tolerance}}}
+    metadata = {
+        'format': 'ASCII-DXF',
+        'source': name,
+        'dxf': {
+            'schemaVersion': 1,
+            **header,
+            'affineDimension': affine_dimension,
+            'layers': layers,
+            'entities': entities,
+            'faces': builder.face_sources,
+            'edgeSources': builder.edge_sources,
+            'sourceVertexMap': builder.sources,
+            'welding': {
+                'tolerance': tolerance,
+                'units': 'supplied coordinates',
+                'method': 'first retained vertex within absolute Euclidean tolerance; no averaging',
+                'sourceVertices': len(builder.sources),
+                'retainedVertices': len(builder.vertices),
+            },
+            'warnings': warnings,
+            'entityCounts': dict(Counter(info['type'] for info in entities)),
+            'ignoredNonGeometrySections': [key for key in ('CLASSES', 'OBJECTS') if key in sections],
+        },
+    }
+    model = {
+        'id': str(uuid.uuid4()),
+        'name': name,
+        'dimension': 3,
+        'embeddingDimension': 3,
+        'interpretation': 'generalized-complex',
+        'vertices': builder.vertices,
+        'edges': builder.edges,
+        'faces': builder.faces,
+        'cells': [],
+        'metadata': metadata,
+        'numeric': {
+            'mode': 'float64-approximate',
+            'tolerance': TOLERANCE,
+            'certified': False,
+            'inputInterpretation': 'Supplied DXF WCS decimal coordinates rounded to float64; no solid inferred',
+        },
+        'provenance': {
+            'operation': 'import-dxf',
+            'algorithmVersion': '0.1.0',
+            'sourceSha256': hashlib.sha256(text.encode('utf-8')).hexdigest(),
+            'parameters': {'weldTolerance': tolerance},
+        },
+    }
     from .dxf_breadth import layer_components
+
     model['components'] = layer_components(builder, entities)
     metadata['dxf']['welding']['crossLayerWelding'] = False
+    from .dxf_boundary import import_document_attributes
+
+    import_document_attributes(model)
     model['validation'] = validate(model)
     if not model['validation']['passed']:
         raise GeometryError('Invalid DXF incidence: ' + '; '.join(model['validation']['errors']))

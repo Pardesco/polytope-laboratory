@@ -1,0 +1,58 @@
+{
+  "format": "polytope-corpus-receipts",
+  "schemaVersion": 2,
+  "receipts": [
+    {
+      "id": "synthetic-u1",
+      "identity": "uniform3:U1",
+      "realization": "antiprism:antiprism-u1",
+      "pins": {
+        "crosswalkSha256": "1111111111111111111111111111111111111111111111111111111111111111",
+        "sourceSha256": "2222222222222222222222222222222222222222222222222222222222222222",
+        "assetSha256": "3333333333333333333333333333333333333333333333333333333333333333",
+        "coordinatesSha256": "4444444444444444444444444444444444444444444444444444444444444444",
+        "topologySha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "licenseSha256": "6666666666666666666666666666666666666666666666666666666666666666",
+        "importerSha256": "7777777777777777777777777777777777777777777777777777777777777777",
+        "verifierSha256": "8888888888888888888888888888888888888888888888888888888888888888",
+        "policySha256": "9999999999999999999999999999999999999999999999999999999999999999"
+      },
+      "evidence": {
+        "geometry": {
+          "status": "numerical-pass",
+          "audit": {
+            "status": "pass",
+            "qualified": false,
+            "checks": {
+              "face_planarity": {
+                "status": "pass",
+                "maxRelativeResidual": 0.0,
+                "tolerance": 1e-09
+              }
+            }
+          }
+        },
+        "classification": {
+          "status": "source-asserted",
+          "reference": "Synthetic fixture; no real review.",
+          "statement": "Test evidence only."
+        },
+        "chirality": {
+          "status": "unresolved",
+          "reference": "Synthetic fixture; no real review.",
+          "statement": "Test evidence only."
+        },
+        "license": {
+          "status": "unreviewed",
+          "reference": "Synthetic fixture; no real review.",
+          "statement": "Test evidence only."
+        },
+        "baselineIdentity": {
+          "status": "unreviewed",
+          "reference": "Synthetic fixture; no real review.",
+          "statement": "Test evidence only."
+        }
+      }
+    }
+  ]
+}

@@ -1,4 +1,5 @@
 """Copy the exact qualified portable while preserving previous releases."""
+
 import argparse
 from datetime import datetime, timezone
 import hashlib
@@ -22,8 +23,7 @@ def main():
     parser.add_argument('--native-proof', required=True, type=Path)
     parser.add_argument('--frontend-proof', required=True, type=Path)
     args = parser.parse_args()
-    release, native, frontend = [read(path) for path in
-        (args.release_proof, args.native_proof, args.frontend_proof)]
+    release, native, frontend = [read(path) for path in (args.release_proof, args.native_proof, args.frontend_proof)]
     version = read(ROOT / 'package.json')['version']
     assert all(proof['version'] == version for proof in (release, native, frontend))
     assert release['fullFeatureGoalComplete'] is False
@@ -57,12 +57,22 @@ def main():
     destination.write_bytes(source.read_bytes())
     assert digest(destination) == expected
     assert all(digest(destination.parent / name) == value for name, value in previous.items())
-    receipt = {'version': version, 'passed': True, 'createdUtc': datetime.now(timezone.utc).isoformat(),
+    receipt = {
+        'version': version,
+        'passed': True,
+        'createdUtc': datetime.now(timezone.utc).isoformat(),
         'scope': 'Exact qualified portable copied; previous releases preserved; original 73-requirement scope retained',
-        'source': str(source), 'destination': str(destination), 'bytes': destination.stat().st_size,
-        'sha256': expected, 'previousReleaseHashes': previous, 'previousReleasesUnchanged': True,
-        'releaseProofSha256': digest(args.release_proof), 'nativeProofSha256': digest(args.native_proof),
-        'frontendProofSha256': digest(args.frontend_proof), 'fullFeatureGoalComplete': False}
+        'source': str(source),
+        'destination': str(destination),
+        'bytes': destination.stat().st_size,
+        'sha256': expected,
+        'previousReleaseHashes': previous,
+        'previousReleasesUnchanged': True,
+        'releaseProofSha256': digest(args.release_proof),
+        'nativeProofSha256': digest(args.native_proof),
+        'frontendProofSha256': digest(args.frontend_proof),
+        'fullFeatureGoalComplete': False,
+    }
     output = ROOT / 'artifacts' / f'promoted-portable-{version}.json'
     output.write_text(json.dumps(receipt, indent=2) + '\n', encoding='utf-8')
     print(f'Promoted exact qualified portable: {destination}; {expected}')

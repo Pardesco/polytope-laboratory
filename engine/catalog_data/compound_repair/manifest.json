@@ -1,0 +1,75 @@
+{
+  "schemaVersion": 1,
+  "sourceUrl": "https://drive.google.com/drive/folders/1DrGRp2SluE3nlMGaXgxdOXaXpOSLQOZi",
+  "notice": "Original source bytes retained unchanged beside separately pinned correction copies. See docs/COMPOUND_CELL_REVIEW_2026-11-09.md for reconstruction and cell-group conventions.",
+  "entries": [
+    {
+      "key": "compound-repaired-haddet",
+      "name": "Haddet (2 16-cells): corrected cell groups",
+      "dimension": 4,
+      "family": "4D compounds",
+      "counts": [
+        16,
+        48,
+        64,
+        24
+      ],
+      "componentCount": 2,
+      "aliases": [
+        "haddet",
+        "corrected 2hex-Haddet.off",
+        "coplanar cell groups"
+      ],
+      "source": "corrected from 2hex-Haddet.off: cells 22,23 rebuilt",
+      "provenance": "corrected from 2hex-Haddet.off: cells 22,23 rebuilt",
+      "catalogStatus": "corrected-derived-copy",
+      "classificationVerified": true,
+      "sourceClassification": "Generalized compound with disconnected coplanar tetrahedral cell groups; not ordinary cell incidence",
+      "numericContract": "Float64 residuals at 1e-9; no exact certificate; no filled-solid interpretation",
+      "file": "2hex-Haddet-CORRECTED.off",
+      "sha256": "b9d012a0913d8c65832fa5e7da3296c7cf144ad7eaae797794e17c1fbd1de4fa",
+      "originalFile": "2hex-Haddet.off",
+      "sourceSha256": "ce3346a17176df5b323a321c93b1cbf72a8659f36c769ae12c7cfa3ebe86ad85",
+      "sourcePath": "data/drive-uniforms/Compounds/2demitessic/2hex-Haddet.off",
+      "repairKind": "haddet",
+      "changedCellIds": [
+        22,
+        23
+      ]
+    },
+    {
+      "key": "compound-repaired-dathah",
+      "name": "Dathah (2 tesseractihemioctachora): corrected cell groups",
+      "dimension": 4,
+      "family": "4D compounds",
+      "counts": [
+        16,
+        48,
+        64,
+        16
+      ],
+      "componentCount": 2,
+      "aliases": [
+        "dathah",
+        "corrected 2tho-a-Dathah.off",
+        "coplanar cell groups"
+      ],
+      "source": "corrected from 2tho-a-Dathah.off: cells 6,7 rebuilt",
+      "provenance": "corrected from 2tho-a-Dathah.off: cells 6,7 rebuilt",
+      "catalogStatus": "corrected-derived-copy",
+      "classificationVerified": true,
+      "sourceClassification": "Generalized compound with disconnected coplanar tetrahedral cell groups; not ordinary cell incidence",
+      "numericContract": "Float64 residuals at 1e-9; no exact certificate; no filled-solid interpretation",
+      "file": "2tho-a-Dathah-CORRECTED.off",
+      "sha256": "7aa92a7e225099e9088944e43674764708b91bbbc46106b545903985518bc7ab",
+      "originalFile": "2tho-a-Dathah.off",
+      "sourceSha256": "1fcba6e5b53a74f43c80e69e5593a3741896b34d7a0b93721cb74309ba91bec0",
+      "sourcePath": "data/drive-uniforms/Compounds/2demitessic/2tho-a-Dathah.off",
+      "repairKind": "dathah",
+      "changedCellIds": [
+        6,
+        7
+      ]
+    }
+  ]
+}

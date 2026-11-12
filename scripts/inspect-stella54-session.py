@@ -3,6 +3,7 @@
 No construction, model opening, export, registration or upgrade command is sent.
 Only our freshly created process receives a graceful close request afterwards.
 """
+
 import ctypes as C
 from ctypes import wintypes as W
 from datetime import datetime, timezone
@@ -42,14 +43,22 @@ def text(hwnd, class_name=False):
 
 def windows(pid):
     result = []
+
     @ENUM
     def visit(hwnd, _):
         owner = W.DWORD()
         U.GetWindowThreadProcessId(hwnd, C.byref(owner))
         if owner.value == pid:
-            result.append({'handle': int(hwnd), 'title': text(hwnd),
-                           'class': text(hwnd, True), 'visible': bool(U.IsWindowVisible(hwnd))})
+            result.append(
+                {
+                    'handle': int(hwnd),
+                    'title': text(hwnd),
+                    'class': text(hwnd, True),
+                    'visible': bool(U.IsWindowVisible(hwnd)),
+                }
+            )
         return True
+
     U.EnumWindows(visit, 0)
     return result
 
@@ -69,8 +78,7 @@ def menu_items(menu, path=(), depth=0):
         if child:
             result.extend(menu_items(child, path + (label,), depth + 1))
         else:
-            result.append({'path': list(path), 'label': label,
-                           'commandId': U.GetMenuItemID(menu, position)})
+            result.append({'path': list(path), 'label': label, 'commandId': U.GetMenuItemID(menu, position)})
     if len(result) > 8192:
         raise RuntimeError('Menu traversal resource bound exceeded.')
     return result
@@ -79,12 +87,17 @@ def menu_items(menu, path=(), depth=0):
 def main():
     before = hashlib.sha256(EXE.read_bytes()).hexdigest()
     assert before == EXPECTED, 'Installed executable differs from inspected5.4 reference.'
-    folder = Path(tempfile.mkdtemp(prefix='stella54-session-', dir=ROOT/'artifacts'))
-    result = {'recordedUtc': datetime.now(timezone.utc).isoformat(),
-              'executable': str(EXE), 'executableSha256': before,
-              'version': '5.4, 10th May 2014', 'passed': False,
-              'scope': 'Actual launch and visible window/menu metadata only; no mathematical output conformance',
-              'constructionCommandsSent': 0, 'registrationOrUpgradeCommandsSent': 0}
+    folder = Path(tempfile.mkdtemp(prefix='stella54-session-', dir=ROOT / 'artifacts'))
+    result = {
+        'recordedUtc': datetime.now(timezone.utc).isoformat(),
+        'executable': str(EXE),
+        'executableSha256': before,
+        'version': '5.4, 10th May 2014',
+        'passed': False,
+        'scope': 'Actual launch and visible window/menu metadata only; no mathematical output conformance',
+        'constructionCommandsSent': 0,
+        'registrationOrUpgradeCommandsSent': 0,
+    }
     process = subprocess.Popen([str(EXE)], cwd=EXE.parent, creationflags=subprocess.CREATE_NEW_PROCESS_GROUP)
     result['pid'] = process.pid
     main_windows = []
@@ -94,7 +107,7 @@ def main():
             main_windows = windows(process.pid)
             if any(window['visible'] and U.GetMenu(window['handle']) for window in main_windows):
                 break
-            time.sleep(.1)
+            time.sleep(0.1)
         # Initial dialogs can appear after the main window is created.
         time.sleep(1)
         result['windows'] = windows(process.pid)
@@ -104,7 +117,9 @@ def main():
             if window['visible'] and menu and U.GetMenuItemCount(menu) >= 0:
                 result['menus'].extend(menu_items(menu))
         result['menuCount'] = len(result['menus'])
-        result['dialogTitles'] = [window['title'] for window in result['windows'] if window['class'] == '#32770' and window['visible']]
+        result['dialogTitles'] = [
+            window['title'] for window in result['windows'] if window['class'] == '#32770' and window['visible']
+        ]
         result['passed'] = bool(result['menus'])
     finally:
         # This process was launched by this inspector; existing sessions are untouched.
@@ -118,7 +133,7 @@ def main():
             result['cleanupPendingPid'] = process.pid
         result['processExited'] = process.poll() is not None
         result['executableUnchanged'] = hashlib.sha256(EXE.read_bytes()).hexdigest() == before
-        (folder/'result.json').write_text(json.dumps(result, indent=2)+'\n', encoding='utf-8')
+        (folder / 'result.json').write_text(json.dumps(result, indent=2) + '\n', encoding='utf-8')
         print('Installed5.4 actual window/menu observation:', folder)
         print('Visible dialogs:', result.get('dialogTitles', []))
         print('Menus:', result.get('menuCount', 0), 'Process exited:', result['processExited'])

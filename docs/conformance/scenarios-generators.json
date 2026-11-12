@@ -1,0 +1,1603 @@
+{
+  "schema_version": 1,
+  "scenarios": [
+    {
+      "id": "con-02-podium-sizing",
+      "requirement_id": "CON-02",
+      "option": "podium-sizing",
+      "title": "Podium rational sizing modes",
+      "domain_id": "generators",
+      "input": {
+        "description": "Rational 5/2 base, unequal rings",
+        "parameters": {
+          "base": [
+            "radius",
+            "edge"
+          ],
+          "elevation": [
+            "height",
+            "lateral-edge"
+          ]
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "CON-02",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "generators",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "history60",
+            "locator": "test_four_modes_actual_generate_save_and_reopen",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "installed54-report",
+            "locator": "test_four_modes_actual_generate_save_and_reopen",
+            "role": "historical-metadata"
+          }
+        ],
+        "checks": [
+          "Keep raw symbol/literal rings in all four sizing modes",
+          "Impossible sizes refuse atomically"
+        ],
+        "basis": "documented-or-local-contract"
+      },
+      "implementation": "supported",
+      "fixtures": [
+        {
+          "path": "tests/test_podia_workflow.py",
+          "selector": "test_four_modes_actual_generate_save_and_reopen",
+          "role": "direct",
+          "evidence": "existing-test-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "podia-settings",
+          "stephanoid-settings",
+          "torus-settings",
+          "waterman-settings"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R6-GENERATORS",
+        "priority": "P2",
+        "unverified": "6.0 precision constructors cannot be qualified by 5.4 dedicated-dialog metadata.",
+        "next_action": "Compare independently derived radii/heights for all sizing pairs; obtain versioned defaults rather than assume 5.4 parity."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3
+        ],
+        "supported_source_dimensions": [
+          3
+        ],
+        "support_note": "Supported only under referenced domain qualifications.",
+        "object_class": "Rational 5/2 base, unequal rings"
+      }
+    },
+    {
+      "id": "con-02-antipodium-sizing",
+      "requirement_id": "CON-02",
+      "option": "antipodium-sizing",
+      "title": "Antipodium rational sizing modes",
+      "domain_id": "generators",
+      "input": {
+        "description": "Rational 5/2 base, unequal rings",
+        "parameters": {
+          "base": [
+            "radius",
+            "edge"
+          ],
+          "elevation": [
+            "height",
+            "lateral-edge"
+          ]
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "CON-02",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "generators",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "history60",
+            "locator": "test_four_modes_actual_generate_save_and_reopen",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "installed54-report",
+            "locator": "test_four_modes_actual_generate_save_and_reopen",
+            "role": "historical-metadata"
+          }
+        ],
+        "checks": [
+          "Keep raw symbol/literal rings in all four sizing modes",
+          "Impossible sizes refuse atomically"
+        ],
+        "basis": "documented-or-local-contract"
+      },
+      "implementation": "supported",
+      "fixtures": [
+        {
+          "path": "tests/test_podia_workflow.py",
+          "selector": "test_four_modes_actual_generate_save_and_reopen",
+          "role": "direct",
+          "evidence": "existing-test-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "podia-settings",
+          "stephanoid-settings",
+          "torus-settings",
+          "waterman-settings"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R6-GENERATORS",
+        "priority": "P2",
+        "unverified": "6.0 precision constructors cannot be qualified by 5.4 dedicated-dialog metadata.",
+        "next_action": "Compare independently derived radii/heights for all sizing pairs; obtain versioned defaults rather than assume 5.4 parity."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3
+        ],
+        "supported_source_dimensions": [
+          3
+        ],
+        "support_note": "Supported only under referenced domain qualifications.",
+        "object_class": "Rational 5/2 base, unequal rings"
+      }
+    },
+    {
+      "id": "con-02-stephanoid",
+      "requirement_id": "CON-02",
+      "option": "stephanoid",
+      "title": "Stephanoid crown/torus conventions",
+      "domain_id": "generators",
+      "input": {
+        "description": "stephanoid-antiprism-reference.json and crown/torus variants",
+        "parameters": {
+          "parameters": [
+            "n",
+            "a",
+            "b",
+            "radius",
+            "height"
+          ]
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "CON-02",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "generators",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "history60",
+            "locator": "Stephanoid crown/torus conventions",
+            "role": "requirement-scope"
+          }
+        ],
+        "checks": [
+          "Report winding/topology without assuming noble classification",
+          "Refuse a=b, a+b>=n and invalid dimensions"
+        ],
+        "basis": "documented-or-local-contract"
+      },
+      "implementation": "supported",
+      "fixtures": [
+        {
+          "path": "tests/test_stephanoids.py",
+          "selector": null,
+          "role": "direct",
+          "evidence": "existing-suite-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "podia-settings",
+          "stephanoid-settings",
+          "torus-settings",
+          "waterman-settings"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R6-GENERATORS",
+        "priority": "P2",
+        "unverified": "Not every baseline sequence/parameter convention is reconciled.",
+        "next_action": "Crosswalk tests/fixtures/stephanoid-antiprism-reference.json to n/a/b and height; capture first/next/previous sequence."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3
+        ],
+        "supported_source_dimensions": [
+          3
+        ],
+        "support_note": "Supported only under referenced domain qualifications.",
+        "object_class": "stephanoid-antiprism-reference.json and crown/torus variants"
+      }
+    },
+    {
+      "id": "con-02-torus-twist",
+      "requirement_id": "CON-02",
+      "option": "torus-twist",
+      "title": "Ordinary and twisted torus",
+      "domain_id": "generators",
+      "input": {
+        "description": "Default torus and signed arm-step twist",
+        "parameters": {
+          "twist": [
+            0,
+            -1,
+            1
+          ],
+          "subdivision": [
+            "rings",
+            "arms"
+          ]
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "CON-02",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "generators",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "installed54-manual",
+            "locator": "#torus",
+            "role": "documented-options"
+          }
+        ],
+        "checks": [
+          "Retain closed genus-one incidence",
+          "Do not infer filled toroidal volume from formal caps"
+        ],
+        "basis": "documented-or-local-contract"
+      },
+      "implementation": "supported",
+      "fixtures": [
+        {
+          "path": "tests/test_torus_workflow.py",
+          "selector": "test_actual_default_generate_analyze_and_project_json_boundary",
+          "role": "direct",
+          "evidence": "existing-test-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "podia-settings",
+          "stephanoid-settings",
+          "torus-settings",
+          "waterman-settings"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R6-GENERATORS",
+        "priority": "P2",
+        "unverified": "Bounded native coverage exists; benchmark option behavior and shipped UI are unverified.",
+        "next_action": "Reconcile ring/arm indexing, radius ratio and twist sign; add independent default/twisted metric fixtures."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3
+        ],
+        "supported_source_dimensions": [
+          3
+        ],
+        "support_note": "Supported only under referenced domain qualifications.",
+        "object_class": "Default torus and signed arm-step twist"
+      }
+    },
+    {
+      "id": "con-02-waterman-sequence",
+      "requirement_id": "CON-02",
+      "option": "waterman-sequence",
+      "title": "Waterman lattice threshold and sequence",
+      "domain_id": "generators",
+      "input": {
+        "description": "SC/FCC/BCC selection with rational squared radius",
+        "parameters": {
+          "lattices": [
+            "SC",
+            "FCC",
+            "BCC"
+          ],
+          "threshold": "exact rational"
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "CON-02",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "generators",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "installed54-manual",
+            "locator": "#waterman",
+            "role": "documented-options"
+          },
+          {
+            "source_id": "independent-fixtures",
+            "locator": "test_exact_fraction_threshold_survives_real_json_dispatch_without_binary_rounding",
+            "role": "expectation-oracle"
+          }
+        ],
+        "checks": [
+          "Selected sites satisfy exact threshold including boundary",
+          "Separate squared-radius and centered-root conventions",
+          "Hull remains approximate"
+        ],
+        "basis": "independent-invariant"
+      },
+      "implementation": "supported",
+      "fixtures": [
+        {
+          "path": "tests/test_waterman_workflow.py",
+          "selector": "test_exact_fraction_threshold_survives_real_json_dispatch_without_binary_rounding",
+          "role": "direct",
+          "evidence": "existing-test-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "podia-settings",
+          "stephanoid-settings",
+          "torus-settings",
+          "waterman-settings"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R6-GENERATORS",
+        "priority": "P2",
+        "unverified": "Bounded native coverage exists; benchmark option behavior and shipped UI are unverified.",
+        "next_action": "Capture first/next/previous roots for one documented family; compare literal lattice-site sets and saved parameters."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3
+        ],
+        "supported_source_dimensions": [
+          3
+        ],
+        "support_note": "Supported only under referenced domain qualifications.",
+        "object_class": "SC/FCC/BCC selection with rational squared radius"
+      }
+    },
+    {
+      "id": "con-02-waterman-4d",
+      "requirement_id": "CON-02",
+      "option": "waterman-4d",
+      "title": "Documented 4D Waterman choice",
+      "domain_id": "generators",
+      "input": {
+        "description": "Installed 5.4 manual describes 4D Waterman",
+        "parameters": {
+          "dimension": 4
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "CON-02",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "generators",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "installed54-manual",
+            "locator": "#waterman",
+            "role": "documented-options"
+          }
+        ],
+        "checks": [
+          "3D lattice APIs do not establish 4D generator support"
+        ],
+        "basis": "documented-or-local-contract"
+      },
+      "implementation": "unverified",
+      "fixtures": [
+        {
+          "path": "tests/test_waterman_workflow.py",
+          "selector": null,
+          "role": "related-not-oracle",
+          "evidence": "existing-suite-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "podia-settings",
+          "stephanoid-settings",
+          "torus-settings",
+          "waterman-settings"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R6-GENERATORS",
+        "priority": "P1",
+        "unverified": "4D radius/origin/lattice options and dispatch are unreconciled.",
+        "next_action": "Inspect dimension dispatch and authorized option labels; choose one literal 4D lattice oracle before requesting algorithm work."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          4
+        ],
+        "supported_source_dimensions": [],
+        "support_note": "No supported-domain claim for this requested case; see implementation status and follow-up.",
+        "object_class": "Installed 5.4 manual describes 4D Waterman"
+      }
+    },
+    {
+      "id": "con-11-shell-prism",
+      "requirement_id": "CON-11",
+      "option": "shell-prism",
+      "title": "4D prism on literal 3D shell",
+      "domain_id": "step-products",
+      "input": {
+        "description": "Cube then qualified generalized star shell",
+        "parameters": {
+          "height": "positive interval"
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "CON-11",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "step-products",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "installed54-manual",
+            "locator": "#menu4D",
+            "role": "documented-options"
+          }
+        ],
+        "checks": [
+          "Keep base/top cycles and side cells",
+          "Keep generalized interpretation for formal caps"
+        ],
+        "basis": "documented-or-local-contract"
+      },
+      "implementation": "supported",
+      "fixtures": [
+        {
+          "path": "tests/test_prisms.py",
+          "selector": null,
+          "role": "direct",
+          "evidence": "existing-suite-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "product-settings",
+          "antiprism-settings",
+          "step-prism-settings"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R6-GENERATORS",
+        "priority": "P2",
+        "unverified": "Bounded native coverage exists; benchmark option behavior and shipped UI are unverified.",
+        "next_action": "Run the named fixture, then reproduce 4d prism on literal 3d shell through the listed UI; retain source, parameters, residuals, incidence and versioned comparison evidence."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          4
+        ],
+        "supported_source_dimensions": [
+          4
+        ],
+        "support_note": "Supported only under referenced domain qualifications.",
+        "object_class": "Cube then qualified generalized star shell"
+      }
+    },
+    {
+      "id": "con-11-rational-products",
+      "requirement_id": "CON-11",
+      "option": "rational-products",
+      "title": "Rational duoprism and antiduoprism",
+      "domain_id": "step-products",
+      "input": {
+        "description": "5/2, 6/2 factors and retrograde 5/3 antiprism",
+        "parameters": {
+          "symbols": [
+            "5/2",
+            "6/2",
+            "5/3"
+          ],
+          "products": [
+            "duoprism",
+            "antiduoprism"
+          ]
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "CON-11",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "step-products",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "installed54-manual",
+            "locator": "#menu4D",
+            "role": "documented-options"
+          },
+          {
+            "source_id": "installed54-report",
+            "locator": "Rational duoprism and antiduoprism",
+            "role": "historical-metadata"
+          }
+        ],
+        "checks": [
+          "Retain unreduced components/retrograde winding",
+          "Unsupported dimensions refuse without factor hull replacement"
+        ],
+        "basis": "documented-or-local-contract"
+      },
+      "implementation": "restricted",
+      "fixtures": [
+        {
+          "path": "tests/test_antiprisms.py",
+          "selector": null,
+          "role": "direct",
+          "evidence": "existing-suite-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "product-settings",
+          "antiprism-settings",
+          "step-prism-settings"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R6-GENERATORS",
+        "priority": "P2",
+        "unverified": "Bounded native coverage exists; benchmark option behavior and shipped UI are unverified.",
+        "next_action": "Run four antiprism sizing pairs and independent product fixtures; compare 5.4 symbol conventions without claiming coordinate parity."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          4
+        ],
+        "supported_source_dimensions": [
+          4
+        ],
+        "support_note": "Supported only under referenced domain qualifications.",
+        "object_class": "5/2, 6/2 factors and retrograde 5/3 antiprism"
+      }
+    },
+    {
+      "id": "con-11-step-prism",
+      "requirement_id": "CON-11",
+      "option": "step-prism",
+      "title": "Correlated step-prism identities",
+      "domain_id": "step-products",
+      "input": {
+        "description": "Orders/steps 5/2, 8/3 and inverse 13/2 versus 13/6",
+        "parameters": {
+          "order_step": [
+            [
+              5,
+              2
+            ],
+            [
+              8,
+              3
+            ],
+            [
+              13,
+              2
+            ],
+            [
+              13,
+              6
+            ]
+          ]
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "CON-11",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "step-products",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "installed54-manual",
+            "locator": "#menu4D",
+            "role": "documented-options"
+          },
+          {
+            "source_id": "independent-fixtures",
+            "locator": "test_five_two_is_complete_regular_simplex_with_independent_gram_and_incidence",
+            "role": "expectation-oracle"
+          }
+        ],
+        "checks": [
+          "5/2 simplex V/E/F/C=5/10/10/5 and independent Gram",
+          "8/3 cross-polytope 8/24/32/16 with four antipodal pairs",
+          "Retain signed step"
+        ],
+        "basis": "independent-invariant"
+      },
+      "implementation": "restricted",
+      "fixtures": [
+        {
+          "path": "tests/test_step_prisms.py",
+          "selector": "test_five_two_is_complete_regular_simplex_with_independent_gram_and_incidence",
+          "role": "direct",
+          "evidence": "existing-test-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "product-settings",
+          "antiprism-settings",
+          "step-prism-settings"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R6-GENERATORS",
+        "priority": "P2",
+        "unverified": "Bounded native coverage exists; benchmark option behavior and shipped UI are unverified.",
+        "next_action": "Run all step identities; derive origin-polar gyrochoron oracle and reconcile ordinary polygon step prompt."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          4
+        ],
+        "supported_source_dimensions": [
+          4
+        ],
+        "support_note": "Supported only under referenced domain qualifications.",
+        "object_class": "Orders/steps 5/2, 8/3 and inverse 13/2 versus 13/6"
+      }
+    },
+    {
+      "id": "con-11-rational-step-multiprism",
+      "requirement_id": "CON-11",
+      "option": "rational-step-multiprism",
+      "title": "Rational step factors and multiprisms",
+      "domain_id": "step-products",
+      "input": {
+        "description": "Nonordinary n/d factor and more than two factors",
+        "parameters": {
+          "factor_symbol": "n/d",
+          "factor_count": 3
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "CON-11",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "step-products",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "installed54-report",
+            "locator": "test_unsupported_domain_is_diagnosed_before_a_result_escapes",
+            "role": "historical-metadata"
+          }
+        ],
+        "checks": [
+          "Do not claim current integer-order step prism supports arbitrary factors"
+        ],
+        "basis": "documented-or-local-contract"
+      },
+      "implementation": "unsupported",
+      "fixtures": [
+        {
+          "path": "tests/test_step_prisms.py",
+          "selector": "test_unsupported_domain_is_diagnosed_before_a_result_escapes",
+          "role": "related-not-oracle",
+          "evidence": "existing-test-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "product-settings",
+          "antiprism-settings",
+          "step-prism-settings"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R6-GENERATORS",
+        "priority": "P1",
+        "unverified": "Rational-factor/multiprism breadth is absent; requirement semantics still need specification.",
+        "next_action": "Obtain versioned input definition and independent full-incidence fixture before selecting an extension."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          4
+        ],
+        "supported_source_dimensions": [],
+        "support_note": "No supported-domain claim for this requested case; see implementation status and follow-up.",
+        "object_class": "Nonordinary n/d factor and more than two factors"
+      }
+    },
+    {
+      "id": "con-12-convex-layer-join",
+      "requirement_id": "CON-12",
+      "option": "convex-layer-join",
+      "title": "Convex join versus strict segmentotope",
+      "domain_id": "segmentotope",
+      "input": {
+        "description": "Aligned cubes, tetrahedron+point, unequal-sized layers",
+        "parameters": {
+          "layer_axis": "W",
+          "height": "signed nonzero"
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "CON-12",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "segmentotope",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "history60",
+            "locator": "test_aligned_cubes_are_full_tesseract_literal_boundary_not_counts_only",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "independent-fixtures",
+            "locator": "test_aligned_cubes_are_full_tesseract_literal_boundary_not_counts_only",
+            "role": "expectation-oracle"
+          }
+        ],
+        "checks": [
+          "Aligned cubes give full tesseract",
+          "Strict regular-face/edge/sphere checks stay separate from successful join"
+        ],
+        "basis": "independent-invariant"
+      },
+      "implementation": "supported",
+      "fixtures": [
+        {
+          "path": "tests/test_segmentotopes.py",
+          "selector": "test_aligned_cubes_are_full_tesseract_literal_boundary_not_counts_only",
+          "role": "direct",
+          "evidence": "existing-test-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "layer-join-settings",
+          "crossed-segmentotope-settings"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R6-GENERATORS",
+        "priority": "P2",
+        "unverified": "Bounded native coverage exists; benchmark option behavior and shipped UI are unverified.",
+        "next_action": "Run the named fixture, then reproduce convex join versus strict segmentotope through the listed UI; retain source, parameters, residuals, incidence and versioned comparison evidence."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          4
+        ],
+        "supported_source_dimensions": [
+          4
+        ],
+        "support_note": "Supported only under referenced domain qualifications.",
+        "object_class": "Aligned cubes, tetrahedron+point, unequal-sized layers"
+      }
+    },
+    {
+      "id": "con-12-crossed-definition",
+      "requirement_id": "CON-12",
+      "option": "crossed-definition",
+      "title": "Declared crossed segmentotope sizing",
+      "domain_id": "segmentotope",
+      "input": {
+        "description": "Crossed antiprism times interval, signed/unreduced symbols",
+        "parameters": {
+          "sizing_pairs": 4,
+          "reflection": "common XYZ"
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "CON-12",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "segmentotope",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "history60",
+            "locator": "test_all_four_sizing_modes_have_independent_literal_dimensions",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "independent-fixtures",
+            "locator": "test_all_four_sizing_modes_have_independent_literal_dimensions",
+            "role": "expectation-oracle"
+          }
+        ],
+        "checks": [
+          "Retain literal crossed cycles/raw symbols",
+          "Derived definition is not proved baseline checkbox equivalence"
+        ],
+        "basis": "independent-invariant"
+      },
+      "implementation": "restricted",
+      "fixtures": [
+        {
+          "path": "tests/test_crossed_segmentotope_workflow.py",
+          "selector": "test_all_four_sizing_modes_have_independent_literal_dimensions",
+          "role": "direct",
+          "evidence": "existing-test-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "layer-join-settings",
+          "crossed-segmentotope-settings"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R6-GENERATORS",
+        "priority": "P2",
+        "unverified": "Benchmark crossed checkbox may define a broader/different layer construction.",
+        "next_action": "Reconcile one documented crossed example against literal incidence before extending/replacing current construction."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          4
+        ],
+        "supported_source_dimensions": [
+          4
+        ],
+        "support_note": "Supported only under referenced domain qualifications.",
+        "object_class": "Crossed antiprism times interval, signed/unreduced symbols"
+      }
+    },
+    {
+      "id": "con-12-crossed-layers",
+      "requirement_id": "CON-12",
+      "option": "crossed-layers",
+      "title": "Arbitrary crossed layer orientations",
+      "domain_id": "segmentotope",
+      "input": {
+        "description": "Nonidentical crossed layers",
+        "parameters": {
+          "layers": "independently crossed/oriented"
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "CON-12",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "segmentotope",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "spec",
+            "locator": "test_nonconvex_star_and_bowtie_ordered_polygon_reject_without_point_set_hull_repair",
+            "role": "requirement-scope"
+          }
+        ],
+        "checks": [
+          "Refuse unsupported pair without convex-hull repair"
+        ],
+        "basis": "documented-or-local-contract"
+      },
+      "implementation": "unsupported",
+      "fixtures": [
+        {
+          "path": "tests/test_segmentotopes.py",
+          "selector": "test_nonconvex_star_and_bowtie_ordered_polygon_reject_without_point_set_hull_repair",
+          "role": "direct",
+          "evidence": "existing-test-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "layer-join-settings",
+          "crossed-segmentotope-settings"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R6-GENERATORS",
+        "priority": "P1",
+        "unverified": "Bounded native coverage exists; benchmark option behavior and shipped UI are unverified.",
+        "next_action": "Choose one required crossed-layer pair and independent orientable cell oracle for R6-GENERATORS."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          4
+        ],
+        "supported_source_dimensions": [],
+        "support_note": "No supported-domain claim for this requested case; see implementation status and follow-up.",
+        "object_class": "Nonidentical crossed layers"
+      }
+    },
+    {
+      "id": "con-13-finite-completion",
+      "requirement_id": "CON-13",
+      "option": "finite-completion",
+      "title": "Vertex-figure finite search and ambiguity",
+      "domain_id": "vertex-figure",
+      "input": {
+        "description": "Convex tetrahedral/octahedral figure",
+        "parameters": {
+          "domains": [
+            "regular-convex",
+            "regular-and-wythoff"
+          ]
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "CON-13",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "vertex-figure",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "installed54-manual",
+            "locator": "#menu4D",
+            "role": "documented-options"
+          },
+          {
+            "source_id": "history60",
+            "locator": "Vertex-figure finite search and ambiguity",
+            "role": "requirement-scope"
+          }
+        ],
+        "checks": [
+          "Compare normalized full metric/cyclic incidence",
+          "Present all matching completions with explicit selection"
+        ],
+        "basis": "documented-or-local-contract"
+      },
+      "implementation": "restricted",
+      "fixtures": [
+        {
+          "path": "tests/test_vertex_figure_construction.py",
+          "selector": null,
+          "role": "direct",
+          "evidence": "existing-suite-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "vertex-figure-search"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R7-VF",
+        "priority": "P2",
+        "unverified": "Bounded native coverage exists; benchmark option behavior and shipped UI are unverified.",
+        "next_action": "Run the named fixture, then reproduce vertex-figure finite search and ambiguity through the listed UI; retain source, parameters, residuals, incidence and versioned comparison evidence."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3
+        ],
+        "supported_source_dimensions": [
+          3
+        ],
+        "support_note": "Supported only under referenced domain qualifications.",
+        "object_class": "Convex tetrahedral/octahedral figure"
+      }
+    },
+    {
+      "id": "con-13-scaliform-completion",
+      "requirement_id": "CON-13",
+      "option": "scaliform-completion",
+      "title": "Scaliform vertex-figure completion",
+      "domain_id": "vertex-figure",
+      "input": {
+        "description": "Named figure outside finite candidate table",
+        "parameters": {
+          "completion": "scaliform"
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "CON-13",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "vertex-figure",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "spec",
+            "locator": "Scaliform vertex-figure completion",
+            "role": "requirement-scope"
+          }
+        ],
+        "checks": [
+          "Finite candidate exhaustion is not a universal no-solution proof"
+        ],
+        "basis": "documented-or-local-contract"
+      },
+      "implementation": "unsupported",
+      "fixtures": [
+        {
+          "path": "tests/test_vertex_figure_construction.py",
+          "selector": null,
+          "role": "related-not-oracle",
+          "evidence": "existing-suite-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "vertex-figure-search"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R7-VF",
+        "priority": "P1",
+        "unverified": "General eligible scaliform reconstruction search is absent.",
+        "next_action": "Coordinate with R5-CORPUS/R7-VF on one licensed full boundary/figure and independent admissibility/ambiguity checks."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3
+        ],
+        "supported_source_dimensions": [],
+        "support_note": "No supported-domain claim for this requested case; see implementation status and follow-up.",
+        "object_class": "Named figure outside finite candidate table"
+      }
+    },
+    {
+      "id": "con-14-initialization",
+      "requirement_id": "CON-14",
+      "option": "initialization",
+      "title": "Spring source/seeded initialization",
+      "domain_id": "spring",
+      "input": {
+        "description": "Literal tetrahedron network",
+        "parameters": {
+          "initialization": [
+            "source",
+            "random"
+          ],
+          "seeds": [
+            0,
+            19,
+            4294967295
+          ]
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "CON-14",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "spring",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "installed54-report",
+            "locator": "test_seeded_random_starts_are_repeatable_with_reported_pcg64_seed",
+            "role": "historical-metadata"
+          },
+          {
+            "source_id": "independent-fixtures",
+            "locator": "test_seeded_random_starts_are_repeatable_with_reported_pcg64_seed",
+            "role": "expectation-oracle"
+          }
+        ],
+        "checks": [
+          "Repeated seed gives identical initial/result coordinates",
+          "No isomer/uniformity certificate"
+        ],
+        "basis": "independent-invariant"
+      },
+      "implementation": "supported",
+      "fixtures": [
+        {
+          "path": "tests/test_spring_relaxation.py",
+          "selector": "test_seeded_random_starts_are_repeatable_with_reported_pcg64_seed",
+          "role": "direct",
+          "evidence": "existing-test-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "preview-spring"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R6-FITTING",
+        "priority": "P2",
+        "unverified": "Bounded native coverage exists; benchmark option behavior and shipped UI are unverified.",
+        "next_action": "Crosswalk static spring initialization fields to current PCG64 contract; competitor random-stream equality requires separate evidence."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3
+        ],
+        "supported_source_dimensions": [
+          3
+        ],
+        "support_note": "Supported only under referenced domain qualifications.",
+        "object_class": "Literal tetrahedron network"
+      }
+    },
+    {
+      "id": "con-14-constraints",
+      "requirement_id": "CON-14",
+      "option": "constraints",
+      "title": "Spring diagonal/regular-face/extra/pin constraints",
+      "domain_id": "spring",
+      "input": {
+        "description": "Literal tetrahedron/cube and inconsistent all-pinned case",
+        "parameters": {
+          "constraints": [
+            "edge",
+            "face-diagonal",
+            "regular-face",
+            "extra-spring",
+            "pin"
+          ]
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "CON-14",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "spring",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "independent-fixtures",
+            "locator": "test_conflicting_duplicate_springs_report_independent_weighted_compromise",
+            "role": "expectation-oracle"
+          }
+        ],
+        "checks": [
+          "Check independent weighted compromise for conflicting springs",
+          "Pins are exact",
+          "Residual satisfaction differs from valid adoption"
+        ],
+        "basis": "independent-invariant"
+      },
+      "implementation": "restricted",
+      "fixtures": [
+        {
+          "path": "tests/test_spring_relaxation.py",
+          "selector": "test_conflicting_duplicate_springs_report_independent_weighted_compromise",
+          "role": "direct",
+          "evidence": "existing-test-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "preview-spring"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R6-FITTING",
+        "priority": "P2",
+        "unverified": "Bounded native coverage exists; benchmark option behavior and shipped UI are unverified.",
+        "next_action": "Map one baseline constraint setup to lengths/weights; run pinned failure and rejected collapse through preview/adopt/replay."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3
+        ],
+        "supported_source_dimensions": [
+          3
+        ],
+        "support_note": "Supported only under referenced domain qualifications.",
+        "object_class": "Literal tetrahedron/cube and inconsistent all-pinned case"
+      }
+    },
+    {
+      "id": "con-14-grammar",
+      "requirement_id": "CON-14",
+      "option": "grammar",
+      "title": "Spring-description schema compatibility",
+      "domain_id": "spring",
+      "input": {
+        "description": "Static Create Spring Model metadata and current native schema",
+        "parameters": {
+          "grammar": "unqualified"
+        },
+        "executable": false
+      },
+      "expected": {
+        "source_refs": [
+          {
+            "source_id": "spec",
+            "locator": "CON-14",
+            "role": "requirement-scope"
+          },
+          {
+            "source_id": "native-contracts",
+            "locator": "spring",
+            "role": "implementation-contract"
+          },
+          {
+            "source_id": "installed54-report",
+            "locator": "Spring-description schema compatibility",
+            "role": "historical-metadata"
+          }
+        ],
+        "checks": [
+          "Do not claim JSON schema compatibility with undocumented competitor grammar"
+        ],
+        "basis": "documented-or-local-contract"
+      },
+      "implementation": "unverified",
+      "fixtures": [
+        {
+          "path": "tests/test_spring_workflow.py",
+          "selector": null,
+          "role": "related-not-oracle",
+          "evidence": "existing-suite-inspected"
+        }
+      ],
+      "ui": {
+        "element_ids": [
+          "preview-spring"
+        ],
+        "route": "Requirement entry points; see INDEX.md for tabs/access caveats."
+      },
+      "benchmark": {
+        "target_version": "6.0",
+        "status": "unverified",
+        "installed_version": "5.4",
+        "reason": "No operation comparison executed here; 5.4 and live manuals cannot certify 6.0 output."
+      },
+      "follow_up": {
+        "kind": "baseline-semantics",
+        "owner": "R6-FITTING",
+        "priority": "P1",
+        "unverified": "Detailed installed constraint grammar/defaults have no recovered execution oracle.",
+        "next_action": "Read authorized dialog/manual evidence; record fields/defaults and select analytic constraint case without inventing parser behavior."
+      },
+      "qualification": {
+        "native_fixture_run": "not-recorded-per-case",
+        "desktop_run": "not-run",
+        "competitor_run": "not-run"
+      },
+      "case_domain": {
+        "source_dimensions": [
+          3
+        ],
+        "supported_source_dimensions": [],
+        "support_note": "No supported-domain claim for this requested case; see implementation status and follow-up.",
+        "object_class": "Static Create Spring Model metadata and current native schema"
+      }
+    }
+  ]
+}

@@ -4,6 +4,7 @@ Verified convex 3D source boundaries are joined across one congruent facet.
 The hull is only an independent source verifier, never replacement geometry.
 Stella's full augmentation/excavation/drilling baseline remains unqualified.
 """
+
 from collections import Counter, defaultdict
 from copy import deepcopy
 import hashlib
@@ -37,17 +38,24 @@ def _bytes(value, limit):
 
 
 def _number(value, label, *, minimum, maximum, inclusive=True):
-    if (type(value) not in (int, float) or abs(value) > maximum
-            or not math.isfinite(value) or value < minimum
-            or (not inclusive and value == minimum)):
+    if (
+        type(value) not in (int, float)
+        or abs(value) > maximum
+        or not math.isfinite(value)
+        or value < minimum
+        or (not inclusive and value == minimum)
+    ):
         raise GeometryError(f'Attachment {label} is outside its finite bounded numeric domain.')
     return float(value)
 
 
 def _closed_boundary(model):
     """Closed connected genus-zero surface, including a single cyclic vertex link."""
-    faces = model['faces']; edges = model['edges']; vertices = model['vertices']
-    counts = Counter(); links = defaultdict(list)
+    faces = model['faces']
+    edges = model['edges']
+    vertices = model['vertices']
+    counts = Counter()
+    links = defaultdict(list)
     for face in faces:
         for j, v in enumerate(face):
             counts[tuple(sorted((v, face[(j + 1) % len(face)])))] += 1
@@ -57,33 +65,46 @@ def _closed_boundary(model):
         raise GeometryError('Attachment boundary must have exactly two faces on every edge and no leftover strata.')
     adjacency = defaultdict(set)
     for a, b in edges:
-        adjacency[a].add(b); adjacency[b].add(a)
+        adjacency[a].add(b)
+        adjacency[b].add(a)
     if set(adjacency) != set(range(len(vertices))):
         raise GeometryError('Attachment boundary contains an unowned or isolated vertex.')
-    seen = {0}; stack = [0]
+    seen = {0}
+    stack = [0]
     while stack:
         for other in adjacency[stack.pop()] - seen:
-            seen.add(other); stack.append(other)
+            seen.add(other)
+            stack.append(other)
     if len(seen) != len(vertices):
         raise GeometryError('Attachment boundary must be connected.')
     for v in range(len(vertices)):
-        link = links[v]; graph = defaultdict(set)
+        link = links[v]
+        graph = defaultdict(set)
         if len(set(link)) != len(link):
             raise GeometryError('Attachment vertex link contains duplicate edges.')
         for a, b in link:
-            graph[a].add(b); graph[b].add(a)
+            graph[a].add(b)
+            graph[b].add(a)
         if set(graph) != adjacency[v] or any(len(row) != 2 for row in graph.values()):
             raise GeometryError('Attachment vertex link must be a cycle.')
-        first = next(iter(graph)); reached = {first}; pending = [first]
+        first = next(iter(graph))
+        reached = {first}
+        pending = [first]
         while pending:
             for other in graph[pending.pop()] - reached:
-                reached.add(other); pending.append(other)
+                reached.add(other)
+                pending.append(other)
         if reached != set(graph):
             raise GeometryError('Attachment has a disconnected vertex link.')
     if len(vertices) - len(edges) + len(faces) != 2:
         raise GeometryError('Attachment boundary must have Euler characteristic 2 in this initial domain.')
-    return {'closed': True, 'connected': True, 'vertexLinks': 'single cycles',
-            'facesPerEdge': 2, 'eulerCharacteristic': 2}
+    return {
+        'closed': True,
+        'connected': True,
+        'vertexLinks': 'single cycles',
+        'facesPerEdge': 2,
+        'eulerCharacteristic': 2,
+    }
 
 
 def _source(model):
@@ -136,33 +157,55 @@ def _measures(model, signs):
     points = np.asarray(model['vertices'], dtype=float)
     scale = float(np.max(np.ptp(points, axis=0)))
     p = (points - points[0]) / scale
-    center = p.mean(axis=0); area = 0.; volume = 0.
+    center = p.mean(axis=0)
+    area = 0.0
+    volume = 0.0
     for face, sign in zip(model['faces'], signs):
-        polygon = p[face]; anchor = polygon[0] - center
+        polygon = p[face]
+        anchor = polygon[0] - center
         vector = np.zeros(3)
         for j in range(1, len(face) - 1):
             vector += np.cross(polygon[j] - polygon[0], polygon[j + 1] - polygon[0])
-            volume += sign * float(np.dot(anchor, np.cross(polygon[j] - center,
-                                                          polygon[j + 1] - center))) / 6
+            volume += sign * float(np.dot(anchor, np.cross(polygon[j] - center, polygon[j + 1] - center))) / 6
         area += float(np.linalg.norm(vector)) / 2
-    evidence = {'status': 'unsupported', 'numeric': {'certified': False, 'mode': 'float64-approximate'},
-                'definition': 'oriented closed-boundary integration; convex interiors separated by the matched facet',
-                'units': model.get('metadata', {}).get('coordinateUnits', 'model'),
-                'nativeMeasurePublished': False}
+    evidence = {
+        'status': 'unsupported',
+        'numeric': {'certified': False, 'mode': 'float64-approximate'},
+        'definition': 'oriented closed-boundary integration; convex interiors separated by the matched facet',
+        'units': model.get('metadata', {}).get('coordinateUnits', 'model'),
+        'nativeMeasurePublished': False,
+    }
     try:
-        content = volume * scale ** 3; surface = area * scale ** 2
-        if (math.isfinite(content) and math.isfinite(surface)
-                and content >= np.finfo(float).tiny and surface >= np.finfo(float).tiny):
+        content = volume * scale**3
+        surface = area * scale**2
+        if (
+            math.isfinite(content)
+            and math.isfinite(surface)
+            and content >= np.finfo(float).tiny
+            and surface >= np.finfo(float).tiny
+        ):
             evidence.update(status='passed', disjointInteriorContent=content, surfaceArea=surface)
         else:
-            evidence['diagnostic'] = 'Boundary measures overflowed, underflowed, or were unresolved; no values published.'
+            evidence['diagnostic'] = (
+                'Boundary measures overflowed, underflowed, or were unresolved; no values published.'
+            )
     except OverflowError:
         evidence['diagnostic'] = 'Boundary measure scale is unsupported; no values published.'
     return evidence
 
 
-def attach_at_faces(base, addition, base_face_id, addition_face_id, *, cycle_offset=0,
-                    scale=1.0, tolerance=TOLERANCE, color_policy='preserve', **unsupported):
+def attach_at_faces(
+    base,
+    addition,
+    base_face_id,
+    addition_face_id,
+    *,
+    cycle_offset=0,
+    scale=1.0,
+    tolerance=TOLERANCE,
+    color_policy='preserve',
+    **unsupported,
+):
     """Return a new generalized boundary; never mutate, hull, or silently blend sources.
 
     Tolerance is relative to the selected face spans, bounded by 1e-6. Only
@@ -170,18 +213,35 @@ def attach_at_faces(base, addition, base_face_id, addition_face_id, *, cycle_off
     coordinates; transformed addition IDs map explicitly into the new boundary.
     """
     try:
-        return _attach(base, addition, base_face_id, addition_face_id, cycle_offset=cycle_offset,
-                       scale=scale, tolerance=tolerance, color_policy=color_policy,
-                       unsupported=unsupported)
+        return _attach(
+            base,
+            addition,
+            base_face_id,
+            addition_face_id,
+            cycle_offset=cycle_offset,
+            scale=scale,
+            tolerance=tolerance,
+            color_policy=color_policy,
+            unsupported=unsupported,
+        )
     except GeometryError:
         raise
-    except (ArithmeticError, AttributeError, KeyError, TypeError, ValueError,
-            RecursionError, UnicodeError, np.linalg.LinAlgError) as exc:
+    except (
+        ArithmeticError,
+        AttributeError,
+        KeyError,
+        TypeError,
+        ValueError,
+        RecursionError,
+        UnicodeError,
+        np.linalg.LinAlgError,
+    ) as exc:
         raise GeometryError('Attachment could not resolve malformed data or numerical geometry: ' + str(exc)) from exc
 
 
-def _attach(base, addition, base_face_id, addition_face_id, *, cycle_offset, scale,
-            tolerance, color_policy, unsupported):
+def _attach(
+    base, addition, base_face_id, addition_face_id, *, cycle_offset, scale, tolerance, color_policy, unsupported
+):
     if unsupported:
         raise GeometryError('Unknown attachment parameters: ' + ', '.join(sorted(unsupported)))
     if color_policy != 'preserve':
@@ -195,31 +255,38 @@ def _attach(base, addition, base_face_id, addition_face_id, *, cycle_offset, sca
     for source, face_id in ((base, base_face_id), (addition, addition_face_id)):
         if type(face_id) is not int or not 0 <= face_id < len(source['faces']):
             raise GeometryError('Attachment face IDs must be bounded integer source IDs.')
-    bf = base['faces'][base_face_id]; af = addition['faces'][addition_face_id]
+    bf = base['faces'][base_face_id]
+    af = addition['faces'][addition_face_id]
     if not 3 <= len(bf) == len(af) <= MAX_FACE_VERTICES:
         raise GeometryError('Attachment faces need matching arity within the face resource limit.')
     if type(cycle_offset) is not int or not 0 <= cycle_offset < len(bf):
         raise GeometryError('Attachment cycle offset must be an integer in the selected face cycle.')
     units = [source.get('metadata', {}).get('coordinateUnits') for source in (base, addition)]
-    if any(unit is not None and (type(unit) is not str or unit not in ('model', 'mm', 'cm', 'm', 'in', 'ft'))
-           for unit in units):
+    if any(
+        unit is not None and (type(unit) is not str or unit not in ('model', 'mm', 'cm', 'm', 'in', 'ft'))
+        for unit in units
+    ):
         raise GeometryError('Attachment coordinate unit labels are unsupported or malformed.')
     if units[0] != units[1]:
         raise GeometryError('Attachment source coordinate units differ; no automatic conversion is performed.')
-    p = np.asarray(base['vertices'], dtype=float); q = np.asarray(addition['vertices'], dtype=float)
-    bn = _normal(checked[0][0], base_face_id); an = _normal(checked[1][0], addition_face_id)
+    p = np.asarray(base['vertices'], dtype=float)
+    q = np.asarray(addition['vertices'], dtype=float)
+    bn = _normal(checked[0][0], base_face_id)
+    an = _normal(checked[1][0], addition_face_id)
     direction = -_orientation(p, bf, bn) * _orientation(q, af, an)
     targets = [bf[(cycle_offset + direction * j) % len(bf)] for j in range(len(bf))]
     rotation = _frame(p, targets, -bn) @ _frame(q, af, an).T
     determinant = float(np.linalg.det(rotation))
-    if (not np.isfinite(rotation).all() or abs(determinant - 1) > 1e-12
-            or not np.allclose(rotation.T @ rotation, np.eye(3), atol=1e-12, rtol=0)):
+    if (
+        not np.isfinite(rotation).all()
+        or abs(determinant - 1) > 1e-12
+        or not np.allclose(rotation.T @ rotation, np.eye(3), atol=1e-12, rtol=0)
+    ):
         raise GeometryError('Attachment requires a resolved proper rigid rotation with determinant +1.')
     transformed = ((q - q[af[0]]) * scale) @ rotation.T + p[targets[0]]
     if not np.isfinite(transformed).all() or np.max(np.abs(transformed)) > MAX_COORDINATE:
         raise GeometryError('Attachment transformed coordinates exceed finite resource bounds.')
-    face_span = max(float(np.max(np.ptp(p[bf], axis=0))),
-                    float(np.max(np.ptp(transformed[af], axis=0))))
+    face_span = max(float(np.max(np.ptp(p[bf], axis=0))), float(np.max(np.ptp(transformed[af], axis=0))))
     absolute_tolerance = tolerance * face_span
     residuals = [float(np.linalg.norm(transformed[a] - p[b])) for a, b in zip(af, targets)]
     if any(not math.isfinite(r) or r > absolute_tolerance for r in residuals):
@@ -229,17 +296,29 @@ def _attach(base, addition, base_face_id, addition_face_id, *, cycle_offset, sca
     signed_addition = (transformed - p[targets[0]]) @ bn
     outside_base = [i for i in range(len(p)) if i not in bf]
     outside_addition = [i for i in range(len(q)) if i not in af]
-    if (float(np.max(signed_base)) > absolute_tolerance
-            or float(np.min(signed_addition)) < -absolute_tolerance
-            or any(signed_base[i] >= -absolute_tolerance for i in outside_base)
-            or any(signed_addition[i] <= absolute_tolerance for i in outside_addition)):
+    if (
+        float(np.max(signed_base)) > absolute_tolerance
+        or float(np.min(signed_addition)) < -absolute_tolerance
+        or any(signed_base[i] >= -absolute_tolerance for i in outside_base)
+        or any(signed_addition[i] <= absolute_tolerance for i in outside_addition)
+    ):
         raise GeometryError('Attachment opposite-halfspace separation is unresolved or overlapping.')
     snapped = transformed.copy()
-    for a, b in zip(af, targets): snapped[a] = p[b]
-    verification = {'id': 'aligned-addition-verification', 'name': 'Aligned addition',
-                    'dimension': 3, 'embeddingDimension': 3, 'interpretation': 'generalized-complex',
-                    'vertices': snapped.tolist(), 'edges': addition['edges'], 'faces': addition['faces'],
-                    'cells': [], 'metadata': {}, 'numeric': {'certified': False}}
+    for a, b in zip(af, targets):
+        snapped[a] = p[b]
+    verification = {
+        'id': 'aligned-addition-verification',
+        'name': 'Aligned addition',
+        'dimension': 3,
+        'embeddingDimension': 3,
+        'interpretation': 'generalized-complex',
+        'vertices': snapped.tolist(),
+        'edges': addition['edges'],
+        'faces': addition['faces'],
+        'cells': [],
+        'metadata': {},
+        'numeric': {'certified': False},
+    }
     snap_proof = analyze_convex_boundary(verification)
     if snap_proof['status'] != 'passed':
         raise GeometryError('Attachment seam welding invalidates the independently verified addition boundary.')
@@ -248,74 +327,138 @@ def _attach(base, addition, base_face_id, addition_face_id, *, cycle_offset, sca
     seam_pairs = []
     for a, b in zip(af, targets):
         vertex_maps[1][a] = b
-        seam_pairs.append({'baseVertexId': b, 'additionVertexId': a,
-                           'resultVertexId': b, 'snapResidual': residuals[af.index(a)]})
+        seam_pairs.append(
+            {'baseVertexId': b, 'additionVertexId': a, 'resultVertexId': b, 'snapResidual': residuals[af.index(a)]}
+        )
     for i, point in enumerate(snapped):
         if vertex_maps[1][i] is None:
-            vertex_maps[1][i] = len(vertices); vertices.append(point.tolist())
-    edges = []; edge_lookup = {}; edge_maps = [[], []]
+            vertex_maps[1][i] = len(vertices)
+            vertices.append(point.tolist())
+    edges = []
+    edge_lookup = {}
+    edge_maps = [[], []]
     for si, source in enumerate((base, addition)):
         for edge in source['edges']:
-            mapped = [vertex_maps[si][v] for v in edge]; key = tuple(sorted(mapped))
+            mapped = [vertex_maps[si][v] for v in edge]
+            key = tuple(sorted(mapped))
             if key not in edge_lookup:
-                edge_lookup[key] = len(edges); edges.append(mapped)
+                edge_lookup[key] = len(edges)
+                edges.append(mapped)
             edge_maps[si].append(edge_lookup[key])
-    faces = []; face_maps = [[], []]; colors = []; owners = []; signs = []
-    for si, (source, removed, points, proof) in enumerate(((base, base_face_id, p, checked[0][0]),
-                                                        (addition, addition_face_id, q, checked[1][0]))):
+    faces = []
+    face_maps = [[], []]
+    colors = []
+    owners = []
+    signs = []
+    for si, (source, removed, points, proof) in enumerate(
+        ((base, base_face_id, p, checked[0][0]), (addition, addition_face_id, q, checked[1][0]))
+    ):
         source_colors = _colors(source, 'faces')
         for fi, face in enumerate(source['faces']):
             if fi == removed:
-                face_maps[si].append(None); continue
-            face_maps[si].append(len(faces)); faces.append([vertex_maps[si][v] for v in face])
+                face_maps[si].append(None)
+                continue
+            face_maps[si].append(len(faces))
+            faces.append([vertex_maps[si][v] for v in face])
             owners.append({'sourceIndex': si, 'sourceFaceId': fi})
             colors.append(deepcopy(source_colors[fi]))
             signs.append(_orientation(points, face, _normal(proof, fi)))
-    bindings = [{'sourceModelId': source['id'], 'sourceFingerprint': identity(source),
-                 'sourceSnapshotSha256': hashlib.sha256(_bytes(source, MAX_INPUT_BYTES)).hexdigest(),
-                 'maps': {'vertices': vertex_maps[si], 'edges': edge_maps[si], 'faces': face_maps[si], 'cells': []}}
-                for si, source in enumerate((base, addition))]
+    bindings = [
+        {
+            'sourceModelId': source['id'],
+            'sourceFingerprint': identity(source),
+            'sourceSnapshotSha256': hashlib.sha256(_bytes(source, MAX_INPUT_BYTES)).hexdigest(),
+            'maps': {'vertices': vertex_maps[si], 'edges': edge_maps[si], 'faces': face_maps[si], 'cells': []},
+        }
+        for si, source in enumerate((base, addition))
+    ]
     translation = p[targets[0]] - scale * (rotation @ q[af[0]])
-    evidence = {'schemaVersion': 1, 'sourceModels': [deepcopy(base), deepcopy(addition)],
-                'inputs': bindings, 'faceOwners': owners, 'seamVertexPairs': seam_pairs,
-                'removedFaces': [{'sourceIndex': 0, 'faceId': base_face_id},
-                                 {'sourceIndex': 1, 'faceId': addition_face_id}],
-                'alignment': {'rotation': rotation.tolist(), 'translation': translation.tolist(),
-                              'sourceAnchor': q[af[0]].tolist(), 'targetAnchor': p[targets[0]].tolist(),
-                              'stableTransform': 'scale * rotation * (point - sourceAnchor) + targetAnchor',
-                              'scale': scale, 'determinant': determinant, 'targetCycle': targets,
-                              'relativeTolerance': tolerance, 'absoluteTolerance': absolute_tolerance,
-                              'maximumSnapResidual': max(residuals)},
-                'separation': {'status': 'passed', 'method': 'verified convex interiors in opposite facet halfspaces',
-                               'maximumBaseResidual': float(np.max(signed_base)),
-                               'minimumAdditionResidual': float(np.min(signed_addition))},
-                'currentComponents': 'connected boundary; input components are historical snapshots only',
-                'resourceBounds': {'sourceVertices': MAX_SOURCE_VERTICES, 'selectedFaceVertices': MAX_FACE_VERTICES,
-                                   'combinedIncidenceReferences': MAX_INCIDENCES, 'inputBytes': MAX_INPUT_BYTES,
-                                   'outputBytes': MAX_OUTPUT_BYTES},
-                'inputByteCount': len(source_bytes)}
-    model = {'id': str(uuid.uuid4()), 'name': base.get('name', 'Base') + ' augmented',
-             'dimension': 3, 'embeddingDimension': 3, 'interpretation': 'generalized-complex',
-             'vertices': vertices, 'edges': edges, 'faces': faces, 'cells': [],
-             'metadata': {'augmentation': evidence, 'offColors': {'faces': colors, 'cells': []}},
-             'numeric': {'mode': 'float64-approximate', 'tolerance': TOLERANCE, 'certified': False},
-             'provenance': {'operation': 'attach-at-faces', 'algorithmVersion': VERSION,
-                            'inputs': [{key: row[key] for key in ('sourceModelId', 'sourceFingerprint', 'sourceSnapshotSha256')}
-                                       for row in bindings],
-                            'parameters': {'base_face_id': base_face_id, 'addition_face_id': addition_face_id,
-                                           'cycle_offset': cycle_offset, 'scale': scale, 'tolerance': tolerance,
-                                           'color_policy': color_policy, 'weld': 'paired seam only',
-                                           'blendCoplanarFaces': False, 'hullReplacement': False}}}
-    if units[0] is not None: model['metadata']['coordinateUnits'] = deepcopy(units[0])
+    evidence = {
+        'schemaVersion': 1,
+        'sourceModels': [deepcopy(base), deepcopy(addition)],
+        'inputs': bindings,
+        'faceOwners': owners,
+        'seamVertexPairs': seam_pairs,
+        'removedFaces': [{'sourceIndex': 0, 'faceId': base_face_id}, {'sourceIndex': 1, 'faceId': addition_face_id}],
+        'alignment': {
+            'rotation': rotation.tolist(),
+            'translation': translation.tolist(),
+            'sourceAnchor': q[af[0]].tolist(),
+            'targetAnchor': p[targets[0]].tolist(),
+            'stableTransform': 'scale * rotation * (point - sourceAnchor) + targetAnchor',
+            'scale': scale,
+            'determinant': determinant,
+            'targetCycle': targets,
+            'relativeTolerance': tolerance,
+            'absoluteTolerance': absolute_tolerance,
+            'maximumSnapResidual': max(residuals),
+        },
+        'separation': {
+            'status': 'passed',
+            'method': 'verified convex interiors in opposite facet halfspaces',
+            'maximumBaseResidual': float(np.max(signed_base)),
+            'minimumAdditionResidual': float(np.min(signed_addition)),
+        },
+        'currentComponents': 'connected boundary; input components are historical snapshots only',
+        'resourceBounds': {
+            'sourceVertices': MAX_SOURCE_VERTICES,
+            'selectedFaceVertices': MAX_FACE_VERTICES,
+            'combinedIncidenceReferences': MAX_INCIDENCES,
+            'inputBytes': MAX_INPUT_BYTES,
+            'outputBytes': MAX_OUTPUT_BYTES,
+        },
+        'inputByteCount': len(source_bytes),
+    }
+    model = {
+        'id': str(uuid.uuid4()),
+        'name': base.get('name', 'Base') + ' augmented',
+        'dimension': 3,
+        'embeddingDimension': 3,
+        'interpretation': 'generalized-complex',
+        'vertices': vertices,
+        'edges': edges,
+        'faces': faces,
+        'cells': [],
+        'metadata': {'augmentation': evidence, 'offColors': {'faces': colors, 'cells': []}},
+        'numeric': {'mode': 'float64-approximate', 'tolerance': TOLERANCE, 'certified': False},
+        'provenance': {
+            'operation': 'attach-at-faces',
+            'algorithmVersion': VERSION,
+            'inputs': [
+                {key: row[key] for key in ('sourceModelId', 'sourceFingerprint', 'sourceSnapshotSha256')}
+                for row in bindings
+            ],
+            'parameters': {
+                'base_face_id': base_face_id,
+                'addition_face_id': addition_face_id,
+                'cycle_offset': cycle_offset,
+                'scale': scale,
+                'tolerance': tolerance,
+                'color_policy': color_policy,
+                'weld': 'paired seam only',
+                'blendCoplanarFaces': False,
+                'hullReplacement': False,
+            },
+        },
+    }
+    if units[0] is not None:
+        model['metadata']['coordinateUnits'] = deepcopy(units[0])
     evidence['boundary'] = _closed_boundary(model)
     model['validation'] = validate(model)
     if not model['validation']['passed']:
-        raise GeometryError('Attachment result incidence failed native validation: ' + '; '.join(model['validation']['errors']))
+        raise GeometryError(
+            'Attachment result incidence failed native validation: ' + '; '.join(model['validation']['errors'])
+        )
     model['fingerprint'] = identity(model)
-    evidence['resultModelId'] = model['id']; evidence['resultFingerprint'] = model['fingerprint']
+    evidence['resultModelId'] = model['id']
+    evidence['resultFingerprint'] = model['fingerprint']
     evidence['measureEvidence'] = _measures(model, signs)
-    project = {'format': 'polytope-laboratory', 'version': 1, 'active': 0,
-               'documents': [{'id': 'attachment-gate', 'cursor': 0, 'states': [{'model': model, 'view': {}}]}]}
+    project = {
+        'format': 'polytope-laboratory',
+        'version': 1,
+        'active': 0,
+        'documents': [{'id': 'attachment-gate', 'cursor': 0, 'states': [{'model': model, 'view': {}}]}],
+    }
     detached = json.loads(_bytes(project, MAX_OUTPUT_BYTES))
     validate_project(detached)
     restored = detached['documents'][0]['states'][0]['model']

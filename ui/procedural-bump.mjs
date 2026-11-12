@@ -2,22 +2,25 @@
 // Surface-gradient formulation: Mikkelsen JCGT 9(3), 2020, equations (5)-(6).
 // Height is defined on the current normalized display-object coordinates, not
 // triangle-local UVs. Geometry/source normals and colors are never replaced.
-const states=new WeakMap();
-const declaration=`
+import { imageBumpDeclaration } from './material-bump.mjs';
+const states = new WeakMap();
+const declaration = `
 varying vec3 vEffectsObjectPosition;
 uniform mat3 normalMatrix;
 uniform mat4 modelViewMatrix;
 uniform float effectsBumpKind;
 uniform float effectsBumpFrequency;
 uniform float effectsBumpStrength;
+${imageBumpDeclaration}
 vec3 effectsHeightGradient(vec3 p) {
+  if(effectsBumpKind>2.5)return effectsImageGradient(p);
   float k=6.283185307179586*effectsBumpFrequency;
   vec3 s=sin(k*p),c=cos(k*p);
   if(effectsBumpKind<1.5)return k*vec3(c.x*s.y*s.z,s.x*c.y*s.z,s.x*s.y*c.z);
   return -k*s/3.0;
 }
 `;
-const perturb=`
+const perturb = `
 if(effectsBumpKind>0.5&&effectsBumpStrength>0.0) {
   // Recover the object-space normal with transpose(modelViewMatrix), then
   // transform its perturbed normal back. This keeps bump strength in object
@@ -33,34 +36,71 @@ if(effectsBumpKind>0.5&&effectsBumpStrength>0.0) {
   normal=normalize(normalMatrix*normalize(effectsObjectNormal-effectsSide*effectsBumpStrength*effectsSurfaceGradient));
 }
 `;
-function replaceOne(text,before,after){
-  if(text.split(before).length!==2)throw Error('Phong shader does not expose the required procedural bump anchor.');
-  return text.replace(before,after);
+function replaceOne(text, before, after) {
+  if (text.split(before).length !== 2) throw Error('Phong shader does not expose the required procedural bump anchor.');
+  return text.replace(before, after);
 }
-export function configureProceduralBump(material,options){
-  if(!material?.isMeshPhongMaterial)return;
-  let state=states.get(material);
-  const enabled=options.bump!=='none'&&options.bumpStrength>0;
-  if(!enabled){
-    if(state){material.onBeforeCompile=state.previous;material.customProgramCacheKey=state.previousKey;material.needsUpdate=true;states.delete(material);}
+export function configureProceduralBump(material, options) {
+  if (!material?.isMeshPhongMaterial) return;
+  let state = states.get(material);
+  const enabled =
+    options.bump !== 'none' && options.bumpStrength > 0 && (options.bump !== 'image' || options.bumpTexture);
+  if (!enabled) {
+    if (state) {
+      material.onBeforeCompile = state.previous;
+      material.customProgramCacheKey = state.previousKey;
+      material.needsUpdate = true;
+      states.delete(material);
+    }
     return;
   }
-  if(material.bumpMap||material.normalMap)throw Error('Procedural bump cannot replace an existing normal or bump map.');
-  if(!state){
-    state={previous:material.onBeforeCompile,previousKey:material.customProgramCacheKey,
-      uniforms:{effectsBumpKind:{value:0},effectsBumpFrequency:{value:12},effectsBumpStrength:{value:0}}};
-    material.onBeforeCompile=(shader,renderer)=>{
-      state.previous.call(material,shader,renderer);
-      shader.vertexShader=replaceOne(shader.vertexShader,'#include <common>', '#include <common>\nvarying vec3 vEffectsObjectPosition;');
-      shader.vertexShader=replaceOne(shader.vertexShader,'#include <displacementmap_vertex>', '#include <displacementmap_vertex>\nvEffectsObjectPosition=transformed;');
-      shader.fragmentShader=replaceOne(shader.fragmentShader,'#include <common>', '#include <common>\n'+declaration);
-      shader.fragmentShader=replaceOne(shader.fragmentShader,'#include <normal_fragment_maps>', '#include <normal_fragment_maps>\n'+perturb);
-      Object.assign(shader.uniforms,state.uniforms);
+  if (material.bumpMap || material.normalMap)
+    throw Error('Procedural bump cannot replace an existing normal or bump map.');
+  if (!state) {
+    state = {
+      previous: material.onBeforeCompile,
+      previousKey: material.customProgramCacheKey,
+      uniforms: {
+        effectsBumpKind: { value: 0 },
+        effectsBumpFrequency: { value: 12 },
+        effectsBumpStrength: { value: 0 },
+        effectsBumpImage: { value: null },
+        effectsBumpTexel: { value: [1, 1] },
+      },
     };
-    material.customProgramCacheKey=()=>`display-object-gradient-v1:${state.previousKey.call(material)}`;
-    material.needsUpdate=true;states.set(material,state);
+    material.onBeforeCompile = (shader, renderer) => {
+      state.previous.call(material, shader, renderer);
+      shader.vertexShader = replaceOne(
+        shader.vertexShader,
+        '#include <common>',
+        '#include <common>\nvarying vec3 vEffectsObjectPosition;'
+      );
+      shader.vertexShader = replaceOne(
+        shader.vertexShader,
+        '#include <displacementmap_vertex>',
+        '#include <displacementmap_vertex>\nvEffectsObjectPosition=transformed;'
+      );
+      shader.fragmentShader = replaceOne(
+        shader.fragmentShader,
+        '#include <common>',
+        '#include <common>\n' + declaration
+      );
+      shader.fragmentShader = replaceOne(
+        shader.fragmentShader,
+        '#include <normal_fragment_maps>',
+        '#include <normal_fragment_maps>\n' + perturb
+      );
+      Object.assign(shader.uniforms, state.uniforms);
+    };
+    material.customProgramCacheKey = () => `display-object-gradient-v2:${state.previousKey.call(material)}`;
+    material.needsUpdate = true;
+    states.set(material, state);
   }
-  state.uniforms.effectsBumpKind.value=options.bump==='waves'?1:2;
-  state.uniforms.effectsBumpFrequency.value=options.bumpFrequency;
-  state.uniforms.effectsBumpStrength.value=options.bumpStrength;
+  state.uniforms.effectsBumpKind.value = options.bump === 'waves' ? 1 : options.bump === 'image' ? 3 : 2;
+  state.uniforms.effectsBumpImage.value = options.bumpTexture ?? null;
+  state.uniforms.effectsBumpTexel.value = options.bumpAsset
+    ? [1 / options.bumpAsset.width, 1 / options.bumpAsset.height]
+    : [1, 1];
+  state.uniforms.effectsBumpFrequency.value = options.bumpFrequency;
+  state.uniforms.effectsBumpStrength.value = options.bumpStrength;
 }

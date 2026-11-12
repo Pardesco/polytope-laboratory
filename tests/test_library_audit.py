@@ -14,20 +14,32 @@ def write_index(tmp_path, root, status='parsed', **changes):
     path = root / 'Cat1' / 'shape.off'
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text('OFF\n4 4 6\n', encoding='utf-8')
-    record = {'sourceHash': hashlib.sha256(path.read_bytes()).hexdigest(), 'status': status,
-              'sourceUnchanged': True, 'validationPassed': status == 'parsed',
-              'warnings': ['Generalized open shell'], 'warningCount': 1,
-              'errors': ['Example source incidence rejected'] if status == 'diagnosed' else []}
+    record = {
+        'sourceHash': hashlib.sha256(path.read_bytes()).hexdigest(),
+        'status': status,
+        'sourceUnchanged': True,
+        'validationPassed': status == 'parsed',
+        'warnings': ['Generalized open shell'],
+        'warningCount': 1,
+        'errors': ['Example source incidence rejected'] if status == 'diagnosed' else [],
+    }
     record.update(changes)
-    index = {'format': audit.FORMAT, 'schemaVersion': 1, 'sourceDirectory': str(root),
-             'importer': audit.importer_fingerprint(), 'records': {'Cat1/shape.off': record}}
+    index = {
+        'format': audit.FORMAT,
+        'schemaVersion': 1,
+        'sourceDirectory': str(root),
+        'importer': audit.importer_fingerprint(),
+        'records': {'Cat1/shape.off': record},
+    }
     evidence = tmp_path / 'evidence.library-index.json'
     evidence.write_text(json.dumps(index), encoding='utf-8')
     return evidence, path, index
 
 
-@pytest.mark.parametrize('status,expected', [('parsed', 'passed'), ('diagnosed', 'rejected'),
-                                           ('timeout', 'untested'), ('worker-error', 'untested')])
+@pytest.mark.parametrize(
+    'status,expected',
+    [('parsed', 'passed'), ('diagnosed', 'rejected'), ('timeout', 'untested'), ('worker-error', 'untested')],
+)
 def test_fresh_evidence_status_warnings_without_geometry(tmp_path, monkeypatch, status, expected):
     root = tmp_path / 'sources'
     evidence, _, _ = write_index(tmp_path, root, status)
@@ -100,12 +112,20 @@ def test_explicit_hash_verification_resolves_size_and_budget_staleness(tmp_path,
 
 def write_report(tmp_path, root, context=None):
     fingerprint = audit.importer_fingerprint()
-    context = context or {'sourceDirectory': str(root), 'validatorHashes': fingerprint['sourceHashes'],
-               'pythonVersion': fingerprint['pythonVersion'], 'dependencyVersions': fingerprint['dependencyVersions']}
+    context = context or {
+        'sourceDirectory': str(root),
+        'validatorHashes': fingerprint['sourceHashes'],
+        'pythonVersion': fingerprint['pythonVersion'],
+        'dependencyVersions': fingerprint['dependencyVersions'],
+    }
     signature = hashlib.sha256(json.dumps(context, sort_keys=True).encode('utf-8')).hexdigest()
     report = tmp_path / 'audit.json'
-    metadata = {'schemaVersion': 2, 'sourceDirectory': str(root), 'resumeContext': context,
-                'resumeContextSha256': signature}
+    metadata = {
+        'schemaVersion': 2,
+        'sourceDirectory': str(root),
+        'resumeContext': context,
+        'resumeContextSha256': signature,
+    }
     # Deliberately unparseable body proves compilation never reads full records.
     report.write_text(json.dumps(metadata)[:-1] + ', "files": [' + 'x' * 300000, encoding='utf-8')
     journal = report.with_suffix('.checkpoint.jsonl')
@@ -116,10 +136,16 @@ def test_compile_streams_journal_compacts_warnings_and_preserves_provenance(tmp_
     root = tmp_path / 'sources'
     _, source, index = write_index(tmp_path, root)
     report, journal, signature = write_report(tmp_path, root)
-    record = {'relativePath': 'Cat1/shape.off', 'status': 'parsed',
-              'sha256': hashlib.sha256(source.read_bytes()).hexdigest(), 'sourceUnchanged': True,
-              'validation': {'passed': True, 'warnings': ['warning' * 1000] * 100, 'errors': []}}
-    journal.write_text(json.dumps({'contextSha256': signature, 'record': record}) + '\n{"incomplete":', encoding='utf-8', newline='')
+    record = {
+        'relativePath': 'Cat1/shape.off',
+        'status': 'parsed',
+        'sha256': hashlib.sha256(source.read_bytes()).hexdigest(),
+        'sourceUnchanged': True,
+        'validation': {'passed': True, 'warnings': ['warning' * 1000] * 100, 'errors': []},
+    }
+    journal.write_text(
+        json.dumps({'contextSha256': signature, 'record': record}) + '\n{"incomplete":', encoding='utf-8', newline=''
+    )
     output = tmp_path / 'compiled.library-index.json'
     result = audit.compile_audit_index(report, output)
     assert result['recordCount'] == 1 and result['importerFresh'] and result['ignoredIncompleteTail']

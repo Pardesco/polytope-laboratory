@@ -1,4 +1,5 @@
 """Bounded equation grammar and AST interpreter; never evaluates program code."""
+
 import ast
 import math
 import operator
@@ -34,15 +35,38 @@ def _degree_trig(name, value):
     return (sine, cosine, -sine, -cosine)[quadrant] if name == 'sind' else (cosine, -sine, -cosine, sine)[quadrant]
 
 
-FUNCTIONS = {name: getattr(math, name) for name in ('sqrt', 'sin', 'cos', 'tan', 'asin', 'acos', 'atan', 'exp', 'log', 'floor', 'ceil')}
-FUNCTIONS.update({'abs': abs, 'min': min, 'max': max, 'deg': math.radians,
-                  'r': math.sqrt, 'chord': lambda n: 2 * math.sin(math.pi / n)})
-BINARY = {ast.Add: operator.add, ast.Sub: operator.sub, ast.Mult: operator.mul, ast.Div: operator.truediv, ast.Pow: operator.pow, ast.Mod: operator.mod}
-TOKEN = re.compile(r'(?P<number>(?:[0-9]+(?:\.[0-9]*)?|\.[0-9]+)(?:[eE][+-]?[0-9]+)?)|(?P<name>[A-Za-z_]+)|(?P<op>\*\*|[+\-*/%^(),])')
+FUNCTIONS = {
+    name: getattr(math, name)
+    for name in ('sqrt', 'sin', 'cos', 'tan', 'asin', 'acos', 'atan', 'exp', 'log', 'floor', 'ceil')
+}
+FUNCTIONS.update(
+    {
+        'abs': abs,
+        'min': min,
+        'max': max,
+        'deg': math.radians,
+        'r': math.sqrt,
+        'chord': lambda n: 2 * math.sin(math.pi / n),
+    }
+)
+BINARY = {
+    ast.Add: operator.add,
+    ast.Sub: operator.sub,
+    ast.Mult: operator.mul,
+    ast.Div: operator.truediv,
+    ast.Pow: operator.pow,
+    ast.Mod: operator.mod,
+}
+TOKEN = re.compile(
+    r'(?P<number>(?:[0-9]+(?:\.[0-9]*)?|\.[0-9]+)(?:[eE][+-]?[0-9]+)?)|(?P<name>[A-Za-z_]+)|(?P<op>\*\*|[+\-*/%^(),])'
+)
 
 
 def _bounded(value):
-    if isinstance(value, Fraction) and max(value.numerator.bit_length(), value.denominator.bit_length()) > MAX_RATIONAL_BITS:
+    if (
+        isinstance(value, Fraction)
+        and max(value.numerator.bit_length(), value.denominator.bit_length()) > MAX_RATIONAL_BITS
+    ):
         raise GeometryError('Exact rational intermediate exceeds the expression resource limit.')
     if isinstance(value, complex) or not math.isfinite(float(value)) or abs(value) > 1e100:
         raise GeometryError('Expression must have a finite real result within ±1e100.')
@@ -62,6 +86,7 @@ class _EquationParser:
     Polygon arguments are parsed as literal integer pairs before arithmetic;
     ordinary divisions elsewhere retain Fraction semantics.
     """
+
     def __init__(self, text):
         self.tokens = []
         cursor = 0
@@ -99,13 +124,21 @@ class _EquationParser:
         if depth > 64:
             raise GeometryError('Expression nesting exceeds the resource limit.')
         left = self.prefix(depth)
-        operators = {'+': (10, 11, ast.Add), '-': (10, 11, ast.Sub),
-                     '*': (20, 21, ast.Mult), '/': (20, 21, ast.Div), '%': (20, 21, ast.Mod),
-                     '^': (40, 40, ast.Pow), '**': (40, 40, ast.Pow)}
+        operators = {
+            '+': (10, 11, ast.Add),
+            '-': (10, 11, ast.Sub),
+            '*': (20, 21, ast.Mult),
+            '/': (20, 21, ast.Div),
+            '%': (20, 21, ast.Mod),
+            '^': (40, 40, ast.Pow),
+            '**': (40, 40, ast.Pow),
+        }
         while True:
             kind, text, _ = self.peek()
             previous = self.tokens[self.cursor - 1]
-            implied = text == '(' or kind == 'name' or kind == 'number' and (previous[1] == ')' or previous[0] == 'name')
+            implied = (
+                text == '(' or kind == 'name' or kind == 'number' and (previous[1] == ')' or previous[0] == 'name')
+            )
             if implied:
                 before, after, operation = operators['*']
             elif text in operators:
@@ -135,7 +168,11 @@ class _EquationParser:
             if text not in FUNCTIONS and text not in POLYGON_FUNCTIONS and text not in ('sind', 'cosd', 'tand'):
                 raise GeometryError(f'Unknown equation name {text!r}.')
             if text == 'r' and self.peek()[0] == 'number':
-                return ast.Call(func=ast.Name(id='sqrt', ctx=ast.Load()), args=[ast.Constant(value=_literal(self.take()[1]))], keywords=[])
+                return ast.Call(
+                    func=ast.Name(id='sqrt', ctx=ast.Load()),
+                    args=[ast.Constant(value=_literal(self.take()[1]))],
+                    keywords=[],
+                )
             self.take('(')
             if text in POLYGON_FUNCTIONS:
                 args = [self.polygon_integer()]
@@ -158,7 +195,9 @@ class _EquationParser:
     def polygon_integer(self):
         kind, text, _ = self.take()
         if kind != 'number' or not text.isascii() or not text.isdigit():
-            raise GeometryError('Polygon helpers require a literal positive integer n or n/d, not an arithmetic argument.')
+            raise GeometryError(
+                'Polygon helpers require a literal positive integer n or n/d, not an arithmetic argument.'
+            )
         return ast.Constant(value=_literal(text))
 
 
@@ -180,6 +219,7 @@ def evaluate(expression):
         raise GeometryError('Expression must contain at most 512 characters.')
     try:
         root = _EquationParser(expression).parse()
+
         def visit(node):
             if isinstance(node, ast.Constant) and isinstance(node.value, Fraction):
                 return node.value
@@ -193,11 +233,18 @@ def evaluate(expression):
                     if abs(right) > 100:
                         raise GeometryError('Exponent magnitude exceeds 100.')
                     if isinstance(left, Fraction) and isinstance(right, Fraction) and right.denominator == 1:
-                        projected_bits = max(left.numerator.bit_length(), left.denominator.bit_length()) * abs(right.numerator)
+                        projected_bits = max(left.numerator.bit_length(), left.denominator.bit_length()) * abs(
+                            right.numerator
+                        )
                         if projected_bits > MAX_RATIONAL_BITS:
                             raise GeometryError('Exact rational power exceeds the expression resource limit.')
                 result = BINARY[type(node.op)](left, right)
-            elif isinstance(node, ast.Call) and isinstance(node.func, ast.Name) and not node.keywords and 1 <= len(node.args) <= 8:
+            elif (
+                isinstance(node, ast.Call)
+                and isinstance(node.func, ast.Name)
+                and not node.keywords
+                and 1 <= len(node.args) <= 8
+            ):
                 name = node.func.id
                 args = [visit(a) for a in node.args]
                 if name in POLYGON_FUNCTIONS:
@@ -215,34 +262,44 @@ def evaluate(expression):
             else:
                 raise GeometryError('Only arithmetic, documented constants and numeric functions are allowed.')
             return _bounded(result)
+
         value = visit(root.body)
-        return {'value': float(value), 'exactRational': str(value) if isinstance(value, Fraction) else None,
-                'mode': 'rational-exact' if isinstance(value, Fraction) else 'float64-approximate'}
+        return {
+            'value': float(value),
+            'exactRational': str(value) if isinstance(value, Fraction) else None,
+            'mode': 'rational-exact' if isinstance(value, Fraction) else 'float64-approximate',
+        }
     except (SyntaxError, OverflowError, ZeroDivisionError, TypeError, ValueError, RecursionError) as exc:
         raise GeometryError(f'Invalid expression: {exc}') from exc
 
 
 def exact_orientation(points):
     """Exact determinant relative to supplied rational/decimal strings."""
-    if len(points) not in (3, 4, 5) or any(len(p) != len(points)-1 for p in points):
+    if len(points) not in (3, 4, 5) or any(len(p) != len(points) - 1 for p in points):
         raise GeometryError('Orientation requires d+1 points in d dimensions, d=2,3,4.')
     try:
         p = [[Fraction(str(x)) for x in row] for row in points]
     except (ValueError, ZeroDivisionError) as exc:
         raise GeometryError('Coordinates must be rational or finite decimal strings.') from exc
-    a = [[x-y for x, y in zip(row, p[0])] for row in p[1:]]
+    a = [[x - y for x, y in zip(row, p[0])] for row in p[1:]]
     determinant = Fraction(1)
     for k in range(len(a)):
         pivot = next((i for i in range(k, len(a)) if a[i][k]), None)
         if pivot is None:
-            determinant = Fraction(0); break
+            determinant = Fraction(0)
+            break
         if pivot != k:
-            a[k], a[pivot] = a[pivot], a[k]; determinant *= -1
+            a[k], a[pivot] = a[pivot], a[k]
+            determinant *= -1
         value = a[k][k]
         determinant *= value
-        for i in range(k+1, len(a)):
+        for i in range(k + 1, len(a)):
             ratio = a[i][k] / value
-            for j in range(k+1, len(a)):
+            for j in range(k + 1, len(a)):
                 a[i][j] -= ratio * a[k][j]
-    return {'determinant': str(determinant), 'sign': (determinant > 0) - (determinant < 0),
-            'mode': 'rational-exact', 'interpretation': 'Exact relative to supplied rational/decimal values; not a certificate of intended algebraic geometry.'}
+    return {
+        'determinant': str(determinant),
+        'sign': (determinant > 0) - (determinant < 0),
+        'mode': 'rational-exact',
+        'interpretation': 'Exact relative to supplied rational/decimal values; not a certificate of intended algebraic geometry.',
+    }

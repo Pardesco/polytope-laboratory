@@ -1,0 +1,20 @@
+import helpers from './source-match.cjs';
+export const {
+  compactSource,
+  sourcePattern,
+  matchSource,
+  doesNotMatchSource,
+  findSource,
+  matchAllSource,
+  includesSource,
+  indexOfSource,
+  sourceNodes,
+  sourceFunction,
+  sourceStatement,
+  sourceProperty,
+  sourceRange,
+  sourceAssignment,
+  sourceInitializer,
+  sourceStrings,
+  htmlElement,
+} = helpers;

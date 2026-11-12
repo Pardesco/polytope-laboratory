@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<testsuites>
+	<testcase name="mounted Tuta figure completion: expert-off search, metric evidence, undo/reopen/replay and branch" time="73.280212" classname="test" file="C:\Users\Randall\Documents\polytope-orchestra\r9-fix-vf\tests\vertex-figure-scaliform-mounted.test.mjs"/>
+	<!-- tests 1 -->
+	<!-- suites 0 -->
+	<!-- pass 1 -->
+	<!-- fail 0 -->
+	<!-- cancelled 0 -->
+	<!-- skipped 0 -->
+	<!-- todo 0 -->
+	<!-- duration_ms 74961.6075 -->
+</testsuites>

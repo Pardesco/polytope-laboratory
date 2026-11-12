@@ -1,0 +1,35 @@
+{
+  "description": "Independent unit cube and square pyramid, literal ordered incidence. Red opposite faces have equivalent byte/unit RGBA; face 2 differs in alpha.",
+  "cube": {
+    "id": "r6-colored-unit-cube", "name": "Colored unit cube", "dimension": 3, "embeddingDimension": 3,
+    "interpretation": "generalized-complex", "numeric": {"certified": false},
+    "vertices": [[0,0,0],[1,0,0],[1,1,0],[0,1,0],[0,0,1],[1,0,1],[1,1,1],[0,1,1]],
+    "edges": [[0,1],[1,2],[2,3],[0,3],[4,5],[5,6],[6,7],[4,7],[0,4],[1,5],[2,6],[3,7]],
+    "faces": [[0,3,2,1],[4,5,6,7],[0,1,5,4],[1,2,6,5],[2,3,7,6],[3,0,4,7]], "cells": [],
+    "metadata": {"coordinateUnits": "mm", "offColors": {"faces": [
+      {"encoding":"byte","values":[255,0,0,128]},
+      {"encoding":"unit","values":[1,0,0,0.5019607843137255]},
+      {"encoding":"byte","values":[255,0,0,255]},
+      {"encoding":"byte","values":[0,0,255,255]}, null, null
+    ], "cells": []}}
+  },
+  "pyramid": {
+    "id": "r6-colored-square-pyramid", "name": "Colored square pyramid", "dimension": 3, "embeddingDimension": 3,
+    "interpretation": "generalized-complex", "numeric": {"certified": false},
+    "vertices": [[0,0,0],[1,0,0],[1,1,0],[0,1,0],[0.5,0.5,0.25]],
+    "edges": [[0,1],[1,2],[2,3],[0,3],[0,4],[1,4],[2,4],[3,4]],
+    "faces": [[0,3,2,1],[0,1,4],[1,2,4],[2,3,4],[3,0,4]], "cells": [],
+    "metadata": {"coordinateUnits": "mm", "offColors": {"faces": [
+      {"encoding":"byte","values":[255,255,255,255]},
+      {"encoding":"byte","values":[10,20,30,40]},
+      {"encoding":"byte","values":[50,60,70,80]},
+      {"encoding":"byte","values":[90,100,110,120]},
+      {"encoding":"unit","values":[0.25,0.5,0.75,1]}
+    ], "cells": []}}
+  },
+  "oracles": {
+    "selected": {"targets":[0], "counts":[9,16,9], "augmentationVolume":1.0833333333333333,"excavationVolume":0.9166666666666666},
+    "same-color": {"targets":[0,1], "counts":[10,20,12], "augmentationVolume":1.1666666666666667,"excavationVolume":0.8333333333333334},
+    "congruent": {"targets":[0,1,2,3,4,5], "counts":[14,36,24], "augmentationVolume":1.5,"excavationVolume":0.5}
+  }
+}

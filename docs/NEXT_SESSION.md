@@ -1,3 +1,22 @@
+## Rounds 4-8 - November 6-9, 2026 (read first)
+
+Goal from Randall: feature complete per spec section 3, still user friendly. Claude led five rounds of parallel Codex
+(gpt-6.1-sol) packages in `polytope-orchestra`; everything below is merged in orchestra `main` and synced here.
+
+- **Round 4:** docked Timeline panel ([TIMELINE.md](TIMELINE.md), [TIMELINE_ROUND_2026-11-09.md](TIMELINE_ROUND_2026-11-09.md)).
+- **Round 5:** conformance inventory, corpus crosswalk, exactness chain, history policy, via-snub contract, help refresh.
+- **Round 6:** Goursat star polychora, 20-vertex faceting, arbitrary stellation planes, star-cell sections, face-surgery
+  colors, Waterman 4D, multi-component fitting, hinge strips, memories add/blend, DXF face boundaries, PNG environments.
+- **Round 7:** 79 Goursat/Wythoff 4D + 63 Schwarz 3D generations, 40 generated uniform duals, Tuta scaliform vertex-figure
+  completion, H3 via-snub morph, symmetry evidence, batch experiment CLI, media/common-workflow qualification runners.
+- **Round 8:** 15 packages closing partial requirements, including 54 new conformance scenarios (all 73 requirements
+  linked) and 120-cell/600-cell Expansion and Tilting-quads morphs.
+
+Where it stands: [GAP_AUDIT_2026-11-10.md](GAP_AUDIT_2026-11-10.md) and `parity-ledger.proposed.json` (34 done, 39
+partial). Plan for the next steps (readability round, catalog default, release 0.28.0, outside verification, depth on
+Coxeter builder/sections/nets, then scripting): `polytope-orchestra/handoffs/PLAN_2026-11-10.md`.
+Version is still 0.27.21 and unpackaged; GitHub still serves v0.27.20.
+
 > November 5, 2026: round 3 UI pass (8 Codex packages + integration polish, Astra-reviewed plan) and catalog audit pushed to GitHub `main` as unreleased source. README gained "What it's for", the Stella4D difference and why Electron.
 
 ## Round 3 - November 5, 2026 (read first)

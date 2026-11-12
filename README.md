@@ -2,11 +2,11 @@
 
 A free, open-source desktop app for exploring and constructing 3D and 4D polytopes. Browse models, inspect their geometry, experiment with sections and duals, and create printable nets. The app runs offline and is licensed under [GPLv3](LICENSE).
 
-**This is an early community preview, not yet a direct Stella4D competitor.** Stella4D is a reference for the long-term feature scope. The current priority is to make the existing tools easier to use, faster and more reliable; feature expansion is paused.
+**This is an early community preview, not yet a direct Stella4D competitor.** Stella4D is the reference for the long-term feature scope. The current priority is depth and correctness on the existing tools, checked against published sources.
 
-[Download the Windows x64 preview](https://github.com/Pardesco/polytope-laboratory/releases/download/v0.27.20/Polytope.Laboratory.0.27.20.preview.exe) | [Release notes](docs/RELEASE_0.27.20_PREVIEW.md) | [Report an issue](https://github.com/Pardesco/polytope-laboratory/issues)
+[Download the Windows x64 preview](https://github.com/Pardesco/polytope-laboratory/releases/download/v0.28.0/Polytope.Laboratory.0.28.0.preview.exe) | [Release notes](docs/RELEASE_0.28.0_PREVIEW.md) | [Report an issue](https://github.com/Pardesco/polytope-laboratory/issues)
 
-The current preview is **0.27.20**. Run the downloaded executable; a separate Python installation is not required. [Matching source ZIP](https://github.com/Pardesco/polytope-laboratory/releases/download/v0.27.20/Polytope.Laboratory.0.27.20.source.zip).
+The current preview is **0.28.0**. Run the downloaded executable; a separate Python installation is not required. [Matching source ZIP](https://github.com/Pardesco/polytope-laboratory/releases/download/v0.28.0/Polytope.Laboratory.0.28.0.source.zip).
 
 ## What it's for
 
@@ -21,29 +21,16 @@ How it differs from Stella4D: Stella4D is a mature, closed-source, paid program 
 
 **Why Electron:** the viewer is a WebGL (three.js) renderer and the geometry runs in a Python engine; Electron lets one codebase ship both offline with a bundled engine, at the cost of a larger download.
 
-## New on main (unreleased)
+## New in 0.28.0
 
-The `main` branch now carries the 0.27.21 development source with a large usability round. It is not in the 0.27.20 download yet; [run from source](#run-from-source) to try it. Full notes: [UX round, November 2026](docs/UX_ROUND_2026-11-04.md).
+Full notes: [0.28.0 release notes](docs/RELEASE_0.28.0_PREVIEW.md).
 
-- **Simpler screen:** an essentials-only toolbar with a **View options** popover, a single-row dock with **More**, and **⋯ → Show expert tools** for the full technical controls.
-- **Visual library:** collections (Platonic, Archimedean, Catalan, Kepler–Poinsot, Johnson, Regular 4D…), a thumbnail grid and hover previews.
-- **Build from symmetry:** tap the nodes of a Coxeter–Dynkin diagram (A3–H4) to make uniform polyhedra and polychora with a live preview, up to the 14,400-vertex H4 shapes.
-- **Prism look:** colors by face and cell type, symmetric color pairs on regular shapes, thick edges and studio light; dense models fade edges by depth instead of becoming a hairball.
-- **Direct 4D turning:** Shift-drag rotates through the fourth dimension; let go while moving and it keeps tumbling until you press Esc. 4D perspective is more dramatic by default, with a **Depth** slider beside the projection picker.
-- **Construct gallery:** "What would you like to make?" with plain-language tool cards and live sliders to preview cut corners, expand, dual size and more before applying.
-- **Plain-language analysis:** an overview with a short description of the model, big counts and facts such as "3 cubes meet at every edge".
-- **Export by goal:** 3D print it, make a paper model, save a picture, make a video or GIF, use in other 3D software, or export the model data at full double precision.
-- **Learn 4D:** a six-chapter interactive lesson (square → cube → tesseract, projections, 4D turning, slicing) under **Help**, plus a refreshed Welcome with walkthroughs.
-- Friendlier status and error messages, and faster startup.
-
-November 2026 interface pass (full notes: [UI pass](docs/UI_PASS_2026-11-05.md)):
-
-- **Clearer canvas:** a short first-run hint (turn it, see its parts, build one), and plain labels for the 4D projection and 3D camera.
-- **Tidier header and tools:** icon buttons with labels, a **Find a shape or tool** command search (Ctrl+K), and distinct tool names such as **Star truncation**.
-- **Honest precision:** the Advanced tab gives a plain validation summary, symmetry such as "B4, order 384" and residuals, with the raw report one click away. Only rational-exact results are called exact.
-- **Appearance sheet:** colors, vertex and edge sizes and lighting in one place.
-- **Readable at 1280×800:** 14px text, 36px controls, visible keyboard focus, and no auto-rotation when reduced motion is requested.
-- **Checked catalog:** an automated audit of every bundled model (counts, Euler characteristic, equal edges, flat faces and cells). All 1,594 registered models pass; see the [catalog audit](docs/CATALOG_AUDIT_2026-11-05.md).
+- **Simpler screen:** an essentials-only toolbar, a visual library with collections and thumbnails, and **⋯ → Show expert tools** for the full technical controls.
+- **Build from symmetry:** ring the nodes of a Coxeter–Dynkin diagram (A3–H4) to make uniform polyhedra and polychora with a live preview.
+- **Direct 4D turning** with Shift-drag, a six-chapter **Learn 4D** lesson, export by goal, and a docked Timeline for animation and tours.
+- **More constructions:** Goursat star polychora, Schwarz-triangle Wythoff forms, generated uniform duals, faceting, stellation by arbitrary planes, filled sections of star cells, Waterman 4D, and 120-cell/600-cell dual morphs.
+- **Checked catalog:** the 870 default models were compared with Klitzing's tables, Bowers' lists and the Miratope library: 508 agree on every check made, 356 have no outside data, and the 6 differences are explained in the [verification report](docs/VERIFICATION_REPORT.md). 908 unverified computer-found 4D candidates are now behind a **Discovery candidates (unverified)** filter.
+- **What's still partial:** 39 of 73 tracked requirements; see the [gap audit](docs/GAP_AUDIT_2026-11-10.md).
 
 ## Try it
 
@@ -63,7 +50,7 @@ Click **Guide** or press **F1** for the bundled searchable help. For worked exam
 - **Paper models:** editable nets, folding previews, glue tabs, page layouts and SVG/PDF output.
 - **Projects and animation:** saved construction history, notes, labels, face images, keyframes and PNG/WebM export.
 
-Support depends on the model and operation. A tool being present does not mean it works on every convex, nonconvex, star or singular input. See the [0.27.20 release notes](docs/RELEASE_0.27.20_PREVIEW.md) for current limitations and the [technical feature notes](docs/RELEASE_0.26_DEVELOPMENT.md) for details.
+Support depends on the model and operation. A tool being present does not mean it works on every convex, nonconvex, star or singular input. See the [0.28.0 release notes](docs/RELEASE_0.28.0_PREVIEW.md) for current limitations and the [technical feature notes](docs/RELEASE_0.26_DEVELOPMENT.md) for details.
 
 ## Current limitations
 
@@ -75,13 +62,13 @@ Some specialized models and operations are incomplete. Dense models can be expen
 
 ## Development priorities
 
-Feature expansion is paused while we improve the core experience: find a model, view it, inspect it, perform a construction, save it and export a result. We are reviewing each control and data panel for a clear purpose, sensible defaults and placement. Technical diagnostics should be available when needed without dominating routine use.
+New feature domains are paused while three flagship workflows (the Coxeter builder, sections and nets) are finished on the shipped build. The core experience comes first: find a model, view it, inspect it, perform a construction, save it and export a result. We are reviewing each control and data panel for a clear purpose, sensible defaults and placement. Technical diagnostics should be available when needed without dominating routine use.
 
 See the [roadmap](docs/OPEN_SOURCE_ROADMAP.md) and [contributing guide](CONTRIBUTING.md). Useful reports include the version, model, settings, steps, expected result and actual result. A small project file helps us reproduce geometry or performance problems.
 
 ## Run from source
 
-For development on Windows x64, use Node.js 22.12 or newer and Python 3.10 or newer:
+For development on Windows x64, use Node.js 22.12 or newer and Python 3.10 or newer. [Architecture](docs/ARCHITECTURE.md) explains how the code is organized.
 
 ```powershell
 python -m pip install -r requirements.txt

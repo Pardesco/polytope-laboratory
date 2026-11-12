@@ -1,0 +1,105 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:polytope-laboratory:corpus-reconciliation:1",
+  "title": "Polytope Laboratory first corpus reconciliation manifest",
+  "description": "Source identities, realizations and candidates remain distinct. Version 1 inventories evidence; it does not accept release qualification receipts.",
+  "type": "object",
+  "required": ["format", "schemaVersion", "date", "policy", "sources", "groups", "identities", "candidateGroups", "externalInventories", "blockers"],
+  "additionalProperties": false,
+  "properties": {
+    "format": {"const": "polytope-corpus-reconciliation"},
+    "schemaVersion": {"const": 1},
+    "date": {"type": "string"},
+    "policy": {"type": "string"},
+    "sources": {"type": "array", "maxItems": 10000, "items": {"$ref": "#/$defs/source"}},
+    "groups": {"type": "array", "maxItems": 10000, "items": {"$ref": "#/$defs/group"}},
+    "identities": {"type": "array", "maxItems": 10000, "items": {"$ref": "#/$defs/identity"}},
+    "candidateGroups": {"type": "array", "maxItems": 10000, "items": {"$ref": "#/$defs/candidates"}},
+    "externalInventories": {"type": "array", "maxItems": 10000, "items": {
+      "type": "object", "required": ["id", "file", "sha256", "entryCount", "licenseStatus", "baselineIdentityStatus"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"}, "file": {"type": "string"}, "sha256": {"$ref": "#/$defs/sha"},
+        "entryCount": {"type": "integer", "minimum": 0}, "licenseStatus": {"const": "unverified"},
+        "baselineIdentityStatus": {"const": "unmatched"}
+      }
+    }},
+    "blockers": {"type": "array", "items": {"type": "string"}}
+  },
+  "$defs": {
+    "id": {"type": "string", "minLength": 1, "maxLength": 256},
+    "sha": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "source": {
+      "type": "object", "required": ["id", "file", "sha256", "entryCount"], "additionalProperties": false,
+      "properties": {
+        "id": {"$ref": "#/$defs/id"}, "file": {"type": ["string", "null"]},
+        "sha256": {"anyOf": [{"$ref": "#/$defs/sha"}, {"type": "null"}]},
+        "entryCount": {"type": "integer", "minimum": 0}
+      }
+    },
+    "group": {
+      "type": "object", "required": ["id", "label", "requirement", "required", "rosterStatus"], "additionalProperties": false,
+      "properties": {
+        "id": {"$ref": "#/$defs/id"}, "label": {"type": "string"}, "requirement": {"type": "string"},
+        "required": {"type": ["integer", "null"], "minimum": 0},
+        "rosterStatus": {"enum": ["named-roster", "benchmark-roster-missing"]}
+      }
+    },
+    "link": {
+      "type": "object", "required": ["source", "entry", "catalogKey", "relation"], "additionalProperties": false,
+      "properties": {
+        "source": {"$ref": "#/$defs/id"}, "entry": {"type": "string"},
+        "catalogKey": {"type": ["string", "null"]},
+        "relation": {"enum": ["realization", "reflected-realization"]}
+      }
+    },
+    "identity": {
+      "type": "object", "required": ["id", "group", "name", "identityEvidence", "links", "qualification"], "additionalProperties": false,
+      "properties": {
+        "id": {"$ref": "#/$defs/id"}, "group": {"$ref": "#/$defs/id"}, "name": {"type": "string"},
+        "identityEvidence": {"type": "object", "required": ["basis", "reference"], "properties": {
+          "basis": {"type": "string"}, "reference": {"type": "string"}, "symbol": {"type": "string"},
+          "expectedCounts": {"type": "array", "minItems": 4, "maxItems": 4, "items": {"type": "integer", "minimum": 0}},
+          "sourceId": {"type": "string"}
+        }},
+        "links": {"type": "array", "items": {"$ref": "#/$defs/link"}},
+        "qualification": {"type": "null"}, "dualOf": {"$ref": "#/$defs/id"}
+      }
+    },
+    "candidates": {
+      "type": "object", "required": ["id", "group", "source", "entries", "identityStatus", "basis"], "additionalProperties": false,
+      "properties": {
+        "id": {"$ref": "#/$defs/id"}, "group": {"$ref": "#/$defs/id"}, "source": {"$ref": "#/$defs/id"},
+        "entries": {"type": "array", "uniqueItems": true, "items": {"type": "string"}},
+        "identityStatus": {"const": "unmatched"}, "basis": {"type": "string"}
+      }
+    },
+    "realizationEvidence": {
+      "description": "Live evidence projection of one source link. These layers are independent; an ID or literal digest is not an equality, isomorphism or classification certificate.",
+      "type": "object",
+      "required": ["id", "source", "entry", "catalogKey", "relation", "status", "coordinateSet", "topology", "chirality", "classification", "license", "sourceEvidence"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"}, "source": {"$ref": "#/$defs/id"}, "entry": {"type": "string"},
+        "catalogKey": {"type": ["string", "null"]},
+        "relation": {"enum": ["realization", "reflected-realization"]},
+        "status": {"enum": ["mapped-unverified", "stale-or-missing"]},
+        "coordinateSet": {"$ref": "#/$defs/representationEvidence"},
+        "topology": {"$ref": "#/$defs/representationEvidence"},
+        "chirality": {"type": "object"},
+        "classification": {"type": "object", "required": ["status", "scope"], "properties": {
+          "status": {"enum": ["source-asserted", "unmatched"]}, "scope": {"type": "string"}
+        }},
+        "license": {"type": "object", "required": ["status"], "properties": {
+          "status": {"enum": ["documented", "unverified"]}
+        }},
+        "sourceEvidence": {"type": "object"}
+      }
+    },
+    "representationEvidence": {
+      "type": "object", "required": ["id", "status", "comparison", "sha256"],
+      "properties": {
+        "id": {"type": "string"}, "status": {"type": "string"}, "comparison": {"type": "string"},
+        "sha256": {"anyOf": [{"$ref": "#/$defs/sha"}, {"type": "null"}]}
+      }
+    }
+  }
+}

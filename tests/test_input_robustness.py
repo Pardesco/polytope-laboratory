@@ -1,4 +1,5 @@
 """Seeded byte/structure mutations; each corpus runs in a killable child process."""
+
 import copy
 import json
 import math
@@ -21,17 +22,33 @@ def sample(d=3):
     # Hand-authored tetrahedron / 4-simplex, independent of the hull generator.
     vertices = [[0] * d] + [[int(i == j) for i in range(d)] for j in range(d)]
     from itertools import combinations
-    return {'dimension': d, 'embeddingDimension': d, 'vertices': vertices,
-            'edges': list(map(list, combinations(range(d + 1), 2))),
-            'faces': list(map(list, combinations(range(d + 1), 3))),
-            'cells': [list(ids) for ids in combinations(range(10), 4)
-                      if len({v for f in ids for v in list(combinations(range(5), 3))[f]}) == 4] if d == 4 else [],
-            'interpretation': 'generalized-complex', 'metadata': {}, 'numeric': {}}
+
+    return {
+        'dimension': d,
+        'embeddingDimension': d,
+        'vertices': vertices,
+        'edges': list(map(list, combinations(range(d + 1), 2))),
+        'faces': list(map(list, combinations(range(d + 1), 3))),
+        'cells': [
+            list(ids)
+            for ids in combinations(range(10), 4)
+            if len({v for f in ids for v in list(combinations(range(5), 3))[f]}) == 4
+        ]
+        if d == 4
+        else [],
+        'interpretation': 'generalized-complex',
+        'metadata': {},
+        'numeric': {},
+    }
 
 
 def project():
-    return {'format': 'polytope-laboratory', 'version': 1, 'active': 0,
-            'documents': [{'cursor': 0, 'states': [{'model': sample(), 'view': {}}]}]}
+    return {
+        'format': 'polytope-laboratory',
+        'version': 1,
+        'active': 0,
+        'documents': [{'cursor': 0, 'states': [{'model': sample(), 'view': {}}]}],
+    }
 
 
 DXF = b'0\nSECTION\n2\nENTITIES\n0\n3DFACE\n10\n0\n20\n0\n11\n1\n21\n0\n12\n0\n22\n1\n0\nENDSEC\n0\nEOF\n'
@@ -49,11 +66,23 @@ def mutations(source, rng, count):
         elif action == 1 and start < len(data):
             data[start] ^= 1 << rng.randrange(8)
         elif action == 2:
-            data[start:start] = rng.choice([b'NaN', b'Infinity', b'-1', b'1e999', b'999999999999',
-                                          b'\x00', b'\xff', b'\r\n', '\u2603'.encode(), b'"\\ud800"'])
+            data[start:start] = rng.choice(
+                [
+                    b'NaN',
+                    b'Infinity',
+                    b'-1',
+                    b'1e999',
+                    b'999999999999',
+                    b'\x00',
+                    b'\xff',
+                    b'\r\n',
+                    '\u2603'.encode(),
+                    b'"\\ud800"',
+                ]
+            )
         elif action == 3:
             end = min(len(data), start + rng.randrange(1, 20))
-            data[start:end] = data[max(0, start - 10):start]
+            data[start:end] = data[max(0, start - 10) : start]
         else:
             data.extend(rng.choice([b'[]', b'{}', b'\r\n', b'\xef\xbb\xbf']))
         yield bytes(data)
@@ -67,9 +96,13 @@ def structure_mutations(kind, rng, count):
         model = data['documents'][0]['states'][0]['model'] if kind == 'polyproj' else data
         action = rng.randrange(6)
         if action == 0:
-            model[rng.choice(['vertices', 'edges', 'faces', 'cells', 'numeric', 'metadata', 'provenance'])] = rng.choice([None, True, 42, [], {}, '雪', [None], [[0, 1, 0]]])
+            model[rng.choice(['vertices', 'edges', 'faces', 'cells', 'numeric', 'metadata', 'provenance'])] = (
+                rng.choice([None, True, 42, [], {}, '雪', [None], [[0, 1, 0]]])
+            )
         elif action == 1:
-            model['vertices'][0][rng.randrange(3)] = rng.choice([-10, -1e308, 1e308, float('nan'), float('inf'), '\ud800', {}, True, 10**500])
+            model['vertices'][0][rng.randrange(3)] = rng.choice(
+                [-10, -1e308, 1e308, float('nan'), float('inf'), '\ud800', {}, True, 10**500]
+            )
         elif action == 2:
             model['faces'][0] = rng.choice([[0, 0, 1], [0, 1, -1], [0, 1, 9999999999], [0, 1, 2] * 500, [[], 1, 2]])
         elif action == 3:
@@ -78,14 +111,20 @@ def structure_mutations(kind, rng, count):
             model['faces'] += [model['faces'][0][:]] * 3
         elif kind == 'polyproj':
             state = data['documents'][0]['states'][0]
-            state['view'][rng.choice(['angles', 'dualMorph', 'multiViews', 'animation', 'elementAnnotations', 'orientationFrame'])] = rng.choice([None, True, '雪', [], {}, [1e308]])
+            state['view'][
+                rng.choice(['angles', 'dualMorph', 'multiViews', 'animation', 'elementAnnotations', 'orientationFrame'])
+            ] = rng.choice([None, True, '雪', [], {}, [1e308]])
         else:
             model['cells'] = [[0, 0, 0]]
         yield json.dumps(data, ensure_ascii=True).encode()
 
 
 def assert_valid(result):
-    models = [result['model']] if 'model' in result else [s['model'] for d in result['project']['documents'] for s in d['states']]
+    models = (
+        [result['model']]
+        if 'model' in result
+        else [s['model'] for d in result['project']['documents'] for s in d['states']]
+    )
     for model in models:
         assert validate(model)['passed']
         assert all(math.isfinite(x) for row in model['vertices'] for x in row)
@@ -94,15 +133,21 @@ def assert_valid(result):
 
 def _fuzz_worker(root, kind, count, queue):
     try:
-        source = { 'off': export_off(sample()).encode(), '4off': export_off(sample(4)).encode(),
-                   'dxf': DXF, 'json': json.dumps(sample()).encode(),
-                   'polyproj': json.dumps(project()).encode()}[kind]
+        source = {
+            'off': export_off(sample()).encode(),
+            '4off': export_off(sample(4)).encode(),
+            'dxf': DXF,
+            'json': json.dumps(sample()).encode(),
+            'polyproj': json.dumps(project()).encode(),
+        }[kind]
         from pathlib import Path
+
         path = Path(root) / ('mutated.' + ('off' if kind == '4off' else kind))
         rng = random.Random(4700 + ['off', '4off', 'dxf', 'json', 'polyproj'].index(kind))
         tracemalloc.start()
         started = time.monotonic()
         from itertools import chain
+
         corpus = chain(mutations(source, rng, count), structure_mutations(kind, rng, count))
         for index, raw in enumerate(corpus):
             path.write_bytes(raw)
@@ -118,6 +163,7 @@ def _fuzz_worker(root, kind, count, queue):
         queue.put(('ok', time.monotonic() - started))
     except BaseException:
         import traceback
+
         queue.put(('error', traceback.format_exc()))
 
 
@@ -141,8 +187,18 @@ def test_seeded_import_mutations(tmp_path, kind):
         queue.close()
 
 
-@pytest.mark.parametrize('payload', [b'{', b'[]', b'{"format":"polytope-laboratory","version":999}',
-    b'[' * 1500 + b'0' + b']' * 1500, b'{"vertices":NaN}', b'"\\ud800"', b'\xff'])
+@pytest.mark.parametrize(
+    'payload',
+    [
+        b'{',
+        b'[]',
+        b'{"format":"polytope-laboratory","version":999}',
+        b'[' * 1500 + b'0' + b']' * 1500,
+        b'{"vertices":NaN}',
+        b'"\\ud800"',
+        b'\xff',
+    ],
+)
 def test_corrupt_json_is_a_diagnostic(tmp_path, payload):
     path = tmp_path / 'broken.polyproj'
     path.write_bytes(payload)
@@ -150,7 +206,9 @@ def test_corrupt_json_is_a_diagnostic(tmp_path, payload):
         load_file(path)
 
 
-@pytest.mark.parametrize('field,value', [('model', []), ('model', None), ('view', []), ('netLayout', 3), ('netPages', 3)])
+@pytest.mark.parametrize(
+    'field,value', [('model', []), ('model', None), ('view', []), ('netLayout', 3), ('netPages', 3)]
+)
 def test_malformed_project_records_are_diagnostics(field, value):
     data = project()
     state = data['documents'][0]['states'][0]
@@ -186,7 +244,7 @@ def test_off_bad_text_is_a_diagnostic(value):
         parse_off(value)
 
 
-@pytest.mark.parametrize('coordinate', [10 ** 500, 1e308, float('nan'), float('inf')])
+@pytest.mark.parametrize('coordinate', [10**500, 1e308, float('nan'), float('inf')])
 def test_unsafe_project_coordinates(coordinate):
     data = project()
     data['documents'][0]['states'][0]['model']['vertices'][0][0] = coordinate
@@ -206,6 +264,7 @@ def test_rational_exponent_bomb_refuses_before_fraction_allocation(field, litera
 @pytest.mark.parametrize('key', ['\ud800', 'normal'])
 def test_history_invalid_unicode_is_a_geometry_error(key):
     from engine.history import _json_bytes
+
     with pytest.raises(GeometryError, match='UTF-8'):
         _json_bytes({key: '\ud800'})
 
@@ -213,10 +272,16 @@ def test_history_invalid_unicode_is_a_geometry_error(key):
 @pytest.mark.parametrize('kind', ['off', '4off', 'json', 'polyproj'])
 def test_explicit_hostile_geometry_structures(tmp_path, kind):
     original = sample(4 if kind == '4off' else 3)
-    changes = [('vertices', [[float('nan'), 0, 0]]), ('vertices', [[float('inf'), 0, 0]]),
-               ('vertices', [[-1e308, 0, 0]]), ('faces', [[0, 0, 1]]),
-               ('faces', [[-1, 0, 1]]), ('faces', [[0, 1, 999999999]]),
-               ('faces', [[0, 1, 2] * 1000]), ('cells', [[0, 0, 0]])]
+    changes = [
+        ('vertices', [[float('nan'), 0, 0]]),
+        ('vertices', [[float('inf'), 0, 0]]),
+        ('vertices', [[-1e308, 0, 0]]),
+        ('faces', [[0, 0, 1]]),
+        ('faces', [[-1, 0, 1]]),
+        ('faces', [[0, 1, 999999999]]),
+        ('faces', [[0, 1, 2] * 1000]),
+        ('cells', [[0, 0, 0]]),
+    ]
     path = tmp_path / ('hostile.' + ('off' if kind == '4off' else kind))
     for key, value in changes:
         model = copy.deepcopy(original)
@@ -240,14 +305,14 @@ def test_explicit_hostile_geometry_structures(tmp_path, kind):
 
 
 def test_huge_counts_and_boundaries_refuse_before_geometry():
-    for text in ['OFF\n999999999999 0 0\n', '4OFF\n5 0 0 999999999\n',
-                 'OFF\n1 1 0\n0 0 0\n999999999999 0\n']:
+    for text in ['OFF\n999999999999 0 0\n', '4OFF\n5 0 0 999999999\n', 'OFF\n1 1 0\n0 0 0\n999999999999 0\n']:
         with pytest.raises(GeometryError, match='limits|limit'):
             parse_off(text)
 
 
 def test_resource_limits_are_enforced_with_small_test_budgets(tmp_path, monkeypatch):
     from engine import formats, input_limits, dxf
+
     path = tmp_path / 'oversized.off'
     path.write_bytes(b'x' * 33)
     monkeypatch.setattr(formats, 'MAX_FILE_BYTES', 32)
@@ -263,6 +328,7 @@ def test_resource_limits_are_enforced_with_small_test_budgets(tmp_path, monkeypa
 
 def test_bounded_request_reader_drains_one_record_and_preserves_the_next():
     from engine.request_stream import bounded_lines, response_line
+
     assert list(bounded_lines(io.BytesIO(b'x' * 100 + b'\n{}\nlast'), limit=8)) == [None, b'{}\n', b'last']
     assert list(bounded_lines(io.BytesIO(b'x' * 100), limit=8)) == [None]
     assert list(bounded_lines(io.BytesIO(b''), limit=8)) == []
@@ -272,11 +338,21 @@ def test_bounded_request_reader_drains_one_record_and_preserves_the_next():
 
 
 def test_native_protocol_survives_corrupt_records_then_completes_a_valid_request():
-    records = [b'\xff\n', b'{\n', b'[]\n', b'[' * 1000 + b'0' + b']' * 1000 + b'\n',
-               b'{"id":"\\ud800","op":"\\ud800"}\n',
-               b'{"id":"valid","op":"expression","params":{"expression":"2+3"}}\n']
-    child = subprocess.run([sys.executable, '-m', 'engine.server'], input=b''.join(records),
-                           stdout=subprocess.PIPE, stderr=subprocess.PIPE, timeout=8)
+    records = [
+        b'\xff\n',
+        b'{\n',
+        b'[]\n',
+        b'[' * 1000 + b'0' + b']' * 1000 + b'\n',
+        b'{"id":"\\ud800","op":"\\ud800"}\n',
+        b'{"id":"valid","op":"expression","params":{"expression":"2+3"}}\n',
+    ]
+    child = subprocess.run(
+        [sys.executable, '-m', 'engine.server'],
+        input=b''.join(records),
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        timeout=8,
+    )
     assert child.returncode == 0, child.stderr
     replies = [json.loads(line) for line in child.stdout.splitlines()]
     assert len(replies) == len(records)
@@ -286,6 +362,7 @@ def test_native_protocol_survives_corrupt_records_then_completes_a_valid_request
 
 def test_bom_repair_preserves_original_spelling():
     from engine.formats import repair_off_edge_count
+
     source = '\ufeff' + export_off(sample()).replace('4 4 6', '4 4 7')
     repaired = repair_off_edge_count(source)
     assert repaired['text'] == source.replace('4 4 7', '4 4 6')
@@ -293,6 +370,7 @@ def test_bom_repair_preserves_original_spelling():
 
 def test_history_snapshot_rejects_malformed_model_shapes():
     from engine.history import _snapshot
+
     data = {'model': sample(), 'view': {}}
     data['model']['numeric'] = []
     with pytest.raises(GeometryError, match='numeric must be an object'):
@@ -302,11 +380,14 @@ def test_history_snapshot_rejects_malformed_model_shapes():
 def test_adversarial_4d_hull_is_bounded_before_full_incidence_reconstruction(monkeypatch):
     import numpy as np
     from engine import formats
+
     t = np.linspace(-1, 1, 100)
     points = np.column_stack([t**i for i in range(1, 5)]).tolist()
     text = '4OFF\n100 0 0 0\n' + '\n'.join(' '.join(map(str, row)) for row in points)
+
     def unexpected(*args):
         raise AssertionError('Unbounded hull reconstruction must not run')
+
     monkeypatch.setattr(formats, 'hull', unexpected)
     model = parse_off(text)
     assert model['interpretation'] == 'generalized-complex'
@@ -317,6 +398,7 @@ def test_adversarial_4d_hull_is_bounded_before_full_incidence_reconstruction(mon
 @pytest.mark.parametrize('separator', ['\n', '\r\n', '\x85', '\u2028'])
 def test_line_expansion_refuses_before_splitlines(monkeypatch, separator):
     from engine import formats
+
     monkeypatch.setattr(formats, 'MAX_OFF_LINES', 5)
     with pytest.raises(GeometryError, match='5 text lines'):
         parse_off(separator * 6)
@@ -324,6 +406,7 @@ def test_line_expansion_refuses_before_splitlines(monkeypatch, separator):
 
 def test_off_token_expansion_refuses_before_numeric_conversion():
     from engine.formats import repair_off_edge_count
+
     text = 'OFF\n' + '0 ' * 10000
     for parse in (parse_off, repair_off_edge_count):
         with pytest.raises(GeometryError, match='16,384-character'):

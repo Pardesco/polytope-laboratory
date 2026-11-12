@@ -1,0 +1,28 @@
+{
+  "scenarioId": "con-08-subdivision-inheritance",
+  "definition": "One and two consecutive native refinement steps, not an assertion about competitor frequency semantics. Face labels detach without replication.",
+  "cube": {
+    "id": "r8-inheritance-cube", "name": "Inheritance cube", "dimension": 3, "embeddingDimension": 3,
+    "interpretation": "convex-polytope", "numeric": {"mode":"float64-approximate", "certified":false},
+    "vertices": [[0,0,0],[1,0,0],[1,1,0],[0,1,0],[0,0,1],[1,0,1],[1,1,1],[0,1,1]],
+    "edges": [[0,1],[1,2],[2,3],[0,3],[4,5],[5,6],[6,7],[4,7],[0,4],[1,5],[2,6],[3,7]],
+    "faces": [[0,3,2,1],[4,5,6,7],[0,1,5,4],[1,2,6,5],[2,3,7,6],[3,0,4,7]], "cells": [],
+    "metadata": {"coordinateUnits":"mm", "fillRule":"even-odd", "catalogClaim":"must not inherit as classification", "offColors":{"faces":[
+      {"encoding":"byte","values":[255,0,0,128]},
+      {"encoding":"unit","values":[0,1,0,0.25]},
+      {"encoding":"byte","values":[0,0,255,0]},
+      null,
+      {"encoding":"byte","values":[240,180,10,255]},
+      null
+    ],"cells":[]}}
+  },
+  "markup": "<b>Source face 0</b>",
+  "cases": [
+    {"key":"centroid", "operation":"subdivide-faces", "parameters":{"method":"centroid"}, "counts":[[14,36,24,0],[38,108,72,0]], "childrenPerFace":[4,3]},
+    {"key":"midpoint", "operation":"subdivide-faces", "parameters":{"method":"midpoint"}, "counts":[[26,48,24,0],[98,192,96,0]], "childrenPerFace":[4,4]},
+    {"key":"kis", "operation":"subdivide-faces", "parameters":{"method":"kis","height":0.01}, "counts":[[14,36,24,0],[38,108,72,0]], "childrenPerFace":[4,3]},
+    {"key":"conway-k", "operation":"conway", "parameters":{"notation":"k"}, "counts":[[14,36,24,0],[38,108,72,0]], "childrenPerFace":[4,3]},
+    {"key":"edge-2", "operation":"subdivide-edges", "parameters":{"divisions":2}, "counts":[[20,24,6,0],[44,48,6,0]], "childrenPerFace":[1,1]},
+    {"key":"edge-1", "operation":"subdivide-edges", "parameters":{"divisions":1}, "counts":[[8,12,6,0],[8,12,6,0]], "childrenPerFace":[1,1]}
+  ]
+}

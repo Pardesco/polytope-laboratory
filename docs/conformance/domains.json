@@ -1,0 +1,651 @@
+{
+  "schema_version": 1,
+  "domains": [
+    {
+      "id": "hull-core",
+      "dimensions": [
+        3,
+        4
+      ],
+      "object_classes": [
+        "finite point set",
+        "facial/cell-plane chamber"
+      ],
+      "implementation": [
+        "engine/geometry.py",
+        "engine/rational.py",
+        "engine/convex_core.py",
+        "engine/convex_core4d.py"
+      ],
+      "parameter_limits": {
+        "rationalHullInputPoints": 32,
+        "core4dSourceVertices": 256,
+        "core4dSourceCells": 64,
+        "core4dDistinctHyperplanes": 16,
+        "core4dOutputVertices": 64
+      },
+      "unsupported": [
+        "Unbounded cores are refused, not boxed.",
+        "No general certified float hull fallback."
+      ],
+      "numeric_contract": "Float64 approximate unless the case explicitly scopes exact supplied-input arithmetic; no general algebraic certificate."
+    },
+    {
+      "id": "dual",
+      "dimensions": [
+        3,
+        4
+      ],
+      "object_classes": [
+        "convex boundary",
+        "qualified generalized incidence boundary"
+      ],
+      "implementation": [
+        "engine/operations.py",
+        "engine/incidence_dual.py",
+        "engine/incidence_dual_4d.py",
+        "engine/projective_incidence_dual.py"
+      ],
+      "parameter_limits": {
+        "incidenceDual3dFaces": 2048,
+        "center": "finite selected intrinsic point",
+        "radius": "finite positive; per-dispatch validation"
+      },
+      "unsupported": [
+        "Singular finite reciprocals refuse.",
+        "Projective clipped inspection is 3D only; not an unbounded native 4D solid."
+      ],
+      "numeric_contract": "Float64 approximate unless the case explicitly scopes exact supplied-input arithmetic; no general algebraic certificate."
+    },
+    {
+      "id": "sections",
+      "dimensions": [
+        3,
+        4
+      ],
+      "object_classes": [
+        "convex boundary",
+        "oriented closed generalized boundary",
+        "declared convex-piece union",
+        "ordered face surface"
+      ],
+      "implementation": [
+        "engine/operations.py",
+        "engine/generalized_sections.py",
+        "engine/filled_sections.py",
+        "engine/ordinary_cell_sections.py"
+      ],
+      "parameter_limits": {
+        "plane": "finite nonzero intrinsic normal and depth",
+        "fillRules": [
+          "nonzero",
+          "even-odd",
+          "density"
+        ],
+        "limits": "Orientation/arrangement budgets and ordinary-cell qualifications are enforced by the selected adapter."
+      },
+      "unsupported": [
+        "Surface curves do not define a filled solid.",
+        "Global generalized 4D interior is not universally supported."
+      ],
+      "numeric_contract": "Float64 approximate unless the case explicitly scopes exact supplied-input arithmetic; no general algebraic certificate."
+    },
+    {
+      "id": "nets",
+      "dimensions": [
+        3,
+        4
+      ],
+      "object_classes": [
+        "convex shell",
+        "qualified ordinary nonconvex shell",
+        "qualified star-cell boundary"
+      ],
+      "implementation": [
+        "engine/nets.py",
+        "engine/generalized_nets.py",
+        "engine/net_tabs.py",
+        "engine/net_printing.py",
+        "engine/cell_nets.py",
+        "engine/net_fabrication.py"
+      ],
+      "parameter_limits": {
+        "scale": "physical mm; packing never rescales intact components",
+        "connections": "acyclic hinge forest",
+        "foldFraction": [
+          0,
+          1
+        ],
+        "cellPlacement": "whole-cell rigid SE(3)"
+      },
+      "unsupported": [
+        "No collision-free folding guarantee.",
+        "No partially folded 4D nets.",
+        "Printer calibration not established by digital vector checks."
+      ],
+      "numeric_contract": "Float64 approximate unless the case explicitly scopes exact supplied-input arithmetic; no general algebraic certificate."
+    },
+    {
+      "id": "fitting",
+      "dimensions": [
+        3,
+        4
+      ],
+      "object_classes": [
+        "intrinsic convex boundary; warped starting coordinates accepted for repair"
+      ],
+      "implementation": [
+        "engine/geometric_fitting.py",
+        "engine/condition_fitting.py"
+      ],
+      "parameter_limits": {
+        "vertices": 64,
+        "faces": 256,
+        "cells": 128,
+        "faceVertices": 32,
+        "evaluations": 400,
+        "residualCalls": 12000,
+        "conditions": [
+          "regular-faces",
+          "planar-faces",
+          "equal-edges",
+          "equal-areas"
+        ]
+      },
+      "unsupported": [
+        "Generalized/nonconvex sources refused.",
+        "Convergence is separate from residual satisfaction and geometric validity."
+      ],
+      "numeric_contract": "Float64 approximate unless the case explicitly scopes exact supplied-input arithmetic; no general algebraic certificate."
+    },
+    {
+      "id": "spring",
+      "dimensions": [
+        3
+      ],
+      "object_classes": [
+        "closed literal edge/face network with single cyclic links"
+      ],
+      "implementation": [
+        "engine/spring_relaxation.py",
+        "engine/spring_workflow.py"
+      ],
+      "parameter_limits": {
+        "vertices": 256,
+        "edges": 2048,
+        "faces": 512,
+        "faceVertices": 64,
+        "springs": 8192,
+        "evaluations": 2000,
+        "springVisits": 2000000,
+        "initialization": [
+          "source",
+          "random"
+        ]
+      },
+      "unsupported": [
+        "No general isomer/uniformity certificate.",
+        "No baseline spring-description grammar compatibility claim."
+      ],
+      "numeric_contract": "Float64 approximate unless the case explicitly scopes exact supplied-input arithmetic; no general algebraic certificate."
+    },
+    {
+      "id": "generators",
+      "dimensions": [
+        3,
+        4
+      ],
+      "object_classes": [
+        "rational podia/antipodia",
+        "stephanoid",
+        "torus surface",
+        "Waterman lattice hull",
+        "polygon products"
+      ],
+      "implementation": [
+        "engine/podia.py",
+        "engine/stephanoids.py",
+        "engine/torus.py",
+        "engine/waterman.py",
+        "engine/products.py",
+        "engine/antiprisms.py"
+      ],
+      "parameter_limits": {
+        "podiaVertices": 4000,
+        "torusVertices": 4000,
+        "torusTwist": [
+          -128,
+          128
+        ],
+        "stephanoidOrder": 128,
+        "watermanInspectedSites": 1000000,
+        "watermanOutputVertices": 4000,
+        "watermanRationalBits": 256,
+        "optionDomains": "Each case and kernel has additional nondegeneracy/incidence restrictions; these caps do not imply all combinations are supported."
+      },
+      "unsupported": [
+        "5.4 lacks dedicated documented 6.0 podium/segmentotope workflows.",
+        "3D FCC workflow does not establish full baseline 4D Waterman options."
+      ],
+      "numeric_contract": "Float64 approximate unless the case explicitly scopes exact supplied-input arithmetic; no general algebraic certificate."
+    },
+    {
+      "id": "modifications",
+      "dimensions": [
+        3,
+        4
+      ],
+      "object_classes": [
+        "convex source",
+        "qualified generalized flag/link source",
+        "literal compound"
+      ],
+      "implementation": [
+        "engine/operations.py",
+        "engine/incidence_truncation.py",
+        "engine/static_expansion.py",
+        "engine/static_expansion4d.py",
+        "engine/face_blending.py"
+      ],
+      "parameter_limits": {
+        "incidenceCutVertices": 256,
+        "incidenceCutEdges": 1024,
+        "incidenceCutFaces": 512,
+        "incidenceCutFaceVertices": 64,
+        "parameterInterpretation": "Use native preset/ratio contract, not an assumed common percentage across convex and generalized adapters.",
+        "incidenceCut3dAmount": [
+          0,
+          1024
+        ],
+        "incidenceCut3dExcludedAmount": 1,
+        "expansionRatio": [
+          0,
+          1
+        ]
+      },
+      "unsupported": [
+        "Generalized cut/expansion depends on checked links and planes.",
+        "4D face blending cannot reconstruct arbitrary distinct cell shells."
+      ],
+      "numeric_contract": "Float64 approximate unless the case explicitly scopes exact supplied-input arithmetic; no general algebraic certificate."
+    },
+    {
+      "id": "attachment",
+      "dimensions": [
+        3
+      ],
+      "object_classes": [
+        "convex target",
+        "congruent attachment face",
+        "qualified opposite-face tunnel"
+      ],
+      "implementation": [
+        "engine/augmentation.py",
+        "engine/face_surgery.py",
+        "engine/face_placement.py"
+      ],
+      "parameter_limits": {
+        "sources": [
+          "generated",
+          "library",
+          "memory"
+        ],
+        "matching": "metric face shape/size and explicit orientation",
+        "collision": "bounded numerical intersection checks"
+      },
+      "unsupported": [
+        "Not arbitrary generalized-surface excavation.",
+        "No unrestricted solid Boolean contract."
+      ],
+      "numeric_contract": "Float64 approximate unless the case explicitly scopes exact supplied-input arithmetic; no general algebraic certificate."
+    },
+    {
+      "id": "refinement",
+      "dimensions": [
+        3
+      ],
+      "object_classes": [
+        "qualified convex source",
+        "qualified triangular spherical boundary"
+      ],
+      "implementation": [
+        "engine/source_zonohedron.py",
+        "engine/w12_workflow.py",
+        "engine/triangular_geodesic.py",
+        "engine/sphere_projection.py"
+      ],
+      "parameter_limits": {
+        "geodesic": "integer bounded frequency on qualified triangular source with common sphere",
+        "inheritance": "source maps/colors retained only where defined"
+      },
+      "unsupported": [
+        "No universal regularity after radial projection.",
+        "Arbitrary star/crossing refinements need a separate contract."
+      ],
+      "numeric_contract": "Float64 approximate unless the case explicitly scopes exact supplied-input arithmetic; no general algebraic certificate."
+    },
+    {
+      "id": "step-products",
+      "dimensions": [
+        4
+      ],
+      "object_classes": [
+        "closed 3D shell times interval",
+        "rational polygon product",
+        "ordinary equal-radius correlated step prism"
+      ],
+      "implementation": [
+        "engine/prisms.py",
+        "engine/products.py",
+        "engine/antiprisms.py",
+        "engine/step_prisms.py"
+      ],
+      "parameter_limits": {
+        "stepPrismOrder": [
+          5,
+          128
+        ],
+        "step": "nonzero integer abs(step)<order; full-rank check",
+        "radius": [
+          1e-70,
+          1e+70
+        ]
+      },
+      "unsupported": [
+        "Rational-symbol step prisms and arbitrary multiprisms unsupported.",
+        "Step-prism hull and origin polar gyrochoron are distinct constructions."
+      ],
+      "numeric_contract": "Float64 approximate unless the case explicitly scopes exact supplied-input arithmetic; no general algebraic certificate."
+    },
+    {
+      "id": "segmentotope",
+      "dimensions": [
+        4
+      ],
+      "object_classes": [
+        "convex parallel-layer join",
+        "declared crossed antiprism times interval"
+      ],
+      "implementation": [
+        "engine/segmentotopes.py",
+        "engine/crossed_segmentotopes.py"
+      ],
+      "parameter_limits": {
+        "layerDefinition": "explicit W-layer partition; rigid layer transform",
+        "strictness": "equal edges alone do not prove regular faces/common sphere"
+      },
+      "unsupported": [
+        "Crossed checkbox equivalence unverified.",
+        "Arbitrary crossed layer combinations unsupported."
+      ],
+      "numeric_contract": "Float64 approximate unless the case explicitly scopes exact supplied-input arithmetic; no general algebraic certificate."
+    },
+    {
+      "id": "vertex-figure",
+      "dimensions": [
+        3
+      ],
+      "object_classes": [
+        "intrinsic convex source figure for finite 4D completion matching"
+      ],
+      "implementation": [
+        "engine/vertex_figure_construction.py"
+      ],
+      "parameter_limits": {
+        "sourceVertices": [
+          4,
+          64
+        ],
+        "domains": [
+          "regular-convex",
+          "regular-and-wythoff"
+        ],
+        "metricTolerance": 8e-08,
+        "searchNodes": 100000
+      },
+      "unsupported": [
+        "No general uniform/scaliform reconstruction search.",
+        "Ambiguous candidates must be selected explicitly."
+      ],
+      "numeric_contract": "Float64 approximate unless the case explicitly scopes exact supplied-input arithmetic; no general algebraic certificate."
+    },
+    {
+      "id": "stellation",
+      "dimensions": [
+        3
+      ],
+      "object_classes": [
+        "facial or explicit arbitrary plane arrangement",
+        "observed convex-region union"
+      ],
+      "implementation": [
+        "engine/stellation.py",
+        "engine/stellation_diagrams.py",
+        "engine/stellation_cells.py",
+        "engine/miller_stellations.py"
+      ],
+      "parameter_limits": {
+        "arbitraryPlanes": [
+          1,
+          32
+        ],
+        "observationBoxScale": [
+          1.01,
+          100
+        ],
+        "regions": [
+          1,
+          8192
+        ],
+        "enumerationOrbits": [
+          1,
+          20
+        ],
+        "semantics": "LP boundedness and observed-box completion are separate from unrestricted enumeration."
+      },
+      "unsupported": [
+        "Arbitrary planes are engine-only in this baseline.",
+        "Miller 59 is supported on its qualified icosahedron, not on every seed.",
+        "Facial editor lacks arbitrary subgroup authoring."
+      ],
+      "numeric_contract": "Float64 approximate unless the case explicitly scopes exact supplied-input arithmetic; no general algebraic certificate."
+    },
+    {
+      "id": "faceting",
+      "dimensions": [
+        3
+      ],
+      "object_classes": [
+        "finite full-rank supplied vertex set with source incidence"
+      ],
+      "implementation": [
+        "engine/automatic_faceting.py",
+        "engine/faceting_search_filters.py",
+        "engine/faceting_tidy_dual.py",
+        "engine/faceting_diagram.py",
+        "engine/faceting_diagram_edit.py"
+      ],
+      "parameter_limits": {
+        "sourceVertices": [
+          4,
+          12
+        ],
+        "faceCorners": 8,
+        "candidates": 4096,
+        "searchVariables": 256,
+        "searchNodes": 200000,
+        "results": 128,
+        "groupElements": 128,
+        "fractionBits": 4096
+      },
+      "unsupported": [
+        "20-vertex dodecahedron is outside automatic source domain.",
+        "Exact binary64 coplanarity does not certify intended trigonometric planes.",
+        "No general 4D faceting."
+      ],
+      "numeric_contract": "Float64 approximate unless the case explicitly scopes exact supplied-input arithmetic; no general algebraic certificate."
+    },
+    {
+      "id": "materials",
+      "dimensions": [
+        3,
+        4
+      ],
+      "object_classes": [
+        "3D display",
+        "projected 4D display; 4D optics optional"
+      ],
+      "implementation": [
+        "ui/viewer-material-effects.mjs",
+        "ui/material-effects-controls.mjs",
+        "engine/material_effects_state.py"
+      ],
+      "parameter_limits": {
+        "bump": [
+          "none",
+          "waves",
+          "pebbles"
+        ],
+        "bumpStrength": [
+          0,
+          0.1
+        ],
+        "bumpFrequency": [
+          1,
+          32
+        ],
+        "reflection": [
+          "none",
+          "studio"
+        ],
+        "reflectivity": [
+          0,
+          1
+        ],
+        "environmentMode": [
+          "reflection",
+          "refraction"
+        ],
+        "refractiveIndex": [
+          1,
+          3
+        ],
+        "reflectionSourceFaces": 12000
+      },
+      "unsupported": [
+        "Environment-only refraction is not object ray tracing.",
+        "No arbitrary imported bump/environment assets.",
+        "Transparent overlap rendering needs device qualification."
+      ],
+      "numeric_contract": "Float64 approximate unless the case explicitly scopes exact supplied-input arithmetic; no general algebraic certificate."
+    },
+    {
+      "id": "interchange",
+      "dimensions": [
+        3,
+        4
+      ],
+      "object_classes": [
+        "OFF/4OFF boundary",
+        "supported ASCII DXF entities",
+        "intrinsic/displayed 3D export geometry"
+      ],
+      "implementation": [
+        "engine/formats.py",
+        "engine/dxf.py",
+        "engine/dxf_breadth.py",
+        "engine/interchange.py",
+        "ui/interchange-controls.mjs"
+      ],
+      "parameter_limits": {
+        "importFormats": [
+          "OFF",
+          "4OFF",
+          "ASCII DXF"
+        ],
+        "baselineExportFormats": [
+          "OFF",
+          "OBJ",
+          "STL",
+          "DXF",
+          "VRML",
+          "POV"
+        ],
+        "dxfEntities": [
+          "3DFACE",
+          "polyface",
+          "LINE",
+          "POINT",
+          "straight LWPOLYLINE",
+          "rectangular polygon mesh"
+        ],
+        "units": "explicit scale/units; loss preview before publication"
+      },
+      "unsupported": [
+        "Binary DXF, curves/bulges/width/ACIS refuse; baseline requirement unresolved.",
+        "STL/POV intrinsic solid restrictions differ from displayed surface export."
+      ],
+      "numeric_contract": "Float64 approximate unless the case explicitly scopes exact supplied-input arithmetic; no general algebraic certificate."
+    },
+    {
+      "id": "media",
+      "dimensions": [
+        3,
+        4
+      ],
+      "object_classes": [
+        "current mathematical view",
+        "sampled animation output"
+      ],
+      "implementation": [
+        "ui/png-capture-options.mjs",
+        "ui/media-export-options.mjs",
+        "ui/video-recorder.mjs",
+        "desktop/animation-export.cjs"
+      ],
+      "parameter_limits": {
+        "pngPixels": 33554432,
+        "pngBytes": 25165824,
+        "formats": [
+          "PNG",
+          "PNG sequence",
+          "VP8 WebM",
+          "H.264 MP4",
+          "GIF"
+        ],
+        "timing": "PNG exact mathematical sample manifest; MP4 frame-index cadence; GIF centiseconds/quantization"
+      },
+      "unsupported": [
+        "Codec/GPU availability needs shipped Windows qualification.",
+        "Transparent/scaled anaglyph PNG refuses.",
+        "AVI baseline container absent from offered formats; required equivalence unresolved."
+      ],
+      "numeric_contract": "Float64 approximate unless the case explicitly scopes exact supplied-input arithmetic; no general algebraic certificate."
+    },
+    {
+      "id": "manual-faceting",
+      "dimensions": [
+        3
+      ],
+      "object_classes": [
+        "validated supplied 3D vertices with explicit ordered planar face cycles"
+      ],
+      "implementation": [
+        "engine/faceting.py"
+      ],
+      "parameter_limits": {
+        "bound": "native model/incidence validation; automatic 12-vertex search cap does not apply",
+        "cycle": "ordered, planar, at least three distinct source vertices",
+        "faceCycles": [
+          1,
+          10000
+        ]
+      },
+      "unsupported": [
+        "Repeated vertices and invalid/nonplanar cycles refuse.",
+        "No inferred manifold/filled-solid interpretation."
+      ],
+      "numeric_contract": "Float64 approximate validation; supplied star cycles retained without hull replacement."
+    }
+  ]
+}

@@ -1,0 +1,712 @@
+{
+  "format": "polytope-symmetry-fixtures",
+  "version": 1,
+  "scope": "All 39 native classical 3D realizations (five Platonic, thirteen Archimedean and thirteen Catalan identities with four additional mirror realizations, four Kepler-Poinsot); all sixteen classical regular 4D sources; selected convex A4/B4/F4 and Goursat H4 Wythoff representatives. No claim for all U75, Johnson, compounds, scaliforms, arbitrary imports or 2191 uniform 4D identities.",
+  "references": [
+    {
+      "title": "Heckman, Coxeter Groups, finite Coxeter group orders",
+      "url": "https://www.math.ru.nl/~heckman/CoxeterGroups.pdf",
+      "basis": "A3 24, B3 48, H3 120; A4 120, B4 384, F4 1152, H4 14400. Chiral snubs and their duals have the rotation group only. Polar duals preserve the group."
+    },
+    {
+      "title": "Schulte, Regular Polytopes, tables 18.1.1 and 18.2.1",
+      "url": "https://www.csun.edu/~ctoth/Handbook/chap18.pdf",
+      "basis": "Six convex and ten Schlaefli-Hess regular 4D types; independent flag action crosscheck uses regular4d_validation."
+    },
+    {
+      "title": "Incidence controls",
+      "basis": "Removing one icosahedral face leaves its setwise triangle stabilizer of order 6; adding one open five-face tesseract cell leaves order 8. Similarities preserve action permutations; a one-frame cube run cannot exhaust 48 actions."
+    }
+  ],
+  "scenarios": [
+    {
+      "id": "r7-symmetry-tetrahedron",
+      "key": "tetrahedron",
+      "family": "Platonic",
+      "expected": {
+        "order": 24,
+        "properOrder": 12,
+        "flagOrbitCount": 1
+      }
+    },
+    {
+      "id": "r7-symmetry-cube",
+      "key": "cube",
+      "family": "Platonic",
+      "expected": {
+        "order": 48,
+        "properOrder": 24,
+        "flagOrbitCount": 1
+      }
+    },
+    {
+      "id": "r7-symmetry-octahedron",
+      "key": "octahedron",
+      "family": "Platonic",
+      "expected": {
+        "order": 48,
+        "properOrder": 24,
+        "flagOrbitCount": 1
+      }
+    },
+    {
+      "id": "r7-symmetry-dodecahedron",
+      "key": "dodecahedron",
+      "family": "Platonic",
+      "expected": {
+        "order": 120,
+        "properOrder": 60,
+        "flagOrbitCount": 1
+      }
+    },
+    {
+      "id": "r7-symmetry-icosahedron",
+      "key": "icosahedron",
+      "family": "Platonic",
+      "expected": {
+        "order": 120,
+        "properOrder": 60,
+        "flagOrbitCount": 1
+      }
+    },
+    {
+      "id": "r7-symmetry-cuboctahedron",
+      "key": "cuboctahedron",
+      "family": "Archimedean",
+      "expected": {
+        "order": 48,
+        "properOrder": 24,
+        "flagOrbitCount": 2
+      }
+    },
+    {
+      "id": "r7-symmetry-icosidodecahedron",
+      "key": "icosidodecahedron",
+      "family": "Archimedean",
+      "expected": {
+        "order": 120,
+        "properOrder": 60,
+        "flagOrbitCount": 2
+      }
+    },
+    {
+      "id": "r7-symmetry-truncated-tetrahedron",
+      "key": "truncated-tetrahedron",
+      "family": "Archimedean",
+      "expected": {
+        "order": 24,
+        "properOrder": 12,
+        "flagOrbitCount": 3
+      }
+    },
+    {
+      "id": "r7-symmetry-truncated-cube",
+      "key": "truncated-cube",
+      "family": "Archimedean",
+      "expected": {
+        "order": 48,
+        "properOrder": 24,
+        "flagOrbitCount": 3
+      }
+    },
+    {
+      "id": "r7-symmetry-truncated-octahedron",
+      "key": "truncated-octahedron",
+      "family": "Archimedean",
+      "expected": {
+        "order": 48,
+        "properOrder": 24,
+        "flagOrbitCount": 3
+      }
+    },
+    {
+      "id": "r7-symmetry-truncated-dodecahedron",
+      "key": "truncated-dodecahedron",
+      "family": "Archimedean",
+      "expected": {
+        "order": 120,
+        "properOrder": 60,
+        "flagOrbitCount": 3
+      }
+    },
+    {
+      "id": "r7-symmetry-truncated-icosahedron",
+      "key": "truncated-icosahedron",
+      "family": "Archimedean",
+      "expected": {
+        "order": 120,
+        "properOrder": 60,
+        "flagOrbitCount": 3
+      }
+    },
+    {
+      "id": "r7-symmetry-rhombicuboctahedron",
+      "key": "rhombicuboctahedron",
+      "family": "Archimedean",
+      "expected": {
+        "order": 48,
+        "properOrder": 24,
+        "flagOrbitCount": 4
+      }
+    },
+    {
+      "id": "r7-symmetry-truncated-cuboctahedron",
+      "key": "truncated-cuboctahedron",
+      "family": "Archimedean",
+      "expected": {
+        "order": 48,
+        "properOrder": 24,
+        "flagOrbitCount": 6
+      }
+    },
+    {
+      "id": "r7-symmetry-rhombicosidodecahedron",
+      "key": "rhombicosidodecahedron",
+      "family": "Archimedean",
+      "expected": {
+        "order": 120,
+        "properOrder": 60,
+        "flagOrbitCount": 4
+      }
+    },
+    {
+      "id": "r7-symmetry-truncated-icosidodecahedron",
+      "key": "truncated-icosidodecahedron",
+      "family": "Archimedean",
+      "expected": {
+        "order": 120,
+        "properOrder": 60,
+        "flagOrbitCount": 6
+      }
+    },
+    {
+      "id": "r7-symmetry-snub-cube",
+      "key": "snub-cube",
+      "family": "Archimedean",
+      "expected": {
+        "order": 24,
+        "properOrder": 24,
+        "flagOrbitCount": 10
+      }
+    },
+    {
+      "id": "r7-symmetry-snub-cube-mirror",
+      "key": "snub-cube-mirror",
+      "family": "Archimedean",
+      "expected": {
+        "order": 24,
+        "properOrder": 24,
+        "flagOrbitCount": 10
+      }
+    },
+    {
+      "id": "r7-symmetry-snub-dodecahedron",
+      "key": "snub-dodecahedron",
+      "family": "Archimedean",
+      "expected": {
+        "order": 60,
+        "properOrder": 60,
+        "flagOrbitCount": 10
+      }
+    },
+    {
+      "id": "r7-symmetry-snub-dodecahedron-mirror",
+      "key": "snub-dodecahedron-mirror",
+      "family": "Archimedean",
+      "expected": {
+        "order": 60,
+        "properOrder": 60,
+        "flagOrbitCount": 10
+      }
+    },
+    {
+      "id": "r7-symmetry-triakis-tetrahedron",
+      "key": "triakis-tetrahedron",
+      "family": "Catalan",
+      "expected": {
+        "order": 24,
+        "properOrder": 12,
+        "flagOrbitCount": 3
+      }
+    },
+    {
+      "id": "r7-symmetry-rhombic-dodecahedron",
+      "key": "rhombic-dodecahedron",
+      "family": "Catalan",
+      "expected": {
+        "order": 48,
+        "properOrder": 24,
+        "flagOrbitCount": 2
+      }
+    },
+    {
+      "id": "r7-symmetry-triakis-octahedron",
+      "key": "triakis-octahedron",
+      "family": "Catalan",
+      "expected": {
+        "order": 48,
+        "properOrder": 24,
+        "flagOrbitCount": 3
+      }
+    },
+    {
+      "id": "r7-symmetry-tetrakis-hexahedron",
+      "key": "tetrakis-hexahedron",
+      "family": "Catalan",
+      "expected": {
+        "order": 48,
+        "properOrder": 24,
+        "flagOrbitCount": 3
+      }
+    },
+    {
+      "id": "r7-symmetry-pentakis-dodecahedron",
+      "key": "pentakis-dodecahedron",
+      "family": "Catalan",
+      "expected": {
+        "order": 120,
+        "properOrder": 60,
+        "flagOrbitCount": 3
+      }
+    },
+    {
+      "id": "r7-symmetry-triakis-icosahedron",
+      "key": "triakis-icosahedron",
+      "family": "Catalan",
+      "expected": {
+        "order": 120,
+        "properOrder": 60,
+        "flagOrbitCount": 3
+      }
+    },
+    {
+      "id": "r7-symmetry-rhombic-triacontahedron",
+      "key": "rhombic-triacontahedron",
+      "family": "Catalan",
+      "expected": {
+        "order": 120,
+        "properOrder": 60,
+        "flagOrbitCount": 2
+      }
+    },
+    {
+      "id": "r7-symmetry-deltoidal-icositetrahedron",
+      "key": "deltoidal-icositetrahedron",
+      "family": "Catalan",
+      "expected": {
+        "order": 48,
+        "properOrder": 24,
+        "flagOrbitCount": 4
+      }
+    },
+    {
+      "id": "r7-symmetry-disdyakis-dodecahedron",
+      "key": "disdyakis-dodecahedron",
+      "family": "Catalan",
+      "expected": {
+        "order": 48,
+        "properOrder": 24,
+        "flagOrbitCount": 6
+      }
+    },
+    {
+      "id": "r7-symmetry-pentagonal-icositetrahedron",
+      "key": "pentagonal-icositetrahedron",
+      "family": "Catalan",
+      "expected": {
+        "order": 24,
+        "properOrder": 24,
+        "flagOrbitCount": 10
+      }
+    },
+    {
+      "id": "r7-symmetry-deltoidal-hexecontahedron",
+      "key": "deltoidal-hexecontahedron",
+      "family": "Catalan",
+      "expected": {
+        "order": 120,
+        "properOrder": 60,
+        "flagOrbitCount": 4
+      }
+    },
+    {
+      "id": "r7-symmetry-disdyakis-triacontahedron",
+      "key": "disdyakis-triacontahedron",
+      "family": "Catalan",
+      "expected": {
+        "order": 120,
+        "properOrder": 60,
+        "flagOrbitCount": 6
+      }
+    },
+    {
+      "id": "r7-symmetry-pentagonal-hexecontahedron",
+      "key": "pentagonal-hexecontahedron",
+      "family": "Catalan",
+      "expected": {
+        "order": 60,
+        "properOrder": 60,
+        "flagOrbitCount": 10
+      }
+    },
+    {
+      "id": "r7-symmetry-pentagonal-icositetrahedron-mirror",
+      "key": "pentagonal-icositetrahedron-mirror",
+      "family": "Catalan",
+      "expected": {
+        "order": 24,
+        "properOrder": 24,
+        "flagOrbitCount": 10
+      }
+    },
+    {
+      "id": "r7-symmetry-pentagonal-hexecontahedron-mirror",
+      "key": "pentagonal-hexecontahedron-mirror",
+      "family": "Catalan",
+      "expected": {
+        "order": 60,
+        "properOrder": 60,
+        "flagOrbitCount": 10
+      }
+    },
+    {
+      "id": "r7-symmetry-small-stellated-dodecahedron",
+      "key": "small-stellated-dodecahedron",
+      "family": "Kepler-Poinsot",
+      "expected": {
+        "order": 120,
+        "properOrder": 60,
+        "flagOrbitCount": 1
+      }
+    },
+    {
+      "id": "r7-symmetry-great-dodecahedron",
+      "key": "great-dodecahedron",
+      "family": "Kepler-Poinsot",
+      "expected": {
+        "order": 120,
+        "properOrder": 60,
+        "flagOrbitCount": 1
+      }
+    },
+    {
+      "id": "r7-symmetry-great-stellated-dodecahedron",
+      "key": "great-stellated-dodecahedron",
+      "family": "Kepler-Poinsot",
+      "expected": {
+        "order": 120,
+        "properOrder": 60,
+        "flagOrbitCount": 1
+      }
+    },
+    {
+      "id": "r7-symmetry-great-icosahedron",
+      "key": "great-icosahedron",
+      "family": "Kepler-Poinsot",
+      "expected": {
+        "order": 120,
+        "properOrder": 60,
+        "flagOrbitCount": 1
+      }
+    },
+    {
+      "id": "r7-symmetry-simplex4",
+      "key": "simplex4",
+      "family": "Classical regular 4D",
+      "expected": {
+        "order": 120,
+        "properOrder": 60,
+        "flagOrbitCount": 1
+      },
+      "regular4dKey": "simplex4"
+    },
+    {
+      "id": "r7-symmetry-tesseract",
+      "key": "tesseract",
+      "family": "Classical regular 4D",
+      "expected": {
+        "order": 384,
+        "properOrder": 192,
+        "flagOrbitCount": 1
+      },
+      "regular4dKey": "tesseract"
+    },
+    {
+      "id": "r7-symmetry-cross4",
+      "key": "cross4",
+      "family": "Classical regular 4D",
+      "expected": {
+        "order": 384,
+        "properOrder": 192,
+        "flagOrbitCount": 1
+      },
+      "regular4dKey": "cross4"
+    },
+    {
+      "id": "r7-symmetry-cell24",
+      "key": "cell24",
+      "family": "Classical regular 4D",
+      "expected": {
+        "order": 1152,
+        "properOrder": 576,
+        "flagOrbitCount": 1
+      },
+      "regular4dKey": "cell24"
+    },
+    {
+      "id": "r7-symmetry-cell120",
+      "key": "cell120",
+      "family": "Classical regular 4D",
+      "expected": {
+        "order": 14400,
+        "properOrder": 7200,
+        "flagOrbitCount": 1
+      },
+      "regular4dKey": "cell120"
+    },
+    {
+      "id": "r7-symmetry-cell600",
+      "key": "cell600",
+      "family": "Classical regular 4D",
+      "expected": {
+        "order": 14400,
+        "properOrder": 7200,
+        "flagOrbitCount": 1
+      },
+      "regular4dKey": "cell600"
+    },
+    {
+      "id": "r7-symmetry-miratope-icosahedral-hecatonicosachoron",
+      "key": "miratope-icosahedral-hecatonicosachoron",
+      "family": "Classical regular 4D",
+      "expected": {
+        "order": 14400,
+        "properOrder": 7200,
+        "flagOrbitCount": 1
+      },
+      "regular4dKey": "miratope-icosahedral-hecatonicosachoron"
+    },
+    {
+      "id": "r7-symmetry-miratope-great-hecatonicosachoron",
+      "key": "miratope-great-hecatonicosachoron",
+      "family": "Classical regular 4D",
+      "expected": {
+        "order": 14400,
+        "properOrder": 7200,
+        "flagOrbitCount": 1
+      },
+      "regular4dKey": "miratope-great-hecatonicosachoron"
+    },
+    {
+      "id": "r7-symmetry-miratope-grand-hecatonicosachoron",
+      "key": "miratope-grand-hecatonicosachoron",
+      "family": "Classical regular 4D",
+      "expected": {
+        "order": 14400,
+        "properOrder": 7200,
+        "flagOrbitCount": 1
+      },
+      "regular4dKey": "miratope-grand-hecatonicosachoron"
+    },
+    {
+      "id": "r7-symmetry-miratope-stellated-hecatonicosachoron",
+      "key": "miratope-stellated-hecatonicosachoron",
+      "family": "Classical regular 4D",
+      "expected": {
+        "order": 14400,
+        "properOrder": 7200,
+        "flagOrbitCount": 1
+      },
+      "regular4dKey": "miratope-stellated-hecatonicosachoron"
+    },
+    {
+      "id": "r7-symmetry-miratope-great-grand-hecatonicosachoron",
+      "key": "miratope-great-grand-hecatonicosachoron",
+      "family": "Classical regular 4D",
+      "expected": {
+        "order": 14400,
+        "properOrder": 7200,
+        "flagOrbitCount": 1
+      },
+      "regular4dKey": "miratope-great-grand-hecatonicosachoron"
+    },
+    {
+      "id": "r7-symmetry-miratope-great-stellated-hecatonicosachoron",
+      "key": "miratope-great-stellated-hecatonicosachoron",
+      "family": "Classical regular 4D",
+      "expected": {
+        "order": 14400,
+        "properOrder": 7200,
+        "flagOrbitCount": 1
+      },
+      "regular4dKey": "miratope-great-stellated-hecatonicosachoron"
+    },
+    {
+      "id": "r7-symmetry-miratope-grand-stellated-hecatonicosachoron",
+      "key": "miratope-grand-stellated-hecatonicosachoron",
+      "family": "Classical regular 4D",
+      "expected": {
+        "order": 14400,
+        "properOrder": 7200,
+        "flagOrbitCount": 1
+      },
+      "regular4dKey": "miratope-grand-stellated-hecatonicosachoron"
+    },
+    {
+      "id": "r7-symmetry-miratope-great-icosahedral-hecatonicosachoron",
+      "key": "miratope-great-icosahedral-hecatonicosachoron",
+      "family": "Classical regular 4D",
+      "expected": {
+        "order": 14400,
+        "properOrder": 7200,
+        "flagOrbitCount": 1
+      },
+      "regular4dKey": "miratope-great-icosahedral-hecatonicosachoron"
+    },
+    {
+      "id": "r7-symmetry-miratope-grand-hexacosichoron",
+      "key": "miratope-grand-hexacosichoron",
+      "family": "Classical regular 4D",
+      "expected": {
+        "order": 14400,
+        "properOrder": 7200,
+        "flagOrbitCount": 1
+      },
+      "regular4dKey": "miratope-grand-hexacosichoron"
+    },
+    {
+      "id": "r7-symmetry-miratope-great-grand-stellated-hecatonicosachoron",
+      "key": "miratope-great-grand-stellated-hecatonicosachoron",
+      "family": "Classical regular 4D",
+      "expected": {
+        "order": 14400,
+        "properOrder": 7200,
+        "flagOrbitCount": 1
+      },
+      "regular4dKey": "miratope-great-grand-stellated-hecatonicosachoron"
+    },
+    {
+      "id": "r7-symmetry-uniform4-rap",
+      "key": "uniform4-rap",
+      "family": "Convex Wythoff representatives",
+      "expected": {
+        "order": 120,
+        "properOrder": 60
+      }
+    },
+    {
+      "id": "r7-symmetry-uniform4-rit",
+      "key": "uniform4-rit",
+      "family": "Convex Wythoff representatives",
+      "expected": {
+        "order": 384,
+        "properOrder": 192
+      }
+    },
+    {
+      "id": "r7-symmetry-uniform4-rico",
+      "key": "uniform4-rico",
+      "family": "Convex Wythoff representatives",
+      "expected": {
+        "order": 1152,
+        "properOrder": 576
+      }
+    },
+    {
+      "id": "r7-symmetry-goursat-wythoff-gax",
+      "key": "goursat-wythoff-gax",
+      "family": "Goursat H4 representatives",
+      "expected": {
+        "order": 14400,
+        "properOrder": 7200,
+        "flagOrbitCount": 1
+      }
+    },
+    {
+      "id": "r7-symmetry-goursat-wythoff-raggix",
+      "key": "goursat-wythoff-raggix",
+      "family": "Goursat H4 representatives",
+      "expected": {
+        "order": 14400,
+        "properOrder": 7200
+      }
+    },
+    {
+      "id": "r7-symmetry-goursat-wythoff-rigogishi",
+      "key": "goursat-wythoff-rigogishi",
+      "family": "Goursat H4 resource boundary",
+      "expected": {
+        "order": 14400,
+        "properOrder": 7200
+      },
+      "expectedStatus": "limited"
+    },
+    {
+      "id": "r7-symmetry-icosahedron-rotated-scaled-small",
+      "key": "icosahedron",
+      "family": "Similarity invariance",
+      "expected": {
+        "order": 120,
+        "properOrder": 60,
+        "flagOrbitCount": 1
+      },
+      "variant": "rotated-scaled",
+      "scale": 1e-09
+    },
+    {
+      "id": "r7-symmetry-cell24-rotated-scaled-large",
+      "key": "cell24",
+      "family": "Similarity invariance",
+      "expected": {
+        "order": 1152,
+        "properOrder": 576,
+        "flagOrbitCount": 1
+      },
+      "variant": "rotated-scaled",
+      "scale": 1000000000.0
+    },
+    {
+      "id": "r7-symmetry-cell24-rotated-scaled-small",
+      "key": "cell24",
+      "family": "Similarity invariance",
+      "expected": {
+        "order": 1152,
+        "properOrder": 576,
+        "flagOrbitCount": 1
+      },
+      "variant": "rotated-scaled",
+      "scale": 1e-09
+    },
+    {
+      "id": "r7-symmetry-icosahedron-missing-face",
+      "key": "icosahedron",
+      "family": "Altered ordered incidence",
+      "expected": {
+        "order": 6,
+        "properOrder": 3
+      },
+      "variant": "missing-face"
+    },
+    {
+      "id": "r7-symmetry-tesseract-extra-open-cell",
+      "key": "tesseract",
+      "family": "Altered cell-face incidence",
+      "expected": {
+        "order": 8,
+        "properOrder": 4
+      },
+      "variant": "extra-open-cell"
+    },
+    {
+      "id": "r7-symmetry-cube-frame-limit",
+      "key": "cube",
+      "family": "Frame budget boundary",
+      "expected": {
+        "order": 48,
+        "properOrder": 24
+      },
+      "maxFrames": 1,
+      "expectedStatus": "limited"
+    }
+  ]
+}

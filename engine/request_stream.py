@@ -1,4 +1,5 @@
 """Bound JSON-lines before decoding, draining one refused record at a time."""
+
 import json
 
 
@@ -40,5 +41,11 @@ def response_line(output):
         result.encode('utf-8')
         return result
     except (UnicodeError, ValueError, TypeError, RecursionError):
-        return json.dumps({'id': correlation_id(output), 'ok': False,
-                          'type': 'GeometryError', 'error': 'Native response requires finite UTF-8 JSON values.'})
+        return json.dumps(
+            {
+                'id': correlation_id(output),
+                'ok': False,
+                'type': 'GeometryError',
+                'error': 'Native response requires finite UTF-8 JSON values.',
+            }
+        )

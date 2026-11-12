@@ -1,4 +1,5 @@
 """Independent measures and real ownership at the podium finalization gate."""
+
 from copy import deepcopy
 import math
 import pytest
@@ -11,7 +12,7 @@ from engine.podia import rational_podium, rational_antipodium
 
 
 def test_square_frustum_matches_independent_volume_and_slant_surface():
-    raw = rational_podium(n=4, base_radius=math.sqrt(2), top_radius=math.sqrt(.5), height=3)
+    raw = rational_podium(n=4, base_radius=math.sqrt(2), top_radius=math.sqrt(0.5), height=3)
     before = deepcopy(raw)
     result = finalize_construction(raw)
     assert result['interpretation'] == 'convex-polytope'
@@ -19,7 +20,7 @@ def test_square_frustum_matches_independent_volume_and_slant_surface():
     assert result['metadata']['constructionFinalization']['classification']['status'] == 'passed'
     assert result['metadata']['constructionFinalization']['ownership']['adapter'] == 'podia-components'
     assert result['measure']['content'] == pytest.approx(7)
-    assert result['measure']['boundaryMeasure'] == pytest.approx(5+6*math.sqrt(9.25))
+    assert result['measure']['boundaryMeasure'] == pytest.approx(5 + 6 * math.sqrt(9.25))
     assert identity(result) == identity(raw) and result['id'] == raw['id']
     assert result['metadata']['rationalPodium']['sourceModels'] == raw['metadata']['rationalPodium']['sourceModels']
     assert len(result['components']) == 1 and result['components'][0]['sourcePath'] == []
@@ -31,14 +32,14 @@ def test_equal_triangular_antipodium_is_independently_measured_octahedron():
     result = finalize_construction(raw)
     assert result['interpretation'] == 'convex-polytope'
     assert result['measure']['content'] == pytest.approx(math.sqrt(6))
-    assert result['measure']['boundaryMeasure'] == pytest.approx(6*math.sqrt(3))
-    assert [len(result[k]) for k in ('vertices','edges','faces','cells')] == [6,12,8,0]
+    assert result['measure']['boundaryMeasure'] == pytest.approx(6 * math.sqrt(3))
+    assert [len(result[k]) for k in ('vertices', 'edges', 'faces', 'cells')] == [6, 12, 8, 0]
     assert identity(result) == identity(raw)
 
 
 @pytest.mark.parametrize('constructor', [rational_podium, rational_antipodium])
 def test_signed_disconnected_sources_keep_generalized_genuine_leaves_and_attributes(constructor):
-    colors = [{'encoding':'byte','values':[12,80,255,128]}, {'encoding':'unit','values':[.1,.3,.8,.5]}]
+    colors = [{'encoding': 'byte', 'values': [12, 80, 255, 128]}, {'encoding': 'unit', 'values': [0.1, 0.3, 0.8, 0.5]}]
     raw = constructor(symbol='6/-2', base_radius=2, top_radius=1, height=3, cap_colors=colors)
     before = deepcopy(raw)
     result = finalize_construction(raw)
@@ -47,12 +48,12 @@ def test_signed_disconnected_sources_keep_generalized_genuine_leaves_and_attribu
     assert len(result['components']) == 2 and result['metadata'][key]['recoverableCompoundComponents'] is True
     assert result['metadata'][key]['sourceModels'] == raw['metadata'][key]['sourceModels']
     assert result['metadata']['offColors'] == raw['metadata']['offColors']
-    assert [c['maps']['vertices'] for c in result['components']] == [[0,2,4,6,8,10],[1,3,5,7,9,11]]
+    assert [c['maps']['vertices'] for c in result['components']] == [[0, 2, 4, 6, 8, 10], [1, 3, 5, 7, 9, 11]]
     for component in result['components']:
         leaf = extract_component(result, component['id'])
         assert len(leaf['vertices']) == 6 and leaf['dimension'] == 3
         assert leaf['metadata']['podiaLeaf']['sourceFactorModels'] == raw['metadata'][key]['sourceModels']
-    assert len(remove_component(result,result['components'][0]['id'])['vertices']) == 6
+    assert len(remove_component(result, result['components'][0]['id'])['vertices']) == 6
     assert raw == before and identity(result) == identity(raw)
 
 
@@ -62,7 +63,9 @@ def test_tiny_subnormal_content_cannot_gain_a_convex_measure_claim(constructor):
     before = deepcopy(raw)
     result = finalize_construction(raw)
     assert result['interpretation'] == 'generalized-complex' and 'measure' not in result
-    assert any(d['code']=='unsupported-measure' for d in result['metadata']['constructionFinalization']['diagnostics'])
+    assert any(
+        d['code'] == 'unsupported-measure' for d in result['metadata']['constructionFinalization']['diagnostics']
+    )
     assert result['components'] and identity(result) == identity(raw) and raw == before
 
 
@@ -71,7 +74,8 @@ def test_repeated_finalization_and_edited_geometry_refuse_without_source_mutatio
     finalized = finalize_construction(raw)
     with pytest.raises(GeometryError):
         finalize_construction(finalized)
-    edited = deepcopy(raw);edited['vertices'][0][0] += .1
+    edited = deepcopy(raw)
+    edited['vertices'][0][0] += 0.1
     before = deepcopy(edited)
     with pytest.raises(GeometryError):
         finalize_construction(edited)

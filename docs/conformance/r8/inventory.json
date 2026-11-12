@@ -1,0 +1,1077 @@
+{
+  "schema_version": 2,
+  "inventory_version": "2026-11-09.r8-conformance.1",
+  "target_version": "6.0",
+  "baseline_audit_complete": false,
+  "inspected_commit": "c547b8f1275ac3778ff64afa30fb3be2719dd295",
+  "predecessor_audit": "docs/GAP_AUDIT_2026-11-10.md",
+  "supersedes": {
+    "version": "2026-11-09.r5-domains.1",
+    "policy": "R5 bytes frozen; successor records deltas without rewriting historical benchmark evidence.",
+    "sha256": {
+      "docs/conformance/inventory.json": "707d82e202fb40955c4978d19cdb1cf26469daa77b0b4ae2641f415ace14e1b3",
+      "docs/conformance/sources.json": "1e55292cc41f82655b84846341aa477bf7496f44b41f4637b2fd82bbbb6b55a6",
+      "docs/conformance/domains.json": "4283e5d6e555c2e74c45b9c414b19fdabd1aad51f3a6d62388cd60c6229f064c",
+      "docs/conformance/INDEX.md": "5ad5db484c0e327923e15bc4502c05a4c16fafe05057c4143b24e6e31fe65add",
+      "docs/conformance/VERIFICATION.md": "f976459685d5d667ef1bdc93f8fc0635f7fc31dec56ddbeb5d77a5836831ca30",
+      "docs/conformance/scenarios-common.json": "fd64a888324b8023ae5f3993cb7324b1d6eb3ddd8aa52c448f470b06097e114c",
+      "docs/conformance/scenarios-fitting-options.json": "034edfeaf84554c6e1ee0758c89bfb973ac6459fb3d29faad79eb98fad113875",
+      "docs/conformance/scenarios-generators.json": "85cded5e0b2314a400c7dd90a3128e429545aaaad47866690cd30bf0dc998722",
+      "docs/conformance/scenarios-io.json": "8775d3cc58656a87cdbf62354d26a46e9998e1a021f9bd8ef0c368265d482983",
+      "docs/conformance/scenarios-materials.json": "9fbfc77bea239dd3c965947742036436b3bf26e34b30f8ccf23833ab5c8c531a",
+      "docs/conformance/scenarios-modifications.json": "a3ed63f87a6d6c0c1ec5b9ebd0f5a16353c6825bd4fcc8463af0df85059ec27e",
+      "docs/conformance/scenarios-nets.json": "0ac4ca6a40cbfb3b210686d6628578cdafd943c3cd906e2257f7697f2bf8a5a5",
+      "docs/conformance/scenarios-stellation-faceting.json": "44ed2617e0cbd70a9bd04673d632caa27fb8778afa08fb6061dbeaac08cdd484"
+    }
+  },
+  "scenario_files": [
+    "scenarios-r6.json",
+    "scenarios-options.json"
+  ],
+  "evidence_policy": {
+    "closure": "scenario-closed means named local implementation/UI gap only; never broad ledger, benchmark or release closure.",
+    "tranche": "Different source/parameter/domain leaves original broad case open; explicit closure.legacy_case_ids are lineage, not supersession.",
+    "execution": "Fresh selected native and UI tests are source-bound in receipts.json. Stored R7 matrix/report inspection is not fresh regeneration.",
+    "levels": "native, ui-unit, ui-mounted and tooling-unit remain separate. No Electron, competitor, GPU, physical DPI, printer or installed-platform run.",
+    "counts": "Suite pass counts never promote a scenario, requirement, named identity or qualified release."
+  },
+  "source_files": [
+    "engine/server.py",
+    "engine/geometry.py",
+    "engine/operations.py",
+    "engine/recipes.py",
+    "engine/formats.py",
+    "desktop/main.cjs",
+    "desktop/engine-pool.cjs",
+    "ui/app.js",
+    "ui/index.html",
+    "ui/inspector-layout.mjs",
+    "package.json"
+  ],
+  "source_scopes": [
+    "engine",
+    "ui",
+    "desktop",
+    "tests/fixtures"
+  ],
+  "requirements": [
+    {
+      "id": "LIB-01",
+      "title": "Platonic, Archimedean, Kepler-Poinsot, remaining uniform polyhedra, and duals",
+      "case_ids": [
+        "lib-01-r7-finite-u-duals",
+        "lib-01-r7-schwarz-source-generation"
+      ],
+      "remaining_inventory_task": null,
+      "benchmark_status": "unverified",
+      "platform_status": "not-run"
+    },
+    {
+      "id": "LIB-02",
+      "title": "Johnson solids and documented near misses",
+      "case_ids": [
+        "lib-02-r7-near-miss-deviations"
+      ],
+      "remaining_inventory_task": null,
+      "benchmark_status": "unverified",
+      "platform_status": "not-run"
+    },
+    {
+      "id": "LIB-03",
+      "title": "Stewart toroids, noble polyhedra, compounds, and specialized catalog families",
+      "case_ids": [
+        "lib-03-r7-stewart-compound-relationships"
+      ],
+      "remaining_inventory_task": null,
+      "benchmark_status": "unverified",
+      "platform_status": "not-run"
+    },
+    {
+      "id": "LIB-04",
+      "title": "All 16 regular 4-polytopes",
+      "case_ids": [
+        "lib-04-r7-regular-source-labels"
+      ],
+      "remaining_inventory_task": null,
+      "benchmark_status": "unverified",
+      "platform_status": "not-run"
+    },
+    {
+      "id": "LIB-05",
+      "title": "All 2,191 baseline known uniform polychora",
+      "case_ids": [
+        "lib-05-r7-goursat-registered-tranche"
+      ],
+      "remaining_inventory_task": null,
+      "benchmark_status": "unverified",
+      "platform_status": "not-run"
+    },
+    {
+      "id": "LIB-06",
+      "title": "Uniform fissaries, scaliforms, coincidic/regiment relationships, and 4D compounds",
+      "case_ids": [
+        "lib-06-r7-scaliform-regiment-relationships"
+      ],
+      "remaining_inventory_task": null,
+      "benchmark_status": "unverified",
+      "platform_status": "not-run"
+    },
+    {
+      "id": "LIB-07",
+      "title": "Infinite prism, antiprism, duoprism, and antiduoprism families",
+      "case_ids": [
+        "lib-07-r8-uniform-family-options"
+      ],
+      "remaining_inventory_task": null,
+      "benchmark_status": "unverified",
+      "platform_status": "not-run"
+    },
+    {
+      "id": "LIB-08",
+      "title": "Naming and navigation",
+      "case_ids": [
+        "lib-08-r8-alias-and-identity-options"
+      ],
+      "remaining_inventory_task": null,
+      "benchmark_status": "unverified",
+      "platform_status": "not-run"
+    },
+    {
+      "id": "VIEW-01",
+      "title": "Linked base, dual, compound, section, face/cell, vertex-figure, net, and diagram views",
+      "case_ids": [],
+      "remaining_inventory_task": {
+        "status": "open",
+        "owner": "R8-CONFORMANCE-follow-up",
+        "next_action": "Inventory linked base/dual/compound/section/face/cell/VF/net/diagram switching and source owner cross-products.",
+        "fixture_candidates": [
+          "tests/derived-view-controls.test.mjs",
+          "tests/linked-selection.test.mjs",
+          "tests/multi-view-controls.test.mjs"
+        ]
+      },
+      "benchmark_status": "unverified",
+      "platform_status": "not-run"
+    },
+    {
+      "id": "VIEW-02",
+      "title": "Orthogonal and perspective 4D projections, plus 3D camera controls",
+      "case_ids": [],
+      "remaining_inventory_task": {
+        "status": "open",
+        "owner": "R8-CONFORMANCE-follow-up",
+        "next_action": "Split 4D orthogonal/perspective parameters from 3D observer poses; add persisted camera and refusal scenarios.",
+        "fixture_candidates": [
+          "tests/perspective4d.test.mjs",
+          "tests/viewer-perspective.test.mjs",
+          "tests/view-camera.test.mjs"
+        ]
+      },
+      "benchmark_status": "unverified",
+      "platform_status": "not-run"
+    },
+    {
+      "id": "VIEW-03",
+      "title": "Entity-aligned 4D views",
+      "case_ids": [],
+      "remaining_inventory_task": {
+        "status": "open",
+        "owner": "R8-CONFORMANCE-follow-up",
+        "next_action": "Inventory selected vertex/edge/face/cell aligned 4D poses and degenerate orientation refusals.",
+        "fixture_candidates": [
+          "tests/test_view_orientation.py",
+          "tests/entity-orientation-controls.test.mjs"
+        ]
+      },
+      "benchmark_status": "unverified",
+      "platform_status": "not-run"
+    },
+    {
+      "id": "VIEW-04",
+      "title": "Front/back cell visibility, per-element hide/show, and isolation",
+      "case_ids": [
+        "view-04-r8-common-cell-visibility"
+      ],
+      "remaining_inventory_task": null,
+      "benchmark_status": "unverified",
+      "platform_status": "not-run"
+    },
+    {
+      "id": "VIEW-05",
+      "title": "Selection and identification",
+      "case_ids": [],
+      "remaining_inventory_task": {
+        "status": "open",
+        "owner": "R8-CONFORMANCE-follow-up",
+        "next_action": "Inventory picking/identification under projections, clipping and visibility with literal selected IDs.",
+        "fixture_candidates": [
+          "tests/entity-picking.test.mjs",
+          "tests/test_viewer_ux.py",
+          "tests/common-workflows-mounted.test.mjs"
+        ]
+      },
+      "benchmark_status": "unverified",
+      "platform_status": "not-run"
+    },
+    {
+      "id": "VIEW-06",
+      "title": "Rotation, reflection, and subgroup display",
+      "case_ids": [
+        "view-06-r7-source-symmetry-evidence"
+      ],
+      "remaining_inventory_task": null,
+      "benchmark_status": "unverified",
+      "platform_status": "not-run"
+    },
+    {
+      "id": "VIEW-07",
+      "title": "Stereoscopic, fullscreen, and multiple-view display",
+      "case_ids": [],
+      "remaining_inventory_task": {
+        "status": "open",
+        "owner": "R8-CONFORMANCE-follow-up",
+        "next_action": "Inventory stereo eye parameters, fullscreen and multiple-view persistence separately from physical-display qualification.",
+        "fixture_candidates": [
+          "tests/viewer-stereo.test.mjs",
+          "tests/multi-view-controls.test.mjs",
+          "tests/stereo-information.test.mjs"
+        ]
+      },
+      "benchmark_status": "unverified",
+      "platform_status": "not-run"
+    },
+    {
+      "id": "INFO-01",
+      "title": "Names, indices, symbols, element counts/types, and component information",
+      "case_ids": [],
+      "remaining_inventory_task": {
+        "status": "open",
+        "owner": "R8-CONFORMANCE-follow-up",
+        "next_action": "Inventory names/indices/symbols and component/type disclosures under named ordinary/generalized sources.",
+        "fixture_candidates": [
+          "tests/test_information_panel.py",
+          "tests/information-panel.test.mjs",
+          "tests/analysis-overview.test.mjs"
+        ]
+      },
+      "benchmark_status": "unverified",
+      "platform_status": "not-run"
+    },
+    {
+      "id": "INFO-02",
+      "title": "Radius, area, volume, density/genus where meaningful, and dihedral data",
+      "case_ids": [],
+      "remaining_inventory_task": {
+        "status": "open",
+        "owner": "R8-CONFORMANCE-follow-up",
+        "next_action": "Inventory radius/area/volume/density/genus and dihedral eligibility, residuals and unknown-domain disclosures.",
+        "fixture_candidates": [
+          "tests/test_information_panel.py",
+          "tests/information-panel.test.mjs"
+        ]
+      },
+      "benchmark_status": "unverified",
+      "platform_status": "not-run"
+    },
+    {
+      "id": "INFO-03",
+      "title": "Model comments, references, and editable metadata",
+      "case_ids": [],
+      "remaining_inventory_task": {
+        "status": "open",
+        "owner": "R8-CONFORMANCE-follow-up",
+        "next_action": "Inventory notes/references/metadata edits through save/reopen and detached content ownership.",
+        "fixture_candidates": [
+          "tests/document-metadata.test.mjs",
+          "tests/test_export_metadata.py",
+          "tests/document-field-edits.test.mjs"
+        ]
+      },
+      "benchmark_status": "unverified",
+      "platform_status": "not-run"
+    },
+    {
+      "id": "MEAS-01",
+      "title": "Distances involving vertices, lines, planes, and supported 4D entities",
+      "case_ids": [],
+      "remaining_inventory_task": {
+        "status": "open",
+        "owner": "R8-CONFORMANCE-follow-up",
+        "next_action": "Inventory bounded/unbounded distance witness options and all supported rank/entity/4D selections.",
+        "fixture_candidates": [
+          "tests/test_measurements.py",
+          "tests/test_bounded_entity_distance.py",
+          "tests/test_ordinary_face_distances.py",
+          "tests/ordinary-concave-distances.test.mjs"
+        ]
+      },
+      "benchmark_status": "unverified",
+      "platform_status": "not-run"
+    },
+    {
+      "id": "MEAS-02",
+      "title": "Angles, radii, area, volume, and applicable 4D measures",
+      "case_ids": [],
+      "remaining_inventory_task": {
+        "status": "open",
+        "owner": "R8-CONFORMANCE-follow-up",
+        "next_action": "Inventory angle/radius/area/volume domain options with independent unit and degeneracy oracles.",
+        "fixture_candidates": [
+          "tests/test_measurements.py",
+          "tests/test_information_panel.py",
+          "tests/numeric-analysis-controls.test.mjs"
+        ]
+      },
+      "benchmark_status": "unverified",
+      "platform_status": "not-run"
+    },
+    {
+      "id": "MEAS-03",
+      "title": "Physical scaling and units",
+      "case_ids": [],
+      "remaining_inventory_task": {
+        "status": "open",
+        "owner": "R8-CONFORMANCE-follow-up",
+        "next_action": "Inventory document physical units, view scale and export conversion as distinct options with literal length fixtures.",
+        "fixture_candidates": [
+          "tests/test_export_context.py",
+          "tests/test_precision_exports.py",
+          "tests/workspace-numeric-controls.test.mjs",
+          "scripts/units-export-smoke.cjs"
+        ]
+      },
+      "benchmark_status": "unverified",
+      "platform_status": "not-run"
+    },
+    {
+      "id": "MEAS-04",
+      "title": "Expression entry",
+      "case_ids": [],
+      "remaining_inventory_task": {
+        "status": "open",
+        "owner": "R8-CONFORMANCE-follow-up",
+        "next_action": "Inventory expression syntax/constants, scalar/vector atomic evaluation and malformed or unsupported input refusals.",
+        "fixture_candidates": [
+          "tests/test_expression_helpers.py",
+          "tests/test_expression_batch.py",
+          "tests/numeric-entry.test.mjs",
+          "tests/expression-entry.test.mjs"
+        ]
+      },
+      "benchmark_status": "unverified",
+      "platform_status": "not-run"
+    },
+    {
+      "id": "CON-01",
+      "title": "Blocks, triangular grids, pyramids, irregular tetrahedra/triangular prisms, prisms, and antiprisms",
+      "case_ids": [],
+      "remaining_inventory_task": {
+        "status": "open",
+        "owner": "R8-CONFORMANCE-follow-up",
+        "next_action": "Inventory primitive constructor option/count/size controls and preview/adopt/history domains individually.",
+        "fixture_candidates": [
+          "tests/test_basic_solids.py",
+          "tests/test_generator_options.py",
+          "tests/generator-options.test.mjs"
+        ]
+      },
+      "benchmark_status": "unverified",
+      "platform_status": "not-run"
+    },
+    {
+      "id": "CON-02",
+      "title": "Podia, antipodia, stephanoids, torus constructions, and Waterman objects",
+      "case_ids": [
+        "con-02-podium-sizing",
+        "con-02-antipodium-sizing",
+        "con-02-stephanoid",
+        "con-02-torus-twist",
+        "con-02-waterman-sequence",
+        "con-02-waterman-4d",
+        "con-02-r6-waterman-z4-d4"
+      ],
+      "remaining_inventory_task": null,
+      "benchmark_status": "unverified",
+      "platform_status": "not-run"
+    },
+    {
+      "id": "CON-03",
+      "title": "3D/4D convex hulls and convex cores",
+      "case_ids": [
+        "con-03-hull-cube-tesseract",
+        "con-03-hull-degenerate",
+        "con-03-rational-hull",
+        "con-03-core-center",
+        "con-03-core-unbounded"
+      ],
+      "remaining_inventory_task": null,
+      "benchmark_status": "unverified",
+      "platform_status": "not-run"
+    },
+    {
+      "id": "CON-04",
+      "title": "Duals and reciprocation centers",
+      "case_ids": [
+        "con-04-polar-involution",
+        "con-04-center-radius",
+        "con-04-singular-projective"
+      ],
+      "remaining_inventory_task": null,
+      "benchmark_status": "unverified",
+      "platform_status": "not-run"
+    },
+    {
+      "id": "CON-05",
+      "title": "Truncation, rectification, and expansion/runcination in supported 3D/4D domains",
+      "case_ids": [
+        "con-05-cut-transitions",
+        "con-05-expand-3d",
+        "con-05-expand-4d",
+        "con-05-normal-quasi"
+      ],
+      "remaining_inventory_task": null,
+      "benchmark_status": "unverified",
+      "platform_status": "not-run"
+    },
+    {
+      "id": "CON-06",
+      "title": "Mirroring, pseudo-uniform transformations, adding/blending duals, and compound part operations",
+      "case_ids": [
+        "con-06-reflection-chirality",
+        "con-06-pseudo-uniform",
+        "con-06-add-dual-scale",
+        "con-06-compound-parts",
+        "con-06-r6-scaled-memory-add"
+      ],
+      "remaining_inventory_task": null,
+      "benchmark_status": "unverified",
+      "platform_status": "not-run"
+    },
+    {
+      "id": "CON-07",
+      "title": "3D augmentation, excavation, drilling, and placing models on faces/vertices",
+      "case_ids": [
+        "con-07-matching-orientation",
+        "con-07-target-filters",
+        "con-07-height-policies",
+        "con-07-color-coincidence",
+        "con-07-drill",
+        "con-07-placement-sizes",
+        "con-07-r6-same-color-targets",
+        "con-07-r6-side-color-owners"
+      ],
+      "remaining_inventory_task": null,
+      "benchmark_status": "unverified",
+      "platform_status": "not-run"
+    },
+    {
+      "id": "CON-08",
+      "title": "Zonohedrification, face/edge subdivision, geodesic construction, and sphere projection",
+      "case_ids": [
+        "con-08-zonohedron-directions",
+        "con-08-subdivision-inheritance",
+        "con-08-geodesic-sphere"
+      ],
+      "remaining_inventory_task": null,
+      "benchmark_status": "unverified",
+      "platform_status": "not-run"
+    },
+    {
+      "id": "CON-09",
+      "title": "Regular-face, equal-edge, and equal-area fitting",
+      "case_ids": [
+        "con-09-regular-faces",
+        "con-09-planar-faces",
+        "con-09-equal-edges",
+        "con-09-equal-areas",
+        "con-09-infeasible",
+        "con-09-generalized-domain",
+        "con-09-selected-combined",
+        "con-09-scale-symmetry-target",
+        "con-09-invalid-adoption",
+        "con-09-r6-separated-components",
+        "con-09-r6-selected-incompatible",
+        "con-09-r6-invalid-candidate-gate"
+      ],
+      "remaining_inventory_task": null,
+      "benchmark_status": "unverified",
+      "platform_status": "not-run"
+    },
+    {
+      "id": "CON-10",
+      "title": "Coplanar-face blending and relevant coincidence operations",
+      "case_ids": [
+        "con-10-coincident-pairs",
+        "con-10-coplanar-hole",
+        "con-10-4d-cell-rebuild"
+      ],
+      "remaining_inventory_task": null,
+      "benchmark_status": "unverified",
+      "platform_status": "not-run"
+    },
+    {
+      "id": "CON-11",
+      "title": "4D prisms on 3D bases, duoprisms, antiduoprisms, and step prisms/gyrochora",
+      "case_ids": [
+        "con-11-shell-prism",
+        "con-11-rational-products",
+        "con-11-step-prism",
+        "con-11-rational-step-multiprism"
+      ],
+      "remaining_inventory_task": null,
+      "benchmark_status": "unverified",
+      "platform_status": "not-run"
+    },
+    {
+      "id": "CON-12",
+      "title": "Segmentotopes, including benchmark crossed variants",
+      "case_ids": [
+        "con-12-convex-layer-join",
+        "con-12-crossed-definition",
+        "con-12-crossed-layers"
+      ],
+      "remaining_inventory_task": null,
+      "benchmark_status": "unverified",
+      "platform_status": "not-run"
+    },
+    {
+      "id": "CON-13",
+      "title": "Uniform/scaliform construction from eligible 3D vertex figures",
+      "case_ids": [
+        "con-13-finite-completion",
+        "con-13-scaliform-completion",
+        "con-13-r7-tuta-vf-completion"
+      ],
+      "remaining_inventory_task": null,
+      "benchmark_status": "unverified",
+      "platform_status": "not-run"
+    },
+    {
+      "id": "CON-14",
+      "title": "3D spring-network relaxation and supported near-miss constraints",
+      "case_ids": [
+        "con-14-initialization",
+        "con-14-constraints",
+        "con-14-grammar"
+      ],
+      "remaining_inventory_task": null,
+      "benchmark_status": "unverified",
+      "platform_status": "not-run"
+    },
+    {
+      "id": "SEC-01",
+      "title": "2D sections of 3D objects and 3D sections of 4D objects",
+      "case_ids": [
+        "sec-01-axis-slices"
+      ],
+      "remaining_inventory_task": null,
+      "benchmark_status": "unverified",
+      "platform_status": "not-run"
+    },
+    {
+      "id": "SEC-02",
+      "title": "Arbitrary orientation, depth, selected-entity alignment, and vertex-event stepping",
+      "case_ids": [
+        "sec-02-tangent-empty"
+      ],
+      "remaining_inventory_task": null,
+      "benchmark_status": "unverified",
+      "platform_status": "not-run"
+    },
+    {
+      "id": "SEC-03",
+      "title": "Interactive and animated sections",
+      "case_ids": [],
+      "remaining_inventory_task": {
+        "status": "open",
+        "owner": "R8-CONFORMANCE-follow-up",
+        "next_action": "Inventory animated section depth/normal and async cancellation combinations; add source-owned frame receipts.",
+        "fixture_candidates": [
+          "tests/test_animation_4d.py",
+          "tests/animation-renderer.test.mjs",
+          "tests/section-source-content.test.mjs"
+        ]
+      },
+      "benchmark_status": "unverified",
+      "platform_status": "not-run"
+    },
+    {
+      "id": "SEC-04",
+      "title": "Convert derived section or vertex figure into a new base model",
+      "case_ids": [],
+      "remaining_inventory_task": {
+        "status": "open",
+        "owner": "R8-CONFORMANCE-follow-up",
+        "next_action": "Inventory section/VF promotion source maps and detached context through undo, reopen and replay.",
+        "fixture_candidates": [
+          "tests/derived-document-context.test.mjs",
+          "tests/derived-publication.test.mjs",
+          "tests/density-section-controls.test.mjs"
+        ]
+      },
+      "benchmark_status": "unverified",
+      "platform_status": "not-run"
+    },
+    {
+      "id": "SEC-05",
+      "title": "Nonconvex and star-object sections in benchmark-supported domains",
+      "case_ids": [
+        "sec-05-surface-winding",
+        "sec-05-filled-density",
+        "sec-05-unknown-interior",
+        "sec-05-r6-pentagram-prism-independent",
+        "sec-05-r6-small-stellated-prism-cells"
+      ],
+      "remaining_inventory_task": null,
+      "benchmark_status": "unverified",
+      "platform_status": "not-run"
+    },
+    {
+      "id": "VF-01",
+      "title": "3D polyhedron and 4D polytope vertex figures",
+      "case_ids": [],
+      "remaining_inventory_task": {
+        "status": "open",
+        "owner": "R8-CONFORMANCE-follow-up",
+        "next_action": "Inventory vertex-figure entity options, source embeddings, regular/generalized domains and degenerate refusals.",
+        "fixture_candidates": [
+          "tests/test_generalized_4d_constructions.py",
+          "tests/generalized-4d-controls.test.mjs",
+          "tests/test_reference_library.py"
+        ]
+      },
+      "benchmark_status": "unverified",
+      "platform_status": "not-run"
+    },
+    {
+      "id": "STEL-01",
+      "title": "Stellation from seed facial planes or a supported arbitrary plane set",
+      "case_ids": [
+        "stel-01-facial-arrangement",
+        "stel-01-arbitrary-planes",
+        "stel-01-box-completion",
+        "stel-01-r6-arbitrary-plane-editor"
+      ],
+      "remaining_inventory_task": null,
+      "benchmark_status": "unverified",
+      "platform_status": "not-run"
+    },
+    {
+      "id": "STEL-02",
+      "title": "Manual region/cell inclusion, stellation diagrams, attached diagrams, and cell-dependency diagrams",
+      "case_ids": [
+        "stel-02-diagram-links"
+      ],
+      "remaining_inventory_task": null,
+      "benchmark_status": "unverified",
+      "platform_status": "not-run"
+    },
+    {
+      "id": "STEL-03",
+      "title": "Enumeration and stepping under benchmark criteria",
+      "case_ids": [
+        "stel-03-custom-criteria",
+        "stel-03-miller59",
+        "stel-03-other-seed-criteria"
+      ],
+      "remaining_inventory_task": null,
+      "benchmark_status": "unverified",
+      "platform_status": "not-run"
+    },
+    {
+      "id": "STEL-04",
+      "title": "Symmetry/subsymmetry and reflexibility controls",
+      "case_ids": [
+        "stel-04-group-scope",
+        "stel-04-reflexibility",
+        "stel-04-editor-subgroups",
+        "stel-04-r6-reflection-editor"
+      ],
+      "remaining_inventory_task": null,
+      "benchmark_status": "unverified",
+      "platform_status": "not-run"
+    },
+    {
+      "id": "STEL-05",
+      "title": "Inaccessible-cell handling and derived-model promotion",
+      "case_ids": [
+        "stel-05-inaccessible-cavity",
+        "stel-05-promotion-history",
+        "stel-05-r6-arbitrary-promotion-replay"
+      ],
+      "remaining_inventory_task": null,
+      "benchmark_status": "unverified",
+      "platform_status": "not-run"
+    },
+    {
+      "id": "FAC-01",
+      "title": "Manual coplanar facet construction from existing vertices",
+      "case_ids": [
+        "fac-01-ordered-cycles"
+      ],
+      "remaining_inventory_task": null,
+      "benchmark_status": "unverified",
+      "platform_status": "not-run"
+    },
+    {
+      "id": "FAC-02",
+      "title": "Automatic facet candidates and valid faceting enumeration",
+      "case_ids": [
+        "fac-02-tetrahedron-complete",
+        "fac-02-cube-candidates",
+        "fac-02-dodecahedron-frontier",
+        "fac-02-limited-search",
+        "fac-02-r6-pyritohedron-candidates"
+      ],
+      "remaining_inventory_task": null,
+      "benchmark_status": "unverified",
+      "platform_status": "not-run"
+    },
+    {
+      "id": "FAC-03",
+      "title": "Criteria, partial facetings, type limits, per-plane limits, and spiky filters",
+      "case_ids": [
+        "fac-03-isohedral",
+        "fac-03-tidy",
+        "fac-03-tidy-dual",
+        "fac-03-spiky",
+        "fac-03-tidy-spiky",
+        "fac-03-partial-coplanar",
+        "fac-03-type-plane-limits",
+        "fac-03-r6-pyritohedron-policies"
+      ],
+      "remaining_inventory_task": null,
+      "benchmark_status": "unverified",
+      "platform_status": "not-run"
+    },
+    {
+      "id": "FAC-04",
+      "title": "Faceting diagrams, symmetry replication, and conversion to base model",
+      "case_ids": [
+        "fac-04-replication-adoption",
+        "fac-04-chart-and-stepping",
+        "fac-04-r6-pyritohedron-adoption"
+      ],
+      "remaining_inventory_task": null,
+      "benchmark_status": "unverified",
+      "platform_status": "not-run"
+    },
+    {
+      "id": "NET-01",
+      "title": "Generate and manually rearrange 2D nets for supported 3D polyhedra",
+      "case_ids": [
+        "net-01-face-net"
+      ],
+      "remaining_inventory_task": null,
+      "benchmark_status": "unverified",
+      "platform_status": "not-run"
+    },
+    {
+      "id": "NET-02",
+      "title": "Tabs, cut/uncut editing, coincident-edge policies, numbering, and color separation",
+      "case_ids": [
+        "net-02-tabs-none",
+        "net-02-tabs-single",
+        "net-02-tabs-double",
+        "net-02-tongue-in-groove",
+        "net-02-internal-support",
+        "net-02-no-internal-support",
+        "net-02-disconnected"
+      ],
+      "remaining_inventory_task": null,
+      "benchmark_status": "unverified",
+      "platform_status": "not-run"
+    },
+    {
+      "id": "NET-03",
+      "title": "Page packing, preview, scaled printing, images/labels, and multiple nets",
+      "case_ids": [
+        "net-03-packing-scale",
+        "net-03-multiple-images-colors"
+      ],
+      "remaining_inventory_task": null,
+      "benchmark_status": "unverified",
+      "platform_status": "not-run"
+    },
+    {
+      "id": "NET-04",
+      "title": "Animated folding of 3D polyhedron nets",
+      "case_ids": [
+        "net-04-fold-endpoints"
+      ],
+      "remaining_inventory_task": null,
+      "benchmark_status": "unverified",
+      "platform_status": "not-run"
+    },
+    {
+      "id": "NET-05",
+      "title": "Internal reinforcement parts and measurement export",
+      "case_ids": [
+        "net-05-reinforcement-patterns",
+        "net-05-measurements",
+        "net-05-r6-strip-setbacks",
+        "net-05-r6-strip-measurements"
+      ],
+      "remaining_inventory_task": null,
+      "benchmark_status": "unverified",
+      "platform_status": "not-run"
+    },
+    {
+      "id": "NET-06",
+      "title": "3D nets of 4D polytopes with manual cell rearrangement",
+      "case_ids": [
+        "net-06-whole-cell"
+      ],
+      "remaining_inventory_task": null,
+      "benchmark_status": "unverified",
+      "platform_status": "not-run"
+    },
+    {
+      "id": "ANIM-01",
+      "title": "3D/4D rotation, explosion, section-depth animation, and fold animation",
+      "case_ids": [],
+      "remaining_inventory_task": {
+        "status": "open",
+        "owner": "R8-CONFORMANCE-follow-up",
+        "next_action": "Inventory rotation/explosion/section/fold tracks and combinations; separate source tests from packaged media runs.",
+        "fixture_candidates": [
+          "tests/test_animation_4d.py",
+          "tests/animation-tracks.test.mjs",
+          "tests/animation-renderer.test.mjs",
+          "tests/test_animation_v4.py",
+          "tests/animation-v4-mounted.test.mjs",
+          "tests/timeline-mounted.test.mjs"
+        ]
+      },
+      "benchmark_status": "unverified",
+      "platform_status": "not-run"
+    },
+    {
+      "id": "ANIM-02",
+      "title": "All verified benchmark dual-morph methods and supported dimensions",
+      "case_ids": [
+        "anim-02-r6-via-snub-b3",
+        "anim-02-r7-via-snub-h3-dodecahedron",
+        "anim-02-r7-via-snub-h3-icosahedron",
+        "anim-02-r8-method-sizing",
+        "anim-02-r8-method-truncation",
+        "anim-02-r8-method-augmentation",
+        "anim-02-r8-method-expansion",
+        "anim-02-r8-method-tilting-quads",
+        "anim-02-r8-method-tilting-triangles",
+        "anim-02-r8-method-tilting-to-compound",
+        "anim-02-r8-method-tilting-to-rectify",
+        "anim-02-r8-method-via-snub"
+      ],
+      "remaining_inventory_task": null,
+      "benchmark_status": "unverified",
+      "platform_status": "not-run"
+    },
+    {
+      "id": "ANIM-03",
+      "title": "Transitions and polyhedral tours",
+      "case_ids": [],
+      "remaining_inventory_task": {
+        "status": "open",
+        "owner": "R8-CONFORMANCE-follow-up",
+        "next_action": "Inventory tour ordering/transition/playback/cancel and reopened source restoration; pin each native/UI selector.",
+        "fixture_candidates": [
+          "tests/test_tours.py",
+          "tests/animated-tour-timeline.test.mjs",
+          "tests/animated-tour-export.test.mjs",
+          "tests/transitions.test.mjs",
+          "tests/tour-strip.test.mjs",
+          "tests/timeline-panel.test.mjs"
+        ]
+      },
+      "benchmark_status": "unverified",
+      "platform_status": "not-run"
+    },
+    {
+      "id": "VIS-01",
+      "title": "Faces/cells, lines, vertex spheres, edge cylinders, and Geomag-style presentation",
+      "case_ids": [],
+      "remaining_inventory_task": {
+        "status": "open",
+        "owner": "R8-CONFORMANCE-follow-up",
+        "next_action": "Inventory faces/cells/edges/vertices/Geomag presentation, caps and saved options with literal buffer owners.",
+        "fixture_candidates": [
+          "tests/presentation.test.mjs",
+          "tests/viewer-geometry.test.mjs",
+          "tests/dense-display.test.mjs"
+        ]
+      },
+      "benchmark_status": "unverified",
+      "platform_status": "not-run"
+    },
+    {
+      "id": "VIS-02",
+      "title": "Per-element/type/subgroup coloring, transparency, selection highlighting, and overlap rules",
+      "case_ids": [
+        "vis-02-alpha-overlap"
+      ],
+      "remaining_inventory_task": null,
+      "benchmark_status": "unverified",
+      "platform_status": "not-run"
+    },
+    {
+      "id": "VIS-03",
+      "title": "Benchmark 3D materials, themes, images, bump maps, reflection/refraction, and lighting",
+      "case_ids": [
+        "vis-03-preset-studio",
+        "vis-03-preset-glass",
+        "vis-03-preset-metal",
+        "vis-03-preset-geomag",
+        "vis-03-bump",
+        "vis-03-reflection-refraction",
+        "vis-03-imported-assets",
+        "vis-03-image-mapping-video",
+        "vis-03-background",
+        "vis-03-r6-png-environment"
+      ],
+      "remaining_inventory_task": null,
+      "benchmark_status": "unverified",
+      "platform_status": "not-run"
+    },
+    {
+      "id": "VIS-04",
+      "title": "Formatted text on elements and textures on printable nets",
+      "case_ids": [],
+      "remaining_inventory_task": {
+        "status": "open",
+        "owner": "R8-CONFORMANCE-follow-up",
+        "next_action": "Inventory text layout/font/PNG face-sheet/net texture portability and every supported transfer/refusal path.",
+        "fixture_candidates": [
+          "tests/test_element_content_workflow.py",
+          "tests/test_element_content_specialists.py",
+          "tests/element-content-controls-native.test.mjs",
+          "tests/element-content-presentations.test.mjs"
+        ]
+      },
+      "benchmark_status": "unverified",
+      "platform_status": "not-run"
+    },
+    {
+      "id": "DOC-01",
+      "title": "Native projects, multiple documents, undo/redo, and derived-model promotion",
+      "case_ids": [
+        "doc-01-r8-legacy-branch-document"
+      ],
+      "remaining_inventory_task": null,
+      "benchmark_status": "unverified",
+      "platform_status": "not-run"
+    },
+    {
+      "id": "DOC-02",
+      "title": "Model memories, retrieve/swap, and add/blend operations",
+      "case_ids": [
+        "doc-02-r6-controlled-add-blend"
+      ],
+      "remaining_inventory_task": null,
+      "benchmark_status": "unverified",
+      "platform_status": "not-run"
+    },
+    {
+      "id": "DOC-03",
+      "title": "Autosave, recovery, migrations, and reproducible construction history",
+      "case_ids": [
+        "doc-03-r8-retained-legacy-version",
+        "doc-03-r8-unknown-version-snapshot",
+        "doc-03-r8-schema-and-pregraph"
+      ],
+      "remaining_inventory_task": null,
+      "benchmark_status": "unverified",
+      "platform_status": "not-run"
+    },
+    {
+      "id": "IO-01",
+      "title": "OFF/4OFF and baseline DXF import",
+      "case_ids": [
+        "io-01-off-colors",
+        "io-01-edge-count",
+        "io-01-vertices-only-open",
+        "io-01-4off-optional-cells",
+        "io-01-dxf-face-polyface",
+        "io-01-dxf-lines-points-weld",
+        "io-01-dxf-straight-mesh",
+        "io-01-dxf-unsupported",
+        "io-01-r6-dxf-boundary-import"
+      ],
+      "remaining_inventory_task": null,
+      "benchmark_status": "unverified",
+      "platform_status": "not-run"
+    },
+    {
+      "id": "IO-02",
+      "title": "DXF, POV-Ray, VRML, OBJ, OFF, and STL model export",
+      "case_ids": [
+        "io-02-units-loss",
+        "io-02-codec-off",
+        "io-02-codec-obj",
+        "io-02-codec-stl",
+        "io-02-codec-dxf",
+        "io-02-codec-vrml",
+        "io-02-codec-pov",
+        "io-02-selected-derived",
+        "io-02-orientation-primitives",
+        "io-02-solid-versus-surface",
+        "io-02-atomic-publication",
+        "io-02-r6-dxf-boundary-profile"
+      ],
+      "remaining_inventory_task": null,
+      "benchmark_status": "unverified",
+      "platform_status": "not-run"
+    },
+    {
+      "id": "IO-03",
+      "title": "Still images, transparent output, image sequences, and baseline video formats",
+      "case_ids": [
+        "io-03-png-alpha-size",
+        "io-03-png-sequence",
+        "io-03-webm",
+        "io-03-mp4",
+        "io-03-gif",
+        "io-03-legacy-containers",
+        "io-03-combined-motion-scope",
+        "io-03-r7-media-runner-fixtures"
+      ],
+      "remaining_inventory_task": null,
+      "benchmark_status": "unverified",
+      "platform_status": "not-run"
+    },
+    {
+      "id": "IO-04",
+      "title": "Direct printing and export of net measurements",
+      "case_ids": [
+        "io-04-digital-print",
+        "io-04-hardware-calibration",
+        "io-04-print-cancel",
+        "io-04-r6-strip-digital-export"
+      ],
+      "remaining_inventory_task": null,
+      "benchmark_status": "unverified",
+      "platform_status": "not-run"
+    },
+    {
+      "id": "DESK-01",
+      "title": "Native menus, file dialogs, shortcuts, view layouts, high-DPI scaling, and context help",
+      "case_ids": [
+        "desk-01-r8-common-expert-off",
+        "desk-01-r7-common-runner-plan"
+      ],
+      "remaining_inventory_task": null,
+      "benchmark_status": "unverified",
+      "platform_status": "not-run"
+    },
+    {
+      "id": "DESK-02",
+      "title": "Installation, upgrades, offline computation, and documented hardware support",
+      "case_ids": [
+        "desk-02-r7-offline-batch-source"
+      ],
+      "remaining_inventory_task": null,
+      "benchmark_status": "unverified",
+      "platform_status": "not-run"
+    }
+  ]
+}

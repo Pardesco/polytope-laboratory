@@ -2,6 +2,7 @@
 
 This record does not transfer or change the source annotation document.
 """
+
 import hashlib
 from .element_annotations import _source, _json, MAX_SOURCE
 from .geometry import GeometryError, identity
@@ -16,8 +17,9 @@ def section_content_record(source, result, common):
     def add(kind, index, target, ids, **extra):
         if len(occurrences) >= MAX_OCCURRENCES:
             raise GeometryError('Section content correspondence exceeds 100000 occurrences.')
-        occurrences.append({'sourceKind': kind, 'sourceIndex': index,
-                            'targetKind': target, 'targetIds': list(ids), **extra})
+        occurrences.append(
+            {'sourceKind': kind, 'sourceIndex': index, 'targetKind': target, 'targetIds': list(ids), **extra}
+        )
 
     for v, references in enumerate(common['sourceReferences']):
         for e in sorted({r['edge'] for r in references}):
@@ -33,8 +35,7 @@ def section_content_record(source, result, common):
             for f in region['outputFaces']:
                 add('cell', c, 'face', [f], component=f, coplanarCell=True)
         else:
-            add('cell', c, 'face', region['outputFaces'],
-                component=region['component'], hasHoles=bool(region['holes']))
+            add('cell', c, 'face', region['outputFaces'], component=region['component'], hasHoles=bool(region['holes']))
 
     # Whole source face sheets only. All corners must be surviving original
     # vertices in the same cyclic order (up to start/reversal).
@@ -52,15 +53,20 @@ def section_content_record(source, result, common):
         expected = source['faces'][original]
         if len(corners) != len(expected) or corners[0] not in expected:
             raise GeometryError('Whole section face has incomplete original corner identity.')
-        n = len(expected); start = expected.index(corners[0])
-        if not any(corners == [expected[(start + direction*i) % n] for i in range(n)] for direction in (1,-1)):
+        n = len(expected)
+        start = expected.index(corners[0])
+        if not any(corners == [expected[(start + direction * i) % n] for i in range(n)] for direction in (1, -1)):
             raise GeometryError('Whole section face differs from the literal original cycle.')
         sheets.append({'sourceFace': original, 'outputFace': f, 'sourceVertexIds': corners})
-    record = {'version': VERSION, 'sourceId': source['id'],
-              'sourceFingerprint': identity(source),
-              'sourceSha256': hashlib.sha256(_source(source)).hexdigest(),
-              'plane': {k: common[k] for k in ('normal','offset','origin','basis')},
-              'occurrences': occurrences, 'wholeFaceSheets': sheets,
-              'policy': 'literal source rank loss; complete regions; whole affine PNG sheets only'}
+    record = {
+        'version': VERSION,
+        'sourceId': source['id'],
+        'sourceFingerprint': identity(source),
+        'sourceSha256': hashlib.sha256(_source(source)).hexdigest(),
+        'plane': {k: common[k] for k in ('normal', 'offset', 'origin', 'basis')},
+        'occurrences': occurrences,
+        'wholeFaceSheets': sheets,
+        'policy': 'literal source rank loss; complete regions; whole affine PNG sheets only',
+    }
     _json(record, MAX_SOURCE)
     return record

@@ -1,0 +1,1383 @@
+{
+  "schemaVersion": 1,
+  "algorithmVersion": "1",
+  "scope": "All 79 registered rational-chain star Wythoffians: H4, B4 and F4. Native generation and independent root/coset/local-link qualification; no baseline coverage inferred.",
+  "entries": [
+    {
+      "key": "goursat-wythoff-gax",
+      "bowers": "gax",
+      "name": "grand hexacosachoron",
+      "symbol": "x3o3o5/2o",
+      "regular": true,
+      "counts": [
+        120,
+        720,
+        1200,
+        600
+      ],
+      "identity": "regular4:gax",
+      "definitionSha256": "d9ec423af8484a0872edbf3043c6873b7504175b702087697351db9cd8008b9a"
+    },
+    {
+      "key": "goursat-wythoff-raggix",
+      "bowers": "raggix",
+      "name": "rectified grand hexacosachoron",
+      "symbol": "o3x3o5/2o",
+      "regular": false,
+      "counts": [
+        720,
+        3600,
+        3600,
+        720
+      ],
+      "identity": "native-star:raggix",
+      "definitionSha256": "eeabc81888c675e60e963fb1bdf274ebee8c6b265ed7e65a53088fe86c74748d"
+    },
+    {
+      "key": "goursat-wythoff-rigogishi",
+      "bowers": "rigogishi",
+      "name": "rectified great grand stellated hecatonicosachoron",
+      "symbol": "o3o3x5/2o",
+      "regular": false,
+      "counts": [
+        1200,
+        3600,
+        3120,
+        720
+      ],
+      "identity": "native-star:rigogishi",
+      "definitionSha256": "6b8e26ff0c00910d38ff3d2badc8dc029b88cd467eb7b93435e246e2ce21452b"
+    },
+    {
+      "key": "goursat-wythoff-gogishi",
+      "bowers": "gogishi",
+      "name": "great grand stellated hecatonicosachoron",
+      "symbol": "o3o3o5/2x",
+      "regular": true,
+      "counts": [
+        600,
+        1200,
+        720,
+        120
+      ],
+      "identity": "regular4:gogishi",
+      "definitionSha256": "e64e92df06a9f776def5d7c5a540911dd8d5e6f7f19076110205956b70fe371f"
+    },
+    {
+      "key": "goursat-wythoff-taggix",
+      "bowers": "taggix",
+      "name": "truncated grand hexacosachoron",
+      "symbol": "x3x3o5/2o",
+      "regular": false,
+      "counts": [
+        1440,
+        4320,
+        3600,
+        720
+      ],
+      "identity": "native-star:taggix",
+      "definitionSha256": "bbd9617f63716cd694fd0c18146a19557aad219a5375208841be2a51150d533d"
+    },
+    {
+      "key": "goursat-wythoff-sirgax",
+      "bowers": "sirgax",
+      "name": "small rhombated grand hexacosachoron",
+      "symbol": "x3o3x5/2o",
+      "regular": false,
+      "counts": [
+        3600,
+        10800,
+        8640,
+        1440
+      ],
+      "identity": "native-star:sirgax",
+      "definitionSha256": "cdaf3369970f7b84f6282f328b61bbb4c7458c3ac685f61baffab043d014a739"
+    },
+    {
+      "key": "goursat-wythoff-gixhi",
+      "bowers": "gixhi",
+      "name": "great hexacosihecatonicosachoron",
+      "symbol": "o3x3x5/2o",
+      "regular": false,
+      "counts": [
+        3600,
+        7200,
+        4320,
+        720
+      ],
+      "identity": "native-star:gixhi",
+      "definitionSha256": "4cc7f57fe44ef81ecf218837db684633c66c79579d0780f7366b49a923e95d31"
+    },
+    {
+      "key": "goursat-wythoff-graggix",
+      "bowers": "graggix",
+      "name": "great rhombated grand hexacosachoron",
+      "symbol": "x3x3x5/2o",
+      "regular": false,
+      "counts": [
+        7200,
+        14400,
+        8640,
+        1440
+      ],
+      "identity": "native-star:graggix",
+      "definitionSha256": "bb69e424e2e655496f3506f91704b0a967bd84d672ceb5df54ad08bcaa36ff8b"
+    },
+    {
+      "key": "goursat-wythoff-fix",
+      "bowers": "fix",
+      "name": "icosahedral hecatonicosachoron",
+      "symbol": "x3o5o5/2o",
+      "regular": true,
+      "counts": [
+        120,
+        720,
+        1200,
+        120
+      ],
+      "identity": "regular4:fix",
+      "definitionSha256": "b437b3ffa83a042afb3f5d2404b4e5034dd6c9bca4ba226a210d2f9c081df2c5"
+    },
+    {
+      "key": "goursat-wythoff-sishi",
+      "bowers": "sishi",
+      "name": "small stellated hecatonicosachoron",
+      "symbol": "x5/2o5o3o",
+      "regular": true,
+      "counts": [
+        120,
+        1200,
+        720,
+        120
+      ],
+      "identity": "regular4:sishi",
+      "definitionSha256": "0345f5017b3e4f8086fb269b320ee999788b76aeb275fc8343eae7ad1ef580fe"
+    },
+    {
+      "key": "goursat-wythoff-gofix",
+      "bowers": "gofix",
+      "name": "great icosahedral hecatonicosachoron",
+      "symbol": "x3o5/2o5o",
+      "regular": true,
+      "counts": [
+        120,
+        720,
+        1200,
+        120
+      ],
+      "identity": "regular4:gofix",
+      "definitionSha256": "ac0dbca83e9e20e4b476441921efaec797cfb0ac369c4b187aa1441094b231ec"
+    },
+    {
+      "key": "goursat-wythoff-gaghi",
+      "bowers": "gaghi",
+      "name": "great grand hecatonicosachoron",
+      "symbol": "x5o5/2o3o",
+      "regular": true,
+      "counts": [
+        120,
+        1200,
+        720,
+        120
+      ],
+      "identity": "regular4:gaghi",
+      "definitionSha256": "1db308a3e0b40b44108fea5932306a0d73fc400dd5d2271812ed6c78e06503dd"
+    },
+    {
+      "key": "goursat-wythoff-gahi",
+      "bowers": "gahi",
+      "name": "grand hecatonicosachoron",
+      "symbol": "x5o3o5/2o",
+      "regular": true,
+      "counts": [
+        120,
+        720,
+        720,
+        120
+      ],
+      "identity": "regular4:gahi",
+      "definitionSha256": "c51eecbdf8875e65112934ada19edd08b2d64de51b30835c9848a5abd0b101ca"
+    },
+    {
+      "key": "goursat-wythoff-gishi",
+      "bowers": "gishi",
+      "name": "great stellated hecatonicosachoron",
+      "symbol": "o5o3o5/2x",
+      "regular": true,
+      "counts": [
+        120,
+        720,
+        720,
+        120
+      ],
+      "identity": "regular4:gishi",
+      "definitionSha256": "d28d36d333fe5f156149066cb8165c1aa9a272cc900228a16c211d10d39cc937"
+    },
+    {
+      "key": "goursat-wythoff-gohi",
+      "bowers": "gohi",
+      "name": "great hecatonicosachoron",
+      "symbol": "x5o5/2o5o",
+      "regular": true,
+      "counts": [
+        120,
+        720,
+        720,
+        120
+      ],
+      "identity": "regular4:gohi",
+      "definitionSha256": "6412d0711c5e4ff5e01a4d7868ca9fe53307f5cb203ba6558d5c05f910cfa5b8"
+    },
+    {
+      "key": "goursat-wythoff-gashi",
+      "bowers": "gashi",
+      "name": "grand stellated hecatonicosachoron",
+      "symbol": "x5/2o5o5/2o",
+      "regular": true,
+      "counts": [
+        120,
+        720,
+        720,
+        120
+      ],
+      "identity": "regular4:gashi",
+      "definitionSha256": "79d2bc03cc3164a4311dc4ad63bcac9b238a29f8d4069d400f02a398cc409466"
+    },
+    {
+      "key": "goursat-wythoff-rofix",
+      "bowers": "rofix",
+      "name": "rectified faceted hexacosichoron",
+      "symbol": "o3x5o5/2o",
+      "regular": false,
+      "counts": [
+        720,
+        3600,
+        2640,
+        240
+      ],
+      "identity": "native-star:rofix",
+      "definitionSha256": "f21b8b2b127d108459055bcb7ebaac4683b37b2cff7c367a27c1661f68c228c6",
+      "qualificationRound": 7
+    },
+    {
+      "key": "goursat-wythoff-rigfix",
+      "bowers": "rigfix",
+      "name": "rectified great faceted hexacosichoron",
+      "symbol": "o3x5/2o5o",
+      "regular": false,
+      "counts": [
+        720,
+        3600,
+        2640,
+        240
+      ],
+      "identity": "native-star:rigfix",
+      "definitionSha256": "6371b5487748676dbd75e4d1f889713201f89ced129eb57b6448c65c408ec09d",
+      "qualificationRound": 7
+    },
+    {
+      "key": "goursat-wythoff-raghi",
+      "bowers": "raghi",
+      "name": "rectified grand hecatonicosachoron",
+      "symbol": "o5x3o5/2o",
+      "regular": false,
+      "counts": [
+        720,
+        3600,
+        3120,
+        240
+      ],
+      "identity": "native-star:raghi",
+      "definitionSha256": "cee76bd0209ad2743c5a7c88d03117dc58a91531a64bf9503202a10c4bb0c2ef",
+      "qualificationRound": 7
+    },
+    {
+      "key": "goursat-wythoff-ragishi",
+      "bowers": "ragishi",
+      "name": "rectified great stellated hecatonicosachoron",
+      "symbol": "o5/2x3o5o",
+      "regular": false,
+      "counts": [
+        720,
+        3600,
+        3120,
+        240
+      ],
+      "identity": "native-star:ragishi",
+      "definitionSha256": "baedc62bd31f9bd6d6627f97045b3910da2c141c896c17662d9bf3940195bcc7",
+      "qualificationRound": 7
+    },
+    {
+      "key": "goursat-wythoff-righi",
+      "bowers": "righi",
+      "name": "rectified great hecatonicosachoron",
+      "symbol": "o5x5/2o5o",
+      "regular": false,
+      "counts": [
+        720,
+        3600,
+        2160,
+        240
+      ],
+      "identity": "native-star:righi",
+      "definitionSha256": "46ae03865a1c04d422e9a086fdacb455ca9dd83fe80563237c0d763050384ada",
+      "qualificationRound": 7
+    },
+    {
+      "key": "goursat-wythoff-ragashi",
+      "bowers": "ragashi",
+      "name": "rectified grand stellated hecatonicosachoron",
+      "symbol": "o5/2x5o5/2o",
+      "regular": false,
+      "counts": [
+        720,
+        3600,
+        2160,
+        240
+      ],
+      "identity": "native-star:ragashi",
+      "definitionSha256": "88550385116dc6c999bc198391e89a33a3540ecbb36627446f6421c4dd8da645",
+      "qualificationRound": 7
+    },
+    {
+      "key": "goursat-wythoff-rasishi",
+      "bowers": "rasishi",
+      "name": "rectified small stellated hecatonicosachoron",
+      "symbol": "o3o5x5/2o",
+      "regular": false,
+      "counts": [
+        1200,
+        3600,
+        2160,
+        240
+      ],
+      "identity": "native-star:rasishi",
+      "definitionSha256": "6691f1f8e88d6679eebf8c47410a1c71f8f8a4fef63f69a16a9a72ecd2699407",
+      "qualificationRound": 7
+    },
+    {
+      "key": "goursat-wythoff-ragaghi",
+      "bowers": "ragaghi",
+      "name": "rectified great grand hecatonicosachoron",
+      "symbol": "o3o5/2x5o",
+      "regular": false,
+      "counts": [
+        1200,
+        3600,
+        2160,
+        240
+      ],
+      "identity": "native-star:ragaghi",
+      "definitionSha256": "40650cd5a66575a73d3536701e69cae346fcb5438712e1cac37980c147c5fc2e",
+      "qualificationRound": 7
+    },
+    {
+      "key": "goursat-wythoff-tiffix",
+      "bowers": "tiffix",
+      "name": "truncated faceted hexacosichoron",
+      "symbol": "x3x5o5/2o",
+      "regular": false,
+      "counts": [
+        1440,
+        4320,
+        2640,
+        240
+      ],
+      "identity": "native-star:tiffix",
+      "definitionSha256": "857af6c808115ae1fce5635e967e0b3eb484b0502d9110dc8f8a3eab5824f4ba",
+      "qualificationRound": 7
+    },
+    {
+      "key": "goursat-wythoff-padohi",
+      "bowers": "padohi",
+      "name": "prismatodishecatonicosachoron",
+      "symbol": "x3o5o5/2x",
+      "regular": false,
+      "counts": [
+        1440,
+        7200,
+        7440,
+        2160
+      ],
+      "identity": "native-star:padohi",
+      "definitionSha256": "ea7b6c324c964cb4b953f4d5746f9d609ad7a32dbf580d9f3daa7d2a402aacc0",
+      "qualificationRound": 7
+    },
+    {
+      "key": "goursat-wythoff-tigfix",
+      "bowers": "tigfix",
+      "name": "truncated great faceted hexacosichoron",
+      "symbol": "x3x5/2o5o",
+      "regular": false,
+      "counts": [
+        1440,
+        4320,
+        2640,
+        240
+      ],
+      "identity": "native-star:tigfix",
+      "definitionSha256": "728e7321742d9b81dda07e08da77be1503bc6931f0d1fda7de6348a97f3626e8",
+      "qualificationRound": 7
+    },
+    {
+      "key": "goursat-wythoff-quipdohi",
+      "bowers": "quipdohi",
+      "name": "quasiprismatodishecatonicosachoron",
+      "symbol": "x3o5/2o5x",
+      "regular": false,
+      "counts": [
+        1440,
+        7200,
+        7440,
+        2160
+      ],
+      "identity": "native-star:quipdohi",
+      "definitionSha256": "f72798faaeb531ba4f218ec005d812738c090e2033ff0ce25bf0c41e388a5190",
+      "qualificationRound": 7
+    },
+    {
+      "key": "goursat-wythoff-taghi",
+      "bowers": "taghi",
+      "name": "truncated grand hecatonicosachoron",
+      "symbol": "x5x3o5/2o",
+      "regular": false,
+      "counts": [
+        1440,
+        4320,
+        3120,
+        240
+      ],
+      "identity": "native-star:taghi",
+      "definitionSha256": "4bb1d5944c29f920e279649b0b691ff3fc223c5c2019597f9dc9b7f85d67da0b",
+      "qualificationRound": 7
+    },
+    {
+      "key": "goursat-wythoff-tighi",
+      "bowers": "tighi",
+      "name": "truncated great hecatonicosachoron",
+      "symbol": "o5o5/2x5x",
+      "regular": false,
+      "counts": [
+        1440,
+        4320,
+        2160,
+        240
+      ],
+      "identity": "native-star:tighi",
+      "definitionSha256": "80eb77142a898db3107605c51b865ada5022f29ab49511782ffbedeaf6f1a546",
+      "qualificationRound": 7
+    },
+    {
+      "key": "goursat-wythoff-quidpixhi",
+      "bowers": "quidpixhi",
+      "name": "quasidisprismatohexacosihecatonicosachoron",
+      "symbol": "x3o3o5/3x",
+      "regular": false,
+      "counts": [
+        2400,
+        7200,
+        7440,
+        2640
+      ],
+      "identity": "native-star:quidpixhi",
+      "definitionSha256": "c76ee3518e8d683d970fd556e42b23213896a1c0cdcd1058cc24affc8cc7e2c3",
+      "qualificationRound": 7
+    },
+    {
+      "key": "goursat-wythoff-tigaghi",
+      "bowers": "tigaghi",
+      "name": "truncated great grand hecatonicosachoron",
+      "symbol": "x5x5/2o3o",
+      "regular": false,
+      "counts": [
+        2400,
+        4800,
+        2160,
+        240
+      ],
+      "identity": "native-star:tigaghi",
+      "definitionSha256": "aaf0d72c05c4dd66da443301fb3c6378f497e02791298e2b2cebd11c0dc96b27",
+      "qualificationRound": 7
+    },
+    {
+      "key": "goursat-wythoff-siddapady",
+      "bowers": "siddapady",
+      "name": "small disprismatodishecatonicosachoron",
+      "symbol": "x5o3o5/2x",
+      "regular": false,
+      "counts": [
+        2400,
+        7200,
+        6480,
+        1680
+      ],
+      "identity": "native-star:siddapady",
+      "definitionSha256": "2b17a1bab8bd4a70d49a619c21f5ef30d9cd8319e76a160fc7e6ea8e2e6f3aa7",
+      "qualificationRound": 7
+    },
+    {
+      "key": "goursat-wythoff-qrigogishi",
+      "bowers": "qrigogishi",
+      "name": "quasirhombated great grand stellated hecatonicosachoron",
+      "symbol": "o3x3o5/3x",
+      "regular": false,
+      "counts": [
+        3600,
+        10800,
+        9120,
+        1920
+      ],
+      "identity": "native-star:qrigogishi",
+      "definitionSha256": "bd021f6bfa418abc34e84ac12bbe7da4cca06bea5e65262659418ecb615a962f",
+      "qualificationRound": 7
+    },
+    {
+      "key": "goursat-wythoff-sirfix",
+      "bowers": "sirfix",
+      "name": "small rhombated faceted hexacosachoron",
+      "symbol": "x3o5x5/2o",
+      "regular": false,
+      "counts": [
+        3600,
+        10800,
+        7680,
+        960
+      ],
+      "identity": "native-star:sirfix",
+      "definitionSha256": "206ff4bf6dd8e2b5ab04ae6b992138a76aafc1d74a2390019eb4b60ee110c9f3",
+      "qualificationRound": 7
+    },
+    {
+      "key": "goursat-wythoff-shihi",
+      "bowers": "shihi",
+      "name": "small hecatonicosihecatonicosachoron",
+      "symbol": "o3x5x5/2o",
+      "regular": false,
+      "counts": [
+        3600,
+        7200,
+        3360,
+        240
+      ],
+      "identity": "native-star:shihi",
+      "definitionSha256": "4443cf436e21230b8ccfbee232249a655d1e3039d93b128e08da30fadd8d6ae9",
+      "qualificationRound": 7
+    },
+    {
+      "key": "goursat-wythoff-sirsashi",
+      "bowers": "sirsashi",
+      "name": "small rhombated small stellated hecatonicosachoron",
+      "symbol": "x5/2o5x3o",
+      "regular": false,
+      "counts": [
+        3600,
+        10800,
+        8160,
+        1440
+      ],
+      "identity": "native-star:sirsashi",
+      "definitionSha256": "ccd8e8e09dbb9e75f029b3ab2d9ba4e951ea3c0bf9593afeced5e12c433af22e",
+      "qualificationRound": 7
+    },
+    {
+      "key": "goursat-wythoff-sirgaghi",
+      "bowers": "sirgaghi",
+      "name": "small rhombated great grand hecatonicosachoron",
+      "symbol": "x5o5/2x3o",
+      "regular": false,
+      "counts": [
+        3600,
+        10800,
+        8160,
+        1440
+      ],
+      "identity": "native-star:sirgaghi",
+      "definitionSha256": "b91c4c39aaa86542855731b44fa41ea3033dbc3352df551e1c9f0c4d1500e838",
+      "qualificationRound": 7
+    },
+    {
+      "key": "goursat-wythoff-qrigfix",
+      "bowers": "qrigfix",
+      "name": "quasirhombated great faceted hexacosachoron",
+      "symbol": "x3/2o5/2x5o",
+      "regular": false,
+      "counts": [
+        3600,
+        10800,
+        7680,
+        960
+      ],
+      "identity": "native-star:qrigfix",
+      "definitionSha256": "5a8acc4178b9ac63090453c97b0f7208f8f9d44e111891d58470ffcf59dfb1c8",
+      "qualificationRound": 7
+    },
+    {
+      "key": "goursat-wythoff-ghihi",
+      "bowers": "ghihi",
+      "name": "great hecatonicosihecatonicosachoron",
+      "symbol": "o3x5/3x5o",
+      "regular": false,
+      "counts": [
+        3600,
+        7200,
+        3360,
+        240
+      ],
+      "identity": "native-star:ghihi",
+      "definitionSha256": "eebe47153be9b8f63682a6e87e986426af6c795d62b7ae1ed6170277a07bd4bd",
+      "qualificationRound": 7
+    },
+    {
+      "key": "goursat-wythoff-sraghi",
+      "bowers": "sraghi",
+      "name": "small rhombated grand hecatonicosachoron",
+      "symbol": "x5o3x5/2o",
+      "regular": false,
+      "counts": [
+        3600,
+        10800,
+        8160,
+        960
+      ],
+      "identity": "native-star:sraghi",
+      "definitionSha256": "62cd0dac211b6103b91960ad297c63563bf50c4f996d28a9034fec69022bc744",
+      "qualificationRound": 7
+    },
+    {
+      "key": "goursat-wythoff-dahi",
+      "bowers": "dahi",
+      "name": "dishecatonicosachoron",
+      "symbol": "o5x3x5/2o",
+      "regular": false,
+      "counts": [
+        3600,
+        7200,
+        3840,
+        240
+      ],
+      "identity": "native-star:dahi",
+      "definitionSha256": "5c7bbc79689d4e75b53f843c00c3765a813cd6b458891f57b8205f638b647720",
+      "qualificationRound": 7
+    },
+    {
+      "key": "goursat-wythoff-qragishi",
+      "bowers": "qragishi",
+      "name": "quasirhombated grand stellated hecatonicosachoron",
+      "symbol": "x5/2o3/2x5o",
+      "regular": false,
+      "counts": [
+        3600,
+        10800,
+        8160,
+        960
+      ],
+      "identity": "native-star:qragishi",
+      "definitionSha256": "00f385986fa4f3a7d47881c4faf6a3f22c1cd53f34655070a15824089ed328d6",
+      "qualificationRound": 7
+    },
+    {
+      "key": "goursat-wythoff-sirghi",
+      "bowers": "sirghi",
+      "name": "small rhombated great hecatonicosachoron",
+      "symbol": "x5o5/2x5o",
+      "regular": false,
+      "counts": [
+        3600,
+        10800,
+        7200,
+        960
+      ],
+      "identity": "native-star:sirghi",
+      "definitionSha256": "502cc888d6e2850977168bcc10757b2623eed7546a5f17416382474c210c77c2",
+      "qualificationRound": 7
+    },
+    {
+      "key": "goursat-wythoff-sirgashi",
+      "bowers": "sirgashi",
+      "name": "small rhombated grand stellated hecatonicosachoron",
+      "symbol": "x5/2o5x5/2o",
+      "regular": false,
+      "counts": [
+        3600,
+        10800,
+        7200,
+        960
+      ],
+      "identity": "native-star:sirgashi",
+      "definitionSha256": "4b8f77838ea7503b54b38ff398b8c74b1a7e939dc74c6e9604377eb902090b85",
+      "qualificationRound": 7
+    },
+    {
+      "key": "goursat-wythoff-paqrigagishi",
+      "bowers": "paqrigagishi",
+      "name": "prismatoquasirhombated great grand stellated hecatonicosachoron",
+      "symbol": "x3x3o5/3x",
+      "regular": false,
+      "counts": [
+        7200,
+        18000,
+        13440,
+        2640
+      ],
+      "identity": "native-star:paqrigagishi",
+      "definitionSha256": "90f7d24a670ce7862212c3d47a4e04a602751b2118c6fbc933b5cbcd70fe6711",
+      "qualificationRound": 7
+    },
+    {
+      "key": "goursat-wythoff-quippirgax",
+      "bowers": "quippirgax",
+      "name": "quasiprismatorhombated grand hexacosachoron",
+      "symbol": "x3o3x5/3x",
+      "regular": false,
+      "counts": [
+        7200,
+        18000,
+        13440,
+        2640
+      ],
+      "identity": "native-star:quippirgax",
+      "definitionSha256": "c2caebea42e70bccce9ba9d4b039bb0d4e2068adec76dcf95857b3a5f0b8b7ca",
+      "qualificationRound": 7
+    },
+    {
+      "key": "goursat-wythoff-gaqrigagishi",
+      "bowers": "gaqrigagishi",
+      "name": "great quasirhombated great grand stellated hecatonicosachoron",
+      "symbol": "o3x3x5/3x",
+      "regular": false,
+      "counts": [
+        7200,
+        14400,
+        9120,
+        1920
+      ],
+      "identity": "native-star:gaqrigagishi",
+      "definitionSha256": "08d2bd96baf45d71283ea286b06b0f1b8ecf973e145d2467a4f0224ea88de8c5",
+      "qualificationRound": 7
+    },
+    {
+      "key": "goursat-wythoff-girfix",
+      "bowers": "girfix",
+      "name": "great rhombated faceted hexacosachoron",
+      "symbol": "x3x5x5/2o",
+      "regular": false,
+      "counts": [
+        7200,
+        14400,
+        7680,
+        960
+      ],
+      "identity": "native-star:girfix",
+      "definitionSha256": "2f88ce29928eca4f00e14d1a34c2eee3151f501a67b7dd193e6bec79a70294b6",
+      "qualificationRound": 7
+    },
+    {
+      "key": "goursat-wythoff-pirshi",
+      "bowers": "pirshi",
+      "name": "prismatorhombated (small) stellated hecatonicosachoron",
+      "symbol": "x3x5o5/2x",
+      "regular": false,
+      "counts": [
+        7200,
+        18000,
+        12480,
+        2160
+      ],
+      "identity": "native-star:pirshi",
+      "definitionSha256": "d0a6b74828a8d0edcbd4cce40b4983f7c0dc450fa2cf69a488df7fb628af36d0",
+      "qualificationRound": 7
+    },
+    {
+      "key": "goursat-wythoff-quippirfix",
+      "bowers": "quippirfix",
+      "name": "quasiprismatorhombated faceted hexacosachoron",
+      "symbol": "x5/3x5o3x",
+      "regular": false,
+      "counts": [
+        7200,
+        18000,
+        12480,
+        2160
+      ],
+      "identity": "native-star:quippirfix",
+      "definitionSha256": "03076ea347dbf7661b934abe1000895b1bf2f766ec49d82376613b70e497ea62",
+      "qualificationRound": 7
+    },
+    {
+      "key": "goursat-wythoff-gaqrisashi",
+      "bowers": "gaqrisashi",
+      "name": "great quasirhombated small stellated hecatonicosachoron",
+      "symbol": "x5/3x5x3o",
+      "regular": false,
+      "counts": [
+        7200,
+        14400,
+        8160,
+        1440
+      ],
+      "identity": "native-star:gaqrisashi",
+      "definitionSha256": "b296943b8618d1b676d7494f5a0e239c593082d49e79aa974af581f70cf1f879",
+      "qualificationRound": 7
+    },
+    {
+      "key": "goursat-wythoff-pirgaghi",
+      "bowers": "pirgaghi",
+      "name": "prismatorhombated great grand hecatonicosachoron",
+      "symbol": "x3x5/2o5x",
+      "regular": false,
+      "counts": [
+        7200,
+        18000,
+        12480,
+        2160
+      ],
+      "identity": "native-star:pirgaghi",
+      "definitionSha256": "3c155a51a8ded00061828ff59eb6f1264d5ca188f64e4982078bfa89856241ef",
+      "qualificationRound": 7
+    },
+    {
+      "key": "goursat-wythoff-paqrigafix",
+      "bowers": "paqrigafix",
+      "name": "prismatoquasirhombated great facetted hexacosachoron",
+      "symbol": "x5x5/3o3x",
+      "regular": false,
+      "counts": [
+        7200,
+        18000,
+        12480,
+        2160
+      ],
+      "identity": "native-star:paqrigafix",
+      "definitionSha256": "8b23b009effbcdebcee97ed618c693c586a589694f384300b11ba077ece35e68",
+      "qualificationRound": 7
+    },
+    {
+      "key": "goursat-wythoff-gaqrigafix",
+      "bowers": "gaqrigafix",
+      "name": "great quasirhombated great faceted hexacosachoron",
+      "symbol": "x3x5/3x5o",
+      "regular": false,
+      "counts": [
+        7200,
+        14400,
+        7680,
+        960
+      ],
+      "identity": "native-star:gaqrigafix",
+      "definitionSha256": "c4950a605237b8630a015ff75c42926fbeba661fe5dfebcb067ca7d2d08c09ad",
+      "qualificationRound": 7
+    },
+    {
+      "key": "goursat-wythoff-gaqrigaghi",
+      "bowers": "gaqrigaghi",
+      "name": "great quasirhombated great grand hecatonicosachoron",
+      "symbol": "x5x5/3x3o",
+      "regular": false,
+      "counts": [
+        7200,
+        14400,
+        8160,
+        1440
+      ],
+      "identity": "native-star:gaqrigaghi",
+      "definitionSha256": "693de9d99e5dc38f1042af66771742bf67df505fa7ae4797353f272cf4ab9e86",
+      "qualificationRound": 7
+    },
+    {
+      "key": "goursat-wythoff-graghi",
+      "bowers": "graghi",
+      "name": "great rhombated grand hecatonicosachoron",
+      "symbol": "x5x3x5/2o",
+      "regular": false,
+      "counts": [
+        7200,
+        14400,
+        8160,
+        960
+      ],
+      "identity": "native-star:graghi",
+      "definitionSha256": "7bedeff8bf8a4c0de176cfda932372c5595c39ca60b2e2f5751aac4fae371f20",
+      "qualificationRound": 7
+    },
+    {
+      "key": "goursat-wythoff-paqrigshi",
+      "bowers": "paqrigshi",
+      "name": "prismatoquasirhombated great stellated hecatonicosachoron",
+      "symbol": "x5x3o5/3x",
+      "regular": false,
+      "counts": [
+        7200,
+        18000,
+        12480,
+        1680
+      ],
+      "identity": "native-star:paqrigshi",
+      "definitionSha256": "4c8f819118da223244031f4848ec3a8e2340bb126f8ec49080bfaad3cb023e47",
+      "qualificationRound": 7
+    },
+    {
+      "key": "goursat-wythoff-quippirghi",
+      "bowers": "quippirghi",
+      "name": "quasiprismatorhombated grand hecatonicosachoron",
+      "symbol": "x5/3x3o5x",
+      "regular": false,
+      "counts": [
+        7200,
+        18000,
+        12480,
+        1680
+      ],
+      "identity": "native-star:quippirghi",
+      "definitionSha256": "374523fc96d3ac2344e2064ca2d3b081796de021026f7a554a8fb31c529d529e",
+      "qualificationRound": 7
+    },
+    {
+      "key": "goursat-wythoff-gaqrigashi",
+      "bowers": "gaqrigashi",
+      "name": "great quasirhombated great stellated hecatonicosachoron",
+      "symbol": "x5/3x3x5o",
+      "regular": false,
+      "counts": [
+        7200,
+        14400,
+        8160,
+        960
+      ],
+      "identity": "native-star:gaqrigashi",
+      "definitionSha256": "0ae5c7597381440f66fa0525e644541e6b2823468bc5532edc196b77801f0f26",
+      "qualificationRound": 7
+    },
+    {
+      "key": "goursat-wythoff-pirghi",
+      "bowers": "pirghi",
+      "name": "prismatorhombated great hecatonicosachoron",
+      "symbol": "x5x5/2o5x",
+      "regular": false,
+      "counts": [
+        7200,
+        18000,
+        11520,
+        1680
+      ],
+      "identity": "native-star:pirghi",
+      "definitionSha256": "b020f2cdf6f3728cc091d48b3d07bad32af0faa8af45c4a6ac363b65b77e19fc",
+      "qualificationRound": 7
+    },
+    {
+      "key": "goursat-wythoff-quippirgashi",
+      "bowers": "quippirgashi",
+      "name": "quasiprismatorhombated grand stellated hecatonicosachoron",
+      "symbol": "x5/3x5o5/2x",
+      "regular": false,
+      "counts": [
+        7200,
+        18000,
+        11520,
+        1680
+      ],
+      "identity": "native-star:quippirgashi",
+      "definitionSha256": "6e31ae71a6239873931738e7d426d5d42c4c7a252734ad2f1837da682a07fed8",
+      "qualificationRound": 7
+    },
+    {
+      "key": "goursat-wythoff-gaquidapixhi",
+      "bowers": "gaquidapixhi",
+      "name": "great quasidisprismatohexacosihecatonicosachoron",
+      "symbol": "x3x3x5/3x",
+      "regular": false,
+      "counts": [
+        14400,
+        28800,
+        17040,
+        2640
+      ],
+      "identity": "native-star:gaquidapixhi",
+      "definitionSha256": "ba81a5832ed4f0c52a681549e8fc8c754fb1004b2342aff4d70217f469c530a9",
+      "qualificationRound": 7
+    },
+    {
+      "key": "goursat-wythoff-goquidipdy",
+      "bowers": "goquidipdy",
+      "name": "great quasidisprismatodishecatonicosachoron",
+      "symbol": "x3x5x5/3x",
+      "regular": false,
+      "counts": [
+        14400,
+        28800,
+        16080,
+        2160
+      ],
+      "identity": "native-star:goquidipdy",
+      "definitionSha256": "0a127673251c3d919da929aa37ae85bc02276e90ae0e90e67102c2d34ca1f1d1",
+      "qualificationRound": 7
+    },
+    {
+      "key": "goursat-wythoff-gaquidipdy",
+      "bowers": "gaquidipdy",
+      "name": "grand quasidisprismatodishecatonicosachoron",
+      "symbol": "x3x5/3x5x",
+      "regular": false,
+      "counts": [
+        14400,
+        28800,
+        16080,
+        2160
+      ],
+      "identity": "native-star:gaquidipdy",
+      "definitionSha256": "1d994f38253c6879ee91e5b19d63c310e7b6f620f261e81f30d9ee3dc07b7830",
+      "qualificationRound": 7
+    },
+    {
+      "key": "goursat-wythoff-gaquidphihi",
+      "bowers": "gaquidphihi",
+      "name": "great quasidisprismatohecatonicosihecatonicosachoron",
+      "symbol": "x5x3x5/3x",
+      "regular": false,
+      "counts": [
+        14400,
+        28800,
+        16080,
+        1680
+      ],
+      "identity": "native-star:gaquidphihi",
+      "definitionSha256": "4674ab9670fba3bb5f22c99d2b64c4a2c6f5ea24b48df54aa992dd16aa0f842d",
+      "qualificationRound": 7
+    },
+    {
+      "key": "goursat-wythoff-quidpith",
+      "bowers": "quidpith",
+      "name": "quasi(dis)prismatotesseractihexadecachoron",
+      "symbol": "x3/2o3o4x",
+      "regular": false,
+      "counts": [
+        64,
+        192,
+        208,
+        80
+      ],
+      "identity": "native-star:quidpith",
+      "definitionSha256": "dee557cd79e752d6ef36463ef12e390736ae7d964e9df9c17b56487ac799a7d8",
+      "qualificationRound": 7
+    },
+    {
+      "key": "goursat-wythoff-quitit",
+      "bowers": "quitit",
+      "name": "quasitruncated tesseract",
+      "symbol": "o3o3x4/3x",
+      "regular": false,
+      "counts": [
+        64,
+        128,
+        88,
+        24
+      ],
+      "identity": "native-star:quitit",
+      "definitionSha256": "3734e4da9061ace1355de4a9e71627096b35834f468a60b9d03eccd7e0f8ce17",
+      "qualificationRound": 7
+    },
+    {
+      "key": "goursat-wythoff-qrit",
+      "bowers": "qrit",
+      "name": "quasirhombated tesseract",
+      "symbol": "o3x3o4/3x",
+      "regular": false,
+      "counts": [
+        96,
+        288,
+        248,
+        56
+      ],
+      "identity": "native-star:qrit",
+      "definitionSha256": "2934db4a500bc772da9f0711f47a32ddb392a27128fa0250eea566ad50c1eba2",
+      "qualificationRound": 7
+    },
+    {
+      "key": "goursat-wythoff-quippic",
+      "bowers": "quippic",
+      "name": "quasiprismatotetracontoctachoron",
+      "symbol": "x3o4o3/2x",
+      "regular": false,
+      "counts": [
+        144,
+        576,
+        672,
+        240
+      ],
+      "identity": "native-star:quippic",
+      "definitionSha256": "635f0a2a1b7a8b2f693b3738785661ec5fc1bb3b6430eb7760fff1ea0d16507f",
+      "qualificationRound": 7
+    },
+    {
+      "key": "goursat-wythoff-paqrit",
+      "bowers": "paqrit",
+      "name": "prismatoquasirhombated tesseract",
+      "symbol": "x3x3o4/3x",
+      "regular": false,
+      "counts": [
+        192,
+        480,
+        368,
+        80
+      ],
+      "identity": "native-star:paqrit",
+      "definitionSha256": "14d43d057e42a5dfc79548f2b6ecc6580ba79d2925873624bd49f6cec85f32af",
+      "qualificationRound": 7
+    },
+    {
+      "key": "goursat-wythoff-quiproh",
+      "bowers": "quiproh",
+      "name": "quasiprismatorhombated hexadecachoron",
+      "symbol": "x3o3x4/3x",
+      "regular": false,
+      "counts": [
+        192,
+        480,
+        368,
+        80
+      ],
+      "identity": "native-star:quiproh",
+      "definitionSha256": "ab910c7f85fc68ad453c54b68bede305a6a5e6e2bce79760b37fb39a47ccec41",
+      "qualificationRound": 7
+    },
+    {
+      "key": "goursat-wythoff-gaqrit",
+      "bowers": "gaqrit",
+      "name": "great quasirhombated tesseract",
+      "symbol": "o3x3x4/3x",
+      "regular": false,
+      "counts": [
+        192,
+        384,
+        248,
+        56
+      ],
+      "identity": "native-star:gaqrit",
+      "definitionSha256": "29ae13c56d29a127debb639bb1cf4c57d81fc6721f239178a8dda4809eb3e5e6",
+      "qualificationRound": 7
+    },
+    {
+      "key": "goursat-wythoff-qrico",
+      "bowers": "qrico",
+      "name": "quasirhombated icositetrachoron",
+      "symbol": "x3o4/3x3o",
+      "regular": false,
+      "counts": [
+        288,
+        864,
+        720,
+        144
+      ],
+      "identity": "native-star:qrico",
+      "definitionSha256": "a4b68093cff6bbf2ba2ed46d4e3f823e77eca13b9c5eb32e317161512a23646f",
+      "qualificationRound": 7
+    },
+    {
+      "key": "goursat-wythoff-gic",
+      "bowers": "gic",
+      "name": "great tetracontoctachoron",
+      "symbol": "o3x4/3x3o",
+      "regular": false,
+      "counts": [
+        288,
+        576,
+        336,
+        48
+      ],
+      "identity": "native-star:gic",
+      "definitionSha256": "f94ca78d49c1b3c7d94eea1a9f3b5b28545e95427ee42eb9788c7abb25b97cd6",
+      "qualificationRound": 7
+    },
+    {
+      "key": "goursat-wythoff-gaquidpoth",
+      "bowers": "gaquidpoth",
+      "name": "great quasidisprismatotesseractihexadecachoron",
+      "symbol": "x3x3x4/3x",
+      "regular": false,
+      "counts": [
+        384,
+        768,
+        464,
+        80
+      ],
+      "identity": "native-star:gaquidpoth",
+      "definitionSha256": "ed343f5da22d3d540973575e0927ecfe5daa88f36e3d31d19742ebb854d36621",
+      "qualificationRound": 7
+    },
+    {
+      "key": "goursat-wythoff-paqri",
+      "bowers": "paqri",
+      "name": "prismatoquasirhombated icositetrachoron",
+      "symbol": "x3x4o3/2x",
+      "regular": false,
+      "counts": [
+        576,
+        1440,
+        1104,
+        240
+      ],
+      "identity": "native-star:paqri",
+      "definitionSha256": "f65f49c048ad09ff845695c910b78fc1c907801136fab9968589e26c5981d2dc",
+      "qualificationRound": 7
+    },
+    {
+      "key": "goursat-wythoff-gaqri",
+      "bowers": "gaqri",
+      "name": "great quasirhombated icositetrachoron",
+      "symbol": "x3x4/3x3o",
+      "regular": false,
+      "counts": [
+        576,
+        1152,
+        720,
+        144
+      ],
+      "identity": "native-star:gaqri",
+      "definitionSha256": "4b2c7d794ab542ef9f79dba6fc96bc07ff0e1e12b99936319593729b66fb5068",
+      "qualificationRound": 7
+    },
+    {
+      "key": "goursat-wythoff-gaquapac",
+      "bowers": "gaquapac",
+      "name": "great quasiprismatotetracontoctachoron",
+      "symbol": "x3x4/3x3x",
+      "regular": false,
+      "counts": [
+        1152,
+        2304,
+        1392,
+        240
+      ],
+      "identity": "native-star:gaquapac",
+      "definitionSha256": "7329c8b4ba54e77aa07be466797df98974cd7e7db90b0acc98f45a8243f7b45c",
+      "qualificationRound": 7
+    }
+  ],
+  "queue": [
+    {
+      "symbol": "x3o3o5/2x",
+      "reason": "Rechecked: numeric seed orbit is smaller than the inactive-mirror coset prediction. Coinciding orbit positions/extra seed stabilizers; no welding, partial boundary or hull returned.",
+      "rings": [
+        1,
+        0,
+        0,
+        1
+      ],
+      "predictedCounts": [
+        2400,
+        7200,
+        7440,
+        2640
+      ],
+      "qualificationRound": 7,
+      "status": "refused-extra-seed-stabilizer"
+    },
+    {
+      "symbol": "o3x3o5/2x",
+      "reason": "Rechecked: numeric seed orbit is smaller than the inactive-mirror coset prediction. Coinciding orbit positions/extra seed stabilizers; no welding, partial boundary or hull returned.",
+      "rings": [
+        0,
+        1,
+        0,
+        1
+      ],
+      "predictedCounts": [
+        3600,
+        10800,
+        9120,
+        1920
+      ],
+      "qualificationRound": 7,
+      "status": "refused-extra-seed-stabilizer"
+    },
+    {
+      "symbol": "o3o3x5/2x",
+      "reason": "Rechecked: numeric seed orbit is smaller than the inactive-mirror coset prediction. Coinciding orbit positions/extra seed stabilizers; no welding, partial boundary or hull returned.",
+      "rings": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "predictedCounts": [
+        2400,
+        4800,
+        3120,
+        720
+      ],
+      "qualificationRound": 7,
+      "status": "refused-extra-seed-stabilizer"
+    },
+    {
+      "symbol": "x3x3o5/2x",
+      "reason": "Rechecked: numeric seed orbit is smaller than the inactive-mirror coset prediction. Coinciding orbit positions/extra seed stabilizers; no welding, partial boundary or hull returned.",
+      "rings": [
+        1,
+        1,
+        0,
+        1
+      ],
+      "predictedCounts": [
+        7200,
+        18000,
+        13440,
+        2640
+      ],
+      "qualificationRound": 7,
+      "status": "refused-extra-seed-stabilizer"
+    },
+    {
+      "symbol": "x3o3x5/2x",
+      "reason": "Rechecked: numeric seed orbit is smaller than the inactive-mirror coset prediction. Coinciding orbit positions/extra seed stabilizers; no welding, partial boundary or hull returned.",
+      "rings": [
+        1,
+        0,
+        1,
+        1
+      ],
+      "predictedCounts": [
+        7200,
+        18000,
+        13440,
+        2640
+      ],
+      "qualificationRound": 7,
+      "status": "refused-extra-seed-stabilizer"
+    },
+    {
+      "symbol": "o3x3x5/2x",
+      "reason": "Rechecked: numeric seed orbit is smaller than the inactive-mirror coset prediction. Coinciding orbit positions/extra seed stabilizers; no welding, partial boundary or hull returned.",
+      "rings": [
+        0,
+        1,
+        1,
+        1
+      ],
+      "predictedCounts": [
+        7200,
+        14400,
+        9120,
+        1920
+      ],
+      "qualificationRound": 7,
+      "status": "refused-extra-seed-stabilizer"
+    },
+    {
+      "symbol": "x3x3x5/2x",
+      "reason": "Rechecked: numeric seed orbit is smaller than the inactive-mirror coset prediction. Coinciding orbit positions/extra seed stabilizers; no welding, partial boundary or hull returned.",
+      "rings": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "predictedCounts": [
+        14400,
+        28800,
+        17040,
+        2640
+      ],
+      "qualificationRound": 7,
+      "status": "refused-extra-seed-stabilizer"
+    }
+  ]
+}

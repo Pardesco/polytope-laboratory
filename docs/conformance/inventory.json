@@ -1,0 +1,791 @@
+{
+  "schema_version": 1,
+  "inventory_version": "2026-11-09.r5-domains.1",
+  "audited_baseline_commit": "582c0015f4baa5a8a567a06523c8a664061825f2",
+  "target_version": "6.0",
+  "baseline_audit_complete": false,
+  "scope": "R5-DOMAINS option inventory; common hull/dual/section/net/fitting/import/export, partial construction, stellation/faceting, materials and IO rows. Not a replacement for canonical parity ledger.",
+  "excluded_packages": {
+    "LIB-*": "R5-CORPUS classification/crosswalk",
+    "ANIM-02": "R5-MORPH-SCOPE method inventory; IO combination boundary only here",
+    "DOC-*": "R5-HISTORY/R6-MEMORIES; construction round-trip acceptance only here",
+    "VIEW-*/DESK-*": "R5-UX/R5-HELP/R7-DESKTOP; UI entry pointers only here"
+  },
+  "source_file": "sources.json",
+  "domain_file": "domains.json",
+  "scenario_files": [
+    "scenarios-common.json",
+    "scenarios-fitting-options.json",
+    "scenarios-generators.json",
+    "scenarios-io.json",
+    "scenarios-materials.json",
+    "scenarios-modifications.json",
+    "scenarios-nets.json",
+    "scenarios-stellation-faceting.json"
+  ],
+  "partial_requirement_ids": [
+    "CON-02",
+    "CON-03",
+    "CON-05",
+    "CON-06",
+    "CON-07",
+    "CON-08",
+    "CON-09",
+    "CON-10",
+    "CON-11",
+    "CON-12",
+    "CON-13",
+    "CON-14",
+    "FAC-02",
+    "FAC-03",
+    "FAC-04",
+    "IO-01",
+    "IO-02",
+    "IO-03",
+    "IO-04",
+    "NET-02",
+    "NET-03",
+    "NET-05",
+    "SEC-05",
+    "STEL-01",
+    "STEL-03",
+    "STEL-04",
+    "STEL-05",
+    "VIS-02",
+    "VIS-03"
+  ],
+  "requirements": [
+    {
+      "id": "CON-02",
+      "title": "Podia, antipodia, stephanoids, torus constructions, and Waterman objects",
+      "audit_status": "partial",
+      "case_ids": [
+        "con-02-podium-sizing",
+        "con-02-antipodium-sizing",
+        "con-02-stephanoid",
+        "con-02-torus-twist",
+        "con-02-waterman-sequence",
+        "con-02-waterman-4d"
+      ],
+      "cross_products": "Not exhaustively executed. Combine only independently qualified source classes, dimensions and options; remaining combinations require new scenarios, not inferred conformance.",
+      "implementation_gap_case_ids": [
+        "con-02-waterman-4d"
+      ],
+      "qualification_case_ids": [
+        "con-02-podium-sizing",
+        "con-02-antipodium-sizing",
+        "con-02-stephanoid",
+        "con-02-torus-twist",
+        "con-02-waterman-sequence",
+        "con-02-waterman-4d"
+      ]
+    },
+    {
+      "id": "CON-03",
+      "title": "3D/4D convex hulls and convex cores",
+      "audit_status": "partial",
+      "case_ids": [
+        "con-03-hull-cube-tesseract",
+        "con-03-hull-degenerate",
+        "con-03-rational-hull",
+        "con-03-core-center",
+        "con-03-core-unbounded"
+      ],
+      "cross_products": "Not exhaustively executed. Combine only independently qualified source classes, dimensions and options; remaining combinations require new scenarios, not inferred conformance.",
+      "implementation_gap_case_ids": [],
+      "qualification_case_ids": [
+        "con-03-hull-cube-tesseract",
+        "con-03-hull-degenerate",
+        "con-03-rational-hull",
+        "con-03-core-center",
+        "con-03-core-unbounded"
+      ]
+    },
+    {
+      "id": "CON-04",
+      "title": "Duals and reciprocation centers",
+      "audit_status": "implemented",
+      "case_ids": [
+        "con-04-polar-involution",
+        "con-04-center-radius",
+        "con-04-singular-projective"
+      ],
+      "cross_products": "Not exhaustively executed. Combine only independently qualified source classes, dimensions and options; remaining combinations require new scenarios, not inferred conformance.",
+      "implementation_gap_case_ids": [],
+      "qualification_case_ids": [
+        "con-04-polar-involution",
+        "con-04-center-radius",
+        "con-04-singular-projective"
+      ]
+    },
+    {
+      "id": "CON-05",
+      "title": "Truncation, rectification, and expansion/runcination in supported 3D/4D domains",
+      "audit_status": "partial",
+      "case_ids": [
+        "con-05-cut-transitions",
+        "con-05-expand-3d",
+        "con-05-expand-4d",
+        "con-05-normal-quasi"
+      ],
+      "cross_products": "Not exhaustively executed. Combine only independently qualified source classes, dimensions and options; remaining combinations require new scenarios, not inferred conformance.",
+      "implementation_gap_case_ids": [],
+      "qualification_case_ids": [
+        "con-05-cut-transitions",
+        "con-05-expand-3d",
+        "con-05-expand-4d",
+        "con-05-normal-quasi"
+      ]
+    },
+    {
+      "id": "CON-06",
+      "title": "Mirroring, pseudo-uniform transformations, adding/blending duals, and compound part operations",
+      "audit_status": "partial",
+      "case_ids": [
+        "con-06-reflection-chirality",
+        "con-06-pseudo-uniform",
+        "con-06-add-dual-scale",
+        "con-06-compound-parts"
+      ],
+      "cross_products": "Not exhaustively executed. Combine only independently qualified source classes, dimensions and options; remaining combinations require new scenarios, not inferred conformance.",
+      "implementation_gap_case_ids": [
+        "con-06-pseudo-uniform"
+      ],
+      "qualification_case_ids": [
+        "con-06-reflection-chirality",
+        "con-06-pseudo-uniform",
+        "con-06-add-dual-scale",
+        "con-06-compound-parts"
+      ]
+    },
+    {
+      "id": "CON-07",
+      "title": "3D augmentation, excavation, drilling, and placing models on faces/vertices",
+      "audit_status": "partial",
+      "case_ids": [
+        "con-07-matching-orientation",
+        "con-07-target-filters",
+        "con-07-height-policies",
+        "con-07-color-coincidence",
+        "con-07-drill",
+        "con-07-placement-sizes"
+      ],
+      "cross_products": "Not exhaustively executed. Combine only independently qualified source classes, dimensions and options; remaining combinations require new scenarios, not inferred conformance.",
+      "implementation_gap_case_ids": [
+        "con-07-target-filters",
+        "con-07-height-policies",
+        "con-07-color-coincidence",
+        "con-07-placement-sizes"
+      ],
+      "qualification_case_ids": [
+        "con-07-matching-orientation",
+        "con-07-target-filters",
+        "con-07-height-policies",
+        "con-07-color-coincidence",
+        "con-07-drill",
+        "con-07-placement-sizes"
+      ]
+    },
+    {
+      "id": "CON-08",
+      "title": "Zonohedrification, face/edge subdivision, geodesic construction, and sphere projection",
+      "audit_status": "partial",
+      "case_ids": [
+        "con-08-zonohedron-directions",
+        "con-08-subdivision-inheritance",
+        "con-08-geodesic-sphere"
+      ],
+      "cross_products": "Not exhaustively executed. Combine only independently qualified source classes, dimensions and options; remaining combinations require new scenarios, not inferred conformance.",
+      "implementation_gap_case_ids": [],
+      "qualification_case_ids": [
+        "con-08-zonohedron-directions",
+        "con-08-subdivision-inheritance",
+        "con-08-geodesic-sphere"
+      ]
+    },
+    {
+      "id": "CON-09",
+      "title": "Regular-face, equal-edge, and equal-area fitting",
+      "audit_status": "partial",
+      "case_ids": [
+        "con-09-regular-faces",
+        "con-09-planar-faces",
+        "con-09-equal-edges",
+        "con-09-equal-areas",
+        "con-09-infeasible",
+        "con-09-generalized-domain",
+        "con-09-selected-combined",
+        "con-09-scale-symmetry-target",
+        "con-09-invalid-adoption"
+      ],
+      "cross_products": "Not exhaustively executed. Combine only independently qualified source classes, dimensions and options; remaining combinations require new scenarios, not inferred conformance.",
+      "implementation_gap_case_ids": [
+        "con-09-generalized-domain"
+      ],
+      "qualification_case_ids": [
+        "con-09-regular-faces",
+        "con-09-planar-faces",
+        "con-09-equal-edges",
+        "con-09-equal-areas",
+        "con-09-infeasible",
+        "con-09-generalized-domain",
+        "con-09-selected-combined",
+        "con-09-scale-symmetry-target",
+        "con-09-invalid-adoption"
+      ]
+    },
+    {
+      "id": "CON-10",
+      "title": "Coplanar-face blending and relevant coincidence operations",
+      "audit_status": "partial",
+      "case_ids": [
+        "con-10-coincident-pairs",
+        "con-10-coplanar-hole",
+        "con-10-4d-cell-rebuild"
+      ],
+      "cross_products": "Not exhaustively executed. Combine only independently qualified source classes, dimensions and options; remaining combinations require new scenarios, not inferred conformance.",
+      "implementation_gap_case_ids": [
+        "con-10-4d-cell-rebuild"
+      ],
+      "qualification_case_ids": [
+        "con-10-coincident-pairs",
+        "con-10-coplanar-hole",
+        "con-10-4d-cell-rebuild"
+      ]
+    },
+    {
+      "id": "CON-11",
+      "title": "4D prisms on 3D bases, duoprisms, antiduoprisms, and step prisms/gyrochora",
+      "audit_status": "partial",
+      "case_ids": [
+        "con-11-shell-prism",
+        "con-11-rational-products",
+        "con-11-step-prism",
+        "con-11-rational-step-multiprism"
+      ],
+      "cross_products": "Not exhaustively executed. Combine only independently qualified source classes, dimensions and options; remaining combinations require new scenarios, not inferred conformance.",
+      "implementation_gap_case_ids": [
+        "con-11-rational-step-multiprism"
+      ],
+      "qualification_case_ids": [
+        "con-11-shell-prism",
+        "con-11-rational-products",
+        "con-11-step-prism",
+        "con-11-rational-step-multiprism"
+      ]
+    },
+    {
+      "id": "CON-12",
+      "title": "Segmentotopes, including benchmark crossed variants",
+      "audit_status": "partial",
+      "case_ids": [
+        "con-12-convex-layer-join",
+        "con-12-crossed-definition",
+        "con-12-crossed-layers"
+      ],
+      "cross_products": "Not exhaustively executed. Combine only independently qualified source classes, dimensions and options; remaining combinations require new scenarios, not inferred conformance.",
+      "implementation_gap_case_ids": [
+        "con-12-crossed-layers"
+      ],
+      "qualification_case_ids": [
+        "con-12-convex-layer-join",
+        "con-12-crossed-definition",
+        "con-12-crossed-layers"
+      ]
+    },
+    {
+      "id": "CON-13",
+      "title": "Uniform/scaliform construction from eligible 3D vertex figures",
+      "audit_status": "partial",
+      "case_ids": [
+        "con-13-finite-completion",
+        "con-13-scaliform-completion"
+      ],
+      "cross_products": "Not exhaustively executed. Combine only independently qualified source classes, dimensions and options; remaining combinations require new scenarios, not inferred conformance.",
+      "implementation_gap_case_ids": [
+        "con-13-scaliform-completion"
+      ],
+      "qualification_case_ids": [
+        "con-13-finite-completion",
+        "con-13-scaliform-completion"
+      ]
+    },
+    {
+      "id": "CON-14",
+      "title": "3D spring-network relaxation and supported near-miss constraints",
+      "audit_status": "partial",
+      "case_ids": [
+        "con-14-initialization",
+        "con-14-constraints",
+        "con-14-grammar"
+      ],
+      "cross_products": "Not exhaustively executed. Combine only independently qualified source classes, dimensions and options; remaining combinations require new scenarios, not inferred conformance.",
+      "implementation_gap_case_ids": [
+        "con-14-grammar"
+      ],
+      "qualification_case_ids": [
+        "con-14-initialization",
+        "con-14-constraints",
+        "con-14-grammar"
+      ]
+    },
+    {
+      "id": "FAC-01",
+      "title": "Manual coplanar facet construction from existing vertices",
+      "audit_status": "implemented",
+      "case_ids": [
+        "fac-01-ordered-cycles"
+      ],
+      "cross_products": "Not exhaustively executed. Combine only independently qualified source classes, dimensions and options; remaining combinations require new scenarios, not inferred conformance.",
+      "implementation_gap_case_ids": [],
+      "qualification_case_ids": [
+        "fac-01-ordered-cycles"
+      ]
+    },
+    {
+      "id": "FAC-02",
+      "title": "Automatic facet candidates and valid faceting enumeration",
+      "audit_status": "partial",
+      "case_ids": [
+        "fac-02-tetrahedron-complete",
+        "fac-02-cube-candidates",
+        "fac-02-dodecahedron-frontier",
+        "fac-02-limited-search"
+      ],
+      "cross_products": "Not exhaustively executed. Combine only independently qualified source classes, dimensions and options; remaining combinations require new scenarios, not inferred conformance.",
+      "implementation_gap_case_ids": [
+        "fac-02-dodecahedron-frontier"
+      ],
+      "qualification_case_ids": [
+        "fac-02-tetrahedron-complete",
+        "fac-02-cube-candidates",
+        "fac-02-dodecahedron-frontier",
+        "fac-02-limited-search"
+      ]
+    },
+    {
+      "id": "FAC-03",
+      "title": "Criteria, partial facetings, type limits, per-plane limits, and spiky filters",
+      "audit_status": "partial",
+      "case_ids": [
+        "fac-03-isohedral",
+        "fac-03-tidy",
+        "fac-03-tidy-dual",
+        "fac-03-spiky",
+        "fac-03-tidy-spiky",
+        "fac-03-partial-coplanar",
+        "fac-03-type-plane-limits"
+      ],
+      "cross_products": "Not exhaustively executed. Combine only independently qualified source classes, dimensions and options; remaining combinations require new scenarios, not inferred conformance.",
+      "implementation_gap_case_ids": [],
+      "qualification_case_ids": [
+        "fac-03-isohedral",
+        "fac-03-tidy",
+        "fac-03-tidy-dual",
+        "fac-03-spiky",
+        "fac-03-tidy-spiky",
+        "fac-03-partial-coplanar",
+        "fac-03-type-plane-limits"
+      ]
+    },
+    {
+      "id": "FAC-04",
+      "title": "Faceting diagrams, symmetry replication, and conversion to base model",
+      "audit_status": "partial",
+      "case_ids": [
+        "fac-04-replication-adoption",
+        "fac-04-chart-and-stepping"
+      ],
+      "cross_products": "Not exhaustively executed. Combine only independently qualified source classes, dimensions and options; remaining combinations require new scenarios, not inferred conformance.",
+      "implementation_gap_case_ids": [
+        "fac-04-chart-and-stepping"
+      ],
+      "qualification_case_ids": [
+        "fac-04-replication-adoption",
+        "fac-04-chart-and-stepping"
+      ]
+    },
+    {
+      "id": "IO-01",
+      "title": "OFF/4OFF and baseline DXF import",
+      "audit_status": "partial",
+      "case_ids": [
+        "io-01-off-colors",
+        "io-01-edge-count",
+        "io-01-vertices-only-open",
+        "io-01-4off-optional-cells",
+        "io-01-dxf-face-polyface",
+        "io-01-dxf-lines-points-weld",
+        "io-01-dxf-straight-mesh",
+        "io-01-dxf-unsupported"
+      ],
+      "cross_products": "Not exhaustively executed. Combine only independently qualified source classes, dimensions and options; remaining combinations require new scenarios, not inferred conformance.",
+      "implementation_gap_case_ids": [
+        "io-01-vertices-only-open"
+      ],
+      "qualification_case_ids": [
+        "io-01-off-colors",
+        "io-01-edge-count",
+        "io-01-vertices-only-open",
+        "io-01-4off-optional-cells",
+        "io-01-dxf-face-polyface",
+        "io-01-dxf-lines-points-weld",
+        "io-01-dxf-straight-mesh",
+        "io-01-dxf-unsupported"
+      ]
+    },
+    {
+      "id": "IO-02",
+      "title": "DXF, POV-Ray, VRML, OBJ, OFF, and STL model export",
+      "audit_status": "partial",
+      "case_ids": [
+        "io-02-units-loss",
+        "io-02-codec-off",
+        "io-02-codec-obj",
+        "io-02-codec-stl",
+        "io-02-codec-dxf",
+        "io-02-codec-vrml",
+        "io-02-codec-pov",
+        "io-02-selected-derived",
+        "io-02-orientation-primitives",
+        "io-02-solid-versus-surface",
+        "io-02-atomic-publication"
+      ],
+      "cross_products": "Not exhaustively executed. Combine only independently qualified source classes, dimensions and options; remaining combinations require new scenarios, not inferred conformance.",
+      "implementation_gap_case_ids": [],
+      "qualification_case_ids": [
+        "io-02-units-loss",
+        "io-02-codec-off",
+        "io-02-codec-obj",
+        "io-02-codec-stl",
+        "io-02-codec-dxf",
+        "io-02-codec-vrml",
+        "io-02-codec-pov",
+        "io-02-selected-derived",
+        "io-02-orientation-primitives",
+        "io-02-solid-versus-surface",
+        "io-02-atomic-publication"
+      ]
+    },
+    {
+      "id": "IO-03",
+      "title": "Still images, transparent output, image sequences, and baseline video formats",
+      "audit_status": "partial",
+      "case_ids": [
+        "io-03-png-alpha-size",
+        "io-03-png-sequence",
+        "io-03-webm",
+        "io-03-mp4",
+        "io-03-gif",
+        "io-03-legacy-containers",
+        "io-03-combined-motion-scope"
+      ],
+      "cross_products": "Not exhaustively executed. Combine only independently qualified source classes, dimensions and options; remaining combinations require new scenarios, not inferred conformance.",
+      "implementation_gap_case_ids": [
+        "io-03-legacy-containers"
+      ],
+      "qualification_case_ids": [
+        "io-03-png-alpha-size",
+        "io-03-png-sequence",
+        "io-03-webm",
+        "io-03-mp4",
+        "io-03-gif",
+        "io-03-legacy-containers",
+        "io-03-combined-motion-scope"
+      ]
+    },
+    {
+      "id": "IO-04",
+      "title": "Direct printing and export of net measurements",
+      "audit_status": "partial",
+      "case_ids": [
+        "io-04-digital-print",
+        "io-04-hardware-calibration",
+        "io-04-print-cancel"
+      ],
+      "cross_products": "Not exhaustively executed. Combine only independently qualified source classes, dimensions and options; remaining combinations require new scenarios, not inferred conformance.",
+      "implementation_gap_case_ids": [
+        "io-04-hardware-calibration"
+      ],
+      "qualification_case_ids": [
+        "io-04-digital-print",
+        "io-04-hardware-calibration",
+        "io-04-print-cancel"
+      ]
+    },
+    {
+      "id": "NET-01",
+      "title": "Generate and manually rearrange 2D nets for supported 3D polyhedra",
+      "audit_status": "implemented",
+      "case_ids": [
+        "net-01-face-net"
+      ],
+      "cross_products": "Not exhaustively executed. Combine only independently qualified source classes, dimensions and options; remaining combinations require new scenarios, not inferred conformance.",
+      "implementation_gap_case_ids": [],
+      "qualification_case_ids": [
+        "net-01-face-net"
+      ]
+    },
+    {
+      "id": "NET-02",
+      "title": "Tabs, cut/uncut editing, coincident-edge policies, numbering, and color separation",
+      "audit_status": "partial",
+      "case_ids": [
+        "net-02-tabs-none",
+        "net-02-tabs-single",
+        "net-02-tabs-double",
+        "net-02-tongue-in-groove",
+        "net-02-internal-support",
+        "net-02-no-internal-support",
+        "net-02-disconnected"
+      ],
+      "cross_products": "Not exhaustively executed. Combine only independently qualified source classes, dimensions and options; remaining combinations require new scenarios, not inferred conformance.",
+      "implementation_gap_case_ids": [],
+      "qualification_case_ids": [
+        "net-02-tabs-none",
+        "net-02-tabs-single",
+        "net-02-tabs-double",
+        "net-02-tongue-in-groove",
+        "net-02-internal-support",
+        "net-02-no-internal-support",
+        "net-02-disconnected"
+      ]
+    },
+    {
+      "id": "NET-03",
+      "title": "Page packing, preview, scaled printing, images/labels, and multiple nets",
+      "audit_status": "partial",
+      "case_ids": [
+        "net-03-packing-scale",
+        "net-03-multiple-images-colors"
+      ],
+      "cross_products": "Not exhaustively executed. Combine only independently qualified source classes, dimensions and options; remaining combinations require new scenarios, not inferred conformance.",
+      "implementation_gap_case_ids": [],
+      "qualification_case_ids": [
+        "net-03-packing-scale",
+        "net-03-multiple-images-colors"
+      ]
+    },
+    {
+      "id": "NET-04",
+      "title": "Animated folding of 3D polyhedron nets",
+      "audit_status": "implemented",
+      "case_ids": [
+        "net-04-fold-endpoints"
+      ],
+      "cross_products": "Not exhaustively executed. Combine only independently qualified source classes, dimensions and options; remaining combinations require new scenarios, not inferred conformance.",
+      "implementation_gap_case_ids": [],
+      "qualification_case_ids": [
+        "net-04-fold-endpoints"
+      ]
+    },
+    {
+      "id": "NET-05",
+      "title": "Internal reinforcement parts and measurement export",
+      "audit_status": "partial",
+      "case_ids": [
+        "net-05-reinforcement-patterns",
+        "net-05-measurements"
+      ],
+      "cross_products": "Not exhaustively executed. Combine only independently qualified source classes, dimensions and options; remaining combinations require new scenarios, not inferred conformance.",
+      "implementation_gap_case_ids": [],
+      "qualification_case_ids": [
+        "net-05-reinforcement-patterns",
+        "net-05-measurements"
+      ]
+    },
+    {
+      "id": "NET-06",
+      "title": "3D nets of 4D polytopes with manual cell rearrangement",
+      "audit_status": "implemented",
+      "case_ids": [
+        "net-06-whole-cell"
+      ],
+      "cross_products": "Not exhaustively executed. Combine only independently qualified source classes, dimensions and options; remaining combinations require new scenarios, not inferred conformance.",
+      "implementation_gap_case_ids": [],
+      "qualification_case_ids": [
+        "net-06-whole-cell"
+      ]
+    },
+    {
+      "id": "SEC-01",
+      "title": "2D sections of 3D objects and 3D sections of 4D objects",
+      "audit_status": "implemented",
+      "case_ids": [
+        "sec-01-axis-slices"
+      ],
+      "cross_products": "Not exhaustively executed. Combine only independently qualified source classes, dimensions and options; remaining combinations require new scenarios, not inferred conformance.",
+      "implementation_gap_case_ids": [],
+      "qualification_case_ids": [
+        "sec-01-axis-slices"
+      ]
+    },
+    {
+      "id": "SEC-02",
+      "title": "Arbitrary orientation, depth, selected-entity alignment, and vertex-event stepping",
+      "audit_status": "validated",
+      "case_ids": [
+        "sec-02-tangent-empty"
+      ],
+      "cross_products": "Not exhaustively executed. Combine only independently qualified source classes, dimensions and options; remaining combinations require new scenarios, not inferred conformance.",
+      "implementation_gap_case_ids": [],
+      "qualification_case_ids": [
+        "sec-02-tangent-empty"
+      ]
+    },
+    {
+      "id": "SEC-05",
+      "title": "Nonconvex and star-object sections in benchmark-supported domains",
+      "audit_status": "partial",
+      "case_ids": [
+        "sec-05-surface-winding",
+        "sec-05-filled-density",
+        "sec-05-unknown-interior"
+      ],
+      "cross_products": "Not exhaustively executed. Combine only independently qualified source classes, dimensions and options; remaining combinations require new scenarios, not inferred conformance.",
+      "implementation_gap_case_ids": [],
+      "qualification_case_ids": [
+        "sec-05-surface-winding",
+        "sec-05-filled-density",
+        "sec-05-unknown-interior"
+      ]
+    },
+    {
+      "id": "STEL-01",
+      "title": "Stellation from seed facial planes or a supported arbitrary plane set",
+      "audit_status": "partial",
+      "case_ids": [
+        "stel-01-facial-arrangement",
+        "stel-01-arbitrary-planes",
+        "stel-01-box-completion"
+      ],
+      "cross_products": "Not exhaustively executed. Combine only independently qualified source classes, dimensions and options; remaining combinations require new scenarios, not inferred conformance.",
+      "implementation_gap_case_ids": [
+        "stel-01-arbitrary-planes"
+      ],
+      "qualification_case_ids": [
+        "stel-01-facial-arrangement",
+        "stel-01-arbitrary-planes",
+        "stel-01-box-completion"
+      ]
+    },
+    {
+      "id": "STEL-02",
+      "title": "Manual region/cell inclusion, stellation diagrams, attached diagrams, and cell-dependency diagrams",
+      "audit_status": "validated",
+      "case_ids": [
+        "stel-02-diagram-links"
+      ],
+      "cross_products": "Not exhaustively executed. Combine only independently qualified source classes, dimensions and options; remaining combinations require new scenarios, not inferred conformance.",
+      "implementation_gap_case_ids": [],
+      "qualification_case_ids": [
+        "stel-02-diagram-links"
+      ]
+    },
+    {
+      "id": "STEL-03",
+      "title": "Enumeration and stepping under benchmark criteria",
+      "audit_status": "partial",
+      "case_ids": [
+        "stel-03-custom-criteria",
+        "stel-03-miller59",
+        "stel-03-other-seed-criteria"
+      ],
+      "cross_products": "Not exhaustively executed. Combine only independently qualified source classes, dimensions and options; remaining combinations require new scenarios, not inferred conformance.",
+      "implementation_gap_case_ids": [
+        "stel-03-other-seed-criteria"
+      ],
+      "qualification_case_ids": [
+        "stel-03-custom-criteria",
+        "stel-03-miller59",
+        "stel-03-other-seed-criteria"
+      ]
+    },
+    {
+      "id": "STEL-04",
+      "title": "Symmetry/subsymmetry and reflexibility controls",
+      "audit_status": "partial",
+      "case_ids": [
+        "stel-04-group-scope",
+        "stel-04-reflexibility",
+        "stel-04-editor-subgroups"
+      ],
+      "cross_products": "Not exhaustively executed. Combine only independently qualified source classes, dimensions and options; remaining combinations require new scenarios, not inferred conformance.",
+      "implementation_gap_case_ids": [
+        "stel-04-editor-subgroups"
+      ],
+      "qualification_case_ids": [
+        "stel-04-group-scope",
+        "stel-04-reflexibility",
+        "stel-04-editor-subgroups"
+      ]
+    },
+    {
+      "id": "STEL-05",
+      "title": "Inaccessible-cell handling and derived-model promotion",
+      "audit_status": "partial",
+      "case_ids": [
+        "stel-05-inaccessible-cavity",
+        "stel-05-promotion-history"
+      ],
+      "cross_products": "Not exhaustively executed. Combine only independently qualified source classes, dimensions and options; remaining combinations require new scenarios, not inferred conformance.",
+      "implementation_gap_case_ids": [],
+      "qualification_case_ids": [
+        "stel-05-inaccessible-cavity",
+        "stel-05-promotion-history"
+      ]
+    },
+    {
+      "id": "VIS-02",
+      "title": "Per-element/type/subgroup coloring, transparency, selection highlighting, and overlap rules",
+      "audit_status": "partial",
+      "case_ids": [
+        "vis-02-alpha-overlap"
+      ],
+      "cross_products": "Not exhaustively executed. Combine only independently qualified source classes, dimensions and options; remaining combinations require new scenarios, not inferred conformance.",
+      "implementation_gap_case_ids": [],
+      "qualification_case_ids": [
+        "vis-02-alpha-overlap"
+      ]
+    },
+    {
+      "id": "VIS-03",
+      "title": "Benchmark 3D materials, themes, images, bump maps, reflection/refraction, and lighting",
+      "audit_status": "partial",
+      "case_ids": [
+        "vis-03-preset-studio",
+        "vis-03-preset-glass",
+        "vis-03-preset-metal",
+        "vis-03-preset-geomag",
+        "vis-03-bump",
+        "vis-03-reflection-refraction",
+        "vis-03-imported-assets",
+        "vis-03-image-mapping-video",
+        "vis-03-background"
+      ],
+      "cross_products": "Not exhaustively executed. Combine only independently qualified source classes, dimensions and options; remaining combinations require new scenarios, not inferred conformance.",
+      "implementation_gap_case_ids": [
+        "vis-03-imported-assets",
+        "vis-03-image-mapping-video"
+      ],
+      "qualification_case_ids": [
+        "vis-03-preset-studio",
+        "vis-03-preset-glass",
+        "vis-03-preset-metal",
+        "vis-03-preset-geomag",
+        "vis-03-bump",
+        "vis-03-reflection-refraction",
+        "vis-03-imported-assets",
+        "vis-03-image-mapping-video",
+        "vis-03-background"
+      ]
+    }
+  ],
+  "evidence_policy": {
+    "existing_fixture": "Coverage pointer, not proof every scenario option is tested or passed. related-not-oracle means an explicit new fixture/extension is required.",
+    "execution": "No per-case operation run, competitor comparison, Electron or shipped-desktop qualification is claimed. See VERIFICATION.md for bounded commands actually executed.",
+    "version": "Installed 5.4 manual/static metadata, live public manuals and 6.0 release-history entry stay distinct. No purchase, install or later-version target expansion.",
+    "expectations": "Counts/metrics name independent fixtures where known; unspecified baseline semantics are follow-up investigations, never invented result counts."
+  },
+  "gap_audit_baseline_commit": "01c5d22e104a0f2c89ea42ce1241427f883a0a2d"
+}
