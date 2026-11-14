@@ -162,11 +162,15 @@ test(
             assert.ok(tab.scroll <= tab.client, JSON.stringify(tab));
             assert.equal(tab.wrap, 'nowrap');
           }
-          if (panel === 'construct')
+          if (panel === 'construct') {
+            assert.equal(await page.locator('#construct-card-incidence-truncation-settings').isVisible(), false);
+            await page.locator('#construct-more-tools > summary').click();
             assert.equal(
               await page.locator('#construct-card-incidence-truncation-settings strong').innerText(),
               'Star truncation'
             );
+            await page.locator('#construct-more-tools > summary').click();
+          }
           if (panel === 'net') {
             for (const selector of ['#nets-other-types > summary', '#cell-net-generation-settings > summary']) {
               const bounds = await page.locator(selector).evaluate((n) => {

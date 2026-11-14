@@ -3,6 +3,8 @@ import { startupMark, afterModelPaint } from '../startup-performance.mjs';
 import { FaceSurgeryControls } from '../face-surgery-controls.mjs';
 import { CellRebuildControls } from '../cell-rebuild-controls.mjs';
 import { DerivedViewControls, DerivedWork, derivedInputKey, derivedEntityIndex } from '../derived-view-controls.mjs';
+import { SectionToolbar } from '../section-toolbar.mjs';
+import '../section-toolbar.css';
 import { organizeNetInspector } from '../net-inspector-layout.mjs';
 import { NetsFlow } from '../nets-flow.mjs';
 import { organizeInspector, simplifyAnalysis, renderValidation } from '../inspector-layout.mjs';
@@ -165,6 +167,7 @@ export function createPanels(ctx) {
     $('promote').disabled = true;
     $('derived-status').textContent = 'Derived evaluation canceled. Evaluate the current inputs to retry.';
     ctx.derivedControls?.cancelEvaluation();
+    ctx.sectionToolbar?.status('Section update canceled. Choose Update section to retry.');
     syncCancelAvailability();
     return true;
   }
@@ -1512,6 +1515,8 @@ export function createPanels(ctx) {
         },
         preview: (m, { isCurrent }) => {
           if (!isCurrent()) return;
+          coxeterPreviewHost.dataset.dimension = String(m.dimension);
+          coxeterPreviewLabel.textContent = m.name + ' · symmetry preview';
           coxeterPreviewHost.hidden = false;
           coxeterPreviewFrame.sync();
           ctx.coxeterPreview ??= new Viewer(coxeterPreviewFrame.surface);
@@ -1555,6 +1560,9 @@ export function createPanels(ctx) {
         cancelPlane: () => workspaceNumeric.cancel(),
         onAvailabilityChange: derivedAvailabilityChanged,
         onActivityChange: syncCancelAvailability,
+        onSync: () => ctx.sectionToolbar?.sync(),
+        onSliceStatus: (text) => ctx.sectionToolbar?.status(text),
+        onSliceComplete: (result) => ctx.sectionToolbar?.complete(result),
         invalidate: () => {
           ++ctx.derivedSequence;
           derivedWork.cancel();
@@ -1638,6 +1646,20 @@ export function createPanels(ctx) {
       $('construct-panel').prepend(openCoxeterBuilderButton);
       const constructGallery = mountConstructGallery(document, { getModel: model, guide: userGuide });
       ctx.constructGallery = constructGallery;
+      ctx.sectionToolbar = new SectionToolbar({
+        getState: state,
+        getDocument: () => ctx.doc(),
+        controls: ctx.derivedControls,
+        guard: ctx.guard,
+        isExporting: () => ctx.animation.exporting || ctx.tourExporting,
+        stop: () => {
+          ctx.welcome?.close();
+          ctx.coxeterBuilder?.close();
+          ctx.viewportControls.stop();
+          ctx.viewportControls.overlays?.dismissAll('section');
+          ctx.animation.pause();
+        },
+      });
       organizeNetInspector(document);
       ctx.liveSliders = new LiveSliders({
         ...numericContext,

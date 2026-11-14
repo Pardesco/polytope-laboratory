@@ -8,6 +8,9 @@ from .animation_state import validate_animation_sequence
 
 
 def validate_view(model, view):
+    if model.get('kind') == 'hyperbolic-space':
+        from .hyperbolic_document import validate_view as hyperbolic_view
+        return hyperbolic_view(model, view)
     if not isinstance(view, dict):
         raise GeometryError('Saved view must be an object.')
     from .element_visibility import validate_element_visibility

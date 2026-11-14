@@ -1,3 +1,4 @@
+import { isHyperbolic } from '../ui/hyperbolic-document.mjs';
 import { readAppSource } from './helpers/app-source.mjs';
 import { includesSource, indexOfSource, sourceFunction, sourceNodes } from './helpers/source-match.mjs';
 import test from 'node:test';
@@ -220,6 +221,8 @@ test('actual analysis prelude shows placeholders and Cancel prevents work queued
     },
   };
   const scope = {
+    isHyperbolic,
+    model: () => ticket.model,
     polychoronRelationships: null,
     informationPanel: null,
     relatedLibrary: { sync() {} },

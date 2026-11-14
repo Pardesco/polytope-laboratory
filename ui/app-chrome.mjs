@@ -117,6 +117,7 @@ export class AppChrome {
     const doc = this.doc;
     this.expert = !!value;
     doc.body.classList.toggle('expert-mode', this.expert);
+    doc.defaultView?.dispatchEvent?.(new doc.defaultView.Event('construct-tools-changed'));
     if (this.expertButton) {
       this.expertButton.setAttribute('aria-pressed', String(this.expert));
       this.expertButton.textContent = this.expert ? 'Hide expert tools' : 'Show expert tools';
@@ -229,6 +230,7 @@ export class AppChrome {
     if (png) options.panel.append(png);
     // Any later toolbar additions go into the same anchored options panel.
     const essentials = new Set([
+      'hyperbolic-controls',
       'projection-label',
       'projection',
       'render-style',

@@ -156,7 +156,7 @@ def test_specialized_replay_and_branch_cannot_bypass_unknown_version_preflight(o
             invoke()
 
 
-@pytest.mark.parametrize('version', [0, 2, '1', True, None])
+@pytest.mark.parametrize('version', [0, 3, '1', True, None])
 def test_unknown_project_schema_rejected_without_touching_original_or_destination(version, tmp_path):
     project = legacy()
     project['version'] = version

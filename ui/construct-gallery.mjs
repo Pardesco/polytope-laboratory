@@ -9,6 +9,19 @@ const categories = [
   'Create a new shape',
   'Expert',
 ];
+export const COMMON_CONSTRUCT_TOOLS = new Set([
+  'gallery-dual',
+  'gallery-truncate',
+  'expansion-settings',
+  'transform-model-settings',
+  'add-dual-controls',
+  'hull-model-settings',
+  'gallery-generator',
+  'antiprism-settings',
+  'product-settings',
+  'shape-builder',
+]);
+export const commonConstructTool = (tool) => tool.common === true || COMMON_CONSTRUCT_TOOLS.has(tool.id);
 const tool = (id, name, description, category, keywords = '', primary = '', dimensions = null) => ({
   id,
   name,
@@ -509,6 +522,9 @@ export class ConstructGallery {
     this.sources = create('div', null, 'construct-tool-host');
     this.sources.append(...Array.from(this.panel.children));
     this.panel.append(this.sources);
+    const legacyBuilder = doc.getElementById('open-coxeter-builder'),
+      wythoffSettings = doc.getElementById('wythoff-model-settings');
+    if (legacyBuilder && wythoffSettings) wythoffSettings.append(legacyBuilder);
     this.wrapLegacy('gallery-dual', ['make-dual', 'dual-options-settings']);
     const cut = doc.getElementById('truncation');
     this.wrapLegacy('gallery-truncate', [cut?.closest('label'), doc.getElementById('truncate')]);
@@ -541,16 +557,26 @@ export class ConstructGallery {
     this.recentRoot.setAttribute('aria-label', 'Recent tools');
     this.categoryRoot = create('div');
     this.categoryRoot.id = 'construct-tool-categories';
-    this.categoryNodes = categories.map((name, i) => {
-      const root = create('section', null, 'construct-category');
-      root.setAttribute('aria-label', name);
-      if (i === 5) root.setAttribute('data-expert', '');
-      const title = create('h3', name),
-        grid = create('div', null, 'construct-card-grid');
-      root.append(title, grid);
-      this.categoryRoot.append(root);
-      return { root, grid };
-    });
+    const makeCategories = (host) =>
+      categories.map((name) => {
+        const root = create('section', null, 'construct-category');
+        root.setAttribute('aria-label', name);
+        const title = create('h3', name),
+          grid = create('div', null, 'construct-card-grid');
+        root.append(title, grid);
+        host.append(root);
+        return { root, grid };
+      });
+    this.categoryNodes = makeCategories(this.categoryRoot);
+    this.moreTools = create('details', null, 'construct-more-tools');
+    this.moreTools.id = 'construct-more-tools';
+    this.moreTools.dataset.guideTopic = 'construction';
+    this.moreTools.open = false;
+    this.moreTools.append(create('summary', 'More tools'));
+    this.specialistCategories = create('div');
+    this.specialistNodes = makeCategories(this.specialistCategories);
+    this.specialistUnavailable = create('div');
+    this.moreTools.append(this.specialistCategories, this.specialistUnavailable);
     this.empty = create('p', 'No tools match. Try “corners”, “dual” or “prism”.', 'muted');
     this.empty.hidden = true;
     this.empty.setAttribute('role', 'status');
@@ -566,6 +592,7 @@ export class ConstructGallery {
       this.recentRoot,
       this.categoryRoot,
       this.unavailableRoot,
+      this.moreTools,
       this.empty,
       this.count
     );
@@ -582,7 +609,13 @@ export class ConstructGallery {
         this.sync();
       }
       if (event.key === 'ArrowDown') {
-        const card = this.tools.find((t) => !t.card.hidden && !t.card.disabled && !t.external);
+        const card = this.tools.find(
+          (t) =>
+            !t.card.hidden &&
+            !t.card.disabled &&
+            !t.external &&
+            (!t.card.closest('#construct-more-tools') || this.moreTools.open)
+        );
         if (card) {
           event.preventDefault();
           card.card.focus();
@@ -666,7 +699,6 @@ export class ConstructGallery {
     t.card.type = 'button';
     t.card.setAttribute('aria-label', t.name);
     t.card.dataset.constructTarget = t.id;
-    if (t.category === 5) t.card.setAttribute('data-expert', '');
     const svg = createToolIcon(this.doc, t);
     const copy = c('span', null, 'construct-card-copy');
     t.reason = c('small', null, 'construct-card-reason');
@@ -774,15 +806,21 @@ export class ConstructGallery {
     for (const t of this.tools) if (t.pane) t.pane.hidden = true;
     this.overview.hidden = false;
     this.sync();
-    if (previous && !previous.card.hidden && !previous.card.disabled && previous.category !== 5)
+    if (previous && !previous.card.hidden && !previous.card.disabled) {
+      if (previous.card.closest('#construct-more-tools')) this.moreTools.open = true;
       previous.card.focus({ preventScroll: true });
-    else this.search.focus({ preventScroll: true });
+    } else this.search.focus({ preventScroll: true });
   }
   syncRecent() {
     this.recentRoot.replaceChildren();
     const ids = this.recent.filter((id) => {
       const t = this.tools.find((t) => t.id === id);
-      return t && !t.card.hidden && !t.card.disabled;
+      return (
+        t &&
+        !t.card.hidden &&
+        !t.card.disabled &&
+        (this.doc.body.classList.contains('expert-mode') || commonConstructTool(t))
+      );
     });
     this.recentRoot.hidden = !ids.length || !!this.search.value;
     if (!ids.length) return;
@@ -794,7 +832,6 @@ export class ConstructGallery {
       button.type = 'button';
       button.disabled = t.card.disabled;
       button.title = t.card.title;
-      if (t.category === 5) button.setAttribute('data-expert', '');
       button.onclick = () => this.open(id);
       row.append(button);
     }
@@ -802,7 +839,9 @@ export class ConstructGallery {
   }
   sync() {
     const model = this.getModel(),
-      groups = new Map();
+      groups = new Map(),
+      searching = !!this.search.value.trim(),
+      expert = this.doc.body.classList.contains('expert-mode');
     let count = 0;
     for (const t of this.tools) {
       const absent = t.external && typeof this.win?.openCoxeterBuilder !== 'function',
@@ -818,9 +857,11 @@ export class ConstructGallery {
       if (t.subtitle.textContent !== description) t.subtitle.textContent = description;
       if (t.paneDescription && t.paneDescription.textContent !== description)
         t.paneDescription.textContent = description;
-      let host = this.categoryNodes[t.category].grid;
+      const specialist = !expert && !searching && !commonConstructTool(t);
+      let host = (specialist ? this.specialistNodes : this.categoryNodes)[t.category].grid;
       if (group && !hide) {
-        let entry = this.unavailableGroups.get(group.key);
+        const key = (specialist ? 'more-' : '') + group.key;
+        let entry = this.unavailableGroups.get(key);
         if (!entry) {
           const root = this.create('details', null, 'construct-unavailable-group'),
             summary = this.create('summary'),
@@ -831,21 +872,23 @@ export class ConstructGallery {
           root.open = false;
           summary.append(label);
           root.append(summary, grid);
-          this.unavailableRoot.append(root);
+          (specialist ? this.specialistUnavailable : this.unavailableRoot).append(root);
           entry = { root, summary, label, grid };
-          this.unavailableGroups.set(group.key, entry);
+          this.unavailableGroups.set(key, entry);
         }
         host = entry.grid;
-        const n = (groups.get(group.key) ?? 0) + 1;
-        groups.set(group.key, n);
+        if (searching) entry.root.open = true;
+        const n = (groups.get(key) ?? 0) + 1;
+        groups.set(key, n);
         entry.label.textContent = `${group.label} (${n})`;
       }
       if (t.card.parentElement !== host) host.append(t.card);
       if (!hide) count++;
     }
     for (const [key, entry] of this.unavailableGroups) entry.root.hidden = !groups.has(key);
-    this.unavailableRoot.hidden = !groups.size;
-    for (const { root, grid } of this.categoryNodes) {
+    this.unavailableRoot.hidden = ![...groups.keys()].some((key) => !key.startsWith('more-'));
+    this.moreTools.hidden = expert || searching || !this.tools.some((t) => !t.card.hidden && !commonConstructTool(t));
+    for (const { root, grid } of [...this.categoryNodes, ...this.specialistNodes]) {
       const hide = !Array.from(grid.children).some((card) => !card.hidden);
       if (root.hidden !== hide) root.hidden = hide;
     }

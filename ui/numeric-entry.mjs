@@ -211,6 +211,11 @@ function waitFor(promise, signal) {
 
 export class NumericEntry {
   constructor(context) {
+    if (
+      (context.captureSource !== undefined || context.verifySource !== undefined) &&
+      (typeof context.captureSource !== 'function' || typeof context.verifySource !== 'function')
+    )
+      fail('Document-kind numeric entries require paired captureSource / verifySource owner fences.');
     this.context = context;
     this.busy = false;
     this.generation = 0;
@@ -242,7 +247,7 @@ export class NumericEntry {
     if (typeof publish !== 'function' || (validate !== undefined && typeof validate !== 'function'))
       fail('Use an expression publisher and optional domain validator.');
     const staged = stageFields(fields),
-      owner = captureNativeSource(this.context),
+      owner = this.context.captureSource ? this.context.captureSource() : captureNativeSource(this.context),
       model = owner.state.model;
     for (const field of staged) {
       if (typeof this.context.evaluateMany === 'function') continue;
@@ -266,7 +271,8 @@ export class NumericEntry {
       if (this.destroyed || this.active !== job || this.generation !== job.generation || job.controller.signal.aborted)
         throw abort();
       this.available();
-      verifyNativeSource(this.context, owner);
+      if (this.context.verifySource) this.context.verifySource(owner);
+      else verifyNativeSource(this.context, owner);
       if (this.context.getState().model !== model) fail('The source model ownership changed. Repeat the edit.');
       if (this.context.getTarget && targetSignature(this.context.getTarget()) !== target)
         fail('The numeric target fields changed. Repeat the edit.');

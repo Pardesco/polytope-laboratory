@@ -4,6 +4,12 @@ import { ExportGoals } from '../export-goals.mjs';
 import { derivedExportGeometry } from '../interchange-controls.mjs';
 export function createExport(ctx) {
   function openGeometryExport() {
+    if (ctx.model()?.kind === 'hyperbolic-space') {
+      ctx.setStatus(
+        'Hyperbolic space supports PNG pictures and native projects. Geometry export uses Euclidean coordinates.'
+      );
+      return;
+    }
     const { animation, derivedWork, state, tours, refreshDerived, error, exportControls } = ctx;
 
     if (animation.exporting || ctx.tourExporting) throw new Error('Finish animation export before exporting geometry.');
@@ -20,6 +26,10 @@ export function createExport(ctx) {
     return exportControls.open();
   }
   function printNet() {
+    if (ctx.model()?.kind === 'hyperbolic-space') {
+      ctx.setStatus('Nets are available for Euclidean documents.');
+      return;
+    }
     const { animation, netEditor, state } = ctx;
 
     if (animation.exporting || ctx.tourExporting) throw Error('Finish animation export before printing a net.');

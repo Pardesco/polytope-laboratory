@@ -163,6 +163,8 @@ export class MemoryControls {
       throw new Error('Finish or cancel animation export before changing model memories.');
   }
   async capture(project, state) {
+    if (state?.model?.kind === 'hyperbolic-space')
+      throw new Error('Model memories support Euclidean models. Save this hyperbolic space in the native project.');
     const target = this.nodes.source.value;
     const captured = target === 'derived' ? await this.context.getDerivedState?.() : state;
     this.assertCurrent(project, state);

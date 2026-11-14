@@ -1,0 +1,101 @@
+#cross-section-card p {
+  margin: var(--space-1) 0 0;
+  color: var(--muted);
+}
+#section-toolbar.slice-active {
+  margin-left: 50%;
+  padding: var(--space-1) var(--space-2);
+  border: 1px solid var(--border);
+  border-radius: 0 0 var(--space-1) var(--space-1);
+  background: var(--panel);
+  color: var(--text);
+  min-width: 0;
+  gap: var(--space-1);
+}
+#section-toolbar p,
+#section-toolbar output,
+#section-toolbar small {
+  font-family: var(--font-ui);
+  white-space: normal;
+  overflow-wrap: anywhere;
+  max-width: 100%;
+}
+#section-toolbar p {
+  margin: 0;
+  flex-basis: 100%;
+}
+#section-toolbar.slice-active label {
+  color: var(--text);
+  flex-wrap: wrap;
+}
+#section-toolbar input {
+  font-family: var(--font-ui);
+}
+#section-toolbar select {
+  max-width: 100%;
+  min-width: 0;
+}
+#section-toolbar #section-offset {
+  width: clamp(100px, 13vw, 220px);
+}
+#section-toolbar #section-depth {
+  width: 90px;
+}
+#section-toolbar #section-normal {
+  width: min(240px, 100%);
+}
+#section-toolbar #slice-wrap-note {
+  color: var(--muted);
+}
+#section-toolbar #slice-feedback {
+  flex-basis: 100%;
+  color: var(--accent);
+  min-height: 1.4em;
+}
+#section-toolbar #advanced-slice-settings {
+  flex-basis: 100%;
+  min-width: 0;
+}
+#advanced-slice-settings > label,
+#advanced-slice-settings > select,
+#advanced-slice-settings > output {
+  margin-top: var(--space-1);
+}
+#section-toolbar button:not(.group-help) {
+  min-height: var(--control-height);
+}
+#section-pane-title {
+  color: var(--text);
+}
+.viewport.primary > .view-label.slice-original-title {
+  display: flex;
+  color: var(--text);
+}
+.slice-original-title span {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+#views[data-layout='split'] .viewport.primary:has(#direct-4d-gizmo:not([hidden])) > #base-canvas {
+  height: calc(100% - 120px);
+}
+#views[data-layout='split'] .viewport.primary:has(#direct-4d-gizmo:not([hidden])) > #counts-strip {
+  bottom: 96px;
+}
+#views[data-layout='split'] .viewport.primary > #direct-4d-gizmo {
+  top: auto;
+  bottom: 8px;
+  left: 8px;
+  right: 8px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+#views[data-layout='split'] #direct-4d-gizmo #direct-4d-straighten {
+  grid-column: auto;
+  padding: 4px;
+  font-size: 12px;
+}
+@media (max-width: 1100px) {
+  #section-toolbar.slice-active {
+    margin-left: 0;
+  }
+}

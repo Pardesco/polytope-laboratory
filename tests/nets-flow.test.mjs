@@ -228,7 +228,7 @@ test('mounted flow preserves every original button, handler and ID in three orde
     get = (id) => f.doc.getElementById(id);
   assert.deepEqual(
     get('net-panel').children.map((n) => n.id),
-    ['nets-step-1', 'nets-step-2', 'nets-step-3']
+    ['nets-stepper', 'nets-step-1', 'nets-step-2', 'nets-step-3']
   );
   for (const [id, original] of f.original) {
     assert.equal(get(id), original, id);
@@ -267,6 +267,7 @@ test('cards and output track current layout and busy state; new outputs use guar
   f.flow.sync();
   assert.equal(get('net-print').disabled, false);
   get('net-print').onclick();
+  assert.equal(f.flow.activeStep, 3);
   assert.deepEqual(f.calls.at(-1), ['print', 'print', { packed: true }]);
   get('net-export-dxf').onclick();
   assert.deepEqual(f.calls.at(-1), ['fabrication', 'measure-dxf']);
@@ -284,6 +285,43 @@ test('cards and output track current layout and busy state; new outputs use guar
   assert.equal(get('cell-net-build').disabled, false);
   assert.equal(get('net-rebuild').disabled, true);
   assert.match(get('nets-output-note').textContent, /3D previews/);
+});
+
+test('paper display activates Print and refitting happens before native ownership is captured', () => {
+  const f = flowFixture(),
+    calls = [];
+  f.state.view.derivedMode = 'net';
+  f.state.view.viewportLayout = 'split';
+  f.faceEditor.context.assemblyViewer = {
+    resize: () => calls.push('resize'),
+    fit: () => {
+      calls.push('fit');
+      return { fitted: calls.length };
+    },
+  };
+  f.faceEditor.context.prepareLayout();
+  assert.deepEqual(calls, ['resize', 'fit']);
+  const camera = f.state.view.camera;
+  f.flow.sync();
+  f.faceEditor.context.prepareLayout();
+  assert.equal(f.state.view.camera, camera);
+  assert.equal(calls.length, 2);
+  f.state.view.net.display = 'pages';
+  f.flow.sync();
+  assert.equal(f.flow.activeStep, 3);
+  f.flow.goToStep(1, false);
+  f.flow.sync();
+  assert.equal(f.flow.activeStep, 1);
+  f.state.view.net.display = 'layout';
+  f.flow.sync();
+  assert.equal(f.flow.activeStep, 2);
+  f.state.view.viewportLayout = 'single';
+  f.flow.refitSource();
+  f.state.view.viewportLayout = 'split';
+  f.flow.refitSource();
+  assert.equal(calls.length, 4);
+  assert.equal(f.doc.getElementById('net-summary').hidden, true);
+  assert.equal(f.doc.getElementById('cell-net-summary').hidden, true);
 });
 test('Advanced gets specific headings and method titles, preserves checks and is idempotent', () => {
   const doc = documentFixture(),

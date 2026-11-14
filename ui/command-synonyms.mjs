@@ -1,4 +1,5 @@
 const families = [
+  [/open-cross-section/, 'slice section cross-section cross section see inside'],
   [/learn4d/, 'learn 4d four dimensions fourth dimension tutorial lessons chapters beginner'],
   [/dual|reciprocat/, 'dual polar reciprocal swap faces corners cells vertices'],
   [/truncat|rectif/, 'truncate truncation cut corners rectify rectification edge midpoints bevel'],

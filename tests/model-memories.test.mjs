@@ -13,6 +13,13 @@ import {
 } from '../ui/model-memories.mjs';
 import { MemoryControls } from '../ui/memory-controls.mjs';
 
+test('hyperbolic memory capture explains the document domain before Euclidean validation', async () => {
+  await assert.rejects(
+    MemoryControls.prototype.capture.call({}, {}, { model: { kind: 'hyperbolic-space' } }),
+    /Model memories support Euclidean models.*native project/
+  );
+});
+
 // Explicit incidence fixture, independent of kernel generators and memory code.
 const cube = () => ({
   model: {

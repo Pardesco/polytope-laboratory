@@ -1,5 +1,6 @@
 import { readAppSource } from './helpers/app-source.mjs';
-import { matchSource } from './helpers/source-match.mjs';
+import { matchSource, sourceFunction } from './helpers/source-match.mjs';
+import { isHyperbolic } from '../ui/hyperbolic-document.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
@@ -355,10 +356,43 @@ test('numerical type evidence stays below Details and clears before the next sou
     else globalThis.document = previous;
   }
 });
-test('app mounts overview into analysis refresh and document title edits', () => {
+test('app mounts overview into analysis refresh and document title edits', async () => {
   const app = readAppSource();
   matchSource(app, /new AnalysisOverview/);
-  matchSource(app, /async function refreshAnalysis\(\)\{\s+analysisOverview.sync\(\)/);
+  const f = fixture(),
+    calls = [];
+  const refresh = new Function(
+    'scope',
+    `with(scope){${sourceFunction(app, 'refreshAnalysis')}return refreshAnalysis;}`
+  )({
+    isHyperbolic,
+    model: () => f.state.model,
+    hyperbolicDocument: { renderAnalysis: () => assert.fail('Euclidean analysis must refresh the overview.') },
+    analysisOverview: {
+      sync: () => {
+        calls.push('overview');
+        f.control.sync();
+      },
+    },
+    polychoronRelationships: null,
+    informationPanel: null,
+    relatedLibrary: { sync: () => calls.push('related') },
+    reports: {
+      begin: () => {
+        calls.push('begin');
+        return { model: f.state.model, controller: new AbortController() };
+      },
+      current: () => false,
+    },
+    analysisDetailsOpen: false,
+    $: () => ({ addEventListener() {}, removeEventListener() {} }),
+    rememberValidationDetails() {},
+    reportMessage() {},
+    afterModelPaint: async () => calls.push('paint'),
+  });
+  await refresh();
+  assert.deepEqual(calls, ['overview', 'related', 'begin', 'paint']);
+  assert.equal(f.document.getElementById('analysis-overview-vertices').textContent, '8');
   matchSource(app, /onTypes:\(model,result\)=>analysisOverview.sync\(model,result\)/);
   matchSource(app, /refresh:\(\)=>\{(?:ctx\.)?analysisOverview.sync\(\);(?:ctx\.)?renderTabs/);
 });

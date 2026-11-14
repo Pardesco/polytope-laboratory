@@ -180,7 +180,7 @@ test(
       );
 
       await t.test(
-        'Convex core is a common 4D/3D card and commits through undo, redo and validated save/reopen',
+        'Convex core remains available in More tools in 4D/3D and commits through undo, redo and validated save/reopen',
         async () => {
           await closeAppearance();
           await page.locator('[data-panel="construct"]').click();
@@ -192,6 +192,7 @@ test(
             await page.locator('[data-panel="construct"]').click();
             const back = page.locator('#construct-back-convex-core-settings');
             if (await back.isVisible()) await back.click();
+            await reveal(page, '#construct-card-convex-core-settings');
             await visible(['construct-card-convex-core-settings']);
             await page.locator('#construct-card-convex-core-settings').click();
             await visible(['core-x', 'core-y', 'core-z', 'core-color-policy', 'make-convex-core']);
@@ -224,12 +225,13 @@ test(
       );
 
       await t.test(
-        'source-direction Zonohedron is common and its original controls commit undoable source-edge construction',
+        'source-direction Zonohedron stays discoverable under More tools and its original controls commit undoable source-edge construction',
         async () => {
           await choose('cube');
           await page.locator('[data-panel="construct"]').click();
           const back = page.locator('#construct-back-convex-core-settings');
           if (await back.isVisible()) await back.click();
+          await reveal(page, '#construct-card-source-zonohedron-settings');
           await visible(['construct-card-source-zonohedron-settings']);
           await page.locator('#construct-card-source-zonohedron-settings').click();
           await visible(['zonohedron-feature', 'zonohedron-ids', 'zonohedron-length', 'make-source-zonohedron']);
@@ -297,7 +299,9 @@ test(
           assert.equal(await page.locator('#vertex-radius').isVisible(), false);
           assert.equal(await page.locator('#face-fill-rule').isVisible(), false);
           assert.equal(
-            await page.locator('#construct-card-exact-section-settings').evaluate((n) => !!n.closest('[data-expert]')),
+            await page
+              .locator('#construct-card-exact-section-settings')
+              .evaluate((n) => !!n.closest('#construct-more-tools')),
             true
           );
           for (const id of ['advanced-exact-arithmetic', 'advanced-symmetry-checks']) {

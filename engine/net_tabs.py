@@ -74,12 +74,26 @@ def tab_records_for_faces(model, net, options):
     """
     options = validate_options(model, options)
     records = []
+    automatic = []
     incidence = {}
     for fi, face in enumerate(model['faces']):
         for a, b in zip(face, face[1:] + face[:1]):
             incidence.setdefault(tuple(sorted((a, b))), []).append(fi)
     if any(len(owners) != 2 for owners in incidence.values()):
         raise GeometryError('Glue tabs require exactly two incident source faces per edge.')
+    saved_owners = net.get('tabOwners', {})
+    if not isinstance(saved_owners, dict):
+        raise GeometryError('Automatic tab ownership must be a source-edge map.')
+    for edge, owner in saved_owners.items():
+        if (
+            not isinstance(edge, str)
+            or not edge.isdigit()
+            or str(int(edge)) != edge
+            or not 0 <= int(edge) < len(model['edges'])
+            or type(owner) is not int
+            or owner not in incidence[tuple(sorted(model['edges'][int(edge)]))]
+        ):
+            raise GeometryError('Automatic tab ownership must refer to an incident source face.')
     overrides = {item['edge']: item for item in options['edges']}
     if not net['tabs']:
         return records
@@ -91,8 +105,8 @@ def tab_records_for_faces(model, net, options):
             mode = item.get('mode', options['mode'])
             if mode == 'none':
                 continue
-            owners = incidence[tuple(sorted(model['edges'][edge['id']]))]
-            if mode == 'single' and face['id'] != item.get('face', min(owners)):
+            chosen = item.get('face', saved_owners.get(str(edge['id'])))
+            if mode == 'single' and chosen is not None and face['id'] != chosen:
                 continue
             p = np.asarray(face['points'], dtype=float)
             a, b = p[i], p[(i + 1) % len(p)]
@@ -103,10 +117,19 @@ def tab_records_for_faces(model, net, options):
             depth = options['widthMm']
             bevel = min(depth, length / 5)
             points = np.array([a, a + u * bevel + outward * depth, b - u * bevel + outward * depth, b])
-            records.append(
+            target = automatic if mode == 'single' and chosen is None else records
+            target.append(
                 {'edge': edge['id'], 'face': face['id'], 'points': points.tolist(), 'widthMm': depth, 'mode': mode}
             )
-    return records
+    from .net_tab_assignment import choose_tabs
+
+    return choose_tabs(
+        automatic,
+        net['faces'],
+        net['referenceEdgeLengthMm'] * 1e-8,
+        fixed=records,
+        convex=model.get('interpretation') == 'convex-polytope',
+    )
 
 
 def apply_options(model, net, options):
@@ -116,8 +139,10 @@ def apply_options(model, net, options):
     result = deepcopy(net)
     result.pop('svg', None)
     result['tabOptions'] = options
+    result.pop('tabOwners', None)
     records = tab_records_for_faces(model, result, options)
     result['tabRecords'] = records
+    result['tabOwners'] = {str(t['edge']): t['face'] for t in records if t['mode'] == 'single'}
     pairs = []
     tol = result['referenceEdgeLengthMm'] * 1e-8
     for index, tab in enumerate(records):

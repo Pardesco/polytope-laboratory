@@ -83,7 +83,7 @@
   align-items: center;
   flex-wrap: wrap;
 }
-.library-visual-actions button {
+.library-visual-actions button:not(.group-help) {
   font-size: 14px;
   min-width: 32px;
   min-height: 32px;
@@ -93,8 +93,8 @@
 .library-visual-actions #library-home {
   margin-right: auto;
 }
-#library-region button[aria-pressed='true'],
-#library-region .segmented button.active {
+#library-region button:not(.group-help)[aria-pressed='true'],
+#library-region .segmented button:not(.group-help).active {
   background: var(--selection-bg);
   border-color: var(--accent);
   box-shadow: inset 0 -2px var(--accent);
@@ -134,7 +134,7 @@
   box-shadow: inset 3px 0 var(--accent);
 }
 #library-region > select,
-#library-region .segmented button {
+#library-region .segmented button:not(.group-help) {
   min-height: 36px;
   font-size: 14px;
 }
@@ -280,7 +280,7 @@
 #library-region .catalog-entry small,
 #library-region .catalog-entry .dim,
 #library-region .linked-library small,
-#library-region .linked-library button {
+#library-region .linked-library button:not(.group-help) {
   font-size: 12px;
 }
 #library-region .catalog-entry small:not(.audit-badge),
@@ -292,7 +292,7 @@
   flex-wrap: wrap;
   gap: 8px;
 }
-#library-region .linked-library button {
+#library-region .linked-library button:not(.group-help) {
   min-height: 32px;
   font-size: 14px;
 }
@@ -363,4 +363,11 @@
   width: 128px;
   height: 128px;
   pointer-events: none;
+}
+
+#library-region output,
+#library-discovery-note {
+  font-family: var(--font-ui);
+  font-size: var(--font-secondary);
+  color: var(--muted);
 }

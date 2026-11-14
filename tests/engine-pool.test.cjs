@@ -246,3 +246,44 @@ test('timeouts, output limits and shutdown kill active processes', async () => {
   await assert.rejects(closed.pool.run({ op: 'dual' }, 'late'), /shutting down/);
   assert.equal(closed.jobs.size, 0);
 });
+
+test('atomic hyperbolic openings reuse warm calculations while ordinary recipe documents stay isolated', async () => {
+  const h = harness({ maxWorkers: 1 });
+  try {
+    let job = h.pool.run({ op: 'expression', params: { expression: '1' } }, 'warm');
+    h.processes[0].reply(1);
+    await job;
+    for (const [i, pqr] of [
+      [5, 3, 4],
+      [3, 5, 3],
+    ].entries()) {
+      job = h.pool.run(
+        {
+          op: 'recipe-run',
+          params: {
+            document: null,
+            operation: 'hyperbolic-create',
+            parameters: { source: { type: 'honeycomb', pqr } },
+          },
+        },
+        'hyper-' + i
+      );
+      assert.equal(h.processes.length, 1);
+      assert.equal(h.processes[0].killed, false);
+      assert.deepEqual(h.processes[0].sent.at(-1).params.parameters.source.pqr, pqr);
+      h.processes[0].reply({ id: 'document-' + i });
+      assert.deepEqual(await job, { id: 'document-' + i });
+    }
+    job = h.pool.run(
+      { op: 'recipe-run', params: { document: { states: [] }, operation: 'hyperbolic-create', parameters: {} } },
+      'source-edit'
+    );
+    assert.equal(h.processes[0].killed, true);
+    assert.equal(h.processes.length, 2);
+    h.processes[1].reply({ id: 'edit' });
+    await job;
+    assert.equal(h.processes[1].killed, true);
+  } finally {
+    h.pool.dispose();
+  }
+});

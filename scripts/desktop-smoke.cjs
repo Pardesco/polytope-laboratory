@@ -377,7 +377,7 @@ async function main() {
     await reveal(page, '#net-pack');
     await page.locator('#net-pack').click();
     await page.waitForFunction(() => document.getElementById('net-paper-status').textContent.includes('Page 1 of 6'));
-    assert.ok((await page.locator('#net-paper-status').innerText()).includes('E0 = 65 mm · 100% source scale'));
+    assert.ok((await page.locator('#net-paper-status').innerText()).includes('E0 = 65 mm · Print at 100%'));
     await reveal(page, '#net-page-next');
     await page.locator('#net-page-next').click();
     await page.waitForFunction(() => document.getElementById('net-paper-status').textContent.includes('Page 2 of 6'));

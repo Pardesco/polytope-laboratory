@@ -1,0 +1,775 @@
+{
+  "schemaVersion": 1,
+  "accessed": "2026-11-12",
+  "basis": "Richard Klitzing incidence pages, Face vector (V,E,F,C); 3D cell count is recorded as zero. Explicit mask crosswalk uses the source Dynkin diagrams: reverse the B/H chains; A/F diagram reversal and D4 outer-node triality identify equivalent figures. Display names normalize source figure synonyms to conventional English truncation names. No engine or product catalog data is used for counts.",
+  "rows": [
+    {
+      "family": "A3",
+      "rings": "001",
+      "name": "Tetrahedron",
+      "counts": [4, 6, 4, 0],
+      "sourceUrl": "https://bendwavy.org/klitzing/incmats/tet.htm",
+      "sourceFigure": "tet"
+    },
+    {
+      "family": "A3",
+      "rings": "010",
+      "name": "Octahedron",
+      "counts": [6, 12, 8, 0],
+      "sourceUrl": "https://bendwavy.org/klitzing/incmats/oct.htm",
+      "sourceFigure": "oct"
+    },
+    {
+      "family": "A3",
+      "rings": "011",
+      "name": "Truncated tetrahedron",
+      "counts": [12, 18, 8, 0],
+      "sourceUrl": "https://bendwavy.org/klitzing/incmats/tut.htm",
+      "sourceFigure": "tut"
+    },
+    {
+      "family": "A3",
+      "rings": "100",
+      "name": "Tetrahedron",
+      "counts": [4, 6, 4, 0],
+      "sourceUrl": "https://bendwavy.org/klitzing/incmats/tet.htm",
+      "sourceFigure": "tet"
+    },
+    {
+      "family": "A3",
+      "rings": "101",
+      "name": "Cuboctahedron",
+      "counts": [12, 24, 14, 0],
+      "sourceUrl": "https://bendwavy.org/klitzing/incmats/co.htm",
+      "sourceFigure": "co"
+    },
+    {
+      "family": "A3",
+      "rings": "110",
+      "name": "Truncated tetrahedron",
+      "counts": [12, 18, 8, 0],
+      "sourceUrl": "https://bendwavy.org/klitzing/incmats/tut.htm",
+      "sourceFigure": "tut"
+    },
+    {
+      "family": "A3",
+      "rings": "111",
+      "name": "Truncated octahedron",
+      "counts": [24, 36, 14, 0],
+      "sourceUrl": "https://bendwavy.org/klitzing/incmats/toe.htm",
+      "sourceFigure": "toe"
+    },
+    {
+      "family": "B3",
+      "rings": "001",
+      "name": "Octahedron",
+      "counts": [6, 12, 8, 0],
+      "sourceUrl": "https://bendwavy.org/klitzing/incmats/oct.htm",
+      "sourceFigure": "oct"
+    },
+    {
+      "family": "B3",
+      "rings": "010",
+      "name": "Cuboctahedron",
+      "counts": [12, 24, 14, 0],
+      "sourceUrl": "https://bendwavy.org/klitzing/incmats/co.htm",
+      "sourceFigure": "co"
+    },
+    {
+      "family": "B3",
+      "rings": "011",
+      "name": "Truncated octahedron",
+      "counts": [24, 36, 14, 0],
+      "sourceUrl": "https://bendwavy.org/klitzing/incmats/toe.htm",
+      "sourceFigure": "toe"
+    },
+    {
+      "family": "B3",
+      "rings": "100",
+      "name": "Cube",
+      "counts": [8, 12, 6, 0],
+      "sourceUrl": "https://bendwavy.org/klitzing/incmats/cube.htm",
+      "sourceFigure": "cube"
+    },
+    {
+      "family": "B3",
+      "rings": "101",
+      "name": "Rhombicuboctahedron",
+      "counts": [24, 48, 26, 0],
+      "sourceUrl": "https://bendwavy.org/klitzing/incmats/sirco.htm",
+      "sourceFigure": "sirco"
+    },
+    {
+      "family": "B3",
+      "rings": "110",
+      "name": "Truncated cube",
+      "counts": [24, 36, 14, 0],
+      "sourceUrl": "https://bendwavy.org/klitzing/incmats/tic.htm",
+      "sourceFigure": "tic"
+    },
+    {
+      "family": "B3",
+      "rings": "111",
+      "name": "Truncated cuboctahedron",
+      "counts": [48, 72, 26, 0],
+      "sourceUrl": "https://bendwavy.org/klitzing/incmats/girco.htm",
+      "sourceFigure": "girco"
+    },
+    {
+      "family": "H3",
+      "rings": "001",
+      "name": "Icosahedron",
+      "counts": [12, 30, 20, 0],
+      "sourceUrl": "https://bendwavy.org/klitzing/incmats/ike.htm",
+      "sourceFigure": "ike"
+    },
+    {
+      "family": "H3",
+      "rings": "010",
+      "name": "Icosidodecahedron",
+      "counts": [30, 60, 32, 0],
+      "sourceUrl": "https://bendwavy.org/klitzing/incmats/id.htm",
+      "sourceFigure": "id"
+    },
+    {
+      "family": "H3",
+      "rings": "011",
+      "name": "Truncated icosahedron",
+      "counts": [60, 90, 32, 0],
+      "sourceUrl": "https://bendwavy.org/klitzing/incmats/ti.htm",
+      "sourceFigure": "ti"
+    },
+    {
+      "family": "H3",
+      "rings": "100",
+      "name": "Dodecahedron",
+      "counts": [20, 30, 12, 0],
+      "sourceUrl": "https://bendwavy.org/klitzing/incmats/doe.htm",
+      "sourceFigure": "doe"
+    },
+    {
+      "family": "H3",
+      "rings": "101",
+      "name": "Rhombicosidodecahedron",
+      "counts": [60, 120, 62, 0],
+      "sourceUrl": "https://bendwavy.org/klitzing/incmats/srid.htm",
+      "sourceFigure": "srid"
+    },
+    {
+      "family": "H3",
+      "rings": "110",
+      "name": "Truncated dodecahedron",
+      "counts": [60, 90, 32, 0],
+      "sourceUrl": "https://bendwavy.org/klitzing/incmats/tid.htm",
+      "sourceFigure": "tid"
+    },
+    {
+      "family": "H3",
+      "rings": "111",
+      "name": "Truncated icosidodecahedron",
+      "counts": [120, 180, 62, 0],
+      "sourceUrl": "https://bendwavy.org/klitzing/incmats/grid.htm",
+      "sourceFigure": "grid"
+    },
+    {
+      "family": "A4",
+      "rings": "0001",
+      "name": "5-cell",
+      "counts": [5, 10, 10, 5],
+      "sourceUrl": "https://bendwavy.org/klitzing/incmats/pen.htm",
+      "sourceFigure": "pen"
+    },
+    {
+      "family": "A4",
+      "rings": "0010",
+      "name": "Rectified 5-cell",
+      "counts": [10, 30, 30, 10],
+      "sourceUrl": "https://bendwavy.org/klitzing/incmats/rap.htm",
+      "sourceFigure": "rap"
+    },
+    {
+      "family": "A4",
+      "rings": "0011",
+      "name": "Truncated 5-cell",
+      "counts": [20, 40, 30, 10],
+      "sourceUrl": "https://bendwavy.org/klitzing/incmats/tip.htm",
+      "sourceFigure": "tip"
+    },
+    {
+      "family": "A4",
+      "rings": "0100",
+      "name": "Rectified 5-cell",
+      "counts": [10, 30, 30, 10],
+      "sourceUrl": "https://bendwavy.org/klitzing/incmats/rap.htm",
+      "sourceFigure": "rap"
+    },
+    {
+      "family": "A4",
+      "rings": "0101",
+      "name": "Cantellated 5-cell",
+      "counts": [30, 90, 80, 20],
+      "sourceUrl": "https://bendwavy.org/klitzing/incmats/srip.htm",
+      "sourceFigure": "srip"
+    },
+    {
+      "family": "A4",
+      "rings": "0110",
+      "name": "Bitruncated 5-cell",
+      "counts": [30, 60, 40, 10],
+      "sourceUrl": "https://bendwavy.org/klitzing/incmats/deca.htm",
+      "sourceFigure": "deca"
+    },
+    {
+      "family": "A4",
+      "rings": "0111",
+      "name": "Cantitruncated 5-cell",
+      "counts": [60, 120, 80, 20],
+      "sourceUrl": "https://bendwavy.org/klitzing/incmats/grip.htm",
+      "sourceFigure": "grip"
+    },
+    {
+      "family": "A4",
+      "rings": "1000",
+      "name": "5-cell",
+      "counts": [5, 10, 10, 5],
+      "sourceUrl": "https://bendwavy.org/klitzing/incmats/pen.htm",
+      "sourceFigure": "pen"
+    },
+    {
+      "family": "A4",
+      "rings": "1001",
+      "name": "Runcinated 5-cell",
+      "counts": [20, 60, 70, 30],
+      "sourceUrl": "https://bendwavy.org/klitzing/incmats/spid.htm",
+      "sourceFigure": "spid"
+    },
+    {
+      "family": "A4",
+      "rings": "1010",
+      "name": "Cantellated 5-cell",
+      "counts": [30, 90, 80, 20],
+      "sourceUrl": "https://bendwavy.org/klitzing/incmats/srip.htm",
+      "sourceFigure": "srip"
+    },
+    {
+      "family": "A4",
+      "rings": "1011",
+      "name": "Runcitruncated 5-cell",
+      "counts": [60, 150, 120, 30],
+      "sourceUrl": "https://bendwavy.org/klitzing/incmats/prip.htm",
+      "sourceFigure": "prip"
+    },
+    {
+      "family": "A4",
+      "rings": "1100",
+      "name": "Truncated 5-cell",
+      "counts": [20, 40, 30, 10],
+      "sourceUrl": "https://bendwavy.org/klitzing/incmats/tip.htm",
+      "sourceFigure": "tip"
+    },
+    {
+      "family": "A4",
+      "rings": "1101",
+      "name": "Runcitruncated 5-cell",
+      "counts": [60, 150, 120, 30],
+      "sourceUrl": "https://bendwavy.org/klitzing/incmats/prip.htm",
+      "sourceFigure": "prip"
+    },
+    {
+      "family": "A4",
+      "rings": "1110",
+      "name": "Cantitruncated 5-cell",
+      "counts": [60, 120, 80, 20],
+      "sourceUrl": "https://bendwavy.org/klitzing/incmats/grip.htm",
+      "sourceFigure": "grip"
+    },
+    {
+      "family": "A4",
+      "rings": "1111",
+      "name": "Omnitruncated 5-cell",
+      "counts": [120, 240, 150, 30],
+      "sourceUrl": "https://bendwavy.org/klitzing/incmats/gippid.htm",
+      "sourceFigure": "gippid"
+    },
+    {
+      "family": "B4",
+      "rings": "0001",
+      "name": "16-cell",
+      "counts": [8, 24, 32, 16],
+      "sourceUrl": "https://bendwavy.org/klitzing/incmats/hex.htm",
+      "sourceFigure": "hex"
+    },
+    {
+      "family": "B4",
+      "rings": "0010",
+      "name": "24-cell",
+      "counts": [24, 96, 96, 24],
+      "sourceUrl": "https://bendwavy.org/klitzing/incmats/ico.htm",
+      "sourceFigure": "ico"
+    },
+    {
+      "family": "B4",
+      "rings": "0011",
+      "name": "Truncated 16-cell",
+      "counts": [48, 120, 96, 24],
+      "sourceUrl": "https://bendwavy.org/klitzing/incmats/thex.htm",
+      "sourceFigure": "thex"
+    },
+    {
+      "family": "B4",
+      "rings": "0100",
+      "name": "Rectified tesseract",
+      "counts": [32, 96, 88, 24],
+      "sourceUrl": "https://bendwavy.org/klitzing/incmats/rit.htm",
+      "sourceFigure": "rit"
+    },
+    {
+      "family": "B4",
+      "rings": "0101",
+      "name": "Rectified 24-cell",
+      "counts": [96, 288, 240, 48],
+      "sourceUrl": "https://bendwavy.org/klitzing/incmats/rico.htm",
+      "sourceFigure": "rico"
+    },
+    {
+      "family": "B4",
+      "rings": "0110",
+      "name": "Bitruncated tesseract",
+      "counts": [96, 192, 120, 24],
+      "sourceUrl": "https://bendwavy.org/klitzing/incmats/tah.htm",
+      "sourceFigure": "tah"
+    },
+    {
+      "family": "B4",
+      "rings": "0111",
+      "name": "Truncated 24-cell",
+      "counts": [192, 384, 240, 48],
+      "sourceUrl": "https://bendwavy.org/klitzing/incmats/tico.htm",
+      "sourceFigure": "tico"
+    },
+    {
+      "family": "B4",
+      "rings": "1000",
+      "name": "Tesseract",
+      "counts": [16, 32, 24, 8],
+      "sourceUrl": "https://bendwavy.org/klitzing/incmats/tes.htm",
+      "sourceFigure": "tes"
+    },
+    {
+      "family": "B4",
+      "rings": "1001",
+      "name": "Runcinated tesseract",
+      "counts": [64, 192, 208, 80],
+      "sourceUrl": "https://bendwavy.org/klitzing/incmats/sidpith.htm",
+      "sourceFigure": "sidpith"
+    },
+    {
+      "family": "B4",
+      "rings": "1010",
+      "name": "Cantellated tesseract",
+      "counts": [96, 288, 248, 56],
+      "sourceUrl": "https://bendwavy.org/klitzing/incmats/srit.htm",
+      "sourceFigure": "srit"
+    },
+    {
+      "family": "B4",
+      "rings": "1011",
+      "name": "Runcitruncated 16-cell",
+      "counts": [192, 480, 368, 80],
+      "sourceUrl": "https://bendwavy.org/klitzing/incmats/prit.htm",
+      "sourceFigure": "prit"
+    },
+    {
+      "family": "B4",
+      "rings": "1100",
+      "name": "Truncated tesseract",
+      "counts": [64, 128, 88, 24],
+      "sourceUrl": "https://bendwavy.org/klitzing/incmats/tat.htm",
+      "sourceFigure": "tat"
+    },
+    {
+      "family": "B4",
+      "rings": "1101",
+      "name": "Runcitruncated tesseract",
+      "counts": [192, 480, 368, 80],
+      "sourceUrl": "https://bendwavy.org/klitzing/incmats/proh.htm",
+      "sourceFigure": "proh"
+    },
+    {
+      "family": "B4",
+      "rings": "1110",
+      "name": "Cantitruncated tesseract",
+      "counts": [192, 384, 248, 56],
+      "sourceUrl": "https://bendwavy.org/klitzing/incmats/grit.htm",
+      "sourceFigure": "grit"
+    },
+    {
+      "family": "B4",
+      "rings": "1111",
+      "name": "Omnitruncated tesseract",
+      "counts": [384, 768, 464, 80],
+      "sourceUrl": "https://bendwavy.org/klitzing/incmats/gidpith.htm",
+      "sourceFigure": "gidpith"
+    },
+    {
+      "family": "D4",
+      "rings": "0001",
+      "name": "16-cell",
+      "counts": [8, 24, 32, 16],
+      "sourceUrl": "https://bendwavy.org/klitzing/incmats/hex.htm",
+      "sourceFigure": "hex"
+    },
+    {
+      "family": "D4",
+      "rings": "0010",
+      "name": "16-cell",
+      "counts": [8, 24, 32, 16],
+      "sourceUrl": "https://bendwavy.org/klitzing/incmats/hex.htm",
+      "sourceFigure": "hex"
+    },
+    {
+      "family": "D4",
+      "rings": "0011",
+      "name": "Rectified tesseract",
+      "counts": [32, 96, 88, 24],
+      "sourceUrl": "https://bendwavy.org/klitzing/incmats/rit.htm",
+      "sourceFigure": "rit"
+    },
+    {
+      "family": "D4",
+      "rings": "0100",
+      "name": "24-cell",
+      "counts": [24, 96, 96, 24],
+      "sourceUrl": "https://bendwavy.org/klitzing/incmats/ico.htm",
+      "sourceFigure": "ico"
+    },
+    {
+      "family": "D4",
+      "rings": "0101",
+      "name": "Truncated 16-cell",
+      "counts": [48, 120, 96, 24],
+      "sourceUrl": "https://bendwavy.org/klitzing/incmats/thex.htm",
+      "sourceFigure": "thex"
+    },
+    {
+      "family": "D4",
+      "rings": "0110",
+      "name": "Truncated 16-cell",
+      "counts": [48, 120, 96, 24],
+      "sourceUrl": "https://bendwavy.org/klitzing/incmats/thex.htm",
+      "sourceFigure": "thex"
+    },
+    {
+      "family": "D4",
+      "rings": "0111",
+      "name": "Bitruncated tesseract",
+      "counts": [96, 192, 120, 24],
+      "sourceUrl": "https://bendwavy.org/klitzing/incmats/tah.htm",
+      "sourceFigure": "tah"
+    },
+    {
+      "family": "D4",
+      "rings": "1000",
+      "name": "16-cell",
+      "counts": [8, 24, 32, 16],
+      "sourceUrl": "https://bendwavy.org/klitzing/incmats/hex.htm",
+      "sourceFigure": "hex"
+    },
+    {
+      "family": "D4",
+      "rings": "1001",
+      "name": "Rectified tesseract",
+      "counts": [32, 96, 88, 24],
+      "sourceUrl": "https://bendwavy.org/klitzing/incmats/rit.htm",
+      "sourceFigure": "rit"
+    },
+    {
+      "family": "D4",
+      "rings": "1010",
+      "name": "Rectified tesseract",
+      "counts": [32, 96, 88, 24],
+      "sourceUrl": "https://bendwavy.org/klitzing/incmats/rit.htm",
+      "sourceFigure": "rit"
+    },
+    {
+      "family": "D4",
+      "rings": "1011",
+      "name": "Rectified 24-cell",
+      "counts": [96, 288, 240, 48],
+      "sourceUrl": "https://bendwavy.org/klitzing/incmats/rico.htm",
+      "sourceFigure": "rico"
+    },
+    {
+      "family": "D4",
+      "rings": "1100",
+      "name": "Truncated 16-cell",
+      "counts": [48, 120, 96, 24],
+      "sourceUrl": "https://bendwavy.org/klitzing/incmats/thex.htm",
+      "sourceFigure": "thex"
+    },
+    {
+      "family": "D4",
+      "rings": "1101",
+      "name": "Bitruncated tesseract",
+      "counts": [96, 192, 120, 24],
+      "sourceUrl": "https://bendwavy.org/klitzing/incmats/tah.htm",
+      "sourceFigure": "tah"
+    },
+    {
+      "family": "D4",
+      "rings": "1110",
+      "name": "Bitruncated tesseract",
+      "counts": [96, 192, 120, 24],
+      "sourceUrl": "https://bendwavy.org/klitzing/incmats/tah.htm",
+      "sourceFigure": "tah"
+    },
+    {
+      "family": "D4",
+      "rings": "1111",
+      "name": "Truncated 24-cell",
+      "counts": [192, 384, 240, 48],
+      "sourceUrl": "https://bendwavy.org/klitzing/incmats/tico.htm",
+      "sourceFigure": "tico"
+    },
+    {
+      "family": "F4",
+      "rings": "0001",
+      "name": "24-cell",
+      "counts": [24, 96, 96, 24],
+      "sourceUrl": "https://bendwavy.org/klitzing/incmats/ico.htm",
+      "sourceFigure": "ico"
+    },
+    {
+      "family": "F4",
+      "rings": "0010",
+      "name": "Rectified 24-cell",
+      "counts": [96, 288, 240, 48],
+      "sourceUrl": "https://bendwavy.org/klitzing/incmats/rico.htm",
+      "sourceFigure": "rico"
+    },
+    {
+      "family": "F4",
+      "rings": "0011",
+      "name": "Truncated 24-cell",
+      "counts": [192, 384, 240, 48],
+      "sourceUrl": "https://bendwavy.org/klitzing/incmats/tico.htm",
+      "sourceFigure": "tico"
+    },
+    {
+      "family": "F4",
+      "rings": "0100",
+      "name": "Rectified 24-cell",
+      "counts": [96, 288, 240, 48],
+      "sourceUrl": "https://bendwavy.org/klitzing/incmats/rico.htm",
+      "sourceFigure": "rico"
+    },
+    {
+      "family": "F4",
+      "rings": "0101",
+      "name": "Cantellated 24-cell",
+      "counts": [288, 864, 720, 144],
+      "sourceUrl": "https://bendwavy.org/klitzing/incmats/srico.htm",
+      "sourceFigure": "srico"
+    },
+    {
+      "family": "F4",
+      "rings": "0110",
+      "name": "Bitruncated 24-cell",
+      "counts": [288, 576, 336, 48],
+      "sourceUrl": "https://bendwavy.org/klitzing/incmats/cont.htm",
+      "sourceFigure": "cont"
+    },
+    {
+      "family": "F4",
+      "rings": "0111",
+      "name": "Cantitruncated 24-cell",
+      "counts": [576, 1152, 720, 144],
+      "sourceUrl": "https://bendwavy.org/klitzing/incmats/grico.htm",
+      "sourceFigure": "grico"
+    },
+    {
+      "family": "F4",
+      "rings": "1000",
+      "name": "24-cell",
+      "counts": [24, 96, 96, 24],
+      "sourceUrl": "https://bendwavy.org/klitzing/incmats/ico.htm",
+      "sourceFigure": "ico"
+    },
+    {
+      "family": "F4",
+      "rings": "1001",
+      "name": "Runcinated 24-cell",
+      "counts": [144, 576, 672, 240],
+      "sourceUrl": "https://bendwavy.org/klitzing/incmats/spic.htm",
+      "sourceFigure": "spic"
+    },
+    {
+      "family": "F4",
+      "rings": "1010",
+      "name": "Cantellated 24-cell",
+      "counts": [288, 864, 720, 144],
+      "sourceUrl": "https://bendwavy.org/klitzing/incmats/srico.htm",
+      "sourceFigure": "srico"
+    },
+    {
+      "family": "F4",
+      "rings": "1011",
+      "name": "Runcitruncated 24-cell",
+      "counts": [576, 1440, 1104, 240],
+      "sourceUrl": "https://bendwavy.org/klitzing/incmats/prico.htm",
+      "sourceFigure": "prico"
+    },
+    {
+      "family": "F4",
+      "rings": "1100",
+      "name": "Truncated 24-cell",
+      "counts": [192, 384, 240, 48],
+      "sourceUrl": "https://bendwavy.org/klitzing/incmats/tico.htm",
+      "sourceFigure": "tico"
+    },
+    {
+      "family": "F4",
+      "rings": "1101",
+      "name": "Runcitruncated 24-cell",
+      "counts": [576, 1440, 1104, 240],
+      "sourceUrl": "https://bendwavy.org/klitzing/incmats/prico.htm",
+      "sourceFigure": "prico"
+    },
+    {
+      "family": "F4",
+      "rings": "1110",
+      "name": "Cantitruncated 24-cell",
+      "counts": [576, 1152, 720, 144],
+      "sourceUrl": "https://bendwavy.org/klitzing/incmats/grico.htm",
+      "sourceFigure": "grico"
+    },
+    {
+      "family": "F4",
+      "rings": "1111",
+      "name": "Omnitruncated 24-cell",
+      "counts": [1152, 2304, 1392, 240],
+      "sourceUrl": "https://bendwavy.org/klitzing/incmats/gippic.htm",
+      "sourceFigure": "gippic"
+    },
+    {
+      "family": "H4",
+      "rings": "0001",
+      "name": "600-cell",
+      "counts": [120, 720, 1200, 600],
+      "sourceUrl": "https://bendwavy.org/klitzing/incmats/ex.htm",
+      "sourceFigure": "ex"
+    },
+    {
+      "family": "H4",
+      "rings": "0010",
+      "name": "Rectified 600-cell",
+      "counts": [720, 3600, 3600, 720],
+      "sourceUrl": "https://bendwavy.org/klitzing/incmats/rox.htm",
+      "sourceFigure": "rox"
+    },
+    {
+      "family": "H4",
+      "rings": "0011",
+      "name": "Truncated 600-cell",
+      "counts": [1440, 4320, 3600, 720],
+      "sourceUrl": "https://bendwavy.org/klitzing/incmats/tex.htm",
+      "sourceFigure": "tex"
+    },
+    {
+      "family": "H4",
+      "rings": "0100",
+      "name": "Rectified 120-cell",
+      "counts": [1200, 3600, 3120, 720],
+      "sourceUrl": "https://bendwavy.org/klitzing/incmats/rahi.htm",
+      "sourceFigure": "rahi"
+    },
+    {
+      "family": "H4",
+      "rings": "0101",
+      "name": "Cantellated 600-cell",
+      "counts": [3600, 10800, 8640, 1440],
+      "sourceUrl": "https://bendwavy.org/klitzing/incmats/srix.htm",
+      "sourceFigure": "srix"
+    },
+    {
+      "family": "H4",
+      "rings": "0110",
+      "name": "Bitruncated 120-cell",
+      "counts": [3600, 7200, 4320, 720],
+      "sourceUrl": "https://bendwavy.org/klitzing/incmats/xhi.htm",
+      "sourceFigure": "xhi"
+    },
+    {
+      "family": "H4",
+      "rings": "0111",
+      "name": "Cantitruncated 600-cell",
+      "counts": [7200, 14400, 8640, 1440],
+      "sourceUrl": "https://bendwavy.org/klitzing/incmats/grix.htm",
+      "sourceFigure": "grix"
+    },
+    {
+      "family": "H4",
+      "rings": "1000",
+      "name": "120-cell",
+      "counts": [600, 1200, 720, 120],
+      "sourceUrl": "https://bendwavy.org/klitzing/incmats/hi.htm",
+      "sourceFigure": "hi"
+    },
+    {
+      "family": "H4",
+      "rings": "1001",
+      "name": "Runcinated 120-cell",
+      "counts": [2400, 7200, 7440, 2640],
+      "sourceUrl": "https://bendwavy.org/klitzing/incmats/sidpixhi.htm",
+      "sourceFigure": "sidpixhi"
+    },
+    {
+      "family": "H4",
+      "rings": "1010",
+      "name": "Cantellated 120-cell",
+      "counts": [3600, 10800, 9120, 1920],
+      "sourceUrl": "https://bendwavy.org/klitzing/incmats/srahi.htm",
+      "sourceFigure": "srahi"
+    },
+    {
+      "family": "H4",
+      "rings": "1011",
+      "name": "Runcitruncated 600-cell",
+      "counts": [7200, 18000, 13440, 2640],
+      "sourceUrl": "https://bendwavy.org/klitzing/incmats/prahi.htm",
+      "sourceFigure": "prahi"
+    },
+    {
+      "family": "H4",
+      "rings": "1100",
+      "name": "Truncated 120-cell",
+      "counts": [2400, 4800, 3120, 720],
+      "sourceUrl": "https://bendwavy.org/klitzing/incmats/thi.htm",
+      "sourceFigure": "thi"
+    },
+    {
+      "family": "H4",
+      "rings": "1101",
+      "name": "Runcitruncated 120-cell",
+      "counts": [7200, 18000, 13440, 2640],
+      "sourceUrl": "https://bendwavy.org/klitzing/incmats/prix.htm",
+      "sourceFigure": "prix"
+    },
+    {
+      "family": "H4",
+      "rings": "1110",
+      "name": "Cantitruncated 120-cell",
+      "counts": [7200, 14400, 9120, 1920],
+      "sourceUrl": "https://bendwavy.org/klitzing/incmats/grahi.htm",
+      "sourceFigure": "grahi"
+    },
+    {
+      "family": "H4",
+      "rings": "1111",
+      "name": "Omnitruncated 120-cell",
+      "counts": [14400, 28800, 17040, 2640],
+      "sourceUrl": "https://bendwavy.org/klitzing/incmats/gidpixhi.htm",
+      "sourceFigure": "gidpixhi"
+    }
+  ]
+}

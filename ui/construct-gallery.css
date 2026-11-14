@@ -84,7 +84,7 @@
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 8px;
 }
-.construct-recent-row button {
+.construct-recent-row button:not(.group-help) {
   font-size: 12px;
   padding: 8px;
   text-align: left;
@@ -201,7 +201,7 @@
 .construct-unavailable-group > .construct-card-grid {
   margin-top: 8px;
 }
-.construct-gallery button,
+.construct-gallery button:not(.group-help),
 .construct-gallery summary {
   min-height: 32px;
 }
@@ -209,9 +209,31 @@
 .construct-gallery .construct-primary {
   min-height: 36px;
 }
-.construct-gallery button:focus-visible,
+.construct-gallery button:not(.group-help):focus-visible,
 .construct-gallery summary:focus-visible,
 #construct-tool-search:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
+}
+
+.construct-more-tools {
+  margin-top: var(--space-2);
+  border-top: 1px solid var(--border);
+  padding-top: var(--space-1);
+}
+.construct-more-tools > summary {
+  position: relative;
+  padding: var(--space-1) 40px var(--space-1) 0;
+  font-size: var(--font-body);
+  color: var(--text);
+  cursor: pointer;
+}
+.construct-gallery :is(p, small, summary, output) {
+  font-family: var(--font-ui);
+}
+.construct-gallery :is(small, output) {
+  font-size: var(--font-secondary);
+}
+.construct-gallery :is(.construct-pane-description, .construct-card-copy > span, .construct-more-options > summary) {
+  color: var(--muted);
 }

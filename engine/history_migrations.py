@@ -8,7 +8,7 @@ from types import MappingProxyType
 
 from .geometry import GeometryError, VERSION
 
-PROJECT_VERSIONS = (1,)
+PROJECT_VERSIONS = (1, 2)
 HISTORY_VERSIONS = (1,)
 RETAINED_ALGORITHMS = MappingProxyType(
     {

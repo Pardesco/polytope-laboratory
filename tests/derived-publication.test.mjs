@@ -1,4 +1,5 @@
 import { readAppSource } from './helpers/app-source.mjs';
+import { isHyperbolic } from '../ui/hyperbolic-document.mjs';
 import { matchSource, sourceRange, sourceFunction, sourceAssignment } from './helpers/source-match.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
@@ -44,6 +45,7 @@ function fixture() {
   };
   const project = { active: 0, documents: [{ id: 'derived-source', cursor: 0, states: [state] }] };
   const scope = {
+    isHyperbolic,
     project,
     imageCapture: null,
     derivedSequence: 0,
@@ -460,6 +462,7 @@ test('opening the actual geometry export action pauses source-changing playback 
   const code = sourceFunction(app, 'openGeometryExport'),
     calls = [];
   const scope = {
+    model: () => ({ dimension: 3 }),
     animation: { exporting: false, pause: () => calls.push('animation') },
     tourExporting: false,
     viewportControls: { stop: () => calls.push('rotation') },

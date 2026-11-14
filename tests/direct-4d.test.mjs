@@ -492,3 +492,26 @@ test('opening demo turns briefly, restores its pose, and yields immediately to S
   assert.equal(f.direct.tick(0.1), false);
   assert.equal(f.direct.active, false);
 });
+
+test('hyperbolic documents hide and cancel 4D controls without reading Euclidean angles', () => {
+  const control = Object.create(Direct4D.prototype),
+    flags = [];
+  Object.assign(control, {
+    context: { getModel: () => ({ kind: 'hyperbolic-space', dimension: 3 }) },
+    owner: {
+      view() {
+        throw Error('Euclidean angle read');
+      },
+    },
+    cancel: () => flags.push('cancel'),
+    gizmo: {},
+    hint: {},
+    visibilityLabel: {},
+    overlays: { eligible: (id, value) => flags.push([id, value]) },
+  });
+  control.sync();
+  assert.deepEqual(flags, ['cancel', ['direct4d', false]]);
+  assert.equal(control.gizmo.hidden, true);
+  assert.equal(control.hint.hidden, true);
+  assert.equal(control.visibilityLabel.hidden, true);
+});

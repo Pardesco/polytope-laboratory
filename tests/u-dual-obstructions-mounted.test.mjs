@@ -4,9 +4,11 @@ import { spawn } from 'node:child_process';
 import { createInterface } from 'node:readline';
 import { createServer } from 'vite';
 import { chromium } from 'playwright';
+import { createRequire } from 'node:module';
+const { autoReveal } = createRequire(import.meta.url)('../scripts/smoke-helpers.cjs');
 
 test(
-  'expert-off named dual diagnostics recheck U75, retain source history and reopen a project',
+  'expert reveal reaches named dual diagnostics, rechecks U75 and retains source history and project evidence',
   { timeout: 180000 },
   async () => {
     const engine = spawn('python', ['-B', '-u', 'engine/server.py'], {
@@ -51,6 +53,7 @@ test(
       const page = await browser.newPage({ viewport: { width: 1600, height: 1000 }, reducedMotion: 'reduce' }),
         errors = [];
       page.setDefaultTimeout(30000);
+      autoReveal(page);
       page.on('pageerror', (e) => errors.push(e.message));
       await page.exposeFunction('nativeEngine', compute);
       await page.addInitScript(() => {
@@ -87,10 +90,10 @@ test(
       await page.waitForFunction(() =>
         document.getElementById('u-dual-summary').textContent.includes('13 named source reports')
       );
-      assert.equal(await page.locator('body').evaluate((n) => n.classList.contains('expert-mode')), false);
+      assert.equal(await page.locator('body').evaluate((n) => n.classList.contains('expert-mode')), true);
       for (const id of ['u-dual-identity', 'u-dual-open-source', 'u-dual-verify']) {
         assert.equal(await page.locator('#' + id).isVisible(), true, id);
-        assert.equal(await page.locator('#' + id).evaluate((n) => !!n.closest('[data-expert]')), false);
+        assert.equal(await page.locator('#' + id).evaluate((n) => !!n.closest('[data-expert]')), true);
       }
       await page.locator('#u-dual-identity').selectOption('dual3:U75');
       await page.locator('#u-dual-open-source').click();

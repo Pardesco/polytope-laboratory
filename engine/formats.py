@@ -287,7 +287,7 @@ def export_model(model, format_name):
 def validate_project(project, *, require_views=False):
     from .history import _json_bytes
     _json_bytes(project, MAX_FILE_BYTES)
-    if not isinstance(project, dict) or project.get('format') != 'polytope-laboratory' or type(project.get('version')) is not int or project.get('version') != 1:
+    if not isinstance(project, dict) or project.get('format') != 'polytope-laboratory' or type(project.get('version')) is not int or project.get('version') not in (1, 2):
         raise GeometryError('Unsupported project format/version. Original file remains unchanged.')
     documents = project.get('documents')
     if not isinstance(documents, list) or not 1 <= len(documents) <= 100:
@@ -312,6 +312,11 @@ def validate_project(project, *, require_views=False):
             raise GeometryError('Invalid document history.')
         if type(doc.get('cursor')) is not int or not 0 <= doc['cursor'] < len(doc['states']):
             raise GeometryError('Invalid history cursor.')
+        kinds = {state['model'].get('kind', 'polytope') if isinstance(state.get('model'), dict) else 'polytope' for state in doc['states'] if isinstance(state, dict)}
+        if len(kinds) != 1:
+            raise GeometryError('Each document history must contain one document kind.')
+        if 'hyperbolic-space' in kinds and project['version'] != 2:
+            raise GeometryError('Hyperbolic documents require project schema v2; open with a version supporting hyperbolic space.')
         for state in doc['states']:
             if not require_views and isinstance(state, dict) and 'view' not in state:
                 state['view'] = {}
@@ -320,6 +325,15 @@ def validate_project(project, *, require_views=False):
             for field in ('netLayout', 'netPages', 'cellNetLayout'):
                 if state.get(field) is not None and not isinstance(state[field], dict):
                     raise GeometryError(f'Project {field} must be an object.')
+            if isinstance(state.get('model'), dict) and state['model'].get('kind') == 'hyperbolic-space':
+                from .hyperbolic_document import validate_document, validate_view as validate_hyperbolic_view, fingerprint
+                receipt = validate_document(state['model'])
+                validate_hyperbolic_view(state['model'], state['view'])
+                state['model']['fingerprint'] = fingerprint(state['model'])
+                state['model']['analysisReceipt'] = receipt['analysis']
+                if any(state.get(key) for key in ('netLayout', 'netPages', 'cellNetLayout')):
+                    raise GeometryError('Hyperbolic documents do not support Euclidean net layouts.')
+                continue
             report = resolve_geometry(state.get('model',{}), validate_imported)
             if not report['passed']:
                 raise GeometryError('Project contains invalid geometry: ' + '; '.join(report['errors']))

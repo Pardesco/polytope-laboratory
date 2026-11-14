@@ -91,7 +91,7 @@ function element(doc, id, tag = 'div') {
   doc.body.append(node);
   return node;
 }
-function mounted(t) {
+function mounted(t, { modelHeading = false } = {}) {
   const original = globalThis.MutationObserver,
     observers = [];
   globalThis.MutationObserver = class {
@@ -107,6 +107,7 @@ function mounted(t) {
   });
   const doc = dom();
   for (const id of ['status', 'toast', 'cancel']) element(doc, id);
+  if (modelHeading) element(doc, 'model-name');
   const messages = new FriendlyMessages(doc);
   return { doc, messages, observers };
 }
@@ -320,6 +321,36 @@ test('Expert tools class is read for timing and legacy status re-renders when to
   doc.body.className = '';
   observers[0].callback();
   assert.equal(doc.getElementById('status').textContent, 'Loaded 1,594 models');
+});
+
+test('workflow switches clear transient completions while retaining errors and save notices', (t) => {
+  const { doc, messages } = mounted(t),
+    workflow = { closest: () => ({}) };
+  messages.publish('Corner cut ready');
+  doc.listeners.click({ target: workflow });
+  assert.equal(doc.getElementById('status').textContent, 'Ready');
+  assert.equal(doc.getElementById('status').title, 'Ready');
+  messages.completed({ label: 'Truncate', elapsed: 500 });
+  doc.listeners.change({ target: { id: 'derived-mode' } });
+  assert.equal(messages.completion, null);
+  assert.equal(doc.getElementById('status').textContent, 'Ready');
+  for (const text of ['Saved work.polyproj', 'The geometry engine stopped. Try the action again.']) {
+    messages.publish(text);
+    doc.listeners.click({ target: workflow });
+    assert.equal(doc.getElementById('status').textContent, text);
+  }
+});
+
+test('loading a model clears the previous workflow completion', (t) => {
+  const { doc, messages, observers } = mounted(t, { modelHeading: true });
+  messages.publish('Shape ready');
+  doc.getElementById('model-name').textContent = 'Replacement model';
+  observers.at(-1).callback();
+  assert.equal(doc.getElementById('status').textContent, 'Ready');
+  doc.listeners['polytope:workflow-status']({ detail: 'Shape replaced · document appearance settings applied.' });
+  assert.equal(doc.getElementById('status').textContent, 'Shape replaced · document appearance settings applied.');
+  messages.clearTransient();
+  assert.equal(doc.getElementById('status').textContent, 'Ready');
 });
 
 test('friendly native completions retain deferred silence and cannot overwrite a newer error', async (t) => {

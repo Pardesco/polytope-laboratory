@@ -236,6 +236,7 @@ test('actual app pose display skips construction-panel work while retaining cont
   };
   const scope = {
     state: () => f.state,
+    model: () => f.state.model,
     elementContent: content,
     base: f.v,
     derived: { model: null },
@@ -283,6 +284,7 @@ test('pose panel optimization cannot authorize stale annotation content in the a
   };
   const scope = {
     state: () => f.state,
+    model: () => f.state.model,
     elementContent: content,
     base: f.v,
     derived: { model: null },

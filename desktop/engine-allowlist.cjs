@@ -1,4 +1,8 @@
 const allowed = new Set([
+  'hyperbolic-create',
+  'hyperbolic-patch',
+  'hyperbolic-analyze',
+  'hyperbolic-validate',
   'prepare-dual-morph',
   'evaluate-dual-morph',
   'catalog',

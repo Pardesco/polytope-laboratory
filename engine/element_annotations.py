@@ -636,6 +636,7 @@ def annotated_net_svg(document, source, net, *, expected_face_ids=None):
         for face in records
     ]
     safe_net['tabOverlapPairs'] = deepcopy(pairs)
+    safe_net['tabOwners'] = deepcopy(net.get('tabOwners', {}))
     if net.get('tabOptions') is not None:
         from .net_tabs import tab_records_for_faces
 

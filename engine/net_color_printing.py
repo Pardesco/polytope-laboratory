@@ -78,8 +78,8 @@ def attach_print_source(net, model):
 def legacy_tab_records(source, net):
     """Source-owned automatic single tabs for sanitized page subsets.
 
-    No saved tab buffers are trusted. Source ID ordering selects the same owner
-    before and after splitting paper pages, including concave source faces.
+    No saved tab buffers are trusted. Source-bound ownership survives page
+    subsets; legacy layouts without ownership use source ID ordering.
     """
     if not net['tabs']:
         return []
@@ -88,12 +88,25 @@ def legacy_tab_records(source, net):
     for fi, cycle in enumerate(source['faces']):
         for a, b in zip(cycle, cycle[1:] + cycle[:1]):
             owners.setdefault(lookup[tuple(sorted((a, b)))], []).append(fi)
+    saved_owners = net.get('tabOwners', {})
+    if not isinstance(saved_owners, dict):
+        raise GeometryError('Automatic tab ownership must be a source-edge map.')
+    for edge, face in saved_owners.items():
+        if (
+            not isinstance(edge, str)
+            or not edge.isdigit()
+            or str(int(edge)) != edge
+            or int(edge) not in owners
+            or type(face) is not int
+            or face not in owners[int(edge)]
+        ):
+            raise GeometryError('Automatic tab ownership must refer to an incident source face.')
     result = []
     for face in net['faces']:
         p = np.asarray(face['points'])
         signed = float(np.sum(p[:, 0] * np.roll(p[:, 1], -1) - p[:, 1] * np.roll(p[:, 0], -1)))
         for i, edge in enumerate(face['edges']):
-            if edge['hinge'] or face['id'] != min(owners[edge['id']]):
+            if edge['hinge'] or face['id'] != saved_owners.get(str(edge['id']), min(owners[edge['id']])):
                 continue
             a, b = p[i], p[(i + 1) % len(p)]
             length = float(np.linalg.norm(b - a))
@@ -109,6 +122,10 @@ def legacy_tab_records(source, net):
                     ).tolist(),
                 }
             )
+    if source.get('interpretation') == 'convex-polytope':
+        from .net_tab_assignment import trim_tab_corners
+
+        result = trim_tab_corners(result, net['faces'], net['referenceEdgeLengthMm'] * 1e-8)
     return result
 
 

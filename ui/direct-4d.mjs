@@ -420,6 +420,14 @@ export class Direct4D {
     this.overlays?.context.refitOverlay?.();
   }
   sync() {
+    if (this.context.getModel()?.kind === 'hyperbolic-space') {
+      this.cancel();
+      this.gizmo.hidden = true;
+      this.hint.hidden = true;
+      this.visibilityLabel.hidden = true;
+      this.overlays?.eligible('direct4d', false);
+      return;
+    }
     const four = this.context.getModel()?.dimension === 4;
     if (!four || (this.active && !this.current())) this.cancel();
     if (four && this.showHint === undefined) this.showHint = hintSession(this.storage);

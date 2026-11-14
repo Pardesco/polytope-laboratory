@@ -145,6 +145,7 @@ test(
       await t.test('zero normal refusal and expanded error details never overlap section controls', async () => {
         await page.locator('#view-options-button').click();
         await page.selectOption('#viewport-layout', 'split');
+        await page.locator('#advanced-slice-settings').evaluate((node) => (node.open = true));
         await page.keyboard.press('Escape');
         await page.selectOption('#derived-mode', 'section');
         const canvasSize = await page.locator('#base-canvas').evaluate((n) => [n.clientWidth, n.clientHeight]);

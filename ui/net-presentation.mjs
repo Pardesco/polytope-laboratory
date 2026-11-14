@@ -43,3 +43,46 @@ export function currentFaceNet(state) {
         JSON.stringify(model.metadata?.offColors?.faces ?? null)
   );
 }
+
+export function netOverlapTargets(net) {
+  const faces = new Set((net?.overlapPairs ?? []).flat()),
+    tabs = new Set();
+  for (const pair of net?.tabOverlapPairs ?? []) {
+    tabs.add(pair.edge);
+    if (pair.otherTabEdge !== undefined) tabs.add(pair.otherTabEdge);
+    if (pair.face !== undefined) faces.add(pair.face);
+  }
+  for (const tab of net?.tabRecords ?? []) if (tabs.has(tab.edge)) faces.add(tab.face);
+  return { faces, tabs };
+}
+
+export function highlightNetOverlaps(preview, net, visible) {
+  const { faces, tabs } = netOverlapTargets(net);
+  for (const node of preview?.querySelectorAll('[data-net-face], [data-net-tab]') ?? []) {
+    const affected =
+      node.dataset.netTab !== undefined
+        ? tabs.has(Number(node.dataset.netTab))
+        : faces.has(Number(node.dataset.netFace));
+    node.classList.toggle('net-overlap-mark', Boolean(visible && affected));
+  }
+}
+
+export function paperPrintAppearance(page) {
+  const polygons = [
+      ...(page.svg ?? '').matchAll(/<(?:\w+:)?g\b[^>]*data-net-face="[^"]*"[^>]*>[\s\S]*?<(?:\w+:)?polygon\b([^>]*)>/g),
+    ],
+    filled = polygons.filter(([, attributes]) => {
+      const fill = attributes.match(/\bfill="([^"]*)"/)?.[1],
+        opacity = attributes.match(/\bfill-opacity="([^"]*)"/)?.[1];
+      return fill && !['none', 'transparent'].includes(fill) && (opacity === undefined || Number(opacity) > 0);
+    }).length;
+  return filled
+    ? filled === polygons.length
+      ? 'Filled face colors'
+      : 'Filled and outline faces'
+    : 'Outline faces (no face color fill)';
+}
+
+export function paperPageCaption(packed, page, index) {
+  return `Page ${index + 1} of ${packed.pageCount} · ${page.widthMm} × ${page.heightMm} mm · E0 = ${packed.referenceEdgeLengthMm} mm · Print at 100% · ${paperPrintAppearance(page)}${packed.colorPrinting?.effectiveMode === 'separate' && page.paperColorLabel ? ' · Paper batch: ' + page.paperColorLabel : ''}${packed.colorPrinting?.crossColorCuts?.length ? ' · ' + packed.colorPrinting.crossColorCuts.length + ' detached print cuts' : ''}`;
+}

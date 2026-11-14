@@ -1,5 +1,5 @@
 import { catalogThumbnailVersion } from './library-thumbnails.mjs';
-import { libraryProvenance, mountLibrarySearch, symmetryHero } from './library-visual.mjs';
+import { libraryProvenance, mountLibrarySearch, symmetryHero, organizeLibraryEvidence } from './library-visual.mjs';
 import { catalogBrowseEntries, DISCOVERY_CANDIDATE_LABEL, DISCOVERY_CANDIDATE_NOTE } from './catalog-defaults.mjs';
 
 const family =
@@ -141,6 +141,7 @@ export class LibraryCollections {
     getBuilder = () => globalThis.window?.openCoxeterBuilder,
   }) {
     Object.assign(this, { document, thumbnails, change, resetFilters, getBuilder });
+    organizeLibraryEvidence(document);
     this.collection = null;
     this.showAll = false;
     this.view = 'list';

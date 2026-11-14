@@ -1,4 +1,5 @@
 import test from 'node:test';
+import { revealConstructCard } from './helpers/construct-tools.mjs';
 import assert from 'node:assert/strict';
 import { spawn } from 'node:child_process';
 import { createInterface } from 'node:readline';
@@ -91,6 +92,7 @@ test(
       if (await page.locator('body').evaluate((n) => n.classList.contains('inspector-hidden')))
         await page.locator('#toggle-inspector').click();
       await page.locator('[data-panel="construct"]').click();
+      await revealConstructCard(page, 'construct-card-waterman-settings');
       await page.locator('#construct-card-waterman-settings').click();
       assert.equal(await page.locator('body').evaluate((n) => n.classList.contains('expert-mode')), false);
       assert.equal(await page.locator('#waterman-sequence-settings').evaluate((n) => n.open), false);
@@ -151,6 +153,7 @@ test(
       await ready();
       assert.deepEqual(current(await save()).model, model);
       await page.locator('#construct-back-waterman-settings').click();
+      await revealConstructCard(page, 'construct-card-transform-model-settings');
       await page.locator('#construct-card-transform-model-settings').click();
       await page.locator('#model-scale').fill('2');
       await page.locator('#scale').click();

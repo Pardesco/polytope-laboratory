@@ -11,6 +11,8 @@ import {
   diagramMarkup,
   moveDiagramFocus,
   CoxeterBuilder,
+  CoxeterPreviewFrame,
+  replacementCamera,
 } from '../ui/coxeter-builder.mjs';
 import { deferred } from './numeric-control-fixture.mjs';
 
@@ -103,7 +105,7 @@ const shape = (name = 'Cube') => ({
   metadata: { shapeBuilder: { edgeRelativeSpread: 1e-15 } },
 });
 
-test('all eight families preserve a nonempty immutable ring mask across every toggle', () => {
+test('all eight families toggle immutable ring masks, including an empty selection', () => {
   for (const family of Object.keys(COXETER_FAMILIES)) {
     const rank = Number(family.at(-1));
     assert.equal(diagramState(family).rings.length, rank);
@@ -112,15 +114,13 @@ test('all eight families preserve a nonempty immutable ring mask across every to
         original = diagramState(family, mask);
       for (let i = 0; i < rank; i++) {
         const next = toggleRing(original, i);
-        assert.ok(next.rings.some(Boolean));
         assert.deepEqual(original.rings, mask);
-        if (mask[i] && mask.filter(Boolean).length === 1) assert.equal(next, original);
-        else assert.equal(next.rings[i], 1 - mask[i]);
+        assert.equal(next.rings[i], 1 - mask[i]);
       }
     }
   }
   assert.throws(() => diagramState('E8'));
-  assert.throws(() => diagramState('B3', [0, 0, 0]));
+  assert.deepEqual(diagramState('B3', [0, 0, 0]).rings, [0, 0, 0]);
   assert.throws(() => toggleRing(diagramState(), 8));
 });
 test('D4 draws a branch, chains show 4/5 labels, and accessible ring targets stay keyboard reachable', () => {
@@ -148,7 +148,7 @@ test('mounted panel creates family chips, keyboard handlers, snub controls and e
   clearTimeout(c.timer);
   assert.equal(c.panel.open, true);
   assert.equal(c.nodes.families.querySelectorAll('[data-family]').length, 8);
-  assert.match(c.panel.html, /<details data-expert>/);
+  assert.match(c.panel.html, /<details id="coxeter-builder-method" data-expert>/);
   c.nodes.diagram.listeners.keydown({
     target: { closest: () => ({ dataset: { node: '0' } }) },
     key: 'ArrowRight',
@@ -276,7 +276,7 @@ test('stale native replies and delayed presentation cannot publish after selecti
   await presenting;
   assert.equal(c.receipt, null);
 });
-test('Open as model binds the chosen diagram, prevents duplicate commits, and forwards final ownership checks', async () => {
+test('opening binds the chosen diagram, prevents duplicate commits, and forwards final ownership checks', async () => {
   const f = fixture(),
     c = f.control;
   c.show();
@@ -304,13 +304,23 @@ test('Open as model binds the chosen diagram, prevents duplicate commits, and fo
   await opening;
   assert.equal(c.committing, false);
 });
-test('native errors stay local, exports close and cancel, and the last ring gives a friendly hint', async () => {
+test('empty ringing cancels preview locally, Reset restores it, and native errors stay local', async () => {
   const f = fixture(),
     c = f.control;
   c.show();
   clearTimeout(c.timer);
   c.toggle(0);
-  assert.match(c.nodes.status.textContent, /Keep one/);
+  assert.match(c.nodes.status.textContent, /Ring at least one/);
+  assert.equal(c.nodes.name.textContent, 'No rings selected');
+  assert.equal(c.timer, null);
+  assert.equal(c.nodes.open.disabled, true);
+  assert.equal(
+    f.calls.some(([op]) => op === 'run'),
+    false
+  );
+  c.nodes.reset.onclick();
+  clearTimeout(c.timer);
+  assert.deepEqual(c.value.rings, [1, 0, 0]);
   f.context.run = async () => {
     throw Error('Native resource limit');
   };
@@ -355,7 +365,8 @@ test('preview uses the same model-aware view initializer as Library documents', 
     fit() {},
   };
   const scope = {
-    coxeterPreviewHost: { hidden: true },
+    coxeterPreviewHost: { hidden: true, dataset: {} },
+    coxeterPreviewLabel: {},
     coxeterPreviewFrame: { sync() {} },
     coxeterPreview: viewer,
     initialDocumentState: (m, label) => {
@@ -368,7 +379,78 @@ test('preview uses the same model-aware view initializer as Library documents', 
   preview(model, { isCurrent: () => true });
   assert.equal(calls[2][1], expected);
   assert.deepEqual(calls[1], ['initial', model, 'Shape preview']);
+  assert.equal(scope.coxeterPreviewHost.dataset.dimension, '4');
+  assert.equal(scope.coxeterPreviewLabel.textContent, model.name + ' · symmetry preview');
   calls.length = 0;
   preview(model, { isCurrent: () => false });
   assert.equal(calls.length, 0);
+});
+
+test('preview identity changes only the viewport heading and restores it on close and replacement', async () => {
+  const f = fixture(),
+    heading = { textContent: 'Named document' };
+  f.document.getElementById = (id) => (id === 'model-name' ? heading : null);
+  f.control.show();
+  clearTimeout(f.control.timer);
+  assert.equal(f.control.nodes.enter.textContent, 'Enter: Replace current model');
+  await f.control.preview();
+  assert.equal(heading.textContent, 'Symmetry preview');
+  f.control.close();
+  assert.equal(heading.textContent, 'Named document');
+  f.control.show();
+  clearTimeout(f.control.timer);
+  await f.control.preview();
+  f.context.commit = async () => {
+    heading.textContent = 'New model';
+  };
+  await f.control.openAsModel();
+  assert.equal(heading.textContent, 'New model');
+});
+
+test('replacement preserves pixel scale when space grows and fits safely when it shrinks', () => {
+  const camera = { position: [0, 0, 4], target: [0, 0, 0], up: [0, 1, 0], zoom: 1, orthographicHalfHeight: 2 },
+    fitted = { ...camera, position: [0, 0, 2], orthographicHalfHeight: 1 };
+  assert.deepEqual(replacementCamera(camera, fitted, 600, 600), camera);
+  const grown = replacementCamera(camera, fitted, 600, 900);
+  assert.equal(grown.orthographicHalfHeight, 3);
+  assert.deepEqual(grown.position, [0, 0, 6]);
+  assert.deepEqual(replacementCamera(fitted, camera, 600, 600), camera);
+});
+
+test('replacement refit persists the preview pose and camera while retaining document appearance', () => {
+  const model = shape(),
+    camera = {
+      position: [0, 4, 0],
+      target: [0, 0, 0],
+      up: [0, 0, -1],
+      projection: 'orthographic',
+      zoom: 1,
+      orthographicHalfHeight: 2,
+    },
+    view = { angles: [0, 0, 0, 0, 0, 0], surfaceColors: 'source' },
+    snapshot = {
+      model,
+      camera,
+      height: 600,
+      view: { angles: [1, 2, 3, 4, 5, 6], projection: 'orthographic', surfaceColors: 'face' },
+    },
+    calls = [],
+    viewer = {
+      model,
+      container: { getBoundingClientRect: () => ({ height: 600 }) },
+      resize() {},
+      restoreCamera: (v) => calls.push(v),
+      fit: () => camera,
+      cameraState: () => calls.at(-1),
+    },
+    frame = Object.assign(Object.create(CoxeterPreviewFrame.prototype), {
+      replacement: snapshot,
+      host: { ownerDocument: { getElementById: () => null } },
+    });
+  frame.refitReplacement(viewer, view, () => calls.push('display'));
+  assert.deepEqual(view.angles, snapshot.view.angles);
+  assert.equal(view.surfaceColors, 'source');
+  assert.equal(snapshot.appearanceChanged, true);
+  assert.deepEqual(view.camera, camera);
+  assert.equal(frame.replacement, null);
 });

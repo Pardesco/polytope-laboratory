@@ -4,6 +4,7 @@ import json
 import hashlib
 import os
 import sys
+import time
 from pathlib import Path
 
 if __package__ in (None, ''):
@@ -67,6 +68,12 @@ def dispatch(request):
     if type(request) is not dict:
         raise GeometryError('Native requests require a JSON object.')
     op = request.get('op')
+    if op in ('hyperbolic-create', 'hyperbolic-patch', 'hyperbolic-analyze', 'hyperbolic-validate'):
+        from engine.hyperbolic_document import handle
+
+        return handle(op, request.get('params', {}))
+    if isinstance(request.get('model'), dict) and request['model'].get('kind') == 'hyperbolic-space' and op not in ('recipe-run', 'recipe-replay', 'recipe-branch'):
+        raise GeometryError('This tool uses Euclidean geometry. Hyperbolic documents support exploration, screenshots and native projects.')
     if op == 'u-dual-obstructions':
         from engine.u_dual_obstructions import dispatch_obstructions
 
@@ -538,6 +545,7 @@ def main():
     sys.stdout.reconfigure(encoding='utf-8')
     if os.environ.get('POLYTOPE_STARTUP_PROFILE') == '1':
         print('POLYTOPE_ENGINE_READY', file=sys.stderr, flush=True)
+    profile = os.environ.get('POLYTOPE_HYPERBOLIC_PROFILE') == '1'
     for line in bounded_lines(sys.stdin.buffer):
         if line is None:
             print(
@@ -546,10 +554,14 @@ def main():
             )
             continue
         request, text = {}, None
+        started = time.perf_counter() if profile else 0
+        parsed = dispatched = started
         try:
             text = line.decode('utf-8')
             request = parse_json(text)
+            parsed = time.perf_counter() if profile else 0
             result = dispatch(request)
+            dispatched = time.perf_counter() if profile else 0
             output = {'id': correlation_id(request), 'ok': True, 'result': result}
         except Exception as exc:
             if not request and text is not None:
@@ -560,7 +572,26 @@ def main():
                     request = {}
             correlation = correlation_id(request)
             output = {'id': correlation, 'ok': False, 'error': str(exc), 'type': type(exc).__name__}
-        print(response_line(output), flush=True)
+        encoded = response_line(output)
+        if profile and output.get('ok') and isinstance(request, dict):
+            params = request.get('params')
+            hyperbolic = str(request.get('op', '')).startswith('hyperbolic-') or (
+                request.get('op') == 'recipe-run'
+                and isinstance(params, dict)
+                and params.get('operation') == 'hyperbolic-create'
+            )
+            if hyperbolic:
+                timing = {
+                    'id': correlation_id(request),
+                    'op': request.get('op'),
+                    'parseMs': (parsed - started) * 1000,
+                    'dispatchMs': (dispatched - parsed) * 1000,
+                    'serializeMs': (time.perf_counter() - dispatched) * 1000,
+                    'requestBytes': len(line),
+                    'responseBytes': len(encoded.encode('utf-8')),
+                }
+                print('POLYTOPE_HYPERBOLIC_PROFILE ' + json.dumps(timing), file=sys.stderr, flush=True)
+        print(encoded, flush=True)
 
 
 if __name__ == '__main__':

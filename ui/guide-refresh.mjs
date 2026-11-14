@@ -25,6 +25,22 @@ const task = (id, title, goal, where, intro, steps, tips, related, keywords = ''
 });
 const tasks = [
   task(
+    'hyperbolic-space',
+    'Explore hyperbolic space',
+    'Explore the library',
+    'Library \u2192 Hyperbolic space',
+    'Open one of four regular honeycombs or the pinned eight-cell dodecahedral small cover. Coordinates are float64 approximations in curvature \u22121.',
+    [
+      'Choose a preset for a cell-centered Poincar\u00e9 overview.',
+      'Choose Explore inside: WASD moves, arrows or drag look, Escape returns to overview. Explore uses Klein; Return to center restores the starting cell.',
+      'Open Patch for Visible radius (0\u20132), Cell layers (0\u20135 for the cubic preset, 0\u20133 otherwise), or Pause generation. Choose observer ball or adjacency layers, then Apply patch.',
+      'In Analysis, expand Hyperbolic diagnostics for coverage, residual gates and Copy receipt (JSON). Incomplete coverage reports cells missing within R as unknown.',
+      'Save a PNG picture or a native mixed-document project.',
+    ],
+    'Patches are finite and bounded. Euclidean sections, nets, geometry export and 4D rotation do not apply. Uniform ringings are deferred. Diagnostics retain measured residuals and verification qualifiers.',
+    ['library', 'projects', 'numeric']
+  ),
+  task(
     'classification-evidence',
     'Review specialized relationships',
     'Explore the library',
@@ -343,14 +359,14 @@ const tasks = [
     'density-sections',
     'Fill a section by winding density',
     'Sections & 4D',
-    'Derived viewport → Section mode → Filled (density); Analysis → Filled section settings',
+    'Construct → Cross-section → Advanced slice settings → Section mode → Filled (density); Analysis → Filled section settings',
     'Select section regions by signed winding multiplicity, including separate loops and supported holes, instead of showing only surface curves.',
     [
       'Choose Filled (density) in Section mode.',
-      'Enter intrinsic Normal and Depth, then Evaluate.',
+      'Choose a Slice direction and Slice position, then Update section. Custom… reveals the intrinsic normal.',
       'Open Filled section settings and choose Nonzero, Even/odd or signed density ≥ k.',
       'For a threshold, enter an integer k from 1 to 100 and Apply density settings.',
-      'Read the signed-density legend and residuals; Promote to open the selected boundary as a new document.',
+      'Read the signed-density legend and residuals; Open section as model opens the selected boundary as a new document.',
     ],
     'Nonzero means w≠0, parity selects odd w, and threshold means signed w≥k. Multiplicity is not physical material density. Depth is distance along the normalized source normal. On generalized sources, planes through/very near original vertices refuse; move depth away or use surface curves. Large or deep 4D arrangements can exceed budgets. This fill policy differs from the component-union policy used for paper exteriors and solid printing.',
     ['sections', 'density', 'visible-surface'],
@@ -606,7 +622,19 @@ const upgrades = {
     tips: 'Snapshots preserve inspection when a recorded algorithm or numeric policy is unavailable. Replay fails explicitly in that case. Snapshot-only histories have no parameters to replay. Only project format version 1 is currently accepted; future formats are not silently migrated. Save keeps the prior-file backup, but actual power-loss and upgrade behavior still need shipped qualification.',
     related: ['desktop-files', 'metadata', 'interchange', 'unsupported-domains', 'discover'],
   },
-  sections: { goal: 'Sections & 4D', related: ['density-sections', 'generalized-4d', 'cell-nets'] },
+  sections: {
+    goal: 'Sections & 4D',
+    where: 'Construct → Cross-section; toolbar beneath the section pane',
+    steps: [
+      'Choose Cross-section to evaluate a central slice beside the original model.',
+      'Drag Slice position to update the section, or enter an expression and choose Update section.',
+      'Choose X/Y/Z/W as Slice direction; Custom… opens the intrinsic normal in Advanced slice settings.',
+      'Next vertex level advances to a source vertex projection and wraps to the first level at the end.',
+      'Read the completion message, then Open section as model to keep the result in a new document.',
+    ],
+    tips: 'Rotating either displayed shape does not change the intrinsic slice. Advanced slice settings contains section interpretations and algorithm notes. Surface curves do not imply a filled solid. Vertex levels can be tangent or degenerate; numerical results retain their existing residuals and domain limits.',
+    related: ['density-sections', 'generalized-4d', 'cell-nets'],
+  },
   nets: {
     goal: 'Nets & paper models',
     related: ['visible-surface', 'paper-assembly', 'cell-nets', 'coincident-assembly'],
@@ -735,6 +763,11 @@ export function refreshGuideTopics(original) {
 }
 
 export const NEW_GROUP_GUIDE_TOPICS = {
+  'hyperbolic-library': 'hyperbolic-space',
+  'hyperbolic-diagnostics': 'hyperbolic-space',
+  'hyperbolic-patch-controls': 'hyperbolic-space',
+  'coxeter-builder-method': 'wythoff-generation',
+  'construct-more-tools': 'construction',
   'library-more-filters': 'library',
   'library-collections': 'library',
   'library-classification': 'classification-evidence',
@@ -782,6 +815,7 @@ export const NEW_GROUP_GUIDE_TOPICS = {
   'stellation-cell-settings': 'stellation-diagrams',
   'information-panel': 'information',
   'density-section-settings': 'density-sections',
+  'advanced-slice-settings': 'sections',
   'symmetry-orientation-settings': 'symmetry-orientation',
   'near-miss-catalog-evidence': 'near-miss',
   'library-properties': 'library',

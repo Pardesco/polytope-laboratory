@@ -1,4 +1,5 @@
 import { readAppSource } from './helpers/app-source.mjs';
+import { projectSnapshot } from '../ui/hyperbolic-document.mjs';
 import { matchSource, sourceRange, sourceAssignment, sourceFunction } from './helpers/source-match.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
@@ -18,6 +19,7 @@ function fixture() {
     counts = { dirty: 0, tabs: 0, tours: 0, morph: 0, fit: 0 },
     opening = new ProjectOpening();
   const scope = {
+    projectSnapshot,
     state: f.context.getState,
     project: f.project,
     clone: structuredClone,

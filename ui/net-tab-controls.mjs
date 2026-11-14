@@ -90,7 +90,7 @@ export class NetTabControls {
     select.replaceChildren();
     const auto = document.createElement('option');
     auto.value = 'auto';
-    auto.textContent = 'Automatic first incident face';
+    auto.textContent = 'Automatic: fewer overlaps';
     select.append(auto);
     const pair = model.edges[edge];
     if (pair)

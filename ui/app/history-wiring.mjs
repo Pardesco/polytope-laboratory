@@ -1,3 +1,4 @@
+import { hyperbolicView, projectSnapshot, isHyperbolic } from '../hyperbolic-document.mjs';
 import { defaultDocumentView, legacyDocumentView } from '../default-look.mjs';
 import { normalizeMemories } from '../model-memories.mjs';
 import { HistoryControls } from '../history-controls.mjs';
@@ -116,6 +117,7 @@ export function createHistoryWiring(ctx) {
   function initialDocumentState(m, label, documentContext = null) {
     const { defaults, clone } = ctx;
 
+    if (isHyperbolic(m)) return { model: m, view: hyperbolicView(m), label, notes: '' };
     const view = defaults(m.dimension);
     view.coordinateUnit = ['model', 'mm', 'cm', 'm', 'in', 'ft'].includes(m.metadata?.coordinateUnits)
       ? m.metadata.coordinateUnits
@@ -169,12 +171,64 @@ export function createHistoryWiring(ctx) {
     markDirty();
     if (activate) renderWorkspace();
     else renderTabs();
-    if (activate && catalog) ctx.viewportControls?.opened(m);
+    if (activate && catalog && !isHyperbolic(m)) ctx.viewportControls?.opened(m);
     return next;
   }
-  async function commitOperation(op, params, label, { verifyPublication, verifyResult, signal } = {}) {
+  async function commitOperation(
+    op,
+    params,
+    label,
+    { verifyPublication, verifyResult, signal, newDocument, onTiming } = {}
+  ) {
     const { doc, state, animation, run, $, markDirty, renderWorkspace } = ctx;
 
+    if (isHyperbolic(state()?.model) && op !== 'hyperbolic-create')
+      throw Error(
+        'This construction uses Euclidean geometry. Hyperbolic documents support exploration, pictures and native projects.'
+      );
+    if (newDocument) {
+      const owner = ctx.project,
+        openingSource = state();
+      const draft =
+        newDocument === true
+          ? null
+          : { id: ctx.uid(), cursor: 0, states: [initialDocumentState(newDocument, 'Hyperbolic source')] };
+      const temporary = { documents: [draft] };
+      const context = {
+        getProject: () => temporary,
+        getDocument: () => draft,
+        getState: () => draft.states[0],
+        isExporting: () => animation.exporting || ctx.tourExporting,
+        run: (op, params, source, label) => run(op, params, source, label, { signal, onTiming }),
+        verifyPublication: () => {
+          if (signal?.aborted || ctx.project !== owner || state() !== openingSource || owner.documents.length >= 100)
+            throw Error('Hyperbolic opening superseded.');
+          verifyPublication?.();
+        },
+      };
+      let result;
+      if (newDocument === true) {
+        if (op !== 'hyperbolic-create') throw Error('Only hyperbolic creation supports an empty recipe source.');
+        if (context.isExporting()) throw Error('Finish animation export before opening a document.');
+        context.verifyPublication();
+        result = await run('recipe-run', { document: null, operation: op, parameters: params, label }, null, label, {
+          signal,
+          onTiming,
+        });
+        if (context.isExporting()) throw Error('Animation export began while the history job ran.');
+        context.verifyPublication();
+      } else {
+        const prepared = await prepareHistoryCommit(context, op, params, label);
+        verifyHistoryPublication(context, prepared);
+        result = prepared.result;
+      }
+      verifyResult?.(result);
+      owner.documents.push(result);
+      owner.active = owner.documents.length - 1;
+      markDirty();
+      renderWorkspace();
+      return result;
+    }
     const context = {
       getProject: () => ctx.project,
       getDocument: doc,
@@ -211,7 +265,9 @@ export function createHistoryWiring(ctx) {
     context.verifyPublication = captureContentHistoryPublication(context);
     const prepared = await prepareHistoryOpen(context, op, parameters);
     prepared.result.states.forEach((s) => {
-      s.view = { ...legacyDocumentView(s.model.dimension), ...s.view };
+      s.view = isHyperbolic(s.model)
+        ? { ...hyperbolicView(s.model), ...s.view }
+        : { ...legacyDocumentView(s.model.dimension), ...s.view };
     });
     verifyHistoryPublication(context, prepared, { opening: true });
     ctx.project.documents.push(prepared.result);
@@ -222,7 +278,10 @@ export function createHistoryWiring(ctx) {
   function serialize() {
     const { clone } = ctx;
 
-    return clone({ ...ctx.project, savedAt: new Date().toISOString() });
+    const startedAt = performance.now();
+    const snapshot = clone({ ...projectSnapshot(ctx.project), savedAt: new Date().toISOString() });
+    ctx.hyperbolicDocument?.recordSnapshot(performance.now() - startedAt);
+    return snapshot;
   }
   function adopt(p) {
     const { api, renderWorkspace } = ctx;
@@ -237,7 +296,9 @@ export function createHistoryWiring(ctx) {
     ctx.tourPreviewDocument = null;
     ctx.project.documents.forEach((d) =>
       d.states.forEach((s) => {
-        s.view = { ...legacyDocumentView(s.model.dimension), ...s.view };
+        s.view = isHyperbolic(s.model)
+          ? { ...hyperbolicView(s.model), ...s.view }
+          : { ...legacyDocumentView(s.model.dimension), ...s.view };
       })
     );
     ctx.dirty = false;

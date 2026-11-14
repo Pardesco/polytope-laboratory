@@ -37,3 +37,25 @@ __pycache__/
 *.pyc
 .venv/
 artifacts/
+node_modules
+data
+!/tests/data/
+/tests/data/*
+!/tests/data/coxeter_ringings.json
+dist/
+build/
+release/
+artifacts/
+__pycache__/
+.pytest_cache/
+
+# R9 formatting configuration and blame metadata.
+!/.prettierrc.json
+!/.prettierignore
+!/ruff.toml
+!/.git-blame-ignore-revs
+!/data-external/
+/data-external/*
+!/data-external/verification/
+/data-external/verification/*.download
+/data-external/verification/*.png

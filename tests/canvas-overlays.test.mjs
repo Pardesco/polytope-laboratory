@@ -282,6 +282,45 @@ test('fresh models replace the opening strip without duplicate ids or reopening 
   assert.equal(current.hidden, true);
 });
 
+test('focused workflow consumes queued hints without permanently dismissing Explore for later sessions', () => {
+  const f = fixture();
+  let reason;
+  f.overlays.enqueue('tip', f.hint('tip'), { onDismiss: (value) => (reason = value) });
+  f.overlays.freshOpen(f.state.model);
+  f.overlays.focusWorkflow();
+  assert.equal(reason, 'workflow');
+  assert.equal(f.overlays.slot.hidden, true);
+  assert.equal(f.timers.size, 0);
+  assert.equal(readExplore(f.local).dismissed, false);
+  f.overlays.freshOpen(f.state.model);
+  f.overlays.enable(true);
+  assert.equal(f.overlays.active, null);
+  const later = fixture({ local: f.local });
+  later.overlays.freshOpen(later.state.model);
+  assert.equal(later.overlays.active.key, 'explore');
+});
+
+test('default dormant section keeps hints; opening its split view consumes them even with denied storage', () => {
+  const denied = {
+    getItem() {
+      throw Error();
+    },
+    setItem() {
+      throw Error();
+    },
+  };
+  const f = fixture({ local: denied });
+  Object.assign(f.state.view, { derivedMode: 'section', viewportLayout: 'single' });
+  f.overlays.freshOpen(f.state.model);
+  assert.equal(f.overlays.active.key, 'explore');
+  f.state.view.viewportLayout = 'split';
+  f.overlays.sync();
+  assert.equal(f.overlays.workflowFocused, true);
+  assert.equal(f.overlays.slot.hidden, true);
+  f.overlays.freshOpen(f.state.model);
+  assert.equal(f.overlays.active, null);
+});
+
 test('safe area chooses the larger rectangle beside or below the turn widget', () => {
   const wide = canvasSafeInsets(1400, 700, { bottom: 112, widget: { left: 1230, bottom: 164 } }),
     narrow = canvasSafeInsets(420, 700, { bottom: 112, widget: { left: 250, bottom: 164 } });
@@ -315,5 +354,23 @@ test('fresh library opens and startup rotation frame once; view-only sync does n
   f.overlays.sync();
   assert.equal(calls.filter((x) => x === 'fit').length, 2);
   const app = readAppSource();
-  matchSource(app, /if\(activate&&(?:ctx\.)?catalog\)(?:ctx\.)?viewportControls\?\.opened\(m\)/);
+  matchSource(app, /if\(activate&&(?:ctx\.)?catalog&&!isHyperbolic\(m\)\)(?:ctx\.)?viewportControls\?\.opened\(m\)/);
+});
+
+test('queued Euclidean hints stay hidden on hyperbolic documents, including later timer/enqueue work', () => {
+  const f = fixture();
+  const model = { dimension: 4 };
+  f.overlays.configure({ getModel: () => model });
+  f.overlays.enqueue('turn', f.hint('turn'));
+  assert.equal(f.overlays.slot.hidden, false);
+  model.kind = 'hyperbolic-space';
+  model.dimension = 3;
+  f.overlays.sync();
+  assert.equal(f.overlays.slot.hidden, true);
+  f.overlays.enqueue('late', f.hint('late'));
+  assert.equal(f.overlays.slot.hidden, true);
+  delete model.kind;
+  f.overlays.sync();
+  f.overlays.showNext();
+  assert.equal(f.overlays.slot.hidden, false);
 });

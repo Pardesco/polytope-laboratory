@@ -457,6 +457,7 @@ export class ElementContentControls {
     if (options.signal?.aborted || (options.isCurrent && !options.isCurrent())) throw aborted();
   }
   sync() {
+    if (this.context.getState()?.model?.kind === 'hyperbolic-space') return;
     const state = this.context.getState(),
       model = state?.model,
       content = annotationSignature(state);

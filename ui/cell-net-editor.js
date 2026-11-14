@@ -248,7 +248,10 @@ export class CellNetEditor {
       if (!restoring) this.remember(state, net);
       this.markDirty();
     }
-    if (explicit && this.buildRequest === request) this.buildRequest = null;
+    if (explicit && this.buildRequest === request) {
+      this.buildRequest = null;
+      this.flow?.generated('cells', net);
+    }
     return net;
   }
   async edit(action, params, { verifyPublication, owner } = {}) {

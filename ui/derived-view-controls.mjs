@@ -81,7 +81,7 @@ export class DerivedViewControls {
     const wrap = context.guard;
     this.$('derived-mode').onchange = wrap(() => this.setMode(this.$('derived-mode').value));
     this.$('entity-id').onchange = wrap(() => this.setEntity(this.$('entity-id').value));
-    this.$('section-offset').oninput = wrap(() => this.setOffset(this.$('section-offset').value));
+    this.$('section-offset').oninput = wrap(() => this.queueOffset(this.$('section-offset').value));
     this.$('apply-section').onclick = wrap(() => this.apply(false));
     this.$('section-events').onclick = wrap(() => this.apply(true));
     this.$('promote').onclick = wrap(() => this.promote());
@@ -97,6 +97,8 @@ export class DerivedViewControls {
     this.generation++;
     clearTimeout(this.timer);
     this.timer = null;
+    this.resolveQueued?.();
+    this.resolveQueued = null;
     this.live = null;
     this.context.onActivityChange?.();
   }
@@ -244,11 +246,54 @@ export class DerivedViewControls {
     this.context.onActivityChange?.();
     return next.promise;
   }
+  queueOffset(text) {
+    const s = this.editable(),
+      value = String(text).trim(),
+      offset = Number(value);
+    if (!sectionMode(s.view.derivedMode) || !value || !Number.isFinite(offset) || Math.abs(offset) > 1e100)
+      throw Error('Choose a finite depth for a section view.');
+    this.cancel();
+    this.context.invalidate();
+    this.$('section-depth').value = String(offset);
+    const generation = this.generation,
+      source = s.model,
+      key = derivedInputKey(s.view),
+      document = this.context.getDocument?.(),
+      project = this.context.getProject?.();
+    this.context.onSliceStatus?.('Updating section…');
+    const promise = new Promise((resolve, reject) => {
+      this.resolveQueued = resolve;
+      this.timer = setTimeout(() => {
+        this.timer = null;
+        this.resolveQueued = null;
+        if (
+          generation !== this.generation ||
+          this.context.getState() !== s ||
+          s.model !== source ||
+          derivedInputKey(s.view) !== key ||
+          this.context.getDocument?.() !== document ||
+          this.context.getProject?.() !== project ||
+          this.context.isExporting?.()
+        ) {
+          this.context.onActivityChange?.();
+          return resolve();
+        }
+        try {
+          Promise.resolve(this.setOffset(value)).then(resolve, reject);
+        } catch (error) {
+          reject(error);
+        }
+      }, this.context.sliceDebounceMs ?? 90);
+    });
+    this.context.onActivityChange?.();
+    return promise;
+  }
   apply(next) {
     this.editable();
     this.cancel();
     const job = { state: this.context.getState() };
     this.pending = job;
+    this.context.onSliceStatus?.('Updating section…');
     this.sync();
     this.context.onActivityChange?.();
     this.context.onAvailabilityChange?.();
@@ -260,9 +305,14 @@ export class DerivedViewControls {
         this.context.onAvailabilityChange?.();
       }
     };
+    const failed = (error) => {
+      if (this.pending === job) this.context.onSliceStatus?.('Section could not update: ' + error.message);
+      throw error;
+    };
     try {
-      return Promise.resolve(this.context.applyPlane(next)).finally(finish);
+      return Promise.resolve(this.context.applyPlane(next)).catch(failed).finally(finish);
     } catch (error) {
+      if (this.pending === job) this.context.onSliceStatus?.('Section could not update: ' + error.message);
       finish();
       throw error;
     }
@@ -345,6 +395,7 @@ export class DerivedViewControls {
     this.$('entity-id').max = String(Math.max(0, (domain?.count ?? 1) - 1));
     this.$('entity-id').ariaLabel = domain ? 'Source ' + domain.kind + ' index' : 'Derived source entity index';
     this.$('promote').disabled = blocked || !this.context.getDerived();
+    this.$('promote').hidden = mode === 'net' || mode === 'cell-net';
     const label = this.$('derived-entity-label');
     if (label)
       label.textContent = domain ? domain.kind[0].toUpperCase() + domain.kind.slice(1) + ' index' : 'Source index';
@@ -362,5 +413,6 @@ export class DerivedViewControls {
         'Filled density requires an off-vertex plane. Move depth away from vertex levels; Next vertex may refuse contacts.';
     if (this.pending && note)
       note.textContent = 'Evaluating the plane. Promotion and derived export will be available when it finishes.';
+    this.context.onSync?.();
   }
 }

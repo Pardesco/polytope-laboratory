@@ -145,18 +145,21 @@ test('mounted Guide, contextual help, Welcome, menu action and live command/shor
         if (panel) doc.querySelector('[data-panel="' + panel.id.replace('-panel', '') + '"]').click();
       });
       await reveal(page, selector);
-      await expertOff();
+      if (!(await page.locator(selector).evaluate((node) => !!node.closest('[data-expert]')))) await expertOff();
     };
     const openHelp = async (selector, title) => {
       await revealHelp(selector);
+      const expertTarget = await page.locator(selector).evaluate((node) => !!node.closest('[data-expert]'));
       const pane = await page
         .locator(selector)
         .evaluate((node) => node.closest('summary.construct-tool-summary')?.closest('[data-construct-tool]')?.id);
       if (pane) selector = '#' + pane + ' .construct-pane-help';
       await page.locator(selector).click();
       assert.equal(await page.locator('#help-topic h3').innerText(), title, selector);
-      await expertOff();
+      if (!expertTarget) await expertOff();
       await page.keyboard.press('Escape');
+      if (expertTarget) await page.evaluate(() => document.getElementById('expert-tools').click());
+      await expertOff();
     };
     await t.test(
       'desk-01-help-r6-topics: nine Round 6 disclosures open their intended help with Expert off',
@@ -176,7 +179,7 @@ test('mounted Guide, contextual help, Welcome, menu action and live command/shor
       }
     );
     await t.test(
-      'desk-01-help-r7-evidence: Library and generated evidence keep specific help with Expert off',
+      'desk-01-help-r7-evidence: Library evidence reveals expert help and generated evidence keeps specific help',
       async () => {
         for (const id of ['library-corpus', 'library-classification', 'library-symmetry-evidence'])
           await page.locator('#' + id).evaluate((node) => (node.open = true));
@@ -232,6 +235,8 @@ test('mounted Guide, contextual help, Welcome, menu action and live command/shor
           await page.keyboard.press('F1');
           assert.equal(await page.locator('#help-topic h3').innerText(), title, id + ' F1');
           await page.keyboard.press('Escape');
+          if (await page.locator('#' + id).evaluate((node) => !!node.closest('[data-expert]')))
+            await page.evaluate(() => document.getElementById('expert-tools').click());
           await expertOff();
         }
         const selector = '#library-symmetry-evidence > details > summary .group-help';

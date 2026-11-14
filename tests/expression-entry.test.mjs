@@ -467,11 +467,12 @@ test('production paper Pack button evaluates all custom dimensions/margins/gaps 
   preset.nodes.get('net-paper-width').value = 'bad';
   preset.nodes.get('net-paper-height').value = 'bad';
   await clicked(preset, 'net-pack');
-  assert.equal(preset.calls.filter((c) => c[0] === 'number').length, 2);
+  assert.equal(preset.calls.filter((c) => c[0] === 'number').length, 3);
 });
 
 test('paper invalid dimensions/margins/gaps or export starting during any input never partially apply', async () => {
   for (const [id, text] of [
+    ['net-length', '1001'],
     ['net-paper-width', '19'],
     ['net-paper-height', '2001'],
     ['net-paper-margin', '105'],
@@ -485,7 +486,7 @@ test('paper invalid dimensions/margins/gaps or export starting during any input 
     await assert.rejects(() => clicked(f, 'net-pack'));
     assert.deepEqual(f.state, before);
   }
-  for (const after of [1, 2, 3, 4]) {
+  for (const after of [1, 2, 3, 4, 5]) {
     const f = editors();
     f.nodes.get('net-paper').value = 'custom';
     let count = 0;

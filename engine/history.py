@@ -10,8 +10,15 @@ import hashlib
 import json
 import math
 
-from .geometry import GeometryError, VERSION, TOLERANCE, identity, validate
+from .geometry import GeometryError, VERSION, TOLERANCE, identity as euclidean_identity, validate
 from .input_limits import input_boundary
+
+def identity(model):
+    if model.get('kind') == 'hyperbolic-space':
+        from .hyperbolic_document import fingerprint
+        return fingerprint(model)
+    return euclidean_identity(model)
+
 
 MAX_NODES = 1024
 MAX_NODE_BYTES = 32 * 1024 * 1024
@@ -76,6 +83,7 @@ ALGORITHM_VERSIONS = MappingProxyType({**ALGORITHM_VERSIONS, 'rational-dual': '0
 ALGORITHM_VERSIONS = MappingProxyType({**ALGORITHM_VERSIONS, 'compound-add': '0.1.0'})
 ALGORITHM_VERSIONS = MappingProxyType({**ALGORITHM_VERSIONS, 'construct-from-vertex-figure': '0.1.0'})
 ALGORITHM_VERSIONS = MappingProxyType({**ALGORITHM_VERSIONS, 'rebuild-coplanar-cells': '0.1.0'})
+ALGORITHM_VERSIONS = MappingProxyType({**ALGORITHM_VERSIONS, 'hyperbolic-create': '1'})
 REPLAY_OPERATIONS = frozenset(ALGORITHM_VERSIONS)
 NUMERIC_POLICY = MappingProxyType({'mode': 'float64-approximate', 'tolerance': TOLERANCE})
 NODE_KEYS = frozenset(
@@ -154,6 +162,9 @@ def canonical_model(model):
     Incidence is not sorted, cyclically rotated or converted to a convex hull.
     Numeric spellings 1/1.0 and 0/-0 denote the same source coordinate.
     """
+    if model.get('kind') == 'hyperbolic-space':
+        from .hyperbolic_document import canonical_model as hyperbolic_canonical
+        return hyperbolic_canonical(model)
     fields = {
         key: model.get(key)
         for key in (
@@ -179,6 +190,11 @@ def _snapshot(state):
     detached = json.loads(_json_bytes(state, MAX_NODE_BYTES))
     if type(detached) is not dict or type(detached.get('model')) is not dict or type(detached.get('view')) is not dict:
         raise GeometryError('History snapshots require model and view objects.')
+    if detached['model'].get('kind') == 'hyperbolic-space':
+        from .hyperbolic_document import validate_document, validate_view
+        validate_document(detached['model'])
+        validate_view(detached['model'], detached['view'])
+        return detached
     model_limits(detached['model'])
     checked = validate(detached['model'])
     if not checked['passed']:

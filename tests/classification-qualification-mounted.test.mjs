@@ -4,9 +4,11 @@ import { spawn } from 'node:child_process';
 import { createInterface } from 'node:readline';
 import { createServer } from 'vite';
 import { chromium } from 'playwright';
+import { createRequire } from 'node:module';
+const { autoReveal } = createRequire(import.meta.url)('../scripts/smoke-helpers.cjs');
 
 test(
-  'expert-off Library opens a generated dual, rechecks both tranches and reopens source-owned evidence',
+  'Library expert reveal opens a generated dual, rechecks both tranches and reopens source-owned evidence',
   { timeout: 180000 },
   async () => {
     const engine = spawn('python', ['-B', '-u', 'engine/server.py'], {
@@ -51,6 +53,7 @@ test(
       const page = await browser.newPage({ viewport: { width: 1600, height: 1000 }, reducedMotion: 'reduce' }),
         errors = [];
       page.setDefaultTimeout(30000);
+      autoReveal(page);
       page.on('pageerror', (e) => errors.push(e.message));
       await page.exposeFunction('nativeEngine', compute);
       await page.addInitScript(() => {
@@ -87,7 +90,7 @@ test(
       await page.waitForFunction(() =>
         document.getElementById('classification-summary').textContent.includes('64 recorded numerical passes')
       );
-      assert.equal(await page.locator('body').evaluate((n) => n.classList.contains('expert-mode')), false);
+      assert.equal(await page.locator('body').evaluate((n) => n.classList.contains('expert-mode')), true);
       for (const id of [
         'classification-tranche',
         'classification-identity',
@@ -95,7 +98,7 @@ test(
         'classification-verify',
       ]) {
         assert.equal(await page.locator('#' + id).isVisible(), true, id);
-        assert.equal(await page.locator('#' + id).evaluate((n) => !!n.closest('[data-expert]')), false);
+        assert.equal(await page.locator('#' + id).evaluate((n) => !!n.closest('[data-expert]')), true);
       }
       await page.locator('#classification-identity').selectOption('dual3:U74');
       await page.locator('#classification-verify').click();

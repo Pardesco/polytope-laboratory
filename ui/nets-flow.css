@@ -59,7 +59,7 @@
   gap: 8px;
   margin: 8px 0;
 }
-#net-panel .nets-output-actions button {
+#net-panel .nets-output-actions button:not(.group-help) {
   min-width: 0;
   padding: 8px 4px;
   white-space: nowrap;
@@ -74,7 +74,7 @@
   gap: 8px;
   margin: 8px 0;
 }
-#net-panel .net-history button {
+#net-panel .net-history button:not(.group-help) {
   flex: 1;
   min-width: 0;
 }
@@ -165,7 +165,7 @@
   gap: var(--space-1);
   margin: var(--space-1) 0;
 }
-#net-fabrication-settings button {
+#net-fabrication-settings button:not(.group-help) {
   min-height: var(--control-height);
   white-space: normal;
 }
@@ -193,4 +193,101 @@
   display: block;
   margin: var(--space-1) 0;
   font-size: var(--font-secondary);
+}
+
+#nets-stepper {
+  position: sticky;
+  top: -13px;
+  z-index: 3;
+  display: flex;
+  gap: var(--space-1);
+  padding: var(--space-1) 0;
+  margin-bottom: var(--space-2);
+  background: var(--panel);
+  border-bottom: 1px solid var(--border);
+}
+#nets-stepper button:not(.group-help) {
+  flex: 1;
+  min-width: 0;
+  min-height: var(--control-height);
+  padding: 4px;
+}
+#nets-stepper [aria-current='step'] {
+  color: var(--text);
+  background: var(--selection-bg);
+  border-color: var(--accent);
+}
+#net-panel :is(.nets-step, #net-layout-settings) {
+  scroll-margin-top: 64px;
+}
+#nets-result-summary {
+  white-space: pre-line;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: var(--space-1);
+  margin: 0;
+  color: var(--text);
+  background: var(--panel2);
+  border-top: 1px solid var(--border);
+}
+#nets-overlap-tools {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: var(--font-secondary);
+  color: var(--text);
+}
+#nets-overlap-tools button:not(.group-help) {
+  min-height: var(--utility-size);
+}
+#nets-overlap-tools a {
+  color: var(--accent);
+}
+#net-preview .net-overlap-mark:is(path, g) > polygon,
+#net-preview path.net-overlap-mark {
+  fill: var(--selection-bg);
+  fill-opacity: 0.7;
+  stroke: var(--focus-color);
+  stroke-width: 2px;
+  vector-effect: non-scaling-stroke;
+}
+@media screen {
+  .viewport.derived:has(> #net-preview:not([hidden])) {
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr) auto;
+    gap: var(--space-1);
+    padding: 46px var(--space-1) var(--space-1);
+  }
+  .viewport.derived > #nets-overlap-tools {
+    grid-row: 1;
+  }
+  .viewport.derived > #net-preview:not([hidden]) {
+    position: relative;
+    inset: auto;
+    min-height: 0;
+    min-width: 0;
+    grid-row: 2;
+  }
+  .viewport.derived:has(> #net-preview:not([hidden])) > #derived-status,
+  .viewport.derived:has(> #net-preview:not([hidden])) > #nets-result-summary {
+    position: static;
+    grid-row: 3;
+    padding: var(--space-1);
+    color: var(--text);
+    background: var(--panel2);
+    border-top: 1px solid var(--border);
+    overflow-wrap: anywhere;
+    margin: 0;
+  }
+  #net-preview.packed-page {
+    outline: 1px solid var(--border);
+  }
+}
+@media print {
+  #nets-overlap-tools {
+    display: none;
+  }
 }

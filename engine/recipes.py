@@ -34,7 +34,7 @@ RECORD_OPERATIONS = REPLAY_OPERATIONS | {'rational-dual'}
 
 def checked_document(document):
     detached = copy.deepcopy(document)
-    validate_project({'format': 'polytope-laboratory', 'version': 1, 'active': 0, 'documents': [detached]})
+    validate_project({'format': 'polytope-laboratory', 'version': 2 if any(s.get('model', {}).get('kind') == 'hyperbolic-space' for s in detached.get('states', [])) else 1, 'active': 0, 'documents': [detached]})
     return detached
 
 
@@ -47,6 +47,10 @@ def run_recipe(document, operation, parameters, dispatcher, label=None, *, algor
         operation != 'polygon-prism' or algorithm_version not in supported_versions(operation)
     ):
         raise GeometryError('Unsupported explicit recipe algorithm version; retained snapshots stay readable.')
+    if document is None and operation == 'hyperbolic-create':
+        from .hyperbolic_document import recipe_source
+
+        document = recipe_source(parameters)
     if operation == 'projective-incidence-dual':
         from .projective_dual_workflow import run_projective
 
@@ -98,7 +102,15 @@ def run_recipe(document, operation, parameters, dispatcher, label=None, *, algor
     model = response.get('model') if operation == 'section' else response
     if type(model) is not dict:
         raise GeometryError('This operation produced no model to commit.')
-    view = copy.deepcopy(source['view'])
+    if operation == 'hyperbolic-create':
+        if source['model'].get('kind') != 'hyperbolic-space':
+            raise GeometryError('Open hyperbolic space as a new document.')
+        from .hyperbolic_document import IDENTITY
+        view = {'hyperbolicModel': 'poincare', 'hyperbolicLod': 'normal', 'mode': 'overview', 'observerMatrix': IDENTITY, 'anchor': model['anchor']}
+    elif source['model'].get('kind') == 'hyperbolic-space':
+        raise GeometryError('This construction requires a Euclidean document.')
+    else:
+        view = copy.deepcopy(source['view'])
     if operation == 'construct-from-vertex-figure':
         view.pop('dualMorph', None)
     if operation == 'coxeter-build' or operation == 'generate' and parameters.get('kind') == 'coxeter-builder':
@@ -134,7 +146,8 @@ def run_recipe(document, operation, parameters, dispatcher, label=None, *, algor
     for field in ('entitySelection', 'sectionAlignment', 'orientationFrame', 'cellFacingCache', 'elementVisibility'):
         view.pop(field, None)
     view.pop('coincidicComparison', None)
-    view.update(cellFacing='all', hiddenCells=[], isolatedCell=None)
+    if model.get('kind') != 'hyperbolic-space':
+        view.update(cellFacing='all', hiddenCells=[], isolatedCell=None)
     if (model['dimension'], model.get('embeddingDimension', model['dimension'])) != (
         source['model']['dimension'],
         source['model'].get('embeddingDimension', source['model']['dimension']),

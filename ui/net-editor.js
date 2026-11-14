@@ -2,7 +2,7 @@ import { contentSignature, contentParameters } from './element-content-lifecycle
 import { NetTabControls } from './net-tab-controls.mjs';
 import { NetColorPrintingControls } from './net-color-printing-controls.mjs';
 import { ExpressionEntry, captureExpressionOwner, verifyExpressionOwner } from './expression-entry.mjs';
-import { faceNetSummary, currentFaceNet } from './net-presentation.mjs';
+import { faceNetSummary, currentFaceNet, paperPageCaption } from './net-presentation.mjs';
 import { NetExportSession } from './net-export-session.mjs';
 import { VisibleSurfaceControls } from './visible-surface-controls.mjs';
 import { NetAssemblyControls } from './net-assembly-controls.mjs';
@@ -205,6 +205,7 @@ export class NetEditor {
     this.requireEditable();
     if (!['layout', 'fold', 'pages'].includes(value)) throw Error('Choose a supported net view.');
     this.config().display = value;
+    this.$('net-display').value = value;
     this.playing = false;
     this.activate();
     this.markDirty();
@@ -283,6 +284,8 @@ export class NetEditor {
       c.root = root;
       c.length = length;
       c.tabs = tabs;
+      c.display = 'layout';
+      this.$('net-display').value = 'layout';
       this.playing = false;
       this.buildRequest = { state: s, model: s.model, root, length, tabs, separate };
       s.netLayout = null;
@@ -294,18 +297,25 @@ export class NetEditor {
     });
   }
   async pack() {
+    this.flow?.goToStep(3);
     const paper = this.$('net-paper').value,
       orientation = this.$('net-paper-orientation').value,
       colorPrinting = this.colorPrinting.parameters();
     if (!['a4', 'a3', 'letter', 'legal', 'custom'].includes(paper) || !['portrait', 'landscape'].includes(orientation))
       throw Error('Choose a supported paper and orientation.');
-    const fields = { margin_mm: this.$('net-paper-margin').value, gap_mm: this.$('net-paper-gap').value };
+    const fields = {
+      length: this.$('net-length').value,
+      margin_mm: this.$('net-paper-margin').value,
+      gap_mm: this.$('net-paper-gap').value,
+    };
     // Hidden custom sizes are not inputs to a preset paper operation.
     if (paper === 'custom') {
       fields.width_mm = this.$('net-paper-width').value;
       fields.height_mm = this.$('net-paper-height').value;
     }
     return this.expressionEntry.run(fields, (values, verify, owner) => {
+      const { length, ...physical } = values;
+      if (length < 1 || length > 1000) throw Error('Reference E0 must be between 1 and 1,000 mm.');
       const [width, height] =
         paper === 'custom'
           ? [values.width_mm, values.height_mm]
@@ -328,12 +338,13 @@ export class NetEditor {
         orientation,
         width_mm: width,
         height_mm: height,
-        ...values,
+        ...physical,
         allow_rotation: true,
         ...colorPrinting,
       };
       s.netPages = null;
       const c = this.config(s);
+      c.length = length;
       c.display = 'pages';
       c.page = 0;
       this.$('net-display').value = 'pages';
@@ -508,7 +519,10 @@ export class NetEditor {
       state.netPages = packed;
       this.markDirty();
     }
-    if (explicit && this.buildRequest === request) this.buildRequest = null;
+    if (explicit && this.buildRequest === request) {
+      this.buildRequest = null;
+      this.flow?.generated('faces', net);
+    }
     return net;
   }
   async edit(action, params, { verifyPublication, owner } = {}) {
@@ -697,8 +711,7 @@ export class NetEditor {
     );
     this.$('net-page-prev').disabled = c.page === 0;
     this.$('net-page-next').disabled = c.page === packed.pageCount - 1;
-    this.$('net-paper-status').textContent =
-      `Page ${c.page + 1} of ${packed.pageCount} · ${page.widthMm} × ${page.heightMm} mm · E0 = ${packed.referenceEdgeLengthMm} mm · 100% source scale${page.paperColorLabel ? ' / ' + page.paperColorLabel : ''}${packed.colorPrinting?.crossColorCuts.length ? ' / ' + packed.colorPrinting.crossColorCuts.length + ' detached print cuts' : ''}`;
+    this.$('net-paper-status').textContent = paperPageCaption(packed, page, c.page);
     const net = this.getState().netLayout,
       faces = net?.overlapPairs.length ?? 0,
       tabs = net?.tabOverlapPairs.length ?? 0;

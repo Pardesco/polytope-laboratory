@@ -1,4 +1,5 @@
 import test from 'node:test';
+import { revealConstructCard } from './helpers/construct-tools.mjs';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { spawn } from 'node:child_process';
@@ -141,6 +142,7 @@ test(
       };
       const show = async () => {
         await page.locator('[data-panel="construct"]').click();
+        await revealConstructCard(page, 'construct-card-face-conway-settings');
         const card = page.locator('#construct-card-face-conway-settings');
         if (await card.isVisible()) await card.click();
         if (!(await page.locator('#face-conway-settings').evaluate((n) => n.open)))
@@ -178,6 +180,7 @@ test(
           if (kind === 'edges') {
             // Configure the existing edge fields through their own common panel.
             await page.locator('#construct-back-face-conway-settings').click();
+            await revealConstructCard(page, 'construct-card-subdivision-settings');
             const card = page.locator('#construct-card-subdivision-settings');
             await card.click();
             if (!(await page.locator('#subdivision-settings').evaluate((n) => n.open)))

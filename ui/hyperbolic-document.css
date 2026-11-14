@@ -1,0 +1,92 @@
+.hyperbolic-library button:not(.group-help) {
+  display: block;
+  text-align: left;
+  margin-block: 6px;
+}
+.hyperbolic-library small {
+  display: block;
+  opacity: 0.7;
+}
+.hyperbolic-controls {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+.hyperbolic-controls[hidden] {
+  display: none;
+}
+#hyperbolic-navigation-help {
+  font-size: 12px;
+  opacity: 0.7;
+}
+#hyperbolic-diagnostics pre {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  max-height: 420px;
+  overflow: auto;
+}
+body[data-document-kind='hyperbolic-space'] #base-canvas {
+  display: none;
+}
+#hyperbolic-patch-controls {
+  position: relative;
+}
+#hyperbolic-patch-controls > summary {
+  cursor: pointer;
+}
+.hyperbolic-patch-fields {
+  position: absolute;
+  z-index: 30;
+  top: 100%;
+  right: 0;
+  width: 260px;
+  padding: 12px;
+  background: var(--panel, #222831);
+  border: 1px solid var(--border, #66707c);
+  border-radius: 8px;
+  box-shadow: 0 8px 24px #0008;
+}
+.hyperbolic-patch-fields label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-block: 8px;
+}
+.hyperbolic-patch-fields input[type='text'] {
+  width: 72px;
+}
+.hyperbolic-patch-fields p {
+  font-size: 12px;
+  line-height: 1.4;
+}
+#hyperbolic-explore:not(.group-help) {
+  background: #225469;
+  color: #fff;
+  font-weight: 650;
+}
+#hyperbolic-navigation-help {
+  flex: 1 1 260px;
+}
+#hyperbolic-analysis dl {
+  margin-block: 8px 16px;
+  font-size: 12px;
+}
+#hyperbolic-analysis dt {
+  font-weight: 650;
+  margin-top: 10px;
+}
+#hyperbolic-analysis dd {
+  margin-left: 0;
+  overflow-wrap: anywhere;
+}
+#hyperbolic-diagnostics summary {
+  cursor: pointer;
+}
+body[data-document-kind='hyperbolic-space'] #view-diagnostic {
+  white-space: normal;
+  line-height: 1.45;
+}

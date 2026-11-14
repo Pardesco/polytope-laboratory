@@ -18,6 +18,8 @@ const attribute = (node, key, value) => {
 };
 export function motionPresetReason(key, state, { capabilities = {}, blocked = false } = {}) {
   if (!state) return 'Open a model first.';
+  if (state.model?.kind === 'hyperbolic-space')
+    return 'Timeline motions use Euclidean geometry; explore this hyperbolic space in its viewport.';
   if (blocked) return 'Finish the current animation action first.';
   const model = state.model,
     dimension = model.embeddingDimension || model.dimension,
@@ -381,7 +383,7 @@ export class TimelinePanel {
     this.syncing = true;
     try {
       const source = this.context.getState();
-      if (!source) {
+      if (!source || source.model?.kind === 'hyperbolic-space') {
         write(this.panel, 'hidden', true);
         return;
       }

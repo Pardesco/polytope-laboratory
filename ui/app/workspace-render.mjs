@@ -3,9 +3,11 @@ import { clearPrecisionValidation, syncPrecisionContext } from '../precision-evi
 import { PLANES } from '../projection.js';
 export function createWorkspaceRender(ctx) {
   function displayPose() {
+    if (ctx.model()?.kind === 'hyperbolic-space') return;
     return displayBase({ poseOnly: true });
   }
   function displayBase({ poseOnly = false } = {}) {
+    if (ctx.model()?.kind === 'hyperbolic-space') return;
     const {
       state,
       symmetryOrientation,
@@ -129,6 +131,7 @@ export function createWorkspaceRender(ctx) {
     ctx.appearanceSheet?.sync();
   }
   function renderWorkspace() {
+    if (ctx.hyperbolicDocument?.render()) return;
     const {
       workspaceAvailability,
       reports,
@@ -268,6 +271,8 @@ export function createWorkspaceRender(ctx) {
     // Restore source selection before the one full display. That display prepares
     // highlight positions, picking and annotations together in the saved pose.
     displayBase();
+    ctx.coxeterPreviewFrame?.refitReplacement(base, v, displayBase);
+    ctx.sectionToolbar?.refitLayout(base, ctx.derived);
     elementTypes.sync();
     symmetryEvidence.sync();
     PLANES.forEach(([, axis], i) => {

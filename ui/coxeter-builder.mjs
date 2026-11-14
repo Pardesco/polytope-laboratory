@@ -4,7 +4,7 @@ export const COXETER_FAMILIES = {
   H3: { label: 'Icosahedral', branches: [5, 3] },
   A4: { label: '5-cell', branches: [3, 3, 3] },
   B4: { label: 'Hypercube', branches: [4, 3, 3] },
-  D4: { label: 'Triality', branches: [3, 3, 3] },
+  D4: { label: '16-cell', branches: [3, 3, 3] },
   F4: { label: '24-cell', branches: [3, 4, 3] },
   H4: { label: '600-cell', branches: [5, 3, 3] },
 };
@@ -12,13 +12,12 @@ export function diagramState(family = 'B3', rings) {
   if (!Object.hasOwn(COXETER_FAMILIES, family)) throw Error('Choose a supported symmetry family.');
   const rank = COXETER_FAMILIES[family].branches.length + 1,
     mask = rings ?? [1, ...Array(rank - 1).fill(0)];
-  if (mask.length !== rank || mask.some((r) => r !== 0 && r !== 1) || !mask.some(Boolean))
-    throw Error('Keep at least one node ringed.');
+  if (mask.length !== rank || mask.some((r) => r !== 0 && r !== 1))
+    throw Error('Choose one binary value per diagram node.');
   return { family, rings: [...mask], snub: false, hand: 'A' };
 }
 export function toggleRing(value, index) {
   if (!Number.isInteger(index) || index < 0 || index >= value.rings.length) throw Error('Choose a diagram node.');
-  if (value.rings[index] && value.rings.filter(Boolean).length === 1) return value;
   const rings = value.rings.map((r, i) => (i === index ? 1 - r : r));
   return { ...value, rings, snub: value.snub && rings.every(Boolean) };
 }
@@ -59,7 +58,7 @@ export function diagramMarkup(value, { mini = false, focus = 0 } = {}) {
   const nodes = points
     .map(
       ([x, y], i) =>
-        `<g ${mini ? '' : `id="coxeter-builder-node-${i}" role="button" tabindex="${i === focus ? 0 : -1}" aria-label="Node ${i + 1}, ${value.snub ? 'snub' : value.rings[i] ? 'ringed' : 'unringed'}" aria-pressed="${!!value.rings[i]}" data-node="${i}"`} transform="translate(${x},${y})" class="coxeter-node${value.rings[i] ? ' ringed' : ''}${value.snub ? ' snub' : ''}"><circle class="node-hit" r="24"/>${value.rings[i] ? '<circle class="node-ring" r="17"/>' : ''}<circle class="node-core" r="7"/></g>`
+        `<g ${mini ? '' : `id="coxeter-builder-node-${i}" role="button" tabindex="${i === focus ? 0 : -1}" aria-label="Node ${i + 1}, ${value.rings[i] ? 'ringed' : 'not ringed'}${value.snub ? ', snub' : ''}" aria-pressed="${!!value.rings[i]}" data-node="${i}"`} transform="translate(${x},${y})" class="coxeter-node${value.rings[i] ? ' ringed' : ''}${value.snub ? ' snub' : ''}"><rect class="node-hit" x="-24" y="-24" width="48" height="48" rx="4"/>${value.rings[i] ? '<circle class="node-ring" r="17"/>' : ''}<circle class="node-core" r="7"/>${mini ? '' : '<rect class="node-focus" x="-24" y="-24" width="48" height="48" rx="4"/>'}</g>`
     )
     .join('');
   return `<svg viewBox="0 0 300 140" ${mini ? 'aria-hidden="true"' : 'aria-label="Coxeter–Dynkin diagram. Select nodes to change the shape." role="group"'}>${line}${nodes}</svg>`;
@@ -93,11 +92,30 @@ export function builderPreviewRect(canvas, panel, gap = 16) {
   ].sort((a, b) => b.width * b.height - a.width * a.height)[0];
 }
 
+const previewFrames = new WeakMap();
+
+export function replacementCamera(preview, fitted, previewHeight, height) {
+  if (!(previewHeight > 0 && height > 0)) return fitted;
+  const ratio = height / previewHeight,
+    distance = (camera) => Math.hypot(...camera.position.map((x, i) => x - camera.target[i])),
+    fittedDistance = distance(fitted),
+    scale = Math.max(1, (distance(preview) * ratio) / (preview.zoom * fittedDistance));
+  return {
+    ...fitted,
+    position: fitted.position.map((x, i) => fitted.target[i] + (x - fitted.target[i]) * scale),
+    orthographicHalfHeight: Math.max(
+      fitted.orthographicHalfHeight,
+      (preview.orthographicHalfHeight * ratio) / preview.zoom
+    ),
+  };
+}
+
 export class CoxeterPreviewFrame {
   constructor(host, getPanel, getViewer) {
     this.host = host;
     this.getPanel = getPanel;
     this.getViewer = getViewer;
+    previewFrames.set(getPanel(), this);
     this.surface = host.ownerDocument.createElement('div');
     this.surface.id = 'coxeter-builder-preview-canvas';
     host.prepend(this.surface);
@@ -121,6 +139,51 @@ export class CoxeterPreviewFrame {
     this.key = null;
     for (const name of ['left', 'top', 'width', 'height']) this.surface.style[name] = '';
   }
+  captureReplacement() {
+    const viewer = this.getViewer();
+    if (!viewer?.model || this.host.hidden) return;
+    return (this.replacement = {
+      model: viewer.model,
+      view: structuredClone(viewer.view),
+      camera: viewer.cameraState(),
+      height: this.surface.getBoundingClientRect().height,
+    });
+  }
+  refitReplacement(viewer, view, display) {
+    const snapshot = this.replacement;
+    if (!snapshot || viewer.model?.name !== snapshot.model.name || viewer.model.dimension !== snapshot.model.dimension)
+      return;
+    this.replacement = null;
+    for (const key of ['angles', 'projection', 'stereoMode', 'perspectiveDistance4D', 'perspectiveNear4D'])
+      if (snapshot.view[key] !== undefined) view[key] = structuredClone(snapshot.view[key]);
+    view.cameraProjection = snapshot.camera.projection;
+    display();
+    viewer.resize();
+    viewer.restoreCamera(snapshot.camera);
+    const fitted = viewer.fit();
+    viewer.restoreCamera(
+      replacementCamera(snapshot.camera, fitted, snapshot.height, viewer.container.getBoundingClientRect().height)
+    );
+    view.camera = viewer.cameraState();
+    const doc = this.host.ownerDocument;
+    view.angles.forEach((angle, i) => {
+      const input = doc.getElementById('plane-' + i),
+        output = doc.getElementById('plane-output-' + i);
+      if (input) input.value = angle;
+      if (output) output.textContent = Number(angle.toFixed(4)) + '°';
+    });
+    const projection = doc.getElementById('projection');
+    if (projection) projection.value = view.projection;
+    snapshot.appearanceChanged = [
+      'appearance',
+      'materialEffects',
+      'surfaceColors',
+      'surfaceOpacity',
+      'faces',
+      'edges',
+      'vertices',
+    ].some((key) => JSON.stringify(view[key]) !== JSON.stringify(snapshot.view[key]));
+  }
 }
 
 export class CoxeterBuilder {
@@ -135,12 +198,27 @@ export class CoxeterBuilder {
     panel.id = 'coxeter-builder';
     panel.setAttribute('aria-labelledby', 'coxeter-builder-title');
     panel.innerHTML =
-      '<header><div><p class="coxeter-eyebrow">BUILD FROM SYMMETRY</p><h2 id="coxeter-builder-title">Shape builder</h2></div><button id="coxeter-builder-close" aria-label="Close shape builder">Close</button></header><p>Choose a symmetry. Tap the circles. Discover a shape.</p><div id="coxeter-builder-families"></div><div id="coxeter-builder-diagram"></div><p class="coxeter-hint">Arrows move · Space rings a node · Enter opens</p><div class="coxeter-result"><p class="coxeter-eyebrow">YOUR SHAPE · UNSAVED PREVIEW</p><h3 id="coxeter-builder-name"></h3><p id="coxeter-builder-counts"></p><output id="coxeter-builder-status" role="status" aria-live="polite"></output></div><div id="coxeter-builder-twist"><label><input id="coxeter-builder-snub" type="checkbox"> Twist into a snub shape</label><button id="coxeter-builder-hand" type="button">Mirror twist</button></div><button id="coxeter-builder-open" class="accent wide">Open as model</button><p class="coxeter-hint">Adds a history step. Undo returns to your previous shape.</p><details data-expert><summary>How this shape is built</summary><p>Rings choose mirrors for a finite reflection orbit (Wythoff construction). Equal ring weights produce these convex uniform shapes. Coordinates use approximate float64 arithmetic.</p><output id="coxeter-builder-residual"></output></details>';
+      '<header><div><p class="coxeter-eyebrow">BUILD FROM SYMMETRY</p><h2 id="coxeter-builder-title">Shape builder</h2></div><button id="coxeter-builder-close" aria-label="Close shape builder">Close</button></header><div class="coxeter-choices"><div id="coxeter-builder-families" aria-label="Symmetry families"></div><div class="coxeter-ring-settings"><p>Turn rings on or off to change the shape.</p><div class="coxeter-ring-actions"><button id="coxeter-builder-reset" type="button">Reset rings</button><button id="coxeter-builder-help" type="button" aria-label="What are rings?" aria-expanded="false" aria-controls="coxeter-builder-ring-help">?</button></div><p id="coxeter-builder-ring-help" hidden>A ring marks an active mirror in the Wythoff construction: the starting vertex lies away from that mirror. An unringed mirror contains the starting vertex. Equal distances to active mirrors give these convex uniform shapes. Ring at least one node.</p><div id="coxeter-builder-diagram"></div><p class="coxeter-hint">Arrows move focus · Space toggles a ring · <span id="coxeter-builder-enter">Enter: Replace current model</span></p><div id="coxeter-builder-twist"><label><input id="coxeter-builder-snub" type="checkbox"> Snub · twist the shape</label><button id="coxeter-builder-hand" type="button">Mirror twist</button></div><details id="coxeter-builder-method" data-expert><summary>How this shape is built</summary><p>Rings choose mirrors for a finite reflection orbit (Wythoff construction). Equal ring weights produce these convex uniform shapes. Coordinates use approximate float64 arithmetic.</p><output id="coxeter-builder-residual"></output></details></div></div><footer class="coxeter-result"><p class="coxeter-eyebrow">YOUR SHAPE · UNSAVED PREVIEW</p><h3 id="coxeter-builder-name"></h3><p id="coxeter-builder-counts"></p><output id="coxeter-builder-status" role="status" aria-live="polite"></output><button id="coxeter-builder-open" class="accent wide">Replace current model</button><p id="coxeter-builder-destination" class="coxeter-hint">Adds a history step. Undo returns to your previous shape.</p></footer>';
     this.document.body.append(panel);
     this.nodes = Object.fromEntries(
-      ['families', 'diagram', 'name', 'counts', 'status', 'twist', 'snub', 'hand', 'open', 'residual', 'close'].map(
-        (id) => [id, panel.querySelector('#coxeter-builder-' + id)]
-      )
+      [
+        'families',
+        'diagram',
+        'name',
+        'counts',
+        'status',
+        'twist',
+        'snub',
+        'hand',
+        'open',
+        'residual',
+        'close',
+        'reset',
+        'help',
+        'ring-help',
+        'destination',
+        'enter',
+      ].map((id) => [id, panel.querySelector('#coxeter-builder-' + id)])
     );
     for (const dimension of [3, 4]) {
       const group = this.document.createElement('div');
@@ -149,7 +227,7 @@ export class CoxeterBuilder {
       group.setAttribute('role', 'group');
       group.setAttribute('aria-label', dimension + 'D symmetry');
       const heading = this.document.createElement('strong');
-      heading.textContent = dimension + 'D';
+      heading.textContent = dimension + 'D shapes';
       group.append(heading);
       for (const [family, f] of Object.entries(COXETER_FAMILIES).filter(([key]) => key.endsWith(String(dimension)))) {
         const button = this.document.createElement('button');
@@ -158,7 +236,7 @@ export class CoxeterBuilder {
         button.dataset.family = family;
         button.setAttribute('aria-pressed', 'false');
         button.innerHTML =
-          diagramMarkup(diagramState(family), { mini: true }) + `<b>${family}</b><span>${f.label}</span>`;
+          `<b>${f.label}</b><span>${family}</span>` + diagramMarkup(diagramState(family), { mini: true });
         button.onclick = () => {
           if (this.committing) return;
           this.value = diagramState(family);
@@ -170,6 +248,17 @@ export class CoxeterBuilder {
       this.nodes.families.append(group);
     }
     this.nodes.close.onclick = () => this.close();
+    this.nodes.reset.onclick = () => {
+      if (this.committing) return;
+      this.value = diagramState(this.value.family);
+      this.focus = 0;
+      this.changed();
+    };
+    this.nodes.help.onclick = () => {
+      const help = this.nodes['ring-help'];
+      help.hidden = !help.hidden;
+      this.nodes.help.setAttribute('aria-expanded', String(!help.hidden));
+    };
     panel.addEventListener('cancel', (event) => {
       event.preventDefault();
       this.close();
@@ -223,6 +312,11 @@ export class CoxeterBuilder {
       this.context.stop?.();
       this.source = this.context.getState();
       this.sourceModel = this.source?.model;
+      this.nodes.open.textContent = this.source ? 'Replace current model' : 'Open in new tab';
+      this.nodes.enter.textContent = 'Enter: ' + this.nodes.open.textContent;
+      this.nodes.destination.textContent = this.source
+        ? 'Adds a history step. Undo returns to your previous shape.'
+        : 'Opens a new document tab. Save a project to keep it.';
       this.panel.show();
       this.changed();
     }
@@ -236,11 +330,18 @@ export class CoxeterBuilder {
     this.controller = null;
     this.receipt = null;
   }
+  clearPreview() {
+    this.context.clearPreview();
+    const heading = this.document.getElementById?.('model-name');
+    if (this.documentHeading != null && heading?.textContent === 'Symmetry preview')
+      heading.textContent = this.documentHeading;
+    this.documentHeading = null;
+  }
   close() {
     this.cancel();
     this.source = null;
     this.sourceModel = null;
-    this.context.clearPreview();
+    this.clearPreview();
     if (this.panel.open) {
       this.panel.close();
       if (this.previousFocus?.isConnected) this.previousFocus.focus();
@@ -257,10 +358,6 @@ export class CoxeterBuilder {
   toggle(index) {
     if (this.committing) return;
     const next = toggleRing(this.value, index);
-    if (next === this.value) {
-      this.nodes.status.textContent = 'Keep one circle ringed to make a shape.';
-      return;
-    }
     this.value = next;
     this.focus = index;
     this.changed(true);
@@ -271,7 +368,7 @@ export class CoxeterBuilder {
   }
   changed(focus = false) {
     this.cancel();
-    this.context.clearPreview();
+    this.clearPreview();
     this.renderDiagram(focus);
     this.nodes.open.disabled = true;
     for (const button of this.nodes.families.querySelectorAll('[data-family]'))
@@ -282,6 +379,12 @@ export class CoxeterBuilder {
     this.nodes.name.textContent = this.value.family + ' · ' + this.value.rings.map((r) => (r ? '●' : '○')).join(' ');
     this.nodes.counts.textContent = '';
     this.nodes.residual.textContent = '';
+    if (!this.value.rings.some(Boolean)) {
+      this.nodes.name.textContent = 'No rings selected';
+      this.nodes.status.textContent =
+        'Ring at least one node to preview a shape. With no active mirrors, the starting vertex stays at the center.';
+      return;
+    }
     this.nodes.status.textContent = 'Building your preview…';
     this.timer = setTimeout(() => {
       this.timer = null;
@@ -302,6 +405,11 @@ export class CoxeterBuilder {
       if (!current()) return;
       await this.context.preview(result, { isCurrent: current });
       if (!current()) return;
+      const heading = this.document.getElementById?.('model-name');
+      if (heading) {
+        this.documentHeading ??= heading.textContent;
+        heading.textContent = 'Symmetry preview';
+      }
       this.receipt = { result, params, token };
       this.nodes.name.textContent = result.name;
       this.nodes.counts.textContent = ['vertices', 'edges', 'faces', ...(result.dimension === 4 ? ['cells'] : [])]
@@ -321,7 +429,7 @@ export class CoxeterBuilder {
     } catch (error) {
       if (current()) {
         this.nodes.status.textContent = error.message;
-        this.context.clearPreview();
+        this.clearPreview();
       }
     } finally {
       if (this.controller === controller) this.controller = null;
@@ -334,22 +442,36 @@ export class CoxeterBuilder {
     this.controller = controller;
     this.committing = true;
     this.nodes.open.disabled = true;
-    const controls = [...this.nodes.families.querySelectorAll('[data-family]'), this.nodes.snub, this.nodes.hand];
+    const controls = [
+      ...this.nodes.families.querySelectorAll('[data-family]'),
+      this.nodes.snub,
+      this.nodes.hand,
+      this.nodes.reset,
+    ];
     for (const node of controls) node.disabled = true;
     const owner = this.context.getState(),
       verifyPublication = () => {
         if (controller.signal.aborted || this.receipt !== receipt || this.context.getState() !== owner)
           throw Error('Shape selection or document changed. Open the builder again.');
       };
+    const frame = previewFrames.get(this.panel),
+      snapshot = frame?.captureReplacement();
     this.nodes.status.textContent = 'Opening your shape…';
     try {
       verifyPublication();
       await this.context.commit(receipt.params, receipt.result.name, { signal: controller.signal, verifyPublication });
       this.close();
+      if (snapshot?.appearanceChanged)
+        this.document.dispatchEvent(
+          new CustomEvent('polytope:workflow-status', {
+            detail: 'Shape replaced · document appearance settings applied.',
+          })
+        );
     } catch (error) {
       if (this.panel.open && this.receipt === receipt) this.nodes.status.textContent = error.message;
       throw error;
     } finally {
+      if (frame && frame.replacement === snapshot) frame.replacement = null;
       this.committing = false;
       for (const node of controls) node.disabled = false;
       this.nodes.open.disabled = !this.receipt;

@@ -63,7 +63,15 @@ test('legacy sparse views retain their original look and saved custom styles win
   saved.appearance.background = '#123456';
   assert.deepEqual({ ...legacyDocumentView(3), ...saved }.appearance, saved.appearance);
   const app = readAppSource();
-  matchSource(app, /s\.view=\{\.\.\.legacyDocumentView\(s\.model\.dimension\),\.\.\.s\.view\}/);
+  assert.equal(
+    [
+      ...matchAllSource(
+        app,
+        /s\.view=isHyperbolic\(s\.model\)\?\{\.\.\.hyperbolicView\(s\.model\),\.\.\.s\.view\}:\{\.\.\.legacyDocumentView\(s\.model\.dimension\),\.\.\.s\.view\}/g
+      ),
+    ].length,
+    2
+  );
   assert.equal([...matchAllSource(app, /restored\.view=\{\.\.\.legacyDocumentView/g)].length, 2);
 });
 

@@ -34,7 +34,7 @@ test('expert-off app chooses surface/density/ordinary cells, promotes, saves and
    const start=calls.length;
    await page.evaluate(project=>window.openResult={project,path:'section-source.polyproj'},sourceProject(c.source,{sectionNormal:c.normal,sectionOffset:c.offset}));await page.locator('#open').click();
    await page.waitForFunction(name=>document.getElementById('model-name')?.textContent===name,c.source.name);
-   await page.locator('#view-options-button').click();await page.selectOption('#viewport-layout','split');await page.keyboard.press('Escape');
+   await page.locator('#view-options-button').click();await page.selectOption('#viewport-layout','split');await page.locator('#advanced-slice-settings').evaluate(node => node.open = true);await page.keyboard.press('Escape');
    await page.selectOption('#derived-mode','section');
    await page.locator('#section-normal').fill(c.normal.join(', '));await page.locator('#section-depth').fill(String(c.offset));await page.locator('#apply-section').click();
    await page.waitForFunction(()=>document.getElementById('derived-status').textContent.startsWith('Surface intersection'));
@@ -73,7 +73,7 @@ test('expert-off app chooses surface/density/ordinary cells, promotes, saves and
   await t.test('unsupported density fill shows native refusal and disables promotion without switching to surface',async()=>{
    await page.evaluate(project=>window.openResult={project,path:'open-boundary.polyproj'},sourceProject(openBoundary));await page.locator('#open').click();
    await page.waitForFunction(()=>document.getElementById('model-name').textContent==='Two separated cubes');
-   await page.locator('#view-options-button').click();await page.selectOption('#viewport-layout','split');await page.keyboard.press('Escape');
+   await page.locator('#view-options-button').click();await page.selectOption('#viewport-layout','split');await page.locator('#advanced-slice-settings').evaluate(node => node.open = true);await page.keyboard.press('Escape');
    await page.selectOption('#derived-mode','section');
    await page.selectOption('#section-density-mode','density');
    await page.waitForFunction(()=>document.getElementById('derived-status').textContent.includes('two distinct incident faces'));

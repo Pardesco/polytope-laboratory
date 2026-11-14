@@ -9,6 +9,8 @@ import {
   evidenceSummary,
 } from '../ui/symmetry-evidence-controls.mjs';
 import { REUSABLE_OPERATIONS } from '../desktop/engine-pool.cjs';
+import { createRequire } from 'node:module';
+const { autoReveal } = createRequire(import.meta.url)('../scripts/smoke-helpers.cjs');
 
 class Node {
   constructor(tag) {
@@ -223,7 +225,7 @@ test('report op is reusable, registered in features, mounted and does not write 
 });
 
 test(
-  'mounted app reads native evidence, matches source hashes and links corpus receipts with Expert off',
+  'mounted app reveals expert evidence, matches source hashes and links corpus receipts',
   { timeout: 90000 },
   async () => {
     const [{ spawn }, { createInterface }, { createServer }, { chromium }] = await Promise.all([
@@ -272,6 +274,7 @@ test(
       const page = await browser.newPage({ viewport: { width: 1280, height: 800 }, reducedMotion: 'reduce' }),
         errors = [];
       page.setDefaultTimeout(20000);
+      autoReveal(page);
       page.on('pageerror', (error) => errors.push(error.message));
       await page.exposeFunction('nativeEngine', compute);
       await page.addInitScript(() => {
@@ -308,8 +311,8 @@ test(
           .getElementById('symmetry-evidence-summary')
           .textContent.includes('65 passed; 2 resource-limited; 0 failed')
       );
-      assert.equal(await page.locator('body').evaluate((n) => n.classList.contains('expert-mode')), false);
-      assert.equal(await page.locator('#symmetry-evidence-match').evaluate((n) => !!n.closest('[data-expert]')), false);
+      assert.equal(await page.locator('body').evaluate((n) => n.classList.contains('expert-mode')), true);
+      assert.equal(await page.locator('#symmetry-evidence-match').evaluate((n) => !!n.closest('[data-expert]')), true);
       await page.selectOption('#symmetry-evidence-scenario', 'r7-symmetry-tesseract');
       await page.locator('#symmetry-evidence-match').click();
       await page.waitForFunction(() =>

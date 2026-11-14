@@ -139,6 +139,15 @@ function autoReveal(page) {
     if (typeof original !== 'function') continue;
     proto[name] = async function (...args) {
       try {
+        // An open chrome popover (View options, ...) closes on any outside pointerdown in the app;
+        // Playwright's click would land on the popover instead, so close popovers the target is outside.
+        if ((await this.count()) > 0)
+          await this.first().evaluate((node) => {
+            for (const menu of document.querySelectorAll('details[open]'))
+              if (menu.querySelector(':scope > .chrome-menu-panel') && !menu.contains(node)) menu.open = false;
+          });
+      } catch {}
+      try {
         if ((await this.count()) > 0 && !(await this.first().isVisible())) {
           await reveal(this.page(), this.first());
           // A disclosure summary hidden by a construct tool pane: "click to open" means open its group.

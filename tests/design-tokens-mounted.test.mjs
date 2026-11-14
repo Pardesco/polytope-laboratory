@@ -151,7 +151,7 @@ test('mounted 1280x800 UI keeps readable controls, visible focus, an opaque buil
       width: n.scrollWidth,
       client: n.clientWidth,
     }));
-    assert.equal(builder.background, 'rgb(20, 33, 45)');
+    assert.equal(builder.background, 'rgb(23, 25, 28)'); // --panel token (R10 builder)
     assert.match(builder.font, /Segoe UI/);
     assert.ok(builder.width <= builder.client, JSON.stringify(builder));
     for (const node of await page.locator('#coxeter-builder .coxeter-family-group span').all())

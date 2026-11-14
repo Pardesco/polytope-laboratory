@@ -1,4 +1,5 @@
 import test from 'node:test';
+import { revealConstructCard } from './helpers/construct-tools.mjs';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { spawn } from 'node:child_process';
@@ -131,6 +132,7 @@ test(
       };
       const show = async () => {
         await page.locator('[data-panel="construct"]').click();
+        await revealConstructCard(page, 'construct-card-cell-rebuild-settings');
         const card = page.locator('#construct-card-cell-rebuild-settings');
         if (await card.isVisible()) await card.click();
         if (!(await page.locator('#cell-rebuild-settings').evaluate((n) => n.open)))

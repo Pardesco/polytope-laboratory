@@ -221,9 +221,9 @@ body:not(.expert-mode) [data-expert] {
 .app-chrome .view-toolbar .view-actions {
   margin-left: auto;
 }
-.app-chrome .view-toolbar button,
+.app-chrome .view-toolbar button:not(.group-help),
 .app-chrome .view-toolbar select {
-  font-size: 11px;
+  font-size: var(--font-secondary);
   padding: 6px 8px;
   white-space: nowrap;
 }
@@ -249,7 +249,7 @@ body:not(.expert-mode) [data-expert] {
   position: static;
 }
 #view-options-button {
-  font-size: 11px;
+  font-size: var(--font-secondary);
 }
 #view-options-button::before {
   content: '';
@@ -362,8 +362,8 @@ body:not(.expert-mode) [data-expert] {
 .app-chrome #dock-more-button {
   padding: 6px 8px;
   border-color: transparent;
-  font-size: 11px;
-  color: #b9c5d0;
+  font-size: var(--font-secondary);
+  color: var(--muted);
   background: transparent;
 }
 #dock-more-panel {

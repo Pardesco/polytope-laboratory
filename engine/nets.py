@@ -350,6 +350,8 @@ def unfold(
     }
     result['foldValidation'] = fold_net(result, 1)['validation']
     tab_polygons = tab_geometry(result)
+    result['tabRecords'] = tab_polygons
+    result['tabOwners'] = {str(t['edge']): t['face'] for t in tab_polygons}
     tab_pairs = []
     for index, tab in enumerate(tab_polygons):
         for face in result['faces']:
@@ -556,7 +558,6 @@ def edit_net(model, net, action, edge=None, component=None, translation=None, an
 
 def tab_geometry(net):
     result = []
-    tabbed = set()
     if not net.get('tabs'):
         return result
     if 'tabRecords' in net:
@@ -565,9 +566,8 @@ def tab_geometry(net):
         p = np.asarray(face['points'])
         center = p.mean(axis=0)
         for i, edge in enumerate(face['edges']):
-            if edge['hinge'] or edge['id'] in tabbed:
+            if edge['hinge']:
                 continue
-            tabbed.add(edge['id'])
             a, b = p[i], p[(i + 1) % len(p)]
             length = np.linalg.norm(b - a)
             u = (b - a) / length
@@ -577,7 +577,11 @@ def tab_geometry(net):
             depth = min(4, float(length) / 5)
             ta, tb = a + u * depth + outward * depth, b - u * depth + outward * depth
             result.append({'face': face['id'], 'edge': edge['id'], 'points': np.asarray([a, ta, tb, b]).tolist()})
-    return result
+    from .net_tab_assignment import choose_tabs, trim_tab_corners
+
+    tolerance = net['referenceEdgeLengthMm'] * 1e-8
+    result = trim_tab_corners(result, net['faces'], tolerance)
+    return choose_tabs(result, net['faces'], tolerance, convex=True)
 
 
 def net_svg(net):
@@ -668,10 +672,11 @@ def net_svg(net):
                     )
                 tab = tab_lookup.get((edge['id'], face['id']))
                 if tab and tab['face'] == face['id']:
-                    a, ta, tb, b = np.asarray(tab['points']) - low + margin
+                    outline = np.asarray(tab['points']) - low + margin
+                    path = ' L '.join(f'{x:.8g} {y:.8g}' for x, y in outline)
                     color = '#ba743c' if edge['id'] in warned else '#82958f'
                     out.append(
-                        f'<path data-net-tab="{edge["id"]}" d="M {a[0]:.8g} {a[1]:.8g} L {ta[0]:.8g} {ta[1]:.8g} L {tb[0]:.8g} {tb[1]:.8g} L {b[0]:.8g} {b[1]:.8g}" fill="none" stroke="{color}" stroke-width="0.18"/>'
+                        f'<path data-net-tab="{edge["id"]}" d="M {path}" fill="none" stroke="{color}" stroke-width="0.18"/>'
                     )
         out.append('</g>')
     if component is not None:

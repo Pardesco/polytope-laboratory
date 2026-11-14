@@ -126,6 +126,7 @@ function fixture() {
     };
   const appScope = {
     netEditor: editor,
+    model: () => f.context.getState()?.model,
     state: f.context.getState,
     animation: { exporting: false },
     tourExporting: false,

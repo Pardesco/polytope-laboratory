@@ -146,3 +146,9 @@ test('snapshot history retains the native 200-state project limit', () => {
   assert.equal(document.states.length, 200);
   assert.equal(document.cursor, 199);
 });
+
+test('hyperbolic documents refuse timeline presets before Euclidean incidence reads', () => {
+  const source = { model: { kind: 'hyperbolic-space', dimension: 3, coordinateDimension: 4 }, view: {} };
+  for (const key of ['rotation', 'section', 'fold', 'explosion', 'morph', 'camera'])
+    assert.match(motionPresetReason(key, source), /Euclidean/);
+});

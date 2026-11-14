@@ -39,16 +39,19 @@ export const WALKTHROUGHS = [
     key: 'tesseract',
     steps: [
       {
-        anchor: 'derived-mode',
-        event: 'change',
-        value: 'section',
-        text: 'The second viewport is open. Choose Surface / convex section to see a 3D slice of the tesseract. View options can show or hide this second view.',
+        anchor: 'open-cross-section',
+        event: 'click',
+        text: 'Choose Cross-section in Construct to open a central 3D slice of the tesseract beside the original.',
       },
-      { anchor: 'apply-section', event: 'click', text: 'Evaluate the section at the current normal and depth.' },
+      {
+        anchor: 'apply-section',
+        event: 'click',
+        text: 'Update section evaluates the current direction and position, even if the shape looks unchanged.',
+      },
       {
         anchor: 'section-offset',
         event: 'input',
-        text: 'Drag Depth to move the section through the original four-dimensional object.',
+        text: 'Drag Slice position to move the section through the original four-dimensional object. Rotating the displayed shape does not change the slice.',
       },
     ],
   },

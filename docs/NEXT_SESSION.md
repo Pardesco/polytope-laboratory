@@ -1,3 +1,22 @@
+## Rounds 9-11 - November 10-13, 2026 (read first)
+
+- **Round 9 (readability + release):** Prettier/Ruff, app.js/main.cjs split into modules, 908 unverified discovery
+  candidates hidden by default, outside verification report. **0.28.0 released 11-12** (GitHub prerelease v0.28.0).
+- **Round 10 (flagship depth):** Coxeter builder (44 px nodes, honest scope, Replace + Undo), Cross-section Construct card
+  with slice toolbar and axis presets, nets with zero tab overlaps on Platonic/Archimedean defaults and "Preview on paper",
+  expert-gated Library evidence. Before/after reviews: `polytope-orchestra/r10/astra/review-{before,after}.md`.
+  Ctrl+Z after builder Replace works through the native Edit menu; hidden test windows never get focus, so synthetic key
+  presses cannot reach menu accelerators (probe `polytope-orchestra/steps/ctrlz.cjs`).
+- **Round 11 (merged + synced 11-13, not pushed):** hyperbolic space per [HYPERBOLIC_DESIGN.md](HYPERBOLIC_DESIGN.md)
+  section 9. Library "Hyperbolic space": the four compact regular honeycombs {5,3,4}, {4,3,5}, {5,3,5}, {3,5,3} and the
+  closed eight-dodecahedron small cover ((V,E,F,C)=(20,60,48,8), H1=(Z/2)^9). Poincare/Klein overview, Explore inside
+  (WASD/arrows/drag, Klein + distance fade, seamless rebases), Patch popover (radius clamped to 2), readable Hyperbolic
+  diagnostics, schema v2. `python scripts/capture-hyperbolic-receipts.py && python scripts/verify-hyperbolic.py` is an
+  independent check (no engine imports). Independent review: `polytope-orchestra/r11/review/FABLE_REVIEW_2026-11-13.md`.
+  QA at orchestra e4963d2: pytest pass, Node 3,730 pass / 1 cancelled (cell120 mounted morph timeout, PRE-EXISTING at
+  R10 8801771), 17 hidden smokes pass. Open: cell120 timeout; >=30 fps on a real GPU; epoch-local cell ids; Astra
+  review of hyperbolic screens. Handoff: `polytope-orchestra/handoffs/HANDOFF_2026-11-13_R11.md`.
+
 ## Rounds 4-8 - November 6-9, 2026 (read first)
 
 Goal from Randall: feature complete per spec section 3, still user friendly. Claude led five rounds of parallel Codex

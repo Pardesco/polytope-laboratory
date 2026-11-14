@@ -112,6 +112,16 @@ for (const cell of [false, true]) {
     await f.editor.restore(1);
     assert.deepEqual(f.s[f.key][f.edges], [0, 1, 2]);
   });
+  if (!cell)
+    test('face generation returns from paper to the flat layout before reviewing a fresh net', async () => {
+      const f = fixture(false);
+      f.s.view.net.display = 'pages';
+      f.editor.$('net-display').value = 'pages';
+      await f.editor.build(false);
+      assert.equal(f.s.view.net.display, 'layout');
+      assert.equal(f.editor.$('net-display').value, 'layout');
+      assert.equal(f.s.netPages, null);
+    });
   test(label + ' automatic reconstruction retains current saved placement and redo states', async () => {
     const f = fixture(cell);
     f.s[f.bank].states.push({ ...structuredClone(f.s[f.bank].states[0]), [f.edges]: [] });

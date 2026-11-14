@@ -71,6 +71,10 @@ export class Tips {
   }
   start({ hidden = false } = {}) {
     if (!this.root) return;
+    if (this.overlays?.workflowFocused) {
+      this.hide();
+      return;
+    }
     if (hidden) {
       this.overlays?.enable(false);
       this.hide();

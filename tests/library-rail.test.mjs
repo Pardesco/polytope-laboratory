@@ -160,7 +160,7 @@ test('hero precedes search and retains the builder identity, callback and ringed
     svg = button.children[0];
   assert.ok(f.rail.children.indexOf(button) < f.rail.children.indexOf(f.node('search').parentElement));
   assert.equal(button.children[1].textContent, 'Build from symmetry');
-  assert.equal(button.children[2].textContent, 'Coxeter diagrams to any uniform polytope');
+  assert.equal(button.children[2].textContent, 'Uniform polyhedra and polychora from symmetry diagrams');
   assert.equal(svg.getAttribute('aria-hidden'), 'true');
   assert.equal(svg.children.filter((n) => n.tagName === 'CIRCLE').length, 4);
   button.onclick();

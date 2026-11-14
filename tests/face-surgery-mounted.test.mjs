@@ -1,4 +1,5 @@
 import test from 'node:test';
+import { revealConstructCard } from './helpers/construct-tools.mjs';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { spawn } from 'node:child_process';
@@ -136,6 +137,7 @@ test(
       };
       const show = async () => {
         await page.locator('[data-panel="construct"]').click();
+        await revealConstructCard(page, 'construct-card-face-surgery-settings');
         const card = page.locator('#construct-card-face-surgery-settings');
         if (await card.isVisible()) await card.click();
         if (!(await page.locator('#face-surgery-settings').evaluate((n) => n.open)))

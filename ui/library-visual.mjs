@@ -1,3 +1,23 @@
+export const LIBRARY_EXPERT_PANELS = [
+  'library-symmetry-evidence',
+  'library-corpus',
+  'library-classification',
+  'library-u-dual-obstructions',
+];
+
+export function organizeLibraryEvidence(document) {
+  let after = document.getElementById('catalog');
+  if (!after) return;
+  for (const id of LIBRARY_EXPERT_PANELS) {
+    const panel = document.getElementById(id);
+    if (!panel) continue;
+    panel.setAttribute('data-expert', '');
+    panel.open = false;
+    after.after(panel);
+    after = panel;
+  }
+}
+
 export function libraryFamilyLabel(entry) {
   const family = (entry.family || 'Linked OFF').replace(/\s*\(Miratope source\)/gi, '').trim();
   return family ? family[0].toUpperCase() + family.slice(1) : 'Linked OFF';
@@ -71,6 +91,6 @@ export function symmetryHero(document, button) {
   const title = document.createElement('strong');
   title.textContent = 'Build from symmetry';
   const subtitle = document.createElement('small');
-  subtitle.textContent = 'Coxeter diagrams to any uniform polytope';
+  subtitle.textContent = 'Uniform polyhedra and polychora from symmetry diagrams';
   button.replaceChildren(svg, title, subtitle);
 }

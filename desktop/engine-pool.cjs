@@ -1,5 +1,8 @@
 // Reuse Python imports for frequent pure calculations. Other jobs stay isolated.
 const REUSABLE_OPERATIONS = new Set([
+  'hyperbolic-patch',
+  'hyperbolic-analyze',
+  'hyperbolic-validate',
   'section',
   'net',
   'net-edit',
@@ -182,7 +185,11 @@ class EnginePool {
     }
     if (Buffer.byteLength(input, 'utf8') > this.maxBytes)
       return Promise.reject(new Error('Engine request exceeds the 128 MiB limit.'));
-    const reusable = REUSABLE_OPERATIONS.has(request.op);
+    const reusable =
+      REUSABLE_OPERATIONS.has(request.op) ||
+      (request.op === 'recipe-run' &&
+        request.params?.operation === 'hyperbolic-create' &&
+        request.params.document === null);
     let worker = reusable ? this.idle.pop() : null;
     if (!worker) {
       if (this.workers.size >= this.maxWorkers && this.idle.length) this.retire(this.idle.pop());

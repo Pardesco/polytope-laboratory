@@ -1,4 +1,4 @@
-import { currentFaceNet } from './net-presentation.mjs';
+import { currentFaceNet, faceNetSummary, cellNetSummary, highlightNetOverlaps } from './net-presentation.mjs';
 import { organizePrecisionEvidence } from './precision-evidence.mjs';
 
 const edgeKey = (a, b) => (a < b ? `${a},${b}` : `${b},${a}`);
@@ -218,7 +218,24 @@ export class NetsFlow {
     cellEditor.flow = this;
     faceEditor.visibleSurface.flow = this;
     fabrication.flow = this;
+    for (const editor of [faceEditor, cellEditor]) {
+      const prepare = editor.context?.prepareLayout;
+      if (editor.context)
+        editor.context.prepareLayout = () => {
+          prepare?.();
+          this.refitSource();
+        };
+    }
     this.sync();
+    const views = doc.getElementById('views'),
+      Observer = doc.defaultView?.MutationObserver;
+    if (views && Observer) {
+      this.layoutObserver = new Observer(() => {
+        this.refitSource();
+        this.sync();
+      });
+      this.layoutObserver.observe(views, { attributes: true, attributeFilter: ['data-layout'] });
+    }
   }
   mount() {
     const doc = this.doc,
@@ -236,6 +253,16 @@ export class NetsFlow {
     const choose = step(1, 'Choose net type'),
       arrange = step(2, 'Arrange'),
       output = step(3, 'Print or export');
+    this.stepper = element(doc, 'nav', 'nets-stepper');
+    this.stepper.setAttribute('aria-label', 'Net workflow');
+    this.steps = [choose, arrange, output];
+    this.stepButtons = ['Choose', 'Arrange', 'Print'].map((title, index) => {
+      const button = element(doc, 'button', `nets-go-${index + 1}`, `${index + 1} ${title}`);
+      button.setAttribute('aria-controls', `nets-step-${index + 1}`);
+      button.onclick = () => this.goToStep(index + 1);
+      this.stepper.append(button);
+      return button;
+    });
     panel.append(choose, arrange, output);
     this.availableTypes = element(doc, 'div', 'nets-available-types');
     this.otherTypes = details(doc, 'nets-other-types', 'Other net types', []);
@@ -280,12 +307,20 @@ export class NetsFlow {
       cell = node('cell-net-controls');
     const paper = node('net-paper-settings');
     paper.querySelector('summary').textContent = 'Page and paper options';
+    rename(doc, 'net-pack', 'Preview on paper');
+    const physical = element(doc, 'div', 'nets-paper-controls');
+    physical.append(field('net-length'));
+    for (const id of ['net-paper', 'net-paper-orientation', 'net-custom-size']) {
+      const input = field(id);
+      if (input) physical.append(input);
+    }
     const actions = node('net-export-actions');
     actions.className = 'nets-output-actions';
     this.print = element(doc, 'button', 'net-print', 'Print');
-    this.print.onclick = this.faceEditor.guard(() =>
-      this.faceEditor.exports.run('print', { packed: Boolean(this.faceEditor.getState()?.netPages) })
-    );
+    this.print.onclick = this.faceEditor.guard(() => {
+      this.goToStep(3);
+      return this.faceEditor.exports.run('print', { packed: Boolean(this.faceEditor.getState()?.netPages) });
+    });
     this.dxf = element(doc, 'button', 'net-export-dxf', 'DXF');
     this.dxf.title = 'Separate flat face outlines in millimeters (no glue tabs).';
     this.dxf.onclick = this.fabrication.context.guard(() => this.fabrication.apply('measure-dxf'));
@@ -307,11 +342,12 @@ export class NetsFlow {
     );
     paper.append(foldNote);
     output.append(
-      actions,
+      physical,
       element(doc, 'p', 'nets-output-note', null, 'muted'),
       node('net-pack'),
       node('net-paper-status'),
       node('net-page-prev').parentElement,
+      actions,
       node('net-packed-pdf'),
       node('net-packed-svg'),
       paper
@@ -331,25 +367,105 @@ export class NetsFlow {
       if (title) title.remove();
     }
     node('net-rearrange').after(assembly);
+    this.resultSummary = element(doc, 'p', 'nets-result-summary', null, 'net-status');
+    this.resultSummary.setAttribute('role', 'status');
+    this.rearrangeReason = element(doc, 'p', 'nets-rearrange-reason', null, 'muted');
+    node('net-rearrange').after(this.rearrangeReason);
+    node('net-rearrange').setAttribute('aria-describedby', this.rearrangeReason.id);
     arrange.append(
       element(doc, 'p', null, 'Review the preview, check overlaps, then adjust pieces if needed.', 'muted'),
       face,
       cell
     );
-    panel.replaceChildren(choose, arrange, output);
+    panel.replaceChildren(this.stepper, choose, arrange, output);
+    this.goToStep(1, false);
+    const preview = node('net-preview');
+    if (preview) {
+      preview.after(this.resultSummary);
+      this.overlapTools = element(doc, 'div', 'nets-overlap-tools');
+      this.overlapStatus = element(doc, 'span', 'nets-overlap-status');
+      this.overlapStatus.setAttribute('role', 'status');
+      this.showOverlaps = element(doc, 'button', 'nets-show-overlaps', 'Show overlaps');
+      this.showOverlaps.onclick = this.faceEditor.guard(async () => {
+        this.showingOverlaps = !this.showingOverlaps;
+        if (this.faceEditor.config().display !== 'layout') await this.faceEditor.setDisplay('layout');
+        this.sync();
+      });
+      const adjust = element(doc, 'a', 'nets-adjust-overlaps', 'Cuts and piece placement');
+      adjust.href = '#net-layout-settings';
+      adjust.onclick = this.faceEditor.guard(async (event) => {
+        event.preventDefault();
+        if (this.faceEditor.config().display !== 'layout') await this.faceEditor.setDisplay('layout');
+        this.goToStep(2);
+        const settings = node('net-layout-settings');
+        settings.open = true;
+        settings.scrollIntoView?.({ block: 'start', behavior: 'smooth' });
+        node('net-action')?.focus();
+      });
+      this.overlapTools.append(this.overlapStatus, this.showOverlaps, adjust);
+      preview.before(this.overlapTools);
+    }
+    for (const id of ['net-summary', 'cell-net-summary']) node(id).hidden = true;
+    this.steps.forEach((section, i) => {
+      section.addEventListener('focusin', () => this.goToStep(i + 1, false));
+      section.addEventListener('click', () => this.goToStep(i + 1, false));
+    });
+    const inspector = node('inspector-region');
+    inspector?.addEventListener('scroll', () => {
+      if (panel.hidden) return;
+      const top = this.stepper.getBoundingClientRect().bottom + 16;
+      const index = this.steps.findLastIndex((section) => section.getBoundingClientRect().top <= top);
+      if (index >= 0) this.goToStep(index + 1, false);
+    });
     for (const group of panel.querySelectorAll('details'))
       group.addEventListener('focusin', (event) => {
         if (event.target.tagName !== 'SUMMARY') group.open = true;
       });
     organizeAdvanced(doc);
   }
+  goToStep(number, scroll = true) {
+    this.activeStep = number;
+    this.stepButtons.forEach((button, index) =>
+      button.setAttribute('aria-current', index + 1 === number ? 'step' : 'false')
+    );
+    if (scroll) this.steps[number - 1].scrollIntoView?.({ block: 'start', behavior: 'smooth' });
+  }
+  generated(kind, net) {
+    this.resultSummary.textContent = kind === 'cells' ? cellNetSummary(net) : faceNetSummary(net);
+    this.showingOverlaps = false;
+    this.goToStep(2);
+  }
+  refitSource() {
+    const state = this.faceEditor.getState(),
+      mode = state?.view.derivedMode,
+      splitNet = state?.view.viewportLayout === 'split' && ['net', 'cell-net'].includes(mode),
+      sourceViewer = this.faceEditor.context.assemblyViewer;
+    if (
+      splitNet &&
+      sourceViewer &&
+      (this.framedState !== state || this.framedMode !== mode || this.framedModel !== state.model)
+    ) {
+      sourceViewer.resize();
+      state.view.camera = sourceViewer.fit();
+    }
+    this.framedState = splitNet ? state : null;
+    this.framedMode = splitNet ? mode : null;
+    this.framedModel = splitNet ? state.model : null;
+  }
   sync() {
     const state = this.faceEditor.getState(),
-      model = state?.model;
+      model = state?.model,
+      mode = state?.view.derivedMode,
+      splitNet = state?.view.viewportLayout === 'split' && ['net', 'cell-net'].includes(mode);
+    const display = state?.view.net?.display;
+    if (mode === 'net' && this.display !== display) this.goToStep(display === 'pages' ? 3 : 2, false);
+    this.display = display;
     if (this.source !== model || !this.availability) {
       this.source = model;
       this.availability = netTypeAvailability(model);
       this.otherTypes.open = false;
+      this.showingOverlaps = false;
+      this.goToStep(currentFaceNet(state) ? (state.view.net.display === 'pages' ? 3 : 2) : 1, false);
     }
     const groups = netTypeGroups(model, this.availability);
     for (const key of [...groups.available, ...groups.unavailable]) {
@@ -369,7 +485,13 @@ export class NetsFlow {
         this.availability[key] ||
         (blocked
           ? 'Finish or cancel the active export or surface construction.'
-          : 'Ready. The native engine checks the geometry when you start.');
+          : key === 'faces' && currentFaceNet(state)
+            ? `${state.netLayout.faces?.length ?? model.faces.length} faces unfolded. ${state.netLayout.overlapPairs?.length || state.netLayout.tabOverlapPairs?.length ? 'Review overlaps in Arrange.' : 'No face or glue-tab overlaps detected.'}`
+            : key === 'cells' && state?.cellNetLayout && state.cellNetLayout.sourceFingerprint === model?.fingerprint
+              ? 'Cell arrangement generated. Cell intersections are not checked.'
+              : key === 'surface'
+                ? 'Ready to create a printable outer surface.'
+                : 'Ready to generate a net.');
       const name = model?.name || 'this model';
       heading.textContent = !this.availability[key]
         ? key === 'cells'
@@ -385,6 +507,49 @@ export class NetsFlow {
       card.dataset.available = String(!button.disabled);
     }
     const ready = currentFaceNet(state);
+    this.resultSummary.hidden = !splitNet || (mode === 'net' && display === 'pages');
+    const caption = this.doc.getElementById('derived-status');
+    if (caption) caption.hidden = splitNet && !(mode === 'net' && display === 'pages');
+    const net = ready ? state.netLayout : null,
+      faces = net?.overlapPairs?.length ?? 0,
+      tabs = net?.tabOverlapPairs?.length ?? 0;
+    if (net?.components && net?.faces && net?.hinges && net?.overlapPairs && net?.tabOverlapPairs)
+      this.resultSummary.textContent = faceNetSummary(net);
+    else if (
+      model?.dimension === 4 &&
+      state?.cellNetLayout &&
+      state.cellNetLayout.sourceFingerprint === model.fingerprint
+    )
+      this.resultSummary.textContent = cellNetSummary(state.cellNetLayout);
+    else this.resultSummary.textContent = 'Generate a net in Choose to review its arrangement here.';
+    if (net?.labelDiagnostics?.belowReadableSize) {
+      const warning = `${net.labelDiagnostics.belowReadableSize} edge labels below 1.2 mm text height. Increase Edge 0 length for readable printing.`;
+      this.resultSummary.textContent += '\n' + warning;
+      if (caption && mode === 'net' && display === 'pages' && !caption.textContent.includes(warning))
+        caption.textContent += '\n' + warning;
+    }
+    const rearrange = this.doc.getElementById('net-rearrange'),
+      onePiece = ready && net?.components?.length === 1;
+    rearrange.disabled = !ready || blocked || onePiece;
+    this.rearrangeReason.textContent = !ready
+      ? 'Generate a face net first.'
+      : blocked
+        ? 'Finish or cancel the active export before arranging pieces.'
+        : onePiece
+          ? 'This net is one connected piece. Cut a hinge in Cuts and piece placement to make pieces that can be moved. Re-arrange pieces moves separate pieces; it does not change cuts or tab sides.'
+          : 'Re-arrange pieces moves separate pieces apart while keeping their cuts and rotations.';
+    rearrange.title = this.rearrangeReason.textContent;
+    if (this.overlapTools) {
+      this.overlapTools.hidden =
+        state?.view.derivedMode !== 'net' || state?.view.net?.display === 'fold' || !ready || !(faces || tabs);
+      this.overlapStatus.textContent = `${tabs} glue-tab overlaps${faces ? ' · ' + faces + ' face overlaps' : ''}`;
+      this.showOverlaps.textContent = this.showingOverlaps ? 'Hide overlaps' : 'Show overlaps';
+      this.showOverlaps.setAttribute('aria-pressed', String(Boolean(this.showingOverlaps)));
+      this.showOverlaps.disabled = blocked;
+      highlightNetOverlaps(this.doc.getElementById('net-preview'), net, this.showingOverlaps && ready);
+    }
+    const promote = this.doc.getElementById('promote');
+    if (promote && ['net', 'cell-net'].includes(state?.view.derivedMode)) promote.hidden = true;
     this.print.disabled = !ready || blocked;
     for (const id of ['net-length', 'net-root'])
       this.doc.getElementById(id).disabled = model?.dimension !== 3 || blocked;
@@ -395,6 +560,6 @@ export class NetsFlow {
         ? 'Whole-cell nets are 3D previews. For paper output, extract a 3D cell or face model, then unfold its faces.'
         : model?.metadata?.visibleSurface
           ? 'Paper surface created. Choose Unfold faces, then review and pack the layout.'
-          : 'Pack and preview to fit whole pieces to paper. PDF and SVG export the current net; DXF exports separate face outlines without tabs.';
+          : 'Edge length sets physical scale in millimeters (source edge 0). Preview on paper keeps that scale and whole pieces intact. Review the page appearance before printing at 100%.';
   }
 }

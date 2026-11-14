@@ -1,5 +1,12 @@
 import { readAppSource, readDesktopSource } from './helpers/app-source.mjs';
-import { matchSource, sourceStatement, sourceAssignment } from './helpers/source-match.mjs';
+import {
+  matchSource,
+  sourceStatement,
+  sourceAssignment,
+  sourceInitializer,
+  sourceProperty,
+} from './helpers/source-match.mjs';
+import { isHyperbolic } from '../ui/hyperbolic-document.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile, mkdtemp, writeFile, readFile as readBytes, readdir, rm } from 'node:fs/promises';
@@ -292,7 +299,22 @@ test('actual app capture stops competing playback, forwards morph/content cancel
   await context.prepare(options);
   assert.strictEqual(calls[4][1], options);
   assert.strictEqual(calls[5][1], options);
-  matchSource(app, /image:\(\)=>imageCapture.run\(\)/);
+  const image = new Function(
+    'scope',
+    `with(scope){return (${sourceProperty('(' + sourceInitializer(app, 'actions') + ')', 'image')});}`
+  )({
+    isHyperbolic,
+    model: () => ({ dimension: 3 }),
+    imageCapture: {
+      run: () => {
+        calls.push('capture');
+        return png;
+      },
+    },
+    hyperbolicDocument: { screenshot: () => assert.fail('Euclidean pictures use the reviewed capture session.') },
+  });
+  assert.equal(image(), png);
+  assert.equal(calls.at(-1), 'capture');
   matchSource(app, /imageCapture\?\.cancel\(\)/);
   context.onState();
   assert.equal(calls.at(-1), 'availability');

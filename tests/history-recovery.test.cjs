@@ -84,7 +84,7 @@ test('native legacy backup and autosave recovery preserve pinned versions and re
   }
   const before = await fs.readFile(file),
     beforeBackup = await fs.readFile(file + '.bak');
-  const unsupported = { ...project, version: 2 };
+  const unsupported = { ...project, version: 3 };
   await assert.rejects(() => storage.publish(file, unsupported), /Unsupported project format\/version/);
   assert.deepEqual(await fs.readFile(file), before);
   assert.deepEqual(await fs.readFile(file + '.bak'), beforeBackup);

@@ -17,6 +17,11 @@ export function createStartup(ctx) {
       running,
     } = ctx;
 
+    if (ctx.model()?.kind === 'hyperbolic-space') {
+      ctx.lastFrame = now;
+      requestAnimationFrame(frame);
+      return;
+    }
     const dt = Math.min((now - ctx.lastFrame) / 1000, 0.1);
     ctx.lastFrame = now;
     if (showcase.busy) {
@@ -60,7 +65,10 @@ export function createStartup(ctx) {
           !(animation.exporting || ctx.tourExporting) &&
           !ctx.learn4D?.session,
         snapshot: serialize,
-        write: (value) => api.autosave(value),
+        write: (value) =>
+          ctx.hyperbolicDocument
+            ? ctx.hyperbolicDocument.measureAutosave(() => api.autosave(value))
+            : api.autosave(value),
         onSaved: ({ current }) => {
           $('autosave-status').textContent =
             'Recovery snapshot ' + new Date().toLocaleTimeString() + (current ? '' : ' · newer changes pending');

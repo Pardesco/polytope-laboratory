@@ -1,4 +1,5 @@
 import { readAppSource } from './helpers/app-source.mjs';
+import { isHyperbolic } from '../ui/hyperbolic-document.mjs';
 import { matchSource, sourceRange } from './helpers/source-match.mjs';
 import { defaultDocumentView } from '../ui/default-look.mjs';
 import test from 'node:test';
@@ -73,6 +74,7 @@ function fixture(model = dual) {
   const calls = { dirty: 0, navigation: 0, promote: [] };
   let id = 0;
   const scope = {
+    isHyperbolic,
     project,
     defaults,
     clone: structuredClone,

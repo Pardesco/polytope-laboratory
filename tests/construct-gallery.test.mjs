@@ -314,13 +314,14 @@ test('dimension and existing action availability refresh without changing action
   assert.equal(action.disabled, true);
   assert.equal(f.gallery.find(action).reason.textContent, 'Finish export first.');
 });
-test('pane help maps to the original Guide and unknown groups retain an expert card', () => {
+test('pane help maps to the original Guide and unknown tools stay discoverable under More tools', () => {
   const f = fixture();
   f.gallery.find('fitting-settings').pane.querySelector('.construct-pane-help').click();
   assert.deepEqual(f.calls, ['expansion']);
   const future = f.gallery.find('future-action');
   assert.equal(future.category, 5);
-  assert.equal(future.card.getAttribute('data-expert'), '');
+  assert.equal(future.card.getAttribute('data-expert'), null);
+  assert.equal(future.card.closest('#construct-more-tools'), f.gallery.moreTools);
   assert.equal(future.root.id, 'future-tool-settings');
   assert.ok(matchesConstructTool(future, 'technical'));
 });
@@ -383,14 +384,14 @@ test('palette reveal and shared smoke reveal open the matching pane and nested d
   }
 });
 
-test('unavailable cards share a closed reason group below available categories and recover on source changes', () => {
+test('unavailable specialist cards stay in More tools, search reveals them and source changes restore their category', () => {
   const f = fixture(),
     conway = f.gallery.find('conway-apply'),
     group = conway.card.closest('details');
   assert.equal(group.open, false);
   assert.equal(group.querySelector('summary').textContent, 'Needs a 3D model (1)');
   assert.equal(conway.reason.hidden, true);
-  assert.equal(f.gallery.unavailableRoot.children.includes(group), true);
+  assert.equal(f.gallery.specialistUnavailable.children.includes(group), true);
   assert.equal(
     f.gallery.overview.children.indexOf(f.gallery.unavailableRoot) >
       f.gallery.overview.children.indexOf(f.gallery.categoryRoot),
@@ -405,6 +406,9 @@ test('unavailable cards share a closed reason group below available categories a
   assert.equal(conway.card.parentElement, f.gallery.categoryNodes[0].grid);
   assert.equal(group.hidden, true);
   assert.equal(conway.card.disabled, false);
+  f.gallery.search.value = '';
+  f.gallery.sync();
+  assert.equal(conway.card.parentElement, f.gallery.specialistNodes[0].grid);
   f.source.dimension = 4;
   f.gallery.sync();
   assert.equal(conway.card.closest('details'), group);

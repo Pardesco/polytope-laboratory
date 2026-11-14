@@ -337,6 +337,27 @@ export class FriendlyMessages {
       },
       true
     );
+    doc.addEventListener(
+      'click',
+      (event) => {
+        if (
+          event.target.closest?.(
+            '[data-panel], #document-tabs button, #open-cross-section, #open-coxeter-builder, #library-build-symmetry, .construct-tool-card, #nets-stepper button'
+          )
+        )
+          this.clearTransient();
+      },
+      true
+    );
+    doc.addEventListener('change', (event) => {
+      if (event.target.id === 'derived-mode') this.clearTransient();
+    });
+    doc.addEventListener('polytope:workflow-status', (event) => this.publish(event.detail));
+    const heading = doc.getElementById('model-name');
+    if (heading) {
+      this.modelObserver = new MutationObserver(() => this.clearTransient());
+      this.modelObserver.observe(heading, { childList: true, characterData: true, subtree: true });
+    }
     this.publish(this.status.textContent);
   }
   expert() {
@@ -344,6 +365,7 @@ export class FriendlyMessages {
   }
   publish(text) {
     this.lastText = String(text);
+    this.transient = /completed in [\d.]+ s$|\b(?:ready|updated|checked|applied)\.?$/i.test(this.lastText);
     this.completion = null;
     this.renderStatus();
     if (
@@ -355,6 +377,13 @@ export class FriendlyMessages {
       this.placeNotifications();
       this.toasts.show(text);
     }
+  }
+  clearTransient() {
+    if (!this.completion && !this.transient) return;
+    this.lastText = 'Ready';
+    this.completion = null;
+    this.transient = false;
+    this.renderStatus();
   }
   renderStatus() {
     if (this.lastText === undefined) return;

@@ -1,5 +1,6 @@
 const hosts = new WeakMap(),
-  EXPLORE = 'polytope.canvas.explore.v1';
+  EXPLORE = 'polytope.canvas.explore.v1',
+  FOCUSED_WORKFLOW = 'polytope.canvas.focused-workflow.v1';
 
 export function readExplore(storage) {
   try {
@@ -51,6 +52,10 @@ export class CanvasOverlays {
       this.storage = storage ?? doc.defaultView?.localStorage;
     } catch {}
     this.preferences = readExplore(this.storage);
+    try {
+      this.session = doc.defaultView?.sessionStorage;
+      this.workflowFocused = this.session?.getItem(FOCUSED_WORKFLOW) === 'true';
+    } catch {}
     this.slot = doc.createElement('div');
     this.slot.id = 'canvas-hint-slot';
     this.slot.hidden = true;
@@ -66,6 +71,36 @@ export class CanvasOverlays {
     host.addEventListener?.('pointerdown', interaction, true);
     host.addEventListener?.('wheel', interaction, { capture: true, passive: true });
     host.addEventListener?.('keydown', interaction, true);
+    doc.addEventListener?.('click', (event) => {
+      if (
+        event.target.closest?.(
+          '[data-panel="net"],#library-build-symmetry,#open-coxeter-builder,#construct-card-shape-builder'
+        )
+      )
+        this.focusWorkflow();
+    });
+    doc.addEventListener?.('change', (event) => {
+      if (
+        event.target.id === 'derived-mode' &&
+        ['section', 'cell-section', 'section-evidence'].includes(event.target.value)
+      )
+        this.focusWorkflow();
+    });
+    const Observer = doc.defaultView?.MutationObserver;
+    if (Observer && doc.body) {
+      this.workflowObserver = new Observer((records) => {
+        if (records.some(({ target }) => target.id === 'coxeter-builder' && target.open)) this.focusWorkflow();
+      });
+      this.workflowObserver.observe(doc.body, { subtree: true, attributes: true, attributeFilter: ['open'] });
+    }
+  }
+  focusWorkflow() {
+    if (this.workflowFocused) return;
+    this.workflowFocused = true;
+    try {
+      this.session?.setItem(FOCUSED_WORKFLOW, 'true');
+    } catch {}
+    this.dismissAll('workflow');
   }
   configure(context) {
     Object.assign(this.context, context);
@@ -77,6 +112,10 @@ export class CanvasOverlays {
   enqueue(key, node, { priority = 0, onDismiss = () => {} } = {}) {
     if (this.entries.has(key)) return;
     node.hidden = true;
+    if (this.workflowFocused) {
+      onDismiss('workflow');
+      return;
+    }
     this.slot.append(node);
     this.entries.set(key, { key, node, priority, onDismiss, eligible: true, done: false });
     if (this.active && priority > this.active.priority) {
@@ -121,7 +160,7 @@ export class CanvasOverlays {
     this.slot.hidden = true;
   }
   showNext() {
-    if (!this.enabled) {
+    if (!this.enabled || this.workflowFocused || this.context.getModel?.()?.kind === 'hyperbolic-space') {
       if (this.active) this.active.node.hidden = true;
       this.active = null;
       this.cancel(this.timer);
@@ -165,10 +204,12 @@ export class CanvasOverlays {
     } catch {}
   }
   freshOpen(model) {
+    if (model?.kind === 'hyperbolic-space') return this.showNext();
     this.dismiss('explore', 'replace');
     this.entries.get('explore')?.node.remove?.();
     this.entries.delete('explore');
     this.elementWait?.();
+    if (this.workflowFocused) return;
     this.source = this.context.getState?.();
     this.sourceModel = model;
     const four = (model.embeddingDimension || model.dimension) === 4,
@@ -218,6 +259,13 @@ export class CanvasOverlays {
     return source === this.context.getState?.() && model === this.context.getModel?.() && this.context.canEdit?.();
   }
   sync() {
+    if (this.context.getModel?.()?.kind === 'hyperbolic-space') return this.showNext();
+    const view = this.context.getState?.()?.view;
+    if (
+      this.doc.getElementById('coxeter-builder')?.open ||
+      (view?.viewportLayout === 'split' && ['section', 'cell-section', 'section-evidence'].includes(view.derivedMode))
+    )
+      this.focusWorkflow();
     if (this.source && !this.current()) {
       this.elementWait?.();
       this.eligible('explore', false);

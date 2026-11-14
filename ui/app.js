@@ -1,3 +1,5 @@
+import './hyperbolic-document.css';
+import { HyperbolicDocument, isHyperbolic } from './hyperbolic-document.mjs';
 import { defaultDocumentView, legacyDocumentView } from './default-look.mjs';
 import './default-look.css';
 import { ImageCaptureSession, saveReviewedImage } from './image-capture-session.mjs';
@@ -226,10 +228,12 @@ let stephanoidControls = null;
 
 let appearanceSheet = null;
 let welcome = null;
+let hyperbolicDocument = null;
 
 const appContext = createAppContext(
   {
     $: () => $,
+    hyperbolicDocument: () => hyperbolicDocument,
     acceptLinkedLibrary: () => acceptLinkedLibrary,
     actions: () => actions,
     activateDocument: () => activateDocument,
@@ -768,6 +772,15 @@ derived.onCamera = (value) => {
 };
 
 function markDirty() {
+  if (hyperbolicDocument?.isActive()) {
+    dirty = true;
+    revision++;
+    projectOpening.sync();
+    imageCapture?.sync();
+    api.setDirty(true).catch(() => {});
+    renderTabs();
+    return;
+  }
   cellRebuildControls?.sync();
   faceConwayControls?.sync();
   netEditor?.updateActions();
@@ -887,7 +900,24 @@ new MutationObserver(() => {
     intent.node.focus();
   } else if (performance.now() - intent.at >= 10000) focusIntent = null;
 }).observe(document.body, { subtree: true, attributes: true, attributeFilter: ['disabled'] });
-async function run(op, params = {}, source = null, label = op, { signal } = {}) {
+async function run(op, params = {}, source = null, label = op, { signal, onTiming } = {}) {
+  if (onTiming) {
+    const startedAt = performance.now();
+    const result = await nativeJobs.run((id) => api.engine({ op, params, model: source }, id), label, { signal });
+    const completedAt = performance.now(),
+      jsonStartedAt = performance.now();
+    const bytes = (value) => new TextEncoder().encode(JSON.stringify(value)).byteLength;
+    const requestBytes = bytes({ op, params, model: source }),
+      responseBytes = bytes(result);
+    onTiming({
+      op,
+      wallMs: completedAt - startedAt,
+      requestBytes,
+      responseBytes,
+      measurementJsonMs: performance.now() - jsonStartedAt,
+    });
+    return result;
+  }
   return nativeJobs.run((id) => api.engine({ op, params, model: source }, id), label, { signal });
 }
 async function number(expression, options = {}) {
@@ -1062,6 +1092,7 @@ function reportCurrent(ticket, channel, id) {
   return false;
 }
 async function refreshAnalysis() {
+  if (isHyperbolic(model())) return hyperbolicDocument?.renderAnalysis();
   analysisOverview.sync();
   polychoronRelationships?.sync();
   informationPanel?.invalidate();
@@ -1196,6 +1227,7 @@ async function refreshAnalysis() {
   }
 }
 async function refreshDerived({ throwOnError = false, isCurrent, signal, preserveLayout = false, exportOwner } = {}) {
+  if (isHyperbolic(model())) return;
   const m = model(),
     v = state()?.view;
   if (!m) return;
@@ -1375,6 +1407,7 @@ async function refreshDerived({ throwOnError = false, isCurrent, signal, preserv
       $('derived-status').textContent =
         `Surface intersection · ${result.model.vertices.length} vertices · ${result.model.edges.length} segments · ${v.fillRule || 'nonzero'} face fill`;
     densitySectionControls.show(result);
+    if (['section', 'cell-section'].includes(mode)) derivedControls?.context.onSliceComplete?.(result);
     return result;
   } catch (e) {
     if (sequence === derivedSequence && current()) {
@@ -1384,6 +1417,8 @@ async function refreshDerived({ throwOnError = false, isCurrent, signal, preserv
       derived.clear();
       densitySectionControls.showFailure(e);
       $('derived-status').textContent = e.message;
+      if (['section', 'cell-section'].includes(mode))
+        derivedControls?.context.onSliceStatus?.('Section could not update: ' + e.message);
     }
     if (throwOnError) throw e;
   } finally {
@@ -1782,9 +1817,9 @@ const actions = {
   recover,
   undo: () => historyStep(-1),
   redo: () => historyStep(1),
-  reset: () => viewportControls.resetView(),
+  reset: () => (isHyperbolic(model()) ? hyperbolicDocument.viewer.home() : viewportControls.resetView()),
   fullscreen: () => api.fullscreen(),
-  image: () => imageCapture.run(),
+  image: () => (isHyperbolic(model()) ? hyperbolicDocument.screenshot() : imageCapture.run()),
   help: () => userGuide.show(),
   export: openGeometryExport,
   print: printNet,
@@ -1845,6 +1880,7 @@ let discoverability, appChrome, timelinePanel, desktopFiles;
 panels.mountWorkspacePanels();
 
 let recoverySnapshots;
+hyperbolicDocument = new HyperbolicDocument(appContext);
 startup.startRecovery();
 
 startup.start();
